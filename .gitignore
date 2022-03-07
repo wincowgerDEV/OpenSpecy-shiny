@@ -11,3 +11,4 @@ rsconnect/
 .httr-oauth
 .db_url
 loggit.log
+.Rproj.user
