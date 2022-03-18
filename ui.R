@@ -612,13 +612,132 @@ ui <- fluidPage(
                          column(9,
                                 fluidRow( 
                                   column(3, 
-                                         plotcontainerfunction(radioButtons("intensity_corr", "Intensity Adjustment",
+                                         plotcontainerfunction(h5("Intensity Adjustment"),
+                                                               radioButtons("intensity_corr", "",
                                                                    c("None" = "none", "Transmittance" = "transmittance", "Reflectance" = "reflectance"))),
+                                  ),
+                                  column(3, 
+                                         plotcontainerfunction(h5("Preprocessing"),
+                                          fluidRow(column(12, 
+                                                          downloadButton("downloadData", "Download (recommended)",
+                                                                  style = "background-color: #2a9fd6;")
+                                                          )
+                                            ),
+                                         fluidRow(
+                                           column(9,
+                                                  prettySwitch(inputId = "smooth_decision",
+                                                               label = "Smoothing",
+                                                               inline = T,
+                                                               value = T,
+                                                               status = "success",
+                                                               fill = T)
+                                           ),
+                                           column(3, align = "center",
+                                                  prettyToggle("smooth_tools",
+                                                               icon_on = icon("eye"),
+                                                               icon_off = icon("eye-slash"), 
+                                                               label_on = NULL, label_off = NULL,
+                                                               status_on = "success",
+                                                               status_off = "default",
+                                                               outline = TRUE,
+                                                               plain = TRUE,
+                                                               bigger = T),
+                                           )
+                                         ),
+                                         
+                                         fluidRow(
+                                           column(9,
+                                                  prettySwitch("baseline_decision",
+                                                               label = "Baseline Correction",
+                                                               inline = T,
+                                                               value = T,
+                                                               status = "success",
+                                                               fill = T),
+                                                  
+                                           ),
+                                           column(3, align = "center",
+                                                  prettyToggle("baseline_tools",
+                                                               icon_on = icon("eye"),
+                                                               icon_off = icon("eye-slash"), 
+                                                               label_on = NULL, label_off = NULL,
+                                                               status_on = "success",
+                                                               status_off = "default",
+                                                               outline = TRUE,
+                                                               plain = TRUE,
+                                                               bigger = T),
+                                           )
+                                         ),
+                                         fluidRow(
+                                           column(9,
+                                                  prettySwitch("range_decision",
+                                                               label = "Range Selection",
+                                                               inline = T,
+                                                               value = T,
+                                                               status = "success",
+                                                               fill = T)
+                                           ),
+                                           column(3, align = "center",
+                                                  prettyToggle("range_tools",
+                                                               icon_on = icon("eye"),
+                                                               icon_off = icon("eye-slash"), 
+                                                               label_on = NULL, label_off = NULL,
+                                                               status_on = "success",
+                                                               status_off = "default",
+                                                               outline = TRUE,
+                                                               plain = TRUE,
+                                                               bigger = T),
+                                           )
+                                         )
+                                        )
                                   )
                                 ),
-                                fluidRow(
-                                  plotcontainerfunction(h4(id = "placeholder1", "Upload some data to get started..."), plotlyOutput("MyPlot")),
-                                style = bodyformat()
+                                fluidRow(column(9, 
+                                                plotcontainerfunction(h4(id = "placeholder1", "Upload some data to get started..."), plotlyOutput("MyPlot")),
+                                style = bodyformat(),
+                                                ),
+                                column(3, 
+                                       conditionalPanel("input.smooth_tools == true & input.smooth_decision == true",
+                                                       plotcontainerfunction(sliderInput("smoother", "Smoothing Polynomial", min = 0, max = 7, value = 3)
+                                                       )),
+                                       conditionalPanel("input.baseline_tools == true & input.baseline_decision == true",
+                                                        plotcontainerfunction(
+                                                          selectInput(inputId = "baseline_selection", label = "Baseline Correction Technique", choices = c("Polynomial", "Manual")),
+                                                          sliderInput("baseline", "Baseline Correction Polynomial", min = 1, max = 20, value = 8),
+                                                          fluidRow(
+                                                            column(6,
+                                                                   actionButton("go", "Correct With Trace"),
+                                                            ),
+                                                            column(6,
+                                                                   actionButton("reset", "Reset"),
+                                                            )
+                                                          )
+                                                        )
+                                                        
+                                       ),
+                                       conditionalPanel("input.range_tools == true & input.range_decision == true",
+                                                        plotcontainerfunction(
+                                                          numericInput(
+                                                            "MaxRange",
+                                                            "Maximum Spectral Range",
+                                                            value = 6000,
+                                                            min = NA,
+                                                            max = NA,
+                                                            step = NA,
+                                                            width = NULL
+                                                          ),
+                                                          numericInput(
+                                                            "MinRange",
+                                                            "Minimum Spectral Range",
+                                                            value = 0,
+                                                            min = NA,
+                                                            max = NA,
+                                                            step = NA,
+                                                            width = NULL
+                                                          )
+                                                        )
+                                       )
+                                       )
+                                  
                                 )
                                 
                                 
@@ -640,133 +759,8 @@ ui <- fluidPage(
               tabPanel("Preprocess Spectrum", value = "tab2",
                        titlePanel(h4("Smooth, Baseline Correct, and Download Processed Spectra")),
                        br(),
-                       fluidRow(
-                         column(3, style = columnformat(),
-                                fluidRow(
-                                  column(12,
-                                         downloadButton("downloadData", "Download (recommended)",
-                                                        style = "background-color: #2a9fd6;")
-                                         
-                                  )
-                                ),
-                                br(),
-                                fluidRow(
-                                  column(9, ""),
-                                  column(3, align = "center", tags$label("Options"))
-                                ),
-                                br(),
-                                fluidRow(
-                                  column(9,
-                                         prettySwitch(inputId = "smooth_decision",
-                                                      label = "Smoothing",
-                                                      inline = T,
-                                                      value = T,
-                                                      status = "success",
-                                                      fill = T)
-                                  ),
-                                  column(3, align = "center",
-                                         prettyToggle("smooth_tools",
-                                                      icon_on = icon("eye"),
-                                                      icon_off = icon("eye-slash"), 
-                                                      label_on = NULL, label_off = NULL,
-                                                      status_on = "success",
-                                                      status_off = "default",
-                                                      outline = TRUE,
-                                                      plain = TRUE,
-                                                      bigger = T),
-                                  )
-                                ),
-                                
-                                fluidRow(
-                                  column(9,
-                                         prettySwitch("baseline_decision",
-                                                      label = "Baseline Correction",
-                                                      inline = T,
-                                                      value = T,
-                                                      status = "success",
-                                                      fill = T),
-                                         
-                                  ),
-                                  column(3, align = "center",
-                                         prettyToggle("baseline_tools",
-                                                      icon_on = icon("eye"),
-                                                      icon_off = icon("eye-slash"), 
-                                                      label_on = NULL, label_off = NULL,
-                                                      status_on = "success",
-                                                      status_off = "default",
-                                                      outline = TRUE,
-                                                      plain = TRUE,
-                                                      bigger = T),
-                                  )
-                                ),
-                                fluidRow(
-                                  column(9,
-                                         prettySwitch("range_decision",
-                                                      label = "Range Selection",
-                                                      inline = T,
-                                                      value = T,
-                                                      status = "success",
-                                                      fill = T)
-                                  ),
-                                  column(3, align = "center",
-                                         prettyToggle("range_tools",
-                                                      icon_on = icon("eye"),
-                                                      icon_off = icon("eye-slash"), 
-                                                      label_on = NULL, label_off = NULL,
-                                                      status_on = "success",
-                                                      status_off = "default",
-                                                      outline = TRUE,
-                                                      plain = TRUE,
-                                                      bigger = T),
-                                  )
-                                ),
-                                br(),
-                                fluidRow(column(12,
-                                                conditionalPanel("input.smooth_tools == true & input.smooth_decision == true",
-                                                                 plotcontainerfunction(sliderInput("smoother", "Smoothing Polynomial", min = 0, max = 7, value = 3)
-                                                                 )),
-                                                conditionalPanel("input.baseline_tools == true & input.baseline_decision == true",
-                                                                 plotcontainerfunction(
-                                                                   selectInput(inputId = "baseline_selection", label = "Baseline Correction Technique", choices = c("Polynomial", "Manual")),
-                                                                   sliderInput("baseline", "Baseline Correction Polynomial", min = 1, max = 20, value = 8),
-                                                                   fluidRow(
-                                                                     column(6,
-                                                                            actionButton("go", "Correct With Trace"),
-                                                                     ),
-                                                                     column(6,
-                                                                            actionButton("reset", "Reset"),
-                                                                     )
-                                                                   )
-                                                                 )
-                                                                 
-                                                ),
-                                                conditionalPanel("input.range_tools == true & input.range_decision == true",
-                                                                 plotcontainerfunction(
-                                                                   numericInput(
-                                                                     "MaxRange",
-                                                                     "Maximum Spectral Range",
-                                                                     value = 6000,
-                                                                     min = NA,
-                                                                     max = NA,
-                                                                     step = NA,
-                                                                     width = NULL
-                                                                   ),
-                                                                   numericInput(
-                                                                     "MinRange",
-                                                                     "Minimum Spectral Range",
-                                                                     value = 0,
-                                                                     min = NA,
-                                                                     max = NA,
-                                                                     step = NA,
-                                                                     width = NULL
-                                                                   )
-                                                                 )
-                                                )
-                                )
-                                )
-                         ),
-                         
-                         
+                       fluidRow(column(3),
+
                          column(9,
                                 plotcontainerfunction(h4(id = "placeholder2", "Upload some data to get started..."), plotlyOutput("MyPlotB")),
                                 #verbatimTextOutput(outputId = "text"),
