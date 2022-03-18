@@ -689,7 +689,26 @@ ui <- fluidPage(
                                            )
                                          )
                                         )
-                                  )
+                                  ),
+                                  column(3, 
+                                           column(4,
+                                                  radioButtons("Spectra", "Type",
+                                                               c("Raman" = "raman",
+                                                                 "FTIR" = "ftir"))
+                                           ),
+                                           column(4,
+                                                  radioButtons("Data", "Analysis",
+                                                               c("Processed" = "processed",
+                                                                 "Uploaded" = "uploaded"
+                                                               ))
+                                           ),
+                                           column(4,
+                                                  radioButtons("Library", "Region",
+                                                               c("Full" = "full",
+                                                                 "Peaks" = "peaks"))
+                                                  
+                                         )
+                                         )
                                 ),
                                 fluidRow(column(9, 
                                                 plotcontainerfunction(h4(id = "placeholder1", "Upload some data to get started..."), plotlyOutput("MyPlot")),
@@ -784,25 +803,6 @@ ui <- fluidPage(
                        br(),
                        fluidRow(
                          column(3, style = columnformat(),
-                                fluidRow(
-                                  column(4,
-                                         radioButtons("Spectra", "Type",
-                                                      c("Raman" = "raman",
-                                                        "FTIR" = "ftir"))
-                                  ),
-                                  column(4,
-                                         radioButtons("Data", "Analysis",
-                                                      c("Processed" = "processed",
-                                                        "Uploaded" = "uploaded"
-                                                      ))
-                                  ),
-                                  column(4,
-                                         radioButtons("Library", "Region",
-                                                      c("Full" = "full",
-                                                        "Peaks" = "peaks"))
-                                         
-                                  )
-                                ),
                                 fluidRow(style = "padding:1rem",
                                          DT::dataTableOutput("event")
                                 )
