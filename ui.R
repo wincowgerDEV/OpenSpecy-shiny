@@ -512,9 +512,11 @@ ui <- fluidPage(
                                 
                                 tags$br(),
                                 
-                                tags$div(downloadButton("download_testdata",
+                                fluidRow(column(12, downloadButton("download_testdata",
                                                         "Sample File",
-                                                        style = "background-color: #2a9fd6;")),
+                                                        style = "background-color: #2a9fd6;"))),
+                                          downloadButton("downloadData", "Download (recommended)",
+                                                        style = "background-color: #2a9fd6;"),
                                 
                                 
                                 tags$br(),
@@ -618,11 +620,7 @@ ui <- fluidPage(
                                   ),
                                   column(3, 
                                          plotcontainerfunction(h5("Preprocessing"),
-                                          fluidRow(column(12, 
-                                                          downloadButton("downloadData", "Download (recommended)",
-                                                                  style = "background-color: #2a9fd6;")
-                                                          )
-                                            ),
+                                          
                                          fluidRow(
                                            column(9,
                                                   prettySwitch(inputId = "smooth_decision",
@@ -690,8 +688,10 @@ ui <- fluidPage(
                                          )
                                         )
                                   ),
-                                  column(3, 
-                                           column(4,
+                                  column(3, plotcontainerfunction(
+                                          fluidRow(column(12, h5("Identification Options"))),
+                                          fluidRow(
+                                            column(4,
                                                   radioButtons("Spectra", "Type",
                                                                c("Raman" = "raman",
                                                                  "FTIR" = "ftir"))
@@ -708,6 +708,10 @@ ui <- fluidPage(
                                                                  "Peaks" = "peaks"))
                                                   
                                          )
+                                          )
+                                           
+                                         )
+                                           
                                          )
                                 ),
                                 fluidRow(column(9, 
@@ -754,7 +758,7 @@ ui <- fluidPage(
                                                             width = NULL
                                                           )
                                                         )
-                                       )
+                                          )
                                        )
                                   
                                 )
