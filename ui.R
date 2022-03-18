@@ -510,10 +510,6 @@ ui <- fluidPage(
                                                    "text/comma-separated-values,text/plain",
                                                    ".csv", ".asp", ".spc", ".jdx", ".spa", ".0")),
                                 
-                                
-                                radioButtons("intensity_corr", "Intensity Adjustment",
-                                             c("None" = "none",
-                                               "Transmittance" = "transmittance", "Reflectance" = "reflectance")),
                                 tags$br(),
                                 
                                 tags$div(downloadButton("download_testdata",
@@ -614,8 +610,17 @@ ui <- fluidPage(
                          
                          
                          column(9,
-                                plotcontainerfunction(h4(id = "placeholder1", "Upload some data to get started..."), plotlyOutput("MyPlot")),
+                                fluidRow( 
+                                  column(3, 
+                                         plotcontainerfunction(radioButtons("intensity_corr", "Intensity Adjustment",
+                                                                   c("None" = "none", "Transmittance" = "transmittance", "Reflectance" = "reflectance"))),
+                                  )
+                                ),
+                                fluidRow(
+                                  plotcontainerfunction(h4(id = "placeholder1", "Upload some data to get started..."), plotlyOutput("MyPlot")),
                                 style = bodyformat()
+                                )
+                                
                                 
                          ),
                        ),
