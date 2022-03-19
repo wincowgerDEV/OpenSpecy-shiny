@@ -362,21 +362,26 @@ observeEvent(input$reset, {
   })
 
   match_selected <- reactive({# Default to first row if not yet clicked
-  
-    
-  id_select <- ifelse(is.null(input$event_rows_selected),
+    if(!length(input$event_rows_selected) | !input$active_identification) {
+    data.table(wavenumber = numeric(), intensity = numeric(), spectrum_identity = factor())
+      }
+      else{
+        id_select <- ifelse(is.null(input$event_rows_selected),
                       1,
                       MatchSpectra()[[input$event_rows_selected,
                                       "sample_name"]])
-  # Get data from find_spec
-  current_spectrum <- find_spec(sample_name == id_select,
-                                spec_lib, which = input$Spectra,
-                                type = input$Library)
+    # Get data from find_spec
+    current_spectrum <- find_spec(sample_name == id_select,
+                                  spec_lib, which = input$Spectra,
+                                  type = input$Library)
   
-  TopTens <- current_spectrum %>%
-    inner_join(MatchSpectra()[input$event_rows_selected,,drop = FALSE],
-               by = "sample_name") %>%
-    select(wavenumber, intensity, spectrum_identity)
+    current_spectrum %>%
+      inner_join(MatchSpectra()[input$event_rows_selected,,drop = FALSE],
+                 by = "sample_name") %>%
+      select(wavenumber, intensity, spectrum_identity)
+      }
+    
+  
   })
   
   # Identify Spectra function ----
@@ -435,46 +440,8 @@ observeEvent(input$reset, {
 
   # Display matches based on table selection ----
   output$MyPlotC <- renderPlotly({
-    if(!length(input$event_rows_selected)) {
       plot_ly(type = 'scatter', mode = 'lines', source = "B") %>%
-        add_trace(data = baseline_data(), x = ~wavenumber, y = ~intensity,
-                  name = 'Processed Spectrum',
-                  line = list(color = 'rgb(240,19,207)')) %>%
-        add_trace(data = data(), x = ~wavenumber, y = ~intensity,
-                  name = 'Uploaded Spectrum',
-                  line = list(color = 'rgba(240,236,19,0.8)')) %>%
-        # Dark blue rgb(63,96,130)
-        # https://www.rapidtables.com/web/color/RGB_Color.html https://www.color-hex.com/color-names.html
-        layout(yaxis = list(title = "absorbance intensity [-]"),
-               xaxis = list(title = "wavenumber [cm<sup>-1</sup>]",
-                            autorange = "reversed"),
-               plot_bgcolor = 'rgb(17,0,73)',
-               paper_bgcolor = 'rgba(0,0,0,0.5)',
-               font = list(color = '#FFFFFF')) %>%
-        config(modeBarButtonsToAdd = list("drawopenpath", "eraseshape" ))
-    }
-    else if(length(input$event_rows_selected)) {
-      # Default to first row if not yet clicked
-      id_select <- ifelse(is.null(input$event_rows_selected),
-                          1,
-                          MatchSpectra()[[input$event_rows_selected,
-                                          "sample_name"]])
-      # Get data from find_spec
-      current_spectrum <- find_spec(sample_name == id_select,
-                                    spec_lib, which = input$Spectra,
-                                    type = input$Library)
-
-      TopTens <- current_spectrum %>%
-        inner_join(MatchSpectra()[input$event_rows_selected,,drop = FALSE],
-                   by = "sample_name") %>%
-        select(wavenumber, intensity, spectrum_identity)
-
-      OGData <- DataR() %>%
-        select(wavenumber, intensity) %>%
-        mutate(spectrum_identity = "Spectrum to Analyze")
-      
-      plot_ly(type = 'scatter', mode = 'lines', source = "B") %>%
-        add_trace(data = TopTens, x = ~wavenumber, y = ~intensity,
+        add_trace(data = match_selected(), x = ~wavenumber, y = ~intensity,
                   color = ~factor(spectrum_identity), colors = "#FF0000") %>%
         add_trace(data = baseline_data(), x = ~wavenumber, y = ~intensity,
                   name = 'Processed Spectrum',
@@ -491,7 +458,8 @@ observeEvent(input$reset, {
                paper_bgcolor = 'rgba(0,0,0,0.5)',
                font = list(color = '#FFFFFF')) %>%
         config(modeBarButtonsToAdd = list("drawopenpath", "eraseshape" ))
-    }})
+   
+    })
 
   # Data Download options
   output$downloadData5 <- downloadHandler(
