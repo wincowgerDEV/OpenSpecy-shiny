@@ -418,15 +418,22 @@ observeEvent(input$reset, {
   # Display matches based on table selection ----
   output$MyPlotC <- renderPlotly({
     if(!length(input$event_rows_selected)) {
-      plot_ly(DataR()) %>%
-        add_lines(x = ~wavenumber, y = ~intensity,
-                  line = list(color = 'rgba(255,255,255,0.8)')) %>%
+      plot_ly(type = 'scatter', mode = 'lines', source = "B") %>%
+        add_trace(data = baseline_data(), x = ~wavenumber, y = ~intensity,
+                  name = 'Processed Spectrum',
+                  line = list(color = 'rgb(240,19,207)')) %>%
+        add_trace(data = data(), x = ~wavenumber, y = ~intensity,
+                  name = 'Uploaded Spectrum',
+                  line = list(color = 'rgba(240,236,19,0.8)')) %>%
+        # Dark blue rgb(63,96,130)
+        # https://www.rapidtables.com/web/color/RGB_Color.html https://www.color-hex.com/color-names.html
         layout(yaxis = list(title = "absorbance intensity [-]"),
                xaxis = list(title = "wavenumber [cm<sup>-1</sup>]",
                             autorange = "reversed"),
-               plot_bgcolor='rgb(17,0, 73)',
-               paper_bgcolor= 'rgba(0,0,0,0.5)',
-               font = list(color = '#FFFFFF'))
+               plot_bgcolor = 'rgb(17,0,73)',
+               paper_bgcolor = 'rgba(0,0,0,0.5)',
+               font = list(color = '#FFFFFF')) %>%
+        config(modeBarButtonsToAdd = list("drawopenpath", "eraseshape" ))
     }
     else if(length(input$event_rows_selected)) {
       # Default to first row if not yet clicked
@@ -447,20 +454,25 @@ observeEvent(input$reset, {
       OGData <- DataR() %>%
         select(wavenumber, intensity) %>%
         mutate(spectrum_identity = "Spectrum to Analyze")
-
-      plot_ly(TopTens, x = ~wavenumber, y = ~Intensity) %>%
-        add_lines(data = TopTens, x = ~wavenumber, y = ~intensity,
+      
+      plot_ly(type = 'scatter', mode = 'lines', source = "B") %>%
+        add_trace(data = TopTens, x = ~wavenumber, y = ~intensity,
                   color = ~factor(spectrum_identity), colors = "#FF0000") %>%
-        # viridisLite::plasma(7, begin = 0.2, end = 0.8)
-        add_lines(data = OGData, x = ~wavenumber, y = ~intensity,
-                  line = list(color = "rgba(255,255,255,0.8)"),
-                  name = "Spectrum to Analyze") %>%
+        add_trace(data = baseline_data(), x = ~wavenumber, y = ~intensity,
+                  name = 'Processed Spectrum',
+                  line = list(color = 'rgb(240,19,207)')) %>%
+        add_trace(data = data(), x = ~wavenumber, y = ~intensity,
+                  name = 'Uploaded Spectrum',
+                  line = list(color = 'rgba(240,236,19,0.8)')) %>%
+        # Dark blue rgb(63,96,130)
+        # https://www.rapidtables.com/web/color/RGB_Color.html https://www.color-hex.com/color-names.html
         layout(yaxis = list(title = "absorbance intensity [-]"),
                xaxis = list(title = "wavenumber [cm<sup>-1</sup>]",
                             autorange = "reversed"),
-               plot_bgcolor = "rgb(17,0, 73)",
+               plot_bgcolor = 'rgb(17,0,73)',
                paper_bgcolor = 'rgba(0,0,0,0.5)',
-               font = list(color = "#FFFFFF"))
+               font = list(color = '#FFFFFF')) %>%
+        config(modeBarButtonsToAdd = list("drawopenpath", "eraseshape" ))
     }})
 
   # Data Download options
