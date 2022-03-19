@@ -616,15 +616,16 @@ ui <- fluidPage(
                          ),
                          
                          
-                         column(9,
-                                fluidRow( 
+                         column(6,
+                                plotcontainerfunction(
+                                  fluidRow( 
                                   column(3, 
-                                         plotcontainerfunction(h5("Intensity Adjustment"),
+                                         h5("Intensity Adjustment"),
                                                                radioButtons("intensity_corr", "",
-                                                                   c("None" = "none", "Transmittance" = "transmittance", "Reflectance" = "reflectance"))),
+                                                                   c("None" = "none", "Transmittance" = "transmittance", "Reflectance" = "reflectance")),
                                   ),
                                   column(3, 
-                                         plotcontainerfunction(h5("Preprocessing"),
+                                         h5("Preprocessing"),
                                           
                                          fluidRow(
                                            column(9,
@@ -689,11 +690,11 @@ ui <- fluidPage(
                                                                outline = TRUE,
                                                                plain = TRUE,
                                                                bigger = T),
-                                           )
+                                           
                                          )
                                         )
                                   ),
-                                  column(3, plotcontainerfunction(
+                                  column(3, 
                                           fluidRow(column(12, h5("Identification"))),
                                           fluidRow(
                                             column(4,
@@ -712,60 +713,66 @@ ui <- fluidPage(
                                                                c("Full" = "full",
                                                                  "Peaks" = "peaks"))
                                                   
-                                         )
+                                         
                                           )
                                            
                                          )
                                            
+                                         ))),
+                                plotcontainerfunction(
+                                  fluidRow(
+                                  column(12,
+                                                conditionalPanel("input.smooth_tools == true & input.smooth_decision == true",
+                                                                 plotcontainerfunction(sliderInput("smoother", "Smoothing Polynomial", min = 0, max = 7, value = 3)
+                                                                 )),
+                                                conditionalPanel("input.baseline_tools == true & input.baseline_decision == true",
+                                                                 plotcontainerfunction(
+                                                                   selectInput(inputId = "baseline_selection", label = "Baseline Correction Technique", choices = c("Polynomial", "Manual")),
+                                                                   sliderInput("baseline", "Baseline Correction Polynomial", min = 1, max = 20, value = 8),
+                                                                   fluidRow(
+                                                                     column(6,
+                                                                            actionButton("go", "Correct With Trace"),
+                                                                     ),
+                                                                     column(6,
+                                                                            actionButton("reset", "Reset"),
+                                                                     )
+                                                                   )
+                                                                 )
+                                                                 
+                                                ),
+                                                conditionalPanel("input.range_tools == true & input.range_decision == true",
+                                                                 plotcontainerfunction(
+                                                                   numericInput(
+                                                                     "MaxRange",
+                                                                     "Maximum Spectral Range",
+                                                                     value = 6000,
+                                                                     min = NA,
+                                                                     max = NA,
+                                                                     step = NA,
+                                                                     width = NULL
+                                                                   ),
+                                                                   numericInput(
+                                                                     "MinRange",
+                                                                     "Minimum Spectral Range",
+                                                                     value = 0,
+                                                                     min = NA,
+                                                                     max = NA,
+                                                                     step = NA,
+                                                                     width = NULL
+                                                                   )
+                                                                 )
+                                                )
+                                         
                                          )
+                                )
+                                
                                 ),
-                                fluidRow(column(9, 
+                                fluidRow(column(12, 
                                                 plotcontainerfunction(h4(id = "placeholder1", "Upload some data to get started..."), 
                                                                       plotlyOutput("MyPlotB")),
                                                                       style = bodyformat()
-                                                ),
-                                column(3, 
-                                       conditionalPanel("input.smooth_tools == true & input.smooth_decision == true",
-                                                       plotcontainerfunction(sliderInput("smoother", "Smoothing Polynomial", min = 0, max = 7, value = 3)
-                                                       )),
-                                       conditionalPanel("input.baseline_tools == true & input.baseline_decision == true",
-                                                        plotcontainerfunction(
-                                                          selectInput(inputId = "baseline_selection", label = "Baseline Correction Technique", choices = c("Polynomial", "Manual")),
-                                                          sliderInput("baseline", "Baseline Correction Polynomial", min = 1, max = 20, value = 8),
-                                                          fluidRow(
-                                                            column(6,
-                                                                   actionButton("go", "Correct With Trace"),
-                                                            ),
-                                                            column(6,
-                                                                   actionButton("reset", "Reset"),
-                                                            )
-                                                          )
-                                                        )
-                                                        
-                                       ),
-                                       conditionalPanel("input.range_tools == true & input.range_decision == true",
-                                                        plotcontainerfunction(
-                                                          numericInput(
-                                                            "MaxRange",
-                                                            "Maximum Spectral Range",
-                                                            value = 6000,
-                                                            min = NA,
-                                                            max = NA,
-                                                            step = NA,
-                                                            width = NULL
-                                                          ),
-                                                          numericInput(
-                                                            "MinRange",
-                                                            "Minimum Spectral Range",
-                                                            value = 0,
-                                                            min = NA,
-                                                            max = NA,
-                                                            step = NA,
-                                                            width = NULL
-                                                          )
-                                                        )
-                                          )
-                                       )
+                                                )
+                                
                                   
                                 )
                                 
