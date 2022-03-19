@@ -364,7 +364,7 @@ observeEvent(input$reset, {
   # Identify Spectra function ----
   # Joins their spectrum to the internal database and computes correlation.
   MatchSpectra <- reactive ({
-    req(input$tabs == "tab3")
+    req(input$active_identification)
     input
     withProgress(message = 'Analyzing Spectrum', value = 1/3, {
 

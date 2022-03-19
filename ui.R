@@ -622,7 +622,7 @@ ui <- fluidPage(
                                   ),
                                   column(5, 
                                          h5("Preprocessing"),
-                                          
+                                         
                                          fluidRow(
                                            column(9,
                                                   prettySwitch(inputId = "smooth_decision",
@@ -695,7 +695,13 @@ ui <- fluidPage(
                                         ))
                                   ),
                                   column(5, 
-                                          fluidRow(column(12, h5("Identification"))),
+                                          fluidRow(column(12, h5("Identification"),
+                                                          prettySwitch(inputId = "active_identification",
+                                                                       label = "Activate",
+                                                                       inline = T,
+                                                                       value = F,
+                                                                       status = "success",
+                                                                       fill = T),)),
                                           fluidRow(
                                             column(4,
                                                   radioButtons("Spectra", "Type",
