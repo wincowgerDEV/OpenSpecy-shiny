@@ -775,10 +775,16 @@ ui <- fluidPage(
                                 )
                                        )),
                                 fluidRow(
-                                  column(3),
+                                  column(3, 
+                                         style = columnformat(),
+                                         fluidRow(style = "padding:1rem",
+                                                  DT::dataTableOutput("event")
+                                         )
+                                        ),
                                   column(9, 
                                                 plotcontainerfunction(h4(id = "placeholder1", "Upload some data to get started..."), 
-                                                                      plotlyOutput("MyPlotB")),
+                                                                      plotlyOutput("MyPlotC"),
+                                                                      DT::dataTableOutput("eventmetadata")),
                                                                       style = bodyformat()
                                                 )
                                 
@@ -802,15 +808,10 @@ ui <- fluidPage(
                        titlePanel(h4("Identify Spectrum Using the Reference Library")),
                        br(),
                        fluidRow(
-                         column(3, style = columnformat(),
-                                fluidRow(style = "padding:1rem",
-                                         DT::dataTableOutput("event")
-                                )
-                         ),
                          
                          column(9,
-                                plotcontainerfunction(h4(id = "placeholder3", "Upload some data to get started..."), plotlyOutput("MyPlotC"),
-                                                      DT::dataTableOutput("eventmetadata")),
+                                plotcontainerfunction(h4(id = "placeholder3", "Upload some data to get started...")
+                                                     ),
                                 style = bodyformat()
                                 
                          )
