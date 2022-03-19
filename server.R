@@ -261,8 +261,11 @@ server <- shinyServer(function(input, output, session) {
   #Preprocess Spectra ----
   # All cleaning of the data happens here. Smoothing and Baseline removing
   baseline_data <- reactive({
-    req(data())
-
+    if(!length(data()) | !input$active_preprocessing) {
+      data.table(intensity = numeric(), wavenumber = numeric())
+    }
+    else{
+      
     testdata <- data() %>% dplyr::filter(wavenumber > input$MinRange &
                                            wavenumber < input$MaxRange)
     test <-  nrow(testdata) < 3
@@ -290,39 +293,10 @@ server <- shinyServer(function(input, output, session) {
             make_rel(.$intensity - approx(trace$data$wavenumber, trace$data$intensity, xout = .$wavenumber, rule = 2, method = "linear", ties = mean)$y)
           } else .$intensity)
     }
+    }
+
   })
 
-  # Create file view and preprocess view
-  output$MyPlot <- renderPlotly({
-    plot_ly(data(), type = 'scatter', mode = 'lines') %>%
-      add_trace(x = ~wavenumber, y = ~intensity, name = 'Uploaded Spectrum',
-                line = list(color = 'rgba(240,236,19, 0.8)')) %>%
-      layout(yaxis = list(title = "absorbance intensity [-]"),
-             xaxis = list(title = "wavenumber [cm<sup>-1</sup>]",
-                          autorange = "reversed"),
-             plot_bgcolor = 'rgb(17,0,73)',
-             paper_bgcolor = 'rgba(0,0,0,0.5)',
-             font = list(color = '#FFFFFF'))
-  })
-
-  output$MyPlotB <- renderPlotly({
-    plot_ly(type = 'scatter', mode = 'lines', source = "B") %>%
-      add_trace(data = baseline_data(), x = ~wavenumber, y = ~intensity,
-                name = 'Processed Spectrum',
-                line = list(color = 'rgb(240,19,207)')) %>%
-      add_trace(data = data(), x = ~wavenumber, y = ~intensity,
-                name = 'Uploaded Spectrum',
-                line = list(color = 'rgba(240,236,19,0.8)')) %>%
-      # Dark blue rgb(63,96,130)
-      # https://www.rapidtables.com/web/color/RGB_Color.html https://www.color-hex.com/color-names.html
-      layout(yaxis = list(title = "absorbance intensity [-]"),
-             xaxis = list(title = "wavenumber [cm<sup>-1</sup>]",
-                          autorange = "reversed"),
-             plot_bgcolor = 'rgb(17,0,73)',
-             paper_bgcolor = 'rgba(0,0,0,0.5)',
-             font = list(color = '#FFFFFF')) %>%
-      config(modeBarButtonsToAdd = list("drawopenpath", "eraseshape" ))
-  })
 
 trace <- reactiveValues(data = NULL)
 
