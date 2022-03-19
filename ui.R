@@ -801,35 +801,6 @@ ui <- fluidPage(
                          
                        )),
               
-              
-              
-              #Match Spectrum Tab ----
-              tabPanel("Identify Spectrum",value = "tab3",
-                       titlePanel(h4("Identify Spectrum Using the Reference Library")),
-                       br(),
-                       fluidRow(
-                         
-                         column(9,
-                                plotcontainerfunction(h4(id = "placeholder3", "Upload some data to get started...")
-                                                     ),
-                                style = bodyformat()
-                                
-                         )
-                       ),
-                       
-                       
-                       hr(),
-                       fluidRow(
-                         column(3),
-                         column(6, align = "center",
-                                tags$p(citation),
-                                tags$p(version)
-                         ),
-                         column(3)
-                         
-                       )),
-              
-              
               #Partner With Us tab ----
               tabPanel("Partner With Us",
                        titlePanel(h4("Help us reach our goal to revolutionize spectroscopy.")),
