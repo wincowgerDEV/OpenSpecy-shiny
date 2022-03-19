@@ -510,8 +510,6 @@ ui <- fluidPage(
                                                    "text/comma-separated-values,text/plain",
                                                    ".csv", ".asp", ".spc", ".jdx", ".spa", ".0")),
                                 
-                                tags$br(),
-                                
                                 fluidRow(column(12, downloadButton("download_testdata",
                                                         "Sample File",
                                                         style = "background-color: #2a9fd6;"))),
@@ -619,12 +617,12 @@ ui <- fluidPage(
                          column(6,
                                 plotcontainerfunction(
                                   fluidRow( 
-                                  column(3, 
-                                         h5("Intensity Adjustment"),
+                                  column(4, 
+                                         h5("Intensity"),
                                                                radioButtons("intensity_corr", "",
-                                                                   c("None" = "none", "Transmittance" = "transmittance", "Reflectance" = "reflectance")),
+                                                                   c("Absorbance" = "none", "Transmittance" = "transmittance", "Reflectance" = "reflectance")),
                                   ),
-                                  column(3, 
+                                  column(4, 
                                          h5("Preprocessing"),
                                           
                                          fluidRow(
@@ -694,7 +692,7 @@ ui <- fluidPage(
                                          )
                                         )
                                   ),
-                                  column(3, 
+                                  column(4, 
                                           fluidRow(column(12, h5("Identification"))),
                                           fluidRow(
                                             column(4,
@@ -718,8 +716,8 @@ ui <- fluidPage(
                                            
                                          )
                                            
-                                         ))),
-                                plotcontainerfunction(
+                                         )))),
+                                column(3, 
                                   fluidRow(
                                   column(12,
                                                 conditionalPanel("input.smooth_tools == true & input.smooth_decision == true",
@@ -760,25 +758,24 @@ ui <- fluidPage(
                                                                      step = NA,
                                                                      width = NULL
                                                                    )
-                                                                 )
+                                                                
                                                 )
                                          
                                          )
                                 )
                                 
-                                ),
-                                fluidRow(column(12, 
+                                )
+                                       )),
+                                fluidRow(
+                                  column(3),
+                                  column(9, 
                                                 plotcontainerfunction(h4(id = "placeholder1", "Upload some data to get started..."), 
                                                                       plotlyOutput("MyPlotB")),
                                                                       style = bodyformat()
                                                 )
                                 
-                                  
-                                )
-                                
                                 
                          ),
-                       ),
                        hr(),
                        fluidRow(
                          column(3),
