@@ -525,12 +525,7 @@ ui <- fluidPage(
                          column(6,
                                 plotcontainerfunction(
                                   fluidRow( 
-                                  column(2, 
-                                         h5("Intensity"),
-                                                               radioButtons("intensity_corr", "",
-                                                                   c("Absorbance" = "none", "Transmittance" = "transmittance", "Reflectance" = "reflectance")),
-                                  ),
-                                  column(5, 
+                                  column(6, 
                                          h5("Preprocessing"),
                                          fluidRow(
                                            column(9, prettySwitch(inputId = "active_preprocessing",
@@ -552,6 +547,27 @@ ui <- fluidPage(
                                                                bigger = T)
                                                   )),
                                            conditionalPanel("input.active_preprocessing == true & input.view_preprocessing == true",
+                                                            fluidRow(
+                                                              column(9,
+                                                                     prettySwitch(inputId = "intensity_decision",
+                                                                                  label = "Intensity Adjustment",
+                                                                                  inline = T,
+                                                                                  value = T,
+                                                                                  status = "success",
+                                                                                  fill = T)
+                                                              ),
+                                                              column(3, align = "center",
+                                                                     prettyToggle("intensity_tools",
+                                                                                  icon_on = icon("eye"),
+                                                                                  icon_off = icon("eye-slash"), 
+                                                                                  label_on = NULL, label_off = NULL,
+                                                                                  status_on = "success",
+                                                                                  status_off = "default",
+                                                                                  outline = TRUE,
+                                                                                  plain = TRUE,
+                                                                                  bigger = T),
+                                                              )
+                                                            ),
                                                             fluidRow(
                                                               column(9,
                                                                      prettySwitch(inputId = "smooth_decision",
@@ -624,7 +640,7 @@ ui <- fluidPage(
                                            ),
                                         
                                   ),
-                                  column(5, 
+                                  column(6, 
                                           fluidRow(column(12, h5("Identification"),
                                                           fluidRow(
                                                             column(9,
@@ -675,6 +691,10 @@ ui <- fluidPage(
                                 column(3, 
                                   fluidRow(
                                   column(12,
+                                                conditionalPanel("input.intensity_tools == true & input.intensity_decision == true",
+                                                          plotcontainerfunction(radioButtons("intensity_corr", "Intensity Units",
+                                                               c("Absorbance" = "none", "Transmittance" = "transmittance", "Reflectance" = "reflectance"))),
+                                                ),
                                                 conditionalPanel("input.smooth_tools == true & input.smooth_decision == true",
                                                                  plotcontainerfunction(sliderInput("smoother", "Smoothing Polynomial", min = 0, max = 7, value = 3)
                                                                  )),
