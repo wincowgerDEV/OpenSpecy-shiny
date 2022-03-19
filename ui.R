@@ -515,8 +515,13 @@ ui <- fluidPage(
                                 fluidRow(column(12, downloadButton("download_testdata",
                                                         "Sample File",
                                                         style = "background-color: #2a9fd6;"))),
-                                          downloadButton("downloadData", "Download (recommended)",
-                                                        style = "background-color: #2a9fd6;"),
+                                tags$br(),
+                                
+                                fluidRow(column(12,
+                                           downloadButton("downloadData", "Download Processed (recommended)",
+                                                        style = "background-color: #2a9fd6;")     
+                                         )),
+                                          
                                 
                                 
                                 tags$br(),
@@ -689,7 +694,7 @@ ui <- fluidPage(
                                         )
                                   ),
                                   column(3, plotcontainerfunction(
-                                          fluidRow(column(12, h5("Identification Options"))),
+                                          fluidRow(column(12, h5("Identification"))),
                                           fluidRow(
                                             column(4,
                                                   radioButtons("Spectra", "Type",
@@ -715,8 +720,9 @@ ui <- fluidPage(
                                          )
                                 ),
                                 fluidRow(column(9, 
-                                                plotcontainerfunction(h4(id = "placeholder1", "Upload some data to get started..."), plotlyOutput("MyPlot")),
-                                style = bodyformat(),
+                                                plotcontainerfunction(h4(id = "placeholder1", "Upload some data to get started..."), 
+                                                                      plotlyOutput("MyPlotB")),
+                                                                      style = bodyformat()
                                                 ),
                                 column(3, 
                                        conditionalPanel("input.smooth_tools == true & input.smooth_decision == true",
@@ -778,28 +784,6 @@ ui <- fluidPage(
                        )),
               
               
-              #Preprocess Spectrum Tab ----
-              tabPanel("Preprocess Spectrum", value = "tab2",
-                       titlePanel(h4("Smooth, Baseline Correct, and Download Processed Spectra")),
-                       br(),
-                       fluidRow(column(3),
-
-                         column(9,
-                                plotcontainerfunction(h4(id = "placeholder2", "Upload some data to get started..."), plotlyOutput("MyPlotB")),
-                                #verbatimTextOutput(outputId = "text"),
-                                style = bodyformat()
-                                
-                         )),
-                       hr(),
-                       fluidRow(
-                         column(3),
-                         column(6, align = "center",
-                                tags$p(citation),
-                                tags$p(version)
-                         ),
-                         column(3)
-                         
-                       )),
               
               #Match Spectrum Tab ----
               tabPanel("Identify Spectrum",value = "tab3",
