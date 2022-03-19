@@ -498,30 +498,28 @@ ui <- fluidPage(
                          column(3, style = columnformat(),
                                 tags$label("Choose .csv (preferred), .asp, .jdx, .spc, .spa, or .0 File"),
                                 
-                                prettySwitch("share_decision",
-                                             label = "Share Your Data?",
-                                             inline = T,
-                                             value = T,
-                                             status = "success",
-                                             fill = T),
-                                fileInput("file1", NULL,
-                                          placeholder = ".csv, .asp, .jdx, .spc, .spa, .0",
-                                          accept=c("text/csv",
-                                                   "text/comma-separated-values,text/plain",
-                                                   ".csv", ".asp", ".spc", ".jdx", ".spa", ".0")),
-                                
-                                fluidRow(column(12, downloadButton("download_testdata",
+                                fluidRow(
+                                  column(6, 
+                                         fileInput("file1", NULL,
+                                                   placeholder = ".csv, .asp, .jdx, .spc, .spa, .0",
+                                                   accept=c("text/csv",
+                                                            "text/comma-separated-values,text/plain",
+                                                            ".csv", ".asp", ".spc", ".jdx", ".spa", ".0")),
+                                         prettySwitch("share_decision",
+                                                      label = "Share Your Data?",
+                                                      inline = T,
+                                                      value = T,
+                                                      status = "success",
+                                                      fill = T) 
+                                  ),
+                                  column(6, 
+                                         downloadButton("download_testdata",
                                                         "Sample File",
-                                                        style = "background-color: #2a9fd6;"))),
-                                tags$br(),
-                                
-                                fluidRow(column(12,
-                                           downloadButton("downloadData", "Download Processed (recommended)",
-                                                        style = "background-color: #2a9fd6;")     
-                                         )),
-                                          
-                                
-                                
+                                                        style = "background-color: #2a9fd6;", )
+                                         
+                                  )
+                                ),
+
                                 tags$br(),
                                 
                                 actionButton("share_meta", "Metadata Input", style = "background-color: #2a9fd6;"),
@@ -617,12 +615,12 @@ ui <- fluidPage(
                          column(6,
                                 plotcontainerfunction(
                                   fluidRow( 
-                                  column(4, 
+                                  column(2, 
                                          h5("Intensity"),
                                                                radioButtons("intensity_corr", "",
                                                                    c("Absorbance" = "none", "Transmittance" = "transmittance", "Reflectance" = "reflectance")),
                                   ),
-                                  column(4, 
+                                  column(5, 
                                          h5("Preprocessing"),
                                           
                                          fluidRow(
@@ -690,9 +688,13 @@ ui <- fluidPage(
                                                                bigger = T),
                                            
                                          )
-                                        )
+                                        ),
+                                        fluidRow(column(12,
+                                                        downloadButton("downloadData", "Processed (recommended)",
+                                                                       style = "background-color: #2a9fd6;")     
+                                        ))
                                   ),
-                                  column(4, 
+                                  column(5, 
                                           fluidRow(column(12, h5("Identification"))),
                                           fluidRow(
                                             column(4,
