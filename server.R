@@ -330,8 +330,16 @@ observeEvent(input$reset, {
     if(input$Data == "uploaded") {
       data()
     }
-    else if(input$Data == "processed") {
+    else if(input$Data == "processed" & input$active_preprocessing) {
       baseline_data()
+    }
+    else{
+      show_alert(
+        title = "Impossible task!",
+        text = paste0("We can't search for preprocessed spectra if preprocessing isn't activated","'. ",
+                      "Try again."),
+        type = "warning"
+      )
     }
   })
 

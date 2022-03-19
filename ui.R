@@ -532,23 +532,16 @@ ui <- fluidPage(
                                   ),
                                   column(5, 
                                          h5("Preprocessing"),
-                                         prettySwitch(inputId = "active_preprocessing",
+                                         fluidRow(
+                                           column(9, prettySwitch(inputId = "active_preprocessing",
                                                       label = "Activate",
                                                       inline = T,
                                                       value = F,
                                                       status = "success",
-                                                      fill = T),
-                                         fluidRow(
-                                           column(9,
-                                                  prettySwitch(inputId = "smooth_decision",
-                                                               label = "Smoothing",
-                                                               inline = T,
-                                                               value = T,
-                                                               status = "success",
-                                                               fill = T)
-                                           ),
-                                           column(3, align = "center",
-                                                  prettyToggle("smooth_tools",
+                                                      fill = T)
+                                                  ),
+                                           column(3,
+                                                  prettyToggle("view_preprocessing",
                                                                icon_on = icon("eye"),
                                                                icon_off = icon("eye-slash"), 
                                                                label_on = NULL, label_off = NULL,
@@ -556,68 +549,104 @@ ui <- fluidPage(
                                                                status_off = "default",
                                                                outline = TRUE,
                                                                plain = TRUE,
-                                                               bigger = T),
-                                           )
-                                         ),
-                                         
-                                         fluidRow(
-                                           column(9,
-                                                  prettySwitch("baseline_decision",
-                                                               label = "Baseline Correction",
-                                                               inline = T,
-                                                               value = T,
-                                                               status = "success",
-                                                               fill = T),
-                                                  
+                                                               bigger = T)
+                                                  )),
+                                           conditionalPanel("input.active_preprocessing == true & input.view_preprocessing == true",
+                                                            fluidRow(
+                                                              column(9,
+                                                                     prettySwitch(inputId = "smooth_decision",
+                                                                                  label = "Smoothing",
+                                                                                  inline = T,
+                                                                                  value = T,
+                                                                                  status = "success",
+                                                                                  fill = T)
+                                                              ),
+                                                              column(3, align = "center",
+                                                                     prettyToggle("smooth_tools",
+                                                                                  icon_on = icon("eye"),
+                                                                                  icon_off = icon("eye-slash"), 
+                                                                                  label_on = NULL, label_off = NULL,
+                                                                                  status_on = "success",
+                                                                                  status_off = "default",
+                                                                                  outline = TRUE,
+                                                                                  plain = TRUE,
+                                                                                  bigger = T),
+                                                              )
+                                                            ),
+                                                            fluidRow(
+                                                              column(9,
+                                                                     prettySwitch("baseline_decision",
+                                                                                  label = "Baseline Correction",
+                                                                                  inline = T,
+                                                                                  value = T,
+                                                                                  status = "success",
+                                                                                  fill = T),
+                                                                     
+                                                              ),
+                                                              column(3, align = "center",
+                                                                     prettyToggle("baseline_tools",
+                                                                                  icon_on = icon("eye"),
+                                                                                  icon_off = icon("eye-slash"), 
+                                                                                  label_on = NULL, label_off = NULL,
+                                                                                  status_on = "success",
+                                                                                  status_off = "default",
+                                                                                  outline = TRUE,
+                                                                                  plain = TRUE,
+                                                                                  bigger = T),
+                                                              )
+                                                            ),
+                                                            fluidRow(
+                                                              column(9,
+                                                                     prettySwitch("range_decision",
+                                                                                  label = "Range Selection",
+                                                                                  inline = T,
+                                                                                  value = T,
+                                                                                  status = "success",
+                                                                                  fill = T)
+                                                              ),
+                                                              column(3, align = "center",
+                                                                     prettyToggle("range_tools",
+                                                                                  icon_on = icon("eye"),
+                                                                                  icon_off = icon("eye-slash"), 
+                                                                                  label_on = NULL, label_off = NULL,
+                                                                                  status_on = "success",
+                                                                                  status_off = "default",
+                                                                                  outline = TRUE,
+                                                                                  plain = TRUE,
+                                                                                  bigger = T),
+                                                                     
+                                                              )
+                                                            ),
+                                                            fluidRow(column(12,
+                                                                            downloadButton("downloadData", "Processed (recommended)",
+                                                                                           style = "background-color: #2a9fd6;")     
+                                                            ))
                                            ),
-                                           column(3, align = "center",
-                                                  prettyToggle("baseline_tools",
-                                                               icon_on = icon("eye"),
-                                                               icon_off = icon("eye-slash"), 
-                                                               label_on = NULL, label_off = NULL,
-                                                               status_on = "success",
-                                                               status_off = "default",
-                                                               outline = TRUE,
-                                                               plain = TRUE,
-                                                               bigger = T),
-                                           )
-                                         ),
-                                         fluidRow(
-                                           column(9,
-                                                  prettySwitch("range_decision",
-                                                               label = "Range Selection",
-                                                               inline = T,
-                                                               value = T,
-                                                               status = "success",
-                                                               fill = T)
-                                           ),
-                                           column(3, align = "center",
-                                                  prettyToggle("range_tools",
-                                                               icon_on = icon("eye"),
-                                                               icon_off = icon("eye-slash"), 
-                                                               label_on = NULL, label_off = NULL,
-                                                               status_on = "success",
-                                                               status_off = "default",
-                                                               outline = TRUE,
-                                                               plain = TRUE,
-                                                               bigger = T),
-                                           
-                                         )
-                                        ),
-                                        fluidRow(column(12,
-                                                        downloadButton("downloadData", "Processed (recommended)",
-                                                                       style = "background-color: #2a9fd6;")     
-                                        ))
+                                        
                                   ),
                                   column(5, 
                                           fluidRow(column(12, h5("Identification"),
-                                                          prettySwitch(inputId = "active_identification",
+                                                          fluidRow(
+                                                            column(9,
+                                                                   prettySwitch(inputId = "active_identification",
                                                                        label = "Activate",
                                                                        inline = T,
                                                                        value = F,
                                                                        status = "success",
-                                                                       fill = T))),
-                                          fluidRow(
+                                                                       fill = T)),
+                                                            column(3, 
+                                                                   prettyToggle("view_identification",
+                                                                                icon_on = icon("eye"),
+                                                                                icon_off = icon("eye-slash"), 
+                                                                                label_on = NULL, label_off = NULL,
+                                                                                status_on = "success",
+                                                                                status_off = "default",
+                                                                                outline = TRUE,
+                                                                                plain = TRUE,
+                                                                                bigger = T)
+                                                                   )))),
+                                         conditionalPanel("input.active_identification == true & input.view_identification == true",
+                                                        fluidRow(
                                             column(4,
                                                   radioButtons("Spectra", "Type",
                                                                c("Raman" = "raman",
@@ -637,7 +666,10 @@ ui <- fluidPage(
                                          
                                           )
                                            
+                                         )  
+                                                          
                                          )
+                                          
                                            
                                          )))),
                                 column(3, 
