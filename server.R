@@ -108,6 +108,28 @@ load_data <- function() {
   invisible(list2env(as.list(environment()), parent.frame()))
 }
 
+clean_spec <- function(x, y){
+  #abs(
+  c(
+    #scale( 
+    #signal::sgolayfilt(
+    approx(x = x, y = y, xout = seq(round_up(min(x), 5), round_down(max(x), 5), by = 5))$y#,
+    #p = 3, n = 11, m = 1
+    #      )
+    #) 
+    #  )
+  )
+}
+
+#Round Down
+round_down <- function(x, b){
+  x - x %% b
+}
+#Round Up
+round_up <- function(x, b){
+  x + b - x %% b  
+}
+
 # This is the actual server functions, all functions before this point are not
 # reactive
 server <- shinyServer(function(input, output, session) {
@@ -256,7 +278,7 @@ server <- shinyServer(function(input, output, session) {
   # Corrects spectral intensity units using the user specified correction
   data <- reactive({
     req(preprocessed_data())
-    adj_intens(preprocessed_data(), type = input$intensity_corr)
+    adj_intens(data.table(wavenumber = seq(round_up(min(preprocessed_data()$wavenumber), 5), round_down(max(preprocessed_data()$wavenumber), 5), by = 5), intensity = clean_spec(preprocessed_data()$wavenumber, preprocessed_data()$intensity)), type = input$intensity_corr)  # j is not limited to just aggregations also expansions
     })
 
   #Preprocess Spectra ----
