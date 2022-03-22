@@ -665,18 +665,19 @@ ui <- fluidPage(
                                                         fluidRow(
                                             column(4,
                                                   radioButtons("Spectra", "Type",
-                                                               c("Raman" = "raman",
+                                                               c("Both" = "both",
+                                                                 "Raman" = "raman",
                                                                  "FTIR" = "ftir"))
                                            ),
                                            column(4,
                                                   radioButtons("Data", "Analysis",
-                                                               c("Processed" = "processed",
+                                                               c("Open Specy Auto" = "os_auto" , "Processed" = "processed",
                                                                  "Uploaded" = "uploaded"
                                                                ))
                                            ),
                                            column(4,
                                                   radioButtons("Library", "Region",
-                                                               c("Full" = "full",
+                                                               c("Open Specy Auto" = "os_auto", "Full" = "full",
                                                                  "Peaks" = "peaks"))
                                                   
                                          
