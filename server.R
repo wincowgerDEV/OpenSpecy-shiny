@@ -94,8 +94,8 @@ load_data <- function() {
 
   if(any(test_lib == "warning")) get_lib(path = conf$library_path)
 
-  spec_lib <- load("data/library.RData")
-  spec_metadata <- load("data/metadata.RData")
+  load("data/library.RData")
+  load("data/metadata.RData")
   
   if(droptoken) {
     drop_auth(rdstoken = "data/droptoken.rds")
@@ -351,10 +351,14 @@ observeEvent(input$reset, {
   # Choose which spectrum to use
   DataR <- reactive({
     if(input$Data == "uploaded") {
-      data()
+      data() %>% 
+        right_join(data.table(wavenumber = seq(405, 3995, by = 5))) %>%
+        pull(intensity)
     }
     else if(input$Data == "processed" & input$active_preprocessing) {
-      baseline_data()
+      baseline_data() %>% 
+        right_join(data.table(wavenumber = seq(405, 3995, by = 5))) %>%
+        pull(intensity)
     }
     else{
       show_alert(
@@ -368,22 +372,24 @@ observeEvent(input$reset, {
 
   match_selected <- reactive({# Default to first row if not yet clicked
     if(!length(input$event_rows_selected) | !input$active_identification) {
-    data.table(wavenumber = numeric(), intensity = numeric(), spectrum_identity = factor())
+    data.table(wavenumber = numeric(), 
+               intensity = numeric(), 
+               SpectrumIdentity = factor())
       }
       else{
         id_select <- ifelse(is.null(input$event_rows_selected),
                       1,
-                      MatchSpectra()[[input$event_rows_selected,
+                      meta[[input$event_rows_selected,
                                       "sample_name"]])
     # Get data from find_spec
-    current_spectrum <- find_spec(sample_name == id_select,
-                                  spec_lib, which = input$Spectra,
-                                  type = input$Library)
+    current_spectrum <- data.table(wavenumber = seq(405, 3995, by = 5), 
+                                   intensity = library[[id_select]], 
+                                   sample_name = id_select)
   
     current_spectrum %>%
-      inner_join(MatchSpectra()[input$event_rows_selected,,drop = FALSE],
-                 by = "sample_name") %>%
-      select(wavenumber, intensity, spectrum_identity)
+      inner_join(meta, by = "sample_name") %>%
+      select(wavenumber, intensity, SpectrumIdentity) %>%
+      mutate(intensity = make_rel(intensity, na.rm = T))
       }
     
   
@@ -398,9 +404,10 @@ observeEvent(input$reset, {
 
       incProgress(1/3, detail = "Finding Match")
 
-      Lib <- match_spec(DataR(),
-                        library = spec_lib, which = input$Spectra,
-                        type = input$Library, top_n = 100)
+      correlations <- cor(DataR(),library, use = "pairwise.complete.obs")
+      
+      Lib <- left_join(meta, data.table(sample_name = colnames(correlations), rsq = round(correlations[1,], 2))) 
+      
 
       incProgress(1/3, detail = "Making Plot")
 
@@ -411,10 +418,9 @@ observeEvent(input$reset, {
   # Create the data tables
   output$event <- DT::renderDataTable({
     datatable(MatchSpectra() %>%
-                dplyr::rename("Material" = spectrum_identity) %>%
-                dplyr::select(-sample_name) %>%
-                dplyr::rename("Pearson's r" = rsq,
-                              "Organization" = organization),
+                dplyr::rename("Material" = SpectrumIdentity) %>%
+                dplyr::rename("Pearson's r" = rsq) %>%
+                dplyr::select(Material, `Pearson's r`),
               options = list(searchHighlight = TRUE,
                              sDom  = '<"top">lrt<"bottom">ip',
                              lengthChange = FALSE, pageLength = 5),
@@ -428,12 +434,10 @@ observeEvent(input$reset, {
     # Default to first row if not yet clicked
     id_select <- ifelse(is.null(input$event_rows_selected),
                         1,
-                        MatchSpectra()[[input$event_rows_selected,
-                                        "sample_name"]])
+                        input$event_rows_selected)
     # Get data from find_spec
-    current_meta <- find_spec(sample_name == id_select, spec_lib,
-                              which = input$Spectra)
-    names(current_meta) <- namekey[names(current_meta)]
+    current_meta <- MatchSpectra()[input$event_rows_selected,]
+    #names(current_meta) <- namekey[names(current_meta)]
 
     datatable(current_meta,
               escape = FALSE, rownames = F,
@@ -447,7 +451,7 @@ observeEvent(input$reset, {
   output$MyPlotC <- renderPlotly({
       plot_ly(type = 'scatter', mode = 'lines', source = "B") %>%
         add_trace(data = match_selected(), x = ~wavenumber, y = ~intensity,
-                  color = ~factor(spectrum_identity), colors = "#FF0000") %>%
+                  color = ~factor(SpectrumIdentity), colors = "#FF0000") %>%
         add_trace(data = baseline_data(), x = ~wavenumber, y = ~intensity,
                   name = 'Processed Spectrum',
                   line = list(color = 'rgb(240,19,207)')) %>%

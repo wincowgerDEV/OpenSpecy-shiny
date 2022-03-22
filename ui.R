@@ -671,8 +671,10 @@ ui <- fluidPage(
                                            ),
                                            column(4,
                                                   radioButtons("Data", "Analysis",
-                                                               c("Open Specy Auto" = "os_auto" , "Processed" = "processed",
-                                                                 "Uploaded" = "uploaded"
+                                                               c("Uploaded" = "uploaded", 
+                                                                 "Open Specy Auto" = "os_auto" , 
+                                                                 "Processed" = "processed"
+                                                                 
                                                                ))
                                            ),
                                            column(4,
