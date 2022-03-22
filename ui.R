@@ -691,14 +691,14 @@ ui <- fluidPage(
                                 column(3, 
                                   fluidRow(
                                   column(12,
-                                                conditionalPanel("input.intensity_tools == true & input.intensity_decision == true",
+                                                conditionalPanel("input.intensity_tools == true & input.intensity_decision == true  & input.active_preprocessing == true",
                                                           plotcontainerfunction(radioButtons("intensity_corr", "Intensity Units",
                                                                c("Absorbance" = "none", "Transmittance" = "transmittance", "Reflectance" = "reflectance"))),
                                                 ),
-                                                conditionalPanel("input.smooth_tools == true & input.smooth_decision == true",
+                                                conditionalPanel("input.smooth_tools == true & input.smooth_decision == true & input.active_preprocessing == true",
                                                                  plotcontainerfunction(sliderInput("smoother", "Smoothing Polynomial", min = 0, max = 7, value = 3)
                                                                  )),
-                                                conditionalPanel("input.baseline_tools == true & input.baseline_decision == true",
+                                                conditionalPanel("input.baseline_tools == true & input.baseline_decision == true & input.active_preprocessing == true",
                                                                  plotcontainerfunction(
                                                                    selectInput(inputId = "baseline_selection", label = "Baseline Correction Technique", choices = c("Polynomial", "Manual")),
                                                                    sliderInput("baseline", "Baseline Correction Polynomial", min = 1, max = 20, value = 8),
@@ -713,7 +713,7 @@ ui <- fluidPage(
                                                                  )
                                                                  
                                                 ),
-                                                conditionalPanel("input.range_tools == true & input.range_decision == true",
+                                                conditionalPanel("input.range_tools == true & input.range_decision == true & input.active_preprocessing == true",
                                                                  plotcontainerfunction(
                                                                    numericInput(
                                                                      "MaxRange",

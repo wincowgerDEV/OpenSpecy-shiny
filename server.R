@@ -94,8 +94,9 @@ load_data <- function() {
 
   if(any(test_lib == "warning")) get_lib(path = conf$library_path)
 
-  spec_lib <- load_lib(path = conf$library_path)
-
+  spec_lib <- load("data/library.RData")
+  spec_metadata <- load("data/metadata.RData")
+  
   if(droptoken) {
     drop_auth(rdstoken = "data/droptoken.rds")
   }
