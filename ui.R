@@ -672,14 +672,15 @@ ui <- fluidPage(
                                            column(4,
                                                   radioButtons("Data", "Analysis",
                                                                c("Uploaded" = "uploaded", 
-                                                                 "Open Specy Auto" = "os_auto" , 
+                                                                 "Derivative" = "derivative" , 
                                                                  "Processed" = "processed"
                                                                  
                                                                ))
                                            ),
                                            column(4,
                                                   radioButtons("Library", "Region",
-                                                               c("Open Specy Auto" = "os_auto", "Full" = "full",
+                                                               c("Derivative" = "derivative", 
+                                                                 "Full" = "full",
                                                                  "Peaks" = "peaks"))
                                                   
                                          

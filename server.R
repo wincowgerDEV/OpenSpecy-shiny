@@ -94,8 +94,6 @@ load_data <- function() {
 
   if(any(test_lib == "warning")) get_lib(path = conf$library_path)
 
-  load("data/library.RData")
-  load("data/metadata.RData")
   
   if(droptoken) {
     drop_auth(rdstoken = "data/droptoken.rds")
@@ -121,6 +119,38 @@ clean_spec <- function(x, y){
   )
 }
 
+is_empty <- function(x, first.only = TRUE, all.na.empty = TRUE) {
+  # do we have a valid vector?
+  if (!is.null(x)) {
+    # if it's a character, check if we have only one element in that vector
+    if (is.character(x)) {
+      # characters may also be of length 0
+      if (length(x) == 0) return(TRUE)
+      # else, check all elements of x
+      zero_len <- nchar(x) == 0
+      # return result for multiple elements of character vector
+      if (first.only) {
+        zero_len <- .is_true(zero_len[1])
+        if (length(x) > 0) x <- x[1]
+      } else {
+        return(unname(zero_len))
+      }
+      # we have a non-character vector here. check for length
+    } else if (is.list(x)) {
+      x <- purrr::compact(x)
+      zero_len <- length(x) == 0
+    } else {
+      zero_len <- length(x) == 0
+    }
+  }
+  
+  any(is.null(x) || zero_len || (all.na.empty && all(is.na(x))))
+}
+
+.is_true <- function(x) {
+  is.logical(x) && length(x) == 1L && !is.na(x) && x
+}
+
 #Round Down
 round_down <- function(x, b){
   x - x %% b
@@ -128,6 +158,36 @@ round_down <- function(x, b){
 #Round Up
 round_up <- function(x, b){
   x + b - x %% b  
+}
+
+process_cor_os <- function(x){
+  abs(
+    c(
+      scale( 
+        signal::sgolayfilt(x,
+                           #approx(x = x, y = y, xout = seq(round_up(min(x), 5), round_down(max(x), 5), by = 5))$y#,
+                           p = 3, n = 11, m = 1
+        )
+      ) 
+    )
+  )
+}
+
+process_cor_os_peaks <- function(x){
+  spectra <- abs(
+    c(
+      scale( 
+        signal::sgolayfilt(x,
+                           #approx(x = x, y = y, xout = seq(round_up(min(x), 5), round_down(max(x), 5), by = 5))$y#,
+                           p = 3, n = 11, m = 1
+        )
+      ) 
+    )
+  ) 
+  
+  spectra[spectra < 0.1] <- NA
+  
+  spectra
 }
 
 # This is the actual server functions, all functions before this point are not
@@ -360,6 +420,18 @@ observeEvent(input$reset, {
         right_join(data.table(wavenumber = seq(405, 3995, by = 5))) %>%
         pull(intensity)
     }
+    else if(input$Data == "derivative" & input$active_preprocessing) {
+      baseline_data() %>% 
+        mutate(intensity = process_cor_os(intensity)) %>%
+        right_join(data.table(wavenumber = seq(405, 3995, by = 5))) %>%
+        pull(intensity)
+    }
+    else if(input$Data == "derivative" & !input$active_preprocessing) {
+      data() %>% 
+        mutate(intensity = process_cor_os(intensity)) %>%
+        right_join(data.table(wavenumber = seq(405, 3995, by = 5))) %>%
+        pull(intensity)
+    }
     else{
       show_alert(
         title = "Impossible task!",
@@ -367,6 +439,36 @@ observeEvent(input$reset, {
                       "Try again."),
         type = "warning"
       )
+    }
+  })
+  
+  libraryR_type <- reactive({
+    req(input$active_identification)
+    if(input$Spectra == "both") {
+      library
+    }
+    else if (input$Spectra == "ftir"){
+      cols <- meta %>% dplyr::filter(SpectrumType == "FTIR") %>% pull(sample_name)
+      library[, ..cols] 
+    }
+    else if (input$Spectra == "raman"){
+      cols <- meta %>% dplyr::filter(SpectrumType == "Raman") %>% pull(sample_name)
+      library[, ..cols] 
+    }
+  })
+  
+  libraryR <- reactive({
+    req(input$active_identification)
+    load("data/library.RData") #Nest these in here so that they don't load automatically unless needed. 
+    load("data/metadata.RData") #Can make a few different options of these that can be loaded when needed and overwrite the existing file. 
+    if(input$Library == "full") {
+      libraryR_type()
+    }
+    else if (input$Library == "derivative"){
+      libraryR_type()[, lapply(.SD, process_cor_os)] 
+    }
+    else if (input$Library == "peaks"){
+      libraryR_type()[, lapply(.SD, process_cor_os_peaks)] 
     }
   })
 
@@ -379,7 +481,7 @@ observeEvent(input$reset, {
       else{
         id_select <- ifelse(is.null(input$event_rows_selected),
                       1,
-                      meta[[input$event_rows_selected,
+                      MatchSpectra()[[input$event_rows_selected,
                                       "sample_name"]])
     # Get data from find_spec
     current_spectrum <- data.table(wavenumber = seq(405, 3995, by = 5), 
@@ -403,10 +505,12 @@ observeEvent(input$reset, {
     withProgress(message = 'Analyzing Spectrum', value = 1/3, {
 
       incProgress(1/3, detail = "Finding Match")
-
-      correlations <- cor(DataR(),library, use = "pairwise.complete.obs")
       
-      Lib <- left_join(meta, data.table(sample_name = colnames(correlations), rsq = round(correlations[1,], 2))) 
+
+      correlations <- cor(DataR(),libraryR(), use = "pairwise.complete.obs")
+      
+      Lib <- left_join(meta, data.table(sample_name = colnames(correlations), rsq = round(correlations[1,], 2))) %>%
+        arrange(desc(rsq))
       
 
       incProgress(1/3, detail = "Making Plot")
@@ -422,10 +526,13 @@ observeEvent(input$reset, {
                 dplyr::rename("Pearson's r" = rsq) %>%
                 dplyr::select(Material, `Pearson's r`),
               options = list(searchHighlight = TRUE,
+                             scrollX = TRUE,
                              sDom  = '<"top">lrt<"bottom">ip',
                              lengthChange = FALSE, pageLength = 5),
+              rownames = FALSE,
               filter = "top", caption = "Selectable Matches",
               style = "bootstrap",
+              
               selection = list(mode = "single", selected = c(1)))
   })
 
@@ -436,13 +543,17 @@ observeEvent(input$reset, {
                         1,
                         input$event_rows_selected)
     # Get data from find_spec
-    current_meta <- MatchSpectra()[input$event_rows_selected,]
+    current_meta <- MatchSpectra()[input$event_rows_selected,] %>%
+      select(where(~!any(is_empty(.))))
     #names(current_meta) <- namekey[names(current_meta)]
 
     datatable(current_meta,
-              escape = FALSE, rownames = F,
-              options = list(dom = 't', bSort = F, lengthChange = FALSE,
-                             rownames = FALSE, info = FALSE),
+              escape = FALSE,
+              options = list(dom = 't', bSort = F, 
+                             scrollX = TRUE,
+                             lengthChange = FALSE,
+                             info = FALSE),
+              rownames = FALSE,
               style = 'bootstrap', caption = "Selection Metadata",
               selection = list(mode = 'none'))
   })
@@ -451,7 +562,8 @@ observeEvent(input$reset, {
   output$MyPlotC <- renderPlotly({
       plot_ly(type = 'scatter', mode = 'lines', source = "B") %>%
         add_trace(data = match_selected(), x = ~wavenumber, y = ~intensity,
-                  color = ~factor(SpectrumIdentity), colors = "#FF0000") %>%
+                  name = 'Selected Match',
+                  line = list(color = 'rgb(255,255,255)')) %>%
         add_trace(data = baseline_data(), x = ~wavenumber, y = ~intensity,
                   name = 'Processed Spectrum',
                   line = list(color = 'rgb(240,19,207)')) %>%
