@@ -101,9 +101,24 @@ load_data <- function() {
 
   # Name keys for human readable column names
   load("data/namekey.RData")
+  load("data/metadata.RData") #Can make a few different options of these that can be loaded when needed and overwrite the existing file. 
+  
 
   # Inject variables into the parent environment
   invisible(list2env(as.list(environment()), parent.frame()))
+}
+
+process_cor_os <- function(x){
+  abs(
+    c(
+      scale( 
+        signal::sgolayfilt(x,
+                           #approx(x = x, y = y, xout = seq(round_up(min(x), 5), round_down(max(x), 5), by = 5))$y#,
+                           p = 3, n = 11, m = 1
+        )
+      ) 
+    )
+  )
 }
 
 clean_spec <- function(x, y){
@@ -160,35 +175,7 @@ round_up <- function(x, b){
   x + b - x %% b  
 }
 
-process_cor_os <- function(x){
-  abs(
-    c(
-      scale( 
-        signal::sgolayfilt(x,
-                           #approx(x = x, y = y, xout = seq(round_up(min(x), 5), round_down(max(x), 5), by = 5))$y#,
-                           p = 3, n = 11, m = 1
-        )
-      ) 
-    )
-  )
-}
 
-process_cor_os_peaks <- function(x){
-  spectra <- abs(
-    c(
-      scale( 
-        signal::sgolayfilt(x,
-                           #approx(x = x, y = y, xout = seq(round_up(min(x), 5), round_down(max(x), 5), by = 5))$y#,
-                           p = 3, n = 11, m = 1
-        )
-      ) 
-    )
-  ) 
-  
-  spectra[spectra < 0.1] <- NA
-  
-  spectra
-}
 
 # This is the actual server functions, all functions before this point are not
 # reactive
@@ -432,7 +419,7 @@ observeEvent(input$reset, {
         right_join(data.table(wavenumber = seq(405, 3995, by = 5))) %>%
         pull(intensity)
     }
-    else{
+    else{ #Should change this to just forcing that this option isn't selectable. 
       show_alert(
         title = "Impossible task!",
         text = paste0("We can't search for preprocessed spectra if preprocessing isn't activated","'. ",
@@ -442,8 +429,18 @@ observeEvent(input$reset, {
     }
   })
   
-  libraryR_type <- reactive({
+  libraryR <- reactive({
+    req(input$file1)
     req(input$active_identification)
+    if(input$Library == "full") {
+      load("data/library.RData") #Nest these in here so that they don't load automatically unless needed. 
+    }
+    else if (input$Library == "derivative"){
+      load("data/library_deriv.RData") #Nest these in here so that they don't load automatically unless needed. 
+    }
+    else if (input$Library == "peaks"){
+      load("data/library_peaks.RData") #Nest these in here so that they don't load automatically unless needed. 
+    }
     if(input$Spectra == "both") {
       library
     }
@@ -457,21 +454,6 @@ observeEvent(input$reset, {
     }
   })
   
-  libraryR <- reactive({
-    req(input$active_identification)
-    load("data/library.RData") #Nest these in here so that they don't load automatically unless needed. 
-    load("data/metadata.RData") #Can make a few different options of these that can be loaded when needed and overwrite the existing file. 
-    if(input$Library == "full") {
-      libraryR_type()
-    }
-    else if (input$Library == "derivative"){
-      libraryR_type()[, lapply(.SD, process_cor_os)] 
-    }
-    else if (input$Library == "peaks"){
-      libraryR_type()[, lapply(.SD, process_cor_os_peaks)] 
-    }
-  })
-
   match_selected <- reactive({# Default to first row if not yet clicked
     if(!length(input$event_rows_selected) | !input$active_identification) {
     data.table(wavenumber = numeric(), 
@@ -485,7 +467,7 @@ observeEvent(input$reset, {
                                       "sample_name"]])
     # Get data from find_spec
     current_spectrum <- data.table(wavenumber = seq(405, 3995, by = 5), 
-                                   intensity = library[[id_select]], 
+                                   intensity = libraryR()[[id_select]], 
                                    sample_name = id_select)
   
     current_spectrum %>%
@@ -500,6 +482,7 @@ observeEvent(input$reset, {
   # Identify Spectra function ----
   # Joins their spectrum to the internal database and computes correlation.
   MatchSpectra <- reactive ({
+    req(input$file1)
     req(input$active_identification)
     input
     withProgress(message = 'Analyzing Spectrum', value = 1/3, {

@@ -250,7 +250,7 @@ ui <- fluidPage(
                        ),
                        bsPopover(
                          id = "Library",
-                         title = "Region to Match Help",
+                         title = "Library to Match Help",
                          content = "This selection will determine whether the library you are matching to consists of the full spectrum or only spectrum peaks.",
                          placement = "bottom",
                          trigger = "hover"
@@ -663,27 +663,37 @@ ui <- fluidPage(
                                                                    )))),
                                          conditionalPanel("input.active_identification == true & input.view_identification == true",
                                                         fluidRow(
-                                            column(4,
-                                                  radioButtons("Spectra", "Type",
-                                                               c("Both" = "both",
-                                                                 "Raman" = "raman",
-                                                                 "FTIR" = "ftir"))
-                                           ),
-                                           column(4,
-                                                  radioButtons("Data", "Analysis",
-                                                               c("Uploaded" = "uploaded", 
-                                                                 "Derivative" = "derivative" , 
+                                             column(3,
+                                                  radioButtons("Data", "Spectrum Trans",
+                                                               c("Derivative" = "derivative" ,
+                                                                 "Uploaded" = "uploaded",
                                                                  "Processed" = "processed"
                                                                  
                                                                ))
                                            ),
-                                           column(4,
-                                                  radioButtons("Library", "Region",
+                                           column(3,
+                                                  radioButtons("Spectra", "Library Type",
+                                                               c("Both" = "both",
+                                                                 "Raman" = "raman",
+                                                                 "FTIR" = "ftir"))
+                                           ),
+                                          
+                                           column(3,
+                                                  radioButtons("Library", "Library Trans",
                                                                c("Derivative" = "derivative", 
                                                                  "Full" = "full",
                                                                  "Peaks" = "peaks"))
                                                   
                                          
+                                          ), 
+                                          column(3,
+                                                 radioButtons("id_level", "Identity Level",
+                                                              c("Deep (raw)" = "deep", 
+                                                                "Plastic Pollution (optimal)" = "pp_optimal",
+                                                                "Plastic Pollution groups" = "pp_groups",
+                                                                "Plastic or Not" = "plastic_not"))
+                                                 
+                                                 
                                           )
                                            
                                          )  
