@@ -507,7 +507,7 @@ observeEvent(input$reset, {
     datatable(MatchSpectra() %>%
                 dplyr::rename("Material" = SpectrumIdentity) %>%
                 dplyr::rename("Pearson's r" = rsq) %>%
-                dplyr::select(Material, `Pearson's r`),
+                dplyr::select(if(input$id_level == "deep"){"Material"} else if(input$id_level == "pp_optimal"){"polymer"}, `Pearson's r`),
               options = list(searchHighlight = TRUE,
                              scrollX = TRUE,
                              sDom  = '<"top">lrt<"bottom">ip',
