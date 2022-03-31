@@ -499,7 +499,7 @@ ui <- fluidPage(
                                 tags$label("Choose .csv (preferred), .asp, .jdx, .spc, .spa, or .0 File"),
                                 
                                 fluidRow(
-                                  column(6, 
+                                  column(12, 
                                          fileInput("file1", NULL,
                                                    placeholder = ".csv, .asp, .jdx, .spc, .spa, .0",
                                                    accept=c("text/csv",
@@ -510,15 +510,41 @@ ui <- fluidPage(
                                                       inline = T,
                                                       value = T,
                                                       status = "success",
-                                                      fill = T) 
-                                  ),
-                                  column(6, 
-                                         downloadButton("download_testdata",
-                                                        "Sample File",
-                                                        style = "background-color: #2a9fd6;", )
-                                         
+                                                      fill = T),
+                                         plotcontainerfunction(
+                                           fluidRow(
+                                             column(12, 
+                                             h6("Downloads"),
+                                             fluidRow(
+                                               column(3, 
+                                                  downloadButton("download_testdata",
+                                                                 "Sample",
+                                                                 style = "background-color: #2a9fd6;")
+                                                  
+                                           ),
+                                           column(3, 
+                                                  downloadButton("downloadData", "Processed",
+                                                                 style = "background-color: #2a9fd6;") 
+                                                  
+                                           ),
+                                           column(3, 
+                                                  downloadButton("download_matched", "Matched",
+                                                                 style = "background-color: #2a9fd6;") #Make colors align with the plot, Make only appear if on plot.
+                                                  
+                                           ),
+                                           column(3, 
+                                                  downloadButton("download_selected", "Selected",
+                                                                 style = "background-color: #2a9fd6;") #Make colors align with the plot
+                                                  
+                                           )
+                                             )
+                                           
+                                         )
+                                         )
+                                         )
                                   )
                                 )
+                                
                          ),
                          
                          
@@ -632,11 +658,7 @@ ui <- fluidPage(
                                                                                   bigger = T),
                                                                      
                                                               )
-                                                            ),
-                                                            fluidRow(column(12,
-                                                                            downloadButton("downloadData", "Processed (recommended)",
-                                                                                           style = "background-color: #2a9fd6;")     
-                                                            ))
+                                                            )
                                            ),
                                         
                                   ),

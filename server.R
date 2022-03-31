@@ -397,7 +397,7 @@ observeEvent(input$reset, {
 
   # Choose which spectrum to use
   DataR <- reactive({
-    if(input$Data == "uploaded") {
+      if(input$Data == "uploaded") {
       data() %>% 
         right_join(data.table(wavenumber = seq(405, 3995, by = 5))) %>%
         pull(intensity)
@@ -427,6 +427,21 @@ observeEvent(input$reset, {
         type = "warning"
       )
     }
+    
+  })
+  
+  DataR_plot <- reactive({
+    if(!input$active_identification) {
+      data.table(wavenumber = numeric(), 
+                 intensity = numeric(), 
+                 SpectrumIdentity = factor())    }
+    else{
+      data.table(wavenumber = seq(405, 3995, by = 5),
+                 intensity = make_rel(DataR(), na.rm = T),
+                 SpectrumIdentity = factor()) %>%
+        dplyr::filter(!is.na(intensity))
+    }
+    
   })
   
   libraryR <- reactive({
@@ -473,7 +488,8 @@ observeEvent(input$reset, {
     current_spectrum %>%
       inner_join(meta, by = "sample_name") %>%
       select(wavenumber, intensity, SpectrumIdentity) %>%
-      mutate(intensity = make_rel(intensity, na.rm = T))
+      mutate(intensity = make_rel(intensity, na.rm = T)) %>%
+      dplyr::filter(!is.na(intensity))
       }
     
   
@@ -544,6 +560,9 @@ observeEvent(input$reset, {
   # Display matches based on table selection ----
   output$MyPlotC <- renderPlotly({
       plot_ly(type = 'scatter', mode = 'lines', source = "B") %>%
+        add_trace(data = DataR_plot(), x = ~wavenumber, y = ~intensity,
+                  name = 'Matched Spectrum',
+                  line = list(color = 'rgb(125,249,255)')) %>%
         add_trace(data = match_selected(), x = ~wavenumber, y = ~intensity,
                   name = 'Selected Match',
                   line = list(color = 'rgb(255,255,255)')) %>%
@@ -593,10 +612,21 @@ observeEvent(input$reset, {
 
   ## Download own data ----
   output$downloadData <- downloadHandler(
-    filename = function() {paste('data-', human_ts(), '.csv', sep='')},
+    filename = function() {paste('data-processed-', human_ts(), '.csv', sep='')},
     content = function(file) {fwrite(baseline_data(), file)}
   )
+  
+  ## Download selected data ----
+  output$download_selected <- downloadHandler(
+    filename = function() {paste('data-selected-', human_ts(), '.csv', sep='')},
+    content = function(file) {fwrite(match_selected(), file)}
+  )
 
+  ## Download matched data ----
+  output$download_matched <- downloadHandler(
+    filename = function() {paste('data-matched-', human_ts(), '.csv', sep='')},
+    content = function(file) {fwrite(DataR_plot(), file)}
+  )
   ## Sharing data ----
   # Hide functions which shouldn't exist when there is no internet or
   # when the API token doesn't exist
