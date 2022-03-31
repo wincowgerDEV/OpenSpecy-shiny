@@ -511,37 +511,42 @@ ui <- fluidPage(
                                                       value = T,
                                                       status = "success",
                                                       fill = T),
+                                                          
                                          plotcontainerfunction(
                                            fluidRow(
                                              column(12, 
                                              h6("Downloads"),
                                              fluidRow(
-                                               column(3, 
-                                                  downloadButton("download_testdata",
+                                               column(6, 
+                                                 downloadButton("download_testdata",
                                                                  "Sample",
-                                                                 style = "background-color: #2a9fd6;")
-                                                  
-                                           ),
-                                           column(3, 
-                                                  downloadButton("downloadData", "Processed",
-                                                                 style = "background-color: #2a9fd6;") 
-                                                  
-                                           ),
-                                           column(3, 
-                                                  downloadButton("download_matched", "Matched",
-                                                                 style = "background-color: #2a9fd6;") #Make colors align with the plot, Make only appear if on plot.
-                                                  
-                                           ),
-                                           column(3, 
-                                                  downloadButton("download_selected", "Selected",
-                                                                 style = "background-color: #2a9fd6;") #Make colors align with the plot
-                                                  
-                                           )
+                                                                 style = "background-color: rgb(240,236,19); color: rgb(0,0,0);"),
+                                               ),
+                                               column(6, 
+                                                      conditionalPanel("input.active_preprocessing == true",
+                                                                       downloadButton("downloadData", "Processed",
+                                                                                      style = "background-color: rgb(240,19,207); color: rgb(0,0,0);") 
+                                                      )
+                                                      )
+                                                  ),
+                                             fluidRow(
+                                               column(6,
+                                                      conditionalPanel("input.active_identification == true",
+                                                                       
+                                                                       downloadButton("download_matched", "Matched",
+                                                                                      style = "background-color: rgb(125,249,255); color: rgb(0,0,0);"))), #Make colors align with the plot, Make only appear if on plot.
+                                                      column(6,
+                                                      conditionalPanel("input.active_identification == true",
+                                                                       downloadButton("download_selected", "Selected",
+                                                                                      style = "background-color: rgb(255,255,255); color: rgb(0,0,0);") )
+                                                      )
+                                                )
+                                              )  
                                              )
                                            
                                          )
-                                         )
-                                         )
+                                         
+                                         
                                   )
                                 )
                                 
