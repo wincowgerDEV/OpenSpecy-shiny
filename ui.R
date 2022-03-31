@@ -701,33 +701,32 @@ ui <- fluidPage(
                                                     conditionalPanel("input.active_identification == true & input.view_identification == true",
                                                                      fluidRow(
                                                                        column(3,
-                                                                              radioButtons("Data", "Spectrum Trans",
-                                                                                           c("Derivative" = "derivative" ,
-                                                                                             "Uploaded" = "uploaded",
-                                                                                             "Processed" = "processed"
-                                                                                             
-                                                                                           ))
+                                                                              selectInput(inputId = "Data", label = "Spectrum Trans", choices = c("Derivative" = "derivative" ,
+                                                                                                                                                  "Uploaded" = "uploaded",
+                                                                                                                                                  "Processed" = "processed")
+                                                                              )
+
                                                                        ),
                                                                        column(3,
-                                                                              radioButtons("Spectra", "Library Type",
-                                                                                           c("Both" = "both",
+                                                                              selectInput(inputId = "Spectra", label =  "Library Type",
+                                                                                          choices =  c("Both" = "both",
                                                                                              "Raman" = "raman",
                                                                                              "FTIR" = "ftir"))
                                                                        ),
                                                                        
                                                                        column(3,
-                                                                              radioButtons("Library", "Library Trans",
-                                                                                           c("Derivative" = "derivative", 
+                                                                              selectInput(inputId = "Library", label =  "Library Trans",
+                                                                                          choices =  c("Derivative" = "derivative", 
                                                                                              "Full" = "full",
                                                                                              "Peaks" = "peaks"))
                                                                               
                                                                               
                                                                        ), 
                                                                        column(3,
-                                                                              radioButtons("id_level", "Identity Level",
-                                                                                           c("Deep (raw)" = "deep", 
-                                                                                             "Plastic Pollution (optimal)" = "pp_optimal",
-                                                                                             "Plastic Pollution groups" = "pp_groups",
+                                                                              selectInput(inputId = "id_level", label =  "Identity Level",
+                                                                                           choices = c("Raw" = "deep", 
+                                                                                             "Plastic Detailed" = "pp_optimal",
+                                                                                             "Plastic Grouped" = "pp_groups",
                                                                                              "Plastic or Not" = "plastic_not"))
                                                                               
                                                                               

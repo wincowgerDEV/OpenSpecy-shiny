@@ -7,7 +7,7 @@
 # Check for Auth Tokens and setup, you can change these to test the triggering
 # of functions without removing the files.
 droptoken <- file.exists("data/droptoken.rds")
-db <- F#file.exists(".db_url") #reminder, this will break if you login to a new wifi network even with the token.
+db <- file.exists(".db_url") #reminder, this will break if you login to a new wifi network even with the token.
 translate <- file.exists("www/googletranslate.html")
 
 # Libraries ----
@@ -523,7 +523,10 @@ observeEvent(input$reset, {
     datatable(MatchSpectra() %>%
                 dplyr::rename("Material" = SpectrumIdentity) %>%
                 dplyr::rename("Pearson's r" = rsq) %>%
-                dplyr::select(if(input$id_level == "deep"){"Material"} else if(input$id_level == "pp_optimal"){"polymer"}, `Pearson's r`),
+                dplyr::select(if(input$id_level == "deep"){"Material"} 
+                              else if(input$id_level == "pp_optimal"){"polymer"}
+                              else if(input$id_level == "pp_groups"){"polymer_class"}
+                              else{"plastic_or_not"}, `Pearson's r`),
               options = list(searchHighlight = TRUE,
                              scrollX = TRUE,
                              sDom  = '<"top">lrt<"bottom">ip',
