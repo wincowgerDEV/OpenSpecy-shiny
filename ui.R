@@ -540,7 +540,15 @@ ui <- fluidPage(
                                                                        downloadButton("download_selected", "Selected",
                                                                                       style = "background-color: rgb(255,255,255); color: rgb(0,0,0);") )
                                                       )
-                                                )
+                                                ), 
+                                             fluidRow(
+                                               column(12, 
+                                                    style = columnformat(),
+                                                    fluidRow(style = "padding:1rem",
+                                                             DT::dataTableOutput("event")
+                                                    )
+                                              )
+                                             )
                                               )  
                                              )
                                            
@@ -783,12 +791,7 @@ ui <- fluidPage(
                                 )
                                        )),
                                 fluidRow(
-                                  column(3, 
-                                         style = columnformat(),
-                                         fluidRow(style = "padding:1rem",
-                                                  DT::dataTableOutput("event")
-                                         )
-                                        ),
+                                  
                                   column(9, 
                                                 plotcontainerfunction(h4(id = "placeholder1", "Upload some data to get started..."), 
                                                                       plotlyOutput("MyPlotC"),
