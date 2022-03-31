@@ -9,6 +9,6 @@ run_app:
   log: !expr shiny::getShinyOption("log")
 
 shinyapps:
-  library_path: 'data/library'
+  library_path: 'data'
   share: 'dropbox'
   log: TRUE
