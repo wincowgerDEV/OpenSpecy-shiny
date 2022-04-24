@@ -690,15 +690,8 @@ ui <- fluidPage(
                                                                                           outline = TRUE,
                                                                                           plain = TRUE,
                                                                                           bigger = T),
-                                                                             prettyToggle("validate",
-                                                                                          icon_on = icon("eye"),
-                                                                                          icon_off = icon("eye-slash"), 
-                                                                                          label_on = NULL, label_off = NULL,
-                                                                                          status_on = "success",
-                                                                                          status_off = "default",
-                                                                                          outline = TRUE,
-                                                                                          plain = TRUE,
-                                                                                          bigger = T)
+                                                                             actionButton("validate", "Validate Default"),
+                                                                             
                                                                       )))),
                                                     conditionalPanel("input.active_identification == true & input.view_identification == true",
                                                                      fluidRow(

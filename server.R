@@ -229,71 +229,71 @@ server <- shinyServer(function(input, output, session) {
   
   preprocessed <- reactiveValues(data = NULL)
   
-
+observeEvent(input$file1, {
   # Read in data when uploaded based on the file type
-  preprocessed_data <- reactive({
-    req(input$file1)
-    file <- input$file1
-    filename <- as.character(file$datapath)
-
-    if (!grepl("(\\.csv$)|(\\.asp$)|(\\.spa$)|(\\.spc$)|(\\.jdx$)|(\\.[0-9]$)",
-              ignore.case = T, filename)) {
-      show_alert(
-        title = "Data type not supported!",
-        text = paste0("Uploaded data type is not currently supported; please
+  req(input$file1)
+  file <- input$file1
+  filename <- as.character(file$datapath)
+  
+  if (!grepl("(\\.csv$)|(\\.asp$)|(\\.spa$)|(\\.spc$)|(\\.jdx$)|(\\.[0-9]$)",
+             ignore.case = T, filename)) {
+    show_alert(
+      title = "Data type not supported!",
+      text = paste0("Uploaded data type is not currently supported; please
                       check tooltips and 'About' tab for details."),
-        type = "warning")
+      type = "warning")
+    return(NULL)
+  }
+  
+  if (input$share_decision & curl::has_internet()) {
+    share <- conf$share
+    progm <- "Sharing Spectrum to Community Library"
+  } else {
+    share <- NULL
+    progm <- "Reading Spectrum"
+  }
+  
+  withProgress(message = progm, value = 3/3, {
+    if(grepl("\\.csv$", ignore.case = T, filename)) {
+      rout <- tryCatch(read_text(filename, method = "fread",
+                                 share = share,
+                                 id = id()),
+                       error = function(e) {e})
+    }
+    else if(grepl("\\.[0-9]$", ignore.case = T, filename)) {
+      rout <- tryCatch(read_0(filename, share = share, id = id()),
+                       error = function(e) {e})
+    }
+    else {
+      ex <- strsplit(basename(filename), split="\\.")[[1]]
+      
+      rout <- tryCatch(do.call(paste0("read_", tolower(ex[-1])),
+                               list(filename, share = share, id = id())),
+                       error = function(e) {e})
+    }
+    
+    if (inherits(rout, "simpleError")) {
+      reset("file1")
+      show_alert(
+        title = "Something went wrong :-(",
+        text = paste0("R says: '", rout$message, "'. ",
+                      "If you uploaded a text/csv file, make sure that the ",
+                      "columns are numeric and named 'wavenumber' and ",
+                      "'intensity'."),
+        type = "error"
+      )
       return(NULL)
-      }
+    } else {
+      preprocessed$data <- rout
+    }
+})
+})
 
-    if (input$share_decision & curl::has_internet()) {
-      share <- conf$share
-      progm <- "Sharing Spectrum to Community Library"
-      } else {
-        share <- NULL
-        progm <- "Reading Spectrum"
-      }
-
-    withProgress(message = progm, value = 3/3, {
-      if(grepl("\\.csv$", ignore.case = T, filename)) {
-        rout <- tryCatch(read_text(filename, method = "fread",
-                                   share = share,
-                                   id = id()),
-                         error = function(e) {e})
-      }
-      else if(grepl("\\.[0-9]$", ignore.case = T, filename)) {
-        rout <- tryCatch(read_0(filename, share = share, id = id()),
-                         error = function(e) {e})
-      }
-      else {
-        ex <- strsplit(basename(filename), split="\\.")[[1]]
-
-        rout <- tryCatch(do.call(paste0("read_", tolower(ex[-1])),
-                                 list(filename, share = share, id = id())),
-                         error = function(e) {e})
-      }
-
-      if (inherits(rout, "simpleError")) {
-        reset("file1")
-        show_alert(
-          title = "Something went wrong :-(",
-          text = paste0("R says: '", rout$message, "'. ",
-                        "If you uploaded a text/csv file, make sure that the ",
-                        "columns are numeric and named 'wavenumber' and ",
-                        "'intensity'."),
-          type = "error"
-        )
-        return(NULL)
-      } else {
-        rout
-      }
-    })
-  })
 
   # Corrects spectral intensity units using the user specified correction
   data <- reactive({
-    req(preprocessed_data())
-    adj_intens(data.table(wavenumber = seq(round_up(min(preprocessed_data()$wavenumber), 5), round_down(max(preprocessed_data()$wavenumber), 5), by = 5), intensity = clean_spec(preprocessed_data()$wavenumber, preprocessed_data()$intensity)), type = input$intensity_corr)  # j is not limited to just aggregations also expansions
+    req(preprocessed$data)
+    adj_intens(data.table(wavenumber = seq(round_up(min(preprocessed$data$wavenumber), 5), round_down(max(preprocessed$data$wavenumber), 5), by = 5), intensity = clean_spec(preprocessed$data$wavenumber, preprocessed$data$intensity)), type = input$intensity_corr)  # j is not limited to just aggregations also expansions
     })
 
   #Preprocess Spectra ----
@@ -643,7 +643,7 @@ observeEvent(input$reset, {
 
 
   observe({
-    if (is.null(preprocessed_data())) {
+    if (is.null(preprocessed$data)) {
       show("placeholder1")
       show("placeholder2")
       show("placeholder3")
@@ -696,7 +696,7 @@ observeEvent(input$reset, {
                                    session_name = session_id,
                                    wavenumber = trace$data$wavenumber,
                                    intensity = trace$data$intensity,
-                                   data_id = digest::digest(preprocessed_data(),
+                                   data_id = digest::digest(preprocessed$data,
                                                             algo = "md5"),
                                    ipid = input$ipid,
                                    time = human_ts()))
@@ -709,7 +709,7 @@ observeEvent(input$reset, {
              user_name = input$fingerprint,
              time = human_ts(),
              session_name = session_id,
-             data_id = digest::digest(preprocessed_data(), algo = "md5"),
+             data_id = digest::digest(preprocessed$data, algo = "md5"),
              ipid = input$ipid,
              active_preprocessing = input$active_preprocessing,
              intensity_adj = input$intensity_corr,
@@ -746,7 +746,7 @@ observeEvent(input$reset, {
                max_range = input$MinRange,
                min_range = input$MaxRange,
                range_decision = input$range_decision,
-               data_id = digest::digest(preprocessed_data(), algo = "md5"),
+               data_id = digest::digest(preprocessed$data, algo = "md5"),
                spectra_type = input$Spectra,
                analyze_type = input$Data,
                region_type = input$Library,
