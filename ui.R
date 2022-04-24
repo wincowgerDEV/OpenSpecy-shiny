@@ -400,13 +400,13 @@ ui <- fluidPage(
                        
                        containerfunction(
                          h2("Quick Video Tutorial"),
-                         HTML("<iframe width='560' height='315' src='https://www.youtube-nocookie.com/embed/w55WGtV2Dz4' title='YouTube video player' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>")
+                         HTML("<iframe width='100%' height='100%' src='https://www.youtube-nocookie.com/embed/w55WGtV2Dz4' title='YouTube video player' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>")
                        ),
                        containerfunction(
                          h2("Instructions"),
                          fluidRow(
                            column(6,
-                                  HTML("<iframe width='560' height='315' src='https://www.youtube-nocookie.com/embed/JjhCdhjdcRY' title='YouTube video player' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>")
+                                  HTML("<iframe width='100%' height='100%' src='https://www.youtube-nocookie.com/embed/JjhCdhjdcRY' title='YouTube video player' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>")
                            ),
                            column(6,
                                   p(class = "lead", "In Brief: To use the tool upload a csv, asp, jdx, spc, or spa file to the upload file tab.
@@ -415,9 +415,10 @@ ui <- fluidPage(
                                   The result will be compared to an internal Raman or FTIR spectra library. The strongest 1000 matches along with your
                                   uploaded or processed data will be presented in an interactive plot and table. For more details click the button below
                                   or watch the detailed instructional video."),
-                                  a("Detailed Standard Operating Procedure",
+                                  a("SOP",
                                     onclick = "window.open('https://cran.r-project.org/web/packages/OpenSpecy/vignettes/sop.html', '_blank')",
-                                    class="btn btn-primary btn-lg")
+                                    class="btn btn-primary btn-lg", 
+                                    style = "width: 100%;")
                            )
                          )
                        ),
@@ -429,10 +430,10 @@ ui <- fluidPage(
                                 spectra that is uploaded to the tool will be incorporated to the reference
                                 library to make it even better."),
                          div(
-                           downloadButton("downloadData6", "Raman Reference Library", style = "background-color: #2a9fd6;"),
-                           downloadButton("downloadData5", "FTIR Reference Library", style = "background-color: #2a9fd6;"),
-                           downloadButton("downloadData4", "Raman Reference Library Metadata", style = "background-color: #2a9fd6;"),
-                           downloadButton("downloadData3", "FTIR Reference Library Metadata", style = "background-color: #2a9fd6;")
+                           downloadButton("downloadData6", "Raman Library", style = "background-color: #2a9fd6; width: 100%;"),
+                           downloadButton("downloadData5", "FTIR Library", style = "background-color: #2a9fd6; width: 100%;"),
+                           downloadButton("downloadData4", "Raman Metadata", style = "background-color: #2a9fd6; width: 100%;"),
+                           downloadButton("downloadData3", "FTIR Metadata", style = "background-color: #2a9fd6; width: 100%;")
                          )
                        ),
                        
@@ -448,7 +449,8 @@ ui <- fluidPage(
                          div(
                            a("Community Data Warehouse",
                              onclick = "window.open('https://osf.io/rjg3c/', '_blank')",
-                             class="btn btn-primary btn-lg")
+                             class="btn btn-primary btn-lg",
+                             style = "width: 100%;")
                          )
                        ),
                        
@@ -464,7 +466,8 @@ ui <- fluidPage(
                          div(
                            a("Detailed Validation Procedure",
                              onclick = "window.open('https://docs.google.com/document/d/1Zd2GY4bWIwegGeE4JpX8O0S5l_IYju0sLDl1ddTTMxU/edit?usp=sharing', '_blank')",
-                             class="btn btn-primary btn-lg")
+                             class="btn btn-primary btn-lg",
+                             style = "width: 100%;")
                          )
                        ),
                        
@@ -521,6 +524,9 @@ ui <- fluidPage(
                                                  downloadButton("download_testdata",
                                                                  "Sample",
                                                                  style = "background-color: rgb(240,236,19); color: rgb(0,0,0);"),
+                                                 downloadButton("download_metadata",
+                                                                "Metadata",
+                                                                style = "background-color: rgb(75,0,130); color: rgb(255,255,255);"),
                                                ),
                                                column(6, 
                                                       conditionalPanel("input.active_preprocessing == true",

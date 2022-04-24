@@ -197,9 +197,6 @@ server <- shinyServer(function(input, output, session) {
 #    })
 #  }
 
-  #brks <- seq(5, 320000, 1000)
-  clrs <- colorRampPalette(c("white", "#6baed6"))(5 + 1)
-
   output$event_goals <- DT::renderDataTable({
     datatable(goals,
               options = list(
@@ -630,6 +627,12 @@ observeEvent(input$reset, {
     filename = function() {paste('data-matched-', human_ts(), '.csv', sep='')},
     content = function(file) {fwrite(DataR_plot(), file)}
   )
+  
+  ## Download matched data ----
+  output$download_metadata <- downloadHandler(
+    filename = function() {paste('data-analysis-metadata-', human_ts(), '.csv', sep='')},
+    content = function(file) {fwrite(user_metadata(), file)}
+  )
   ## Sharing data ----
   # Hide functions which shouldn't exist when there is no internet or
   # when the API token doesn't exist
@@ -728,29 +731,37 @@ observeEvent(input$reset, {
         }
     }
   })
+  
+  user_metadata <- reactive({
+    data.frame(
+             user_name = input$fingerprint,
+             time = human_ts(),
+             session_name = session_id,
+             data_id = digest::digest(preprocessed_data(), algo = "md5"),
+             ipid = input$ipid,
+             active_preprocessing = input$active_preprocessing,
+             intensity_adj = input$intensity_corr,
+             smooth_decision = input$smooth_decision,
+             smoother = input$smoother,
+             baseline_decision = input$baseline_decision,
+             baseline_type = input$baseline_selection,
+             baseline = input$baseline,
+             range_decision = input$range_decision,
+             max_range = input$MinRange,
+             min_range = input$MaxRange,
+             active_identification = input$active_identification,
+             spectra_type = input$Spectra,
+             analyze_type = input$Data,
+             region_type = input$Library,
+             id_level = input$id_level)
+  })
 
   observe({
     req(input$file1)
     req(input$share_decision)
     if(conf$log) {
       if(db) {
-        database$insert(data.frame(user_name = input$fingerprint,
-                                   session_name = session_id,
-                                   intensity_adj = input$intensity_corr,
-                                   smoother = input$smoother,
-                                   smooth_decision = input$smooth_decision,
-                                   baseline = input$baseline,
-                                   baseline_decision = input$baseline_decision,
-                                   max_range = input$MinRange,
-                                   min_range = input$MaxRange,
-                                   range_decision = input$range_decision,
-                                   data_id = digest::digest(preprocessed_data(),
-                                                            algo = "md5"),
-                                   spectra_type = input$Spectra,
-                                   analyze_type = input$Data,
-                                   region_type = input$Library,
-                                   ipid = input$ipid,
-                                   time = human_ts()))
+        database$insert(user_metadata())
       } else {
         loggit("INFO", "trigger",
                user_name = input$fingerprint,
