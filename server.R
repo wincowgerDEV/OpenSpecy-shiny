@@ -226,38 +226,9 @@ server <- shinyServer(function(input, output, session) {
     }
   })
 
-  # Save the metadata and data submitted upon pressing the button
-  observeEvent(input$submit, {
-    if (input$share_decision & !is.null(data()) & curl::has_internet()) {
-      withProgress(message = "Sharing Metadata",
-                   value = 3/3, {
-        sout <- tryCatch(share_spec(
-          data = preprocessed_data(),
-          metadata = sapply(names(namekey)[c(1:24,32)], function(x) input[[x]]),
-          share = conf$share,
-          id = id()),
-          warning = function(w) {w}, error = function(e) {e})
-
-        if (inherits(sout, "simpleWarning") | inherits(sout, "simpleError"))
-          mess <- sout$message
-
-        if (is.null(sout)) {
-          show_alert(
-            title = "Thank you for sharing your data!",
-            text = "Your data will soon be available at https://osf.io/stmv4/",
-            type = "success"
-          )
-        } else {
-          show_alert(
-            title = "Something went wrong :-(",
-            text = paste0("All mandatory data added? R says: '", mess, "'. ",
-                          "Try again."),
-            type = "warning"
-          )
-        }
-      })
-    }
-  })
+  
+  preprocessed <- reactiveValues(data = NULL)
+  
 
   # Read in data when uploaded based on the file type
   preprocessed_data <- reactive({
@@ -683,12 +654,6 @@ observeEvent(input$reset, {
     }
   })
 
-  #This toggles the hidden metadata input layers.
-  observeEvent(input$share_meta, {
-    sapply(names(namekey)[c(1:24,32)], function(x) toggle(x))
-    toggle("submit")
-  })
-
   output$translate <- renderUI({
     if(translate & curl::has_internet()) {
       includeHTML("www/googletranslate.html")
@@ -714,7 +679,14 @@ observeEvent(input$reset, {
     render_tweet(tweets[2])
   })
 
-
+  #Validate the app functionality for default identification ----
+  
+  observeEvent(input$validate, {
+    load("data/library.RData") 
+    simulate <- library
+    simulate[[1]]
+  })
+  
   # Log events ----
 
   observeEvent(input$go, {
