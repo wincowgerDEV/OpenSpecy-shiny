@@ -685,11 +685,12 @@ observeEvent(input$reset, {
     load("data/library.RData") 
     simulate <- library
     column <- sample(1:ncol(simulate), 1)
-    preprocessed$data <- data.table(wavenumber = seq(405, 3995, by = 5), intensity = simulate[[column]])
-    tested <- filter(meta, sample_name == colnames(sumulate)[column])
+    preprocessed$data <- data.table(wavenumber = seq(405, 3995, by = 5), intensity = simulate[[column]]) %>%
+                            filter(!is.na(intensity))
+    tested <- filter(meta, sample_name == colnames(simulate)[column])
     show_alert(
       title = "Results on Validation",
-      text = paste0("Tool assessed spectrum:" tested$sample),
+      text = paste0("Tool assessed spectrum:", tested$sample, "_", tested$SpectrumIdentity),
       type = "warning")
   })
   
