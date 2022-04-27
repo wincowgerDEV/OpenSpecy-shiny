@@ -89,10 +89,10 @@ load_data <- function() {
                        "<100$")
   )
   # Check if spectral library is present and load
-  test_lib <- class(tryCatch(check_lib(path = conf$library_path),
-                             warning = function(w) {w}))
+  #test_lib <- class(tryCatch(check_lib(path = conf$library_path),
+  #                           warning = function(w) {w}))
 
-  if(any(test_lib == "warning")) get_lib(path = conf$library_path)
+  #if(any(test_lib == "warning")) get_lib(path = conf$library_path)
 
   
   if(droptoken) {
@@ -486,15 +486,19 @@ observeEvent(input$reset, {
     return(Lib)
   })
 
-  # Create the data tables
+  top_matches <- reactive({
+      MatchSpectra() %>%
+          dplyr::rename("Material" = SpectrumIdentity) %>%
+          dplyr::rename("Pearson's r" = rsq) %>%
+          dplyr::select(if(input$id_level == "deep"){"Material"} 
+                        else if(input$id_level == "pp_optimal"){"polymer"}
+                        else if(input$id_level == "pp_groups"){"polymer_class"}
+                        else{"plastic_or_not"}, `Pearson's r`)
+  })
+  
+  # Create the data tables for all matches
   output$event <- DT::renderDataTable({
-    datatable(MatchSpectra() %>%
-                dplyr::rename("Material" = SpectrumIdentity) %>%
-                dplyr::rename("Pearson's r" = rsq) %>%
-                dplyr::select(if(input$id_level == "deep"){"Material"} 
-                              else if(input$id_level == "pp_optimal"){"polymer"}
-                              else if(input$id_level == "pp_groups"){"polymer_class"}
-                              else{"plastic_or_not"}, `Pearson's r`),
+    datatable(top_matches(),
               options = list(searchHighlight = TRUE,
                              scrollX = TRUE,
                              sDom  = '<"top">lrt<"bottom">ip',
@@ -505,19 +509,16 @@ observeEvent(input$reset, {
               
               selection = list(mode = "single", selected = c(1)))
   })
-
-
-  output$eventmetadata <- DT::renderDataTable({
-    # Default to first row if not yet clicked
-    id_select <- ifelse(is.null(input$event_rows_selected),
-                        1,
-                        input$event_rows_selected)
-    # Get data from find_spec
-    current_meta <- MatchSpectra()[input$event_rows_selected,] %>%
-      select(where(~!any(is_empty(.))))
+  
+match_metadata <- reactive({
+    MatchSpectra()[input$event_rows_selected,] %>%
+        select(where(~!any(is_empty(.))))
     #names(current_meta) <- namekey[names(current_meta)]
-
-    datatable(current_meta,
+})
+    #Metadata for the selected value
+  output$eventmetadata <- DT::renderDataTable({
+    # Get data from find_spec
+    datatable(match_metadata(),
               escape = FALSE,
               options = list(dom = 't', bSort = F, 
                              scrollX = TRUE,
@@ -604,6 +605,12 @@ observeEvent(input$reset, {
     filename = function() {paste('data-analysis-metadata-', human_ts(), '.csv', sep='')},
     content = function(file) {fwrite(user_metadata(), file)}
   )
+  
+  ## Download validation data ----
+  output$validation_download <- downloadHandler(
+      filename = function() {paste('data-analysis-validation-', human_ts(), '.csv', sep='')},
+      content = function(file) {fwrite(validation$data, file)}
+  )
   ## Sharing data ----
   # Hide functions which shouldn't exist when there is no internet or
   # when the API token doesn't exist
@@ -681,18 +688,30 @@ observeEvent(input$reset, {
 
   #Validate the app functionality for default identification ----
   
+  validation <- reactiveValues(data = NULL)
+  
   observeEvent(input$validate, {
     load("data/library.RData") 
     simulate <- library
-    column <- sample(1:ncol(simulate), 1)
-    preprocessed$data <- data.table(wavenumber = seq(405, 3995, by = 5), intensity = simulate[[column]]) %>%
-                            filter(!is.na(intensity))
-    tested <- filter(meta, sample_name == colnames(simulate)[column])
-    show_alert(
-      title = "Results on Validation",
-      text = paste0("Tool assessed spectrum:", tested$sample, "_", tested$SpectrumIdentity),
-      type = "warning")
-  })
+    validation_results <- data.frame(sample_name_tested = character(), SpectrumIdentity_tested = character(), polymer_tested = character(), polymer_class_tested = character(), plastic_or_not_tested = character(),
+                                     sample_name_matched = character(), SpectrumIdentity_matched = character(), polymer_matched = character(), polymer_class_matched = character(), plastic_or_not_matched = character(), rsq_matched = numeric())
+    for(item in 1:100){
+            column <- sample(1:ncol(simulate), 1)
+            preprocessed$data <- data.table(wavenumber = seq(405, 3995, by = 5), intensity = simulate[[column]]) %>%
+                                    filter(!is.na(intensity))
+            
+            tested <- filter(meta, sample_name == colnames(simulate)[column]) %>%
+                select(sample_name, SpectrumIdentity, polymer, polymer_class, plastic_or_not) 
+            colnames(tested) <- paste0(colnames(tested), "_tested")
+            
+            matched <- match_metadata() %>% 
+                select(sample_name, SpectrumIdentity, polymer, polymer_class, plastic_or_not, rsq) 
+            colnames(matched) <- paste0(colnames(matched), "_matched")
+            
+            validation_results[item,] <-  cbind(tested, matched)
+    }
+    validation$data <- validation_results
+ })
   
   # Log events ----
 

@@ -517,6 +517,7 @@ ui <- fluidPage(
                                                  downloadButton("download_testdata",
                                                                  "Sample",
                                                                  style = "background-color: rgb(240,236,19); color: rgb(0,0,0);"),
+                                                 br(),
                                                  downloadButton("download_metadata",
                                                                 "Metadata",
                                                                 style = "background-color: rgb(75,0,130); color: rgb(255,255,255);"),
@@ -691,6 +692,8 @@ ui <- fluidPage(
                                                                                           plain = TRUE,
                                                                                           bigger = T),
                                                                              actionButton("validate", "Validate Default"),
+                                                                             downloadButton("validation_download", "download validation",
+                                                                                            style = "background-color: rgb(240,19,207); color: rgb(0,0,0);") 
                                                                              
                                                                       )))),
                                                     conditionalPanel("input.active_identification == true & input.view_identification == true",
