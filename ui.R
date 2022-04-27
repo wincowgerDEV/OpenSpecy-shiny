@@ -1,4 +1,4 @@
-#' Shiny app server object
+#' Shiny app server 
 #'
 #' @importFrom graphics hist
 #' @import shiny
