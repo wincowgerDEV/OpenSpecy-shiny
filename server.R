@@ -228,6 +228,8 @@ server <- shinyServer(function(input, output, session) {
 
   
   preprocessed <- reactiveValues(data = NULL)
+  map_data <- reactiveValues(data = NULL)
+  
   
 observeEvent(input$file1, {
   # Read in data when uploaded based on the file type
@@ -235,7 +237,7 @@ observeEvent(input$file1, {
   file <- input$file1
   filename <- as.character(file$datapath)
   
-  if (!grepl("(\\.csv$)|(\\.asp$)|(\\.spa$)|(\\.spc$)|(\\.jdx$)|(\\.[0-9]$)",
+  if (!grepl("(\\.csv$)|(\\.asp$)|(\\.spa$)|(\\.spc$)|(\\.jdx$)|(\\.RData$)|(\\.[0-9]$)",
              ignore.case = T, filename)) {
     show_alert(
       title = "Data type not supported!",
@@ -264,6 +266,10 @@ observeEvent(input$file1, {
       rout <- tryCatch(read_0(filename, share = share, id = id()),
                        error = function(e) {e})
     }
+    else if(grepl("\\.RData$", ignore.case = T, filename)) {
+      load(filename) 
+      rout <- library #Assuming library as the name
+    }
     else {
       ex <- strsplit(basename(filename), split="\\.")[[1]]
       
@@ -283,11 +289,27 @@ observeEvent(input$file1, {
         type = "error"
       )
       return(NULL)
-    } else {
+    } 
+    else if(grepl("\\.RData$", ignore.case = T, filename)){
+      match_results <- data.frame(names = colnames(rout))
+      for(column in 1:ncol(rout)){
+        print(column)
+        preprocessed$data <- data.frame(wavenumber = seq(405, 3995, by = 5), intensity = rout[[column]]) %>%
+          filter(!is.na(intensity))
+        match_results[column, "identity"] <- top_matches() %>% slice(1) %>% select(1) %>% unlist(.)
+        match_results[column, "correlation"] <- top_matches() %>% slice(1) %>% select(2) %>% unlist(.)
+        match_results[column, "match_id"] <- top_matches() %>% slice(1) %>% select(3) %>% unlist(.)
+        map_data$data <- match_results
+      }
+    }
+    else {
       preprocessed$data <- rout
     }
 })
 })
+
+
+
 
 
   # Corrects spectral intensity units using the user specified correction
@@ -493,7 +515,7 @@ observeEvent(input$reset, {
           dplyr::select(if(input$id_level == "deep"){"Material"} 
                         else if(input$id_level == "pp_optimal"){"polymer"}
                         else if(input$id_level == "pp_groups"){"polymer_class"}
-                        else{"plastic_or_not"}, `Pearson's r`)
+                        else{"plastic_or_not"}, `Pearson's r`, sample_name)
   })
   
   # Create the data tables for all matches
@@ -611,6 +633,12 @@ match_metadata <- reactive({
       filename = function() {paste('data-analysis-validation-', human_ts(), '.csv', sep='')},
       content = function(file) {fwrite(validation$data, file)}
   )
+  
+  output$download_mapdata <- downloadHandler(
+    filename = function() {paste('data-analysis-map-', human_ts(), '.csv', sep='')},
+    content = function(file) {fwrite(map_data$data, file)}
+  )
+  
   ## Sharing data ----
   # Hide functions which shouldn't exist when there is no internet or
   # when the API token doesn't exist

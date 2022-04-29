@@ -15,6 +15,7 @@ library(DT)
 
 # Name keys for human readable column names ----
 load("data/namekey.RData")
+options(shiny.maxRequestSize = 100*1024^2)
 
 version <- paste0("Open Specy v", packageVersion("OpenSpecy"))
 citation <- HTML(
@@ -500,7 +501,7 @@ ui <- fluidPage(
                                                    placeholder = ".csv, .asp, .jdx, .spc, .spa, .0",
                                                    accept=c("text/csv",
                                                             "text/comma-separated-values,text/plain",
-                                                            ".csv", ".asp", ".spc", ".jdx", ".spa", ".0")),
+                                                            ".csv", ".asp", ".spc", ".jdx", ".spa", ".0", ".RData")),
                                          prettySwitch("share_decision",
                                                       label = "Share Your Data?",
                                                       inline = T,
@@ -520,6 +521,9 @@ ui <- fluidPage(
                                                  br(),
                                                  downloadButton("download_metadata",
                                                                 "Metadata",
+                                                                style = "background-color: rgb(75,0,130); color: rgb(255,255,255);"),
+                                                 downloadButton("download_mapdata",
+                                                                "Mapdata",
                                                                 style = "background-color: rgb(75,0,130); color: rgb(255,255,255);"),
 
                                                       conditionalPanel("input.active_preprocessing == true",
