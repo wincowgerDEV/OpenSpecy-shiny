@@ -7,7 +7,7 @@
 # Check for Auth Tokens and setup, you can change these to test the triggering
 # of functions without removing the files.
 droptoken <- file.exists("data/droptoken.rds")
-db <- file.exists(".db_url") #reminder, this will break if you login to a new wifi network even with the token.
+db <- F#file.exists(".db_url") #reminder, this will break if you login to a new wifi network even with the token.
 translate <- file.exists("www/googletranslate.html")
 
 # Libraries ----
@@ -225,6 +225,8 @@ server <- shinyServer(function(input, output, session) {
   preprocessed <- reactiveValues(data = NULL)
   map_data <- reactiveValues(data = NULL)
   filename <- reactiveValues(data = NULL)
+  processed_map_data <- reactiveValues(data = NULL)
+  matched_map_data <- reactiveValues(data = NULL)
   
   
 observeEvent(input$file1, {
@@ -295,8 +297,8 @@ observeEvent(input$file1, {
         match_results[column, "identity"] <- top_matches() %>% slice(1) %>% select(1) %>% unlist(.)
         match_results[column, "correlation"] <- top_matches() %>% slice(1) %>% select(2) %>% unlist(.)
         match_results[column, "match_id"] <- top_matches() %>% slice(1) %>% select(3) %>% unlist(.)
-        map_data$data <- match_results
       }
+      map_data$data <- match_results
     }
     else {
       preprocessed$data <- rout
@@ -576,8 +578,8 @@ match_metadata <- reactive({
         config(modeBarButtonsToAdd = list("drawopenpath", "eraseshape" ))
     }
     
-      else if(grepl("(\\.RData$)",
-                    ignore.case = T, filename$data)){
+      else if(grepl("(\\.RData$)", ignore.case = T, filename$data)){
+        req(map_data$data)
         base <- sqrt(nrow(map_data$data))
         bind_matches <- cbind(map_data$data, expand.grid(1:round_any(base, 1, ceiling), 1:round_any(base, 1, ceiling))[1:nrow(map_data$data),])
         
