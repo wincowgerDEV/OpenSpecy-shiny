@@ -549,7 +549,7 @@ match_metadata <- reactive({
 
   # Display matches based on table selection ----
   output$MyPlotC <- renderPlotly({
-    
+    req(input$file1)
     if(grepl("(\\.csv$)|(\\.asp$)|(\\.spa$)|(\\.spc$)|(\\.jdx$)|(\\.[0-9]$)",
               ignore.case = T, filename$data)){
       plot_ly(type = 'scatter', mode = 'lines', source = "B") %>%
@@ -578,7 +578,8 @@ match_metadata <- reactive({
     
       else if(grepl("(\\.RData$)",
                     ignore.case = T, filename$data)){
-        bind_matches <- cbind(map_data$data, expand.grid(1:round_any(sqrt(nrow(map_data$data)), 1, ceiling), 1:round_any(sqrt(nrow(map_data$data)), 1, ceiling))[1:nrow(map_data$data),])
+        base <- sqrt(nrow(map_data$data))
+        bind_matches <- cbind(map_data$data, expand.grid(1:round_any(base, 1, ceiling), 1:round_any(base, 1, ceiling))[1:nrow(map_data$data),])
         
         ggplotly(
           bind_matches %>%
