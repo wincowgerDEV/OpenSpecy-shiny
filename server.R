@@ -229,16 +229,17 @@ server <- shinyServer(function(input, output, session) {
   
   preprocessed <- reactiveValues(data = NULL)
   map_data <- reactiveValues(data = NULL)
+  filename <- reactiveValues(data = NULL)
   
   
 observeEvent(input$file1, {
   # Read in data when uploaded based on the file type
   req(input$file1)
   file <- input$file1
-  filename <- as.character(file$datapath)
+  filename$data <- as.character(file$datapath)
   
   if (!grepl("(\\.csv$)|(\\.asp$)|(\\.spa$)|(\\.spc$)|(\\.jdx$)|(\\.RData$)|(\\.[0-9]$)",
-             ignore.case = T, filename)) {
+             ignore.case = T, filename$data)) {
     show_alert(
       title = "Data type not supported!",
       text = paste0("Uploaded data type is not currently supported; please
@@ -256,25 +257,25 @@ observeEvent(input$file1, {
   }
   
   withProgress(message = progm, value = 3/3, {
-    if(grepl("\\.csv$", ignore.case = T, filename)) {
-      rout <- tryCatch(read_text(filename, method = "fread",
+    if(grepl("\\.csv$", ignore.case = T, filename$data)) {
+      rout <- tryCatch(read_text(filename$data, method = "fread",
                                  share = share,
                                  id = id()),
                        error = function(e) {e})
     }
-    else if(grepl("\\.[0-9]$", ignore.case = T, filename)) {
-      rout <- tryCatch(read_0(filename, share = share, id = id()),
+    else if(grepl("\\.[0-9]$", ignore.case = T, filename$data)) {
+      rout <- tryCatch(read_0(filename$data, share = share, id = id()),
                        error = function(e) {e})
     }
-    else if(grepl("\\.RData$", ignore.case = T, filename)) {
-      load(filename) 
+    else if(grepl("\\.RData$", ignore.case = T, filename$data)) {
+      load(filename$data) 
       rout <- library #Assuming library as the name
     }
     else {
-      ex <- strsplit(basename(filename), split="\\.")[[1]]
+      ex <- strsplit(basename(filename$data), split="\\.")[[1]]
       
       rout <- tryCatch(do.call(paste0("read_", tolower(ex[-1])),
-                               list(filename, share = share, id = id())),
+                               list(filename$data, share = share, id = id())),
                        error = function(e) {e})
     }
     
@@ -290,7 +291,7 @@ observeEvent(input$file1, {
       )
       return(NULL)
     } 
-    else if(grepl("\\.RData$", ignore.case = T, filename)){
+    else if(grepl("\\.RData$", ignore.case = T, filename$data)){
       match_results <- data.frame(names = colnames(rout))
       for(column in 1:ncol(rout)){
         print(column)
@@ -553,6 +554,9 @@ match_metadata <- reactive({
 
   # Display matches based on table selection ----
   output$MyPlotC <- renderPlotly({
+    
+    if(grepl("(\\.csv$)|(\\.asp$)|(\\.spa$)|(\\.spc$)|(\\.jdx$)|(\\.[0-9]$)",
+              ignore.case = T, filename$data)){
       plot_ly(type = 'scatter', mode = 'lines', source = "B") %>%
         add_trace(data = DataR_plot(), x = ~wavenumber, y = ~intensity,
                   name = 'Matched Spectrum',
@@ -575,7 +579,18 @@ match_metadata <- reactive({
                paper_bgcolor = 'rgba(0,0,0,0.5)',
                font = list(color = '#FFFFFF')) %>%
         config(modeBarButtonsToAdd = list("drawopenpath", "eraseshape" ))
-   
+    }
+    
+      else if(grepl("(\\.RData$)",
+                    ignore.case = T, filename$data)){
+        bind_matches <- cbind(map_data$data, expand.grid(1:round_up(sqrt(nrow(map_data$data)), 1), 1:round_up(sqrt(nrow(map_data$data)), 1))[1:nrow(map_data$data),])
+        
+        ggplotly(
+          bind_matches %>%
+            ggplot() +
+            geom_raster(aes(x = Var1, y = Var2, fill = correlation, text = names, label = identity))
+        )
+      }
     })
 
   # Data Download options
