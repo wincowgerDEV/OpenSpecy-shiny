@@ -28,6 +28,9 @@ if(droptoken) library(rdrop2)
 #devtools::install_github("wincowgerDEV/OpenSpecy")
 library(OpenSpecy)
 
+round_any <- function(x, accuracy, f = round) {
+  f(x / accuracy) * accuracy
+}
 #library(future)
 #library(bslib)
 
@@ -126,7 +129,7 @@ clean_spec <- function(x, y){
   c(
     #scale( 
     #signal::sgolayfilt(
-    approx(x = x, y = y, xout = seq(round_up(min(x), 5), round_down(max(x), 5), by = 5))$y#,
+    approx(x = x, y = y, xout = seq(round_any(min(x), 5, ceiling), round_any(max(x), 5, floor), by = 5))$y#,
     #p = 3, n = 11, m = 1
     #      )
     #) 
@@ -166,14 +169,6 @@ is_empty <- function(x, first.only = TRUE, all.na.empty = TRUE) {
   is.logical(x) && length(x) == 1L && !is.na(x) && x
 }
 
-#Round Down
-round_down <- function(x, b){
-  x - x %% b
-}
-#Round Up
-round_up <- function(x, b){
-  x + b - x %% b  
-}
 
 
 
@@ -316,7 +311,7 @@ observeEvent(input$file1, {
   # Corrects spectral intensity units using the user specified correction
   data <- reactive({
     req(preprocessed$data)
-    adj_intens(data.table(wavenumber = seq(round_up(min(preprocessed$data$wavenumber), 5), round_down(max(preprocessed$data$wavenumber), 5), by = 5), intensity = clean_spec(preprocessed$data$wavenumber, preprocessed$data$intensity)), type = input$intensity_corr)  # j is not limited to just aggregations also expansions
+    adj_intens(data.table(wavenumber = seq(round_any(min(preprocessed$data$wavenumber), 5, ceiling), round_any(max(preprocessed$data$wavenumber), 5, floor), by = 5), intensity = clean_spec(preprocessed$data$wavenumber, preprocessed$data$intensity)), type = input$intensity_corr)  # j is not limited to just aggregations also expansions
     })
 
   #Preprocess Spectra ----
@@ -583,7 +578,7 @@ match_metadata <- reactive({
     
       else if(grepl("(\\.RData$)",
                     ignore.case = T, filename$data)){
-        bind_matches <- cbind(map_data$data, expand.grid(1:round_up(sqrt(nrow(map_data$data)), 1), 1:round_up(sqrt(nrow(map_data$data)), 1))[1:nrow(map_data$data),])
+        bind_matches <- cbind(map_data$data, expand.grid(1:round_any(sqrt(nrow(map_data$data)), 1, ceiling), 1:round_any(sqrt(nrow(map_data$data)), 1, ceiling))[1:nrow(map_data$data),])
         
         ggplotly(
           bind_matches %>%
