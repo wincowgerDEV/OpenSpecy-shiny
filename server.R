@@ -227,7 +227,7 @@ server <- shinyServer(function(input, output, session) {
   filename <- reactiveValues(data = NULL)
   processed_map_data <- reactiveValues(data = NULL)
   matched_map_data <- reactiveValues(data = NULL)
-  
+  identified_map_data <- reactiveValues(data = NULL)
   
 observeEvent(input$file1, {
   # Read in data when uploaded based on the file type
@@ -290,6 +290,12 @@ observeEvent(input$file1, {
     } 
     else if(grepl("\\.RData$", ignore.case = T, filename$data)){
       match_results <- data.frame(names = colnames(rout))
+      processed_results <- data.frame(matrix(ncol = ncol(rout), nrow = length(seq(405, 3995, by = 5))))
+      processed_results[,"wavenumber"] <- seq(405, 3995, by = 5)
+      matched_results <- data.frame(matrix(ncol = ncol(rout), nrow = length(seq(405, 3995, by = 5))))
+      matched_results[,"wavenumber"] <- seq(405, 3995, by = 5)
+      identified_results <- data.frame(matrix(ncol = ncol(rout), nrow = length(seq(405, 3995, by = 5))))
+      identified_results[,"wavenumber"] <- seq(405, 3995, by = 5)
       for(column in 1:ncol(rout)){
         print(column)
         preprocessed$data <- data.frame(wavenumber = seq(405, 3995, by = 5), intensity = rout[[column]]) %>%
@@ -297,8 +303,16 @@ observeEvent(input$file1, {
         match_results[column, "identity"] <- top_matches() %>% slice(1) %>% select(1) %>% unlist(.)
         match_results[column, "correlation"] <- top_matches() %>% slice(1) %>% select(2) %>% unlist(.)
         match_results[column, "match_id"] <- top_matches() %>% slice(1) %>% select(3) %>% unlist(.)
+        processed_results[,column] <- baseline_data() %>% 
+            right_join(data.table(wavenumber = seq(405, 3995, by = 5))) %>%
+            pull(intensity)
+        matched_results[,column] <- DataR()
+        identified_results[,column] <- match_selected()[,2]
       }
       map_data$data <- match_results
+      processed_map_data$data <- processed_results
+      matched_map_data$data <- matched_results
+      identified_map_data$data <- identified_results
     }
     else {
       preprocessed$data <- rout
@@ -476,8 +490,8 @@ observeEvent(input$reset, {
     current_spectrum %>%
       inner_join(meta, by = "sample_name") %>%
       select(wavenumber, intensity, SpectrumIdentity) %>%
-      mutate(intensity = make_rel(intensity, na.rm = T)) %>%
-      dplyr::filter(!is.na(intensity))
+      mutate(intensity = make_rel(intensity, na.rm = T)) #%>%
+      #dplyr::filter(!is.na(intensity))
       }
     
   
@@ -620,19 +634,19 @@ match_metadata <- reactive({
   ## Download own data ----
   output$downloadData <- downloadHandler(
     filename = function() {paste('data-processed-', human_ts(), '.csv', sep='')},
-    content = function(file) {fwrite(baseline_data(), file)}
+    content = function(file) {fwrite(if(grepl("(\\.RData$)", ignore.case = T, filename$data)){processed_map_data$data}else{baseline_data()}, file)}
   )
   
   ## Download selected data ----
   output$download_selected <- downloadHandler(
     filename = function() {paste('data-selected-', human_ts(), '.csv', sep='')},
-    content = function(file) {fwrite(match_selected(), file)}
+    content = function(file) {fwrite(if(grepl("(\\.RData$)", ignore.case = T, filename$data)){identified_map_data$data}else{match_selected()}, file)}
   )
 
   ## Download matched data ----
   output$download_matched <- downloadHandler(
     filename = function() {paste('data-matched-', human_ts(), '.csv', sep='')},
-    content = function(file) {fwrite(DataR_plot(), file)}
+    content = function(file) {fwrite(if(grepl("(\\.RData$)", ignore.case = T, filename$data)){matched_map_data$data}else{DataR_plot()}, file)}
   )
   
   ## Download matched data ----
