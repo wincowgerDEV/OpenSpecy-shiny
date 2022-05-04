@@ -28,7 +28,7 @@ if(droptoken) library(rdrop2)
 #devtools::install_github("wincowgerDEV/OpenSpecy")
 library(OpenSpecy)
 
-round_any <- function(x, accuracy, f = round) {
+round_any <- function(x, accuracy, f = round){
   f(x / accuracy) * accuracy
 }
 #library(future)
@@ -96,7 +96,7 @@ load_data <- function() {
   #                           warning = function(w) {w}))
 
   #if(any(test_lib == "warning")) get_lib(path = conf$library_path)
-
+  std_wavenumbers <- seq(405, 3995, by = 5)
   
   if(droptoken) {
     drop_auth(rdstoken = "data/droptoken.rds")
@@ -290,21 +290,21 @@ observeEvent(input$file1, {
     } 
     else if(grepl("\\.RData$", ignore.case = T, filename$data)){
       match_results <- data.frame(names = colnames(rout))
-      processed_results <- data.frame(matrix(ncol = ncol(rout), nrow = length(seq(405, 3995, by = 5))))
-      processed_results[,"wavenumber"] <- seq(405, 3995, by = 5)
-      matched_results <- data.frame(matrix(ncol = ncol(rout), nrow = length(seq(405, 3995, by = 5))))
-      matched_results[,"wavenumber"] <- seq(405, 3995, by = 5)
-      identified_results <- data.frame(matrix(ncol = ncol(rout), nrow = length(seq(405, 3995, by = 5))))
-      identified_results[,"wavenumber"] <- seq(405, 3995, by = 5)
+      processed_results <- data.frame(matrix(ncol = ncol(rout), nrow = length(std_wavenumbers)))
+      processed_results[,"wavenumber"] <- std_wavenumbers
+      matched_results <- data.frame(matrix(ncol = ncol(rout), nrow = length(std_wavenumbers)))
+      matched_results[,"wavenumber"] <- std_wavenumbers
+      identified_results <- data.frame(matrix(ncol = ncol(rout), nrow = length(std_wavenumbers)))
+      identified_results[,"wavenumber"] <- std_wavenumbers
       for(column in 1:ncol(rout)){
         print(column)
-        preprocessed$data <- data.frame(wavenumber = seq(405, 3995, by = 5), intensity = rout[[column]]) %>%
+        preprocessed$data <- data.frame(wavenumber = std_wavenumbers, intensity = rout[[column]]) %>%
           filter(!is.na(intensity))
         match_results[column, "identity"] <- top_matches() %>% slice(1) %>% select(1) %>% unlist(.)
         match_results[column, "correlation"] <- top_matches() %>% slice(1) %>% select(2) %>% unlist(.)
         match_results[column, "match_id"] <- top_matches() %>% slice(1) %>% select(3) %>% unlist(.)
         processed_results[,column] <- baseline_data() %>% 
-            right_join(data.table(wavenumber = seq(405, 3995, by = 5))) %>%
+            right_join(data.table(wavenumber = std_wavenumbers)) %>%
             pull(intensity)
         matched_results[,column] <- DataR()
         identified_results[,column] <- match_selected()[,2]
@@ -319,9 +319,6 @@ observeEvent(input$file1, {
     }
 })
 })
-
-
-
 
 
   # Corrects spectral intensity units using the user specified correction
@@ -401,24 +398,24 @@ observeEvent(input$reset, {
   DataR <- reactive({
       if(input$Data == "uploaded") {
       data() %>% 
-        right_join(data.table(wavenumber = seq(405, 3995, by = 5))) %>%
+        right_join(data.table(wavenumber = std_wavenumbers)) %>%
         pull(intensity)
     }
     else if(input$Data == "processed" & input$active_preprocessing) {
       baseline_data() %>% 
-        right_join(data.table(wavenumber = seq(405, 3995, by = 5))) %>%
+        right_join(data.table(wavenumber = std_wavenumbers)) %>%
         pull(intensity)
     }
     else if(input$Data == "derivative" & input$active_preprocessing) {
       baseline_data() %>% 
         mutate(intensity = process_cor_os(intensity)) %>%
-        right_join(data.table(wavenumber = seq(405, 3995, by = 5))) %>%
+        right_join(data.table(wavenumber = std_wavenumbers)) %>%
         pull(intensity)
     }
     else if(input$Data == "derivative" & !input$active_preprocessing) {
       data() %>% 
         mutate(intensity = process_cor_os(intensity)) %>%
-        right_join(data.table(wavenumber = seq(405, 3995, by = 5))) %>%
+        right_join(data.table(wavenumber = std_wavenumbers)) %>%
         pull(intensity)
     }
     else{ #Should change this to just forcing that this option isn't selectable. 
@@ -438,7 +435,7 @@ observeEvent(input$reset, {
                  intensity = numeric(), 
                  SpectrumIdentity = factor())    }
     else{
-      data.table(wavenumber = seq(405, 3995, by = 5),
+      data.table(wavenumber = std_wavenumbers,
                  intensity = make_rel(DataR(), na.rm = T),
                  SpectrumIdentity = factor()) %>%
         dplyr::filter(!is.na(intensity))
@@ -483,7 +480,7 @@ observeEvent(input$reset, {
                       MatchSpectra()[[input$event_rows_selected,
                                       "sample_name"]])
     # Get data from find_spec
-    current_spectrum <- data.table(wavenumber = seq(405, 3995, by = 5), 
+    current_spectrum <- data.table(wavenumber = std_wavenumbers, 
                                    intensity = libraryR()[[id_select]], 
                                    sample_name = id_select)
   
@@ -752,7 +749,7 @@ match_metadata <- reactive({
                                      sample_name_matched = character(), SpectrumIdentity_matched = character(), polymer_matched = character(), polymer_class_matched = character(), plastic_or_not_matched = character(), rsq_matched = numeric())
     for(item in 1:100){
             column <- sample(1:ncol(simulate), 1)
-            preprocessed$data <- data.table(wavenumber = seq(405, 3995, by = 5), intensity = simulate[[column]]) %>%
+            preprocessed$data <- data.table(wavenumber = std_wavenumbers, intensity = simulate[[column]]) %>%
                                     filter(!is.na(intensity))
             
             tested <- filter(meta, sample_name == colnames(simulate)[column]) %>%
