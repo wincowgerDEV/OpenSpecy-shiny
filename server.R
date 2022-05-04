@@ -196,6 +196,26 @@ map_type <- function(filename){
     }
 }
 
+read_coordinates <- function(filename, share, id){
+    files <- unzip(zipfile = filename, list = TRUE)
+    unzip(filename, exdir = tempdir())
+    if(nrow(files) == 2 & any(grepl("\\.dat$", ignore.case = T, files$Name)) & any(grepl("\\.hdr$", ignore.case = T, files$Name))){
+        transpose(as.data.table(hyperSpec::read.ENVI.Nicolet(file = paste0(tempdir(), "/", files$Name[grepl("\\.dat$", ignore.case = T, files$Name)]),
+                                                             headerfile = paste0(tempdir(), "/", files$Name[grepl("\\.hdr$", ignore.case = T, files$Name)]))@data$spc), keep.names = "wavenumbers") %>%
+            mutate(wavenumbers = as.numeric(wavenumbers))
+    }
+    else if(nrow(files) == 1 & any(grepl("\\.RData$", ignore.case = T, files$Name))){
+        assign("file", base::get(load(paste0(tempdir(), "/", files$Name))))
+        file
+    }
+    #else if(nrow(files) == 1 & any(grepl("\\.csv$", ignore.case = T, files$Name))){
+    #    fread
+    #}
+    else{
+        lapply(paste0(tempdir(), "/", files$Name), read_spectrum, share = share, id = id) 
+    }
+}
+
 read_map <- function(filename, share, id){
     files <- unzip(zipfile = filename, list = TRUE)
     unzip(filename, exdir = tempdir())
@@ -272,6 +292,7 @@ server <- shinyServer(function(input, output, session) {
   processed_map_data <- reactiveValues(data = NULL)
   matched_map_data <- reactiveValues(data = NULL)
   identified_map_data <- reactiveValues(data = NULL)
+  coords <- reactiveValues(data = NULL)
   
 observeEvent(input$file1, {
   # Read in data when uploaded based on the file type
@@ -305,6 +326,11 @@ observeEvent(input$file1, {
       else if(grepl("\\.zip$", ignore.case = T, filename$data)) {
           rout <- read_map(filename = filename$data, share = share, id = id())
           map_category$data <- map_type(filename = filename$data)
+          if(map_category$data == "envi"){
+              coords$data <- hyperSpec::read.ENVI.Nicolet(file = paste0(tempdir(), "/", files$Name[grepl("\\.dat$", ignore.case = T, files$Name)]),
+                                               headerfile = paste0(tempdir(), "/", files$Name[grepl("\\.hdr$", ignore.case = T, files$Name)]))@data[,c("x", "y")]
+              
+          }
       }
     
     if (inherits(rout, "simpleError")) {
@@ -632,12 +658,16 @@ match_metadata <- reactive({
       else if(grepl("(\\.zip$)", ignore.case = T, filename$data)){
         req(map_data$data)
         base <- sqrt(nrow(map_data$data))
-        bind_matches <- cbind(map_data$data, expand.grid(1:round_any(base, 1, ceiling), 1:round_any(base, 1, ceiling))[1:nrow(map_data$data),])
-        
+        bind_matches <- if(map_type$data == "envi"){
+            cbind(map_data$data, coords$data)
+        }
+        else{
+            cbind(map_data$data, expand.grid(x = 1:round_any(base, 1, ceiling), y = 1:round_any(base, 1, ceiling))[1:nrow(map_data$data),])
+        }
         ggplotly(
           bind_matches %>%
             ggplot() +
-            geom_raster(aes(x = Var1, y = Var2, fill = correlation, text = names, label = identity))
+            geom_raster(aes(x = x, y = y, fill = correlation, text = names, label = identity))
         )
       }
     })
