@@ -221,8 +221,7 @@ read_map <- function(filename, share, id){
     unzip(filename, exdir = tempdir())
     if(nrow(files) == 2 & any(grepl("\\.dat$", ignore.case = T, files$Name)) & any(grepl("\\.hdr$", ignore.case = T, files$Name))){
         transpose(as.data.table(hyperSpec::read.ENVI.Nicolet(file = paste0(tempdir(), "/", files$Name[grepl("\\.dat$", ignore.case = T, files$Name)]),
-                                                                     headerfile = paste0(tempdir(), "/", files$Name[grepl("\\.hdr$", ignore.case = T, files$Name)]))@data$spc), keep.names = "wavenumbers") %>%
-            mutate(wavenumbers = as.numeric(wavenumbers))
+                                                                     headerfile = paste0(tempdir(), "/", files$Name[grepl("\\.hdr$", ignore.case = T, files$Name)]))@data$spc))
     }
     else if(nrow(files) == 1 & any(grepl("\\.RData$", ignore.case = T, files$Name))){
         assign("file", base::get(load(paste0(tempdir(), "/", files$Name))))
@@ -287,6 +286,7 @@ server <- shinyServer(function(input, output, session) {
 
   map_category <- reactiveValues(data = NULL)
   preprocessed <- reactiveValues(data = NULL)
+  wavenumbers <- reactiveValues(data = NULL)
   map_data <- reactiveValues(data = NULL)
   filename <- reactiveValues(data = NULL)
   processed_map_data <- reactiveValues(data = NULL)
@@ -327,6 +327,9 @@ observeEvent(input$file1, {
           rout <- read_map(filename = filename$data, share = share, id = id())
           map_category$data <- map_type(filename = filename$data)
           if(map_category$data == "envi"){
+              wavenumbers$data <- hyperSpec::read.ENVI.Nicolet(file = paste0(tempdir(), "/", files$Name[grepl("\\.dat$", ignore.case = T, files$Name)]),
+                                                               headerfile = paste0(tempdir(), "/", files$Name[grepl("\\.hdr$", ignore.case = T, files$Name)]))@wavelength
+
               coords$data <- hyperSpec::read.ENVI.Nicolet(file = paste0(tempdir(), "/", files$Name[grepl("\\.dat$", ignore.case = T, files$Name)]),
                                                headerfile = paste0(tempdir(), "/", files$Name[grepl("\\.hdr$", ignore.case = T, files$Name)]))@data[,c("x", "y")]
               
@@ -346,7 +349,7 @@ observeEvent(input$file1, {
       return(NULL)
     } 
     else if(grepl("\\.zip$", ignore.case = T, filename$data)){
-      match_results <- data.frame(names = if(map_category$data == "multiple"){1:length(rout)} else if(map_category$data == "rdata"){colnames(rout)} else{colnames(rout)[-1]})
+      match_results <- data.frame(names = if(map_category$data == "multiple"){1:length(rout)} else{colnames(rout)})
       processed_results <- data.frame(matrix(ncol = length(rout), nrow = length(std_wavenumbers)))
       processed_results[,"wavenumber"] <- std_wavenumbers
       matched_results <- data.frame(matrix(ncol = length(rout), nrow = length(std_wavenumbers)))
@@ -354,7 +357,6 @@ observeEvent(input$file1, {
       identified_results <- data.frame(matrix(ncol = length(rout), nrow = length(std_wavenumbers)))
       identified_results[,"wavenumber"] <- std_wavenumbers
       for(column in 1:length(rout)){ #perhaps turn this into a multithreaded apply function.
-        if(map_category$data == "envi" & column == 1) next
         print(column)
         preprocessed$data <- if(map_category$data == "rdata"){
                 data.frame(wavenumber = std_wavenumbers, 
@@ -362,7 +364,7 @@ observeEvent(input$file1, {
                                         filter(!is.na(intensity))
         }
         else if(map_category$data == "envi"){
-            data.frame(wavenumber = rout[["wavenumbers"]], 
+            data.frame(wavenumber = wavenumbers$data, 
                        intensity = rout[[column]]) %>%
                 filter(!is.na(intensity))
         }
