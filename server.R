@@ -320,17 +320,30 @@ observeEvent(input$file1, {
       return(NULL)
     } 
     else if(grepl("\\.zip$", ignore.case = T, filename$data)){
-      match_results <- data.frame(names = colnames(rout))
-      processed_results <- data.frame(matrix(ncol = ncol(rout), nrow = length(std_wavenumbers)))
+      match_results <- data.frame(names = if(map_category$data == "multiple"){1:length(rout)} else if(map_category$data == "rdata"){colnames(rout)} else{colnames(rout)[-1]})
+      processed_results <- data.frame(matrix(ncol = length(rout), nrow = length(std_wavenumbers)))
       processed_results[,"wavenumber"] <- std_wavenumbers
-      matched_results <- data.frame(matrix(ncol = ncol(rout), nrow = length(std_wavenumbers)))
+      matched_results <- data.frame(matrix(ncol = length(rout), nrow = length(std_wavenumbers)))
       matched_results[,"wavenumber"] <- std_wavenumbers
-      identified_results <- data.frame(matrix(ncol = ncol(rout), nrow = length(std_wavenumbers)))
+      identified_results <- data.frame(matrix(ncol = length(rout), nrow = length(std_wavenumbers)))
       identified_results[,"wavenumber"] <- std_wavenumbers
-      for(column in 1:ncol(rout)){ #perhaps turn this into a multithreaded apply function.
+      for(column in 1:length(rout)){ #perhaps turn this into a multithreaded apply function.
+        if(map_category$data == "envi" & column == 1) next
         print(column)
-        preprocessed$data <- data.frame(wavenumber = std_wavenumbers, intensity = rout[[column]]) %>%
-          filter(!is.na(intensity))
+        preprocessed$data <- if(map_category$data == "rdata"){
+                data.frame(wavenumber = std_wavenumbers, 
+                                        intensity = rout[[column]]) %>%
+                                        filter(!is.na(intensity))
+        }
+        else if(map_category$data == "envi"){
+            data.frame(wavenumber = rout[["wavenumbers"]], 
+                       intensity = rout[[column]]) %>%
+                filter(!is.na(intensity))
+        }
+        else{
+            rout[[column]] %>%
+                filter(!is.na(intensity))
+        }
         match_results[column, "identity"] <- top_matches() %>% slice(1) %>% select(1) %>% unlist(.)
         match_results[column, "correlation"] <- top_matches() %>% slice(1) %>% select(2) %>% unlist(.)
         match_results[column, "match_id"] <- top_matches() %>% slice(1) %>% select(3) %>% unlist(.)
