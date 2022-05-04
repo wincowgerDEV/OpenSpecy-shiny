@@ -283,7 +283,8 @@ server <- shinyServer(function(input, output, session) {
       paste(digest(Sys.info()), digest(sessionInfo()), sep = "/")
     }
   })
-
+  
+  single_data <- reactiveValues(data = NULL)
   map_category <- reactiveValues(data = NULL)
   preprocessed <- reactiveValues(data = NULL)
   wavenumbers <- reactiveValues(data = NULL)
@@ -321,12 +322,15 @@ observeEvent(input$file1, {
   withProgress(message = progm, value = 3/3, {
       if(grepl("(\\.csv$)|(\\.asp$)|(\\.spa$)|(\\.spc$)|(\\.jdx$)|(\\.[0-9]$)", ignore.case = T, filename$data)){
           rout <- read_spectrum(filename = filename$data, share = share, id = id())
+          single_data$data <- TRUE
       }
       
       else if(grepl("\\.zip$", ignore.case = T, filename$data)) {
+          single_data$data <- NULL
           rout <- read_map(filename = filename$data, share = share, id = id())
           map_category$data <- map_type(filename = filename$data)
           if(map_category$data == "envi"){
+              files <- unzip(zipfile = filename$data, list = TRUE)
               wavenumbers$data <- hyperSpec::read.ENVI.Nicolet(file = paste0(tempdir(), "/", files$Name[grepl("\\.dat$", ignore.case = T, files$Name)]),
                                                                headerfile = paste0(tempdir(), "/", files$Name[grepl("\\.hdr$", ignore.case = T, files$Name)]))@wavelength
 
@@ -633,6 +637,7 @@ match_metadata <- reactive({
     req(input$file1)
     if(grepl("(\\.csv$)|(\\.asp$)|(\\.spa$)|(\\.spc$)|(\\.jdx$)|(\\.[0-9]$)",
               ignore.case = T, filename$data)){
+         req(single_data$data)
       plot_ly(type = 'scatter', mode = 'lines', source = "B") %>%
         add_trace(data = DataR_plot(), x = ~wavenumber, y = ~intensity,
                   name = 'Matched Spectrum',
@@ -660,7 +665,7 @@ match_metadata <- reactive({
       else if(grepl("(\\.zip$)", ignore.case = T, filename$data)){
         req(map_data$data)
         base <- sqrt(nrow(map_data$data))
-        bind_matches <- if(map_type$data == "envi"){
+        bind_matches <- if(map_category$data == "envi"){
             cbind(map_data$data, coords$data)
         }
         else{
