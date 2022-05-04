@@ -471,23 +471,27 @@ observeEvent(input$reset, {
       if(input$Data == "uploaded") {
       data() %>% 
         right_join(data.table(wavenumber = std_wavenumbers)) %>%
+        arrange(wavenumber) %>% #Important, NAs will move the wavenumbers if this isn't done.
         pull(intensity)
     }
     else if(input$Data == "processed" & input$active_preprocessing) {
       baseline_data() %>% 
         right_join(data.table(wavenumber = std_wavenumbers)) %>%
+        arrange(wavenumber) %>% 
         pull(intensity)
     }
     else if(input$Data == "derivative" & input$active_preprocessing) {
       baseline_data() %>% 
         mutate(intensity = process_cor_os(intensity)) %>%
         right_join(data.table(wavenumber = std_wavenumbers)) %>%
+        arrange(wavenumber) %>% 
         pull(intensity)
     }
     else if(input$Data == "derivative" & !input$active_preprocessing) {
       data() %>% 
         mutate(intensity = process_cor_os(intensity)) %>%
         right_join(data.table(wavenumber = std_wavenumbers)) %>%
+        arrange(wavenumber) %>% 
         pull(intensity)
     }
     else{ #Should change this to just forcing that this option isn't selectable. 
