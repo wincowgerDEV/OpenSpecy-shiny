@@ -23,6 +23,7 @@ library(curl)
 library(config)
 library(mongolite)
 library(loggit)
+library(hyperSpec)
 if(droptoken) library(rdrop2)
 
 #devtools::install_github("wincowgerDEV/OpenSpecy")
@@ -116,7 +117,6 @@ process_cor_os <- function(x){
     c(
       scale( 
         signal::sgolayfilt(x,
-                           #approx(x = x, y = y, xout = seq(round_up(min(x), 5), round_down(max(x), 5), by = 5))$y#,
                            p = 3, n = 11, m = 1
         )
       ) 
@@ -125,58 +125,102 @@ process_cor_os <- function(x){
 }
 
 clean_spec <- function(x, y){
-  #abs(
   c(
-    #scale( 
-    #signal::sgolayfilt(
-    approx(x = x, y = y, xout = seq(round_any(min(x), 5, ceiling), round_any(max(x), 5, floor), by = 5))$y#,
-    #p = 3, n = 11, m = 1
-    #      )
-    #) 
-    #  )
+    approx(x = x, y = y, xout = seq(round_any(min(x), 5, ceiling), round_any(max(x), 5, floor), by = 5))$y
   )
 }
 
 is_empty <- function(x, first.only = TRUE, all.na.empty = TRUE) {
-  # do we have a valid vector?
-  if (!is.null(x)) {
-    # if it's a character, check if we have only one element in that vector
-    if (is.character(x)) {
-      # characters may also be of length 0
-      if (length(x) == 0) return(TRUE)
-      # else, check all elements of x
-      zero_len <- nchar(x) == 0
-      # return result for multiple elements of character vector
-      if (first.only) {
-        zero_len <- .is_true(zero_len[1])
-        if (length(x) > 0) x <- x[1]
-      } else {
-        return(unname(zero_len))
-      }
-      # we have a non-character vector here. check for length
-    } else if (is.list(x)) {
-      x <- purrr::compact(x)
-      zero_len <- length(x) == 0
-    } else {
-      zero_len <- length(x) == 0
+    # do we have a valid vector?
+    if (!is.null(x)) {
+        # if it's a character, check if we have only one element in that vector
+        if (is.character(x)) {
+            # characters may also be of length 0
+            if (length(x) == 0) return(TRUE)
+            # else, check all elements of x
+            zero_len <- nchar(x) == 0
+            # return result for multiple elements of character vector
+            if (first.only) {
+                zero_len <- .is_true(zero_len[1])
+                if (length(x) > 0) x <- x[1]
+            } else {
+                return(unname(zero_len))
+            }
+            # we have a non-character vector here. check for length
+        } else if (is.list(x)) {
+            x <- purrr::compact(x)
+            zero_len <- length(x) == 0
+        } else {
+            zero_len <- length(x) == 0
+        }
     }
-  }
-  
-  any(is.null(x) || zero_len || (all.na.empty && all(is.na(x))))
+    
+    any(is.null(x) || zero_len || (all.na.empty && all(is.na(x))))
 }
 
 .is_true <- function(x) {
-  is.logical(x) && length(x) == 1L && !is.na(x) && x
+    is.logical(x) && length(x) == 1L && !is.na(x) && x
 }
 
+read_spectrum <- function(filename, share, id) {
+    if(grepl("\\.csv$", ignore.case = T, filename)) {
+        tryCatch(read_text(filename, method = "fread",
+                                   share = share,
+                                   id = id),
+                         error = function(e) {e})
+    }
+    else if(grepl("\\.[0-9]$", ignore.case = T, filename)) {
+        tryCatch(read_0(filename, share = share, id = id),
+                         error = function(e) {e})
+    }
+    
+    else {
+        ex <- strsplit(basename(filename), split="\\.")[[1]]
+        
+        tryCatch(do.call(paste0("read_", tolower(ex[-1])),
+                                 list(filename, share = share, id = id)),
+                         error = function(e) {e})
+    }
+}
 
+map_type <- function(filename){
+    files <- unzip(zipfile = filename, list = TRUE)
+    if(nrow(files) == 2 & any(grepl("\\.dat$", ignore.case = T, files$Name)) & any(grepl("\\.hdr$", ignore.case = T, files$Name))){
+        "envi"
+    }
+    else if(nrow(files) == 1 & any(grepl("\\.RData$", ignore.case = T, files$Name))){
+        "rdata"
+    }
+    else{
+        "multiple"
+    }
+}
 
+read_map <- function(filename, share, id){
+    files <- unzip(zipfile = filename, list = TRUE)
+    unzip(filename, exdir = tempdir())
+    if(nrow(files) == 2 & any(grepl("\\.dat$", ignore.case = T, files$Name)) & any(grepl("\\.hdr$", ignore.case = T, files$Name))){
+        transpose(as.data.table(hyperSpec::read.ENVI.Nicolet(file = paste0(tempdir(), "/", files$Name[grepl("\\.dat$", ignore.case = T, files$Name)]),
+                                                                     headerfile = paste0(tempdir(), "/", files$Name[grepl("\\.hdr$", ignore.case = T, files$Name)]))@data$spc), keep.names = "wavenumbers") %>%
+            mutate(wavenumbers = as.numeric(wavenumbers))
+    }
+    else if(nrow(files) == 1 & any(grepl("\\.RData$", ignore.case = T, files$Name))){
+        assign("file", base::get(load(paste0(tempdir(), "/", files$Name))))
+        file
+    }
+    #else if(nrow(files) == 1 & any(grepl("\\.csv$", ignore.case = T, files$Name))){
+    #    fread
+    #}
+    else{
+        lapply(paste0(tempdir(), "/", files$Name), read_spectrum, share = share, id = id) 
+    }
+}
+                          
 
 # This is the actual server functions, all functions before this point are not
 # reactive
 server <- shinyServer(function(input, output, session) {
-  #For theming
-  #bs_themer()
+    
   session_id <- digest(runif(10))
 
   # Loading overlay
@@ -221,7 +265,7 @@ server <- shinyServer(function(input, output, session) {
     }
   })
 
-  
+  map_category <- reactiveValues(data = NULL)
   preprocessed <- reactiveValues(data = NULL)
   map_data <- reactiveValues(data = NULL)
   filename <- reactiveValues(data = NULL)
@@ -235,7 +279,7 @@ observeEvent(input$file1, {
   file <- input$file1
   filename$data <- as.character(file$datapath)
   
-  if (!grepl("(\\.csv$)|(\\.asp$)|(\\.spa$)|(\\.spc$)|(\\.jdx$)|(\\.RData$)|(\\.[0-9]$)",
+  if (!grepl("(\\.csv$)|(\\.asp$)|(\\.spa$)|(\\.spc$)|(\\.jdx$)|(\\.RData$)|(\\.zip$)|(\\.[0-9]$)",
              ignore.case = T, filename$data)) {
     show_alert(
       title = "Data type not supported!",
@@ -244,7 +288,7 @@ observeEvent(input$file1, {
       type = "warning")
     return(NULL)
   }
-  
+ 
   if (input$share_decision & curl::has_internet()) {
     share <- conf$share
     progm <- "Sharing Spectrum to Community Library"
@@ -254,27 +298,14 @@ observeEvent(input$file1, {
   }
   
   withProgress(message = progm, value = 3/3, {
-    if(grepl("\\.csv$", ignore.case = T, filename$data)) {
-      rout <- tryCatch(read_text(filename$data, method = "fread",
-                                 share = share,
-                                 id = id()),
-                       error = function(e) {e})
-    }
-    else if(grepl("\\.[0-9]$", ignore.case = T, filename$data)) {
-      rout <- tryCatch(read_0(filename$data, share = share, id = id()),
-                       error = function(e) {e})
-    }
-    else if(grepl("\\.RData$", ignore.case = T, filename$data)) {
-      load(filename$data) 
-      rout <- library #Assuming library as the name
-    }
-    else {
-      ex <- strsplit(basename(filename$data), split="\\.")[[1]]
+      if(grepl("(\\.csv$)|(\\.asp$)|(\\.spa$)|(\\.spc$)|(\\.jdx$)|(\\.[0-9]$)", ignore.case = T, filename$data)){
+          rout <- read_spectrum(filename = filename$data, share = share, id = id())
+      }
       
-      rout <- tryCatch(do.call(paste0("read_", tolower(ex[-1])),
-                               list(filename$data, share = share, id = id())),
-                       error = function(e) {e})
-    }
+      else if(grepl("\\.zip$", ignore.case = T, filename$data)) {
+          rout <- read_map(filename = filename$data, share = share, id = id())
+          map_category$data <- map_type(filename = filename$data)
+      }
     
     if (inherits(rout, "simpleError")) {
       reset("file1")
@@ -288,7 +319,7 @@ observeEvent(input$file1, {
       )
       return(NULL)
     } 
-    else if(grepl("\\.RData$", ignore.case = T, filename$data)){
+    else if(grepl("\\.zip$", ignore.case = T, filename$data)){
       match_results <- data.frame(names = colnames(rout))
       processed_results <- data.frame(matrix(ncol = ncol(rout), nrow = length(std_wavenumbers)))
       processed_results[,"wavenumber"] <- std_wavenumbers
@@ -296,7 +327,7 @@ observeEvent(input$file1, {
       matched_results[,"wavenumber"] <- std_wavenumbers
       identified_results <- data.frame(matrix(ncol = ncol(rout), nrow = length(std_wavenumbers)))
       identified_results[,"wavenumber"] <- std_wavenumbers
-      for(column in 1:ncol(rout)){
+      for(column in 1:ncol(rout)){ #perhaps turn this into a multithreaded apply function.
         print(column)
         preprocessed$data <- data.frame(wavenumber = std_wavenumbers, intensity = rout[[column]]) %>%
           filter(!is.na(intensity))
@@ -324,7 +355,7 @@ observeEvent(input$file1, {
   # Corrects spectral intensity units using the user specified correction
   data <- reactive({
     req(preprocessed$data)
-    adj_intens(data.table(wavenumber = seq(round_any(min(preprocessed$data$wavenumber), 5, ceiling), round_any(max(preprocessed$data$wavenumber), 5, floor), by = 5), intensity = clean_spec(preprocessed$data$wavenumber, preprocessed$data$intensity)), type = input$intensity_corr)  # j is not limited to just aggregations also expansions
+    adj_intens(data.table(wavenumber = seq(round_any(min(preprocessed$data$wavenumber), 5, ceiling), round_any(max(preprocessed$data$wavenumber), 5, floor), by = 5), intensity = clean_spec(preprocessed$data$wavenumber, preprocessed$data$intensity)), type = input$intensity_corr)
     })
 
   #Preprocess Spectra ----
@@ -385,14 +416,10 @@ observeEvent(input$go, {
 })
 
 observeEvent(input$reset, {
-  #js$resetClick()
-  #runjs("Shiny.setInputValue('plotly_selected-B', null);")
   trace$data <- NULL
 })
 
-#  output$text <- renderPrint({
-#   trace$data#
-#    })
+
 
   # Choose which spectrum to use
   DataR <- reactive({
@@ -589,7 +616,7 @@ match_metadata <- reactive({
         config(modeBarButtonsToAdd = list("drawopenpath", "eraseshape" ))
     }
     
-      else if(grepl("(\\.RData$)", ignore.case = T, filename$data)){
+      else if(grepl("(\\.zip$)", ignore.case = T, filename$data)){
         req(map_data$data)
         base <- sqrt(nrow(map_data$data))
         bind_matches <- cbind(map_data$data, expand.grid(1:round_any(base, 1, ceiling), 1:round_any(base, 1, ceiling))[1:nrow(map_data$data),])
