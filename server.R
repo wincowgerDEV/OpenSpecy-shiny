@@ -671,19 +671,19 @@ match_metadata <- reactive({
   ## Download own data ----
   output$downloadData <- downloadHandler(
     filename = function() {paste('data-processed-', human_ts(), '.csv', sep='')},
-    content = function(file) {fwrite(if(grepl("(\\.RData$)", ignore.case = T, filename$data)){processed_map_data$data}else{baseline_data()}, file)}
+    content = function(file) {fwrite(if(grepl("(\\.zip$)", ignore.case = T, filename$data)){processed_map_data$data}else{baseline_data()}, file)}
   )
   
   ## Download selected data ----
   output$download_selected <- downloadHandler(
     filename = function() {paste('data-selected-', human_ts(), '.csv', sep='')},
-    content = function(file) {fwrite(if(grepl("(\\.RData$)", ignore.case = T, filename$data)){identified_map_data$data}else{match_selected()}, file)}
+    content = function(file) {fwrite(if(grepl("(\\.zip$)", ignore.case = T, filename$data)){identified_map_data$data}else{match_selected()}, file)}
   )
 
   ## Download matched data ----
   output$download_matched <- downloadHandler(
     filename = function() {paste('data-matched-', human_ts(), '.csv', sep='')},
-    content = function(file) {fwrite(if(grepl("(\\.RData$)", ignore.case = T, filename$data)){matched_map_data$data}else{DataR_plot()}, file)}
+    content = function(file) {fwrite(if(grepl("(\\.zip$)", ignore.case = T, filename$data)){matched_map_data$data}else{DataR_plot()}, file)}
   )
   
   ## Download matched data ----
