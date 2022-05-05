@@ -543,7 +543,9 @@ ui <- fluidPage(
                                                column(12, 
                                                     style = columnformat(),
                                                     fluidRow(style = "padding:1rem",
-                                                             DT::dataTableOutput("event")
+                                                             DT::dataTableOutput("event"),
+                                                             plotlyOutput("selected_plot")
+                                                             
                                                     )
                                               )
                                              )
@@ -802,7 +804,6 @@ ui <- fluidPage(
                                                                       plotlyOutput("MyPlotC"),
                                                                       DT::dataTableOutput("eventmetadata")),
                                                                       verbatimTextOutput("event_test"),
-                                                                      plotlyOutput("selected_plot"),
                                                                       style = bodyformat()
                                                 )
                                 

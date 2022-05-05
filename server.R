@@ -601,6 +601,7 @@ observeEvent(input$reset, {
   
   # Create the data tables for all matches
   output$event <- DT::renderDataTable({
+    req(!grepl("\\.zip$", ignore.case = T, filename$data))
     datatable(top_matches(),
               options = list(searchHighlight = TRUE,
                              scrollX = TRUE,
@@ -620,7 +621,8 @@ match_metadata <- reactive({
 })
     #Metadata for the selected value
   output$eventmetadata <- DT::renderDataTable({
-    # Get data from find_spec
+    if(!grepl("\\.zip$", ignore.case = T, filename$data)){
+        # Get data from find_spec
     datatable(match_metadata(),
               escape = FALSE,
               options = list(dom = 't', bSort = F, 
@@ -630,15 +632,34 @@ match_metadata <- reactive({
               rownames = FALSE,
               style = 'bootstrap', caption = "Selection Metadata",
               selection = list(mode = 'none'))
+    }
+      else{
+          clickData <- event_data("plotly_click", source = "heat_plot")
+          if (is.null(clickData)) return(NULL)
+          datatable(meta %>%
+                        filter(sample_name == map_data$data[[clickData[["pointNumber"]] + 1, "match_id"]])  %>%
+                        select(where(~!any(is_empty(.)))), #Something like filter whole library. 
+                    escape = FALSE,
+                    options = list(dom = 't', bSort = F, 
+                                   scrollX = TRUE,
+                                   lengthChange = FALSE,
+                                   info = FALSE),
+                    rownames = FALSE,
+                    style = 'bootstrap', caption = "Selection Metadata",
+                    selection = list(mode = 'none'))
+      }
+    
   })
   
   output$selected_plot <- renderPlotly({
+      req(grepl("\\.zip$", ignore.case = T, filename$data))
       clickData <- event_data("plotly_click", source = "heat_plot")
       if (is.null(clickData)) return(NULL)
       plot_ly(type = 'scatter', mode = 'lines') %>%
-        add_trace(x = std_wavenumbers, y = matched_map_data$data[[clickData[["pointNumber"]] + 1]]) %>%
-        add_trace(x = std_wavenumbers, y = identified_map_data$data[[clickData[["pointNumber"]] + 1]])
-      
+        add_trace(x = std_wavenumbers, y = matched_map_data$data[[clickData[["pointNumber"]] + 1]],
+                  name = paste0('Selected', "(", clickData[["x"]], ",", clickData[["y"]], ")")) %>%
+        add_trace(x = std_wavenumbers, y = identified_map_data$data[[clickData[["pointNumber"]] + 1]],
+                  name = map_data$data[[clickData[["pointNumber"]] + 1, "identity"]])
   })
 
   # Display matches based on table selection ----
