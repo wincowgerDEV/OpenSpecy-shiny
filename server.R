@@ -667,7 +667,7 @@ match_metadata <- reactive({
     req(input$file1)
     if(grepl("(\\.csv$)|(\\.asp$)|(\\.spa$)|(\\.spc$)|(\\.jdx$)|(\\.[0-9]$)",
               ignore.case = T, filename$data)){
-         req(single_data$data)
+        #req(single_data$data)
       plot_ly(type = 'scatter', mode = 'lines', source = "B") %>%
         add_trace(data = DataR_plot(), x = ~wavenumber, y = ~intensity,
                   name = 'Matched Spectrum',
@@ -693,7 +693,7 @@ match_metadata <- reactive({
     }
     
       else if(grepl("(\\.zip$)", ignore.case = T, filename$data)){
-        req(map_data$data)
+        #req(map_data$data)
         base <- sqrt(nrow(map_data$data))
         bind_matches <- if(map_category$data == "envi"){
             cbind(map_data$data, coords$data)
@@ -786,6 +786,7 @@ match_metadata <- reactive({
       hide("share_meta")
     }
   })
+  
 
   observe({
     if (input$share_decision) {
