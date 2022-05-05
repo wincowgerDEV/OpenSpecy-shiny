@@ -396,7 +396,6 @@ observeEvent(input$file1, {
 })
 })
 
-
   # Corrects spectral intensity units using the user specified correction
   data <- reactive({
     req(preprocessed$data)
