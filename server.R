@@ -543,6 +543,7 @@ observeEvent(input$reset, {
   
   match_selected <- reactive({# Default to first row if not yet clicked
     req(input$file1)
+    req(input$active_identification)
         id_select <- ifelse(is.null(input$event_rows_selected),
                             MatchSpectra()[[1,
                                             "sample_name"]],
@@ -656,10 +657,16 @@ match_metadata <- reactive({
       clickData <- event_data("plotly_click", source = "heat_plot")
       if (is.null(clickData)) return(NULL)
       plot_ly(type = 'scatter', mode = 'lines') %>%
-        add_trace(x = std_wavenumbers, y = matched_map_data$data[[clickData[["pointNumber"]] + 1]],
+        add_trace(x = std_wavenumbers, y = make_rel(matched_map_data$data[[clickData[["pointNumber"]] + 1]], na.rm = T),
                   name = paste0('Selected', "(", clickData[["x"]], ",", clickData[["y"]], ")")) %>%
-        add_trace(x = std_wavenumbers, y = identified_map_data$data[[clickData[["pointNumber"]] + 1]],
-                  name = map_data$data[[clickData[["pointNumber"]] + 1, "identity"]])
+        add_trace(x = std_wavenumbers, y = make_rel(identified_map_data$data[[clickData[["pointNumber"]] + 1]], na.rm = T),
+                  name = map_data$data[[clickData[["pointNumber"]] + 1, "identity"]]) %>%
+          layout(yaxis = list(title = "absorbance intensity [-]"),
+                 xaxis = list(title = "wavenumber [cm<sup>-1</sup>]",
+                              autorange = "reversed"),
+                 plot_bgcolor = 'rgb(17,0,73)',
+                 paper_bgcolor = 'rgba(0,0,0,0.5)',
+                 font = list(color = '#FFFFFF'))
   })
 
   # Display matches based on table selection ----
@@ -708,7 +715,13 @@ match_metadata <- reactive({
                 z = bind_matches$correlation,
                 text = paste0(bind_matches$names, bind_matches$identity)
             ) %>%
-            event_register("plotly_click")
+            event_register("plotly_click") %>%
+            layout(plot_bgcolor = 'rgb(17,0,73)',
+                   paper_bgcolor = 'rgba(0,0,0,0.5)',
+                   font = list(color = '#FFFFFF'))
+      }
+      else{
+          NULL
       }
     })
 
