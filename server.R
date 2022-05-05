@@ -594,6 +594,12 @@ observeEvent(input$reset, {
   })
 
   top_matches <- reactive({
+      clickData <- event_data("plotly_click", source = "heat_plot")
+      if (is.null(clickData)) return(NULL)
+      
+      # Obtain the clicked x/y variables and fit linear model
+      vars <- c(clickData[["x"]], clickData[["y"]])
+      
       MatchSpectra() %>%
           dplyr::rename("Material" = SpectrumIdentity) %>%
           dplyr::rename("Pearson's r" = rsq) %>%
@@ -663,7 +669,7 @@ match_metadata <- reactive({
                plot_bgcolor = 'rgb(17,0,73)',
                paper_bgcolor = 'rgba(0,0,0,0.5)',
                font = list(color = '#FFFFFF')) %>%
-        config(modeBarButtonsToAdd = list("drawopenpath", "eraseshape" ))
+        config(modeBarButtonsToAdd = list("drawopenpath", "eraseshape"))
     }
     
       else if(grepl("(\\.zip$)", ignore.case = T, filename$data)){
@@ -675,11 +681,13 @@ match_metadata <- reactive({
         else{
             cbind(map_data$data, expand.grid(x = 1:round_any(base, 1, ceiling), y = 1:round_any(base, 1, ceiling))[1:nrow(map_data$data),])
         }
-        ggplotly(
-          bind_matches %>%
-            ggplot() +
-            geom_raster(aes(x = x, y = y, fill = correlation, text = names, label = identity))
-        )
+        plot_ly(source = "heat_plot") %>%
+            add_heatmap(
+                x = bind_matches$x,
+                y = bind_matches$y, 
+                z = bind_matches$correlation,
+                text = paste0(bind_matches$names, bind_matches$identity)
+            )
       }
     })
 
