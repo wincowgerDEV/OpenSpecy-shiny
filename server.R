@@ -542,14 +542,10 @@ observeEvent(input$reset, {
   })
   
   match_selected <- reactive({# Default to first row if not yet clicked
-    if(!length(input$event_rows_selected) | !input$active_identification) {
-    data.table(wavenumber = numeric(), 
-               intensity = numeric(), 
-               SpectrumIdentity = factor())
-      }
-      else{
+    req(input$file1)
         id_select <- ifelse(is.null(input$event_rows_selected),
-                      1,
+                            MatchSpectra()[[1,
+                                            "sample_name"]],
                       MatchSpectra()[[input$event_rows_selected,
                                       "sample_name"]])
     # Get data from find_spec
@@ -562,10 +558,7 @@ observeEvent(input$reset, {
       select(wavenumber, intensity, SpectrumIdentity) %>%
       mutate(intensity = make_rel(intensity, na.rm = T)) #%>%
       #dplyr::filter(!is.na(intensity))
-      }
-    
-  
-  })
+      })
   
   # Identify Spectra function ----
   # Joins their spectrum to the internal database and computes correlation.
