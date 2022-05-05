@@ -501,7 +501,7 @@ ui <- fluidPage(
                                                    placeholder = ".csv, .asp, .jdx, .spc, .spa, .0",
                                                    accept=c("text/csv",
                                                             "text/comma-separated-values,text/plain",
-                                                            ".csv", ".asp", ".spc", ".jdx", ".spa", ".0", ".RData")),
+                                                            ".csv", ".asp", ".spc", ".jdx", ".spa", ".0", ".zip")),
                                          prettySwitch("share_decision",
                                                       label = "Share Your Data?",
                                                       inline = T,
@@ -543,6 +543,7 @@ ui <- fluidPage(
                                                column(12, 
                                                     style = columnformat(),
                                                     fluidRow(style = "padding:1rem",
+                                                             #uiOutput("table_plot"),
                                                              DT::dataTableOutput("event"),
                                                              plotlyOutput("selected_plot")
                                                              
