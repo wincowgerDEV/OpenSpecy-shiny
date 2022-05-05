@@ -801,6 +801,7 @@ ui <- fluidPage(
                                                 plotcontainerfunction(h4(id = "placeholder1", "Upload some data to get started..."), 
                                                                       plotlyOutput("MyPlotC"),
                                                                       DT::dataTableOutput("eventmetadata")),
+                                                verbatimTextOutput("event_test"),
                                                                       style = bodyformat()
                                                 )
                                 

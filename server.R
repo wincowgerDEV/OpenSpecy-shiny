@@ -594,11 +594,11 @@ observeEvent(input$reset, {
   })
 
   top_matches <- reactive({
-      clickData <- event_data("plotly_click", source = "heat_plot")
-      if (is.null(clickData)) return(NULL)
+      #clickData <- event_data("plotly_click", source = "heat_plot")
+      #if (is.null(clickData)) return(NULL)
       
       # Obtain the clicked x/y variables and fit linear model
-      vars <- c(clickData[["x"]], clickData[["y"]])
+     # vars <- c(clickData[["x"]], clickData[["y"]])
       
       MatchSpectra() %>%
           dplyr::rename("Material" = SpectrumIdentity) %>%
@@ -687,7 +687,8 @@ match_metadata <- reactive({
                 y = bind_matches$y, 
                 z = bind_matches$correlation,
                 text = paste0(bind_matches$names, bind_matches$identity)
-            )
+            ) %>%
+            event_register("plotly_click")
       }
     })
 
@@ -922,6 +923,11 @@ match_metadata <- reactive({
       }
     }
 
+  })
+  
+  #Test ----
+  output$event_test <- renderPrint({
+      event_data("plotly_click", source = "heat_plot")
   })
 
 })
