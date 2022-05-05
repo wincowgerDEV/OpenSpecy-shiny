@@ -383,7 +383,7 @@ observeEvent(input$file1, {
             right_join(data.table(wavenumber = std_wavenumbers)) %>%
             pull(intensity)
         matched_results[,column] <- DataR()
-        identified_results[,column] <- match_selected()[,2]
+        identified_results[,column] <- match_selected()[["intensity"]]
       }
       map_data$data <- match_results
       processed_map_data$data <- processed_results
@@ -463,8 +463,6 @@ observeEvent(input$go, {
 observeEvent(input$reset, {
   trace$data <- NULL
 })
-
-
 
   # Choose which spectrum to use
   DataR <- reactive({
@@ -640,6 +638,15 @@ match_metadata <- reactive({
               rownames = FALSE,
               style = 'bootstrap', caption = "Selection Metadata",
               selection = list(mode = 'none'))
+  })
+  
+  output$selected_plot <- renderPlotly({
+      clickData <- event_data("plotly_click", source = "heat_plot")
+      if (is.null(clickData)) return(NULL)
+      plot_ly(type = 'scatter', mode = 'lines') %>%
+        add_trace(x = std_wavenumbers, y = matched_map_data$data[[clickData[["pointNumber"]] + 1]]) %>%
+        add_trace(x = std_wavenumbers, y = identified_map_data$data[[clickData[["pointNumber"]] + 1]])
+      
   })
 
   # Display matches based on table selection ----
