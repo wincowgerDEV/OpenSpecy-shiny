@@ -284,6 +284,7 @@ server <- shinyServer(function(input, output, session) {
     }
   })
   
+  #Reactive Values ----
   single_data <- reactiveValues(data = NULL)
   map_category <- reactiveValues(data = NULL)
   preprocessed <- reactiveValues(data = NULL)
@@ -294,6 +295,9 @@ server <- shinyServer(function(input, output, session) {
   matched_map_data <- reactiveValues(data = NULL)
   identified_map_data <- reactiveValues(data = NULL)
   coords <- reactiveValues(data = NULL)
+  trace <- reactiveValues(data = NULL)
+  validation <- reactiveValues(data = NULL)
+  
   
 observeEvent(input$file1, {
   # Read in data when uploaded based on the file type
@@ -438,11 +442,8 @@ observeEvent(input$file1, {
           } else .$intensity)
     }
     }
-
   })
 
-
-trace <- reactiveValues(data = NULL)
 
 observeEvent(input$go, {
   pathinfo <- event_data(event = "plotly_relayout", source = "B")$shapes$path
@@ -789,28 +790,6 @@ match_metadata <- reactive({
   ## Sharing data ----
   # Hide functions which shouldn't exist when there is no internet or
   # when the API token doesn't exist
-  observe({
-    if((conf$share == "dropbox" & droptoken) | curl::has_internet()) {
-      show("share_decision")
-      show("share_meta")
-    }
-    else {
-      hide("share_decision")
-      hide("share_meta")
-    }
-  })
-  
-
-  observe({
-    if (input$share_decision) {
-      show("share_meta")
-      } else {
-        hide("share_meta")
-        sapply(names(namekey)[c(1:24,32)], function(x) hide(x))
-        hide("submit")
-      }
-  })
-
 
   observe({
     if (input$baseline_selection == "Polynomial") {
@@ -863,8 +842,6 @@ match_metadata <- reactive({
   })
 
   #Validate the app functionality for default identification ----
-  
-  validation <- reactiveValues(data = NULL)
   
   observeEvent(input$validate, {
     load("data/library.RData") 
