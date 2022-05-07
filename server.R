@@ -47,6 +47,18 @@ if(conf$log) {
   }
 }
 
+
+render_tweet <- function(x){renderUI({
+    div(class = "inline-block",
+        style = "display:inline-block; margin-left:4px;",
+        tags$blockquote(class = "twitter-tweet", `data-theme` = "dark",
+                        style = "width: 600px; display:inline-block;" ,
+                        tags$a(href = x)),
+        tags$script('twttr.widgets.load(document.getElementById("tweet"));')
+    )
+})
+}
+
 # Load all data ----
 load_data <- function() {
 
@@ -196,42 +208,33 @@ map_type <- function(filename){
     }
 }
 
-read_coordinates <- function(filename, share, id){
+read_map <- function(filename, share, id, std_wavenumbers){
     files <- unzip(zipfile = filename, list = TRUE)
     unzip(filename, exdir = tempdir())
     if(nrow(files) == 2 & any(grepl("\\.dat$", ignore.case = T, files$Name)) & any(grepl("\\.hdr$", ignore.case = T, files$Name))){
-        transpose(as.data.table(hyperSpec::read.ENVI.Nicolet(file = paste0(tempdir(), "/", files$Name[grepl("\\.dat$", ignore.case = T, files$Name)]),
-                                                             headerfile = paste0(tempdir(), "/", files$Name[grepl("\\.hdr$", ignore.case = T, files$Name)]))@data$spc), keep.names = "wavenumbers") %>%
-            mutate(wavenumbers = as.numeric(wavenumbers))
+        hs_envi <- hyperSpec::read.ENVI.Nicolet(file = paste0(tempdir(), "/", files$Name[grepl("\\.dat$", ignore.case = T, files$Name)]),
+                                                headerfile = paste0(tempdir(), "/", files$Name[grepl("\\.hdr$", ignore.case = T, files$Name)]))@data
+        
+        list(transpose(as.data.table(hs_envi$spc), keep.names = "wavenumber") %>%
+                 mutate(wavenumber = as.numeric(wavenumber)), 
+             data.table(x = hs_envi$x, y = hs_envi$y))
     }
     else if(nrow(files) == 1 & any(grepl("\\.RData$", ignore.case = T, files$Name))){
         assign("file", base::get(load(paste0(tempdir(), "/", files$Name))))
-        file
+        base <- sqrt(ncol(file)-1)
+        file$wavenumber <- std_wavenumbers
+        list(file %>%
+                 select(wavenumber, everything()), expand.grid(x = 1:round_any(base, 1, ceiling), y = 1:round_any(base, 1, ceiling))[1:(ncol(file)-1),])
     }
     #else if(nrow(files) == 1 & any(grepl("\\.csv$", ignore.case = T, files$Name))){
     #    fread
     #}
     else{
-        lapply(paste0(tempdir(), "/", files$Name), read_spectrum, share = share, id = id) 
-    }
-}
-
-read_map <- function(filename, share, id){
-    files <- unzip(zipfile = filename, list = TRUE)
-    unzip(filename, exdir = tempdir())
-    if(nrow(files) == 2 & any(grepl("\\.dat$", ignore.case = T, files$Name)) & any(grepl("\\.hdr$", ignore.case = T, files$Name))){
-        transpose(as.data.table(hyperSpec::read.ENVI.Nicolet(file = paste0(tempdir(), "/", files$Name[grepl("\\.dat$", ignore.case = T, files$Name)]),
-                                                                     headerfile = paste0(tempdir(), "/", files$Name[grepl("\\.hdr$", ignore.case = T, files$Name)]))@data$spc))
-    }
-    else if(nrow(files) == 1 & any(grepl("\\.RData$", ignore.case = T, files$Name))){
-        assign("file", base::get(load(paste0(tempdir(), "/", files$Name))))
-        file
-    }
-    #else if(nrow(files) == 1 & any(grepl("\\.csv$", ignore.case = T, files$Name))){
-    #    fread
-    #}
-    else{
-        lapply(paste0(tempdir(), "/", files$Name), read_spectrum, share = share, id = id) 
+        base <- sqrt(nrow(files))
+        
+        list(bind_cols(lapply(paste0(tempdir(), "/", files$Name), read_spectrum, share = F, id = "sdfad")) %>%
+                 select(wavenumber...1, starts_with("intens")) %>%
+                 rename(wavenumber = wavenumber...1), expand.grid(x = 1:round_any(base, 1, ceiling), y = 1:round_any(base, 1, ceiling))[1:nrow(files),])
     }
 }
                           
@@ -331,17 +334,9 @@ observeEvent(input$file1, {
       
       else if(grepl("\\.zip$", ignore.case = T, filename$data)) {
           single_data$data <- NULL
-          rout <- read_map(filename = filename$data, share = share, id = id())
+          rout <- read_map(filename = filename$data, share = share, id = id(), std_wavenumbers = std_wavenumbers)
           map_category$data <- map_type(filename = filename$data)
-          if(map_category$data == "envi"){
-              files <- unzip(zipfile = filename$data, list = TRUE)
-              wavenumbers$data <- hyperSpec::read.ENVI.Nicolet(file = paste0(tempdir(), "/", files$Name[grepl("\\.dat$", ignore.case = T, files$Name)]),
-                                                               headerfile = paste0(tempdir(), "/", files$Name[grepl("\\.hdr$", ignore.case = T, files$Name)]))@wavelength
-
-              coords$data <- hyperSpec::read.ENVI.Nicolet(file = paste0(tempdir(), "/", files$Name[grepl("\\.dat$", ignore.case = T, files$Name)]),
-                                               headerfile = paste0(tempdir(), "/", files$Name[grepl("\\.hdr$", ignore.case = T, files$Name)]))@data[,c("x", "y")]
-              
-          }
+          
       }
     
     if (inherits(rout, "simpleError")) {
@@ -357,29 +352,19 @@ observeEvent(input$file1, {
       return(NULL)
     } 
     else if(grepl("\\.zip$", ignore.case = T, filename$data)){
-      match_results <- data.frame(names = if(map_category$data == "multiple"){1:length(rout)} else{colnames(rout)})
-      processed_results <- data.frame(matrix(ncol = length(rout), nrow = length(std_wavenumbers)))
+      match_results <- data.frame(names = 1:(length(rout[[1]]) - 1))
+      processed_results <- data.frame(matrix(ncol = (length(rout[[1]]) - 1), nrow = length(std_wavenumbers)))
       processed_results[,"wavenumber"] <- std_wavenumbers
-      matched_results <- data.frame(matrix(ncol = length(rout), nrow = length(std_wavenumbers)))
+      matched_results <- data.frame(matrix(ncol = (length(rout[[1]]) - 1), nrow = length(std_wavenumbers)))
       matched_results[,"wavenumber"] <- std_wavenumbers
-      identified_results <- data.frame(matrix(ncol = length(rout), nrow = length(std_wavenumbers)))
+      identified_results <- data.frame(matrix(ncol = (length(rout[[1]]) - 1), nrow = length(std_wavenumbers)))
       identified_results[,"wavenumber"] <- std_wavenumbers
-      for(column in 1:length(rout)){ #perhaps turn this into a multithreaded apply function.
+      for(column in 2:length(rout[[1]])){ #perhaps turn this into a multithreaded apply function.
         print(column)
-        preprocessed$data <- if(map_category$data == "rdata"){
-                data.frame(wavenumber = std_wavenumbers, 
-                                        intensity = rout[[column]]) %>%
+        preprocessed$data <- data.frame(wavenumber = rout[[1]][[1]], 
+                                        intensity = rout[[1]][[column]]) %>%
                                         filter(!is.na(intensity))
-        }
-        else if(map_category$data == "envi"){
-            data.frame(wavenumber = wavenumbers$data, 
-                       intensity = rout[[column]]) %>%
-                filter(!is.na(intensity))
-        }
-        else{
-            rout[[column]] %>%
-                filter(!is.na(intensity))
-        }
+        
         match_results[column, "identity"] <- top_matches() %>% slice(1) %>% select(1) %>% unlist(.)
         match_results[column, "correlation"] <- top_matches() %>% slice(1) %>% select(2) %>% unlist(.)
         match_results[column, "match_id"] <- top_matches() %>% slice(1) %>% select(3) %>% unlist(.)
@@ -701,17 +686,10 @@ match_metadata <- reactive({
     }
     
       else if(grepl("(\\.zip$)", ignore.case = T, filename$data)){
-        #req(map_data$data)
-        base <- sqrt(nrow(map_data$data))
-        bind_matches <- if(map_category$data == "envi"){
-            cbind(map_data$data, coords$data)
-        }
-        else{
-            cbind(map_data$data, expand.grid(x = 1:round_any(base, 1, ceiling), y = 1:round_any(base, 1, ceiling))[1:nrow(map_data$data),])
-        }
+       
         plot_ly(source = "heat_plot") %>%
             add_heatmap(
-                x = bind_matches$x,
+                x = bind_matches$x, #Need to update this with the new rout format. 
                 y = bind_matches$y, 
                 z = bind_matches$correlation,
                 text = paste0(bind_matches$names, bind_matches$identity)
@@ -822,16 +800,7 @@ match_metadata <- reactive({
     }
   })
 
-  render_tweet <- function(x){renderUI({
-    div(class = "inline-block",
-        style = "display:inline-block; margin-left:4px;",
-        tags$blockquote(class = "twitter-tweet", `data-theme` = "dark",
-                        style = "width: 600px; display:inline-block;" ,
-                        tags$a(href = x)),
-        tags$script('twttr.widgets.load(document.getElementById("tweet"));')
-    )
-  })
-  }
+
 
   output$tweet1 <- renderUI({
     render_tweet(tweets[1])
