@@ -329,13 +329,13 @@ observeEvent(input$file1, {
   withProgress(message = progm, value = 3/3, {
       if(grepl("(\\.csv$)|(\\.asp$)|(\\.spa$)|(\\.spc$)|(\\.jdx$)|(\\.[0-9]$)", ignore.case = T, filename$data)){
           rout <- read_spectrum(filename = filename$data, share = share, id = id())
-          single_data$data <- TRUE
+          #single_data$data <- TRUE
       }
       
       else if(grepl("\\.zip$", ignore.case = T, filename$data)) {
           single_data$data <- NULL
           rout <- read_map(filename = filename$data, share = share, id = id(), std_wavenumbers = std_wavenumbers)
-          map_category$data <- map_type(filename = filename$data)
+          #map_category$data <- map_type(filename = filename$data)
           
       }
     
@@ -351,34 +351,34 @@ observeEvent(input$file1, {
       )
       return(NULL)
     } 
-    else if(grepl("\\.zip$", ignore.case = T, filename$data)){
-      match_results <- data.frame(names = 1:(length(rout[[1]]) - 1))
-      processed_results <- data.frame(matrix(ncol = (length(rout[[1]]) - 1), nrow = length(std_wavenumbers)))
-      processed_results[,"wavenumber"] <- std_wavenumbers
-      matched_results <- data.frame(matrix(ncol = (length(rout[[1]]) - 1), nrow = length(std_wavenumbers)))
-      matched_results[,"wavenumber"] <- std_wavenumbers
-      identified_results <- data.frame(matrix(ncol = (length(rout[[1]]) - 1), nrow = length(std_wavenumbers)))
-      identified_results[,"wavenumber"] <- std_wavenumbers
-      for(column in 2:length(rout[[1]])){ #perhaps turn this into a multithreaded apply function.
-        print(column)
-        preprocessed$data <- data.frame(wavenumber = rout[[1]][[1]], 
-                                        intensity = rout[[1]][[column]]) %>%
-                                        filter(!is.na(intensity))
-        
-        match_results[column, "identity"] <- top_matches() %>% slice(1) %>% select(1) %>% unlist(.)
-        match_results[column, "correlation"] <- top_matches() %>% slice(1) %>% select(2) %>% unlist(.)
-        match_results[column, "match_id"] <- top_matches() %>% slice(1) %>% select(3) %>% unlist(.)
-        processed_results[,column] <- baseline_data() %>% 
-            right_join(data.table(wavenumber = std_wavenumbers)) %>%
-            pull(intensity)
-        matched_results[,column] <- DataR()
-        identified_results[,column] <- match_selected()[["intensity"]]
-      }
-      map_data$data <- match_results
-      processed_map_data$data <- processed_results
-      matched_map_data$data <- matched_results
-      identified_map_data$data <- identified_results
-    }
+    #else if(grepl("\\.zip$", ignore.case = T, filename$data)){
+    #  match_results <- data.frame(names = 1:(length(rout[[1]]) - 1))
+    #  processed_results <- data.frame(matrix(ncol = (length(rout[[1]]) - 1), nrow = length(std_wavenumbers)))
+    #  processed_results[,"wavenumber"] <- std_wavenumbers
+    #  matched_results <- data.frame(matrix(ncol = (length(rout[[1]]) - 1), nrow = length(std_wavenumbers)))
+    #  matched_results[,"wavenumber"] <- std_wavenumbers
+    #  identified_results <- data.frame(matrix(ncol = (length(rout[[1]]) - 1), nrow = length(std_wavenumbers)))
+    #  identified_results[,"wavenumber"] <- std_wavenumbers
+    #  for(column in 2:length(rout[[1]])){ #perhaps turn this into a multithreaded apply function.
+    #    print(column)
+    #    preprocessed$data <- data.frame(wavenumber = rout[[1]][[1]], 
+    #                                    intensity = rout[[1]][[column]]) %>%
+    #                                    filter(!is.na(intensity))
+    #    
+    #    match_results[column, "identity"] <- top_matches() %>% slice(1) %>% select(1) %>% unlist(.)
+    #    match_results[column, "correlation"] <- top_matches() %>% slice(1) %>% select(2) %>% unlist(.)
+    #    match_results[column, "match_id"] <- top_matches() %>% slice(1) %>% select(3) %>% unlist(.)
+    #    processed_results[,column] <- baseline_data() %>% 
+    #        right_join(data.table(wavenumber = std_wavenumbers)) %>%
+    #        pull(intensity)
+    #    matched_results[,column] <- DataR()
+    #    identified_results[,column] <- match_selected()[["intensity"]]
+    #  }
+    #  map_data$data <- match_results
+    #  processed_map_data$data <- processed_results
+    #  matched_map_data$data <- matched_results
+    #  identified_map_data$data <- identified_results
+    #}
     else {
       preprocessed$data <- rout
     }
@@ -387,16 +387,17 @@ observeEvent(input$file1, {
 
   # Corrects spectral intensity units using the user specified correction
   data <- reactive({
-    req(preprocessed$data)
-      
+    req(input$file1)
     adj_intens(data.table(wavenumber = seq(round_any(min(preprocessed$data$wavenumber), 5, ceiling), round_any(max(preprocessed$data$wavenumber), 5, floor), by = 5), intensity = clean_spec(preprocessed$data$wavenumber, preprocessed$data$intensity)), type = input$intensity_corr)
     })
 
   #Preprocess Spectra ----
   # All cleaning of the data happens here. Smoothing and Baseline removing
   baseline_data <- reactive({
+     req(input$file1)
+     #req(input$active_preprocessing)
     if(!length(data()) | !input$active_preprocessing) {
-      data.table(intensity = numeric(), wavenumber = numeric())
+      data.table(intensity = numeric(), wavenumber = numeric(), SpectrumIdentity = factor())
     }
     else{
       
@@ -530,22 +531,28 @@ observeEvent(input$reset, {
   
   match_selected <- reactive({# Default to first row if not yet clicked
     req(input$file1)
-    req(input$active_identification)
+    #req(input$active_identification)
+    if(!length(data()) | !input$active_identification) {
+        data.table(intensity = numeric(), wavenumber = numeric())
+    }
+    else{
         id_select <- ifelse(is.null(input$event_rows_selected),
                             MatchSpectra()[[1,
                                             "sample_name"]],
-                      MatchSpectra()[[input$event_rows_selected,
-                                      "sample_name"]])
-    # Get data from find_spec
-    current_spectrum <- data.table(wavenumber = std_wavenumbers, 
-                                   intensity = libraryR()[[id_select]], 
-                                   sample_name = id_select)
-  
-    current_spectrum %>%
-      inner_join(meta, by = "sample_name") %>%
-      select(wavenumber, intensity, SpectrumIdentity) %>%
-      mutate(intensity = make_rel(intensity, na.rm = T)) #%>%
-      #dplyr::filter(!is.na(intensity))
+                            MatchSpectra()[[input$event_rows_selected,
+                                            "sample_name"]])
+        # Get data from find_spec
+        current_spectrum <- data.table(wavenumber = std_wavenumbers, 
+                                       intensity = libraryR()[[id_select]], 
+                                       sample_name = id_select)
+        
+        current_spectrum %>%
+            inner_join(meta, by = "sample_name") %>%
+            select(wavenumber, intensity, SpectrumIdentity) %>%
+            mutate(intensity = make_rel(intensity, na.rm = T)) #%>%
+        #dplyr::filter(!is.na(intensity))
+    }
+        
       })
   
   # Identify Spectra function ----
@@ -659,8 +666,8 @@ match_metadata <- reactive({
   # Display matches based on table selection ----
   output$MyPlotC <- renderPlotly({
     req(input$file1)
-    if(grepl("(\\.csv$)|(\\.asp$)|(\\.spa$)|(\\.spc$)|(\\.jdx$)|(\\.[0-9]$)",
-              ignore.case = T, filename$data)){
+    #if(grepl("(\\.csv$)|(\\.asp$)|(\\.spa$)|(\\.spc$)|(\\.jdx$)|(\\.[0-9]$)",
+     #         ignore.case = T, filename$data)){
         #req(single_data$data)
       plot_ly(type = 'scatter', mode = 'lines', source = "B") %>%
         add_trace(data = DataR_plot(), x = ~wavenumber, y = ~intensity,
@@ -684,25 +691,25 @@ match_metadata <- reactive({
                paper_bgcolor = 'rgba(0,0,0,0.5)',
                font = list(color = '#FFFFFF')) %>%
         config(modeBarButtonsToAdd = list("drawopenpath", "eraseshape"))
-    }
+    #}
     
-      else if(grepl("(\\.zip$)", ignore.case = T, filename$data)){
+      #else if(grepl("(\\.zip$)", ignore.case = T, filename$data)){
        
-        plot_ly(source = "heat_plot") %>%
-            add_heatmap(
-                x = bind_matches$x, #Need to update this with the new rout format. 
-                y = bind_matches$y, 
-                z = bind_matches$correlation,
-                text = paste0(bind_matches$names, bind_matches$identity)
-            ) %>%
-            event_register("plotly_click") %>%
-            layout(plot_bgcolor = 'rgb(17,0,73)',
-                   paper_bgcolor = 'rgba(0,0,0,0.5)',
-                   font = list(color = '#FFFFFF'))
-      }
-      else{
-          NULL
-      }
+      #  plot_ly(source = "heat_plot") %>%
+      #      add_heatmap(
+      #          x = bind_matches$x, #Need to update this with the new rout format. 
+      #          y = bind_matches$y, 
+      #          z = bind_matches$correlation,
+      #          text = paste0(bind_matches$names, bind_matches$identity)
+      #      ) %>%
+      #      event_register("plotly_click") %>%
+      #      layout(plot_bgcolor = 'rgb(17,0,73)',
+      #             paper_bgcolor = 'rgba(0,0,0,0.5)',
+      #             font = list(color = '#FFFFFF'))
+      #}
+      #else{
+      #    NULL
+      #}
     })
 
   # Data Download options
@@ -908,7 +915,7 @@ match_metadata <- reactive({
   
   #Test ----
   output$event_test <- renderPrint({
-      event_data("plotly_click", source = "heat_plot")
+      match_selected()
   })
 
 })
