@@ -531,7 +531,6 @@ observeEvent(input$reset, {
   
   match_selected <- reactive({# Default to first row if not yet clicked
     req(input$file1)
-    #req(input$active_identification)
     if(!length(data()) | !input$active_identification) {
         data.table(intensity = numeric(), wavenumber = numeric())
     }
