@@ -388,6 +388,7 @@ observeEvent(input$file1, {
   # Corrects spectral intensity units using the user specified correction
   data <- reactive({
     req(preprocessed$data)
+      
     adj_intens(data.table(wavenumber = seq(round_any(min(preprocessed$data$wavenumber), 5, ceiling), round_any(max(preprocessed$data$wavenumber), 5, floor), by = 5), intensity = clean_spec(preprocessed$data$wavenumber, preprocessed$data$intensity)), type = input$intensity_corr)
     })
 
