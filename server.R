@@ -32,6 +32,23 @@ library(OpenSpecy)
 round_any <- function(x, accuracy, f = round){
   f(x / accuracy) * accuracy
 }
+
+conform_intensity <- function(intensity, wavenumber, correction){
+    adj_intens(x = conform_wavenumber(wavenumber),
+               y = clean_spec(x = wavenumber, y = intensity),
+               type = correction)[,"intensity"]
+}
+
+conform_wavenumber <- function(wavenumber){
+    seq(round_any(min(wavenumber), 5, ceiling), round_any(max(wavenumber), 5, floor), by = 5)
+}
+
+clean_spec <- function(x, y){
+    c(
+        approx(x = x, y = y, xout = conform_wavenumber(x))$y
+    )
+}
+
 #library(future)
 #library(bslib)
 
@@ -136,11 +153,6 @@ process_cor_os <- function(x){
   )
 }
 
-clean_spec <- function(x, y){
-  c(
-    approx(x = x, y = y, xout = seq(round_any(min(x), 5, ceiling), round_any(max(x), 5, floor), by = 5))$y
-  )
-}
 
 is_empty <- function(x, first.only = TRUE, all.na.empty = TRUE) {
     # do we have a valid vector?
@@ -380,7 +392,7 @@ observeEvent(input$file1, {
     #  identified_map_data$data <- identified_results
     #}
     else {
-      preprocessed$data <- rout
+      preprocessed$data <- as.data.table(rout)
     }
 })
 })
@@ -388,7 +400,7 @@ observeEvent(input$file1, {
   # Corrects spectral intensity units using the user specified correction
   data <- reactive({
     req(input$file1)
-    adj_intens(data.table(wavenumber = seq(round_any(min(preprocessed$data$wavenumber), 5, ceiling), round_any(max(preprocessed$data$wavenumber), 5, floor), by = 5), intensity = clean_spec(preprocessed$data$wavenumber, preprocessed$data$intensity)), type = input$intensity_corr)
+      setcolorder(preprocessed$data[,2:ncol(preprocessed$data)][,lapply(.SD, conform_intensity, wavenumber = preprocessed$data$wavenumber, correction = input$intensity_corr)][,wavenumber := conform_wavenumber(wavenumber = preprocessed$data$wavenumber)], "wavenumber")
     })
 
   #Preprocess Spectra ----
