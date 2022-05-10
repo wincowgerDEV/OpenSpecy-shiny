@@ -33,6 +33,11 @@ round_any <- function(x, accuracy, f = round){
   f(x / accuracy) * accuracy
 }
 
+
+conform_spectra <- function(df, wavenumber, std_wavenumbers, correction){
+    setcolorder(df[,2:ncol(df)][,lapply(.SD, conform_intensity, wavenumber = wavenumber, correction = correction, std_wavenumbers = std_wavenumbers)][,wavenumber := std_wavenumbers], "wavenumber")
+}
+
 conform_intensity <- function(intensity, wavenumber, correction, std_wavenumbers){
     test <- std_wavenumbers %in% conform_wavenumber(wavenumber)
     place <- rep(NA, length.out= length(test))
@@ -157,6 +162,7 @@ process_cor_os <- function(x){
     )
   )
 }
+
 
 
 is_empty <- function(x, first.only = TRUE, all.na.empty = TRUE) {
@@ -417,7 +423,10 @@ observeEvent(input$file1, {
   # Corrects spectral intensity units using the user specified correction
   data <- reactive({
     req(input$file1)
-      setcolorder(preprocessed$data$spectra[,2:ncol(preprocessed$data$spectra)][,lapply(.SD, conform_intensity, wavenumber = preprocessed$data$spectra$wavenumber, correction = input$intensity_corr, std_wavenumbers = std_wavenumbers)][,wavenumber := std_wavenumbers], "wavenumber")
+      conform_spectra(df = preprocessed$data$spectra, 
+                      wavenumber = preprocessed$data$spectra$wavenumber, 
+                      correction = input$intensity_corr, 
+                      std_wavenumbers = std_wavenumbers)
     })
 
   #Preprocess Spectra ----
