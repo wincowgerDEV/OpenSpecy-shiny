@@ -644,6 +644,7 @@ match_metadata <- reactive({
 })
     #Metadata for the selected value
   output$eventmetadata <- DT::renderDataTable({
+     req(input$active_identification)
     if(!grepl("\\.zip$", ignore.case = T, filename$data)){
         # Get data from find_spec
     datatable(match_metadata(),
