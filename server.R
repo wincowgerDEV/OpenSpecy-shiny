@@ -186,26 +186,6 @@ is_empty <- function(x, first.only = TRUE, all.na.empty = TRUE) {
     is.logical(x) && length(x) == 1L && !is.na(x) && x
 }
 
-read_spectrum <- function(filename, share, id) {
-    if(grepl("\\.csv$", ignore.case = T, filename)) {
-        tryCatch(read_text(filename, method = "fread",
-                                   share = share,
-                                   id = id),
-                         error = function(e) {e})
-    }
-    else if(grepl("\\.[0-9]$", ignore.case = T, filename)) {
-        tryCatch(read_0(filename, share = share, id = id),
-                         error = function(e) {e})
-    }
-    
-    else {
-        ex <- strsplit(basename(filename), split="\\.")[[1]]
-        
-        tryCatch(do.call(paste0("read_", tolower(ex[-1])),
-                                 list(filename, share = share, id = id)),
-                         error = function(e) {e})
-    }
-}
 
 map_type <- function(filename){
     files <- unzip(zipfile = filename, list = TRUE)
@@ -227,28 +207,68 @@ read_map <- function(filename, share, id, std_wavenumbers){
         hs_envi <- hyperSpec::read.ENVI.Nicolet(file = paste0(tempdir(), "/", files$Name[grepl("\\.dat$", ignore.case = T, files$Name)]),
                                                 headerfile = paste0(tempdir(), "/", files$Name[grepl("\\.hdr$", ignore.case = T, files$Name)]))@data
         
-        list(transpose(as.data.table(hs_envi$spc), keep.names = "wavenumber") %>%
+        list("spectra" = transpose(as.data.table(hs_envi$spc), keep.names = "wavenumber") %>%
                  mutate(wavenumber = as.numeric(wavenumber)), 
-             data.table(x = hs_envi$x, y = hs_envi$y))
+             "coords" = data.table(x = hs_envi$x, y = hs_envi$y))
     }
     else if(nrow(files) == 1 & any(grepl("\\.RData$", ignore.case = T, files$Name))){
         assign("file", base::get(load(paste0(tempdir(), "/", files$Name))))
         base <- sqrt(ncol(file)-1)
         file$wavenumber <- std_wavenumbers
-        list(file %>%
-                 select(wavenumber, everything()), expand.grid(x = 1:round_any(base, 1, ceiling), y = 1:round_any(base, 1, ceiling))[1:(ncol(file)-1),])
+        list("spectra" = file %>%
+                 select(wavenumber, everything()), 
+             "coords" = expand.grid(x = 1:round_any(base, 1, ceiling), y = 1:round_any(base, 1, ceiling))[1:(ncol(file)-1),])
     }
-    #else if(nrow(files) == 1 & any(grepl("\\.csv$", ignore.case = T, files$Name))){
-    #    fread
-    #}
+    
     else{
         base <- sqrt(nrow(files))
         
-        list(bind_cols(lapply(paste0(tempdir(), "/", files$Name), read_spectrum, share = F, id = "sdfad")) %>%
+        list("spectra" = bind_cols(lapply(paste0(tempdir(), "/", files$Name), read_spectrum, share = F, id = "sdfad")) %>%
                  select(wavenumber...1, starts_with("intens")) %>%
-                 rename(wavenumber = wavenumber...1), expand.grid(x = 1:round_any(base, 1, ceiling), y = 1:round_any(base, 1, ceiling))[1:nrow(files),])
+                 rename(wavenumber = wavenumber...1), 
+             "coords" = expand.grid(x = 1:round_any(base, 1, ceiling), y = 1:round_any(base, 1, ceiling))[1:nrow(files),])
     }
 }
+
+read_any <- function(filename, share, id, std_wavenumbers){
+    if(grepl("(\\.csv$)|(\\.asp$)|(\\.spa$)|(\\.spc$)|(\\.jdx$)|(\\.[0-9]$)", ignore.case = T, filename)){
+        rout <- read_spectrum(filename = filename, share = share, id = id)
+        #single_data$data <- TRUE
+    }
+    
+    else if(grepl("\\.zip$", ignore.case = T, filename)) {
+        rout <- read_map(filename = filename, share = share, id = id, std_wavenumbers = std_wavenumbers)
+
+    }
+}
+
+read_spectrum <- function(filename, share, id) {
+    
+    list("spectra" =     
+             as.data.table(
+                 if(grepl("\\.csv$", ignore.case = T, filename)) {
+                     tryCatch(read_text(filename, method = "fread",
+                                        share = share,
+                                        id = id),
+                              error = function(e) {e})
+                 }
+                 else if(grepl("\\.[0-9]$", ignore.case = T, filename)) {
+                     tryCatch(read_0(filename, share = share, id = id),
+                              error = function(e) {e})
+                 }
+                 
+                 else {
+                     ex <- strsplit(basename(filename), split="\\.")[[1]]
+                     
+                     tryCatch(do.call(paste0("read_", tolower(ex[-1])),
+                                      list(filename, share = share, id = id)),
+                              error = function(e) {e})
+                 }
+             ),
+         "coords" = data.table(x = 1, y = 1)
+    )
+}
+
                           
 
 # This is the actual server functions, all functions before this point are not
@@ -339,17 +359,9 @@ observeEvent(input$file1, {
   }
   
   withProgress(message = progm, value = 3/3, {
-      if(grepl("(\\.csv$)|(\\.asp$)|(\\.spa$)|(\\.spc$)|(\\.jdx$)|(\\.[0-9]$)", ignore.case = T, filename$data)){
-          rout <- read_spectrum(filename = filename$data, share = share, id = id())
-          #single_data$data <- TRUE
-      }
-      
-      else if(grepl("\\.zip$", ignore.case = T, filename$data)) {
-          single_data$data <- NULL
-          rout <- read_map(filename = filename$data, share = share, id = id(), std_wavenumbers = std_wavenumbers)
-          #map_category$data <- map_type(filename = filename$data)
-          
-      }
+      rout <- read_any(
+          filename = filename$data, share = share, id = id(), std_wavenumbers = std_wavenumbers
+      )
     
     if (inherits(rout, "simpleError")) {
       reset("file1")
@@ -392,7 +404,7 @@ observeEvent(input$file1, {
     #  identified_map_data$data <- identified_results
     #}
     else {
-      preprocessed$data <- as.data.table(rout)
+      preprocessed$data <- rout
     }
 })
 })
@@ -400,7 +412,7 @@ observeEvent(input$file1, {
   # Corrects spectral intensity units using the user specified correction
   data <- reactive({
     req(input$file1)
-      setcolorder(preprocessed$data[,2:ncol(preprocessed$data)][,lapply(.SD, conform_intensity, wavenumber = preprocessed$data$wavenumber, correction = input$intensity_corr)][,wavenumber := conform_wavenumber(wavenumber = preprocessed$data$wavenumber)], "wavenumber")
+      setcolorder(preprocessed$data$spectra[,2:ncol(preprocessed$data$spectra)][,lapply(.SD, conform_intensity, wavenumber = preprocessed$data$spectra$wavenumber, correction = input$intensity_corr)][,wavenumber := conform_wavenumber(wavenumber = preprocessed$data$spectra$wavenumber)], "wavenumber")
     })
 
   #Preprocess Spectra ----
