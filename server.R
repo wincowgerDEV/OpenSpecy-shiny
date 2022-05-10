@@ -41,12 +41,24 @@ conform_spectra <- function(df, wavenumber, std_wavenumbers, correction){
 conform_intensity <- function(intensity, wavenumber, correction, std_wavenumbers){
     test <- std_wavenumbers %in% conform_wavenumber(wavenumber)
     place <- rep(NA, length.out= length(test))
-    vec <- adj_intens(x = conform_wavenumber(wavenumber),
+    vec <- adjust_intensity(x = conform_wavenumber(wavenumber),
                y = clean_spec(x = wavenumber, y = intensity),
-               type = correction)[,"intensity"]
+               type = correction,
+               na.rm = T)[,"intensity"]
     place[test] <- vec
     place
     
+}
+
+adjust_intensity <- function(x, y, type = "none", make_rel = F, ...) {
+    yadj <- switch(type,
+                   "reflectance" = (1 - y/100)^2 / (2 * y/100),
+                   "transmittance" = log10(1/adj_neg(y, ...)),
+                   "none" = adj_neg(y, ...)
+    )
+    if (make_rel) yout <- make_rel(yadj) else yout <- yadj
+    
+    data.frame(wavenumber = x, intensity = yout)
 }
 
 conform_wavenumber <- function(wavenumber){
