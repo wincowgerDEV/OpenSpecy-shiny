@@ -33,10 +33,15 @@ round_any <- function(x, accuracy, f = round){
   f(x / accuracy) * accuracy
 }
 
-conform_intensity <- function(intensity, wavenumber, correction){
-    adj_intens(x = conform_wavenumber(wavenumber),
+conform_intensity <- function(intensity, wavenumber, correction, std_wavenumbers){
+    test <- std_wavenumbers %in% conform_wavenumber(wavenumber)
+    place <- rep(NA, length.out= length(test))
+    vec <- adj_intens(x = conform_wavenumber(wavenumber),
                y = clean_spec(x = wavenumber, y = intensity),
                type = correction)[,"intensity"]
+    place[test] <- vec
+    place
+    
 }
 
 conform_wavenumber <- function(wavenumber){
@@ -232,12 +237,12 @@ read_map <- function(filename, share, id, std_wavenumbers){
 
 read_any <- function(filename, share, id, std_wavenumbers){
     if(grepl("(\\.csv$)|(\\.asp$)|(\\.spa$)|(\\.spc$)|(\\.jdx$)|(\\.[0-9]$)", ignore.case = T, filename)){
-        rout <- read_spectrum(filename = filename, share = share, id = id)
+        read_spectrum(filename = filename, share = share, id = id)
         #single_data$data <- TRUE
     }
     
     else if(grepl("\\.zip$", ignore.case = T, filename)) {
-        rout <- read_map(filename = filename, share = share, id = id, std_wavenumbers = std_wavenumbers)
+        read_map(filename = filename, share = share, id = id, std_wavenumbers = std_wavenumbers)
 
     }
 }
@@ -412,7 +417,7 @@ observeEvent(input$file1, {
   # Corrects spectral intensity units using the user specified correction
   data <- reactive({
     req(input$file1)
-      setcolorder(preprocessed$data$spectra[,2:ncol(preprocessed$data$spectra)][,lapply(.SD, conform_intensity, wavenumber = preprocessed$data$spectra$wavenumber, correction = input$intensity_corr)][,wavenumber := conform_wavenumber(wavenumber = preprocessed$data$spectra$wavenumber)], "wavenumber")
+      setcolorder(preprocessed$data$spectra[,2:ncol(preprocessed$data$spectra)][,lapply(.SD, conform_intensity, wavenumber = preprocessed$data$spectra$wavenumber, correction = input$intensity_corr, std_wavenumbers = std_wavenumbers)][,wavenumber := std_wavenumbers], "wavenumber")
     })
 
   #Preprocess Spectra ----
@@ -580,7 +585,7 @@ observeEvent(input$reset, {
   
   # Identify Spectra function ----
   # Joins their spectrum to the internal database and computes correlation.
-  MatchSpectra <- reactive ({
+  MatchSpectra <- reactive({
     req(input$file1)
     req(input$active_identification)
     input
@@ -655,7 +660,7 @@ match_metadata <- reactive({
           clickData <- event_data("plotly_click", source = "heat_plot")
           if (is.null(clickData)) return(NULL)
           datatable(meta %>%
-                        filter(sample_name == map_data$data[[clickData[["pointNumber"]] + 1, "match_id"]])  %>%
+                        filter(sample_name == map_data$data[[clickData[["pointNumber"]] + 2, "match_id"]])  %>%
                         select(where(~!any(is_empty(.)))), #Something like filter whole library. 
                     escape = FALSE,
                     options = list(dom = 't', bSort = F, 
@@ -669,10 +674,21 @@ match_metadata <- reactive({
     
   })
   
+  data_click <- reactive({
+      if(is.null(event_data("plotly_click", source = "heat_plot"))){
+            2  
+          } 
+      else{
+          event_data("plotly_click", source = "heat_plot")[["pointNumber"]] + 2
+          
+      }
+      
+  })
+  
+  
   output$selected_plot <- renderPlotly({
       req(grepl("\\.zip$", ignore.case = T, filename$data))
       clickData <- event_data("plotly_click", source = "heat_plot")
-      if (is.null(clickData)) return(NULL)
       plot_ly(type = 'scatter', mode = 'lines') %>%
         add_trace(x = std_wavenumbers, y = make_rel(matched_map_data$data[[clickData[["pointNumber"]] + 1]], na.rm = T),
                   name = paste0('Selected', "(", clickData[["x"]], ",", clickData[["y"]], ")")) %>%
@@ -702,7 +718,7 @@ match_metadata <- reactive({
         add_trace(data = baseline_data(), x = ~wavenumber, y = ~intensity,
                   name = 'Processed Spectrum',
                   line = list(color = 'rgb(240,19,207)')) %>%
-        add_trace(data = data(), x = ~wavenumber, y = ~intensity,
+        add_trace(x = data()[["wavenumber"]], y = data()[[data_click()]],
                   name = 'Uploaded Spectrum',
                   line = list(color = 'rgba(240,236,19,0.8)')) %>%
         # Dark blue rgb(63,96,130)
@@ -715,25 +731,27 @@ match_metadata <- reactive({
                font = list(color = '#FFFFFF')) %>%
         config(modeBarButtonsToAdd = list("drawopenpath", "eraseshape"))
     #}
-    
-      #else if(grepl("(\\.zip$)", ignore.case = T, filename$data)){
-       
-      #  plot_ly(source = "heat_plot") %>%
-      #      add_heatmap(
-      #          x = bind_matches$x, #Need to update this with the new rout format. 
-      #          y = bind_matches$y, 
-      #          z = bind_matches$correlation,
-      #          text = paste0(bind_matches$names, bind_matches$identity)
-      #      ) %>%
-      #      event_register("plotly_click") %>%
-      #      layout(plot_bgcolor = 'rgb(17,0,73)',
-      #             paper_bgcolor = 'rgba(0,0,0,0.5)',
-      #             font = list(color = '#FFFFFF'))
-      #}
-      #else{
-      #    NULL
-      #}
+  
     })
+  
+  output$heatmap <- renderPlotly({
+      req(input$file1)
+
+        plot_ly(source = "heat_plot") %>%
+            add_heatmap(
+                x = preprocessed$data$coords$x, #Need to update this with the new rout format. 
+                y = preprocessed$data$coords$y, 
+                z = sample(1:length(preprocessed$data$coords$y), size = length(preprocessed$data$coords$y), replace = F)#,
+                #text = paste0(bind_matches$names, bind_matches$identity)
+            ) %>%
+            event_register("plotly_click") %>%
+            layout(plot_bgcolor = 'rgb(17,0,73)',
+                   paper_bgcolor = 'rgba(0,0,0,0.5)',
+                   font = list(color = '#FFFFFF'))
+  })
+     
+      
+      
 
   # Data Download options
   output$downloadData5 <- downloadHandler(
@@ -938,7 +956,7 @@ match_metadata <- reactive({
   
   #Test ----
   output$event_test <- renderPrint({
-      match_selected()
+      data()
   })
 
 })

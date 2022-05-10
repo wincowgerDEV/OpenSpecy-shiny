@@ -545,7 +545,7 @@ ui <- fluidPage(
                                                     fluidRow(style = "padding:1rem",
                                                              #uiOutput("table_plot"),
                                                              DT::dataTableOutput("event"),
-                                                             plotlyOutput("selected_plot")
+                                                             plotlyOutput("heatmap")
                                                              
                                                     )
                                               )
