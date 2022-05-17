@@ -40,7 +40,7 @@ conform_spectra <- function(df, wavenumber, std_wavenumbers, correction){
 
 conform_intensity <- function(intensity, wavenumber, correction, std_wavenumbers){
     test <- std_wavenumbers %in% conform_wavenumber(wavenumber)
-    place <- rep(NA, length.out= length(test))
+    place <- rep(NA, length.out= length(std_wavenumbers))
     vec <- adjust_intensity(x = conform_wavenumber(wavenumber),
                             y = clean_spec(x = wavenumber, y = intensity),
                             type = correction,
@@ -1004,7 +1004,11 @@ match_metadata <- reactive({
   output$event_test <- renderPrint({
       print(data_click())
       print(dim(data()))
-      print(data())
+      print(input$baseline)
+      print(input$smoother)
+      print(baseline_data())
+      
+      
   })
 
 })
