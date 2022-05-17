@@ -40,13 +40,14 @@ conform_spectra <- function(df, wavenumber, std_wavenumbers, correction){
 
 conform_intensity <- function(intensity, wavenumber, correction, std_wavenumbers){
     test <- std_wavenumbers %in% conform_wavenumber(wavenumber)
-    place <- rep(NA, length.out= length(std_wavenumbers))
+    place <- rep(NA, length.out= length(test))
     vec <- adjust_intensity(x = conform_wavenumber(wavenumber),
                             y = clean_spec(x = wavenumber, y = intensity),
                             type = correction,
                             na.rm = T)[,"intensity"]
     place[test] <- vec
     place
+    
 }
 
 adjust_intensity <- function(x, y, type = "none", make_rel = F, ...) {
@@ -59,7 +60,6 @@ adjust_intensity <- function(x, y, type = "none", make_rel = F, ...) {
     
     data.frame(wavenumber = x, intensity = yout)
 }
-
 
 conform_wavenumber <- function(wavenumber){
     seq(round_any(min(wavenumber), 5, ceiling), round_any(max(wavenumber), 5, floor), by = 5)
@@ -489,7 +489,6 @@ observeEvent(input$file1, {
       data.table( wavenumber = numeric(), intensity = numeric(), SpectrumIdentity = factor())
     }
     else{
-    
     process_spectra(df = data(), 
                     wavenumber = data()$wavenumber, 
                     active_preprocessing = input$active_preprocessing, 
@@ -762,7 +761,7 @@ match_metadata <- reactive({
         add_trace(data = match_selected(), x = ~wavenumber, y = ~intensity,
                   name = 'Selected Match',
                   line = list(color = 'rgb(255,255,255)')) %>%
-        add_trace(x = baseline_data()[["wavenumber"]], y = baseline_data()[[data_click()]],
+        add_trace(x = if(input$active_preprocessing){baseline_data()[["wavenumber"]]} else{NULL}, y = if(input$active_preprocessing){baseline_data()[[data_click()]]} else{NULL},
                   name = 'Processed Spectrum',
                   line = list(color = 'rgb(240,19,207)')) %>%
         add_trace(x = data()[["wavenumber"]], y = data()[[data_click()]],
@@ -1003,7 +1002,9 @@ match_metadata <- reactive({
   
   #Test ----
   output$event_test <- renderPrint({
-      data()
+      print(data_click())
+      print(dim(data()))
+      print(data())
   })
 
 })
