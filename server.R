@@ -40,14 +40,13 @@ conform_spectra <- function(df, wavenumber, std_wavenumbers, correction){
 
 conform_intensity <- function(intensity, wavenumber, correction, std_wavenumbers){
     test <- std_wavenumbers %in% conform_wavenumber(wavenumber)
-    place <- rep(NA, length.out= length(test))
+    place <- rep(NA, length.out= length(std_wavenumbers))
     vec <- adjust_intensity(x = conform_wavenumber(wavenumber),
-               y = clean_spec(x = wavenumber, y = intensity),
-               type = correction,
-               na.rm = T)[,"intensity"]
+                            y = clean_spec(x = wavenumber, y = intensity),
+                            type = correction,
+                            na.rm = T)[,"intensity"]
     place[test] <- vec
     place
-    
 }
 
 adjust_intensity <- function(x, y, type = "none", make_rel = F, ...) {
@@ -61,6 +60,7 @@ adjust_intensity <- function(x, y, type = "none", make_rel = F, ...) {
     data.frame(wavenumber = x, intensity = yout)
 }
 
+
 conform_wavenumber <- function(wavenumber){
     seq(round_any(min(wavenumber), 5, ceiling), round_any(max(wavenumber), 5, floor), by = 5)
 }
@@ -69,6 +69,45 @@ clean_spec <- function(x, y){
     c(
         approx(x = x, y = y, xout = conform_wavenumber(x))$y
     )
+}
+
+#Process spectra functions 
+process_intensity <- function(intensity, wavenumber, active_preprocessing, range_decision, min_range, max_range, smooth_decision, smoother, baseline_decision, baseline_selection, baseline, trace, std_wavenumbers) {
+    test2 <-  length(std_wavenumbers[std_wavenumbers > min_range & std_wavenumbers < max_range]) > 9
+    
+    test <- std_wavenumbers %in% std_wavenumbers[!is.na(intensity)]
+    place <- rep(NA, length.out= length(std_wavenumbers))
+    
+    #set innitial conditions
+    intensity_cor <- intensity[!is.na(intensity)]
+    wavenumber_cor <- wavenumber[!is.na(intensity)]
+    
+    #Range criteria   
+    if(range_decision & test2) {
+        test <- std_wavenumbers %in% std_wavenumbers[std_wavenumbers > min_range & std_wavenumbers < max_range]
+        intensity_cor <- intensity_cor[wavenumber > min_range & wavenumber < max_range]
+        wavenumber_cor <- wavenumber_cor[wavenumber > min_range & wavenumber < max_range]
+    } 
+    
+    #Smooth criteria
+    if(smooth_decision) {
+        intensity_cor <- smooth_intens(wavenumber_cor, intensity_cor, p = smoother)$intensity
+    }
+    #Baseline criteria
+    if(baseline_decision & baseline_selection == "Polynomial") {
+        intensity_cor <- subtr_bg(wavenumber_cor, intensity_cor, degree = baseline)$intensity
+    }
+    else if(baseline_decision & baseline_selection == "Manual" & !is.null(trace$data)){
+        intensity_cor <-  intensity_cor - approx(trace$data$wavenumber, trace$data$intensity, xout = wavenumber_cor, rule = 2, method = "linear", ties = mean)$y
+    }
+    place[test] <- intensity_cor
+    
+    place
+    
+}
+
+process_spectra <- function(df, wavenumber, active_preprocessing, range_decision, min_range, max_range, smooth_decision, smoother, baseline_decision, baseline_selection, baseline, trace, std_wavenumbers){
+    setcolorder(df[,2:ncol(df)][,lapply(.SD, preprocess_intensity, wavenumber = wavenumber, active_preprocessing = active_preprocessing, range_decision = range_decision, min_range = min_range, max_range = max_range, smooth_decision = smooth_decision, smoother = smoother, baseline_decision = baseline_decision, baseline_selection = baseline_selection, baseline = baseline, trace = trace, std_wavenumbers = std_wavenumbers)][,wavenumber := std_wavenumbers], "wavenumber")
 }
 
 #library(future)
@@ -442,42 +481,28 @@ observeEvent(input$file1, {
     })
 
   #Preprocess Spectra ----
-  # All cleaning of the data happens here. Smoothing and Baseline removing
+  # All cleaning of the data happens here. Range selection, Smoothing, and Baseline removing
   baseline_data <- reactive({
      req(input$file1)
      #req(input$active_preprocessing)
     if(!length(data()) | !input$active_preprocessing) {
-      data.table(intensity = numeric(), wavenumber = numeric(), SpectrumIdentity = factor())
+      data.table( wavenumber = numeric(), intensity = numeric(), SpectrumIdentity = factor())
     }
     else{
-      
-    testdata <- data() %>% dplyr::filter(wavenumber > input$MinRange &
-                                           wavenumber < input$MaxRange)
-    test <-  nrow(testdata) < 3
-    if (test) {
-      data() %>%
-        mutate(intensity = if(input$smooth_decision) {
-          smooth_intens(.$wavenumber, .$intensity, p = input$smoother)$intensity
-        } else .$intensity) %>%
-        mutate(intensity = if(input$baseline_decision) {
-          subtr_bg(.$wavenumber, .$intensity, degree = input$baseline)$intensity
-          } else .$intensity)
-    } else {
-      data() %>%
-        dplyr::filter(
-          if(input$range_decision) {wavenumber > input$MinRange &
-              wavenumber < input$MaxRange} else {
-                wavenumber == wavenumber}) %>%
-        mutate(intensity = if(input$smooth_decision) {
-          smooth_intens(.$wavenumber, .$intensity, p = input$smoother)$intensity
-        } else .$intensity) %>%
-        mutate(intensity = if(input$baseline_decision & input$baseline_selection == "Polynomial") {
-          subtr_bg(.$wavenumber, .$intensity, degree = input$baseline)$intensity
-          }
-          else if(input$baseline_decision & input$baseline_selection == "Manual" & !is.null(trace$data)){
-            make_rel(.$intensity - approx(trace$data$wavenumber, trace$data$intensity, xout = .$wavenumber, rule = 2, method = "linear", ties = mean)$y)
-          } else .$intensity)
-    }
+    
+    process_spectra(df = data(), 
+                    wavenumber = data()$wavenumber, 
+                    active_preprocessing = input$active_preprocessing, 
+                    range_decision = input$range_decision, 
+                    min_range = input$MinRange, 
+                    max_range = input$MaxRange, 
+                    smooth_decision = input$smooth_decision, 
+                    smoother = input$smoother, 
+                    baseline_decision = input$baseline_decision, 
+                    baseline_selection = input$baseline_selection, 
+                    baseline = input$baseline, 
+                    trace = trace,
+                    std_wavenumbers = std_wavenumbers)
     }
   })
 
@@ -737,7 +762,7 @@ match_metadata <- reactive({
         add_trace(data = match_selected(), x = ~wavenumber, y = ~intensity,
                   name = 'Selected Match',
                   line = list(color = 'rgb(255,255,255)')) %>%
-        add_trace(data = baseline_data(), x = ~wavenumber, y = ~intensity,
+        add_trace(x = baseline_data()[["wavenumber"]], y = baseline_data()[[data_click()]],
                   name = 'Processed Spectrum',
                   line = list(color = 'rgb(240,19,207)')) %>%
         add_trace(x = data()[["wavenumber"]], y = data()[[data_click()]],
