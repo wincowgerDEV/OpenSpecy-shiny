@@ -85,8 +85,8 @@ process_intensity <- function(intensity, wavenumber, active_preprocessing, range
     #Range criteria   
     if(range_decision & test2) {
         test <- std_wavenumbers %in% std_wavenumbers[std_wavenumbers > min_range & std_wavenumbers < max_range]
-        intensity_cor <- intensity_cor[wavenumber > min_range & wavenumber < max_range]
-        wavenumber_cor <- wavenumber_cor[wavenumber > min_range & wavenumber < max_range]
+        intensity_cor <- intensity_cor[wavenumber_cor > min_range & wavenumber_cor < max_range]
+        wavenumber_cor <- wavenumber_cor[wavenumber_cor > min_range & wavenumber_cor < max_range]
     } 
     
     #Smooth criteria
@@ -486,22 +486,32 @@ observeEvent(input$file1, {
      req(input$file1)
      #req(input$active_preprocessing)
     if(!length(data()) | !input$active_preprocessing) {
-      data.table( wavenumber = numeric(), intensity = numeric(), SpectrumIdentity = factor())
+      data.table(wavenumber = numeric(), intensity = numeric(), SpectrumIdentity = factor())
     }
     else{
     process_spectra(df = data(), 
-                    wavenumber = data()$wavenumber, 
+                    wavenumber = data()$wavenumber,
                     active_preprocessing = input$active_preprocessing, 
                     range_decision = input$range_decision, 
-                    min_range = input$MinRange, 
-                    max_range = input$MaxRange, 
-                    smooth_decision = input$smooth_decision, 
-                    smoother = input$smoother, 
-                    baseline_decision = input$baseline_decision, 
-                    baseline_selection = input$baseline_selection, 
-                    baseline = input$baseline, 
-                    trace = trace,
+                    min_range = 1000, 
+                    max_range = 2000, 
+                    smooth_decision = T, 
+                    smoother = 3, 
+                    baseline_decision = T, 
+                    baseline_selection = "Polynomial", 
+                    baseline = 8, 
                     std_wavenumbers = std_wavenumbers)
+                    #active_preprocessing = input$active_preprocessing, 
+                    #range_decision = input$range_decision, 
+                    #min_range = input$MinRange, 
+                    #max_range = input$MaxRange, 
+                    #smooth_decision = input$smooth_decision, 
+                    #smoother = input$smoother, 
+                    #baseline_decision = F,#input$baseline_decision, 
+                    #baseline_selection = input$baseline_selection, 
+                    #baseline = input$baseline, 
+                    #trace = trace,
+                    #std_wavenumbers = std_wavenumbers)
     }
   })
 
@@ -761,10 +771,10 @@ match_metadata <- reactive({
         add_trace(data = match_selected(), x = ~wavenumber, y = ~intensity,
                   name = 'Selected Match',
                   line = list(color = 'rgb(255,255,255)')) %>%
-        add_trace(x = if(input$active_preprocessing){baseline_data()[["wavenumber"]]} else{NULL}, y = if(input$active_preprocessing){baseline_data()[[data_click()]]} else{NULL},
+        add_trace(x = if(input$active_preprocessing){baseline_data()[["wavenumber"]]} else{NULL}, y = if(input$active_preprocessing){make_rel(baseline_data()[[data_click()]], na.rm = T)} else{NULL},
                   name = 'Processed Spectrum',
                   line = list(color = 'rgb(240,19,207)')) %>%
-        add_trace(x = data()[["wavenumber"]], y = data()[[data_click()]],
+        add_trace(x = data()[["wavenumber"]], y = make_rel(data()[[data_click()]], na.rm = T),
                   name = 'Uploaded Spectrum',
                   line = list(color = 'rgba(240,236,19,0.8)')) %>%
         # Dark blue rgb(63,96,130)
@@ -1004,11 +1014,17 @@ match_metadata <- reactive({
   output$event_test <- renderPrint({
       print(data_click())
       print(dim(data()))
-      print(input$baseline)
+      print(input$active_preprocessing)
+      print(input$range_decision) 
+      print(input$MinRange)
+      print(input$MaxRange)
+      print(input$smooth_decision)
       print(input$smoother)
+      print(input$baseline_decision) 
+      print(input$baseline_selection) 
+      print(input$baseline)
+      print(trace)
       print(baseline_data())
-      
-      
   })
 
 })
