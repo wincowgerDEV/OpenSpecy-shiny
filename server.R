@@ -342,8 +342,7 @@ read_spectrum <- function(filename, share, id) {
     )
 }
 
-                          
-
+                         
 # This is the actual server functions, all functions before this point are not
 # reactive
 server <- shinyServer(function(input, output, session) {
@@ -448,34 +447,6 @@ observeEvent(input$file1, {
       )
       return(NULL)
     } 
-    #else if(grepl("\\.zip$", ignore.case = T, filename$data)){
-    #  match_results <- data.frame(names = 1:(length(rout[[1]]) - 1))
-    #  processed_results <- data.frame(matrix(ncol = (length(rout[[1]]) - 1), nrow = length(std_wavenumbers)))
-    #  processed_results[,"wavenumber"] <- std_wavenumbers
-    #  matched_results <- data.frame(matrix(ncol = (length(rout[[1]]) - 1), nrow = length(std_wavenumbers)))
-    #  matched_results[,"wavenumber"] <- std_wavenumbers
-    #  identified_results <- data.frame(matrix(ncol = (length(rout[[1]]) - 1), nrow = length(std_wavenumbers)))
-    #  identified_results[,"wavenumber"] <- std_wavenumbers
-    #  for(column in 2:length(rout[[1]])){ #perhaps turn this into a multithreaded apply function.
-    #    print(column)
-    #    preprocessed$data <- data.frame(wavenumber = rout[[1]][[1]], 
-    #                                    intensity = rout[[1]][[column]]) %>%
-    #                                    filter(!is.na(intensity))
-    #    
-    #    match_results[column, "identity"] <- top_matches() %>% slice(1) %>% select(1) %>% unlist(.)
-    #    match_results[column, "correlation"] <- top_matches() %>% slice(1) %>% select(2) %>% unlist(.)
-    #    match_results[column, "match_id"] <- top_matches() %>% slice(1) %>% select(3) %>% unlist(.)
-    #    processed_results[,column] <- baseline_data() %>% 
-    #        right_join(data.table(wavenumber = std_wavenumbers)) %>%
-    #        pull(intensity)
-    #    matched_results[,column] <- DataR()
-    #    identified_results[,column] <- match_selected()[["intensity"]]
-    #  }
-    #  map_data$data <- match_results
-    #  processed_map_data$data <- processed_results
-    #  matched_map_data$data <- matched_results
-    #  identified_map_data$data <- identified_results
-    #}
     else {
       preprocessed$data <- rout
     }
@@ -495,7 +466,6 @@ observeEvent(input$file1, {
   # All cleaning of the data happens here. Range selection, Smoothing, and Baseline removing
   baseline_data <- reactive({
      req(input$file1)
-     #req(input$active_preprocessing)
     if(!length(data()) | !input$active_preprocessing) {
       data.table(wavenumber = numeric(), intensity = numeric(), SpectrumIdentity = factor())
     }
@@ -604,7 +574,6 @@ observeEvent(input$reset, {
             inner_join(meta, by = "sample_name") %>%
             select(wavenumber, intensity, SpectrumIdentity) %>%
             mutate(intensity = make_rel(intensity, na.rm = T)) #%>%
-        #dplyr::filter(!is.na(intensity))
     }
         
       })
@@ -645,7 +614,6 @@ observeEvent(input$reset, {
   
   # Create the data tables for all matches
   output$event <- DT::renderDataTable({
-    #req(!grepl("\\.zip$", ignore.case = T, filename$data))
     datatable(top_matches(),
               options = list(searchHighlight = TRUE,
                              scrollX = TRUE,
@@ -661,13 +629,10 @@ observeEvent(input$reset, {
 match_metadata <- reactive({
     MatchSpectra()[input$event_rows_selected,] %>%
         select(where(~!any(is_empty(.))))
-    #names(current_meta) <- namekey[names(current_meta)]
 })
     #Metadata for the selected value
  output$eventmetadata <- DT::renderDataTable({
      req(input$active_identification)
-    #if(!grepl("\\.zip$", ignore.case = T, filename$data)){
-        # Get data from find_spec
     datatable(match_metadata(),
               escape = FALSE,
               options = list(dom = 't', bSort = F, 
@@ -677,23 +642,6 @@ match_metadata <- reactive({
               rownames = FALSE,
               style = 'bootstrap', caption = "Selection Metadata",
               selection = list(mode = 'none'))
-    #}
-    #  else{
-    #      clickData <- event_data("plotly_click", source = "heat_plot")
-    #      if (is.null(clickData)) return(NULL)
-    #      datatable(meta %>%
-    #                    filter(sample_name == map_data$data[[clickData[["pointNumber"]] + 2, "match_id"]])  %>%
-    #                    select(where(~!any(is_empty(.)))), #Something like filter whole library. 
-    #                escape = FALSE,
-    #                options = list(dom = 't', bSort = F, 
-    #                               scrollX = TRUE,
-    #                               lengthChange = FALSE,
-    #                               info = FALSE),
-    #                rownames = FALSE,
-    #                style = 'bootstrap', caption = "Selection Metadata",
-    #                selection = list(mode = 'none'))
-    #  }
-    
   })
   
   data_click <- reactive({
@@ -715,18 +663,18 @@ match_metadata <- reactive({
      #         ignore.case = T, filename$data)){
         #req(single_data$data)
       plot_ly(type = 'scatter', mode = 'lines', source = "B") %>%
-        add_trace(data = DataR_plot(), x = ~wavenumber, y = ~intensity,
-                  name = 'Matched Spectrum',
-                  line = list(color = 'rgb(125,249,255)')) %>%
-        add_trace(data = match_selected(), x = ~wavenumber, y = ~intensity,
-                  name = 'Selected Match',
-                  line = list(color = 'rgb(255,255,255)')) %>%
-        add_trace(x = if(input$active_preprocessing){baseline_data()[["wavenumber"]]} else{NULL}, y = if(input$active_preprocessing){make_rel(baseline_data()[[data_click()]], na.rm = T)} else{NULL},
-                  name = 'Processed Spectrum',
-                  line = list(color = 'rgb(240,19,207)')) %>%
         add_trace(x = data()[["wavenumber"]], y = make_rel(data()[[data_click()]], na.rm = T),
                   name = 'Uploaded Spectrum',
                   line = list(color = 'rgba(240,236,19,0.8)')) %>%
+          add_trace(x = if(input$active_preprocessing){baseline_data()[["wavenumber"]]} else{NULL}, y = if(input$active_preprocessing){make_rel(baseline_data()[[data_click()]], na.rm = T)} else{NULL},
+                    name = 'Processed Spectrum',
+                    line = list(color = 'rgb(240,19,207)')) %>%
+          add_trace(data = match_selected(), x = ~wavenumber, y = ~intensity,
+                    name = 'Selected Match',
+                    line = list(color = 'rgb(255,255,255)')) %>%
+          add_trace(data = DataR_plot(), x = ~wavenumber, y = ~intensity,
+                    name = 'Matched Spectrum',
+                    line = list(color = 'rgb(125,249,255)')) %>%
         # Dark blue rgb(63,96,130)
         # https://www.rapidtables.com/web/color/RGB_Color.html https://www.color-hex.com/color-names.html
         layout(yaxis = list(title = "absorbance intensity [-]"),
