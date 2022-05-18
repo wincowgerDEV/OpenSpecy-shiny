@@ -86,8 +86,8 @@ process_intensity <- function(intensity, wavenumber, active_preprocessing, range
     #Range criteria   
     if(range_decision & test2) {
         #assumes that all the wavenumbers exist, but they don't 
-        intensity_cor <- intensity_cor[wavenumber_cor > min_range & wavenumber_cor < max_range]
-        wavenumber_cor <- wavenumber_cor[wavenumber_cor > min_range & wavenumber_cor < max_range]
+        intensity_cor <- intensity_cor[wavenumber_cor >= min_range & wavenumber_cor <= max_range]
+        wavenumber_cor <- wavenumber_cor[wavenumber_cor >= min_range & wavenumber_cor <= max_range]
         test <- std_wavenumbers %in% std_wavenumbers[std_wavenumbers >= min(wavenumber_cor) & std_wavenumbers <= max(wavenumber_cor)]
         
     } 
@@ -104,9 +104,9 @@ process_intensity <- function(intensity, wavenumber, active_preprocessing, range
         intensity_cor <-  intensity_cor - approx(trace$data$wavenumber, trace$data$intensity, xout = wavenumber_cor, rule = 2, method = "linear", ties = mean)$y
     }
     
-    intensity_cor <- ifelse(test, intensity_cor, place) #try using this for other function
+    place[test] <- intensity_cor#try using this for other function
     
-    #place
+    place
     
 }
 
