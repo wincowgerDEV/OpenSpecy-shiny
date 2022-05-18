@@ -622,9 +622,9 @@ observeEvent(input$reset, {
       incProgress(1/3, detail = "Finding Match")
       
 
-      Lib <- left_join(data.table(sample_name = names(correlation()[(data_click() - 1),]), rsq = correlation()[(data_click() - 1),]), meta)
+      Lib <- left_join(data.table(sample_name = names(correlation()[(data_click() - 1),]), rsq = correlation()[(data_click() - 1),]), meta) %>%
+          arrange(desc(rsq))
       
-
       incProgress(1/3, detail = "Making Plot")
 
     })
@@ -946,8 +946,8 @@ match_metadata <- reactive({
              min_range = input$MaxRange,
              active_identification = input$active_identification,
              spectra_type = input$Spectra,
-             analyze_type = input$Data,
-             region_type = input$Library,
+             #analyze_type = input$Data,
+             #region_type = input$Library,
              id_level = input$id_level)
   })
 
@@ -971,8 +971,8 @@ match_metadata <- reactive({
                range_decision = input$range_decision,
                data_id = digest::digest(preprocessed$data, algo = "md5"),
                spectra_type = input$Spectra,
-               analyze_type = input$Data,
-               region_type = input$Library,
+               #analyze_type = input$Data,
+               #region_type = input$Library,
                ipid = input$ipid,
                time = human_ts())
       }
