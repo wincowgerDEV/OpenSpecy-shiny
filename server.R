@@ -40,14 +40,14 @@ conform_spectra <- function(df, wavenumber, std_wavenumbers, correction){
 
 conform_intensity <- function(intensity, wavenumber, correction, std_wavenumbers){
     test <- std_wavenumbers %in% conform_wavenumber(wavenumber)
+    new_wavenumbers <- std_wavenumbers[test]
     place <- rep(NA, length.out= length(std_wavenumbers))
-    vec <- adjust_intensity(x = conform_wavenumber(wavenumber),
-                            y = clean_spec(x = wavenumber, y = intensity),
+    vec <- adjust_intensity(x = new_wavenumbers,
+                            y = clean_spec(x = wavenumber, y = intensity, out = new_wavenumbers),
                             type = correction,
                             na.rm = T)[,"intensity"]
     place[test] <- vec
     place
-    
 }
 
 adjust_intensity <- function(x, y, type = "none", make_rel = F, ...) {
@@ -61,15 +61,17 @@ adjust_intensity <- function(x, y, type = "none", make_rel = F, ...) {
     data.frame(wavenumber = x, intensity = yout)
 }
 
+
 conform_wavenumber <- function(wavenumber){
     seq(round_any(min(wavenumber), 5, ceiling), round_any(max(wavenumber), 5, floor), by = 5)
 }
 
-clean_spec <- function(x, y){
+clean_spec <- function(x, y, out){
     c(
-        approx(x = x, y = y, xout = conform_wavenumber(x))$y
+        approx(x = x, y = y, xout = out)$y
     )
 }
+
 
 #Process spectra functions 
 
@@ -632,12 +634,6 @@ observeEvent(input$reset, {
   })
 
   top_matches <- reactive({
-      #clickData <- event_data("plotly_click", source = "heat_plot")
-      #if (is.null(clickData)) return(NULL)
-      
-      # Obtain the clicked x/y variables and fit linear model
-     # vars <- c(clickData[["x"]], clickData[["y"]])
-      
       MatchSpectra() %>%
           dplyr::rename("Material" = SpectrumIdentity) %>%
           dplyr::rename("Pearson's r" = rsq) %>%
@@ -668,9 +664,9 @@ match_metadata <- reactive({
     #names(current_meta) <- namekey[names(current_meta)]
 })
     #Metadata for the selected value
-  output$eventmetadata <- DT::renderDataTable({
+ output$eventmetadata <- DT::renderDataTable({
      req(input$active_identification)
-    if(!grepl("\\.zip$", ignore.case = T, filename$data)){
+    #if(!grepl("\\.zip$", ignore.case = T, filename$data)){
         # Get data from find_spec
     datatable(match_metadata(),
               escape = FALSE,
@@ -681,22 +677,22 @@ match_metadata <- reactive({
               rownames = FALSE,
               style = 'bootstrap', caption = "Selection Metadata",
               selection = list(mode = 'none'))
-    }
-      else{
-          clickData <- event_data("plotly_click", source = "heat_plot")
-          if (is.null(clickData)) return(NULL)
-          datatable(meta %>%
-                        filter(sample_name == map_data$data[[clickData[["pointNumber"]] + 2, "match_id"]])  %>%
-                        select(where(~!any(is_empty(.)))), #Something like filter whole library. 
-                    escape = FALSE,
-                    options = list(dom = 't', bSort = F, 
-                                   scrollX = TRUE,
-                                   lengthChange = FALSE,
-                                   info = FALSE),
-                    rownames = FALSE,
-                    style = 'bootstrap', caption = "Selection Metadata",
-                    selection = list(mode = 'none'))
-      }
+    #}
+    #  else{
+    #      clickData <- event_data("plotly_click", source = "heat_plot")
+    #      if (is.null(clickData)) return(NULL)
+    #      datatable(meta %>%
+    #                    filter(sample_name == map_data$data[[clickData[["pointNumber"]] + 2, "match_id"]])  %>%
+    #                    select(where(~!any(is_empty(.)))), #Something like filter whole library. 
+    #                escape = FALSE,
+    #                options = list(dom = 't', bSort = F, 
+    #                               scrollX = TRUE,
+    #                               lengthChange = FALSE,
+    #                               info = FALSE),
+    #                rownames = FALSE,
+    #                style = 'bootstrap', caption = "Selection Metadata",
+    #                selection = list(mode = 'none'))
+    #  }
     
   })
   
@@ -711,22 +707,6 @@ match_metadata <- reactive({
       
   })
   
-  
-  output$selected_plot <- renderPlotly({
-      req(grepl("\\.zip$", ignore.case = T, filename$data))
-      clickData <- event_data("plotly_click", source = "heat_plot")
-      plot_ly(type = 'scatter', mode = 'lines') %>%
-        add_trace(x = std_wavenumbers, y = make_rel(matched_map_data$data[[clickData[["pointNumber"]] + 1]], na.rm = T),
-                  name = paste0('Selected', "(", clickData[["x"]], ",", clickData[["y"]], ")")) %>%
-        add_trace(x = std_wavenumbers, y = make_rel(identified_map_data$data[[clickData[["pointNumber"]] + 1]], na.rm = T),
-                  name = map_data$data[[clickData[["pointNumber"]] + 1, "identity"]]) %>%
-          layout(yaxis = list(title = "absorbance intensity [-]"),
-                 xaxis = list(title = "wavenumber [cm<sup>-1</sup>]",
-                              autorange = "reversed"),
-                 plot_bgcolor = 'rgb(17,0,73)',
-                 paper_bgcolor = 'rgba(0,0,0,0.5)',
-                 font = list(color = '#FFFFFF'))
-  })
 
   # Display matches based on table selection ----
   output$MyPlotC <- renderPlotly({
