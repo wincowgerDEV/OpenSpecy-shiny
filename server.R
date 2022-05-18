@@ -72,8 +72,8 @@ clean_spec <- function(x, y){
 }
 
 #Process spectra functions 
+
 process_intensity <- function(intensity, wavenumber, active_preprocessing, range_decision, min_range, max_range, smooth_decision, smoother, baseline_decision, baseline_selection, baseline, trace, std_wavenumbers) {
-    test2 <-  length(std_wavenumbers[std_wavenumbers > min_range & std_wavenumbers < max_range]) > 9
     
     test <- std_wavenumbers %in% std_wavenumbers[!is.na(intensity)]
     place <- rep(NA, length.out= length(std_wavenumbers))
@@ -81,12 +81,15 @@ process_intensity <- function(intensity, wavenumber, active_preprocessing, range
     #set innitial conditions
     intensity_cor <- intensity[!is.na(intensity)]
     wavenumber_cor <- wavenumber[!is.na(intensity)]
+    test2 <-  length(wavenumber_cor[wavenumber_cor > min_range & wavenumber_cor < max_range]) > 11
     
     #Range criteria   
     if(range_decision & test2) {
-        test <- std_wavenumbers %in% std_wavenumbers[std_wavenumbers > min_range & std_wavenumbers < max_range]
+        #assumes that all the wavenumbers exist, but they don't 
         intensity_cor <- intensity_cor[wavenumber_cor > min_range & wavenumber_cor < max_range]
         wavenumber_cor <- wavenumber_cor[wavenumber_cor > min_range & wavenumber_cor < max_range]
+        test <- std_wavenumbers %in% std_wavenumbers[std_wavenumbers >= min(wavenumber_cor) & std_wavenumbers <= max(wavenumber_cor)]
+        
     } 
     
     #Smooth criteria
@@ -100,14 +103,15 @@ process_intensity <- function(intensity, wavenumber, active_preprocessing, range
     else if(baseline_decision & baseline_selection == "Manual" & !is.null(trace$data)){
         intensity_cor <-  intensity_cor - approx(trace$data$wavenumber, trace$data$intensity, xout = wavenumber_cor, rule = 2, method = "linear", ties = mean)$y
     }
-    place[test] <- intensity_cor
     
-    place
+    intensity_cor <- ifelse(test, intensity_cor, place) #try using this for other function
+    
+    #place
     
 }
 
 process_spectra <- function(df, wavenumber, active_preprocessing, range_decision, min_range, max_range, smooth_decision, smoother, baseline_decision, baseline_selection, baseline, trace, std_wavenumbers){
-    setcolorder(df[,2:ncol(df)][,lapply(.SD, preprocess_intensity, wavenumber = wavenumber, active_preprocessing = active_preprocessing, range_decision = range_decision, min_range = min_range, max_range = max_range, smooth_decision = smooth_decision, smoother = smoother, baseline_decision = baseline_decision, baseline_selection = baseline_selection, baseline = baseline, trace = trace, std_wavenumbers = std_wavenumbers)][,wavenumber := std_wavenumbers], "wavenumber")
+    setcolorder(df[,2:ncol(df)][,lapply(.SD, process_intensity, wavenumber = wavenumber, active_preprocessing = active_preprocessing, range_decision = range_decision, min_range = min_range, max_range = max_range, smooth_decision = smooth_decision, smoother = smoother, baseline_decision = baseline_decision, baseline_selection = baseline_selection, baseline = baseline, trace = trace, std_wavenumbers = std_wavenumbers)][,wavenumber := std_wavenumbers], "wavenumber")
 }
 
 #library(future)
