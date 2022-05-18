@@ -511,17 +511,6 @@ observeEvent(input$file1, {
                     baseline = input$baseline, 
                     derivative_decision = input$derivative_decision,
                     std_wavenumbers = std_wavenumbers)
-                    #active_preprocessing = input$active_preprocessing, 
-                    #range_decision = input$range_decision, 
-                    #min_range = input$MinRange, 
-                    #max_range = input$MaxRange, 
-                    #smooth_decision = input$smooth_decision, 
-                    #smoother = input$smoother, 
-                    #baseline_decision = F,#input$baseline_decision, 
-                    #baseline_selection = input$baseline_selection, 
-                    #baseline = input$baseline, 
-                    #trace = trace,
-                    #std_wavenumbers = std_wavenumbers)
     }
   })
 
@@ -547,41 +536,12 @@ observeEvent(input$reset, {
 
   # Choose which spectrum to use
   DataR <- reactive({
-      if(input$Data == "uploaded") {
-      data() %>% 
-        right_join(data.table(wavenumber = std_wavenumbers)) %>%
-        arrange(wavenumber) %>% #Important, NAs will move the wavenumbers if this isn't done.
-        pull(intensity)
+      if(input$active_preprocessing) {
+          baseline_data()
     }
-    else if(input$Data == "processed" & input$active_preprocessing) {
-      baseline_data() %>% 
-        right_join(data.table(wavenumber = std_wavenumbers)) %>%
-        arrange(wavenumber) %>% 
-        pull(intensity)
+    else {
+        data()
     }
-    else if(input$Data == "derivative" & input$active_preprocessing) {
-      baseline_data() %>% 
-        mutate(intensity = process_cor_os(intensity)) %>%
-        right_join(data.table(wavenumber = std_wavenumbers)) %>%
-        arrange(wavenumber) %>% 
-        pull(intensity)
-    }
-    else if(input$Data == "derivative" & !input$active_preprocessing) {
-      data() %>% 
-        mutate(intensity = process_cor_os(intensity)) %>%
-        right_join(data.table(wavenumber = std_wavenumbers)) %>%
-        arrange(wavenumber) %>% 
-        pull(intensity)
-    }
-    else{ #Should change this to just forcing that this option isn't selectable. 
-      show_alert(
-        title = "Impossible task!",
-        text = paste0("We can't search for preprocessed spectra if preprocessing isn't activated","'. ",
-                      "Try again."),
-        type = "warning"
-      )
-    }
-    
   })
   
   DataR_plot <- reactive({
