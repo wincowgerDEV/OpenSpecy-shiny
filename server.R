@@ -537,7 +537,7 @@ observeEvent(input$reset, {
   # Choose which spectrum to use
   DataR <- reactive({
       if(input$active_preprocessing) {
-          baseline_data()
+        baseline_data()
     }
     else {
         data()
@@ -551,7 +551,7 @@ observeEvent(input$reset, {
                  SpectrumIdentity = factor())    }
     else{
       data.table(wavenumber = std_wavenumbers,
-                 intensity = make_rel(DataR(), na.rm = T),
+                 intensity = make_rel(DataR()[[data_click()]], na.rm = T),
                  SpectrumIdentity = factor()) %>%
         dplyr::filter(!is.na(intensity))
     }
@@ -561,15 +561,14 @@ observeEvent(input$reset, {
   libraryR <- reactive({
     req(input$file1)
     req(input$active_identification)
-    if(input$Library == "full") {
-      load("data/library.RData") #Nest these in here so that they don't load automatically unless needed. 
-    }
-    else if (input$Library == "derivative"){
+    if(input$derivative_decision & input$active_preprocessing) {
       load("data/library_deriv.RData") #Nest these in here so that they don't load automatically unless needed. 
+        
     }
-    else if (input$Library == "peaks"){
-      load("data/library_peaks.RData") #Nest these in here so that they don't load automatically unless needed. 
+    else{
+        load("data/library.RData") #Nest these in here so that they don't load automatically unless needed. 
     }
+    
     if(input$Spectra == "both") {
       library
     }
@@ -608,6 +607,10 @@ observeEvent(input$reset, {
         
       })
   
+  correlation <- reactive({
+      cor(DataR()[,2:ncol(DataR())][!is.na(DataR()[[2]]),], libraryR()[!is.na(DataR()[[2]]),], use = "everything")
+  })
+  
   # Identify Spectra function ----
   # Joins their spectrum to the internal database and computes correlation.
   MatchSpectra <- reactive({
@@ -619,10 +622,7 @@ observeEvent(input$reset, {
       incProgress(1/3, detail = "Finding Match")
       
 
-      correlations <- cor(DataR(),libraryR(), use = "pairwise.complete.obs")
-      
-      Lib <- left_join(meta, data.table(sample_name = colnames(correlations), rsq = round(correlations[1,], 2))) %>%
-        arrange(desc(rsq))
+      Lib <- left_join(data.table(sample_name = names(correlation()[(data_click() - 1),]), rsq = correlation()[(data_click() - 1),]), meta)
       
 
       incProgress(1/3, detail = "Making Plot")
@@ -649,7 +649,7 @@ observeEvent(input$reset, {
   
   # Create the data tables for all matches
   output$event <- DT::renderDataTable({
-    req(!grepl("\\.zip$", ignore.case = T, filename$data))
+    #req(!grepl("\\.zip$", ignore.case = T, filename$data))
     datatable(top_matches(),
               options = list(searchHighlight = TRUE,
                              scrollX = TRUE,
