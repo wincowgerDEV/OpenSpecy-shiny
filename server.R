@@ -73,7 +73,7 @@ clean_spec <- function(x, y){
 
 #Process spectra functions 
 
-process_intensity <- function(intensity, wavenumber, active_preprocessing, range_decision, min_range, max_range, smooth_decision, smoother, baseline_decision, baseline_selection, baseline, trace, std_wavenumbers) {
+process_intensity <- function(intensity, wavenumber, active_preprocessing, range_decision, min_range, max_range, smooth_decision, smoother, baseline_decision, baseline_selection, baseline, derivative_decision, trace, std_wavenumbers) {
     
     test <- std_wavenumbers %in% std_wavenumbers[!is.na(intensity)]
     place <- rep(NA, length.out= length(std_wavenumbers))
@@ -104,14 +104,19 @@ process_intensity <- function(intensity, wavenumber, active_preprocessing, range
         intensity_cor <-  intensity_cor - approx(trace$data$wavenumber, trace$data$intensity, xout = wavenumber_cor, rule = 2, method = "linear", ties = mean)$y
     }
     
+    #Derivative
+    if(derivative_decision) {
+        intensity_cor <-  process_cor_os(intensity_cor)
+    }
+    
     place[test] <- intensity_cor#try using this for other function
     
     place
     
 }
 
-process_spectra <- function(df, wavenumber, active_preprocessing, range_decision, min_range, max_range, smooth_decision, smoother, baseline_decision, baseline_selection, baseline, trace, std_wavenumbers){
-    setcolorder(df[,2:ncol(df)][,lapply(.SD, process_intensity, wavenumber = wavenumber, active_preprocessing = active_preprocessing, range_decision = range_decision, min_range = min_range, max_range = max_range, smooth_decision = smooth_decision, smoother = smoother, baseline_decision = baseline_decision, baseline_selection = baseline_selection, baseline = baseline, trace = trace, std_wavenumbers = std_wavenumbers)][,wavenumber := std_wavenumbers], "wavenumber")
+process_spectra <- function(df, wavenumber, active_preprocessing, range_decision, min_range, max_range, smooth_decision, smoother, baseline_decision, baseline_selection, baseline, derivative_decision, trace, std_wavenumbers){
+    setcolorder(df[,2:ncol(df)][,lapply(.SD, process_intensity, wavenumber = wavenumber, active_preprocessing = active_preprocessing, range_decision = range_decision, min_range = min_range, max_range = max_range, smooth_decision = smooth_decision, smoother = smoother, baseline_decision = baseline_decision, baseline_selection = baseline_selection, baseline = baseline, derivative_decision = derivative_decision, trace = trace, std_wavenumbers = std_wavenumbers)][,wavenumber := std_wavenumbers], "wavenumber")
 }
 
 #library(future)
@@ -497,13 +502,14 @@ observeEvent(input$file1, {
                     wavenumber = data()$wavenumber,
                     active_preprocessing = input$active_preprocessing, 
                     range_decision = input$range_decision, 
-                    min_range = 1000, 
-                    max_range = 2000, 
-                    smooth_decision = T, 
-                    smoother = 3, 
-                    baseline_decision = T, 
-                    baseline_selection = "Polynomial", 
-                    baseline = 8, 
+                    min_range = input$MinRange, 
+                    max_range = input$MaxRange, 
+                    smooth_decision = input$smooth_decision, 
+                    smoother = input$smoother, 
+                    baseline_decision = input$baseline_decision, 
+                    baseline_selection = input$baseline_selection, 
+                    baseline = input$baseline, 
+                    derivative_decision = input$derivative_decision,
                     std_wavenumbers = std_wavenumbers)
                     #active_preprocessing = input$active_preprocessing, 
                     #range_decision = input$range_decision, 

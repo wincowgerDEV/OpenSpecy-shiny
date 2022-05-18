@@ -674,7 +674,16 @@ ui <- fluidPage(
                                                                                            bigger = T),
                                                                               
                                                                        )
-                                                                     )
+                                                                     ),
+                                                                     fluidRow(
+                                                                         column(9,
+                                                                                prettySwitch("derivative_decision",
+                                                                                             label = "Derivative",
+                                                                                             inline = T,
+                                                                                             value = T,
+                                                                                             status = "success",
+                                                                                             fill = T)
+                                                                         ))
                                                     ),
                                                     
                                              ),
