@@ -517,26 +517,25 @@ ui <- fluidPage(
                                                column(12, 
                                                  downloadButton("download_testdata",
                                                                  "Sample",
-                                                                 style = "background-color: rgb(240,236,19); color: rgb(0,0,0);"),
-                                                 br(),
+                                                                 style = "background-color: rgb(0,0,0); color: rgb(255,255,255); float: left;"),
                                                  downloadButton("download_metadata",
                                                                 "Metadata",
-                                                                style = "background-color: rgb(75,0,130); color: rgb(255,255,255);"),
-                                                 downloadButton("download_mapdata",
-                                                                "Mapdata",
-                                                                style = "background-color: rgb(75,0,130); color: rgb(255,255,255);"),
-
+                                                                style = "background-color: rgb(75,0,130); color: rgb(255,255,255); float: left;"),
+                                                        conditionalPanel("input.active_preprocessing == true",
+                                                                  downloadButton("download_conformed", "Conformed",
+                                                                                 style = "background-color: rgb(240,236,19); color: rgb(0,0,0); float: left;") 
+                                                        ),
                                                       conditionalPanel("input.active_preprocessing == true",
                                                                        downloadButton("downloadData", "Processed",
-                                                                                      style = "background-color: rgb(240,19,207); color: rgb(0,0,0);") 
+                                                                                      style = "background-color: rgb(240,19,207); color: rgb(0,0,0); float: left;") 
                                                       ),
                                                       conditionalPanel("input.active_identification == true",
                                                                        
                                                                        downloadButton("download_matched", "Matched",
-                                                                                      style = "background-color: rgb(125,249,255); color: rgb(0,0,0);")), #Make colors align with the plot, Make only appear if on plot.
+                                                                                      style = "background-color: rgb(125,249,255); color: rgb(0,0,0); float: left;")), #Make colors align with the plot, Make only appear if on plot.
                                                       conditionalPanel("input.active_identification == true",
                                                                        downloadButton("download_selected", "Selected",
-                                                                                      style = "background-color: rgb(255,255,255); color: rgb(0,0,0);") )
+                                                                                      style = "background-color: rgb(255,255,255); color: rgb(0,0,0); float: left;") )
                                                       )
                                                 ), 
                                              fluidRow(

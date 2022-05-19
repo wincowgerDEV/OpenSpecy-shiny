@@ -392,19 +392,9 @@ server <- shinyServer(function(input, output, session) {
   })
   
   #Reactive Values ----
-  single_data <- reactiveValues(data = NULL)
-  map_category <- reactiveValues(data = NULL)
   preprocessed <- reactiveValues(data = NULL)
-  wavenumbers <- reactiveValues(data = NULL)
-  map_data <- reactiveValues(data = NULL)
-  filename <- reactiveValues(data = NULL)
-  processed_map_data <- reactiveValues(data = NULL)
-  matched_map_data <- reactiveValues(data = NULL)
-  identified_map_data <- reactiveValues(data = NULL)
-  coords <- reactiveValues(data = NULL)
   trace <- reactiveValues(data = NULL)
-  validation <- reactiveValues(data = NULL)
-  
+
   
 observeEvent(input$file1, {
   # Read in data when uploaded based on the file type
@@ -738,21 +728,27 @@ match_metadata <- reactive({
   )
 
   ## Download own data ----
+  
+  output$download_conformed <- downloadHandler(
+      filename = function() {paste('data-conformed-', human_ts(), '.csv', sep='')},
+      content = function(file) {fwrite(data(), file)}
+  )
+  
   output$downloadData <- downloadHandler(
     filename = function() {paste('data-processed-', human_ts(), '.csv', sep='')},
-    content = function(file) {fwrite(if(grepl("(\\.zip$)", ignore.case = T, filename$data)){processed_map_data$data}else{baseline_data()}, file)}
+    content = function(file) {fwrite(baseline_data(), file)}
   )
   
   ## Download selected data ----
   output$download_selected <- downloadHandler(
     filename = function() {paste('data-selected-', human_ts(), '.csv', sep='')},
-    content = function(file) {fwrite(if(grepl("(\\.zip$)", ignore.case = T, filename$data)){identified_map_data$data}else{match_selected()}, file)}
+    content = function(file) {fwrite(match_selected(), file)}
   )
 
   ## Download matched data ----
   output$download_matched <- downloadHandler(
     filename = function() {paste('data-matched-', human_ts(), '.csv', sep='')},
-    content = function(file) {fwrite(if(grepl("(\\.zip$)", ignore.case = T, filename$data)){matched_map_data$data}else{DataR_plot()}, file)}
+    content = function(file) {fwrite(DataR_plot(), file)}
   )
   
   ## Download matched data ----
@@ -765,11 +761,6 @@ match_metadata <- reactive({
   output$validation_download <- downloadHandler(
       filename = function() {paste('data-analysis-validation-', human_ts(), '.csv', sep='')},
       content = function(file) {fwrite(validation$data, file)}
-  )
-  
-  output$download_mapdata <- downloadHandler(
-    filename = function() {paste('data-analysis-map-', human_ts(), '.csv', sep='')},
-    content = function(file) {fwrite(map_data$data, file)}
   )
   
   ## Sharing data ----
