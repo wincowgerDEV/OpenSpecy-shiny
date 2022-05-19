@@ -800,8 +800,7 @@ match_metadata <- reactive({
       show("reset")
     }
   })
-
-
+  
   observe({
     if (is.null(preprocessed$data)) {
       show("placeholder1")
