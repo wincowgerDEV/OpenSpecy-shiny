@@ -579,7 +579,7 @@ observeEvent(input$reset, {
       })
   
   correlation <- reactive({
-      cor(DataR()[,2:ncol(DataR())][!is.na(DataR()[[2]]),], libraryR()[!is.na(DataR()[[2]]),], use = "everything")
+      cor(DataR()[,2:ncol(DataR())][!is.na(DataR()[[2]]),], libraryR()[!is.na(DataR()[[2]]),], use = "pairwise.complete.obs")
   })
   
   # Identify Spectra function ----
@@ -592,8 +592,11 @@ observeEvent(input$reset, {
 
       incProgress(1/3, detail = "Finding Match")
       
-
+      preprocessed$data$coords$max_cor <- apply(correlation(), 1, function(x) max(x, na.rm = T))
+        
       Lib <- left_join(data.table(sample_name = names(correlation()[(data_click() - 1),]), rsq = correlation()[(data_click() - 1),]), meta) %>%
+          mutate(rsq = round(rsq, 2)) %>%
+          filter(!is.na(rsq)) %>%
           arrange(desc(rsq))
       
       incProgress(1/3, detail = "Making Plot")
@@ -614,6 +617,7 @@ observeEvent(input$reset, {
   
   # Create the data tables for all matches
   output$event <- DT::renderDataTable({
+    req(input$active_identification)
     datatable(top_matches(),
               options = list(searchHighlight = TRUE,
                              scrollX = TRUE,
@@ -695,7 +699,7 @@ match_metadata <- reactive({
             add_heatmap(
                 x = preprocessed$data$coords$x, #Need to update this with the new rout format. 
                 y = preprocessed$data$coords$y, 
-                z = sample(1:length(preprocessed$data$coords$y), size = length(preprocessed$data$coords$y), replace = F)#,
+                z = if(input$active_identification){preprocessed$data$coords$max_cor} else{1:length(preprocessed$data$coords$y)}#,
                 #text = paste0(bind_matches$names, bind_matches$identity)
             ) %>%
             event_register("plotly_click") %>%
@@ -817,25 +821,11 @@ match_metadata <- reactive({
   
   observeEvent(input$validate, {
     load("data/library.RData") 
-    simulate <- library
-    validation_results <- data.frame(sample_name_tested = character(), SpectrumIdentity_tested = character(), polymer_tested = character(), polymer_class_tested = character(), plastic_or_not_tested = character(),
-                                     sample_name_matched = character(), SpectrumIdentity_matched = character(), polymer_matched = character(), polymer_class_matched = character(), plastic_or_not_matched = character(), rsq_matched = numeric())
-    for(item in 1:100){
-            column <- sample(1:ncol(simulate), 1)
-            preprocessed$data <- data.table(wavenumber = std_wavenumbers, intensity = simulate[[column]]) %>%
-                                    filter(!is.na(intensity))
-            
-            tested <- filter(meta, sample_name == colnames(simulate)[column]) %>%
-                select(sample_name, SpectrumIdentity, polymer, polymer_class, plastic_or_not) 
-            colnames(tested) <- paste0(colnames(tested), "_tested")
-            
-            matched <- match_metadata() %>% 
-                select(sample_name, SpectrumIdentity, polymer, polymer_class, plastic_or_not, rsq) 
-            colnames(matched) <- paste0(colnames(matched), "_matched")
-            
-            validation_results[item,] <-  cbind(tested, matched)
-    }
-    validation$data <- validation_results
+    base <- 10
+    cols <- sample(1:ncol(library), 100, replace = F)
+    preprocessed$data$spectra <- setcolorder(library[,..cols][,wavenumber := std_wavenumbers], "wavenumber")
+    preprocessed$data$coords <- expand.grid(x = 1:10, y = 1:10)
+    
  })
   
   # Log events ----
@@ -921,7 +911,7 @@ match_metadata <- reactive({
       print(input$baseline_decision) 
       print(input$baseline_selection) 
       print(input$baseline)
-      print(trace)
+      print(preprocessed$data)
       print(baseline_data())
   })
 

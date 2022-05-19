@@ -487,7 +487,7 @@ ui <- fluidPage(
                        ),
               ),
               
-              #Upload File Tab ----
+              #Analyze Spectra Tab ----
               tabPanel("Analyze Spectra", value = "tab1",
                        #titlePanel(h4("Upload, View, and Share Spectra")),
                        br(),
@@ -543,10 +543,11 @@ ui <- fluidPage(
                                                column(12, 
                                                     style = columnformat(),
                                                     fluidRow(style = "padding:1rem",
-                                                             #uiOutput("table_plot"),
-                                                             DT::dataTableOutput("event"),
-                                                             plotlyOutput("heatmap")
                                                              
+                                                             plotlyOutput("heatmap"),
+                                                             conditionalPanel("input.active_identification == true",
+                                                                              DT::dataTableOutput("event"))
+
                                                     )
                                               )
                                              )
