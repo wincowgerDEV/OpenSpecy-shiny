@@ -24,6 +24,7 @@ library(config)
 library(mongolite)
 library(loggit)
 library(hyperSpec)
+library(TTR)
 if(droptoken) library(rdrop2)
 
 #devtools::install_github("wincowgerDEV/OpenSpecy")
@@ -120,6 +121,17 @@ process_intensity <- function(intensity, wavenumber, active_preprocessing, range
 process_spectra <- function(df, wavenumber, active_preprocessing, range_decision, min_range, max_range, smooth_decision, smoother, baseline_decision, baseline_selection, baseline, derivative_decision, trace, std_wavenumbers){
     setcolorder(df[,2:ncol(df)][,lapply(.SD, process_intensity, wavenumber = wavenumber, active_preprocessing = active_preprocessing, range_decision = range_decision, min_range = min_range, max_range = max_range, smooth_decision = smooth_decision, smoother = smoother, baseline_decision = baseline_decision, baseline_selection = baseline_selection, baseline = baseline, derivative_decision = derivative_decision, trace = trace, std_wavenumbers = std_wavenumbers)][,wavenumber := std_wavenumbers], "wavenumber")
 }
+
+#signal to noise ratio
+snr <- function(x) {
+    signal = max(x, na.rm = T)/mean(x, na.rm = T)
+    sd  = runSD(x[!is.na(x)], n = 10) 
+    mean = runMean(x[!is.na(x)], n = 10)
+    noise = min(sd[sd != 0 & mean != 0]/mean[sd != 0 & mean != 0], na.rm = T)
+    
+    signal/noise
+}
+
 
 #library(future)
 #library(bslib)
@@ -460,7 +472,7 @@ observeEvent(input$file1, {
       data.table(wavenumber = numeric(), intensity = numeric(), SpectrumIdentity = factor())
     }
     else{
-    process_spectra(df = data(), 
+    processed <- process_spectra(df = data(), 
                     wavenumber = data()$wavenumber,
                     active_preprocessing = input$active_preprocessing, 
                     range_decision = input$range_decision, 
@@ -472,7 +484,13 @@ observeEvent(input$file1, {
                     baseline_selection = input$baseline_selection, 
                     baseline = input$baseline, 
                     derivative_decision = input$derivative_decision,
+                    trace = trace,
                     std_wavenumbers = std_wavenumbers)
+    
+    preprocessed$data$coords$snr <-  log10(unlist(lapply(processed[,2:ncol(processed)], snr)))
+    
+    processed
+    
     }
   })
 
@@ -691,13 +709,14 @@ match_metadata <- reactive({
             add_heatmap(
                 x = preprocessed$data$coords$x, #Need to update this with the new rout format. 
                 y = preprocessed$data$coords$y, 
-                z = if(input$active_identification){preprocessed$data$coords$max_cor} else{1:length(preprocessed$data$coords$y)}#,
+                z = if(input$active_identification){preprocessed$data$coords$max_cor} else if(input$active_preprocessing){ preprocessed$data$coords$snr
+} else{1:length(preprocessed$data$coords$y)}#,
                 #text = paste0(bind_matches$names, bind_matches$identity)
             ) %>%
             layout(plot_bgcolor = 'rgb(17,0,73)',
                    paper_bgcolor = 'rgba(0,0,0,0.5)',
                    font = list(color = '#FFFFFF'),
-                   title = if(input$active_identification)"Correlation" else "Spectrum Number") %>%
+                   title = if(input$active_identification)"Correlation"  else if(input$active_preprocessing) "Signal to Noise"  else "Spectrum Number") %>%
             event_register("plotly_click") 
   })
      
@@ -905,7 +924,7 @@ match_metadata <- reactive({
       print(input$baseline_decision) 
       print(input$baseline_selection) 
       print(input$baseline)
-      print(preprocessed$data)
+      print(preprocessed$data$coords$snr)
       print(baseline_data())
   })
 
