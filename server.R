@@ -592,7 +592,7 @@ observeEvent(input$reset, {
 
       incProgress(1/3, detail = "Finding Match")
       
-      preprocessed$data$coords$max_cor <- apply(correlation(), 1, function(x) max(x, na.rm = T))
+      preprocessed$data$coords$max_cor <- round(apply(correlation(), 1, function(x) max(x, na.rm = T)), 2)
         
       Lib <- left_join(data.table(sample_name = names(correlation()[(data_click() - 1),]), rsq = correlation()[(data_click() - 1),]), meta) %>%
           mutate(rsq = round(rsq, 2)) %>%

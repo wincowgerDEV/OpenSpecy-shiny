@@ -707,11 +707,7 @@ ui <- fluidPage(
                                                                                           status_off = "default",
                                                                                           outline = TRUE,
                                                                                           plain = TRUE,
-                                                                                          bigger = T),
-                                                                             actionButton("validate", "Validate Default"),
-                                                                             downloadButton("validation_download", "download validation",
-                                                                                            style = "background-color: rgb(240,19,207); color: rgb(0,0,0);") 
-                                                                             
+                                                                                          bigger = T)
                                                                       )))),
                                                     conditionalPanel("input.active_identification == true & input.view_identification == true",
                                                                      fluidRow(
@@ -799,6 +795,7 @@ ui <- fluidPage(
                                                 plotcontainerfunction(h4(id = "placeholder1", "Upload some data to get started..."), 
                                                                       plotlyOutput("MyPlotC"),
                                                                       DT::dataTableOutput("eventmetadata")),
+                                                                      actionButton("validate", "Validate Settings", style = "float: right;"), 
                                                                       verbatimTextOutput("event_test"),
                                                                       style = bodyformat()
                                                 )
