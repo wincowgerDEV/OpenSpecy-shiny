@@ -569,8 +569,12 @@ observeEvent(input$reset, {
       })
   
   correlation <- reactive({
-      cor(DataR()[,2:ncol(DataR())][!is.na(DataR()[[2]]),], libraryR()[!is.na(DataR()[[2]]),], use = "pairwise.complete.obs")
+      cor <- cor(DataR()[,2:ncol(DataR())][!is.na(DataR()[[2]]),], libraryR()[!is.na(DataR()[[2]]),], use = "pairwise.complete.obs")
+      preprocessed$data$coords$max_cor <- round(apply(cor, 1, function(x) max(x, na.rm = T)), 2)
+      cor
   })
+  
+  
   
   # Identify Spectra function ----
   # Joins their spectrum to the internal database and computes correlation.
@@ -582,7 +586,6 @@ observeEvent(input$reset, {
 
       incProgress(1/3, detail = "Finding Match")
       
-      preprocessed$data$coords$max_cor <- round(apply(correlation(), 1, function(x) max(x, na.rm = T)), 2)
         
       Lib <- left_join(data.table(sample_name = names(correlation()[(data_click() - 1),]), rsq = correlation()[(data_click() - 1),]), meta) %>%
           mutate(rsq = round(rsq, 2)) %>%
@@ -679,12 +682,11 @@ match_metadata <- reactive({
                font = list(color = '#FFFFFF')) %>%
         config(modeBarButtonsToAdd = list("drawopenpath", "eraseshape"))
     #}
-  
     })
   
   output$heatmap <- renderPlotly({
       req(input$file1)
-
+      req(ncol(data()) > 2)
         plot_ly(source = "heat_plot") %>%
             add_heatmap(
                 x = preprocessed$data$coords$x, #Need to update this with the new rout format. 
@@ -692,10 +694,11 @@ match_metadata <- reactive({
                 z = if(input$active_identification){preprocessed$data$coords$max_cor} else{1:length(preprocessed$data$coords$y)}#,
                 #text = paste0(bind_matches$names, bind_matches$identity)
             ) %>%
-            event_register("plotly_click") %>%
             layout(plot_bgcolor = 'rgb(17,0,73)',
                    paper_bgcolor = 'rgba(0,0,0,0.5)',
-                   font = list(color = '#FFFFFF'))
+                   font = list(color = '#FFFFFF'),
+                   title = if(input$active_identification)"Correlation" else "Spectrum Number") %>%
+            event_register("plotly_click") 
   })
      
       
