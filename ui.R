@@ -535,7 +535,10 @@ ui <- fluidPage(
                                                                                       style = "background-color: rgb(125,249,255); color: rgb(0,0,0); float: left;")), #Make colors align with the plot, Make only appear if on plot.
                                                       conditionalPanel("input.active_identification == true",
                                                                        downloadButton("download_selected", "Selected",
-                                                                                      style = "background-color: rgb(255,255,255); color: rgb(0,0,0); float: left;") )
+                                                                                      style = "background-color: rgb(255,255,255); color: rgb(0,0,0); float: left;")),
+                                                    conditionalPanel("input.active_identification == true",
+                                                                  downloadButton("correlation_download", "Correlations",
+                                                                                 style = "background-color: rgb(0,0,0); color: rgb(255,255,255); float: left;"))
                                                       )
                                                 ), 
                                              fluidRow(

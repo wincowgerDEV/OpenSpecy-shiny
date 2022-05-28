@@ -597,8 +597,6 @@ observeEvent(input$reset, {
       cor
   })
   
-  
-  
   # Identify Spectra function ----
   # Joins their spectrum to the internal database and computes correlation.
   MatchSpectra <- reactive({
@@ -787,6 +785,12 @@ match_metadata <- reactive({
   output$validation_download <- downloadHandler(
       filename = function() {paste('data-analysis-validation-', human_ts(), '.csv', sep='')},
       content = function(file) {fwrite(validation$data, file)}
+  )
+  
+  ## Download correlation matrix ----
+  output$correlation_download <- downloadHandler(
+      filename = function() {paste('data-analysis-correlations-', human_ts(), '.csv', sep='')},
+      content = function(file) {fwrite(correlation(), file)}
   )
   
   ## Sharing data ----
