@@ -594,6 +594,7 @@ observeEvent(input$reset, {
   correlation <- reactive({
       cor <- cor(DataR()[,2:ncol(DataR())][!is.na(DataR()[[2]]),], libraryR()[!is.na(DataR()[[2]]),], use = "pairwise.complete.obs")
       preprocessed$data$coords$max_cor <- round(apply(cor, 1, function(x) max(x, na.rm = T)), 2)
+      preprocessed$data$coords$max_cor_id <- colnames(libraryR())[apply(cor, 1, function(x) which.max(x))]
       cor
   })
   
@@ -792,6 +793,12 @@ match_metadata <- reactive({
       filename = function() {paste('data-analysis-correlations-', human_ts(), '.csv', sep='')},
       content = function(file) {fwrite(correlation(), file)}
   )
+  
+  output$topmatch_metadata_download <- downloadHandler(
+      filename = function() {paste('data-analysis-topmatch-metadata-', human_ts(), '.csv', sep='')},
+      content = function(file) {fwrite(preprocessed$data$coords, file)}
+  )
+  
   
   ## Sharing data ----
   # Hide functions which shouldn't exist when there is no internet or

@@ -538,6 +538,9 @@ ui <- fluidPage(
                                                                                       style = "background-color: rgb(255,255,255); color: rgb(0,0,0); float: left;")),
                                                     conditionalPanel("input.active_identification == true",
                                                                   downloadButton("correlation_download", "Correlations",
+                                                                                 style = "background-color: rgb(0,0,0); color: rgb(255,255,255); float: left;")), 
+                                                 conditionalPanel("input.active_identification == true",
+                                                                  downloadButton("topmatch_metadata_download", "Top Matches",
                                                                                  style = "background-color: rgb(0,0,0); color: rgb(255,255,255); float: left;"))
                                                       )
                                                 ), 
