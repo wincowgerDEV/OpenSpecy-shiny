@@ -796,7 +796,7 @@ match_metadata <- reactive({
   
   output$topmatch_metadata_download <- downloadHandler(
       filename = function() {paste('data-analysis-topmatch-metadata-', human_ts(), '.csv', sep='')},
-      content = function(file) {fwrite(preprocessed$data$coords, file)}
+      content = function(file) {fwrite(preprocessed$data$coords %>% left_join(meta, by = c("max_cor_id" = "sample_name")), file)}
   )
   
   
