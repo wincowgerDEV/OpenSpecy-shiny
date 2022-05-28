@@ -124,14 +124,14 @@ process_spectra <- function(df, wavenumber, active_preprocessing, range_decision
 
 #signal to noise ratio
 snr <- function(x) {
-    signal = max(x, na.rm = T)/mean(x, na.rm = T)
-    sd  = runSD(x[!is.na(x)], n = 10) 
-    mean = runMean(x[!is.na(x)], n = 10)
-    noise = min(sd[sd != 0 & mean != 0]/mean[sd != 0 & mean != 0], na.rm = T)
-    
+    max  = runMax(x[!is.na(x)], n = 20) 
+    max[(length(max) - 19):length(max)] <- NA
+    #mean = runMean(x[!is.na(x)], n = 10)
+    #mean[(length(mean) - 9):length(mean)] <- NA
+    signal = max[which.max(max)]#/mean(x, na.rm = T)
+    noise = max[which.min(max[max != 0])]
     signal/noise
 }
-
 
 #library(future)
 #library(bslib)

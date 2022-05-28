@@ -201,7 +201,7 @@ std_wavenumbers <- seq(405, 3995, by = 5)
 
 setwd("C:/Users/winco/OneDrive/Documents/zipped_file_test")
 
-file <- read_any("testdata2.zip", share = T, id = "sdafd", std_wavenumbers = std_wavenumbers)
+file <- read_any("test_library.zip", share = T, id = "sdafd", std_wavenumbers = std_wavenumbers)
 
 load("G:/My Drive/GrayLab/Projects/Plastics/ActiveProjects/OpenSpecy/Code/OpenSpecy-shiny/OpenSpecy-shiny/data/library_deriv.RData")
 load("G:/My Drive/GrayLab/Projects/Plastics/ActiveProjects/OpenSpecy/Code/OpenSpecy-shiny/OpenSpecy-shiny/data/metadata.RData")
@@ -229,21 +229,6 @@ preprocessed <- process_intensity(intensity = conformed$`018064006c850b41296c0ff
                                      #trace, 
                                      #std_wavenumbers)
 
-for(column in 1:ncol(conformed)){
-    print(column)
-    process_intensity(intensity = conformed[[column]], 
-                      wavenumber = conformed$wavenumber, 
-                      active_preprocessing = T, 
-                      range_decision = T, 
-                      min_range = 1000, 
-                      max_range = 2000, 
-                      smooth_decision = T, 
-                      smoother = 3, 
-                      baseline_decision = T, 
-                      baseline_selection = "Polynomial", 
-                      baseline = 8, 
-                      std_wavenumbers = std_wavenumbers)
-}
 
 
 preprocessed_df <-   process_spectra(df = conformed, 
@@ -260,16 +245,48 @@ preprocessed_df <-   process_spectra(df = conformed,
                                      derivative_decision = T,
                                      trace = NULL,
                                      std_wavenumbers = std_wavenumbers)
+
+test <- unlist(lapply(preprocessed_df[,2:ncol(preprocessed_df)], snr))
 preprocessed_df[[4]]
 
 intensity = conformed[[49]]
 
 conformed$`018064006c850b41296c0ff94848b797`
-spectrum <- preprocessed_df$`018064006c850b41296c0ff94848b797`
+spectrum <- preprocessed_df$intensity...2
+
+library(TTR)
 
 
-cortest <- cor(preprocessed_df[,2:ncol(preprocessed_df)][!is.na(preprocessed_df[[2]]),], library[!is.na(preprocessed_df[[2]]),], use = "everything")
+x = rnorm(n = 400)
 
+snr <- function(x) {
+    max  = runMax(x[!is.na(x)], n = 20) 
+    max[(length(max) - 19):length(max)] <- NA
+    #mean = runMean(x[!is.na(x)], n = 10)
+    #mean[(length(mean) - 9):length(mean)] <- NA
+    signal = max[which.max(max)]#/mean(x, na.rm = T)
+    noise = max[which.min(max[max != 0])]
+    signal/noise
+}
+
+snr(rnorm(n = 400))
+
+ggplot() + 
+    geom_line(aes(x = 1:400, y = x)) +
+    geom_line(aes(x = 1:400, y = max))
+
+
+hist(rnorm(n = 400))
+
+cortest <- cor(preprocessed_df[,2:ncol(preprocessed_df)][!is.na(preprocessed_df[[2]]),], library[!is.na(preprocessed_df[[2]]),], use = "pairwise.complete.obs")
+
+rowmax <- apply(cortest, 1, function(x) max(x, na.rm = T))
+
+whatmax <- colnames(cortest)[apply(cortest, 1, function(x) which.max(x))]
+
+
+cols <- sample(1:ncol(library), 100, replace = F)
+test <- library[, ..cols]
 
 row1 <- cortest[1,]
 joined <- left_join(data.table(sample_name = names(cortest[1,]), rsq = cortest[1,]), meta)
@@ -290,7 +307,7 @@ check <- library[!is.na(preprocessed_df$`0003cda3af6ecb4b60eca8336f4e34e9`),]
 preprocessed_df$`0003cda3af6ecb4b60eca8336f4e34e9`[!is.na(preprocessed_df$`0003cda3af6ecb4b60eca8336f4e34e9`)]
 
 ggplot() +
-    geom_line(aes(x = file$spectra$wavenumber, y = make_rel(file$spectra$intensity...2, na.rm = T))) + 
+    geom_line(aes(x = preprocessed_df$wavenumber, y = make_rel(spectrum, na.rm = T))) #+ 
     #geom_line(aes(x = std_wavenumbers, y = make_rel(preprocessed, na.rm = T))) + 
-    geom_line(aes(x = conformed$wavenumber, y = make_rel(conformed$`intensity...2`, na.rm = T)), color = "red") #+
-    geom_line(aes(x = vec$wavenumber, y = make_rel(vec$intensity, na.rm = T)), color = "blue")
+    #geom_line(aes(x = conformed$wavenumber, y = make_rel(conformed$`intensity...2`, na.rm = T)), color = "red") #+
+    #geom_line(aes(x = vec$wavenumber, y = make_rel(vec$intensity, na.rm = T)), color = "blue")
