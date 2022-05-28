@@ -794,16 +794,10 @@ match_metadata <- reactive({
   # when the API token doesn't exist
 
   observe({
-    if (input$baseline_selection == "Polynomial") {
-      show("baseline")
-      hide("go")
-      hide("reset")
-    } else {
-      hide("baseline")
-      show("go")
-      show("reset")
-    }
-  })
+    toggle(id = "baseline", condition = input$baseline_selection == "Polynomial")
+    toggle(id = "go", condition = input$baseline_selection == "Manual")
+    toggle(id = "reset", condition = input$baseline_selection == "Manual")
+    })
   
   observe({
       req(input$file1)
@@ -811,15 +805,9 @@ match_metadata <- reactive({
   })
   
   observe({
-    if (is.null(preprocessed$data)) {
-      show("placeholder1")
-      show("placeholder2")
-      show("placeholder3")
-    } else {
-      hide("placeholder1")
-      hide("placeholder2")
-      hide("placeholder3")
-    }
+      toggle(id = "placeholder1", condition = is.null(preprocessed$data))
+      toggle(id = "placeholder2", condition = is.null(preprocessed$data))
+      toggle(id = "placeholder3", condition = is.null(preprocessed$data))
   })
 
   output$translate <- renderUI({
