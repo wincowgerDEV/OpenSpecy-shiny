@@ -828,8 +828,6 @@ match_metadata <- reactive({
     }
   })
 
-
-
   output$tweet1 <- renderUI({
     render_tweet(tweets[1])
   })
