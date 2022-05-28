@@ -521,10 +521,8 @@ ui <- fluidPage(
                                                  downloadButton("download_metadata",
                                                                 "Metadata",
                                                                 style = "background-color: rgb(75,0,130); color: rgb(255,255,255); float: left;"),
-                                                        conditionalPanel("input.active_preprocessing == true",
                                                                   downloadButton("download_conformed", "Conformed",
-                                                                                 style = "background-color: rgb(240,236,19); color: rgb(0,0,0); float: left;") 
-                                                        ),
+                                                                                 style = "background-color: rgb(240,236,19); color: rgb(0,0,0); float: left;"),
                                                       conditionalPanel("input.active_preprocessing == true",
                                                                        downloadButton("downloadData", "Processed",
                                                                                       style = "background-color: rgb(240,19,207); color: rgb(0,0,0); float: left;") 

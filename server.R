@@ -756,7 +756,7 @@ match_metadata <- reactive({
   
   output$download_conformed <- downloadHandler(
       filename = function() {paste('data-conformed-', human_ts(), '.csv', sep='')},
-      content = function(file) {fwrite(data(), file)}
+      content = function(file){fwrite(data(), file)}
   )
   
   output$downloadData <- downloadHandler(
@@ -812,7 +812,8 @@ match_metadata <- reactive({
   
   observe({
       req(input$file1)
-      toggle(id = "heatmap", condition = ncol(data()) > 2)
+      #toggle(id = "download_conformed", condition = !is.null(input$file1)) not sure why this doesn't work to stop the download button
+      toggle(id = "heatmap", condition = ncol(data()) > 2 & !is.null(input$file1))
   })
   
   observe({
@@ -839,6 +840,7 @@ match_metadata <- reactive({
 
   #Validate the app functionality for default identification ----
   
+  #Can use this to update the library by increasing the count to the total library size. 
   observeEvent(input$validate, {
     load("data/library.RData") 
     base <- 10
