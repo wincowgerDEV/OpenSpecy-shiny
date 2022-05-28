@@ -406,12 +406,15 @@ server <- shinyServer(function(input, output, session) {
   #Reactive Values ----
   preprocessed <- reactiveValues(data = NULL)
   trace <- reactiveValues(data = NULL)
+  data_click <- reactiveValues(data = NULL)
+  
 
   
 observeEvent(input$file1, {
   # Read in data when uploaded based on the file type
   req(input$file1)
   file <- input$file1
+  data_click$data <- 2
   filename$data <- as.character(file$datapath)
   
   if (!grepl("(\\.csv$)|(\\.asp$)|(\\.spa$)|(\\.spc$)|(\\.jdx$)|(\\.RData$)|(\\.zip$)|(\\.[0-9]$)",
@@ -533,7 +536,7 @@ observeEvent(input$reset, {
                  SpectrumIdentity = factor())    }
     else{
       data.table(wavenumber = std_wavenumbers,
-                 intensity = make_rel(DataR()[[data_click()]], na.rm = T),
+                 intensity = make_rel(DataR()[[data_click$data]], na.rm = T),
                  SpectrumIdentity = factor()) %>%
         dplyr::filter(!is.na(intensity))
     }
@@ -607,7 +610,7 @@ observeEvent(input$reset, {
       incProgress(1/3, detail = "Finding Match")
       
         
-      Lib <- left_join(data.table(sample_name = names(correlation()[(data_click() - 1),]), rsq = correlation()[(data_click() - 1),]), meta) %>%
+      Lib <- left_join(data.table(sample_name = names(correlation()[(data_click$data - 1),]), rsq = correlation()[(data_click$data - 1),]), meta) %>%
           mutate(rsq = round(rsq, 2)) %>%
           filter(!is.na(rsq)) %>%
           arrange(desc(rsq))
@@ -661,17 +664,16 @@ match_metadata <- reactive({
               selection = list(mode = 'none'))
   })
   
-  data_click <- reactive({
-      if(is.null(event_data("plotly_click", source = "heat_plot"))){
-            2  
-          } 
-      else{
-          event_data("plotly_click", source = "heat_plot")[["pointNumber"]] + 2
-          
-      }
-      
-  })
-  
+ 
+ observeEvent(event_data("plotly_click", source = "heat_plot"), {
+     if(is.null(event_data("plotly_click", source = "heat_plot"))){
+        data_click$data <- 2  
+     } 
+     else{
+        data_click$data <- event_data("plotly_click", source = "heat_plot")[["pointNumber"]] + 2
+         
+     }
+ })
 
   # Display matches based on table selection ----
   output$MyPlotC <- renderPlotly({
@@ -680,10 +682,10 @@ match_metadata <- reactive({
      #         ignore.case = T, filename$data)){
         #req(single_data$data)
       plot_ly(type = 'scatter', mode = 'lines', source = "B") %>%
-        add_trace(x = data()[["wavenumber"]], y = make_rel(data()[[data_click()]], na.rm = T),
+        add_trace(x = data()[["wavenumber"]], y = make_rel(data()[[data_click$data]], na.rm = T),
                   name = 'Uploaded Spectrum',
                   line = list(color = 'rgba(240,236,19,0.8)')) %>%
-          add_trace(x = if(input$active_preprocessing){baseline_data()[["wavenumber"]]} else{NULL}, y = if(input$active_preprocessing){make_rel(baseline_data()[[data_click()]], na.rm = T)} else{NULL},
+          add_trace(x = if(input$active_preprocessing){baseline_data()[["wavenumber"]]} else{NULL}, y = if(input$active_preprocessing){make_rel(baseline_data()[[data_click$data]], na.rm = T)} else{NULL},
                     name = 'Processed Spectrum',
                     line = list(color = 'rgb(240,19,207)')) %>%
           add_trace(data = match_selected(), x = ~wavenumber, y = ~intensity,
@@ -914,7 +916,7 @@ match_metadata <- reactive({
   
   #Test ----
   output$event_test <- renderPrint({
-      print(data_click())
+      print(data_click$data)
       print(dim(data()))
       print(input$active_preprocessing)
       print(input$range_decision) 
