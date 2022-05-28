@@ -128,9 +128,9 @@ snr <- function(x) {
     max[(length(max) - 19):length(max)] <- NA
     #mean = runMean(x[!is.na(x)], n = 10)
     #mean[(length(mean) - 9):length(mean)] <- NA
-    signal = max[which.max(max)]#/mean(x, na.rm = T)
-    noise = max[which.min(max[max != 0])]
-    signal/noise
+    signal = max(max, na.rm = T)#/mean(x, na.rm = T)
+    noise = min(max[max != 0], na.rm = T)
+    ifelse(is.finite(signal/noise), signal/noise, 0)
 }
 
 #library(future)
@@ -487,7 +487,9 @@ observeEvent(input$file1, {
                     trace = trace,
                     std_wavenumbers = std_wavenumbers)
     
-    preprocessed$data$coords$snr <-  log10(unlist(lapply(processed[,2:ncol(processed)], snr)))
+    snr <- unlist(lapply(processed[,2:ncol(processed)], snr))
+    
+    preprocessed$data$coords$snr <-  ifelse(snr <= 0, 0, log10(snr))
     
     processed
     

@@ -201,6 +201,8 @@ std_wavenumbers <- seq(405, 3995, by = 5)
 
 setwd("C:/Users/winco/OneDrive/Documents/zipped_file_test")
 
+file <- read.csv("snr_test.csv")
+
 file <- read_any("test_library.zip", share = T, id = "sdafd", std_wavenumbers = std_wavenumbers)
 
 load("G:/My Drive/GrayLab/Projects/Plastics/ActiveProjects/OpenSpecy/Code/OpenSpecy-shiny/OpenSpecy-shiny/data/library_deriv.RData")
@@ -257,19 +259,21 @@ spectrum <- preprocessed_df$intensity...2
 library(TTR)
 
 
-x = rnorm(n = 400)
+x = file$intensity
 
 snr <- function(x) {
     max  = runMax(x[!is.na(x)], n = 20) 
     max[(length(max) - 19):length(max)] <- NA
     #mean = runMean(x[!is.na(x)], n = 10)
     #mean[(length(mean) - 9):length(mean)] <- NA
-    signal = max[which.max(max)]#/mean(x, na.rm = T)
-    noise = max[which.min(max[max != 0])]
-    signal/noise
+    signal = max(max, na.rm = T)#/mean(x, na.rm = T)
+    noise = min(max[max != 0], na.rm = T)
+    ifelse(is.finite(signal/noise), signal/noise, 0)
 }
 
 snr(rnorm(n = 400))
+snr(rnorm(n = 400))
+
 
 ggplot() + 
     geom_line(aes(x = 1:400, y = x)) +
