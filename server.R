@@ -708,7 +708,7 @@ match_metadata <- reactive({
   
   output$heatmap <- renderPlotly({
       req(input$file1)
-      req(ncol(data()) > 2)
+      #req(ncol(data()) > 2)
         plot_ly(source = "heat_plot") %>%
             add_heatmap(
                 x = preprocessed$data$coords$x, #Need to update this with the new rout format. 
@@ -803,6 +803,11 @@ match_metadata <- reactive({
       show("go")
       show("reset")
     }
+  })
+  
+  observe({
+      req(input$file1)
+      toggle(id = "heatmap", condition = ncol(data()) > 2)
   })
   
   observe({
