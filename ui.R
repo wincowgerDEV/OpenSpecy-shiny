@@ -177,61 +177,17 @@ ui <- fluidPage(
                        #Popovers ----
 
                        bsPopover(
-                         id = "smooth_tools",
-                         title = "Smoothing Help",
-                         content = "Toggle advanced smoothing options",
-                         placement = "bottom",
-                         trigger = "hover"
-                       ),
-                       bsPopover(
-                         id = "baseline_tools",
-                         title = "Baseline Correction Help",
-                         content = "Toggle advanced options for baseline corrections",
-                         placement = "bottom",
-                         trigger = "hover"
-                       ),
-                       bsPopover(
-                         id = "range_tools",
-                         title = "Spectral Range Help",
-                         content = "Toggle advanced range selection",
-                         placement = "bottom",
-                         trigger = "hover"
-                       ),
-                       bsPopover(
-                         id = "Data",
-                         title = "Spectrum to Analyze Help",
-                         content = "This selection will determine whether the uploaded (not processed) spectrum or the spectrum processed using the processing tab is used in the spectrum match.",
-                         placement = "bottom",
-                         trigger = "hover"
-                       ),
-                       bsPopover(
-                         id = "Library",
-                         title = "Library to Match Help",
-                         content = "This selection will determine whether the library you are matching to consists of the full spectrum or only spectrum peaks.",
-                         placement = "bottom",
-                         trigger = "hover"
-                       ),
-                       bsPopover(
-                         id = "share_decision",
-                         title = "Share Help",
-                         content = "If you like, we share your uploaded spectra and settings with the spectroscopy community. By default, all data will be licensed under Creative Commons Attribution 4.0 International (CC BY 4.0). Uploaded spectra will appear here: https://osf.io/rjg3c. If you have spectra of known identities you can share, please upload a JDX file titled with the name of the material it is.",
-                         placement = "bottom",
-                         trigger = "hover"
-                       ),
-                       bsPopover(
-                         id = "file1",
-                         title = "Upload Help",
-                         content = "Upload Raman or FTIR spectrum files as a csv, jdx, spc, or spa. A csv file is preferred. If a csv, the file must contain one column labeled wavenumber in units of (1/cm) and another column labeled intensity in absorbance units. If jdx, spc, spa, or 0 the file should be a single absorbance spectrum with wavenumber in (1/cm). These files will not always work perfectly because they are tricky to read so double check them in another software. Hit the Test Data button to download a sample Raman spectrum.",
-                         placement = "bottom",
-                         trigger = "click"
-                       ),
-                       bsPopover(
                          id = "intensity_corr",
                          title = "Intensity Correction Help",
                          content = "If the uploaded spectrum is not in absorbance units, use this input to specify the units to convert from.The transmittance adjustment uses the log10(1/T) calculation which does not correct for system and particle characteristics. The reflectance adjustment uses the Kubelka-Munk equation (1-R)2/(2*R). We assume that the reflectance is formatted as a percent from 1-100 and first correct the intensity by dividing by 100 so that it fits the form expected by the equation. If none is selected, Open Specy assumes that the uploaded data is an absorbance spectrum.",
                          placement = "bottom",
                          trigger = "hover"
-                       ),
+                       ) %>%
+                           add_prompt(
+                               message = "If the uploaded spectrum is not in absorbance units, use this input to specify the units to convert from.The transmittance adjustment uses the log10(1/T) calculation which does not correct for system and particle characteristics. The reflectance adjustment uses the Kubelka-Munk equation (1-R)2/(2*R). We assume that the reflectance is formatted as a percent from 1-100 and first correct the intensity by dividing by 100 so that it fits the form expected by the equation. If none is selected, Open Specy assumes that the uploaded data is an absorbance spectrum.",
+                               type = "info", 
+                               size = "medium", rounded = TRUE
+                           ),
                        containerfunction(
                          h2("Welcome"),
                          fluidRow(
@@ -463,13 +419,23 @@ ui <- fluidPage(
                                                    placeholder = ".csv, .asp, .jdx, .spc, .spa, .0",
                                                    accept=c("text/csv",
                                                             "text/comma-separated-values,text/plain",
-                                                            ".csv", ".asp", ".spc", ".jdx", ".spa", ".0", ".zip")),
+                                                            ".csv", ".asp", ".spc", ".jdx", ".spa", ".0", ".zip")) %>%
+                                             add_prompt(
+                                                 message = "Upload Raman or FTIR spectrum files as a csv, jdx, spc, or spa. A csv file is preferred. If a csv, the file must contain one column labeled wavenumber in units of (1/cm) and another column labeled intensity in absorbance units. If jdx, spc, spa, or 0 the file should be a single absorbance spectrum with wavenumber in (1/cm). These files will not always work perfectly because they are tricky to read so double check them in another software. Hit the Sample button to download a sample Raman spectrum.",
+                                                  type = "info", 
+                                                 size = "medium", rounded = TRUE
+                                             ),
                                          prettySwitch("share_decision",
                                                       label = "Share Your Data?",
                                                       inline = T,
                                                       value = T,
                                                       status = "success",
-                                                      fill = T),
+                                                      fill = T) %>%
+                                             add_prompt(
+                                                 message = "If you like, we share your uploaded spectra and settings with the spectroscopy community. By default, all data will be licensed under Creative Commons Attribution 4.0 International (CC BY 4.0). Uploaded spectra will appear here: https://osf.io/rjg3c. If you have spectra of known identities you can share, please upload a JDX file titled with the name of the material it is.",
+                                                 position = "left", type = "info", 
+                                                 size = "medium", rounded = TRUE
+                                             ),
                                                           
                                          plotcontainerfunction(
                                            fluidRow(
@@ -641,7 +607,12 @@ ui <- fluidPage(
                                                                                            status_off = "default",
                                                                                            outline = TRUE,
                                                                                            plain = TRUE,
-                                                                                           bigger = T),
+                                                                                           bigger = T) %>%
+                                                                                  add_prompt(
+                                                                                      message = "Toggle advanced options for baseline corrections",
+                                                                                      position = "left", type = "info", 
+                                                                                      size = "medium", rounded = TRUE
+                                                                                  ),
                                                                        )
                                                                      ),
                                                                      fluidRow(
@@ -667,7 +638,12 @@ ui <- fluidPage(
                                                                                            status_off = "default",
                                                                                            outline = TRUE,
                                                                                            plain = TRUE,
-                                                                                           bigger = T),
+                                                                                           bigger = T) %>%
+                                                                                  add_prompt(
+                                                                                      message = "Toggle advanced range selection",
+                                                                                      position = "left", type = "info", 
+                                                                                      size = "medium", rounded = TRUE
+                                                                                  ),
                                                                               
                                                                        )
                                                                      ),
@@ -712,7 +688,7 @@ ui <- fluidPage(
                                                                                              "Raman" = "raman",
                                                                                              "FTIR" = "ftir")) %>%
                                                                                   add_prompt(
-                                                                                      message = "This selection will determine whether the FTIR or Raman matching library is used. Choose the spectrum type that was uploaded.",
+                                                                                      message = "This selection will determine whether both libraries, FTIR only, or Raman only matching library is used. Choose the spectrum type that was uploaded.",
                                                                                       position = "left", type = "info", 
                                                                                       size = "medium", rounded = TRUE
                                                                                   )
@@ -743,7 +719,12 @@ ui <- fluidPage(
                                            column(12,
                                                   conditionalPanel("input.intensity_tools == true & input.intensity_decision == true  & input.active_preprocessing == true",
                                                                    plotcontainerfunction(radioButtons("intensity_corr", "Intensity Units",
-                                                                                                      c("Absorbance" = "none", "Transmittance" = "transmittance", "Reflectance" = "reflectance"))),
+                                                                                                      c("Absorbance" = "none", "Transmittance" = "transmittance", "Reflectance" = "reflectance")) %>%
+                                                                                             add_prompt(
+                                                                                                 message = "If the uploaded spectrum is not in absorbance units, use this input to specify the units to convert from.The transmittance adjustment uses the log10(1/T) calculation which does not correct for system and particle characteristics. The reflectance adjustment uses the Kubelka-Munk equation (1-R)2/(2*R). We assume that the reflectance is formatted as a percent from 1-100 and first correct the intensity by dividing by 100 so that it fits the form expected by the equation. If none is selected, Open Specy assumes that the uploaded data is an absorbance spectrum.",
+                                                                                                 type = "info", 
+                                                                                                 size = "medium", rounded = TRUE
+                                                                                             )),
                                                   ),
                                                   conditionalPanel("input.smooth_tools == true & input.smooth_decision == true & input.active_preprocessing == true",
                                                                    plotcontainerfunction(sliderInput("smoother", "Smoothing Polynomial", min = 0, max = 7, value = 3)
