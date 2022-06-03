@@ -12,6 +12,7 @@ library(shinyBS)
 library(dplyr)
 library(plotly)
 library(DT)
+library(prompter)
 
 # Name keys for human readable column names ----
 load("data/namekey.RData")
@@ -124,6 +125,7 @@ ui <- fluidPage(
   
   # Script for all pages ----
   # Required for any of the shinyjs functions.
+  use_prompt(),
   shinyjs::useShinyjs(),
   #extendShinyjs(text = "shinyjs.resetClick = function() { Shiny.onInputChange('.clientValue-plotly_click-A', 'null'); }", functions = "resetClick"),
   inputIp("ipid"),
@@ -225,13 +227,6 @@ ui <- fluidPage(
                          id = "range_tools",
                          title = "Spectral Range Help",
                          content = "Toggle advanced range selection",
-                         placement = "bottom",
-                         trigger = "hover"
-                       ),
-                       bsPopover(
-                         id = "Spectra",
-                         title = "Spectrum Type Help",
-                         content = "This selection will determine whether the FTIR or Raman matching library is used. Choose the spectrum type that was uploaded.",
                          placement = "bottom",
                          trigger = "hover"
                        ),
@@ -715,19 +710,28 @@ ui <- fluidPage(
                                                     conditionalPanel("input.active_identification == true & input.view_identification == true",
                                                                      fluidRow(
                                                                        column(3,
-                                                                              selectInput(inputId = "Spectra", label =  "Library Type",
+                                                                              pickerInput(inputId = "Spectra", label =  "Library Type",
                                                                                           choices =  c("Both" = "both",
                                                                                              "Raman" = "raman",
-                                                                                             "FTIR" = "ftir"))
+                                                                                             "FTIR" = "ftir")) %>%
+                                                                                  add_prompt(
+                                                                                      message = "This selection will determine whether the FTIR or Raman matching library is used. Choose the spectrum type that was uploaded.",
+                                                                                      position = "left", type = "info", 
+                                                                                      size = "medium", rounded = TRUE
+                                                                                  )
                                                                        ),
 
                                                                        column(3,
-                                                                              selectInput(inputId = "id_level", label =  "Identity Level",
+                                                                              pickerInput(inputId = "id_level", label =  "Identity Level",
                                                                                            choices = c("Raw" = "deep", 
                                                                                              "Plastic Detailed" = "pp_optimal",
                                                                                              "Plastic Grouped" = "pp_groups",
-                                                                                             "Plastic or Not" = "plastic_not"))
-                                                                              
+                                                                                             "Plastic or Not" = "plastic_not")) %>%
+                                                                                  add_prompt(
+                                                                                      message = "Select how detailed or general you want the match description",
+                                                                                      position = "right", type = "info", 
+                                                                                      size = "medium", rounded = TRUE
+                                                                                  )
                                                                               
                                                                        )
                                                                        
