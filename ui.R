@@ -289,14 +289,6 @@ ui <- fluidPage(
                          )
                        ),
                        containerfunction(
-                         h2("Testimonials"),
-                         fluidRow(
-                           column(6, uiOutput("tweet1")),
-                           column(6, uiOutput("tweet2"))
-                         )
-                       ),
-                       
-                       containerfunction(
                          h2("Quick Video Tutorial"),
                          HTML("<iframe width='100%' height='100%' src='https://www.youtube-nocookie.com/embed/w55WGtV2Dz4' title='YouTube video player' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>")
                        ),
