@@ -175,40 +175,7 @@ ui <- fluidPage(
   tabsetPanel(id = "tabs",
               tabPanel("About", value = "tab0",
                        #Popovers ----
-                       
-                       bsPopover(
-                         id = "download_testdata",
-                         title = "Sample Data Help",
-                         content = "This is a sample spectrum that can be uploaded to the tool for testing it out and understanding how the csv files should be formatted.",
-                         placement = "bottom",
-                         trigger = "hover"
-                       ),
-                       bsPopover(id = "downloadData",
-                                 title = "Download Help",
-                                 content = "Some users may wish to save a copy of their processed spectrum. This button downloads the processed spectrum as a csv file.",
-                                 placement = "bottom",
-                                 trigger = "hover"),
-                       bsPopover(
-                         id = "smooth_decision",
-                         title = "Smoothing Help",
-                         content = "This smoother can enhance the signal to noise ratio of the data and uses a Savitzky-Golay filter with 12 running data points and the polynomial specified.",
-                         placement = "bottom",
-                         trigger = "hover"
-                       ),
-                       bsPopover(
-                         id = "baseline_decision",
-                         title = "Baseline Correction Help",
-                         content = "This baseline correction routine has two options for baseline correction, 1) the polynomial imodpolyfit procedure to itteratively find the baseline of the spectrum using a polynomial fit to the entire region of the spectra. 2) manual lines can be drawn using the line tool on the plot and the correct button will use the lines to subtract the baseline.",
-                         placement = "bottom",
-                         trigger = "hover"
-                       ),
-                       bsPopover(
-                         id = "range_decision",
-                         title = "Spectral Range Help",
-                         content = "Restricting the spectral range can remove regions of spectrum where no peaks exist and improve matching",
-                         placement = "bottom",
-                         trigger = "hover"
-                       ),
+
                        bsPopover(
                          id = "smooth_tools",
                          title = "Smoothing Help",
@@ -512,7 +479,12 @@ ui <- fluidPage(
                                                column(12, 
                                                  downloadButton("download_testdata",
                                                                  "Sample",
-                                                                 style = "background-color: rgb(0,0,0); color: rgb(255,255,255); float: left;"),
+                                                                 style = "background-color: rgb(0,0,0); color: rgb(255,255,255); float: left;") %>%
+                                                     add_prompt(
+                                                         message = "This is a sample spectrum that can be uploaded to the tool for testing it out and understanding how the csv files should be formatted.",
+                                                         position = "right", type = "info", 
+                                                         size = "medium", rounded = TRUE
+                                                     ),
                                                  downloadButton("download_metadata",
                                                                 "Metadata",
                                                                 style = "background-color: rgb(75,0,130); color: rgb(255,255,255); float: left;"),
@@ -520,7 +492,12 @@ ui <- fluidPage(
                                                                                  style = "background-color: rgb(240,236,19); color: rgb(0,0,0); float: left;"),
                                                       conditionalPanel("input.active_preprocessing == true",
                                                                        downloadButton("downloadData", "Processed",
-                                                                                      style = "background-color: rgb(240,19,207); color: rgb(0,0,0); float: left;") 
+                                                                                      style = "background-color: rgb(240,19,207); color: rgb(0,0,0); float: left;") %>%
+                                                                           add_prompt(
+                                                                               message = "Some users may wish to save a copy of their processed spectrum. This button downloads the processed spectrum as a csv file.",
+                                                                               position = "left", type = "info", 
+                                                                               size = "medium", rounded = TRUE
+                                                                           )
                                                       ),
                                                       conditionalPanel("input.active_identification == true",
                                                                        
@@ -616,7 +593,12 @@ ui <- fluidPage(
                                                                                            inline = T,
                                                                                            value = T,
                                                                                            status = "success",
-                                                                                           fill = T)
+                                                                                           fill = T) %>%
+                                                                                  add_prompt(
+                                                                                      message = "This smoother can enhance the signal to noise ratio of the data and uses a Savitzky-Golay filter with 12 running data points and the polynomial specified.",
+                                                                                      position = "left", type = "info", 
+                                                                                      size = "medium", rounded = TRUE
+                                                                                  )
                                                                        ),
                                                                        column(3, align = "center",
                                                                               prettyToggle("smooth_tools",
@@ -627,7 +609,12 @@ ui <- fluidPage(
                                                                                            status_off = "default",
                                                                                            outline = TRUE,
                                                                                            plain = TRUE,
-                                                                                           bigger = T),
+                                                                                           bigger = T) %>%
+                                                                                  add_prompt(
+                                                                                      message = "Toggle advanced smoothing options",
+                                                                                      position = "left", type = "info", 
+                                                                                      size = "medium", rounded = TRUE
+                                                                                  ),
                                                                        )
                                                                      ),
                                                                      fluidRow(
@@ -637,7 +624,12 @@ ui <- fluidPage(
                                                                                            inline = T,
                                                                                            value = T,
                                                                                            status = "success",
-                                                                                           fill = T),
+                                                                                           fill = T) %>%
+                                                                                  add_prompt(
+                                                                                      message = "This baseline correction routine has two options for baseline correction, 1) the polynomial imodpolyfit procedure to itteratively find the baseline of the spectrum using a polynomial fit to the entire region of the spectra. 2) manual lines can be drawn using the line tool on the plot and the correct button will use the lines to subtract the baseline.",
+                                                                                      position = "left", type = "info", 
+                                                                                      size = "medium", rounded = TRUE
+                                                                                  ),
                                                                               
                                                                        ),
                                                                        column(3, align = "center",
@@ -659,7 +651,12 @@ ui <- fluidPage(
                                                                                            inline = T,
                                                                                            value = T,
                                                                                            status = "success",
-                                                                                           fill = T)
+                                                                                           fill = T) %>%
+                                                                                  add_prompt(
+                                                                                      message = "Restricting the spectral range can remove regions of spectrum where no peaks exist and improve matching.",
+                                                                                      position = "left", type = "info", 
+                                                                                      size = "medium", rounded = TRUE
+                                                                                  )
                                                                        ),
                                                                        column(3, align = "center",
                                                                               prettyToggle("range_tools",
