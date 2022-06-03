@@ -174,20 +174,6 @@ ui <- fluidPage(
   # About Tab ----
   tabsetPanel(id = "tabs",
               tabPanel("About", value = "tab0",
-                       #Popovers ----
-
-                       bsPopover(
-                         id = "intensity_corr",
-                         title = "Intensity Correction Help",
-                         content = "If the uploaded spectrum is not in absorbance units, use this input to specify the units to convert from.The transmittance adjustment uses the log10(1/T) calculation which does not correct for system and particle characteristics. The reflectance adjustment uses the Kubelka-Munk equation (1-R)2/(2*R). We assume that the reflectance is formatted as a percent from 1-100 and first correct the intensity by dividing by 100 so that it fits the form expected by the equation. If none is selected, Open Specy assumes that the uploaded data is an absorbance spectrum.",
-                         placement = "bottom",
-                         trigger = "hover"
-                       ) %>%
-                           add_prompt(
-                               message = "If the uploaded spectrum is not in absorbance units, use this input to specify the units to convert from.The transmittance adjustment uses the log10(1/T) calculation which does not correct for system and particle characteristics. The reflectance adjustment uses the Kubelka-Munk equation (1-R)2/(2*R). We assume that the reflectance is formatted as a percent from 1-100 and first correct the intensity by dividing by 100 so that it fits the form expected by the equation. If none is selected, Open Specy assumes that the uploaded data is an absorbance spectrum.",
-                               type = "info", 
-                               size = "medium", rounded = TRUE
-                           ),
                        containerfunction(
                          h2("Welcome"),
                          fluidRow(
@@ -453,9 +439,19 @@ ui <- fluidPage(
                                                      ),
                                                  downloadButton("download_metadata",
                                                                 "Metadata",
-                                                                style = "background-color: rgb(75,0,130); color: rgb(255,255,255); float: left;"),
+                                                                style = "background-color: rgb(75,0,130); color: rgb(255,255,255); float: left;") %>%
+                                                     add_prompt(
+                                                         message = "Download metadata for all settings currently used.",
+                                                         type = "info", 
+                                                         size = "medium", rounded = TRUE
+                                                     ),
                                                                   downloadButton("download_conformed", "Conformed",
-                                                                                 style = "background-color: rgb(240,236,19); color: rgb(0,0,0); float: left;"),
+                                                                                 style = "background-color: rgb(240,236,19); color: rgb(0,0,0); float: left;") %>%
+                                                     add_prompt(
+                                                         message = "Download the current spectra conformed to Open Specy's internal format used in the analysis you see.",
+                                                         type = "info", 
+                                                         size = "medium", rounded = TRUE
+                                                     ),
                                                       conditionalPanel("input.active_preprocessing == true",
                                                                        downloadButton("downloadData", "Processed",
                                                                                       style = "background-color: rgb(240,19,207); color: rgb(0,0,0); float: left;") %>%
@@ -468,16 +464,36 @@ ui <- fluidPage(
                                                       conditionalPanel("input.active_identification == true",
                                                                        
                                                                        downloadButton("download_matched", "Matched",
-                                                                                      style = "background-color: rgb(125,249,255); color: rgb(0,0,0); float: left;")), #Make colors align with the plot, Make only appear if on plot.
+                                                                                      style = "background-color: rgb(125,249,255); color: rgb(0,0,0); float: left;") %>%
+                                                                           add_prompt(
+                                                                               message = "Download the spectra you are trying to identify.",
+                                                                               type = "info", 
+                                                                               size = "medium", rounded = TRUE
+                                                                           )), #Make colors align with the plot, Make only appear if on plot.
                                                       conditionalPanel("input.active_identification == true",
                                                                        downloadButton("download_selected", "Selected",
-                                                                                      style = "background-color: rgb(255,255,255); color: rgb(0,0,0); float: left;")),
+                                                                                      style = "background-color: rgb(255,255,255); color: rgb(0,0,0); float: left;") %>%
+                                                                           add_prompt(
+                                                                               message = "Download the spectra for the match you selected in Open Specy.",
+                                                                               type = "info", 
+                                                                               size = "medium", rounded = TRUE
+                                                                           )),
                                                     conditionalPanel("input.active_identification == true",
                                                                   downloadButton("correlation_download", "Correlations",
-                                                                                 style = "background-color: rgb(0,0,0); color: rgb(255,255,255); float: left;")), 
+                                                                                 style = "background-color: rgb(0,0,0); color: rgb(255,255,255); float: left;") %>%
+                                                                      add_prompt(
+                                                                          message = "Download the correlation matrix for all matches assessed by Open Specy.",
+                                                                          type = "info", 
+                                                                          size = "medium", rounded = TRUE
+                                                                      )), 
                                                  conditionalPanel("input.active_identification == true",
                                                                   downloadButton("topmatch_metadata_download", "Top Matches",
-                                                                                 style = "background-color: rgb(0,0,0); color: rgb(255,255,255); float: left;"))
+                                                                                 style = "background-color: rgb(0,0,0); color: rgb(255,255,255); float: left;") %>%
+                                                                      add_prompt(
+                                                                          message = "Download the metadata for the top spectral match.",
+                                                                          type = "info", 
+                                                                          size = "medium", rounded = TRUE
+                                                                      ))
                                                       )
                                                 ), 
                                              fluidRow(
@@ -517,7 +533,12 @@ ui <- fluidPage(
                                                                              inline = T,
                                                                              value = F,
                                                                              status = "success",
-                                                                             fill = T)
+                                                                             fill = T) %>%
+                                                                 add_prompt(
+                                                                     message = "Select if preprocessing should happen.",
+                                                                     type = "info", 
+                                                                     size = "medium", rounded = TRUE
+                                                                 )
                                                       ),
                                                       column(3,
                                                              prettyToggle("view_preprocessing",
@@ -528,7 +549,12 @@ ui <- fluidPage(
                                                                           status_off = "default",
                                                                           outline = TRUE,
                                                                           plain = TRUE,
-                                                                          bigger = T)
+                                                                          bigger = T) %>%
+                                                                 add_prompt(
+                                                                     message = "View advanced preprocessing options.",
+                                                                     type = "info", 
+                                                                     size = "medium", rounded = TRUE
+                                                                 )
                                                       )),
                                                     conditionalPanel("input.active_preprocessing == true & input.view_preprocessing == true",
                                                                      fluidRow(
@@ -538,7 +564,12 @@ ui <- fluidPage(
                                                                                            inline = T,
                                                                                            value = T,
                                                                                            status = "success",
-                                                                                           fill = T)
+                                                                                           fill = T) %>%
+                                                                                  add_prompt(
+                                                                                      message = "Open Specy assumes spectra are in Absorbance units, if they are not, you can select the appropriate transformation.",
+                                                                                      type = "info", 
+                                                                                      size = "medium", rounded = TRUE
+                                                                                  )
                                                                        ),
                                                                        column(3, align = "center",
                                                                               prettyToggle("intensity_tools",
@@ -549,7 +580,12 @@ ui <- fluidPage(
                                                                                            status_off = "default",
                                                                                            outline = TRUE,
                                                                                            plain = TRUE,
-                                                                                           bigger = T),
+                                                                                           bigger = T) %>%
+                                                                                  add_prompt(
+                                                                                      message = "Toggle advanced intensity adjustment options.",
+                                                                                      type = "info", 
+                                                                                      size = "medium", rounded = TRUE
+                                                                                  ),
                                                                        )
                                                                      ),
                                                                      fluidRow(
@@ -654,7 +690,12 @@ ui <- fluidPage(
                                                                                              inline = T,
                                                                                              value = T,
                                                                                              status = "success",
-                                                                                             fill = T)
+                                                                                             fill = T) %>%
+                                                                                    add_prompt(
+                                                                                        message = "Derivative transformation decreases baseline and can amplify peak contrast.",
+                                                                                        type = "info", 
+                                                                                        size = "medium", rounded = TRUE
+                                                                                    )
                                                                          ))
                                                     ),
                                                     
@@ -668,7 +709,12 @@ ui <- fluidPage(
                                                                                           inline = T,
                                                                                           value = F,
                                                                                           status = "success",
-                                                                                          fill = T)),
+                                                                                          fill = T) %>%
+                                                                                 add_prompt(
+                                                                                     message = "Select if you want identificaiton to happen.",
+                                                                                     type = "info", 
+                                                                                     size = "medium", rounded = TRUE
+                                                                                 )),
                                                                       column(3, 
                                                                              prettyToggle("view_identification",
                                                                                           icon_on = icon("eye"),
@@ -678,7 +724,12 @@ ui <- fluidPage(
                                                                                           status_off = "default",
                                                                                           outline = TRUE,
                                                                                           plain = TRUE,
-                                                                                          bigger = T)
+                                                                                          bigger = T) %>%
+                                                                                 add_prompt(
+                                                                                     message = "View advanced identification options.",
+                                                                                     type = "info", 
+                                                                                     size = "medium", rounded = TRUE
+                                                                                 )
                                                                       )))),
                                                     conditionalPanel("input.active_identification == true & input.view_identification == true",
                                                                      fluidRow(
@@ -727,18 +778,43 @@ ui <- fluidPage(
                                                                                              )),
                                                   ),
                                                   conditionalPanel("input.smooth_tools == true & input.smooth_decision == true & input.active_preprocessing == true",
-                                                                   plotcontainerfunction(sliderInput("smoother", "Smoothing Polynomial", min = 0, max = 7, value = 3)
+                                                                   plotcontainerfunction(sliderInput("smoother", "Smoothing Polynomial", min = 0, max = 7, value = 3) %>%
+                                                                                             add_prompt(
+                                                                                                 message = "Smoothing uses the SG filter on an 11 data point window with the polynomial order specified.",
+                                                                                                 type = "info", 
+                                                                                                 size = "medium", rounded = TRUE
+                                                                                             )
                                                                    )),
                                                   conditionalPanel("input.baseline_tools == true & input.baseline_decision == true & input.active_preprocessing == true",
                                                                    plotcontainerfunction(
-                                                                     selectInput(inputId = "baseline_selection", label = "Baseline Correction Technique", choices = c("Polynomial", "Manual")),
-                                                                     sliderInput("baseline", "Baseline Correction Polynomial", min = 1, max = 20, value = 8),
+                                                                     selectInput(inputId = "baseline_selection", label = "Baseline Correction Technique", choices = c("Polynomial", "Manual")) %>%
+                                                                         add_prompt(
+                                                                             message = "Baseline correction techniques can be manually drawn on the spectra or automated using one of the other options.",
+                                                                             type = "info", 
+                                                                             size = "medium", rounded = TRUE
+                                                                         ),
+                                                                     sliderInput("baseline", "Baseline Correction Polynomial", min = 1, max = 20, value = 8) %>%
+                                                                         add_prompt(
+                                                                             message = "This algorithm automatically fits to the baseline by fitting polynomials of the provided order to the whole spectrum.",
+                                                                             type = "info", 
+                                                                             size = "medium", rounded = TRUE
+                                                                         ),
                                                                      fluidRow(
                                                                        column(6,
-                                                                              actionButton("go", "Correct With Trace"),
+                                                                              actionButton("go", "Correct With Trace") %>%
+                                                                                  add_prompt(
+                                                                                      message = "After tracing the baseline spectrum on the plot, select this to correct the spectra.",
+                                                                                      type = "info", 
+                                                                                      size = "medium", rounded = TRUE
+                                                                                  ),
                                                                        ),
                                                                        column(6,
-                                                                              actionButton("reset", "Reset"),
+                                                                              actionButton("reset", "Reset") %>%
+                                                                                  add_prompt(
+                                                                                      message = "Reset the manual baseline to zero baseline.",
+                                                                                      type = "info", 
+                                                                                      size = "medium", rounded = TRUE
+                                                                                  ),
                                                                        )
                                                                      )
                                                                    )
@@ -765,7 +841,12 @@ ui <- fluidPage(
                                                                        width = NULL
                                                                      )
                                                                      
-                                                                   )
+                                                                   ) %>%
+                                                                       add_prompt(
+                                                                           message = "Maximum and minimum wavenumbers to focus on.",
+                                                                           type = "info", 
+                                                                           size = "medium", rounded = TRUE
+                                                                       )
                                                                    
                                                   )
                                            )
@@ -780,7 +861,12 @@ ui <- fluidPage(
                                                 plotcontainerfunction(h4(id = "placeholder1", "Upload some data to get started..."), 
                                                                       plotlyOutput("MyPlotC"),
                                                                       DT::dataTableOutput("eventmetadata")),
-                                                                      actionButton("validate", "Validate Settings", style = "float: right;"), 
+                                                                      actionButton("validate", "Validate Settings", style = "float: right;") %>%
+                                             add_prompt(
+                                                 message = "Run 100 spectra from internal library through the current settings to validate the routine.",
+                                                 type = "info", 
+                                                 size = "medium", rounded = TRUE
+                                             ), 
                                                                       verbatimTextOutput("event_test"),
                                                                       style = bodyformat()
                                                 )
