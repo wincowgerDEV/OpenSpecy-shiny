@@ -332,9 +332,7 @@ read_spectrum <- function(filename, share, id) {
     list("spectra" =     
              as.data.table(
                  if(grepl("\\.csv$", ignore.case = T, filename)) {
-                     tryCatch(read_text(filename, method = "fread",
-                                        share = share,
-                                        id = id),
+                     tryCatch(fread(filename),
                               error = function(e) {e})
                  }
                  else if(grepl("\\.[0-9]$", ignore.case = T, filename)) {
