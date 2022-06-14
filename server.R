@@ -120,20 +120,15 @@ read_formatted_spectrum <- function(filename, share, id){
 
 
 #Conform spectra functions ----
-conform_spectra <- function(df, wavenumber, std_wavenumbers, correction){
-    setcolorder(df[,2:ncol(df)][,lapply(.SD, conform_intensity, wavenumber = wavenumber, correction = correction, std_wavenumbers = std_wavenumbers)][,wavenumber := std_wavenumbers], "wavenumber")
+conform_spectra <- function(df, wavenumber, correction){
+    df[,lapply(.SD, conform_intensity, wavenumber = wavenumber, correction = correction)]
 }
 
-conform_intensity <- function(intensity, wavenumber, correction, std_wavenumbers){
-    test <- std_wavenumbers %in% conform_wavenumber(wavenumber)
-    new_wavenumbers <- std_wavenumbers[test]
-    place <- rep(NA, length.out= length(std_wavenumbers))
-    vec <- adjust_intensity(x = new_wavenumbers,
-                            y = clean_spec(x = wavenumber, y = intensity, out = new_wavenumbers),
-                            type = correction,
-                            na.rm = T)[,"intensity"]
-    place[test] <- vec
-    place
+conform_intensity <- function(intensity, wavenumber, correction){
+    adjust_intensity(x = conform_wavenumber(wavenumber),
+                     y = clean_spec(x = wavenumber, y = intensity, out = conform_wavenumber(wavenumber)),
+                     type = correction,
+                     na.rm = T)[,"intensity"]
 }
 
 adjust_intensity <- function(x, y, type = "none", make_rel = F, ...) {
@@ -157,6 +152,8 @@ clean_spec <- function(x, y, out){
         approx(x = x, y = y, xout = out)$y
     )
 }
+
+
 
 
 #Process spectra functions ----
