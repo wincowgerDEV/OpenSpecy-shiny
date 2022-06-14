@@ -30,11 +30,96 @@ if(droptoken) library(rdrop2)
 #devtools::install_github("wincowgerDEV/OpenSpecy")
 library(OpenSpecy)
 
+generate_grid <- function(x) {
+    base <- sqrt(x)
+    as.data.table(expand.grid(x = 1:round_any(base, 1, ceiling), y = 1:round_any(base, 1, ceiling))[1:x,])
+}
+
 round_any <- function(x, accuracy, f = round){
-  f(x / accuracy) * accuracy
+    f(x / accuracy) * accuracy
+}
+
+#Read spectra functions ----
+read_map <- function(filename, share, id, std_wavenumbers){
+    files <- unzip(zipfile = filename, list = TRUE)
+    unzip(filename, exdir = tempdir())
+    if(nrow(files) == 2 & any(grepl("\\.dat$", ignore.case = T, files$Name)) & any(grepl("\\.hdr$", ignore.case = T, files$Name))){
+        hs_envi <- hyperSpec::read.ENVI.Nicolet(file = paste0(tempdir(), "/", files$Name[grepl("\\.dat$", ignore.case = T, files$Name)]),
+                                                headerfile = paste0(tempdir(), "/", files$Name[grepl("\\.hdr$", ignore.case = T, files$Name)]))
+        
+        list(
+            "wavenumber" = hs_envi@wavelength,
+            "spectra" = transpose(as.data.table(hs_envi@data$spc)), 
+            "coords" = data.table(x = hs_envi@data$x, y = hs_envi@data$y, filename = gsub(".*/", "", hs_envi@data$filename))
+        )
+    }
+    else if(nrow(files) == 1 & any(grepl("\\.RData$", ignore.case = T, files$Name))){
+        assign("file", base::get(load(paste0(tempdir(), "/", files$Name))))
+        dt <- generate_grid(x = ncol(file))
+        list(
+            "wavenumber" =  std_wavenumbers,
+            "spectra" = file, 
+            "coords" = generate_grid(x = ncol(file))[,filename := files$Name])
+    }
+    
+    else{
+        
+        file <- bind_cols(lapply(paste0(tempdir(), "/", files$Name), read_spectrum, share = F, id = "sdfad"))
+        
+        list(
+            "wavenumber" = file$wavenumber...1,
+            "spectra" = file %>%
+                select(-starts_with("wave")), 
+            "coords" = generate_grid(nrow(files))[,filename := files$Name])
+    }
+}
+
+read_any <- function(filename, share, id, std_wavenumbers){
+    if(grepl("(\\.csv$)|(\\.asp$)|(\\.spa$)|(\\.spc$)|(\\.jdx$)|(\\.[0-9]$)", ignore.case = T, filename)){
+        read_formatted_spectrum(filename = filename, share = share, id = id)
+        #single_data$data <- TRUE
+    }
+    
+    else if(grepl("\\.zip$", ignore.case = T, filename)) {
+        read_map(filename = filename, share = share, id = id, std_wavenumbers = std_wavenumbers)
+        
+    }
+}
+
+read_spectrum <- function(filename, share, id) {
+    
+    as.data.table(
+        if(grepl("\\.csv$", ignore.case = T, filename)) {
+            tryCatch(fread(filename),
+                     error = function(e) {e})
+        }
+        else if(grepl("\\.[0-9]$", ignore.case = T, filename)) {
+            tryCatch(read_0(filename, share = share, id = id),
+                     error = function(e) {e})
+        }
+        
+        else {
+            ex <- strsplit(basename(filename), split="\\.")[[1]]
+            
+            tryCatch(do.call(paste0("read_", tolower(ex[-1])),
+                             list(filename, share = share, id = id)),
+                     error = function(e) {e})
+        }
+    )
+}
+
+read_formatted_spectrum <- function(filename, share, id){
+    spectra <- read_spectrum(filename = filename, share = share, id = id)
+    list("wavenumber" =     
+             spectra$wavenumber,
+         "spectra" =     
+             data.table(spectra$intensity),
+         "coords" = as.data.table(expand.grid(x = 1, y = 1, filename = gsub(".*/", "", filename), stringsAsFactors = F))
+    )
 }
 
 
+#Conform spectra functions ----
 conform_spectra <- function(df, wavenumber, std_wavenumbers, correction){
     setcolorder(df[,2:ncol(df)][,lapply(.SD, conform_intensity, wavenumber = wavenumber, correction = correction, std_wavenumbers = std_wavenumbers)][,wavenumber := std_wavenumbers], "wavenumber")
 }
@@ -74,7 +159,7 @@ clean_spec <- function(x, y, out){
 }
 
 
-#Process spectra functions 
+#Process spectra functions ----
 
 process_intensity <- function(intensity, wavenumber, active_preprocessing, range_decision, min_range, max_range, smooth_decision, smoother, baseline_decision, baseline_selection, baseline, derivative_decision, trace, std_wavenumbers) {
     
@@ -285,72 +370,7 @@ map_type <- function(filename){
     }
 }
 
-read_map <- function(filename, share, id, std_wavenumbers){
-    files <- unzip(zipfile = filename, list = TRUE)
-    unzip(filename, exdir = tempdir())
-    if(nrow(files) == 2 & any(grepl("\\.dat$", ignore.case = T, files$Name)) & any(grepl("\\.hdr$", ignore.case = T, files$Name))){
-        hs_envi <- hyperSpec::read.ENVI.Nicolet(file = paste0(tempdir(), "/", files$Name[grepl("\\.dat$", ignore.case = T, files$Name)]),
-                                                headerfile = paste0(tempdir(), "/", files$Name[grepl("\\.hdr$", ignore.case = T, files$Name)]))@data
-        
-        list("spectra" = transpose(as.data.table(hs_envi$spc), keep.names = "wavenumber") %>%
-                 mutate(wavenumber = as.numeric(wavenumber)), 
-             "coords" = data.table(x = hs_envi$x, y = hs_envi$y))
-    }
-    else if(nrow(files) == 1 & any(grepl("\\.RData$", ignore.case = T, files$Name))){
-        assign("file", base::get(load(paste0(tempdir(), "/", files$Name))))
-        base <- sqrt(ncol(file)-1)
-        file$wavenumber <- std_wavenumbers
-        list("spectra" = file %>%
-                 select(wavenumber, everything()), 
-             "coords" = expand.grid(x = 1:round_any(base, 1, ceiling), y = 1:round_any(base, 1, ceiling))[1:(ncol(file)-1),])
-    }
-    
-    else{
-        base <- sqrt(nrow(files))
-        
-        list("spectra" = bind_cols(lapply(paste0(tempdir(), "/", files$Name), read_spectrum, share = F, id = "sdfad")) %>%
-                 select(wavenumber...1, starts_with("intens")) %>%
-                 rename(wavenumber = wavenumber...1), 
-             "coords" = expand.grid(x = 1:round_any(base, 1, ceiling), y = 1:round_any(base, 1, ceiling))[1:nrow(files),])
-    }
-}
 
-read_any <- function(filename, share, id, std_wavenumbers){
-    if(grepl("(\\.csv$)|(\\.asp$)|(\\.spa$)|(\\.spc$)|(\\.jdx$)|(\\.[0-9]$)", ignore.case = T, filename)){
-        read_spectrum(filename = filename, share = share, id = id)
-        #single_data$data <- TRUE
-    }
-    
-    else if(grepl("\\.zip$", ignore.case = T, filename)) {
-        read_map(filename = filename, share = share, id = id, std_wavenumbers = std_wavenumbers)
-
-    }
-}
-
-read_spectrum <- function(filename, share, id) {
-    
-    list("spectra" =     
-             as.data.table(
-                 if(grepl("\\.csv$", ignore.case = T, filename)) {
-                     tryCatch(fread(filename),
-                              error = function(e) {e})
-                 }
-                 else if(grepl("\\.[0-9]$", ignore.case = T, filename)) {
-                     tryCatch(read_0(filename, share = share, id = id),
-                              error = function(e) {e})
-                 }
-                 
-                 else {
-                     ex <- strsplit(basename(filename), split="\\.")[[1]]
-                     
-                     tryCatch(do.call(paste0("read_", tolower(ex[-1])),
-                                      list(filename, share = share, id = id)),
-                              error = function(e) {e})
-                 }
-             ),
-         "coords" = data.table(x = 1, y = 1)
-    )
-}
 
                          
 # This is the actual server functions, all functions before this point are not
@@ -917,21 +937,21 @@ match_metadata <- reactive({
   })
   
   #Test ----
-  output$event_test <- renderPrint({
-      print(data_click$data)
-      print(dim(data()))
-      print(input$active_preprocessing)
-      print(input$range_decision) 
-      print(input$MinRange)
-      print(input$MaxRange)
-      print(input$smooth_decision)
-      print(input$smoother)
-      print(input$baseline_decision) 
-      print(input$baseline_selection) 
-      print(input$baseline)
-      print(preprocessed$data$coords$snr)
-      print(baseline_data())
-  })
+  #output$event_test <- renderPrint({
+  #    print(data_click$data)
+  #    print(dim(data()))
+  #    print(input$active_preprocessing)
+  #    print(input$range_decision) 
+  #    print(input$MinRange)
+  #    print(input$MaxRange)
+  #    print(input$smooth_decision)
+  #    print(input$smoother)
+  #    print(input$baseline_decision) 
+  #    print(input$baseline_selection) 
+  #    print(input$baseline)
+  #    print(preprocessed$data$coords$snr)
+  #    print(baseline_data())
+  #})
 
 })
 
