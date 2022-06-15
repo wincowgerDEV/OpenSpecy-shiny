@@ -222,6 +222,15 @@ correlate_intensity <- function(intensity, search_wavenumbers, std_wavenumbers){
 correlate_spectra <- function(data, search_wavenumbers, std_wavenumbers){
     data[,lapply(.SD, correlate_intensity, search_wavenumbers = search_wavenumbers, std_wavenumbers = std_wavenumbers)]
 }
+
+
+get_all_metadata <- function(sample_name, rsq, metadata) {
+    left_join(data.table(sample_name = sample_name, rsq = rsq), metadata) %>%
+        mutate(rsq = round(rsq, 2)) %>%
+        filter(!is.na(rsq)) %>%
+        arrange(desc(rsq))
+}
+
 #library(future)
 #library(bslib)
 
@@ -634,11 +643,8 @@ observeEvent(input$reset, {
 
       incProgress(1/3, detail = "Finding Match")
       
+    Lib <- get_all_metadata(sample_name = names(libraryR()), rsq = correlation()[[data_click$data]], metadata = meta)
         
-      Lib <- left_join(data.table(sample_name = names(libraryR()), rsq = correlation()[,(data_click$data)]), meta) %>%
-          mutate(rsq = round(rsq, 2)) %>%
-          filter(!is.na(rsq)) %>%
-          arrange(desc(rsq))
       
       incProgress(1/3, detail = "Making Plot")
 
