@@ -214,6 +214,14 @@ snr <- function(x) {
     ifelse(is.finite(signal/noise), signal/noise, 0)
 }
 
+#Correlate functions ----
+correlate_intensity <- function(intensity, search_wavenumbers, std_wavenumbers){
+    c(cor(intensity[search_wavenumbers %in% std_wavenumbers], library[std_wavenumbers %in% search_wavenumbers,], use = "pairwise.complete.obs"))
+}
+
+correlate_spectra <- function(data, search_wavenumbers, std_wavenumbers){
+    data[,lapply(.SD, correlate_intensity, search_wavenumbers = search_wavenumbers, std_wavenumbers = std_wavenumbers)]
+}
 #library(future)
 #library(bslib)
 
@@ -610,13 +618,14 @@ observeEvent(input$reset, {
   #Correlation ----
   correlation <- reactive({
       req(input$active_identification)
-      cor <- cor(DataR()[conform_wavenumber(preprocessed$data$wavenumber) %in% std_wavenumbers,], libraryR()[std_wavenumbers %in% conform_wavenumber(preprocessed$data$wavenumber),], use = "pairwise.complete.obs")
-      preprocessed$data$coords$max_cor <- round(apply(cor, 1, function(x) max(x, na.rm = T)), 2)
-      preprocessed$data$coords$max_cor_id <- colnames(libraryR())[apply(cor, 1, function(x) which.max(x))]
+      cor <- correlate_spectra(data = DataR(), search_wavenumbers = conform_wavenumber(preprocessed$data$wavenumber), std_wavenumbers = std_wavenumbers)
+      #cor <- cor(DataR()[conform_wavenumber(preprocessed$data$wavenumber) %in% std_wavenumbers,], libraryR()[std_wavenumbers %in% conform_wavenumber(preprocessed$data$wavenumber),], use = "pairwise.complete.obs")
+      preprocessed$data$coords$max_cor <- round(apply(cor, 2, function(x) max(x, na.rm = T)), 2)
+      preprocessed$data$coords$max_cor_id <- colnames(libraryR())[apply(cor,2 , function(x) which.max(x))]
       cor
   })
   
-  # Joins their spectrum to the internal database and computes correlation.
+  # Joins their spectrum to the internal database.
   MatchSpectra <- reactive({
     req(input$file1)
     req(input$active_identification)
@@ -626,7 +635,7 @@ observeEvent(input$reset, {
       incProgress(1/3, detail = "Finding Match")
       
         
-      Lib <- left_join(data.table(sample_name = names(correlation()[(data_click$data),]), rsq = correlation()[(data_click$data),]), meta) %>%
+      Lib <- left_join(data.table(sample_name = libraryR()$sample_name[(data_click$data)], rsq = correlation()[,(data_click$data)]), meta) %>%
           mutate(rsq = round(rsq, 2)) %>%
           filter(!is.na(rsq)) %>%
           arrange(desc(rsq))
@@ -939,7 +948,7 @@ match_metadata <- reactive({
   
   #Test ----
   output$event_test <- renderPrint({
-      #print(preprocessed$data)
+      print(correlation())
       print(data_click$data)
       #print(dim(data()))
       #print(input$active_preprocessing)
