@@ -532,6 +532,8 @@ observeEvent(input$reset, {
   trace$data <- NULL
 })
 
+# Identify Spectra function ----
+
   # Choose which spectrum to use
   DataR <- reactive({
       if(input$active_preprocessing) {
@@ -605,15 +607,15 @@ observeEvent(input$reset, {
         
       })
   
+  #Correlation ----
   correlation <- reactive({
       req(input$active_identification)
-      cor <- cor(DataR()[,2:ncol(DataR())][!is.na(DataR()[[2]]),], libraryR()[!is.na(DataR()[[2]]),], use = "pairwise.complete.obs")
+      cor <- cor(DataR()[conform_wavenumber(preprocessed$data$wavenumber) %in% std_wavenumbers,], libraryR()[std_wavenumbers %in% conform_wavenumber(preprocessed$data$wavenumber),], use = "pairwise.complete.obs")
       preprocessed$data$coords$max_cor <- round(apply(cor, 1, function(x) max(x, na.rm = T)), 2)
       preprocessed$data$coords$max_cor_id <- colnames(libraryR())[apply(cor, 1, function(x) which.max(x))]
       cor
   })
   
-  # Identify Spectra function ----
   # Joins their spectrum to the internal database and computes correlation.
   MatchSpectra <- reactive({
     req(input$file1)
@@ -624,7 +626,7 @@ observeEvent(input$reset, {
       incProgress(1/3, detail = "Finding Match")
       
         
-      Lib <- left_join(data.table(sample_name = names(correlation()[(data_click$data - 1),]), rsq = correlation()[(data_click$data - 1),]), meta) %>%
+      Lib <- left_join(data.table(sample_name = names(correlation()[(data_click$data),]), rsq = correlation()[(data_click$data),]), meta) %>%
           mutate(rsq = round(rsq, 2)) %>%
           filter(!is.na(rsq)) %>%
           arrange(desc(rsq))
@@ -704,12 +706,12 @@ match_metadata <- reactive({
           add_trace(x = if(input$active_preprocessing){conform_wavenumber(preprocessed$data$wavenumber)} else{NULL}, y = if(input$active_preprocessing){make_rel(baseline_data()[[data_click$data]], na.rm = T)} else{NULL},
                     name = 'Processed Spectrum',
                     line = list(color = 'rgb(240,19,207)')) %>%
-         # add_trace(data = match_selected(), x = ~wavenumber, y = ~intensity,
-         #           name = 'Selected Match',
-         #           line = list(color = 'rgb(255,255,255)')) %>%
-         # add_trace(data = DataR_plot(), x = ~wavenumber, y = ~intensity,
-         #           name = 'Matched Spectrum',
-         #           line = list(color = 'rgb(125,249,255)')) %>%
+          add_trace(data = match_selected(), x = ~wavenumber, y = ~intensity,
+                    name = 'Selected Match',
+                    line = list(color = 'rgb(255,255,255)')) %>%
+          add_trace(data = DataR_plot(), x = ~wavenumber, y = ~intensity,
+                    name = 'Matched Spectrum',
+                    line = list(color = 'rgb(125,249,255)')) %>%
         # Dark blue rgb(63,96,130)
         # https://www.rapidtables.com/web/color/RGB_Color.html https://www.color-hex.com/color-names.html
         layout(yaxis = list(title = "absorbance intensity [-]"),
