@@ -635,7 +635,7 @@ observeEvent(input$reset, {
       incProgress(1/3, detail = "Finding Match")
       
         
-      Lib <- left_join(data.table(sample_name = libraryR()$sample_name[(data_click$data)], rsq = correlation()[,(data_click$data)]), meta) %>%
+      Lib <- left_join(data.table(sample_name = names(libraryR()), rsq = correlation()[,(data_click$data)]), meta) %>%
           mutate(rsq = round(rsq, 2)) %>%
           filter(!is.na(rsq)) %>%
           arrange(desc(rsq))
