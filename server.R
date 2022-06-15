@@ -641,7 +641,7 @@ observeEvent(input$reset, {
   MatchSpectra <- reactive({
     req(input$file1)
     req(input$active_identification)
-    input
+    #input
     withProgress(message = 'Analyzing Spectrum', value = 1/3, {
 
       incProgress(1/3, detail = "Finding Match")
