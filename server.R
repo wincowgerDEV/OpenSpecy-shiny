@@ -25,10 +25,10 @@ library(mongolite)
 library(loggit)
 library(hyperSpec)
 library(TTR)
-library(future.apply)
+#library(future.apply)
 if(droptoken) library(rdrop2)
 
-plan(multisession) ## Run in parallel on local computer
+#plan(multisession) ## Run in parallel on local computer when processing full map
 
 #devtools::install_github("wincowgerDEV/OpenSpecy")
 library(OpenSpecy)
@@ -84,7 +84,7 @@ read_any <- function(filename, share, id, std_wavenumbers){
     }
     
     else if(grepl("\\.zip$", ignore.case = T, filename)) {
-        read_map(filename = filename, share = share, id = id, std_wavenumbers = std_wavenumbers)
+        read_map(filename = filename, share = F, id = id, std_wavenumbers = std_wavenumbers)
         
     }
 }
@@ -93,7 +93,9 @@ read_spectrum <- function(filename, share, id) {
     
     as.data.table(
         if(grepl("\\.csv$", ignore.case = T, filename)) {
-            tryCatch(fread(filename),
+            tryCatch(read_text(filename, method = "fread",
+                               share = share,
+                               id = id),
                      error = function(e) {e})
         }
         else if(grepl("\\.[0-9]$", ignore.case = T, filename)) {
@@ -124,7 +126,7 @@ read_formatted_spectrum <- function(filename, share, id){
 
 #Conform spectra functions ----
 conform_spectra <- function(df, wavenumber, correction){
-    df[,future_lapply(.SD, conform_intensity, wavenumber = wavenumber, correction = correction)]
+    df[,lapply(.SD, conform_intensity, wavenumber = wavenumber, correction = correction)]
 }
 
 conform_intensity <- function(intensity, wavenumber, correction){
@@ -203,7 +205,7 @@ process_intensity <- function(intensity, wavenumber, active_preprocessing, range
 }
 
 process_spectra <- function(df, wavenumber, active_preprocessing, range_decision, min_range, max_range, smooth_decision, smoother, baseline_decision, baseline_selection, baseline, derivative_decision, trace){
-    df[,future_lapply(.SD, process_intensity, wavenumber = wavenumber, active_preprocessing = active_preprocessing, range_decision = range_decision, min_range = min_range, max_range = max_range, smooth_decision = smooth_decision, smoother = smoother, baseline_decision = baseline_decision, baseline_selection = baseline_selection, baseline = baseline, derivative_decision = derivative_decision, trace = trace)]
+    df[,lapply(.SD, process_intensity, wavenumber = wavenumber, active_preprocessing = active_preprocessing, range_decision = range_decision, min_range = min_range, max_range = max_range, smooth_decision = smooth_decision, smoother = smoother, baseline_decision = baseline_decision, baseline_selection = baseline_selection, baseline = baseline, derivative_decision = derivative_decision, trace = trace)]
 }
 
 #signal to noise ratio
@@ -223,7 +225,7 @@ correlate_intensity <- function(intensity, search_wavenumbers, std_wavenumbers, 
 }
 
 correlate_spectra <- function(data, search_wavenumbers, std_wavenumbers, library){
-    data[search_wavenumbers %in% std_wavenumbers,][,future_lapply(.SD, correlate_intensity, search_wavenumbers = search_wavenumbers, std_wavenumbers = std_wavenumbers, lib = library[std_wavenumbers %in% search_wavenumbers,])]
+    data[search_wavenumbers %in% std_wavenumbers,][,lapply(.SD, correlate_intensity, search_wavenumbers = search_wavenumbers, std_wavenumbers = std_wavenumbers, lib = library[std_wavenumbers %in% search_wavenumbers,])]
 }
 
 

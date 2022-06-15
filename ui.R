@@ -548,13 +548,13 @@ ui <- fluidPage(
                                                                      size = "medium", rounded = TRUE
                                                                  )
                                                       )),
-                                                    conditionalPanel("input.active_preprocessing == true & input.view_preprocessing == true",
+                                                    conditionalPanel("input.view_preprocessing == true",
                                                                      fluidRow(
                                                                        column(9,
                                                                               prettySwitch(inputId = "intensity_decision",
                                                                                            label = "Intensity Adjustment",
                                                                                            inline = T,
-                                                                                           value = T,
+                                                                                           value = F,
                                                                                            status = "success",
                                                                                            fill = T) %>%
                                                                                   add_prompt(
@@ -585,7 +585,7 @@ ui <- fluidPage(
                                                                               prettySwitch(inputId = "smooth_decision",
                                                                                            label = "Smoothing",
                                                                                            inline = T,
-                                                                                           value = T,
+                                                                                           value = F,
                                                                                            status = "success",
                                                                                            fill = T) %>%
                                                                                   add_prompt(
@@ -616,7 +616,7 @@ ui <- fluidPage(
                                                                               prettySwitch("baseline_decision",
                                                                                            label = "Baseline Correction",
                                                                                            inline = T,
-                                                                                           value = T,
+                                                                                           value = F,
                                                                                            status = "success",
                                                                                            fill = T) %>%
                                                                                   add_prompt(
@@ -648,7 +648,7 @@ ui <- fluidPage(
                                                                               prettySwitch("range_decision",
                                                                                            label = "Range Selection",
                                                                                            inline = T,
-                                                                                           value = T,
+                                                                                           value = F,
                                                                                            status = "success",
                                                                                            fill = T) %>%
                                                                                   add_prompt(
@@ -723,7 +723,7 @@ ui <- fluidPage(
                                                                                      size = "medium", rounded = TRUE
                                                                                  )
                                                                       )))),
-                                                    conditionalPanel("input.active_identification == true & input.view_identification == true",
+                                                    conditionalPanel("input.view_identification == true",
                                                                      fluidRow(
                                                                        column(3,
                                                                               pickerInput(inputId = "Spectra", label =  "Library Type",
