@@ -484,11 +484,11 @@ observeEvent(input$file1, {
   # All cleaning of the data happens here. Range selection, Smoothing, and Baseline removing
   baseline_data <- reactive({
      req(input$file1)
-     #req(input$active_preprocessing)
-    if(!length(data()) | !input$active_preprocessing) {
-      data.table(wavenumber = numeric(), intensity = numeric(), SpectrumIdentity = factor())
-    }
-    else{
+     req(input$active_preprocessing)
+    #if(!length(data()) | !input$active_preprocessing) {
+    #  data.table(wavenumber = numeric(), intensity = numeric(), SpectrumIdentity = factor())
+    #}
+    #else{
     processed <- process_spectra(df = data(), 
                     wavenumber = conform_wavenumber(preprocessed$data$wavenumber),
                     active_preprocessing = input$active_preprocessing, 
@@ -509,7 +509,7 @@ observeEvent(input$file1, {
     
     processed
     
-    }
+    #}
   })
 
 
@@ -550,7 +550,7 @@ observeEvent(input$reset, {
                  intensity = numeric(), 
                  SpectrumIdentity = factor())    }
     else{
-      data.table(wavenumber = std_wavenumbers,
+      data.table(wavenumber = conform_wavenumber(preprocessed$data$wavenumber),
                  intensity = make_rel(DataR()[[data_click$data]], na.rm = T),
                  SpectrumIdentity = factor()) %>%
         dplyr::filter(!is.na(intensity))
@@ -706,9 +706,9 @@ match_metadata <- reactive({
           add_trace(x = if(input$active_preprocessing){conform_wavenumber(preprocessed$data$wavenumber)} else{NULL}, y = if(input$active_preprocessing){make_rel(baseline_data()[[data_click$data]], na.rm = T)} else{NULL},
                     name = 'Processed Spectrum',
                     line = list(color = 'rgb(240,19,207)')) %>%
-          add_trace(data = match_selected(), x = ~wavenumber, y = ~intensity,
-                    name = 'Selected Match',
-                    line = list(color = 'rgb(255,255,255)')) %>%
+         # add_trace(data = match_selected(), x = ~wavenumber, y = ~intensity,
+         #           name = 'Selected Match',
+         #           line = list(color = 'rgb(255,255,255)')) %>%
           add_trace(data = DataR_plot(), x = ~wavenumber, y = ~intensity,
                     name = 'Matched Spectrum',
                     line = list(color = 'rgb(125,249,255)')) %>%
