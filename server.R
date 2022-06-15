@@ -215,12 +215,12 @@ snr <- function(x) {
 }
 
 #Correlate functions ----
-correlate_intensity <- function(intensity, search_wavenumbers, std_wavenumbers){
-    c(cor(intensity[search_wavenumbers %in% std_wavenumbers], library[std_wavenumbers %in% search_wavenumbers,], use = "pairwise.complete.obs"))
+correlate_intensity <- function(intensity, search_wavenumbers, std_wavenumbers, lib){
+    c(cor(intensity, lib, use = "pairwise.complete.obs"))
 }
 
-correlate_spectra <- function(data, search_wavenumbers, std_wavenumbers){
-    data[,lapply(.SD, correlate_intensity, search_wavenumbers = search_wavenumbers, std_wavenumbers = std_wavenumbers)]
+correlate_spectra <- function(data, search_wavenumbers, std_wavenumbers, library){
+    data[search_wavenumbers %in% std_wavenumbers,][,lapply(.SD, correlate_intensity, search_wavenumbers = search_wavenumbers, std_wavenumbers = std_wavenumbers, lib = library[std_wavenumbers %in% search_wavenumbers,])]
 }
 
 
@@ -627,7 +627,7 @@ observeEvent(input$reset, {
   #Correlation ----
   correlation <- reactive({
       req(input$active_identification)
-      cor <- correlate_spectra(data = DataR(), search_wavenumbers = conform_wavenumber(preprocessed$data$wavenumber), std_wavenumbers = std_wavenumbers)
+      cor <- correlate_spectra(data = DataR(), search_wavenumbers = conform_wavenumber(preprocessed$data$wavenumber), std_wavenumbers = std_wavenumbers, library = libraryR())
       #cor <- cor(DataR()[conform_wavenumber(preprocessed$data$wavenumber) %in% std_wavenumbers,], libraryR()[std_wavenumbers %in% conform_wavenumber(preprocessed$data$wavenumber),], use = "pairwise.complete.obs")
       preprocessed$data$coords$max_cor <- round(apply(cor, 2, function(x) max(x, na.rm = T)), 2)
       preprocessed$data$coords$max_cor_id <- colnames(libraryR())[apply(cor,2 , function(x) which.max(x))]
