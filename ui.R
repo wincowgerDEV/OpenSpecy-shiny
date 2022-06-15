@@ -426,7 +426,7 @@ ui <- fluidPage(
                                                                  style = "background-color: rgb(0,0,0); color: rgb(255,255,255); float: left;") %>%
                                                      add_prompt(
                                                          message = "This is a sample spectrum that can be uploaded to the tool for testing it out and understanding how the csv files should be formatted.",
-                                                         position = "right", type = "info", 
+                                                         type = "info", 
                                                          size = "medium", rounded = TRUE
                                                      ),
                                                  downloadButton("download_metadata",
@@ -449,7 +449,7 @@ ui <- fluidPage(
                                                                                       style = "background-color: rgb(240,19,207); color: rgb(0,0,0); float: left;") %>%
                                                                            add_prompt(
                                                                                message = "Some users may wish to save a copy of their processed spectrum. This button downloads the processed spectrum as a csv file.",
-                                                                               position = "left", type = "info", 
+                                                                                type = "info", 
                                                                                size = "medium", rounded = TRUE
                                                                            )
                                                       ),
