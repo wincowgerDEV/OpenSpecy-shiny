@@ -429,11 +429,11 @@ observeEvent(input$file1, {
   # Read in data when uploaded based on the file type
   req(input$file1)
   file <- input$file1
-  data_click$data <- 2
-  filename$data <- as.character(file$datapath)
+  data_click$data <- 1
+  #filename$data <- as.character(file$datapath)
   
   if (!grepl("(\\.csv$)|(\\.asp$)|(\\.spa$)|(\\.spc$)|(\\.jdx$)|(\\.RData$)|(\\.zip$)|(\\.[0-9]$)",
-             ignore.case = T, filename$data)) {
+             ignore.case = T, as.character(file$datapath))) {
     show_alert(
       title = "Data type not supported!",
       text = paste0("Uploaded data type is not currently supported; please
@@ -452,7 +452,7 @@ observeEvent(input$file1, {
   
   withProgress(message = progm, value = 3/3, {
       rout <- read_any(
-          filename = filename$data, share = share, id = id(), std_wavenumbers = std_wavenumbers
+          filename = as.character(file$datapath), share = share, id = id(), std_wavenumbers = std_wavenumbers
       )
     
     if (inherits(rout, "simpleError")) {
@@ -477,15 +477,15 @@ observeEvent(input$file1, {
   data <- reactive({
     req(input$file1)
       conform_spectra(df = preprocessed$data$spectra, 
-                      wavenumber = preprocessed$data$spectra$wavenumber, 
-                      correction = input$intensity_corr, 
-                      std_wavenumbers = std_wavenumbers)
+                      wavenumber = preprocessed$data$wavenumber, 
+                      correction = input$intensity_corr)
     })
 
   #Preprocess Spectra ----
   # All cleaning of the data happens here. Range selection, Smoothing, and Baseline removing
   baseline_data <- reactive({
      req(input$file1)
+     req(input$active_preprocessing)
     if(!length(data()) | !input$active_preprocessing) {
       data.table(wavenumber = numeric(), intensity = numeric(), SpectrumIdentity = factor())
     }
@@ -584,6 +584,7 @@ observeEvent(input$reset, {
   
   match_selected <- reactive({# Default to first row if not yet clicked
     req(input$file1)
+    req(input$active_identification)
     if(!length(data()) | !input$active_identification) {
         data.table(intensity = numeric(), wavenumber = numeric())
     }
@@ -607,6 +608,7 @@ observeEvent(input$reset, {
       })
   
   correlation <- reactive({
+      req(input$active_identification)
       cor <- cor(DataR()[,2:ncol(DataR())][!is.na(DataR()[[2]]),], libraryR()[!is.na(DataR()[[2]]),], use = "pairwise.complete.obs")
       preprocessed$data$coords$max_cor <- round(apply(cor, 1, function(x) max(x, na.rm = T)), 2)
       preprocessed$data$coords$max_cor_id <- colnames(libraryR())[apply(cor, 1, function(x) which.max(x))]
@@ -636,6 +638,7 @@ observeEvent(input$reset, {
   })
 
   top_matches <- reactive({
+      req(input$active_identification)
       MatchSpectra() %>%
           dplyr::rename("Material" = SpectrumIdentity) %>%
           dplyr::rename("Pearson's r" = rsq) %>%
@@ -661,12 +664,13 @@ observeEvent(input$reset, {
   })
   
 match_metadata <- reactive({
+    req(input$active_identification)
     MatchSpectra()[input$event_rows_selected,] %>%
         select(where(~!any(is_empty(.))))
 })
     #Metadata for the selected value
  output$eventmetadata <- DT::renderDataTable({
-     req(input$active_identification)
+    req(input$active_identification)
     datatable(match_metadata(),
               escape = FALSE,
               options = list(dom = 't', bSort = F, 
@@ -681,10 +685,10 @@ match_metadata <- reactive({
  
  observeEvent(event_data("plotly_click", source = "heat_plot"), {
      if(is.null(event_data("plotly_click", source = "heat_plot"))){
-        data_click$data <- 2  
+        data_click$data <- 1  
      } 
      else{
-        data_click$data <- event_data("plotly_click", source = "heat_plot")[["pointNumber"]] + 2
+        data_click$data <- event_data("plotly_click", source = "heat_plot")[["pointNumber"]] + 1
          
      }
  })
@@ -696,18 +700,18 @@ match_metadata <- reactive({
      #         ignore.case = T, filename$data)){
         #req(single_data$data)
       plot_ly(type = 'scatter', mode = 'lines', source = "B") %>%
-        add_trace(x = data()[["wavenumber"]], y = make_rel(data()[[data_click$data]], na.rm = T),
+        add_trace(x = conform_wavenumber(preprocessed$data$wavenumber), y = make_rel(data()[[data_click$data]], na.rm = T),
                   name = 'Uploaded Spectrum',
                   line = list(color = 'rgba(240,236,19,0.8)')) %>%
-          add_trace(x = if(input$active_preprocessing){baseline_data()[["wavenumber"]]} else{NULL}, y = if(input$active_preprocessing){make_rel(baseline_data()[[data_click$data]], na.rm = T)} else{NULL},
-                    name = 'Processed Spectrum',
-                    line = list(color = 'rgb(240,19,207)')) %>%
-          add_trace(data = match_selected(), x = ~wavenumber, y = ~intensity,
-                    name = 'Selected Match',
-                    line = list(color = 'rgb(255,255,255)')) %>%
-          add_trace(data = DataR_plot(), x = ~wavenumber, y = ~intensity,
-                    name = 'Matched Spectrum',
-                    line = list(color = 'rgb(125,249,255)')) %>%
+         # add_trace(x = if(input$active_preprocessing){baseline_data()[["wavenumber"]]} else{NULL}, y = if(input$active_preprocessing){make_rel(baseline_data()[[data_click$data]], na.rm = T)} else{NULL},
+         #           name = 'Processed Spectrum',
+         #           line = list(color = 'rgb(240,19,207)')) %>%
+         # add_trace(data = match_selected(), x = ~wavenumber, y = ~intensity,
+         #           name = 'Selected Match',
+         #           line = list(color = 'rgb(255,255,255)')) %>%
+         # add_trace(data = DataR_plot(), x = ~wavenumber, y = ~intensity,
+         #           name = 'Matched Spectrum',
+         #           line = list(color = 'rgb(125,249,255)')) %>%
         # Dark blue rgb(63,96,130)
         # https://www.rapidtables.com/web/color/RGB_Color.html https://www.color-hex.com/color-names.html
         layout(yaxis = list(title = "absorbance intensity [-]"),
@@ -828,7 +832,7 @@ match_metadata <- reactive({
   observe({
       req(input$file1)
       #toggle(id = "download_conformed", condition = !is.null(input$file1)) not sure why this doesn't work to stop the download button
-      toggle(id = "heatmap", condition = ncol(data()) > 2 & !is.null(input$file1))
+      toggle(id = "heatmap", condition = ncol(data()) > 1 & !is.null(input$file1))
   })
   
   observe({
@@ -934,21 +938,22 @@ match_metadata <- reactive({
   })
   
   #Test ----
-  #output$event_test <- renderPrint({
-  #    print(data_click$data)
-  #    print(dim(data()))
-  #    print(input$active_preprocessing)
-  #    print(input$range_decision) 
-  #    print(input$MinRange)
-  #    print(input$MaxRange)
-  #    print(input$smooth_decision)
-  #    print(input$smoother)
-  #    print(input$baseline_decision) 
-  #    print(input$baseline_selection) 
-  #    print(input$baseline)
-  #    print(preprocessed$data$coords$snr)
-  #    print(baseline_data())
-  #})
+  output$event_test <- renderPrint({
+      #print(preprocessed$data)
+      print(data_click$data)
+      #print(dim(data()))
+      #print(input$active_preprocessing)
+      #print(input$range_decision) 
+      #print(input$MinRange)
+      #print(input$MaxRange)
+      #print(input$smooth_decision)
+      #print(input$smoother)
+      #print(input$baseline_decision) 
+      #print(input$baseline_selection) 
+      #print(input$baseline)
+      #print(preprocessed$data$coords$snr)
+      #print(baseline_data())
+  })
 
 })
 
