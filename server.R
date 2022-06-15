@@ -584,7 +584,7 @@ observeEvent(input$reset, {
   
   match_selected <- reactive({# Default to first row if not yet clicked
     req(input$file1)
-    req(input$active_identification)
+    #req(input$active_identification)
     if(!length(data()) | !input$active_identification) {
         data.table(intensity = numeric(), wavenumber = numeric())
     }
@@ -706,9 +706,9 @@ match_metadata <- reactive({
           add_trace(x = if(input$active_preprocessing){conform_wavenumber(preprocessed$data$wavenumber)} else{NULL}, y = if(input$active_preprocessing){make_rel(baseline_data()[[data_click$data]], na.rm = T)} else{NULL},
                     name = 'Processed Spectrum',
                     line = list(color = 'rgb(240,19,207)')) %>%
-         # add_trace(data = match_selected(), x = ~wavenumber, y = ~intensity,
-         #           name = 'Selected Match',
-         #           line = list(color = 'rgb(255,255,255)')) %>%
+          add_trace(data = match_selected(), x = ~wavenumber, y = ~intensity,
+                    name = 'Selected Match',
+                    line = list(color = 'rgb(255,255,255)')) %>%
           add_trace(data = DataR_plot(), x = ~wavenumber, y = ~intensity,
                     name = 'Matched Spectrum',
                     line = list(color = 'rgb(125,249,255)')) %>%
