@@ -688,6 +688,20 @@ ui <- fluidPage(
                                                                                         type = "info", 
                                                                                         size = "medium", rounded = TRUE
                                                                                     )
+                                                                         )),
+                                                                     fluidRow(
+                                                                         column(9,
+                                                                                prettySwitch("co2_decision",
+                                                                                             label = "Flatten FTIR CO2",
+                                                                                             inline = T,
+                                                                                             value = F,
+                                                                                             status = "success",
+                                                                                             fill = T) %>%
+                                                                                    add_prompt(
+                                                                                        message = "Replace the wavenumbers from 2420 - 2200 with the mean of intensities at 2420 and 2200.",
+                                                                                        type = "info", 
+                                                                                        size = "medium", rounded = TRUE
+                                                                                    )
                                                                          ))
                                                     ),
                                                     

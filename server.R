@@ -162,7 +162,7 @@ clean_spec <- function(x, y, out){
 
 
 #Process spectra functions ----
-process_intensity <- function(intensity, wavenumber, active_preprocessing, range_decision, min_range, max_range, smooth_decision, smoother, baseline_decision, baseline_selection, baseline, derivative_decision, trace) {
+process_intensity <- function(intensity, wavenumber, active_preprocessing, range_decision, min_range, max_range, carbon_dioxide_decision, smooth_decision, smoother, baseline_decision, baseline_selection, baseline, derivative_decision, trace) {
     
     test <- wavenumber %in% wavenumber[!is.na(intensity)]
     place <- rep(NA, length.out= length(wavenumber))
@@ -174,9 +174,17 @@ process_intensity <- function(intensity, wavenumber, active_preprocessing, range
     
     #Range criteria   
     if(range_decision & test2) {
-        #assumes that all the wavenumbers exist, but they don't 
+        #assumes that all the wavenumbers exist, but they don't . Might be problematic when we try to use the wavenumber range for correlation afterward or 
         intensity_cor <- intensity_cor[wavenumber_cor >= min_range & wavenumber_cor <= max_range]
         wavenumber_cor <- wavenumber_cor[wavenumber_cor >= min_range & wavenumber_cor <= max_range]
+        #test <- std_wavenumbers %in% std_wavenumbers[std_wavenumbers >= min(wavenumber_cor) & std_wavenumbers <= max(wavenumber_cor)]
+        
+    } 
+    
+    #CO2 criteria   
+    if(carbon_dioxide_decision) {
+        #assumes that all the wavenumbers exist, but they don't 
+        intensity_cor[wavenumber_cor >= 2200 & wavenumber_cor <= 2420] <- mean(intensity_cor[wavenumber_cor %in% c(2200, 2420)])
         #test <- std_wavenumbers %in% std_wavenumbers[std_wavenumbers >= min(wavenumber_cor) & std_wavenumbers <= max(wavenumber_cor)]
         
     } 
@@ -204,10 +212,10 @@ process_intensity <- function(intensity, wavenumber, active_preprocessing, range
     
 }
 
-process_spectra <- function(df, wavenumber, active_preprocessing, range_decision, min_range, max_range, smooth_decision, smoother, baseline_decision, baseline_selection, baseline, derivative_decision, trace){
-    df[,lapply(.SD, process_intensity, wavenumber = wavenumber, active_preprocessing = active_preprocessing, range_decision = range_decision, min_range = min_range, max_range = max_range, smooth_decision = smooth_decision, smoother = smoother, baseline_decision = baseline_decision, baseline_selection = baseline_selection, baseline = baseline, derivative_decision = derivative_decision, trace = trace)]
-}
 
+process_spectra <- function(df, wavenumber, active_preprocessing, range_decision, min_range, max_range, carbon_dioxide_decision, smooth_decision, smoother, baseline_decision, baseline_selection, baseline, derivative_decision, trace){
+    df[,lapply(.SD, process_intensity, wavenumber = wavenumber, active_preprocessing = active_preprocessing, range_decision = range_decision, min_range = min_range, max_range = max_range, carbon_dioxide_decision = carbon_dioxide_decision, smooth_decision = smooth_decision, smoother = smoother, baseline_decision = baseline_decision, baseline_selection = baseline_selection, baseline = baseline, derivative_decision = derivative_decision, trace = trace)]
+}
 #signal to noise ratio
 snr <- function(x) {
     max  = runMax(x[!is.na(x)], n = 20) 
@@ -523,6 +531,7 @@ observeEvent(input$file1, {
                     baseline_selection = input$baseline_selection, 
                     baseline = input$baseline, 
                     derivative_decision = input$derivative_decision,
+                    carbon_dioxide_decision = input$co2_decision,
                     trace = trace)
     
     snr <- unlist(lapply(processed, snr))
