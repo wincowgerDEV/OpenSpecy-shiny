@@ -422,13 +422,21 @@ ui <- fluidPage(
                                              fluidRow(
                                                column(12, 
                                                  downloadButton("download_testdata",
-                                                                 "Sample",
+                                                                 "Single Sample",
                                                                  style = "background-color: rgb(0,0,0); color: rgb(255,255,255); float: left;") %>%
                                                      add_prompt(
                                                          message = "This is a sample spectrum that can be uploaded to the tool for testing it out and understanding how the csv files should be formatted.",
                                                          type = "info", 
                                                          size = "medium", rounded = TRUE
                                                      ),
+                                                # downloadButton("download_testbatch",
+                                                #                "Batch Sample",
+                                                #                style = "background-color: rgb(0,0,0); color: rgb(255,255,255); float: left;") %>%
+                                                #   add_prompt(
+                                                #     message = "This is a sample spectrum that can be uploaded to the tool for testing it out and understanding how the csv files should be formatted.",
+                                                #     type = "info", 
+                                                #     size = "medium", rounded = TRUE
+                                                #   ),
                                                  downloadButton("download_metadata",
                                                                 "Metadata",
                                                                 style = "background-color: rgb(75,0,130); color: rgb(255,255,255); float: left;") %>%
@@ -528,7 +536,7 @@ ui <- fluidPage(
                                                                              fill = T) %>%
                                                                  add_prompt(
                                                                      message = "Select if preprocessing should happen.",
-                                                                     type = "info", 
+                                                                     type = "info", position = "left",
                                                                      size = "medium", rounded = TRUE
                                                                  )
                                                       ),
@@ -559,7 +567,7 @@ ui <- fluidPage(
                                                                                            fill = T) %>%
                                                                                   add_prompt(
                                                                                       message = "Open Specy assumes spectra are in Absorbance units, if they are not, you can select the appropriate transformation.",
-                                                                                      type = "info", 
+                                                                                      type = "info", position = "left",
                                                                                       size = "medium", rounded = TRUE
                                                                                   )
                                                                        ),
@@ -685,7 +693,7 @@ ui <- fluidPage(
                                                                                              fill = T) %>%
                                                                                     add_prompt(
                                                                                         message = "Derivative transformation decreases baseline and can amplify peak contrast.",
-                                                                                        type = "info", 
+                                                                                        type = "info", position = "left",
                                                                                         size = "medium", rounded = TRUE
                                                                                     )
                                                                          )),

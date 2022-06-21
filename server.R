@@ -594,7 +594,6 @@ observeEvent(input$reset, {
                  SpectrumIdentity = factor()) %>%
         dplyr::filter(!is.na(intensity))
     }
-    
   })
   
   libraryR <- reactive({
@@ -768,12 +767,12 @@ match_metadata <- reactive({
             add_trace(
                 x = preprocessed$data$coords$x, #Need to update this with the new rout format. 
                 y = preprocessed$data$coords$y, 
-                z = if(input$active_identification){preprocessed$data$coords$max_cor} else if(input$active_preprocessing){ preprocessed$data$coords$snr
+                z = if(input$active_identification){ifelse(preprocessed$data$coords$snr < 1 | preprocessed$data$coords$max_cor < 0.7, NA, preprocessed$data$coords$max_cor)} else if(input$active_preprocessing){ ifelse(preprocessed$data$coords$snr > 1, preprocessed$data$coords$snr, NA)
 } else{1:length(preprocessed$data$coords$y)}, 
                 type = "heatmap",
                 hoverinfo = 'text',
-                colors = if(input$active_identification){"YlGnBu"} else if(input$active_preprocessing){"PuBuGn"
-                } else{"Dark2"},
+                colors = if(input$active_identification){} else if(input$active_preprocessing){heat.colors(n = sum(preprocessed$data$coords$snr > 1))
+                } else{sample(rainbow(length(preprocessed$data$coords$x)), size = length(preprocessed$data$coords$x), replace = F)},
                 text = ~paste(
                     "x: ", preprocessed$data$coords$x,
                     "<br>y: ", preprocessed$data$coords$y,
@@ -781,7 +780,14 @@ match_metadata <- reactive({
                     } else{1:length(preprocessed$data$coords$y)},
                     "<br>Filename: ", preprocessed$data$coords$filename)) %>%
             layout(
-                   plot_bgcolor = 'rgb(17,0,73)',
+              xaxis = list(title = 'x',
+                           zeroline = F,
+                           showgrid = F
+              ),
+              yaxis = list(title = 'y',
+                           zeroline = F,
+                           showgrid = F),
+                   plot_bgcolor = 'rgba(17,0,73, 0)',
                    paper_bgcolor = 'rgba(0,0,0,0.5)',
                    font = list(color = '#FFFFFF'),
                    title = if(input$active_identification)"Correlation"  else if(input$active_preprocessing) "Signal to Noise"  else "Spectrum Number") %>%
@@ -816,17 +822,22 @@ match_metadata <- reactive({
     filename = function() {"testdata.csv"},
     content = function(file) {fwrite(testdata, file)}
   )
+  
+  output$download_testbatch <- downloadHandler(
+    filename = function() {"testbatch.zip"},
+    content = function(file) {zip(zipfile = file, files = c("data/HDPE__1.csv", "data/HDPE__2.csv", "data/HDPE__3.csv"))}
+  )
 
   ## Download own data ----
   
   output$download_conformed <- downloadHandler(
       filename = function() {paste('data-conformed-', human_ts(), '.csv', sep='')},
-      content = function(file){fwrite(data(), file)}
+      content = function(file){fwrite(data()%>% mutate(wavenumber = preprocessed$data$wavenumber), file)}
   )
   
   output$downloadData <- downloadHandler(
     filename = function() {paste('data-processed-', human_ts(), '.csv', sep='')},
-    content = function(file) {fwrite(baseline_data(), file)}
+    content = function(file) {fwrite(baseline_data() %>% mutate(wavenumber = preprocessed$data$wavenumber), file)}
   )
   
   ## Download selected data ----
