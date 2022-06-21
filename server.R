@@ -228,12 +228,14 @@ snr <- function(x) {
 }
 
 #Correlate functions ----
-correlate_intensity <- function(intensity, search_wavenumbers, lib){
-    c(cor(intensity, lib, use = "pairwise.complete.obs"))*apply(lib, 2, function(x) sum(!is.na(x)))/length(search_wavenumbers)
+correlate_intensity <- function(intensity, search_wavenumbers, lib, overlap){
+    c(cor(intensity, lib, use = "pairwise.complete.obs"))*overlap
 }
 
 correlate_spectra <- function(data, search_wavenumbers, std_wavenumbers, library){
-    data[search_wavenumbers %in% std_wavenumbers,][,lapply(.SD, correlate_intensity, search_wavenumbers = search_wavenumbers,  lib = library[std_wavenumbers %in% search_wavenumbers,])]
+    lib <- library[std_wavenumbers %in% search_wavenumbers,]
+    overlap <- apply(lib, 2, function(x) sum(!is.na(x)))/length(search_wavenumbers)
+    data[search_wavenumbers %in% std_wavenumbers,][,lapply(.SD, correlate_intensity, search_wavenumbers = search_wavenumbers,  lib = lib, overlap = overlap)]
 }
 
 

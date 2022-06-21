@@ -389,17 +389,17 @@ ui <- fluidPage(
                        br(),
                        fluidRow(
                          column(3, style = columnformat(),
-                                tags$label("Choose .csv (preferred), .asp, .jdx, .spc, .spa, or .0 File"),
+                                tags$label("Choose .csv (preferred), .zip, .asp, .jdx, .spc, .spa, or .0 File"),
                                 
                                 fluidRow(
                                   column(12, 
                                          fileInput("file1", NULL,
-                                                   placeholder = ".csv, .asp, .jdx, .spc, .spa, .0",
+                                                   placeholder = ".csv, .zip, .asp, .jdx, .spc, .spa, .0",
                                                    accept=c("text/csv",
                                                             "text/comma-separated-values,text/plain",
                                                             ".csv", ".asp", ".spc", ".jdx", ".spa", ".0", ".zip")) %>%
                                              add_prompt(
-                                                 message = "Upload Raman or FTIR spectrum files as a csv, jdx, spc, or spa. A csv file is preferred. If a csv, the file must contain one column labeled wavenumber in units of (1/cm) and another column labeled intensity in absorbance units. If jdx, spc, spa, or 0 the file should be a single absorbance spectrum with wavenumber in (1/cm). These files will not always work perfectly because they are tricky to read so double check them in another software. Hit the Sample button to download a sample Raman spectrum.",
+                                                 message = "Upload Raman or FTIR spectrum files as a csv, zip, asp, jdx, spc, 0, or spa. A csv file is preferred. If a csv, the file must contain one column labeled wavenumber in units of (1/cm) and another column labeled intensity in absorbance units. If jdx, spc, spa, or 0 the file should be a single absorbance spectrum with wavenumber in (1/cm). If zip, batch upload using a zip file with multiple spectral files that all have the same wavenumbers or a map file formatted as .hdr and .dat. Hit the Sample button to download a sample Raman spectrum.",
                                                   type = "info", 
                                                  size = "medium", rounded = TRUE
                                              ),
