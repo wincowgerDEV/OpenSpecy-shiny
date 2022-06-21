@@ -7,7 +7,7 @@
 # Check for Auth Tokens and setup, you can change these to test the triggering
 # of functions without removing the files.
 droptoken <-  file.exists("data/droptoken.rds") #remove for prototyping with maps 
-db <- file.exists(".db_url") #reminder, this will break if you login to a new wifi network even with the token.
+db <- F#file.exists(".db_url") #reminder, this will break if you login to a new wifi network even with the token.
 translate <- file.exists("www/googletranslate.html")
 
 # Libraries ----
@@ -228,12 +228,12 @@ snr <- function(x) {
 }
 
 #Correlate functions ----
-correlate_intensity <- function(intensity, search_wavenumbers, std_wavenumbers, lib){
-    c(cor(intensity, lib, use = "pairwise.complete.obs"))
+correlate_intensity <- function(intensity, search_wavenumbers, lib){
+    c(cor(intensity, lib, use = "pairwise.complete.obs"))*apply(lib, 2, function(x) sum(!is.na(x)))/length(search_wavenumbers)
 }
 
 correlate_spectra <- function(data, search_wavenumbers, std_wavenumbers, library){
-    data[search_wavenumbers %in% std_wavenumbers,][,lapply(.SD, correlate_intensity, search_wavenumbers = search_wavenumbers, std_wavenumbers = std_wavenumbers, lib = library[std_wavenumbers %in% search_wavenumbers,])]
+    data[search_wavenumbers %in% std_wavenumbers,][,lapply(.SD, correlate_intensity, search_wavenumbers = search_wavenumbers,  lib = library[std_wavenumbers %in% search_wavenumbers,])]
 }
 
 
