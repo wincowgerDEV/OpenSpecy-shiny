@@ -411,7 +411,7 @@ ui <- fluidPage(
                                                       fill = T) %>%
                                              add_prompt(
                                                  message = "If you like, we share your uploaded spectra and settings with the spectroscopy community. By default, all data will be licensed under Creative Commons Attribution 4.0 International (CC BY 4.0). Uploaded spectra will appear here: https://osf.io/rjg3c. If you have spectra of known identities you can share, please upload a JDX file titled with the name of the material it is.",
-                                                 position = "left", type = "info", 
+                                                 type = "info", 
                                                  size = "medium", rounded = TRUE
                                              ),
                                                           
