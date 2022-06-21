@@ -774,7 +774,7 @@ ui <- fluidPage(
                                   column(3, 
                                          fluidRow(
                                            column(12,
-                                                  conditionalPanel("input.intensity_tools == true & input.intensity_decision == true  & input.active_preprocessing == true",
+                                                  conditionalPanel("input.intensity_tools == true",
                                                                    plotcontainerfunction(radioButtons("intensity_corr", "Intensity Units",
                                                                                                       c("Absorbance" = "none", "Transmittance" = "transmittance", "Reflectance" = "reflectance")) %>%
                                                                                              add_prompt(
@@ -783,7 +783,7 @@ ui <- fluidPage(
                                                                                                  size = "medium", rounded = TRUE
                                                                                              )),
                                                   ),
-                                                  conditionalPanel("input.smooth_tools == true & input.smooth_decision == true & input.active_preprocessing == true",
+                                                  conditionalPanel("input.smooth_tools == true",
                                                                    plotcontainerfunction(sliderInput("smoother", "Smoothing Polynomial", min = 0, max = 7, value = 3) %>%
                                                                                              add_prompt(
                                                                                                  message = "Smoothing uses the SG filter on an 11 data point window with the polynomial order specified.",
@@ -791,7 +791,7 @@ ui <- fluidPage(
                                                                                                  size = "medium", rounded = TRUE
                                                                                              )
                                                                    )),
-                                                  conditionalPanel("input.baseline_tools == true & input.baseline_decision == true & input.active_preprocessing == true",
+                                                  conditionalPanel("input.baseline_tools == true",
                                                                    plotcontainerfunction(
                                                                      selectInput(inputId = "baseline_selection", label = "Baseline Correction Technique", choices = c("Polynomial", "Manual")) %>%
                                                                          add_prompt(
@@ -826,7 +826,7 @@ ui <- fluidPage(
                                                                    )
                                                                    
                                                   ),
-                                                  conditionalPanel("input.range_tools == true & input.range_decision == true & input.active_preprocessing == true",
+                                                  conditionalPanel("input.range_tools == true",
                                                                    plotcontainerfunction(
                                                                      numericInput(
                                                                        "MaxRange",
