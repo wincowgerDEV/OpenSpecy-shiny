@@ -757,14 +757,23 @@ match_metadata <- reactive({
       req(input$file1)
       #req(ncol(data()) > 2)
         plot_ly(source = "heat_plot") %>%
-            add_heatmap(
+            add_trace(
                 x = preprocessed$data$coords$x, #Need to update this with the new rout format. 
                 y = preprocessed$data$coords$y, 
                 z = if(input$active_identification){preprocessed$data$coords$max_cor} else if(input$active_preprocessing){ preprocessed$data$coords$snr
-} else{1:length(preprocessed$data$coords$y)}#,
-                #text = paste0(bind_matches$names, bind_matches$identity)
-            ) %>%
-            layout(plot_bgcolor = 'rgb(17,0,73)',
+} else{1:length(preprocessed$data$coords$y)}, 
+                type = "heatmap",
+                hoverinfo = 'text',
+                colors = if(input$active_identification){"YlGnBu"} else if(input$active_preprocessing){"PuBuGn"
+                } else{"Dark2"},
+                text = ~paste(
+                    "x: ", preprocessed$data$coords$x,
+                    "<br>y: ", preprocessed$data$coords$y,
+                    "<br>z: ", if(input$active_identification){round(preprocessed$data$coords$max_cor, 2)} else if(input$active_preprocessing){round(preprocessed$data$coords$snr, 2) 
+                    } else{1:length(preprocessed$data$coords$y)},
+                    "<br>Filename: ", preprocessed$data$coords$filename)) %>%
+            layout(
+                   plot_bgcolor = 'rgb(17,0,73)',
                    paper_bgcolor = 'rgba(0,0,0,0.5)',
                    font = list(color = '#FFFFFF'),
                    title = if(input$active_identification)"Correlation"  else if(input$active_preprocessing) "Signal to Noise"  else "Spectrum Number") %>%
@@ -968,7 +977,7 @@ match_metadata <- reactive({
   
   #Test ----
   output$event_test <- renderPrint({
-      print(correlation())
+      #print(correlation())
       print(data_click$data)
       #print(dim(data()))
       #print(input$active_preprocessing)
