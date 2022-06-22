@@ -885,7 +885,7 @@ match_metadata <- reactive({
   
   output$topmatch_metadata_download <- downloadHandler(
       filename = function() {paste('data-analysis-topmatch-metadata-', human_ts(), '.csv', sep='')},
-      content = function(file) {fwrite(map_metadata() %>% left_join(meta, by = c("max_cor_id" = "sample_name")), file)}
+      content = function(file) {fwrite(data.table(x = preprocessed$data$coords$x, y = preprocessed$data$coords$y, filename = preprocessed$data$coords$filename, max_cor = max_cor(), max_cor_id = max_cor_id()) %>% left_join(meta, by = c("max_cor_id" = "sample_name")), file)}
   )
   
   
@@ -930,9 +930,9 @@ match_metadata <- reactive({
   #Can use this to update the library by increasing the count to the total library size. 
   observeEvent(input$validate, {
     load("data/library.RData") 
-    #cols <- sample(1:ncol(library), 100, replace = F) # add in to reduce sample
+    cols <- sample(1:ncol(library), 100, replace = F) # add in to reduce sample
     preprocessed$data$wavenumber <- std_wavenumbers
-    preprocessed$data$spectra <- library#[,..cols] #Bring this back if wanting less
+    preprocessed$data$spectra <- library[,..cols] #Bring this back if wanting less
     preprocessed$data$coords <- generate_grid(x = ncol(preprocessed$data$spectra))[,filename := "test"]
     
  })
@@ -1010,7 +1010,7 @@ match_metadata <- reactive({
   #Test ----
   output$event_test <- renderPrint({
       #print(correlation())
-      print(signal_noise())
+      #print(signal_noise())
       #print(max_cor())
       #print(max_cor_id())
       #print(preprocessed$data$coords$x)
