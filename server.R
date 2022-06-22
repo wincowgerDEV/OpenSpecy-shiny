@@ -7,7 +7,7 @@
 # Check for Auth Tokens and setup, you can change these to test the triggering
 # of functions without removing the files.
 droptoken <-  file.exists("data/droptoken.rds") #remove for prototyping with maps 
-db <- file.exists(".db_url") #reminder, this will break if you login to a new wifi network even with the token.
+db <- F#file.exists(".db_url") #reminder, this will break if you login to a new wifi network even with the token.
 translate <- file.exists("www/googletranslate.html")
 
 # Libraries ----
@@ -162,7 +162,7 @@ clean_spec <- function(x, y, out){
 
 
 #Process spectra functions ----
-process_intensity <- function(intensity, wavenumber, active_preprocessing, range_decision, min_range, max_range, carbon_dioxide_decision, smooth_decision, smoother, baseline_decision, baseline_selection, baseline, derivative_decision, trace) {
+process_intensity <- function(intensity, wavenumber, active_preprocessing = T, range_decision = F, min_range = 0, max_range = 6000, carbon_dioxide_decision = F, smooth_decision = F, smoother = 3, baseline_decision = F, baseline_selection = "Polynomial", baseline = 8, derivative_decision = T, trace = NULL) {
     
     test <- wavenumber %in% wavenumber[!is.na(intensity)]
     place <- rep(NA, length.out= length(wavenumber))
@@ -213,24 +213,23 @@ process_intensity <- function(intensity, wavenumber, active_preprocessing, range
 }
 
 
-process_spectra <- function(df, wavenumber, active_preprocessing, range_decision, min_range, max_range, carbon_dioxide_decision, smooth_decision, smoother, baseline_decision, baseline_selection, baseline, derivative_decision, trace){
+process_spectra <- function(df, wavenumber, active_preprocessing = T, range_decision = F, min_range = 0, max_range = 6000, carbon_dioxide_decision = F, smooth_decision = F, smoother = 3, baseline_decision = F, baseline_selection = "Polynomial", baseline = 8, derivative_decision = T, trace = NULL){
     df[,lapply(.SD, process_intensity, wavenumber = wavenumber, active_preprocessing = active_preprocessing, range_decision = range_decision, min_range = min_range, max_range = max_range, carbon_dioxide_decision = carbon_dioxide_decision, smooth_decision = smooth_decision, smoother = smoother, baseline_decision = baseline_decision, baseline_selection = baseline_selection, baseline = baseline, derivative_decision = derivative_decision, trace = trace)]
 }
 
 #signal to noise ratio
 snr <- function(x) {
     if(length(x[!is.na(x)]) < 20){
-      NA
+        NA
     }
-  else{
-    max  = runMax(x[!is.na(x)], n = 20) 
-    max[(length(max) - 19):length(max)] <- NA
-    #mean = runMean(x[!is.na(x)], n = 10)
-    #mean[(length(mean) - 9):length(mean)] <- NA
-    signal = max(max, na.rm = T)#/mean(x, na.rm = T)
-    noise = min(max[max != 0], na.rm = T)
-    ifelse(is.finite(signal/noise), signal/noise, 0)
-  }
+    else{
+        y = adj_neg(x, na.rm = T)
+        max  = runMax(y[!is.na(y)], n = 20) 
+        max[(length(max) - 19):length(max)] <- NA
+        signal = max(max, na.rm = T)
+        noise = min(max[max != 0], na.rm = T)
+        ifelse(is.finite(signal/noise), log10(signal/noise), 0)
+    }
 }
 
 #Correlate functions ----
@@ -248,9 +247,9 @@ mean_replace <- function(intensity){
 
 get_all_metadata <- function(sample_name, rsq, metadata) {
     left_join(data.table(sample_name = sample_name, rsq = rsq), metadata) %>%
-        mutate(rsq = round(rsq, 2)) %>%
         filter(!is.na(rsq)) %>%
-        arrange(desc(rsq))
+        arrange(desc(rsq)) %>%
+        mutate(rsq = round(rsq, 2)) 
 }
 
 #library(future)
@@ -528,7 +527,7 @@ observeEvent(input$file1, {
     #  data.table(wavenumber = numeric(), intensity = numeric(), SpectrumIdentity = factor())
     #}
     #else{
-    processed <- process_spectra(df = data(), 
+    process_spectra(df = data(), 
                     wavenumber = conform_wavenumber(preprocessed$data$wavenumber),
                     active_preprocessing = input$active_preprocessing, 
                     range_decision = input$range_decision, 
@@ -543,14 +542,11 @@ observeEvent(input$file1, {
                     carbon_dioxide_decision = input$co2_decision,
                     trace = trace)
     
-    snr <- unlist(lapply(processed, snr))
-    
-    preprocessed$data$coords$snr <-  ifelse(snr <= 0, 0, log10(snr))
-    
-    processed
     
     #}
   })
+  
+
 
 
 observeEvent(input$go, {
@@ -601,7 +597,7 @@ observeEvent(input$reset, {
     req(input$file1)
     req(input$active_identification)
     if(input$derivative_decision & input$active_preprocessing) {
-      load("data/library_deriv.RData") #Nest these in here so that they don't load automatically unless needed. 
+        load("data/library_deriv.RData") #Nest these in here so that they don't load automatically unless needed. 
         
     }
     else{
@@ -648,12 +644,27 @@ observeEvent(input$reset, {
   
   #Correlation ----
   correlation <- reactive({
+      req(input$file1)
       req(input$active_identification)
-      cor <- correlate_spectra(data = DataR(), search_wavenumbers = conform_wavenumber(preprocessed$data$wavenumber), std_wavenumbers = std_wavenumbers, library = libraryR())
-      #cor <- cor(DataR()[conform_wavenumber(preprocessed$data$wavenumber) %in% std_wavenumbers,], libraryR()[std_wavenumbers %in% conform_wavenumber(preprocessed$data$wavenumber),], use = "pairwise.complete.obs")
-      preprocessed$data$coords$max_cor <- round(apply(cor, 2, function(x) max(x, na.rm = T)), 2)
-      preprocessed$data$coords$max_cor_id <- colnames(libraryR())[apply(cor,2 , function(x) which.max(x))]
-      cor
+      correlate_spectra(data = DataR(), search_wavenumbers = conform_wavenumber(preprocessed$data$wavenumber), std_wavenumbers = std_wavenumbers, library = libraryR())
+
+  })
+  
+  signal_noise <- reactive({
+          req(input$file1)
+          unlist(lapply(DataR(), snr))
+  })
+  
+  max_cor <- reactive({
+      req(input$file1)
+      req(correlation())
+      round(apply(correlation(), 2, function(x) max(x, na.rm = T)), 2)
+  })
+  
+  max_cor_id <- reactive({
+      req(input$file1)
+      req(correlation())
+      colnames(libraryR())[apply(correlation(),2 , function(x) which.max(x))]
   })
   
   # Joins their spectrum to the internal database.
@@ -768,16 +779,16 @@ match_metadata <- reactive({
             add_trace(
                 x = preprocessed$data$coords$x, #Need to update this with the new rout format. 
                 y = preprocessed$data$coords$y, 
-                z = if(input$active_identification){ifelse(preprocessed$data$coords$snr < 1 | preprocessed$data$coords$max_cor < 0.7, NA, preprocessed$data$coords$max_cor)} else if(input$active_preprocessing){ ifelse(preprocessed$data$coords$snr > 1, preprocessed$data$coords$snr, NA)
+                z = if(input$active_identification){ifelse(signal_noise() < 1 | max_cor() < 0.7, NA, max_cor())} else if(input$active_preprocessing){ ifelse(signal_noise() > 1, signal_noise(), NA)
 } else{1:length(preprocessed$data$coords$y)}, 
                 type = "heatmap",
                 hoverinfo = 'text',
-                colors = if(input$active_identification){} else if(input$active_preprocessing){heat.colors(n = sum(preprocessed$data$coords$snr > 1))
+                colors = if(input$active_identification){} else if(input$active_preprocessing){heat.colors(n = sum(signal_noise() > 1))
                 } else{sample(rainbow(length(preprocessed$data$coords$x)), size = length(preprocessed$data$coords$x), replace = F)},
                 text = ~paste(
                     "x: ", preprocessed$data$coords$x,
                     "<br>y: ", preprocessed$data$coords$y,
-                    "<br>z: ", if(input$active_identification){round(preprocessed$data$coords$max_cor, 2)} else if(input$active_preprocessing){round(preprocessed$data$coords$snr, 2) 
+                    "<br>z: ", if(input$active_identification){round(max_cor(), 2)} else if(input$active_preprocessing){round(signal_noise(), 2) 
                     } else{1:length(preprocessed$data$coords$y)},
                     "<br>Filename: ", preprocessed$data$coords$filename)) %>%
             layout(
@@ -873,7 +884,7 @@ match_metadata <- reactive({
   
   output$topmatch_metadata_download <- downloadHandler(
       filename = function() {paste('data-analysis-topmatch-metadata-', human_ts(), '.csv', sep='')},
-      content = function(file) {fwrite(preprocessed$data$coords %>% left_join(meta, by = c("max_cor_id" = "sample_name")), file)}
+      content = function(file) {fwrite(map_metadata() %>% left_join(meta, by = c("max_cor_id" = "sample_name")), file)}
   )
   
   
@@ -918,9 +929,9 @@ match_metadata <- reactive({
   #Can use this to update the library by increasing the count to the total library size. 
   observeEvent(input$validate, {
     load("data/library.RData") 
-    cols <- sample(1:ncol(library), 100, replace = F) # add in to reduce sample
+    #cols <- sample(1:ncol(library), 100, replace = F) # add in to reduce sample
     preprocessed$data$wavenumber <- std_wavenumbers
-    preprocessed$data$spectra <- library[,..cols] #Bring this back if wanting less
+    preprocessed$data$spectra <- library#[,..cols] #Bring this back if wanting less
     preprocessed$data$coords <- generate_grid(x = ncol(preprocessed$data$spectra))[,filename := "test"]
     
  })
@@ -998,7 +1009,13 @@ match_metadata <- reactive({
   #Test ----
   output$event_test <- renderPrint({
       #print(correlation())
-      print(data_click$data)
+      print(signal_noise())
+      print(max_cor())
+      print(max_cor_id())
+      print(preprocessed$data$coords$x)
+      print(preprocessed$data$coords$y)
+      print(preprocessed$data$coords$filename)
+      
       #print(dim(data()))
       #print(input$active_preprocessing)
       #print(input$range_decision) 
