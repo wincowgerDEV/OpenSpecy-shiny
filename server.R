@@ -219,15 +219,16 @@ process_spectra <- function(df, wavenumber, active_preprocessing = T, range_deci
 
 #signal to noise ratio
 snr <- function(x) {
-    y = x[!is.na(x)]
-    if(length(y) < 50){
-        NA
+    if(length(x[!is.na(x)]) < 20){
+        0
     }
     else{
-        sd  = runMax(y, n = 20) 
-        sd[(length(sd) - 19):length(sd)] <- NA
-        signal = max(y, na.rm = T)
-        noise = min(sd[sd != 0], na.rm = T)
+        max  = runMax(x[!is.na(x)], n = 20) 
+        max[(length(max) - 19):length(max)] <- NA
+        #mean = runMean(x[!is.na(x)], n = 10)
+        #mean[(length(mean) - 9):length(mean)] <- NA
+        signal = max(max, na.rm = T)#/mean(x, na.rm = T)
+        noise = min(max[max != 0], na.rm = T)
         ifelse(is.finite(signal/noise) & is.numeric(signal/noise) & signal/noise > 0, log10(signal/noise), 0)
     }
 }
