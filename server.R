@@ -216,6 +216,7 @@ process_intensity <- function(intensity, wavenumber, active_preprocessing, range
 process_spectra <- function(df, wavenumber, active_preprocessing, range_decision, min_range, max_range, carbon_dioxide_decision, smooth_decision, smoother, baseline_decision, baseline_selection, baseline, derivative_decision, trace){
     df[,lapply(.SD, process_intensity, wavenumber = wavenumber, active_preprocessing = active_preprocessing, range_decision = range_decision, min_range = min_range, max_range = max_range, carbon_dioxide_decision = carbon_dioxide_decision, smooth_decision = smooth_decision, smoother = smoother, baseline_decision = baseline_decision, baseline_selection = baseline_selection, baseline = baseline, derivative_decision = derivative_decision, trace = trace)]
 }
+
 #signal to noise ratio
 snr <- function(x) {
     max  = runMax(x[!is.na(x)], n = 20) 
