@@ -7,7 +7,7 @@
 # Check for Auth Tokens and setup, you can change these to test the triggering
 # of functions without removing the files.
 droptoken <-  file.exists("data/droptoken.rds") #remove for prototyping with maps 
-db <- F#file.exists(".db_url") #reminder, this will break if you login to a new wifi network even with the token.
+db <- file.exists(".db_url") #reminder, this will break if you login to a new wifi network even with the token.
 translate <- file.exists("www/googletranslate.html")
 
 # Libraries ----
@@ -219,6 +219,10 @@ process_spectra <- function(df, wavenumber, active_preprocessing, range_decision
 
 #signal to noise ratio
 snr <- function(x) {
+    if(length(x[!is.na(x)]) < 20){
+      NA
+    }
+  else{
     max  = runMax(x[!is.na(x)], n = 20) 
     max[(length(max) - 19):length(max)] <- NA
     #mean = runMean(x[!is.na(x)], n = 10)
@@ -226,19 +230,21 @@ snr <- function(x) {
     signal = max(max, na.rm = T)#/mean(x, na.rm = T)
     noise = min(max[max != 0], na.rm = T)
     ifelse(is.finite(signal/noise), signal/noise, 0)
+  }
 }
 
 #Correlate functions ----
-correlate_intensity <- function(intensity, search_wavenumbers, lib, overlap){
-    c(cor(intensity, lib, use = "pairwise.complete.obs"))*overlap
+correlate_intensity <- function(intensity, search_wavenumbers, lib){
+  c(cor(intensity, lib, use = "everything"))
 }
 
 correlate_spectra <- function(data, search_wavenumbers, std_wavenumbers, library){
-    lib <- library[std_wavenumbers %in% search_wavenumbers,]
-    overlap <- apply(lib, 2, function(x) sum(!is.na(x)))/length(search_wavenumbers)
-    data[search_wavenumbers %in% std_wavenumbers,][,lapply(.SD, correlate_intensity, search_wavenumbers = search_wavenumbers,  lib = lib, overlap = overlap)]
+  data[search_wavenumbers %in% std_wavenumbers,][,lapply(.SD, mean_replace)][,lapply(.SD, correlate_intensity, search_wavenumbers = search_wavenumbers,  lib = library[std_wavenumbers %in% search_wavenumbers,][,lapply(.SD, mean_replace)])]
 }
 
+mean_replace <- function(intensity){
+  ifelse(is.na(intensity), mean(intensity, na.rm = T), intensity)
+}
 
 get_all_metadata <- function(sample_name, rsq, metadata) {
     left_join(data.table(sample_name = sample_name, rsq = rsq), metadata) %>%
@@ -589,7 +595,6 @@ observeEvent(input$reset, {
                  SpectrumIdentity = factor()) %>%
         dplyr::filter(!is.na(intensity))
     }
-    
   })
   
   libraryR <- reactive({
@@ -763,12 +768,12 @@ match_metadata <- reactive({
             add_trace(
                 x = preprocessed$data$coords$x, #Need to update this with the new rout format. 
                 y = preprocessed$data$coords$y, 
-                z = if(input$active_identification){preprocessed$data$coords$max_cor} else if(input$active_preprocessing){ preprocessed$data$coords$snr
+                z = if(input$active_identification){ifelse(preprocessed$data$coords$snr < 1 | preprocessed$data$coords$max_cor < 0.7, NA, preprocessed$data$coords$max_cor)} else if(input$active_preprocessing){ ifelse(preprocessed$data$coords$snr > 1, preprocessed$data$coords$snr, NA)
 } else{1:length(preprocessed$data$coords$y)}, 
                 type = "heatmap",
                 hoverinfo = 'text',
-                colors = if(input$active_identification){"YlGnBu"} else if(input$active_preprocessing){"PuBuGn"
-                } else{"Dark2"},
+                colors = if(input$active_identification){} else if(input$active_preprocessing){heat.colors(n = sum(preprocessed$data$coords$snr > 1))
+                } else{sample(rainbow(length(preprocessed$data$coords$x)), size = length(preprocessed$data$coords$x), replace = F)},
                 text = ~paste(
                     "x: ", preprocessed$data$coords$x,
                     "<br>y: ", preprocessed$data$coords$y,
@@ -776,7 +781,14 @@ match_metadata <- reactive({
                     } else{1:length(preprocessed$data$coords$y)},
                     "<br>Filename: ", preprocessed$data$coords$filename)) %>%
             layout(
-                   plot_bgcolor = 'rgb(17,0,73)',
+              xaxis = list(title = 'x',
+                           zeroline = F,
+                           showgrid = F
+              ),
+              yaxis = list(title = 'y',
+                           zeroline = F,
+                           showgrid = F),
+                   plot_bgcolor = 'rgba(17,0,73, 0)',
                    paper_bgcolor = 'rgba(0,0,0,0.5)',
                    font = list(color = '#FFFFFF'),
                    title = if(input$active_identification)"Correlation"  else if(input$active_preprocessing) "Signal to Noise"  else "Spectrum Number") %>%
@@ -811,17 +823,22 @@ match_metadata <- reactive({
     filename = function() {"testdata.csv"},
     content = function(file) {fwrite(testdata, file)}
   )
+  
+  output$download_testbatch <- downloadHandler(
+    filename = function() {"testbatch.zip"},
+    content = function(file) {zip(zipfile = file, files = c("data/HDPE__1.csv", "data/HDPE__2.csv", "data/HDPE__3.csv"))}
+  )
 
   ## Download own data ----
   
   output$download_conformed <- downloadHandler(
       filename = function() {paste('data-conformed-', human_ts(), '.csv', sep='')},
-      content = function(file){fwrite(data(), file)}
+      content = function(file){fwrite(data()%>% mutate(wavenumber = preprocessed$data$wavenumber), file)}
   )
   
   output$downloadData <- downloadHandler(
     filename = function() {paste('data-processed-', human_ts(), '.csv', sep='')},
-    content = function(file) {fwrite(baseline_data(), file)}
+    content = function(file) {fwrite(baseline_data() %>% mutate(wavenumber = preprocessed$data$wavenumber), file)}
   )
   
   ## Download selected data ----
@@ -901,10 +918,10 @@ match_metadata <- reactive({
   #Can use this to update the library by increasing the count to the total library size. 
   observeEvent(input$validate, {
     load("data/library.RData") 
-    base <- 10
-    cols <- sample(1:ncol(library), 100, replace = F)
-    preprocessed$data$spectra <- setcolorder(library[,..cols][,wavenumber := std_wavenumbers], "wavenumber")
-    preprocessed$data$coords <- expand.grid(x = 1:10, y = 1:10)
+    cols <- sample(1:ncol(library), 100, replace = F) # add in to reduce sample
+    preprocessed$data$wavenumber <- std_wavenumbers
+    preprocessed$data$spectra <- library[,..cols] #Bring this back if wanting less
+    preprocessed$data$coords <- generate_grid(x = ncol(preprocessed$data$spectra))[,filename := "test"]
     
  })
   
