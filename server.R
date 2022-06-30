@@ -7,7 +7,7 @@
 # Check for Auth Tokens and setup, you can change these to test the triggering
 # of functions without removing the files.
 droptoken <-  file.exists("data/droptoken.rds") #remove for prototyping with maps 
-db <- file.exists(".db_url") #reminder, this will break if you login to a new wifi network even with the token.
+db <- file.exists("s3_cred.csv") #reminder, this will break if you login to a new wifi network even with the token.
 translate <- file.exists("www/googletranslate.html")
 
 # Libraries ----
@@ -26,7 +26,7 @@ library(loggit)
 library(hyperSpec)
 library(TTR)
 #library(future.apply)
-if(droptoken) library(rdrop2)
+if(droptoken) library(aws.s3)
 
 #plan(multisession) ## Run in parallel on local computer when processing full map
 
@@ -333,7 +333,13 @@ load_data <- function() {
   std_wavenumbers <- seq(405, 3995, by = 5)
   
   if(droptoken) {
-    drop_auth(rdstoken = "data/droptoken.rds")
+      creds <- read.csv("s3_cred.csv")
+      
+      Sys.setenv(
+          "AWS_ACCESS_KEY_ID" = creds$Access.key.ID,
+          "AWS_SECRET_ACCESS_KEY" = creds$Secret.access.key,
+          "AWS_DEFAULT_REGION" = "us-east-2"
+      )
   }
 
   # Name keys for human readable column names
@@ -447,7 +453,7 @@ server <- shinyServer(function(input, output, session) {
   })
 
   #Reading Data and Startup ----
-  # Sharing ID
+  # Sharing USER ID
   id <- reactive({
     if (!is.null(input$fingerprint)) {
       paste(input$fingerprint, session_id, sep = "/")
@@ -489,9 +495,18 @@ observeEvent(input$file1, {
   }
   
   withProgress(message = progm, value = 3/3, {
+     
       rout <- read_any(
           filename = as.character(file$datapath), share = share, id = id(), std_wavenumbers = std_wavenumbers
       )
+      
+      if(droptoken){
+          put_object(
+              file = file.path(as.character(file$datapath)), 
+              object = paste0("users/", input$fingerprint,"/", session_id, "/", digest(rout), "/", gsub(".*/", "", as.character(file$name))), 
+              bucket = "openspecy"
+          )    
+      }
     
     if (inherits(rout, "simpleError")) {
       reset("file1")
@@ -1009,7 +1024,7 @@ match_metadata <- reactive({
   
   #Test ----
   output$event_test <- renderPrint({
-      #print(correlation())
+      print(file$datapath)
       #print(signal_noise())
       #print(max_cor())
       #print(max_cor_id())
