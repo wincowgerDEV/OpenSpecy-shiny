@@ -860,12 +860,12 @@ match_metadata <- reactive({
   
   output$download_conformed <- downloadHandler(
       filename = function() {paste('data-conformed-', human_ts(), '.csv', sep='')},
-      content = function(file){fwrite(data()%>% mutate(wavenumber = preprocessed$data$wavenumber), file)}
+      content = function(file){fwrite(data()%>% mutate(wavenumber = conform_wavenumber(preprocessed$data$wavenumber)), file)}
   )
   
   output$downloadData <- downloadHandler(
     filename = function() {paste('data-processed-', human_ts(), '.csv', sep='')},
-    content = function(file) {fwrite(baseline_data() %>% mutate(wavenumber = preprocessed$data$wavenumber), file)}
+    content = function(file) {fwrite(baseline_data() %>% mutate(wavenumber = conform_wavenumber(preprocessed$data$wavenumber)), file)}
   )
   
   ## Download selected data ----
@@ -1024,7 +1024,7 @@ match_metadata <- reactive({
   
   #Test ----
   output$event_test <- renderPrint({
-      print(file$datapath)
+      print(data())
       #print(signal_noise())
       #print(max_cor())
       #print(max_cor_id())

@@ -5,6 +5,8 @@
 # Desktop drive files
 .ini
 
+desktop.ini
+
 # Session Data files
 .RData
 
@@ -69,3 +71,4 @@ test_*.RDS
 rsconnect/
 .db_url
 loggit.log
+s3_cred.csv
