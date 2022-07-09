@@ -89,11 +89,52 @@ read_any <- function(filename, share, id, std_wavenumbers){
     }
 }
 
+read_text_2 <- function(file = ".", cols = NULL, method = "read.csv",
+                      share = NULL, id = paste(digest(Sys.info()),
+                                               digest(sessionInfo()),
+                                               sep = "/"),
+                      ...) {
+    df <- do.call(method, list(file, ...)) %>%
+        data.frame()
+    
+    if (all(grepl("^X[0-9]*", names(df)))) stop("missing header: ",
+                                                "use 'header = FALSE' or an ",
+                                                "alternative read method")
+    
+    # Try to guess column names
+    if (is.null(cols)) {
+        #if (all(grepl("^V[0-9]*", names(df)))) {
+        #    cols <- 1:2
+        #    warning("missing header: guessing 'wavenumber' and 'intensity' data ",
+        #            "from the first two columns; use 'cols' to supply user-defined ",
+        #            "columns")
+        #} else {
+            cols <- c(names(df)[grep("(wav*)", ignore.case = T, names(df))][1L])#,
+                      #names(df)[grep("(transmit*)|(reflect*)|(abs*)|(intens*)",
+                       #              ignore.case = T, names(df))][1L])
+        #}
+    }
+    if (any(is.na(cols))) stop("undefined columns selected; columns should be ",
+                               "named 'wavenumber' and 'intensity'")
+    #if (cols[1] == cols[2]) stop("inconsistent input format")
+    
+    #df <- df[cols]
+    
+    # Check if columns are numeric
+    if (!all(sapply(df, is.numeric))) stop("input not numeric")
+    
+    #names(df) <- c("wavenumber", "intensity")
+    
+    if (!is.null(share)) share_spec(df, file = file, share = share, id = id)
+    
+    return(df)
+}
+
 read_spectrum <- function(filename, share, id) {
     
     as.data.table(
         if(grepl("\\.csv$", ignore.case = T, filename)) {
-            tryCatch(read_text(filename, method = "fread",
+            tryCatch(read_text_2(filename, method = "fread",
                                share = share,
                                id = id),
                      error = function(e) {e})
@@ -118,7 +159,7 @@ read_formatted_spectrum <- function(filename, share, id){
     list("wavenumber" =     
              spectra$wavenumber,
          "spectra" =     
-             data.table(spectra$intensity),
+             spectra %>% select(-wavenumber),
          "coords" = as.data.table(expand.grid(x = 1, y = 1, filename = gsub(".*/", "", filename), stringsAsFactors = F))
     )
 }
@@ -871,13 +912,13 @@ match_metadata <- reactive({
   ## Download selected data ----
   output$download_selected <- downloadHandler(
     filename = function() {paste('data-selected-', human_ts(), '.csv', sep='')},
-    content = function(file) {fwrite(match_selected(), file)}
+    content = function(file) {fwrite(match_selected() %>% select(-SpectrumIdentity), file)}
   )
 
   ## Download matched data ----
   output$download_matched <- downloadHandler(
     filename = function() {paste('data-matched-', human_ts(), '.csv', sep='')},
-    content = function(file) {fwrite(DataR_plot(), file)}
+    content = function(file) {fwrite(DataR_plot() %>% select(-SpectrumIdentity), file)}
   )
   
   ## Download matched data ----
