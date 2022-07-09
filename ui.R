@@ -451,49 +451,7 @@ ui <- fluidPage(
                                                          message = "Download the current spectra conformed to Open Specy's internal format used in the analysis you see.",
                                                          type = "info", 
                                                          size = "medium", rounded = TRUE
-                                                     ),
-                                                      conditionalPanel("input.active_preprocessing == true",
-                                                                       downloadButton("downloadData", "Processed",
-                                                                                      style = "background-color: rgb(240,19,207); color: rgb(0,0,0); float: left;") %>%
-                                                                           add_prompt(
-                                                                               message = "Some users may wish to save a copy of their processed spectrum. This button downloads the processed spectrum as a csv file.",
-                                                                                type = "info", 
-                                                                               size = "medium", rounded = TRUE
-                                                                           )
-                                                      ),
-                                                      conditionalPanel("input.active_identification == true",
-                                                                       
-                                                                       downloadButton("download_matched", "Matched",
-                                                                                      style = "background-color: rgb(125,249,255); color: rgb(0,0,0); float: left;") %>%
-                                                                           add_prompt(
-                                                                               message = "Download the spectra you are trying to identify.",
-                                                                               type = "info", 
-                                                                               size = "medium", rounded = TRUE
-                                                                           )), #Make colors align with the plot, Make only appear if on plot.
-                                                      conditionalPanel("input.active_identification == true",
-                                                                       downloadButton("download_selected", "Selected",
-                                                                                      style = "background-color: rgb(255,255,255); color: rgb(0,0,0); float: left;") %>%
-                                                                           add_prompt(
-                                                                               message = "Download the spectra for the match you selected in Open Specy.",
-                                                                               type = "info", 
-                                                                               size = "medium", rounded = TRUE
-                                                                           )),
-                                                    conditionalPanel("input.active_identification == true",
-                                                                  downloadButton("correlation_download", "Correlations",
-                                                                                 style = "background-color: rgb(0,0,0); color: rgb(255,255,255); float: left;") %>%
-                                                                      add_prompt(
-                                                                          message = "Download the correlation matrix for all matches assessed by Open Specy.",
-                                                                          type = "info", 
-                                                                          size = "medium", rounded = TRUE
-                                                                      )), 
-                                                 conditionalPanel("input.active_identification == true",
-                                                                  downloadButton("topmatch_metadata_download", "Top Matches",
-                                                                                 style = "background-color: rgb(0,0,0); color: rgb(255,255,255); float: left;") %>%
-                                                                      add_prompt(
-                                                                          message = "Download the metadata for the top spectral match.",
-                                                                          type = "info", 
-                                                                          size = "medium", rounded = TRUE
-                                                                      ))
+                                                     )
                                                       )
                                                 ), 
                                              fluidRow(
@@ -711,6 +669,20 @@ ui <- fluidPage(
                                                                                         size = "medium", rounded = TRUE
                                                                                     )
                                                                          ))
+                                                                     ),
+                                                    
+                                                    fluidRow(
+                                                        column(12, 
+                                                               conditionalPanel("input.active_preprocessing == true",
+                                                                                downloadButton("downloadData", "Processed",
+                                                                                               style = "background-color: rgb(240,19,207); color: rgb(0,0,0); float: left;") %>%
+                                                                                    add_prompt(
+                                                                                        message = "Some users may wish to save a copy of their processed spectrum. This button downloads the processed spectrum as a csv file.",
+                                                                                        type = "info", 
+                                                                                        size = "medium", rounded = TRUE
+                                                                                    )
+                                                               )
+                                                        )
                                                     ),
                                                     
                                              ),
@@ -775,7 +747,41 @@ ui <- fluidPage(
                                                                        
                                                                      )  
                                                                      
-                                                    )
+                                                    ),
+                                                    
+                                                    conditionalPanel("input.active_identification == true",
+                                                                     
+                                                                     downloadButton("download_matched", "Matched",
+                                                                                    style = "background-color: rgb(125,249,255); color: rgb(0,0,0); float: left;") %>%
+                                                                         add_prompt(
+                                                                             message = "Download the spectra you are trying to identify.",
+                                                                             type = "info", 
+                                                                             size = "medium", rounded = TRUE
+                                                                         )), #Make colors align with the plot, Make only appear if on plot.
+                                                    conditionalPanel("input.active_identification == true",
+                                                                     downloadButton("download_selected", "Selected",
+                                                                                    style = "background-color: rgb(255,255,255); color: rgb(0,0,0); float: left;") %>%
+                                                                         add_prompt(
+                                                                             message = "Download the spectra for the match you selected in Open Specy.",
+                                                                             type = "info", 
+                                                                             size = "medium", rounded = TRUE
+                                                                         )),
+                                                    conditionalPanel("input.active_identification == true",
+                                                                     downloadButton("correlation_download", "Correlations",
+                                                                                    style = "background-color: rgb(0,0,0); color: rgb(255,255,255); float: left;") %>%
+                                                                         add_prompt(
+                                                                             message = "Download the correlation matrix for all matches assessed by Open Specy.",
+                                                                             type = "info", 
+                                                                             size = "medium", rounded = TRUE
+                                                                         )), 
+                                                    conditionalPanel("input.active_identification == true",
+                                                                     downloadButton("topmatch_metadata_download", "Top Matches",
+                                                                                    style = "background-color: rgb(0,0,0); color: rgb(255,255,255); float: left;") %>%
+                                                                         add_prompt(
+                                                                             message = "Download the metadata for the top spectral match.",
+                                                                             type = "info", 
+                                                                             size = "medium", rounded = TRUE
+                                                                         ))
                                                     
                                                     
                                              )))),

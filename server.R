@@ -228,7 +228,7 @@ snr <- function(x) {
         #mean = runMean(x[!is.na(x)], n = 10)
         #mean[(length(mean) - 9):length(mean)] <- NA
         signal = max(max, na.rm = T)#/mean(x, na.rm = T)
-        noise = min(max[max != 0], na.rm = T)
+        noise = median(max[max != 0], na.rm = T)
         ifelse(is.finite(signal/noise) & is.numeric(signal/noise) & signal/noise > 0, log10(signal/noise), 0)
     }
 }
@@ -795,17 +795,17 @@ match_metadata <- reactive({
             add_trace(
                 x = preprocessed$data$coords$x, #Need to update this with the new rout format. 
                 y = preprocessed$data$coords$y, 
-                z = if(input$active_identification){ifelse(signal_noise() < 1 | max_cor() < 0.7, NA, max_cor())} else if(input$active_preprocessing){ ifelse(signal_noise() > 1, signal_noise(), NA)
-} else{1:length(preprocessed$data$coords$y)}, 
+                z = if(input$active_identification){ifelse(signal_noise() < 1 | max_cor() < 0.7, NA, max_cor())} else {ifelse(signal_noise() > 1, signal_noise(), NA)
+}, 
                 type = "heatmap",
                 hoverinfo = 'text',
-                colors = if(input$active_identification){} else if(input$active_preprocessing){heat.colors(n = sum(signal_noise() > 1))
-                } else{sample(rainbow(length(preprocessed$data$coords$x)), size = length(preprocessed$data$coords$x), replace = F)},
+                colors = if(input$active_identification){} else {heat.colors(n = sum(signal_noise() > 1))
+                },
                 text = ~paste(
                     "x: ", preprocessed$data$coords$x,
                     "<br>y: ", preprocessed$data$coords$y,
-                    "<br>z: ", if(input$active_identification){round(max_cor(), 2)} else if(input$active_preprocessing){round(signal_noise(), 2) 
-                    } else{1:length(preprocessed$data$coords$y)},
+                    "<br>z: ", if(input$active_identification){round(max_cor(), 2)} else{round(signal_noise(), 2) 
+                    },
                     "<br>Filename: ", preprocessed$data$coords$filename)) %>%
             layout(
               xaxis = list(title = 'x',
@@ -818,7 +818,7 @@ match_metadata <- reactive({
                    plot_bgcolor = 'rgba(17,0,73, 0)',
                    paper_bgcolor = 'rgba(0,0,0,0.5)',
                    font = list(color = '#FFFFFF'),
-                   title = if(input$active_identification)"Correlation"  else if(input$active_preprocessing) "Signal to Noise"  else "Spectrum Number") %>%
+                   title = if(input$active_identification)"Correlation"  else "Signal to Noise") %>%
             event_register("plotly_click") 
   })
      
@@ -895,7 +895,7 @@ match_metadata <- reactive({
   ## Download correlation matrix ----
   output$correlation_download <- downloadHandler(
       filename = function() {paste('data-analysis-correlations-', human_ts(), '.csv', sep='')},
-      content = function(file) {fwrite(correlation(), file)}
+      content = function(file) {fwrite(correlation %>% mutate(library_names = names(libraryR())), file)}
   )
   
   output$topmatch_metadata_download <- downloadHandler(
@@ -1024,7 +1024,7 @@ match_metadata <- reactive({
   
   #Test ----
   output$event_test <- renderPrint({
-      print(data())
+      #print(data())
       #print(signal_noise())
       #print(max_cor())
       #print(max_cor_id())
