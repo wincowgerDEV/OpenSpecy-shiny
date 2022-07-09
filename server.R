@@ -160,7 +160,7 @@ read_formatted_spectrum <- function(filename, share, id){
              spectra$wavenumber,
          "spectra" =     
              spectra %>% select(-wavenumber),
-         "coords" = as.data.table(expand.grid(x = 1, y = 1, filename = gsub(".*/", "", filename), stringsAsFactors = F))
+         "coords" = generate_grid(x = ncol(file))[,filename := gsub(".*/", "", filename)]
     )
 }
 
@@ -1065,7 +1065,7 @@ match_metadata <- reactive({
   
   #Test ----
   output$event_test <- renderPrint({
-      #print(data())
+      print(data())
       #print(signal_noise())
       #print(max_cor())
       #print(max_cor_id())
