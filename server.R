@@ -89,54 +89,14 @@ read_any <- function(filename, share, id, std_wavenumbers){
     }
 }
 
-read_text_2 <- function(file = ".", cols = NULL, method = "read.csv",
-                      share = NULL, id = paste(digest(Sys.info()),
-                                               digest(sessionInfo()),
-                                               sep = "/"),
-                      ...) {
-    df <- do.call(method, list(file, ...)) %>%
-        data.frame()
-    
-    if (all(grepl("^X[0-9]*", names(df)))) stop("missing header: ",
-                                                "use 'header = FALSE' or an ",
-                                                "alternative read method")
-    
-    # Try to guess column names
-    if (is.null(cols)) {
-        #if (all(grepl("^V[0-9]*", names(df)))) {
-        #    cols <- 1:2
-        #    warning("missing header: guessing 'wavenumber' and 'intensity' data ",
-        #            "from the first two columns; use 'cols' to supply user-defined ",
-        #            "columns")
-        #} else {
-            cols <- c(names(df)[grep("(wav*)", ignore.case = T, names(df))][1L])#,
-                      #names(df)[grep("(transmit*)|(reflect*)|(abs*)|(intens*)",
-                       #              ignore.case = T, names(df))][1L])
-        #}
-    }
-    if (any(is.na(cols))) stop("undefined columns selected; columns should be ",
-                               "named 'wavenumber' and 'intensity'")
-    #if (cols[1] == cols[2]) stop("inconsistent input format")
-    
-    #df <- df[cols]
-    
-    # Check if columns are numeric
-    if (!all(sapply(df, is.numeric))) stop("input not numeric")
-    
-    #names(df) <- c("wavenumber", "intensity")
-    
-    if (!is.null(share)) share_spec(df, file = file, share = share, id = id)
-    
-    return(df)
-}
-
-read_spectrum <- function(filename, share, id) {
+read_spectrum <- function(filename, share = F, id = "test") {
     
     as.data.table(
         if(grepl("\\.csv$", ignore.case = T, filename)) {
-            tryCatch(read_text_2(filename, method = "fread",
-                               share = share,
-                               id = id),
+            tryCatch(read_text_2(file = filename, 
+                                 method = "fread",
+                                 share = share,
+                                 id = id),
                      error = function(e) {e})
         }
         else if(grepl("\\.[0-9]$", ignore.case = T, filename)) {
@@ -154,15 +114,56 @@ read_spectrum <- function(filename, share, id) {
     )
 }
 
+read_text_2 <- function(file = ".", cols = NULL, method = "read.csv",
+                        share = NULL, id = paste(digest(Sys.info()),
+                                                 digest(sessionInfo()),
+                                                 sep = "/"), ...) {
+    df <- do.call(method, list(file, ...)) %>%
+        data.frame()
+    
+    if (all(grepl("^X[0-9]*", names(df)))) stop("missing header: ",
+                                                "use 'header = FALSE' or an ",
+                                                "alternative read method")
+    
+    # Try to guess column names
+    if (is.null(cols)) {
+        #if (all(grepl("^V[0-9]*", names(df)))) {
+        #    cols <- 1:2
+        #    warning("missing header: guessing 'wavenumber' and 'intensity' data ",
+        #            "from the first two columns; use 'cols' to supply user-defined ",
+        #            "columns")
+        #} else {
+        cols <- c(names(df)[grep("(wav*)", ignore.case = T, names(df))][1L])#,
+        #names(df)[grep("(transmit*)|(reflect*)|(abs*)|(intens*)",
+        #              ignore.case = T, names(df))][1L])
+        #}
+    }
+    if (any(is.na(cols))) stop("undefined columns selected; columns should be ",
+                               "named 'wavenumber' and 'intensity'")
+    #if (cols[1] == cols[2]) stop("inconsistent input format")
+    
+    #df <- df[cols]
+    
+    # Check if columns are numeric
+    if (!all(sapply(df, is.numeric))) stop("input not numeric")
+    
+    #names(df) <- c("wavenumber", "intensity")
+    
+    #if (!is.null(share)) share_spec_2(df, file = file, share = share, id = id)
+    
+    return(df)
+}
+
 read_formatted_spectrum <- function(filename, share, id){
     spectra <- read_spectrum(filename = filename, share = share, id = id)
     list("wavenumber" =     
              spectra$wavenumber,
          "spectra" =     
              spectra %>% select(-wavenumber),
-         "coords" = generate_grid(x = ncol(file))[,filename := gsub(".*/", "", filename)]
+         "coords" = generate_grid(x = ncol(spectra) - 1)[,filename := gsub(".*/", "", filename)]
     )
 }
+
 
 
 #Conform spectra functions ----
