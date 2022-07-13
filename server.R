@@ -6,8 +6,8 @@
 #'
 # Check for Auth Tokens and setup, you can change these to test the triggering
 # of functions without removing the files.
-droptoken <-  file.exists("data/droptoken.rds") #remove for prototyping with maps 
-db <- file.exists("s3_cred.csv") #reminder, this will break if you login to a new wifi network even with the token.
+droptoken <-  file.exists("s3_cred.csv")#file.exists("data/droptoken.rds") #remove for prototyping with maps 
+db <-  F#file.exists(".db_url") #reminder, this will break if you login to a new wifi network even with the token.
 translate <- file.exists("www/googletranslate.html")
 
 # Libraries ----
@@ -639,7 +639,7 @@ observeEvent(input$reset, {
   })
   
   DataR_plot <- reactive({
-    if(!input$active_identification) {
+    if(!input$active_identification | is.null(preprocessed$data)) {
       data.table(wavenumber = numeric(), 
                  intensity = numeric(), 
                  SpectrumIdentity = factor())    }
@@ -652,7 +652,7 @@ observeEvent(input$reset, {
   })
   
   libraryR <- reactive({
-    req(input$file1)
+    #req(input$file1)
     req(input$active_identification)
     if(input$derivative_decision & input$active_preprocessing) {
         load("data/library_deriv.RData") #Nest these in here so that they don't load automatically unless needed. 
@@ -661,7 +661,6 @@ observeEvent(input$reset, {
     else{
         load("data/library.RData") #Nest these in here so that they don't load automatically unless needed. 
     }
-    
     if(input$Spectra == "both") {
       library
     }
@@ -675,30 +674,7 @@ observeEvent(input$reset, {
     }
   })
   
-  match_selected <- reactive({# Default to first row if not yet clicked
-    req(input$file1)
-    #req(input$active_identification)
-    if(!length(data()) | !input$active_identification) {
-        data.table(intensity = numeric(), wavenumber = numeric())
-    }
-    else{
-        id_select <- ifelse(is.null(input$event_rows_selected),
-                            MatchSpectra()[[1,
-                                            "sample_name"]],
-                            MatchSpectra()[[input$event_rows_selected,
-                                            "sample_name"]])
-        # Get data from find_spec
-        current_spectrum <- data.table(wavenumber = std_wavenumbers, 
-                                       intensity = libraryR()[[id_select]], 
-                                       sample_name = id_select)
-        
-        current_spectrum %>%
-            inner_join(meta, by = "sample_name") %>%
-            select(wavenumber, intensity, SpectrumIdentity) %>%
-            mutate(intensity = make_rel(intensity, na.rm = T)) #%>%
-    }
-        
-      })
+ 
   
   #Correlation ----
   correlation <- reactive({
@@ -727,20 +703,49 @@ observeEvent(input$reset, {
   
   # Joins their spectrum to the internal database.
   MatchSpectra <- reactive({
-    req(input$file1)
+    #req(input$file1)
     req(input$active_identification)
-    #input
-    withProgress(message = 'Analyzing Spectrum', value = 1/3, {
-
-      incProgress(1/3, detail = "Finding Match")
-      
-    Lib <- get_all_metadata(sample_name = names(libraryR()), rsq = correlation()[[data_click$data]], metadata = meta)
-        
-      
-      incProgress(1/3, detail = "Making Plot")
-
-    })
+      if(is.null(preprocessed$data)) {
+      Lib <-  meta %>% filter(sample_name %in% names(libraryR())) %>% mutate(rsq = NA)
+      }
+      else{
+          #input
+          withProgress(message = 'Analyzing Spectrum', value = 1/3, {
+              
+              incProgress(1/3, detail = "Finding Match")
+              
+              Lib <- get_all_metadata(sample_name = names(libraryR()), rsq = correlation()[[data_click$data]], metadata = meta)
+              
+              
+              incProgress(1/3, detail = "Making Plot")
+      })
+    }
     return(Lib)
+  })
+  
+  match_selected <- reactive({# Default to first row if not yet clicked
+      #req(input$file1)
+      #req(input$active_identification)
+      if(!input$active_identification) {
+          data.table(intensity = numeric(), wavenumber = numeric())
+      }
+      else{
+          id_select <- ifelse(is.null(input$event_rows_selected),
+                              MatchSpectra()[[1,
+                                              "sample_name"]],
+                              MatchSpectra()[[input$event_rows_selected,
+                                              "sample_name"]])
+          # Get data from find_spec
+          current_spectrum <- data.table(wavenumber = std_wavenumbers, 
+                                         intensity = libraryR()[[id_select]], 
+                                         sample_name = id_select)
+          
+          current_spectrum %>%
+              inner_join(meta, by = "sample_name") %>%
+              select(wavenumber, intensity, SpectrumIdentity) %>%
+              mutate(intensity = make_rel(intensity, na.rm = T)) #%>%
+      }
+      
   })
 
   top_matches <- reactive({
@@ -751,7 +756,7 @@ observeEvent(input$reset, {
           dplyr::select(if(input$id_level == "deep"){"Material"} 
                         else if(input$id_level == "pp_optimal"){"polymer"}
                         else if(input$id_level == "pp_groups"){"polymer_class"}
-                        else{"plastic_or_not"}, `Pearson's r`, sample_name)
+                        else{"plastic_or_not"}, if(!is.null(preprocessed$data)){"Pearson's r"}, sample_name)
   })
   
   # Create the data tables for all matches
@@ -801,22 +806,22 @@ match_metadata <- reactive({
 
   # Display matches based on table selection ----
   output$MyPlotC <- renderPlotly({
-    req(input$file1)
+    #req(input$file1)
     #if(grepl("(\\.csv$)|(\\.asp$)|(\\.spa$)|(\\.spc$)|(\\.jdx$)|(\\.[0-9]$)",
      #         ignore.case = T, filename$data)){
         #req(single_data$data)
       plot_ly(type = 'scatter', mode = 'lines', source = "B") %>%
-        add_trace(x = conform_wavenumber(preprocessed$data$wavenumber), y = make_rel(data()[[data_click$data]], na.rm = T),
-                  name = 'Uploaded Spectrum',
+        add_trace(x = if(!is.null(preprocessed$data)) {conform_wavenumber(preprocessed$data$wavenumber)} else{NULL}, y = if(!is.null(preprocessed$data)){make_rel(data()[[data_click$data]], na.rm = T)} else{NULL},
+                  name = 'Uploaded',
                   line = list(color = 'rgba(240,236,19,0.8)')) %>%
-          add_trace(x = if(input$active_preprocessing){conform_wavenumber(preprocessed$data$wavenumber)} else{NULL}, y = if(input$active_preprocessing){make_rel(baseline_data()[[data_click$data]], na.rm = T)} else{NULL},
-                    name = 'Processed Spectrum',
+          add_trace(x = if(input$active_preprocessing & !is.null(preprocessed$data)){conform_wavenumber(preprocessed$data$wavenumber)} else{NULL}, y = if(input$active_preprocessing & !is.null(preprocessed$data)){make_rel(baseline_data()[[data_click$data]], na.rm = T)} else{NULL},
+                    name = 'Processed',
                     line = list(color = 'rgb(240,19,207)')) %>%
           add_trace(data = match_selected(), x = ~wavenumber, y = ~intensity,
-                    name = 'Selected Match',
+                    name = 'Selected',
                     line = list(color = 'rgb(255,255,255)')) %>%
           add_trace(data = DataR_plot(), x = ~wavenumber, y = ~intensity,
-                    name = 'Matched Spectrum',
+                    name = 'Matched',
                     line = list(color = 'rgb(125,249,255)')) %>%
         # Dark blue rgb(63,96,130)
         # https://www.rapidtables.com/web/color/RGB_Color.html https://www.color-hex.com/color-names.html
@@ -957,9 +962,10 @@ match_metadata <- reactive({
     })
   
   observe({
-      req(input$file1)
+      #req(input$file1)
       #toggle(id = "download_conformed", condition = !is.null(input$file1)) not sure why this doesn't work to stop the download button
-      toggle(id = "heatmap", condition = ncol(data()) > 1 & !is.null(input$file1))
+      toggle(id = "heatmap", condition = !is.null(preprocessed$data) & ncol(preprocessed$data$spectra) > 1)
+      #if(ncol(data()) > 1)
   })
   
   observe({
@@ -1066,7 +1072,8 @@ match_metadata <- reactive({
   
   #Test ----
   output$event_test <- renderPrint({
-      print(data())
+      print(!is.null(preprocessed$data))
+      #print(ncol(libraryR()))
       #print(signal_noise())
       #print(max_cor())
       #print(max_cor_id())
