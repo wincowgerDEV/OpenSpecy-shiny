@@ -14,7 +14,7 @@ Welcome to the new home for the Open Specy web application. If you are looking f
 <!-- badges: end -->
 
 ## Connect
-If you want to discuss anything with the community you can start a conversation on [Gitter](https://gitter.im/Open-Specy/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge))
+If you want to discuss anything with the community you can start a conversation on [Gitter](https://gitter.im/Open-Specy/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 ## Contributing
 Contributions of all kinds are welcome!
