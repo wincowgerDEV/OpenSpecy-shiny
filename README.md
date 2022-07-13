@@ -13,11 +13,35 @@ Welcome to the new home for the Open Specy web application. If you are looking f
 [![Gitter](https://badges.gitter.im/Open-Specy/community.svg)](https://gitter.im/Open-Specy/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 <!-- badges: end -->
 
-# How to deploy
-coming soon
+## Connect
+If you want to discuss anything with the community you can start a conversation on [Gitter](https://gitter.im/Open-Specy/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge))
 
-#Project Roadmap
-coming soon
+## Contributing
+Contributions of all kinds are welcome!
 
+Some ideas on [How to Contribute](https://opensource.guide/how-to-contribute/). 
+
+Please adhere to this project's [Code of Conduct](https://www.contributor-covenant.org/version/2/1/code_of_conduct/).
+
+## Installation
+### Data
+If you are looking for the most up to date dataset for the Open Specy library see [/data](https://github.com/wincowgerDEV/OpenSpecy-shiny/tree/main/data)
+
+### Software
+
+## Roadmap
+```mermaid
+gantt
+    title Development Timeline
+    dateFormat  YYYY-MM-DD
+    section Open Specy 1.0
+    Network Building           :2022-01-01, 2022-06-01
+    Beta Testing            :2022-06-01, 2022-08-31
+    Manuscript Drafting           :2022-08-31, 2022-12-31
+    section Artificial Intelligence Development
+    Scoping with Open Specy Community  :2022-01-01  , 2022-06-01
+    MVP with Water PACT  :2022-08-01  , 2022-09-20
+    Research at AWI w/Dr. Primpke     :2022-09-20  , 2022-12-20
+```
 
 
