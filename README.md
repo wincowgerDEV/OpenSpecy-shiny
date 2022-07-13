@@ -32,6 +32,7 @@ Open R or R Studio and run this command
 
 `
 if (!require('shiny')) install.packages('shiny'); library('shiny')
+
 shiny::runGitHub('OpenSpecy-shiny', 'wincowgerDEV')
 `
 
