@@ -1,6 +1,5 @@
-# Open Specy Shiny app
-
-Analyze, Process, Identify, and Share, Raman and (FT)IR Spectra
+# Open Specy Shiny App
+Welcome to the new home for the Open Specy web application. If you are looking for the R package go to [OpenSpecy-package](https://github.com/wincowgerDEV/OpenSpecy-package)
 
 <!-- badges: start -->
 <!--
@@ -14,4 +13,11 @@ Analyze, Process, Identify, and Share, Raman and (FT)IR Spectra
 [![Gitter](https://badges.gitter.im/Open-Specy/community.svg)](https://gitter.im/Open-Specy/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 <!-- badges: end -->
 
-# Testing Gitter
+# How to deploy
+coming soon
+
+#Project Roadmap
+coming soon
+
+
+
