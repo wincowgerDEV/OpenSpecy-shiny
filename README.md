@@ -28,7 +28,10 @@ Please adhere to this project's [Code of Conduct](https://www.contributor-covena
 If you are looking for the most up to date dataset for the Open Specy library see [/data](https://github.com/wincowgerDEV/OpenSpecy-shiny/tree/main/data)
 
 ### Software
+Open R or R Studio and run this command
+
 `
+if (!require('shiny')) install.packages('shiny'); library('shiny')
 shiny::runGitHub('OpenSpecy-shiny', 'wincowgerDEV')
 `
 
