@@ -539,12 +539,12 @@ observeEvent(input$file1, {
   withProgress(message = progm, value = 3/3, {
      
       rout <- read_any(
-          filename = as.character(file$datapath), share = share, id = id(), std_wavenumbers = std_wavenumbers
+          filename = as.character(file$datapath), share = F, id = id(), std_wavenumbers = std_wavenumbers
       )
       
-      if(droptoken){
+      if(droptoken & input$share_decision & input$file1$size < 10^7){
           put_object(
-              file = file.path(as.character(file$datapath)), 
+              file = file.path(as.character(input$file1$datapath)), 
               object = paste0("users/", input$fingerprint,"/", session_id, "/", digest(rout), "/", gsub(".*/", "", as.character(file$name))), 
               bucket = "openspecy"
           )    
@@ -1072,9 +1072,9 @@ match_metadata <- reactive({
   
   #Test ----
   output$event_test <- renderPrint({
-      print(!is.null(preprocessed$data))
-      #print(ncol(libraryR()))
-      #print(signal_noise())
+      #print(!is.null(preprocessed$data))
+      #print(input$file1)
+      #print(paste0("users/", input$fingerprint,"/", session_id, "/", gsub(".*/", "", as.character(input$file1$name))))
       #print(max_cor())
       #print(max_cor_id())
       #print(preprocessed$data$coords$x)
