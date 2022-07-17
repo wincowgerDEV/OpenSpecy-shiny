@@ -84,12 +84,12 @@ read_any <- function(filename, share, id, std_wavenumbers){
     }
     
     else if(grepl("\\.zip$", ignore.case = T, filename)) {
-        read_map(filename = filename, share = F, id = id, std_wavenumbers = std_wavenumbers)
+        read_map(filename = filename, share = NULL, id = id, std_wavenumbers = std_wavenumbers)
         
     }
 }
 
-read_spectrum <- function(filename, share = F, id = "test") {
+read_spectrum <- function(filename, share = NULL, id = "test") {
     
     as.data.table(
         if(grepl("\\.csv$", ignore.case = T, filename)) {
@@ -138,11 +138,14 @@ read_text_2 <- function(file = ".", cols = NULL, method = "read.csv",
         #              ignore.case = T, names(df))][1L])
         #}
     }
-    if (any(is.na(cols))) stop("undefined columns selected; columns should be ",
-                               "named 'wavenumber' and 'intensity'")
+    if (any(is.na(cols))){
+        cols <- c(names(df)[1L])#,
+        warning("undefined columns selected; one column should be named wavenumber; guessing first.")  
+    } 
     #if (cols[1] == cols[2]) stop("inconsistent input format")
     
-    #df <- df[cols]
+    df <- df %>%
+        rename("wavenumber" = cols)
     
     # Check if columns are numeric
     if (!all(sapply(df, is.numeric))) stop("input not numeric")
@@ -509,7 +512,6 @@ server <- shinyServer(function(input, output, session) {
   trace <- reactiveValues(data = NULL)
   data_click <- reactiveValues(data = NULL)
   
-
   
 observeEvent(input$file1, {
   # Read in data when uploaded based on the file type
@@ -529,17 +531,17 @@ observeEvent(input$file1, {
   }
  
   if (input$share_decision & curl::has_internet()) {
-    share <- conf$share
+    #share <- conf$share
     progm <- "Sharing Spectrum to Community Library"
   } else {
-    share <- NULL
+    #share <- NULL
     progm <- "Reading Spectrum"
   }
   
   withProgress(message = progm, value = 3/3, {
      
       rout <- read_any(
-          filename = as.character(file$datapath), share = F, id = id(), std_wavenumbers = std_wavenumbers
+          filename = as.character(file$datapath), share = NULL, id = id(), std_wavenumbers = std_wavenumbers
       )
       
       if(droptoken & input$share_decision & input$file1$size < 10^7){
