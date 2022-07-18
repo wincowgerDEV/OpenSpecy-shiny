@@ -140,6 +140,14 @@ ui <- fluidPage(
                     color: green; font-size: 300%;
                     }
                     ")),
+            #Ethical Ads
+            HTML('<script async src="https://media.ethicalads.io/media/client/ethicalads.min.js"></script>
+                   
+                   <!-- Show a text ad -->
+                   <div data-ea-publisher="openanalysisorg" data-ea-type="text"></div>'),
+                   
+                  # <!-- Show an image ad -->
+                  # <div data-ea-publisher="openanalysisorg" data-ea-type="image"></div>'), 
             tags$link(rel = "icon", type = "image/png", href = "favicon.png")
             #This is for the error messages.
   ),
@@ -463,12 +471,14 @@ ui <- fluidPage(
                                                                               DT::dataTableOutput("event"))
 
                                                     )
-                                              )
-                                             )
+                                                )
+                                               )
                                               )  
                                              )
                                            
-                                         )
+                                         ),
+                                         HTML(' <!-- Show an image ad -->
+                                                         <div data-ea-publisher="openanalysisorg" data-ea-type="image"></div>')
                                          
                                          
                                   )
@@ -787,6 +797,7 @@ ui <- fluidPage(
                                   column(3, 
                                          fluidRow(
                                            column(12,
+                                                  
                                                   conditionalPanel("input.intensity_tools == true",
                                                                    plotcontainerfunction(radioButtons("intensity_corr", "Intensity Units",
                                                                                                       c("Absorbance" = "none", "Transmittance" = "transmittance", "Reflectance" = "reflectance")) %>%
