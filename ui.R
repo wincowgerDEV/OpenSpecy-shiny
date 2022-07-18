@@ -414,46 +414,46 @@ ui <- fluidPage(
                                                  type = "info", 
                                                  size = "medium", rounded = TRUE
                                              ),
+                                         fluidRow(
+                                             column(12, 
+                                                    downloadButton("download_testdata",
+                                                                   "Single Sample",
+                                                                   style = "background-color: rgb(0,0,0); color: rgb(255,255,255); float: left;") %>%
+                                                        add_prompt(
+                                                            message = "This is a sample spectrum that can be uploaded to the tool for testing it out and understanding how the csv files should be formatted.",
+                                                            type = "info", 
+                                                            size = "medium", rounded = TRUE
+                                                        ),
+                                                    # downloadButton("download_testbatch",
+                                                    #                "Batch Sample",
+                                                    #                style = "background-color: rgb(0,0,0); color: rgb(255,255,255); float: left;") %>%
+                                                    #   add_prompt(
+                                                    #     message = "This is a sample spectrum that can be uploaded to the tool for testing it out and understanding how the csv files should be formatted.",
+                                                    #     type = "info", 
+                                                    #     size = "medium", rounded = TRUE
+                                                    #   ),
+                                                    downloadButton("download_metadata",
+                                                                   "Metadata",
+                                                                   style = "background-color: rgb(75,0,130); color: rgb(255,255,255); float: left;") %>%
+                                                        add_prompt(
+                                                            message = "Download metadata for all settings currently used.",
+                                                            type = "info", 
+                                                            size = "medium", rounded = TRUE
+                                                        ),
+                                                    downloadButton("download_conformed", "Conformed",
+                                                                   style = "background-color: rgb(240,236,19); color: rgb(0,0,0); float: left;") %>%
+                                                        add_prompt(
+                                                            message = "Download the current spectra conformed to Open Specy's internal format used in the analysis you see.",
+                                                            type = "info", 
+                                                            size = "medium", rounded = TRUE
+                                                        )
+                                             )
+                                         ), 
                                                           
                                          plotcontainerfunction(
                                            fluidRow(
                                              column(12, 
-                                             h6("Downloads"),
-                                             fluidRow(
-                                               column(12, 
-                                                 downloadButton("download_testdata",
-                                                                 "Single Sample",
-                                                                 style = "background-color: rgb(0,0,0); color: rgb(255,255,255); float: left;") %>%
-                                                     add_prompt(
-                                                         message = "This is a sample spectrum that can be uploaded to the tool for testing it out and understanding how the csv files should be formatted.",
-                                                         type = "info", 
-                                                         size = "medium", rounded = TRUE
-                                                     ),
-                                                # downloadButton("download_testbatch",
-                                                #                "Batch Sample",
-                                                #                style = "background-color: rgb(0,0,0); color: rgb(255,255,255); float: left;") %>%
-                                                #   add_prompt(
-                                                #     message = "This is a sample spectrum that can be uploaded to the tool for testing it out and understanding how the csv files should be formatted.",
-                                                #     type = "info", 
-                                                #     size = "medium", rounded = TRUE
-                                                #   ),
-                                                 downloadButton("download_metadata",
-                                                                "Metadata",
-                                                                style = "background-color: rgb(75,0,130); color: rgb(255,255,255); float: left;") %>%
-                                                     add_prompt(
-                                                         message = "Download metadata for all settings currently used.",
-                                                         type = "info", 
-                                                         size = "medium", rounded = TRUE
-                                                     ),
-                                                                  downloadButton("download_conformed", "Conformed",
-                                                                                 style = "background-color: rgb(240,236,19); color: rgb(0,0,0); float: left;") %>%
-                                                     add_prompt(
-                                                         message = "Download the current spectra conformed to Open Specy's internal format used in the analysis you see.",
-                                                         type = "info", 
-                                                         size = "medium", rounded = TRUE
-                                                     )
-                                                      )
-                                                ), 
+                                             h5("Spectral Selection"),
                                              fluidRow(
                                                column(12, 
                                                     style = columnformat(),
