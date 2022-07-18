@@ -963,10 +963,17 @@ match_metadata <- reactive({
     toggle(id = "reset", condition = input$baseline_selection == "Manual")
     })
   
+  #hide(id = "heatmap")
+  
   observe({
       #req(input$file1)
-      #toggle(id = "download_conformed", condition = !is.null(input$file1)) not sure why this doesn't work to stop the download button
-      toggle(id = "heatmap", condition = !is.null(preprocessed$data) & ncol(preprocessed$data$spectra) > 1)
+      toggle(id = "download_conformed", condition = !is.null(preprocessed$data))
+      toggle(id = "download_matched", condition = !is.null(preprocessed$data))
+      toggle(id = "downloadData", condition = !is.null(preprocessed$data))
+      toggle(id = "heatmap", condition = !is.null(preprocessed$data))
+      if(!is.null(preprocessed$data)){
+          toggle(id = "heatmap", condition = ncol(preprocessed$data$spectra) > 1)
+      }
       #if(ncol(data()) > 1)
   })
   

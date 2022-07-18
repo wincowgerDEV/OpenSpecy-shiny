@@ -458,7 +458,6 @@ ui <- fluidPage(
                                                column(12, 
                                                     style = columnformat(),
                                                     fluidRow(style = "padding:1rem",
-                                                             
                                                              plotlyOutput("heatmap"),
                                                              conditionalPanel("input.active_identification == true",
                                                                               DT::dataTableOutput("event"))
