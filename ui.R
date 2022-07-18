@@ -1,4 +1,4 @@
-#' Shiny app server object
+#' Shiny app server 
 #'
 #' @importFrom graphics hist
 #' @import shiny
@@ -12,9 +12,11 @@ library(shinyBS)
 library(dplyr)
 library(plotly)
 library(DT)
+library(prompter)
 
 # Name keys for human readable column names ----
 load("data/namekey.RData")
+options(shiny.maxRequestSize = 100*1024^2)
 
 version <- paste0("Open Specy v", packageVersion("OpenSpecy"))
 citation <- HTML(
@@ -123,6 +125,7 @@ ui <- fluidPage(
   
   # Script for all pages ----
   # Required for any of the shinyjs functions.
+  use_prompt(),
   shinyjs::useShinyjs(),
   #extendShinyjs(text = "shinyjs.resetClick = function() { Shiny.onInputChange('.clientValue-plotly_click-A', 'null'); }", functions = "resetClick"),
   inputIp("ipid"),
@@ -171,111 +174,6 @@ ui <- fluidPage(
   # About Tab ----
   tabsetPanel(id = "tabs",
               tabPanel("About", value = "tab0",
-                       #Popovers ----
-                       
-                       bsPopover(
-                         id = "download_testdata",
-                         title = "Sample Data Help",
-                         content = "This is a sample spectrum that can be uploaded to the tool for testing it out and understanding how the csv files should be formatted.",
-                         placement = "bottom",
-                         trigger = "hover"
-                       ),
-                       bsPopover(
-                         id = "share_meta",
-                         title = "Metadata Help",
-                         content = "We share any uploaded spectra and metadata with the spectroscopy community if you fill out the metadata here and select share. Uploaded spectra and metadata will appear here: https://osf.io/rjg3c",
-                         placement = "bottom",
-                         trigger = "hover"
-                       ),
-                       bsPopover(id = "downloadData",
-                                 title = "Download Help",
-                                 content = "Some users may wish to save a copy of their processed spectrum. This button downloads the processed spectrum as a csv file.",
-                                 placement = "bottom",
-                                 trigger = "hover"),
-                       bsPopover(
-                         id = "smooth_decision",
-                         title = "Smoothing Help",
-                         content = "This smoother can enhance the signal to noise ratio of the data and uses a Savitzky-Golay filter with 12 running data points and the polynomial specified.",
-                         placement = "bottom",
-                         trigger = "hover"
-                       ),
-                       bsPopover(
-                         id = "baseline_decision",
-                         title = "Baseline Correction Help",
-                         content = "This baseline correction routine has two options for baseline correction, 1) the polynomial imodpolyfit procedure to itteratively find the baseline of the spectrum using a polynomial fit to the entire region of the spectra. 2) manual lines can be drawn using the line tool on the plot and the correct button will use the lines to subtract the baseline.",
-                         placement = "bottom",
-                         trigger = "hover"
-                       ),
-                       bsPopover(
-                         id = "range_decision",
-                         title = "Spectral Range Help",
-                         content = "Restricting the spectral range can remove regions of spectrum where no peaks exist and improve matching",
-                         placement = "bottom",
-                         trigger = "hover"
-                       ),
-                       bsPopover(
-                         id = "smooth_tools",
-                         title = "Smoothing Help",
-                         content = "Toggle advanced smoothing options",
-                         placement = "bottom",
-                         trigger = "hover"
-                       ),
-                       bsPopover(
-                         id = "baseline_tools",
-                         title = "Baseline Correction Help",
-                         content = "Toggle advanced options for baseline corrections",
-                         placement = "bottom",
-                         trigger = "hover"
-                       ),
-                       bsPopover(
-                         id = "range_tools",
-                         title = "Spectral Range Help",
-                         content = "Toggle advanced range selection",
-                         placement = "bottom",
-                         trigger = "hover"
-                       ),
-                       bsPopover(
-                         id = "Spectra",
-                         title = "Spectrum Type Help",
-                         content = "This selection will determine whether the FTIR or Raman matching library is used. Choose the spectrum type that was uploaded.",
-                         placement = "bottom",
-                         trigger = "hover"
-                       ),
-                       bsPopover(
-                         id = "Data",
-                         title = "Spectrum to Analyze Help",
-                         content = "This selection will determine whether the uploaded (not processed) spectrum or the spectrum processed using the processing tab is used in the spectrum match.",
-                         placement = "bottom",
-                         trigger = "hover"
-                       ),
-                       bsPopover(
-                         id = "Library",
-                         title = "Region to Match Help",
-                         content = "This selection will determine whether the library you are matching to consists of the full spectrum or only spectrum peaks.",
-                         placement = "bottom",
-                         trigger = "hover"
-                       ),
-                       bsPopover(
-                         id = "share_decision",
-                         title = "Share Help",
-                         content = "If you like, we share your uploaded spectra and settings with the spectroscopy community. By default, all data will be licensed under Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0). Uploaded spectra will appear here: https://osf.io/rjg3c",
-                         placement = "bottom",
-                         trigger = "hover"
-                       ),
-                       bsPopover(
-                         id = "file1",
-                         title = "Upload Help",
-                         content = "Upload Raman or FTIR spectrum files as a csv, jdx, spc, or spa. A csv file is preferred. If a csv, the file must contain one column labeled wavenumber in units of (1/cm) and another column labeled intensity in absorbance units. If jdx, spc, spa, or 0 the file should be a single absorbance spectrum with wavenumber in (1/cm). These files will not always work perfectly because they are tricky to read so double check them in another software. Hit the Test Data button to download a sample Raman spectrum.",
-                         placement = "bottom",
-                         trigger = "click"
-                       ),
-                       bsPopover(
-                         id = "intensity_corr",
-                         title = "Intensity Correction Help",
-                         content = "If the uploaded spectrum is not in absorbance units, use this input to specify the units to convert from.The transmittance adjustment uses the log10(1/T) calculation which does not correct for system and particle characteristics. The reflectance adjustment uses the Kubelka-Munk equation (1-R)2/(2*R). We assume that the reflectance is formatted as a percent from 1-100 and first correct the intensity by dividing by 100 so that it fits the form expected by the equation. If none is selected, Open Specy assumes that the uploaded data is an absorbance spectrum.",
-                         placement = "bottom",
-                         trigger = "hover"
-                       ),
                        containerfunction(
                          h2("Welcome"),
                          fluidRow(
@@ -391,22 +289,14 @@ ui <- fluidPage(
                          )
                        ),
                        containerfunction(
-                         h2("Testimonials"),
-                         fluidRow(
-                           column(6, uiOutput("tweet1")),
-                           column(6, uiOutput("tweet2"))
-                         )
-                       ),
-                       
-                       containerfunction(
                          h2("Quick Video Tutorial"),
-                         HTML("<iframe width='560' height='315' src='https://www.youtube-nocookie.com/embed/w55WGtV2Dz4' title='YouTube video player' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>")
+                         HTML("<iframe width='100%' height='100%' src='https://www.youtube-nocookie.com/embed/w55WGtV2Dz4' title='YouTube video player' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>")
                        ),
                        containerfunction(
                          h2("Instructions"),
                          fluidRow(
                            column(6,
-                                  HTML("<iframe width='560' height='315' src='https://www.youtube-nocookie.com/embed/JjhCdhjdcRY' title='YouTube video player' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>")
+                                  HTML("<iframe width='100%' height='100%' src='https://www.youtube-nocookie.com/embed/JjhCdhjdcRY' title='YouTube video player' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>")
                            ),
                            column(6,
                                   p(class = "lead", "In Brief: To use the tool upload a csv, asp, jdx, spc, or spa file to the upload file tab.
@@ -415,9 +305,10 @@ ui <- fluidPage(
                                   The result will be compared to an internal Raman or FTIR spectra library. The strongest 1000 matches along with your
                                   uploaded or processed data will be presented in an interactive plot and table. For more details click the button below
                                   or watch the detailed instructional video."),
-                                  a("Detailed Standard Operating Procedure",
+                                  a("SOP",
                                     onclick = "window.open('https://cran.r-project.org/web/packages/OpenSpecy/vignettes/sop.html', '_blank')",
-                                    class="btn btn-primary btn-lg")
+                                    class="btn btn-primary btn-lg", 
+                                    style = "width: 100%;")
                            )
                          )
                        ),
@@ -429,10 +320,10 @@ ui <- fluidPage(
                                 spectra that is uploaded to the tool will be incorporated to the reference
                                 library to make it even better."),
                          div(
-                           downloadButton("downloadData6", "Raman Reference Library", style = "background-color: #2a9fd6;"),
-                           downloadButton("downloadData5", "FTIR Reference Library", style = "background-color: #2a9fd6;"),
-                           downloadButton("downloadData4", "Raman Reference Library Metadata", style = "background-color: #2a9fd6;"),
-                           downloadButton("downloadData3", "FTIR Reference Library Metadata", style = "background-color: #2a9fd6;")
+                           downloadButton("downloadData6", "Raman Library", style = "background-color: #2a9fd6; width: 100%;"),
+                           downloadButton("downloadData5", "FTIR Library", style = "background-color: #2a9fd6; width: 100%;"),
+                           downloadButton("downloadData4", "Raman Metadata", style = "background-color: #2a9fd6; width: 100%;"),
+                           downloadButton("downloadData3", "FTIR Metadata", style = "background-color: #2a9fd6; width: 100%;")
                          )
                        ),
                        
@@ -448,7 +339,8 @@ ui <- fluidPage(
                          div(
                            a("Community Data Warehouse",
                              onclick = "window.open('https://osf.io/rjg3c/', '_blank')",
-                             class="btn btn-primary btn-lg")
+                             class="btn btn-primary btn-lg",
+                             style = "width: 100%;")
                          )
                        ),
                        
@@ -464,7 +356,8 @@ ui <- fluidPage(
                          div(
                            a("Detailed Validation Procedure",
                              onclick = "window.open('https://docs.google.com/document/d/1Zd2GY4bWIwegGeE4JpX8O0S5l_IYju0sLDl1ddTTMxU/edit?usp=sharing', '_blank')",
-                             class="btn btn-primary btn-lg")
+                             class="btn btn-primary btn-lg",
+                             style = "width: 100%;")
                          )
                        ),
                        
@@ -490,334 +383,515 @@ ui <- fluidPage(
                        ),
               ),
               
-              #Upload File Tab ----
-              tabPanel("Upload File", value = "tab1",
-                       titlePanel(h4("Upload, View, and Share Spectra")),
+              #Analyze Spectra Tab ----
+              tabPanel("Analyze Spectra", value = "tab1",
+                       #titlePanel(h4("Upload, View, and Share Spectra")),
                        br(),
                        fluidRow(
                          column(3, style = columnformat(),
-                                tags$label("Choose .csv (preferred), .asp, .jdx, .spc, .spa, or .0 File"),
+                                tags$label("Choose .csv (preferred), .zip, .asp, .jdx, .spc, .spa, or .0 File"),
                                 
-                                prettySwitch("share_decision",
-                                             label = "Share Your Data?",
-                                             inline = T,
-                                             value = T,
-                                             status = "success",
-                                             fill = T),
-                                fileInput("file1", NULL,
-                                          placeholder = ".csv, .asp, .jdx, .spc, .spa, .0",
-                                          accept=c("text/csv",
-                                                   "text/comma-separated-values,text/plain",
-                                                   ".csv", ".asp", ".spc", ".jdx", ".spa", ".0")),
-                                
-                                
-                                radioButtons("intensity_corr", "Intensity Adjustment",
-                                             c("None" = "none",
-                                               "Transmittance" = "transmittance", "Reflectance" = "reflectance")),
-                                tags$br(),
-                                
-                                tags$div(downloadButton("download_testdata",
-                                                        "Sample File",
-                                                        style = "background-color: #2a9fd6;")),
-                                
-                                
-                                tags$br(),
-                                
-                                actionButton("share_meta", "Metadata Input", style = "background-color: #2a9fd6;"),
-                                
-                                
-                                hidden(
-                                  textInput(names(namekey)[1],
-                                            labelMandatory(namekey[1]),
-                                            placeholder = "e.g. Win Cowger"),
-                                  textInput(names(namekey)[2],
-                                            label = namekey[2],
-                                            placeholder = "e.g. 1-513-673-8956, wincowger@gmail.com"),
-                                  textInput(names(namekey)[3],
-                                            label = namekey[3],
-                                            placeholder = "e.g. University of California, Riverside"),
-                                  textInput(names(namekey)[4],
-                                            label = namekey[4],
-                                            placeholder = "e.g. Primpke, S., Wirth, M., Lorenz, C., & Gerdts, G. (2018). Reference database design for the automated analysis of microplastic samples based on Fourier transform infrared (FTIR) spectroscopy. Analytical and Bioanalytical Chemistry. doi: 10.1007/s00216-018-1156-x"),
-                                  textInput(names(namekey)[5],
-                                            labelMandatory(namekey[5]),
-                                            placeholder = "Raman or FTIR"),
-                                  textInput(names(namekey)[6],
-                                            labelMandatory(namekey[6]),
-                                            placeholder = "e.g. polystyrene"),
-                                  textInput(names(namekey)[7],
-                                            label = namekey[7],
-                                            placeholder = "e.g. textile fiber, rubber band, sphere, granule"),
-                                  textInput(names(namekey)[8],
-                                            label = namekey[8],
-                                            placeholder = "liquid, gas, solid"),
-                                  textInput(names(namekey)[9],
-                                            label = namekey[9],
-                                            placeholder = "e.g. Dow" ),
-                                  textInput(names(namekey)[10],
-                                            label = namekey[10],
-                                            placeholder = "e.g. 99.98%"),
-                                  textInput(names(namekey)[11],
-                                            label = namekey[11],
-                                            placeholder = "consumer product, manufacturer material, analytical standard, environmental sample"),
-                                  textInput(names(namekey)[12],
-                                            label = namekey[12],
-                                            placeholder = "e.g. blue, #0000ff, (0, 0, 255)"),
-                                  textInput(names(namekey)[13],
-                                            label = namekey[13],
-                                            placeholder = "e.g. 5 µm diameter fibers, 1 mm spherical particles"),
-                                  textInput(names(namekey)[14],
-                                            label = namekey[14],
-                                            placeholder = "9003-53-6"),
-                                  textInput(names(namekey)[15],
-                                            label = namekey[15],
-                                            placeholder = "Horiba LabRam"),
-                                  textInput(names(namekey)[16],
-                                            label = namekey[16],
-                                            placeholder = "Focal Plane Array, CCD"),
-                                  textInput(names(namekey)[17],
-                                            label = namekey[17],
-                                            placeholder = "transmission, reflectance"),
-                                  textInput(names(namekey)[18],
-                                            label = namekey[18],
-                                            placeholder = "e.g. 4/cm"),
-                                  textInput(names(namekey)[19],
-                                            label = namekey[19],
-                                            placeholder = "e.g. 785 nm" ),
-                                  textInput(names(namekey)[20],
-                                            label = namekey[20],
-                                            placeholder = "e.g. 5"),
-                                  textInput(names(namekey)[21],
-                                            label = namekey[21],
-                                            placeholder = "10 s"),
-                                  textInput(names(namekey)[22],
-                                            label = namekey[22],
-                                            placeholder = "spikefilter, baseline correction, none"),
-                                  textInput(names(namekey)[23],
-                                            label = namekey[23],
-                                            placeholder = "e.g. 99%"),
-                                  textInput(names(namekey)[24], label = "Other information"),
-                                  selectInput(names(namekey)[32],
-                                              label = namekey[32],
-                                              selected = "CC BY-NC",
-                                              choices = c("CC0", "CC BY",
-                                                          "CC BY-SA",
-                                                          "CC BY-NC",
-                                                          "CC BY-ND",
-                                                          "CC BY-NC-SA",
-                                                          "CC BY-NC-ND")),
-                                  
-                                  tags$br(),
-                                  actionButton("submit", "Share Metadata", class = "btn-primary")
+                                fluidRow(
+                                  column(12, 
+                                         fileInput("file1", NULL,
+                                                   placeholder = ".csv, .zip, .asp, .jdx, .spc, .spa, .0",
+                                                   accept=c("text/csv",
+                                                            "text/comma-separated-values,text/plain",
+                                                            ".csv", ".asp", ".spc", ".jdx", ".spa", ".0", ".zip")) %>%
+                                             add_prompt(
+                                                 message = "Upload Raman or FTIR spectrum files as a csv, zip, asp, jdx, spc, 0, or spa. A csv file is preferred. If a csv, the file must contain one column labeled wavenumber in units of (1/cm) and another column labeled intensity in absorbance units. If jdx, spc, spa, or 0 the file should be a single absorbance spectrum with wavenumber in (1/cm). If zip, batch upload using a zip file with multiple spectral files that all have the same wavenumbers or a map file formatted as .hdr and .dat. Hit the Sample button to download a sample Raman spectrum.",
+                                                  type = "info", 
+                                                 size = "medium", rounded = TRUE
+                                             ),
+                                         prettySwitch("share_decision",
+                                                      label = "Share Your Data?",
+                                                      inline = T,
+                                                      value = T,
+                                                      status = "success",
+                                                      fill = T) %>%
+                                             add_prompt(
+                                                 message = "If you like, we share your uploaded spectra and settings with the spectroscopy community. By default, all data will be licensed under Creative Commons Attribution 4.0 International (CC BY 4.0). Uploaded spectra will appear here: https://osf.io/rjg3c. If you have spectra of known identities you can share, please upload a JDX file titled with the name of the material it is.",
+                                                 type = "info", 
+                                                 size = "medium", rounded = TRUE
+                                             ),
+                                                          
+                                         plotcontainerfunction(
+                                           fluidRow(
+                                             column(12, 
+                                             h6("Downloads"),
+                                             fluidRow(
+                                               column(12, 
+                                                 downloadButton("download_testdata",
+                                                                 "Single Sample",
+                                                                 style = "background-color: rgb(0,0,0); color: rgb(255,255,255); float: left;") %>%
+                                                     add_prompt(
+                                                         message = "This is a sample spectrum that can be uploaded to the tool for testing it out and understanding how the csv files should be formatted.",
+                                                         type = "info", 
+                                                         size = "medium", rounded = TRUE
+                                                     ),
+                                                # downloadButton("download_testbatch",
+                                                #                "Batch Sample",
+                                                #                style = "background-color: rgb(0,0,0); color: rgb(255,255,255); float: left;") %>%
+                                                #   add_prompt(
+                                                #     message = "This is a sample spectrum that can be uploaded to the tool for testing it out and understanding how the csv files should be formatted.",
+                                                #     type = "info", 
+                                                #     size = "medium", rounded = TRUE
+                                                #   ),
+                                                 downloadButton("download_metadata",
+                                                                "Metadata",
+                                                                style = "background-color: rgb(75,0,130); color: rgb(255,255,255); float: left;") %>%
+                                                     add_prompt(
+                                                         message = "Download metadata for all settings currently used.",
+                                                         type = "info", 
+                                                         size = "medium", rounded = TRUE
+                                                     ),
+                                                                  downloadButton("download_conformed", "Conformed",
+                                                                                 style = "background-color: rgb(240,236,19); color: rgb(0,0,0); float: left;") %>%
+                                                     add_prompt(
+                                                         message = "Download the current spectra conformed to Open Specy's internal format used in the analysis you see.",
+                                                         type = "info", 
+                                                         size = "medium", rounded = TRUE
+                                                     )
+                                                      )
+                                                ), 
+                                             fluidRow(
+                                               column(12, 
+                                                    style = columnformat(),
+                                                    fluidRow(style = "padding:1rem",
+                                                             plotlyOutput("heatmap"),
+                                                             conditionalPanel("input.active_identification == true",
+                                                                              DT::dataTableOutput("event"))
+
+                                                    )
+                                              )
+                                             )
+                                              )  
+                                             )
+                                           
+                                         )
+                                         
+                                         
+                                  )
                                 )
+                                
                          ),
                          
                          
                          column(9,
-                                plotcontainerfunction(h4(id = "placeholder1", "Upload some data to get started..."), plotlyOutput("MyPlot")),
-                                style = bodyformat()
-                                
-                         ),
-                       ),
-                       hr(),
-                       fluidRow(
-                         column(3),
-                         column(6, align = "center",
-                                tags$p(citation),
-                                tags$p(version)
-                         ),
-                         column(3)
-                         
-                       )),
-              
-              
-              #Preprocess Spectrum Tab ----
-              tabPanel("Preprocess Spectrum", value = "tab2",
-                       titlePanel(h4("Smooth, Baseline Correct, and Download Processed Spectra")),
-                       br(),
-                       fluidRow(
-                         column(3, style = columnformat(),
                                 fluidRow(
-                                  column(12,
-                                         downloadButton("downloadData", "Download (recommended)",
-                                                        style = "background-color: #2a9fd6;")
-                                         
-                                  )
-                                ),
-                                br(),
-                                fluidRow(
-                                  column(9, ""),
-                                  column(3, align = "center", tags$label("Options"))
-                                ),
-                                br(),
-                                fluidRow(
-                                  column(9,
-                                         prettySwitch(inputId = "smooth_decision",
-                                                      label = "Smoothing",
-                                                      inline = T,
-                                                      value = T,
-                                                      status = "success",
-                                                      fill = T)
-                                  ),
-                                  column(3, align = "center",
-                                         prettyToggle("smooth_tools",
-                                                      icon_on = icon("eye"),
-                                                      icon_off = icon("eye-slash"), 
-                                                      label_on = NULL, label_off = NULL,
-                                                      status_on = "success",
-                                                      status_off = "default",
-                                                      outline = TRUE,
-                                                      plain = TRUE,
-                                                      bigger = T),
-                                  )
-                                ),
-                                
-                                fluidRow(
-                                  column(9,
-                                         prettySwitch("baseline_decision",
-                                                      label = "Baseline Correction",
-                                                      inline = T,
-                                                      value = T,
-                                                      status = "success",
-                                                      fill = T),
-                                         
-                                  ),
-                                  column(3, align = "center",
-                                         prettyToggle("baseline_tools",
-                                                      icon_on = icon("eye"),
-                                                      icon_off = icon("eye-slash"), 
-                                                      label_on = NULL, label_off = NULL,
-                                                      status_on = "success",
-                                                      status_off = "default",
-                                                      outline = TRUE,
-                                                      plain = TRUE,
-                                                      bigger = T),
-                                  )
-                                ),
-                                fluidRow(
-                                  column(9,
-                                         prettySwitch("range_decision",
-                                                      label = "Range Selection",
-                                                      inline = T,
-                                                      value = T,
-                                                      status = "success",
-                                                      fill = T)
-                                  ),
-                                  column(3, align = "center",
-                                         prettyToggle("range_tools",
-                                                      icon_on = icon("eye"),
-                                                      icon_off = icon("eye-slash"), 
-                                                      label_on = NULL, label_off = NULL,
-                                                      status_on = "success",
-                                                      status_off = "default",
-                                                      outline = TRUE,
-                                                      plain = TRUE,
-                                                      bigger = T),
-                                  )
-                                ),
-                                br(),
-                                fluidRow(column(12,
-                                                conditionalPanel("input.smooth_tools == true & input.smooth_decision == true",
-                                                                 plotcontainerfunction(sliderInput("smoother", "Smoothing Polynomial", min = 0, max = 7, value = 3)
-                                                                 )),
-                                                conditionalPanel("input.baseline_tools == true & input.baseline_decision == true",
-                                                                 plotcontainerfunction(
-                                                                   selectInput(inputId = "baseline_selection", label = "Baseline Correction Technique", choices = c("Polynomial", "Manual")),
-                                                                   sliderInput("baseline", "Baseline Correction Polynomial", min = 1, max = 20, value = 8),
-                                                                   fluidRow(
-                                                                     column(6,
-                                                                            actionButton("go", "Correct With Trace"),
+                                  column(9, 
+                                         plotcontainerfunction(
+                                           fluidRow( 
+                                             column(6, 
+                                                    h5("Preprocessing"),
+                                                    fluidRow(
+                                                      column(9, prettySwitch(inputId = "active_preprocessing",
+                                                                             label = "Activate",
+                                                                             inline = T,
+                                                                             value = F,
+                                                                             status = "success",
+                                                                             fill = T) %>%
+                                                                 add_prompt(
+                                                                     message = "Select if preprocessing should happen.",
+                                                                     type = "info", position = "left",
+                                                                     size = "medium", rounded = TRUE
+                                                                 )
+                                                      ),
+                                                      column(3,
+                                                             prettyToggle("view_preprocessing",
+                                                                          icon_on = icon("eye"),
+                                                                          icon_off = icon("eye-slash"), 
+                                                                          label_on = NULL, label_off = NULL,
+                                                                          status_on = "success",
+                                                                          status_off = "default",
+                                                                          outline = TRUE,
+                                                                          plain = TRUE,
+                                                                          bigger = T) %>%
+                                                                 add_prompt(
+                                                                     message = "View advanced preprocessing options.",
+                                                                     type = "info", 
+                                                                     size = "medium", rounded = TRUE
+                                                                 )
+                                                      )),
+                                                    conditionalPanel("input.view_preprocessing == true",
+                                                                     fluidRow(
+                                                                       column(9,
+                                                                              prettySwitch(inputId = "intensity_decision",
+                                                                                           label = "Intensity Adjustment",
+                                                                                           inline = T,
+                                                                                           value = F,
+                                                                                           status = "success",
+                                                                                           fill = T) %>%
+                                                                                  add_prompt(
+                                                                                      message = "Open Specy assumes spectra are in Absorbance units, if they are not, you can select the appropriate transformation.",
+                                                                                      type = "info", position = "left",
+                                                                                      size = "medium", rounded = TRUE
+                                                                                  )
+                                                                       ),
+                                                                       column(3, align = "center",
+                                                                              prettyToggle("intensity_tools",
+                                                                                           icon_on = icon("eye"),
+                                                                                           icon_off = icon("eye-slash"), 
+                                                                                           label_on = NULL, label_off = NULL,
+                                                                                           status_on = "success",
+                                                                                           status_off = "default",
+                                                                                           outline = TRUE,
+                                                                                           plain = TRUE,
+                                                                                           bigger = T) %>%
+                                                                                  add_prompt(
+                                                                                      message = "Toggle advanced intensity adjustment options.",
+                                                                                      type = "info", 
+                                                                                      size = "medium", rounded = TRUE
+                                                                                  ),
+                                                                       )
                                                                      ),
-                                                                     column(6,
-                                                                            actionButton("reset", "Reset"),
+                                                                     fluidRow(
+                                                                       column(9,
+                                                                              prettySwitch(inputId = "smooth_decision",
+                                                                                           label = "Smoothing",
+                                                                                           inline = T,
+                                                                                           value = F,
+                                                                                           status = "success",
+                                                                                           fill = T) %>%
+                                                                                  add_prompt(
+                                                                                      message = "This smoother can enhance the signal to noise ratio of the data and uses a Savitzky-Golay filter with 12 running data points and the polynomial specified.",
+                                                                                      position = "left", type = "info", 
+                                                                                      size = "medium", rounded = TRUE
+                                                                                  )
+                                                                       ),
+                                                                       column(3, align = "center",
+                                                                              prettyToggle("smooth_tools",
+                                                                                           icon_on = icon("eye"),
+                                                                                           icon_off = icon("eye-slash"), 
+                                                                                           label_on = NULL, label_off = NULL,
+                                                                                           status_on = "success",
+                                                                                           status_off = "default",
+                                                                                           outline = TRUE,
+                                                                                           plain = TRUE,
+                                                                                           bigger = T) %>%
+                                                                                  add_prompt(
+                                                                                      message = "Toggle advanced smoothing options",
+                                                                                      position = "left", type = "info", 
+                                                                                      size = "medium", rounded = TRUE
+                                                                                  ),
+                                                                       )
+                                                                     ),
+                                                                     fluidRow(
+                                                                       column(9,
+                                                                              prettySwitch("baseline_decision",
+                                                                                           label = "Baseline Correction",
+                                                                                           inline = T,
+                                                                                           value = F,
+                                                                                           status = "success",
+                                                                                           fill = T) %>%
+                                                                                  add_prompt(
+                                                                                      message = "This baseline correction routine has two options for baseline correction, 1) the polynomial imodpolyfit procedure to itteratively find the baseline of the spectrum using a polynomial fit to the entire region of the spectra. 2) manual lines can be drawn using the line tool on the plot and the correct button will use the lines to subtract the baseline.",
+                                                                                      position = "left", type = "info", 
+                                                                                      size = "medium", rounded = TRUE
+                                                                                  ),
+                                                                              
+                                                                       ),
+                                                                       column(3, align = "center",
+                                                                              prettyToggle("baseline_tools",
+                                                                                           icon_on = icon("eye"),
+                                                                                           icon_off = icon("eye-slash"), 
+                                                                                           label_on = NULL, label_off = NULL,
+                                                                                           status_on = "success",
+                                                                                           status_off = "default",
+                                                                                           outline = TRUE,
+                                                                                           plain = TRUE,
+                                                                                           bigger = T) %>%
+                                                                                  add_prompt(
+                                                                                      message = "Toggle advanced options for baseline corrections",
+                                                                                      position = "left", type = "info", 
+                                                                                      size = "medium", rounded = TRUE
+                                                                                  ),
+                                                                       )
+                                                                     ),
+                                                                     fluidRow(
+                                                                       column(9,
+                                                                              prettySwitch("range_decision",
+                                                                                           label = "Range Selection",
+                                                                                           inline = T,
+                                                                                           value = F,
+                                                                                           status = "success",
+                                                                                           fill = T) %>%
+                                                                                  add_prompt(
+                                                                                      message = "Restricting the spectral range can remove regions of spectrum where no peaks exist and improve matching.",
+                                                                                      position = "left", type = "info", 
+                                                                                      size = "medium", rounded = TRUE
+                                                                                  )
+                                                                       ),
+                                                                       column(3, align = "center",
+                                                                              prettyToggle("range_tools",
+                                                                                           icon_on = icon("eye"),
+                                                                                           icon_off = icon("eye-slash"), 
+                                                                                           label_on = NULL, label_off = NULL,
+                                                                                           status_on = "success",
+                                                                                           status_off = "default",
+                                                                                           outline = TRUE,
+                                                                                           plain = TRUE,
+                                                                                           bigger = T) %>%
+                                                                                  add_prompt(
+                                                                                      message = "Toggle advanced range selection",
+                                                                                      position = "left", type = "info", 
+                                                                                      size = "medium", rounded = TRUE
+                                                                                  ),
+                                                                              
+                                                                       )
+                                                                     ),
+                                                                     fluidRow(
+                                                                         column(9,
+                                                                                prettySwitch("derivative_decision",
+                                                                                             label = "Derivative",
+                                                                                             inline = T,
+                                                                                             value = T,
+                                                                                             status = "success",
+                                                                                             fill = T) %>%
+                                                                                    add_prompt(
+                                                                                        message = "Derivative transformation decreases baseline and can amplify peak contrast.",
+                                                                                        type = "info", position = "left",
+                                                                                        size = "medium", rounded = TRUE
+                                                                                    )
+                                                                         )),
+                                                                     fluidRow(
+                                                                         column(9,
+                                                                                prettySwitch("co2_decision",
+                                                                                             label = "Flatten FTIR CO2",
+                                                                                             inline = T,
+                                                                                             value = F,
+                                                                                             status = "success",
+                                                                                             fill = T) %>%
+                                                                                    add_prompt(
+                                                                                        message = "Replace the wavenumbers from 2420 - 2200 with the mean of intensities at 2420 and 2200.",
+                                                                                        type = "info", 
+                                                                                        size = "medium", rounded = TRUE
+                                                                                    )
+                                                                         ))
+                                                                     ),
+                                                    
+                                                    fluidRow(
+                                                        column(12, 
+                                                               conditionalPanel("input.active_preprocessing == true",
+                                                                                downloadButton("downloadData", "Processed",
+                                                                                               style = "background-color: rgb(240,19,207); color: rgb(0,0,0); float: left;") %>%
+                                                                                    add_prompt(
+                                                                                        message = "Some users may wish to save a copy of their processed spectrum. This button downloads the processed spectrum as a csv file.",
+                                                                                        type = "info", 
+                                                                                        size = "medium", rounded = TRUE
+                                                                                    )
+                                                               )
+                                                        )
+                                                    ),
+                                                    
+                                             ),
+                                             column(6, 
+                                                    fluidRow(column(12, h5("Identification"),
+                                                                    fluidRow(
+                                                                      column(9,
+                                                                             prettySwitch(inputId = "active_identification",
+                                                                                          label = "Activate",
+                                                                                          inline = T,
+                                                                                          value = F,
+                                                                                          status = "success",
+                                                                                          fill = T) %>%
+                                                                                 add_prompt(
+                                                                                     message = "Select if you want identificaiton to happen.",
+                                                                                     type = "info", 
+                                                                                     size = "medium", rounded = TRUE
+                                                                                 )),
+                                                                      column(3, 
+                                                                             prettyToggle("view_identification",
+                                                                                          icon_on = icon("eye"),
+                                                                                          icon_off = icon("eye-slash"), 
+                                                                                          label_on = NULL, label_off = NULL,
+                                                                                          status_on = "success",
+                                                                                          status_off = "default",
+                                                                                          outline = TRUE,
+                                                                                          plain = TRUE,
+                                                                                          bigger = T) %>%
+                                                                                 add_prompt(
+                                                                                     message = "View advanced identification options.",
+                                                                                     type = "info", 
+                                                                                     size = "medium", rounded = TRUE
+                                                                                 )
+                                                                      )))),
+                                                    conditionalPanel("input.view_identification == true",
+                                                                     fluidRow(
+                                                                       column(3,
+                                                                              pickerInput(inputId = "Spectra", label =  "Library Type",
+                                                                                          choices =  c("Both" = "both",
+                                                                                             "Raman" = "raman",
+                                                                                             "FTIR" = "ftir")) %>%
+                                                                                  add_prompt(
+                                                                                      message = "This selection will determine whether both libraries, FTIR only, or Raman only matching library is used. Choose the spectrum type that was uploaded.",
+                                                                                      position = "left", type = "info", 
+                                                                                      size = "medium", rounded = TRUE
+                                                                                  )
+                                                                       ),
+
+                                                                       column(3,
+                                                                              pickerInput(inputId = "id_level", label =  "Identity Level",
+                                                                                           choices = c("Raw" = "deep", 
+                                                                                             "Plastic Detailed" = "pp_optimal",
+                                                                                             "Plastic Grouped" = "pp_groups",
+                                                                                             "Plastic or Not" = "plastic_not")) %>%
+                                                                                  add_prompt(
+                                                                                      message = "Select how detailed or general you want the match description",
+                                                                                      position = "right", type = "info", 
+                                                                                      size = "medium", rounded = TRUE
+                                                                                  )
+                                                                              
+                                                                       )
+                                                                       
+                                                                     )  
+                                                                     
+                                                    ),
+                                                    
+                                                    conditionalPanel("input.active_identification == true",
+                                                                     
+                                                                     downloadButton("download_matched", "Matched",
+                                                                                    style = "background-color: rgb(125,249,255); color: rgb(0,0,0); float: left;") %>%
+                                                                         add_prompt(
+                                                                             message = "Download the spectra you are trying to identify.",
+                                                                             type = "info", 
+                                                                             size = "medium", rounded = TRUE
+                                                                         )), #Make colors align with the plot, Make only appear if on plot.
+                                                    conditionalPanel("input.active_identification == true",
+                                                                     downloadButton("download_selected", "Selected",
+                                                                                    style = "background-color: rgb(255,255,255); color: rgb(0,0,0); float: left;") %>%
+                                                                         add_prompt(
+                                                                             message = "Download the spectra for the match you selected in Open Specy.",
+                                                                             type = "info", 
+                                                                             size = "medium", rounded = TRUE
+                                                                         )),
+                                                    conditionalPanel("input.active_identification == true",
+                                                                     downloadButton("correlation_download", "Correlations",
+                                                                                    style = "background-color: rgb(0,0,0); color: rgb(255,255,255); float: left;") %>%
+                                                                         add_prompt(
+                                                                             message = "Download the correlation matrix for all matches assessed by Open Specy.",
+                                                                             type = "info", 
+                                                                             size = "medium", rounded = TRUE
+                                                                         )), 
+                                                    conditionalPanel("input.active_identification == true",
+                                                                     downloadButton("topmatch_metadata_download", "Top Matches",
+                                                                                    style = "background-color: rgb(0,0,0); color: rgb(255,255,255); float: left;") %>%
+                                                                         add_prompt(
+                                                                             message = "Download the metadata for the top spectral match.",
+                                                                             type = "info", 
+                                                                             size = "medium", rounded = TRUE
+                                                                         ))
+                                                    
+                                                    
+                                             )))),
+                                  column(3, 
+                                         fluidRow(
+                                           column(12,
+                                                  conditionalPanel("input.intensity_tools == true",
+                                                                   plotcontainerfunction(radioButtons("intensity_corr", "Intensity Units",
+                                                                                                      c("Absorbance" = "none", "Transmittance" = "transmittance", "Reflectance" = "reflectance")) %>%
+                                                                                             add_prompt(
+                                                                                                 message = "If the uploaded spectrum is not in absorbance units, use this input to specify the units to convert from.The transmittance adjustment uses the log10(1/T) calculation which does not correct for system and particle characteristics. The reflectance adjustment uses the Kubelka-Munk equation (1-R)2/(2*R). We assume that the reflectance is formatted as a percent from 1-100 and first correct the intensity by dividing by 100 so that it fits the form expected by the equation. If none is selected, Open Specy assumes that the uploaded data is an absorbance spectrum.",
+                                                                                                 type = "info", 
+                                                                                                 size = "medium", rounded = TRUE
+                                                                                             )),
+                                                  ),
+                                                  conditionalPanel("input.smooth_tools == true",
+                                                                   plotcontainerfunction(sliderInput("smoother", "Smoothing Polynomial", min = 0, max = 7, value = 3) %>%
+                                                                                             add_prompt(
+                                                                                                 message = "Smoothing uses the SG filter on an 11 data point window with the polynomial order specified.",
+                                                                                                 type = "info", 
+                                                                                                 size = "medium", rounded = TRUE
+                                                                                             )
+                                                                   )),
+                                                  conditionalPanel("input.baseline_tools == true",
+                                                                   plotcontainerfunction(
+                                                                     selectInput(inputId = "baseline_selection", label = "Baseline Correction Technique", choices = c("Polynomial", "Manual")) %>%
+                                                                         add_prompt(
+                                                                             message = "Baseline correction techniques can be manually drawn on the spectra or automated using one of the other options.",
+                                                                             type = "info", 
+                                                                             size = "medium", rounded = TRUE
+                                                                         ),
+                                                                     sliderInput("baseline", "Baseline Correction Polynomial", min = 1, max = 20, value = 8) %>%
+                                                                         add_prompt(
+                                                                             message = "This algorithm automatically fits to the baseline by fitting polynomials of the provided order to the whole spectrum.",
+                                                                             type = "info", 
+                                                                             size = "medium", rounded = TRUE
+                                                                         ),
+                                                                     fluidRow(
+                                                                       column(6,
+                                                                              actionButton("go", "Correct With Trace") %>%
+                                                                                  add_prompt(
+                                                                                      message = "After tracing the baseline spectrum on the plot, select this to correct the spectra.",
+                                                                                      type = "info", 
+                                                                                      size = "medium", rounded = TRUE
+                                                                                  ),
+                                                                       ),
+                                                                       column(6,
+                                                                              actionButton("reset", "Reset") %>%
+                                                                                  add_prompt(
+                                                                                      message = "Reset the manual baseline to zero baseline.",
+                                                                                      type = "info", 
+                                                                                      size = "medium", rounded = TRUE
+                                                                                  ),
+                                                                       )
                                                                      )
                                                                    )
-                                                                 )
-                                                                 
-                                                ),
-                                                conditionalPanel("input.range_tools == true & input.range_decision == true",
-                                                                 plotcontainerfunction(
-                                                                   numericInput(
-                                                                     "MaxRange",
-                                                                     "Maximum Spectral Range",
-                                                                     value = 6000,
-                                                                     min = NA,
-                                                                     max = NA,
-                                                                     step = NA,
-                                                                     width = NULL
-                                                                   ),
-                                                                   numericInput(
-                                                                     "MinRange",
-                                                                     "Minimum Spectral Range",
-                                                                     value = 0,
-                                                                     min = NA,
-                                                                     max = NA,
-                                                                     step = NA,
-                                                                     width = NULL
-                                                                   )
-                                                                 )
-                                                )
-                                )
-                                )
-                         ),
-                         
-                         
-                         column(9,
-                                plotcontainerfunction(h4(id = "placeholder2", "Upload some data to get started..."), plotlyOutput("MyPlotB")),
-                                #verbatimTextOutput(outputId = "text"),
-                                style = bodyformat()
-                                
-                         )),
-                       hr(),
-                       fluidRow(
-                         column(3),
-                         column(6, align = "center",
-                                tags$p(citation),
-                                tags$p(version)
-                         ),
-                         column(3)
-                         
-                       )),
-              
-              #Match Spectrum Tab ----
-              tabPanel("Identify Spectrum",value = "tab3",
-                       titlePanel(h4("Identify Spectrum Using the Reference Library")),
-                       br(),
-                       fluidRow(
-                         column(3, style = columnformat(),
-                                fluidRow(
-                                  column(4,
-                                         radioButtons("Spectra", "Type",
-                                                      c("Raman" = "raman",
-                                                        "FTIR" = "ftir"))
-                                  ),
-                                  column(4,
-                                         radioButtons("Data", "Analysis",
-                                                      c("Processed" = "processed",
-                                                        "Uploaded" = "uploaded"
-                                                      ))
-                                  ),
-                                  column(4,
-                                         radioButtons("Library", "Region",
-                                                      c("Full" = "full",
-                                                        "Peaks" = "peaks"))
-                                         
+                                                                   
+                                                  ),
+                                                  conditionalPanel("input.range_tools == true",
+                                                                   plotcontainerfunction(
+                                                                     numericInput(
+                                                                       "MaxRange",
+                                                                       "Maximum Spectral Range",
+                                                                       value = 6000,
+                                                                       min = NA,
+                                                                       max = NA,
+                                                                       step = NA,
+                                                                       width = NULL
+                                                                     ),
+                                                                     numericInput(
+                                                                       "MinRange",
+                                                                       "Minimum Spectral Range",
+                                                                       value = 0,
+                                                                       min = NA,
+                                                                       max = NA,
+                                                                       step = NA,
+                                                                       width = NULL
+                                                                     )
+                                                                     
+                                                                   ) %>%
+                                                                       add_prompt(
+                                                                           message = "Maximum and minimum wavenumbers to focus on.",
+                                                                           type = "info", 
+                                                                           size = "medium", rounded = TRUE
+                                                                       )
+                                                                   
+                                                  )
+                                           )
+                                           
+                                         )
                                   )
-                                ),
-                                fluidRow(style = "padding:1rem",
-                                         DT::dataTableOutput("event")
-                                )
-                         ),
-                         
-                         column(9,
-                                plotcontainerfunction(h4(id = "placeholder3", "Upload some data to get started..."), plotlyOutput("MyPlotC"),
-                                                      DT::dataTableOutput("eventmetadata")),
-                                style = bodyformat()
+                                  
+                                         ),
+                                fluidRow(
+                                  
+                                  column(12, 
+                                                plotcontainerfunction(h4(id = "placeholder1", "Upload some data to get started..."), 
+                                                                      plotlyOutput("MyPlotC"),
+                                                                      DT::dataTableOutput("eventmetadata")),
+                                                                      actionButton("validate", "Validate Settings", style = "float: right;") %>%
+                                             add_prompt(
+                                                 message = "Run 100 spectra from internal library through the current settings to validate the routine.",
+                                                 type = "info", 
+                                                 size = "medium", rounded = TRUE
+                                             ), 
+                                                                      verbatimTextOutput("event_test"),
+                                                                      style = bodyformat()
+                                                )
                                 
-                         )
-                       ),
-                       
-                       
+                                
+                         ),
                        hr(),
                        fluidRow(
                          column(3),
@@ -827,8 +901,7 @@ ui <- fluidPage(
                          ),
                          column(3)
                          
-                       )),
-              
+                       )))),
               
               #Partner With Us tab ----
               tabPanel("Partner With Us",
