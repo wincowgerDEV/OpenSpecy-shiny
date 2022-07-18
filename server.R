@@ -118,8 +118,7 @@ read_text_2 <- function(file = ".", cols = NULL, method = "read.csv",
                         share = NULL, id = paste(digest(Sys.info()),
                                                  digest(sessionInfo()),
                                                  sep = "/"), ...) {
-    df <- do.call(method, list(file, ...)) %>%
-        data.frame()
+    df <- do.call(method, list(file, ...)) 
     
     if (all(grepl("^X[0-9]*", names(df)))) stop("missing header: ",
                                                 "use 'header = FALSE' or an ",
@@ -148,7 +147,10 @@ read_text_2 <- function(file = ".", cols = NULL, method = "read.csv",
         rename("wavenumber" = cols)
     
     # Check if columns are numeric
-    if (!all(sapply(df, is.numeric))) stop("input not numeric")
+    if (!all(sapply(df, is.numeric))){
+        df <- df[,c(sapply(df, is.numeric)), with = F]
+        warning("Dropping non-numeric columns")  
+    } 
     
     #names(df) <- c("wavenumber", "intensity")
     
