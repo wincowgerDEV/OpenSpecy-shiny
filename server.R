@@ -834,6 +834,10 @@ match_metadata <- reactive({
                             autorange = "reversed"),
                plot_bgcolor = 'rgb(17,0,73)',
                paper_bgcolor = 'rgba(0,0,0,0.5)',
+               title = list(
+                   text = paste0(paste0("Signal to Noise = ", round(signal_noise()[[data_click$data]], 2)), if(input$active_identification) paste0("; ", "Max Correlation = ", max_cor())),
+                   x = 0
+               ), 
                font = list(color = '#FFFFFF')) %>%
         config(modeBarButtonsToAdd = list("drawopenpath", "eraseshape"))
     #}
@@ -869,7 +873,7 @@ match_metadata <- reactive({
                    plot_bgcolor = 'rgba(17,0,73, 0)',
                    paper_bgcolor = 'rgba(0,0,0,0.5)',
                    font = list(color = '#FFFFFF'),
-                   title = if(input$active_identification)"Correlation"  else "Signal to Noise") %>%
+                   title = if(input$active_identification) paste0("Correlation ", (1 - sum(signal_noise() < 1 | max_cor() < 0.7)/length(signal_noise())) * 100, "% good id")  else paste0("Signal to Noise ", (1 - sum(signal_noise() < 1)/length(signal_noise())) * 100, "% good signal")) %>%
             event_register("plotly_click") 
   })
      
@@ -951,7 +955,7 @@ match_metadata <- reactive({
   
   output$topmatch_metadata_download <- downloadHandler(
       filename = function() {paste('data-analysis-topmatch-metadata-', human_ts(), '.csv', sep='')},
-      content = function(file) {fwrite(data.table(x = preprocessed$data$coords$x, y = preprocessed$data$coords$y, filename = preprocessed$data$coords$filename, max_cor = max_cor(), max_cor_id = max_cor_id()) %>% left_join(meta, by = c("max_cor_id" = "sample_name")), file)}
+      content = function(file) {fwrite(data.table(x = preprocessed$data$coords$x, y = preprocessed$data$coords$y, filename = preprocessed$data$coords$filename, signal_to_noise = signal_noise(), good_signal = signal_noise() > 1, max_cor = max_cor(), good_cor = max_cor() > 0.7, max_cor_id = max_cor_id()) %>% left_join(meta, by = c("max_cor_id" = "sample_name")), file)}
   )
   
   
