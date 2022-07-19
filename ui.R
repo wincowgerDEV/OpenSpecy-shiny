@@ -144,7 +144,7 @@ ui <- fluidPage(
             HTML('<script async src="https://media.ethicalads.io/media/client/ethicalads.min.js"></script>
                    
                    <!-- Show a text ad -->
-                   <div data-ea-publisher="openanalysisorg" data-ea-type="text"></div>'),
+                   <div class = "dark raised" data-ea-publisher="openanalysisorg" data-ea-type="text"></div>'),
                    
                   # <!-- Show an image ad -->
                   # <div data-ea-publisher="openanalysisorg" data-ea-type="image"></div>'), 
@@ -478,7 +478,7 @@ ui <- fluidPage(
                                            
                                          ),
                                          HTML(' <!-- Show an image ad -->
-                                                         <div data-ea-publisher="openanalysisorg" data-ea-type="image"></div>')
+                                                         <div class = "dark raised" data-ea-publisher="openanalysisorg" data-ea-type="image" data-ea-style="stickybox"></div>')
                                          
                                          
                                   )
