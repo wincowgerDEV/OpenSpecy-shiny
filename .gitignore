@@ -3,9 +3,7 @@
 .Rapp.history
 
 # Desktop drive files
-.ini
-
-desktop.ini
+*.ini
 
 # Session Data files
 .RData
