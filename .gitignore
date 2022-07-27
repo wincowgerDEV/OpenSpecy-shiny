@@ -72,3 +72,5 @@ rsconnect/
 .db_url
 loggit.log
 s3_cred.csv
+
+*.bat
