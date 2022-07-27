@@ -222,6 +222,7 @@ process_intensity <- function(intensity, wavenumber, active_preprocessing = T, r
     #Range criteria   
     if(range_decision & test2) {
         #assumes that all the wavenumbers exist, but they don't . Might be problematic when we try to use the wavenumber range for correlation afterward or 
+        test <- test &  wavenumber >= min_range & wavenumber <= max_range
         intensity_cor <- intensity_cor[wavenumber_cor >= min_range & wavenumber_cor <= max_range]
         wavenumber_cor <- wavenumber_cor[wavenumber_cor >= min_range & wavenumber_cor <= max_range]
         #test <- std_wavenumbers %in% std_wavenumbers[std_wavenumbers >= min(wavenumber_cor) & std_wavenumbers <= max(wavenumber_cor)]
@@ -873,7 +874,8 @@ match_metadata <- reactive({
                    plot_bgcolor = 'rgba(17,0,73, 0)',
                    paper_bgcolor = 'rgba(0,0,0,0.5)',
                    font = list(color = '#FFFFFF'),
-                   title = if(input$active_identification) paste0("Correlation ", (1 - sum(signal_noise() < 1 | max_cor() < 0.7)/length(signal_noise())) * 100, "% good id")  else paste0("Signal to Noise ", (1 - sum(signal_noise() < 1)/length(signal_noise())) * 100, "% good signal")) %>%
+                   #legend= list(title=list(text= '<b> Correlation </b>')),
+                   title = if(input$active_identification) paste0(round((1 - sum(signal_noise() < 1 | max_cor() < 0.7)/length(signal_noise())), 2) * 100, "% Good ID")  else paste0(round((1 - sum(signal_noise() < 1)/length(signal_noise())), 2) * 100, "% Good Signal")) %>%
             event_register("plotly_click") 
   })
      
