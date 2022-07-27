@@ -501,13 +501,13 @@ server <- shinyServer(function(input, output, session) {
 
   #Reading Data and Startup ----
   # Sharing USER ID
-  id <- reactive({
-    if (!is.null(input$fingerprint)) {
-      paste(input$fingerprint, session_id, sep = "/")
-    } else {
-      paste(digest(Sys.info()), digest(sessionInfo()), sep = "/")
-    }
-  })
+ # id <- reactive({
+#    if (!is.null(input$fingerprint)) {
+#      paste(input$fingerprint, session_id, sep = "/")
+#    } else {
+#      paste(digest(Sys.info()), digest(sessionInfo()), sep = "/")
+#    }
+#  })
   
   #Reactive Values ----
   preprocessed <- reactiveValues(data = NULL)
@@ -543,13 +543,13 @@ observeEvent(input$file1, {
   withProgress(message = progm, value = 3/3, {
      
       rout <- read_any(
-          filename = as.character(file$datapath), share = NULL, id = id(), std_wavenumbers = std_wavenumbers
+          filename = as.character(file$datapath), share = NULL, id = "test", std_wavenumbers = std_wavenumbers
       )
       
       if(droptoken & input$share_decision & input$file1$size < 10^7){
           put_object(
               file = file.path(as.character(input$file1$datapath)), 
-              object = paste0("users/", input$fingerprint,"/", session_id, "/", digest(rout), "/", gsub(".*/", "", as.character(file$name))), 
+              object = paste0("users/", "/", session_id, "/", digest(rout), "/", gsub(".*/", "", as.character(file$name))), 
               bucket = "openspecy"
           )    
       }
@@ -1020,13 +1020,13 @@ match_metadata <- reactive({
   observeEvent(input$go, {
     if(conf$log) {
       if(db) {
-        database$insert(data.frame(user_name = input$fingerprint,
+        database$insert(data.frame(#user_name = input$fingerprint,
                                    session_name = session_id,
                                    wavenumber = trace$data$wavenumber,
                                    intensity = trace$data$intensity,
                                    data_id = digest::digest(preprocessed$data,
                                                             algo = "md5"),
-                                   ipid = input$ipid,
+                                   #ipid = input$ipid,
                                    time = human_ts()))
         }
     }
@@ -1034,11 +1034,11 @@ match_metadata <- reactive({
   
   user_metadata <- reactive({
     data.frame(
-             user_name = input$fingerprint,
+             #user_name = input$fingerprint,
              time = human_ts(),
              session_name = session_id,
              data_id = digest::digest(preprocessed$data, algo = "md5"),
-             ipid = input$ipid,
+             #ipid = input$ipid,
              active_preprocessing = input$active_preprocessing,
              intensity_adj = input$intensity_corr,
              smooth_decision = input$smooth_decision,
@@ -1064,7 +1064,7 @@ match_metadata <- reactive({
         database$insert(user_metadata())
       } else {
         loggit("INFO", "trigger",
-               user_name = input$fingerprint,
+               #user_name = input$fingerprint,
                session_name = session_id,
                intensity_adj = input$intensity_corr,
                smoother = input$smoother,
@@ -1078,7 +1078,7 @@ match_metadata <- reactive({
                spectra_type = input$Spectra,
                #analyze_type = input$Data,
                #region_type = input$Library,
-               ipid = input$ipid,
+               #ipid = input$ipid,
                time = human_ts())
       }
     }

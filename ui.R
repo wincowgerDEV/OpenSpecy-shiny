@@ -128,8 +128,8 @@ ui <- fluidPage(
   use_prompt(),
   shinyjs::useShinyjs(),
   #extendShinyjs(text = "shinyjs.resetClick = function() { Shiny.onInputChange('.clientValue-plotly_click-A', 'null'); }", functions = "resetClick"),
-  inputIp("ipid"),
-  inputUserid("fingerprint"),
+  #inputIp("ipid"),
+  #inputUserid("fingerprint"),
   # tags$head(uiOutput("name_get")),singleton(tags$head()),
   
   tags$head(tags$style(css),
@@ -144,7 +144,7 @@ ui <- fluidPage(
             HTML('<script async src="https://media.ethicalads.io/media/client/ethicalads.min.js"></script>
                    
                    <!-- Show a text ad -->
-                   <div class = "dark raised" data-ea-publisher="openanalysisorg" data-ea-type="text"></div>'),
+                   <div class = "dark raised" data-ea-publisher="openanalysisorg" data-ea-type="image" data-ea-style="stickybox"></div>'),
                    
                   # <!-- Show an image ad -->
                   # <div data-ea-publisher="openanalysisorg" data-ea-type="image"></div>'), 
@@ -457,6 +457,8 @@ ui <- fluidPage(
                                                         )
                                              )
                                          ), 
+                                         
+                                         br(),
                                                           
                                          plotcontainerfunction(
                                            fluidRow(
