@@ -679,7 +679,25 @@ ui <- fluidPage(
                                                                                         type = "info", 
                                                                                         size = "medium", rounded = TRUE
                                                                                     )
-                                                                         ))
+                                                                         )), 
+                                                                     fluidRow(
+                                                                       column(9,
+                                                                                               numericInput(
+                                                                                                 "MinSNR",
+                                                                                                 "Minimum Signal to Noise",
+                                                                                                 value = 1,
+                                                                                                 min = 0.5,
+                                                                                                 max = 12,
+                                                                                                 step = 0.1#,
+                                                                                                 #width = '25%'
+                                                                                               )%>%
+                                                                                                 add_prompt(
+                                                                                                   message = "Specify the signal to noise threshold to use.",
+                                                                                                   type = "info", 
+                                                                                                   size = "medium", rounded = TRUE
+                                                                                                 )
+                                                                              )
+                                                                     )
                                                                      ),
                                                     
                                                     fluidRow(
@@ -693,6 +711,7 @@ ui <- fluidPage(
                                                                                         size = "medium", rounded = TRUE
                                                                                     )
                                                                )
+                                                               
                                                         )
                                                     ),
                                                     
@@ -754,7 +773,22 @@ ui <- fluidPage(
                                                                                       size = "medium", rounded = TRUE
                                                                                   )
                                                                               
-                                                                       )
+                                                                       ),
+                                                                       column(3, 
+                                                                                               numericInput(
+                                                                                                 "MinCor",
+                                                                                                 "Minimum Correlation",
+                                                                                                 value = 0.6,
+                                                                                                 min = 0.1,
+                                                                                                 max = 1,
+                                                                                                 step = 0.1#,
+                                                                                                 #width = '25%'
+                                                                                               ) %>%
+                                                                                                 add_prompt(
+                                                                                                   message = "Specify the Correlation Threshold to Use",
+                                                                                                   type = "info", 
+                                                                                                   size = "medium", rounded = TRUE
+                                                                                                 ))
                                                                        
                                                                      )  
                                                                      
@@ -794,7 +828,7 @@ ui <- fluidPage(
                                                                              size = "medium", rounded = TRUE
                                                                          ))
                                                     
-                                                    
+                                                  
                                              )))),
                                   column(3, 
                                          fluidRow(

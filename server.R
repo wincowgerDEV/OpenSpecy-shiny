@@ -851,11 +851,11 @@ match_metadata <- reactive({
             add_trace(
                 x = preprocessed$data$coords$x, #Need to update this with the new rout format. 
                 y = preprocessed$data$coords$y, 
-                z = if(input$active_identification){ifelse(signal_noise() < 1 | max_cor() < 0.7, NA, max_cor())} else {ifelse(signal_noise() > 1, signal_noise(), NA)
+                z = if(input$active_identification){ifelse(signal_noise() < input$MinSNR | max_cor() < input$MinCor, NA, max_cor())} else {ifelse(signal_noise() > input$MinSNR, signal_noise(), NA)
 }, 
                 type = "heatmap",
                 hoverinfo = 'text',
-                colors = if(input$active_identification){} else {heat.colors(n = sum(signal_noise() > 1))
+                colors = if(input$active_identification){} else {heat.colors(n = sum(signal_noise() > input$MinSNR))
                 },
                 text = ~paste(
                     "x: ", preprocessed$data$coords$x,
@@ -875,7 +875,7 @@ match_metadata <- reactive({
                    paper_bgcolor = 'rgba(0,0,0,0.5)',
                    font = list(color = '#FFFFFF'),
                    #legend= list(title=list(text= '<b> Correlation </b>')),
-                   title = if(input$active_identification) paste0(round((1 - sum(signal_noise() < 1 | max_cor() < 0.7)/length(signal_noise())), 2) * 100, "% Good ID")  else paste0(round((1 - sum(signal_noise() < 1)/length(signal_noise())), 2) * 100, "% Good Signal")) %>%
+                   title = if(input$active_identification) paste0(round((1 - sum(signal_noise() < input$MinSNR | max_cor() < input$MinCor)/length(signal_noise())), 2) * 100, "% Good ID")  else paste0(round((1 - sum(signal_noise() < input$MinSNR)/length(signal_noise())), 2) * 100, "% Good Signal")) %>%
             event_register("plotly_click") 
   })
      
@@ -957,7 +957,7 @@ match_metadata <- reactive({
   
   output$topmatch_metadata_download <- downloadHandler(
       filename = function() {paste('data-analysis-topmatch-metadata-', human_ts(), '.csv', sep='')},
-      content = function(file) {fwrite(data.table(x = preprocessed$data$coords$x, y = preprocessed$data$coords$y, filename = preprocessed$data$coords$filename, signal_to_noise = signal_noise(), good_signal = signal_noise() > 1, max_cor = max_cor(), good_cor = max_cor() > 0.7, max_cor_id = max_cor_id()) %>% left_join(meta, by = c("max_cor_id" = "sample_name")), file)}
+      content = function(file) {fwrite(data.table(x = preprocessed$data$coords$x, y = preprocessed$data$coords$y, filename = preprocessed$data$coords$filename, signal_to_noise = signal_noise(), good_signal = signal_noise() > input$MinSNR, max_cor = max_cor(), good_cor = max_cor() > input$MinCor, max_cor_id = max_cor_id()) %>% left_join(meta, by = c("max_cor_id" = "sample_name")), file)}
   )
   
   
