@@ -925,6 +925,12 @@ match_metadata <- reactive({
     content = function(file) {fwrite(baseline_data() %>% mutate(wavenumber = conform_wavenumber(preprocessed$data$wavenumber)), file)}
   )
   
+  output$downloadsnr <- downloadHandler(
+    filename = function() {paste('data-snr-', human_ts(), '.csv', sep='')},
+    content = function(file) {fwrite(data.table(x = preprocessed$data$coords$x, y = preprocessed$data$coords$y, filename = preprocessed$data$coords$filename, signal_to_noise = signal_noise(), good_signal = signal_noise() > input$MinSNR), file)}
+  )
+  
+  
   ## Download selected data ----
   output$download_selected <- downloadHandler(
     filename = function() {paste('data-selected-', human_ts(), '.csv', sep='')},
