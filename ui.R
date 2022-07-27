@@ -462,8 +462,8 @@ ui <- fluidPage(
                                                           
                                          plotcontainerfunction(
                                            fluidRow(
-                                             column(12, 
-                                             h5("Spectral Selection"),
+                                             column(12,
+                                             h4(id = "placeholder2", "Spectral Selection"),
                                              fluidRow(
                                                column(12, 
                                                     style = columnformat(),
@@ -690,7 +690,7 @@ ui <- fluidPage(
                                                                                                  max = 12,
                                                                                                  step = 0.1#,
                                                                                                  #width = '25%'
-                                                                                               )%>%
+                                                                                               ) %>%
                                                                                                  add_prompt(
                                                                                                    message = "Specify the signal to noise threshold to use.",
                                                                                                    type = "info", 

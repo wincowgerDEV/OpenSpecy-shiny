@@ -993,7 +993,7 @@ match_metadata <- reactive({
   
   observe({
       toggle(id = "placeholder1", condition = is.null(preprocessed$data))
-      toggle(id = "placeholder2", condition = is.null(preprocessed$data))
+      toggle(id = "placeholder2", condition = !is.null(preprocessed$data) | input$active_identification)
       toggle(id = "placeholder3", condition = is.null(preprocessed$data))
   })
 
