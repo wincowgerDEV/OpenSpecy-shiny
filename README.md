@@ -1,6 +1,5 @@
-# Open Specy Shiny app
-
-Analyze, Process, Identify, and Share, Raman and (FT)IR Spectra
+# Open Specy Shiny App
+Welcome to the new home for the Open Specy web application. If you are looking for the R package go to [OpenSpecy-package](https://github.com/wincowgerDEV/OpenSpecy-package)
 
 <!-- badges: start -->
 <!--
@@ -11,4 +10,46 @@ Analyze, Process, Identify, and Share, Raman and (FT)IR Spectra
 [![DOI](https://img.shields.io/badge/DOI-10.1021/acs.analchem.1c00123-blue.svg)](https://doi.org/10.1021/acs.analchem.1c00123)
 [![Website](https://img.shields.io/badge/web-openanalysis.org/openspecy-white)](https://openanalysis.org/openspecy)
 [![Twitter Follow](https://img.shields.io/twitter/follow/OpenSpecy)](https://twitter.com/OpenSpecy)
+[![Gitter](https://badges.gitter.im/Open-Specy/community.svg)](https://gitter.im/Open-Specy/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 <!-- badges: end -->
+
+## Connect
+If you want to discuss anything with the community you can start a conversation on [Gitter](https://gitter.im/Open-Specy/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+
+## Contributing
+Contributions of all kinds are welcome!
+
+Some ideas on [How to Contribute](https://opensource.guide/how-to-contribute/). 
+
+Please adhere to this project's [Code of Conduct](https://www.contributor-covenant.org/version/2/1/code_of_conduct/).
+
+## Installation
+### Data
+If you are looking for the most up to date dataset for the Open Specy library see [/data](https://github.com/wincowgerDEV/OpenSpecy-shiny/tree/main/data)
+
+### Software
+Open R or R Studio and run these three lines of code
+
+```r
+if (!require('OpenSpecy')) install.packages('OpenSpecy'); library('OpenSpecy')
+if (!require('shiny')) install.packages('shiny'); library('shiny')
+shiny::runGitHub('OpenSpecy-shiny', 'wincowgerDEV')
+```
+
+
+## Roadmap
+```mermaid
+gantt
+    title Development Timeline
+    dateFormat  YYYY-MM-DD
+    section Open Specy 1.0
+    Network Building           :2022-01-01, 2022-06-01
+    Beta Testing            :2022-06-01, 2022-08-31
+    Manuscript Drafting           :2022-08-31, 2022-12-31
+    section Artificial Intelligence Development
+    Scoping with Open Specy Community  :2022-01-01  , 2022-06-01
+    MVP with Water PACT  :2022-08-01  , 2022-09-20
+    Research at AWI w/Dr. Primpke     :2022-09-20  , 2022-12-20
+```
+
+
