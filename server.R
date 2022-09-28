@@ -6,7 +6,7 @@
 #'
 # Check for Auth Tokens and setup, you can change these to test the triggering
 # of functions without removing the files.
-droptoken <-  file.exists("s3_cred.csv")#file.exists("data/droptoken.rds") #remove for prototyping with maps 
+droptoken <-  file.exists("s3_cred.csv")#file.exists("data/droptoken.rds") #remove for prototyping with maps
 db <-  F#file.exists(".db_url") #reminder, this will break if you login to a new wifi network even with the token.
 translate <- file.exists("www/googletranslate.html")
 
@@ -35,11 +35,7 @@ library(OpenSpecy)
 
 generate_grid <- function(x) {
     base <- sqrt(x)
-    as.data.table(expand.grid(x = 1:round_any(base, 1, ceiling), y = 1:round_any(base, 1, ceiling))[1:x,])
-}
-
-round_any <- function(x, accuracy, f = round){
-    f(x / accuracy) * accuracy
+    as.data.table(expand.grid(x = 1:adj_res(base, 1, ceiling), y = 1:adj_res(base, 1, ceiling))[1:x,])
 }
 
 #Read spectra functions ----
@@ -49,10 +45,10 @@ read_map <- function(filename, share, id, std_wavenumbers){
     if(nrow(files) == 2 & any(grepl("\\.dat$", ignore.case = T, files$Name)) & any(grepl("\\.hdr$", ignore.case = T, files$Name))){
         hs_envi <- hyperSpec::read.ENVI.Nicolet(file = paste0(tempdir(), "/", files$Name[grepl("\\.dat$", ignore.case = T, files$Name)]),
                                                 headerfile = paste0(tempdir(), "/", files$Name[grepl("\\.hdr$", ignore.case = T, files$Name)]))
-        
+
         list(
             "wavenumber" = hs_envi@wavelength,
-            "spectra" = transpose(as.data.table(hs_envi@data$spc)), 
+            "spectra" = transpose(as.data.table(hs_envi@data$spc)),
             "coords" = data.table(x = hs_envi@data$x, y = hs_envi@data$y, filename = gsub(".*/", "", hs_envi@data$filename))
         )
     }
@@ -61,18 +57,18 @@ read_map <- function(filename, share, id, std_wavenumbers){
         dt <- generate_grid(x = ncol(file))
         list(
             "wavenumber" =  std_wavenumbers,
-            "spectra" = file, 
+            "spectra" = file,
             "coords" = generate_grid(x = ncol(file))[,filename := files$Name])
     }
-    
+
     else{
-        
+
         file <- bind_cols(lapply(paste0(tempdir(), "/", files$Name), read_spectrum, share = F, id = "sdfad"))
-        
+
         list(
             "wavenumber" = file$wavenumber...1,
             "spectra" = file %>%
-                select(-starts_with("wave")), 
+                select(-starts_with("wave")),
             "coords" = generate_grid(nrow(files))[,filename := files$Name])
     }
 }
@@ -82,18 +78,18 @@ read_any <- function(filename, share, id, std_wavenumbers){
         read_formatted_spectrum(filename = filename, share = share, id = id)
         #single_data$data <- TRUE
     }
-    
+
     else if(grepl("\\.zip$", ignore.case = T, filename)) {
         read_map(filename = filename, share = NULL, id = id, std_wavenumbers = std_wavenumbers)
-        
+
     }
 }
 
 read_spectrum <- function(filename, share = NULL, id = "test") {
-    
+
     as.data.table(
         if(grepl("\\.csv$", ignore.case = T, filename)) {
-            tryCatch(read_text_2(file = filename, 
+            tryCatch(read_text_2(file = filename,
                                  method = "fread",
                                  share = share,
                                  id = id),
@@ -103,10 +99,10 @@ read_spectrum <- function(filename, share = NULL, id = "test") {
             tryCatch(read_0(filename, share = share, id = id),
                      error = function(e) {e})
         }
-        
+
         else {
             ex <- strsplit(basename(filename), split="\\.")[[1]]
-            
+
             tryCatch(do.call(paste0("read_", tolower(ex[-1])),
                              list(filename, share = share, id = id)),
                      error = function(e) {e})
@@ -118,12 +114,12 @@ read_text_2 <- function(file = ".", cols = NULL, method = "read.csv",
                         share = NULL, id = paste(digest(Sys.info()),
                                                  digest(sessionInfo()),
                                                  sep = "/"), ...) {
-    df <- do.call(method, list(file, ...)) 
-    
+    df <- do.call(method, list(file, ...))
+
     if (all(grepl("^X[0-9]*", names(df)))) stop("missing header: ",
                                                 "use 'header = FALSE' or an ",
                                                 "alternative read method")
-    
+
     # Try to guess column names
     if (is.null(cols)) {
         #if (all(grepl("^V[0-9]*", names(df)))) {
@@ -139,31 +135,31 @@ read_text_2 <- function(file = ".", cols = NULL, method = "read.csv",
     }
     if (any(is.na(cols))){
         cols <- c(names(df)[1L])#,
-        warning("undefined columns selected; one column should be named wavenumber; guessing first.")  
-    } 
+        warning("undefined columns selected; one column should be named wavenumber; guessing first.")
+    }
     #if (cols[1] == cols[2]) stop("inconsistent input format")
-    
+
     df <- df %>%
         rename("wavenumber" = cols)
-    
+
     # Check if columns are numeric
     if (!all(sapply(df, is.numeric))){
         df <- df[,c(sapply(df, is.numeric)), with = F]
-        warning("Dropping non-numeric columns")  
-    } 
-    
+        warning("Dropping non-numeric columns")
+    }
+
     #names(df) <- c("wavenumber", "intensity")
-    
+
     #if (!is.null(share)) share_spec_2(df, file = file, share = share, id = id)
-    
+
     return(df)
 }
 
 read_formatted_spectrum <- function(filename, share, id){
     spectra <- read_spectrum(filename = filename, share = share, id = id)
-    list("wavenumber" =     
+    list("wavenumber" =
              spectra$wavenumber,
-         "spectra" =     
+         "spectra" =
              spectra %>% select(-wavenumber),
          "coords" = generate_grid(x = ncol(spectra) - 1)[,filename := gsub(".*/", "", filename)]
     )
@@ -177,26 +173,10 @@ conform_spectra <- function(df, wavenumber, correction){
 }
 
 conform_intensity <- function(intensity, wavenumber, correction){
-    adjust_intensity(x = conform_wavenumber(wavenumber),
-                     y = clean_spec(x = wavenumber, y = intensity, out = conform_wavenumber(wavenumber)),
+    adj_intens(x = conform_res(wavenumber),
+                     y = clean_spec(x = wavenumber, y = intensity, out = conform_res(wavenumber)),
                      type = correction,
                      na.rm = T)[,"intensity"]
-}
-
-adjust_intensity <- function(x, y, type = "none", make_rel = F, ...) {
-    yadj <- switch(type,
-                   "reflectance" = (1 - y/100)^2 / (2 * y/100),
-                   "transmittance" = log10(1/adj_neg(y, ...)),
-                   "none" = adj_neg(y, ...)
-    )
-    if (make_rel) yout <- make_rel(yadj) else yout <- yadj
-    
-    data.frame(wavenumber = x, intensity = yout)
-}
-
-
-conform_wavenumber <- function(wavenumber){
-    seq(round_any(min(wavenumber), 5, ceiling), round_any(max(wavenumber), 5, floor), by = 5)
 }
 
 clean_spec <- function(x, y, out){
@@ -210,33 +190,33 @@ clean_spec <- function(x, y, out){
 
 #Process spectra functions ----
 process_intensity <- function(intensity, wavenumber, active_preprocessing = T, range_decision = F, min_range = 0, max_range = 6000, carbon_dioxide_decision = F, smooth_decision = F, smoother = 3, baseline_decision = F, baseline_selection = "Polynomial", baseline = 8, derivative_decision = T, trace = NULL) {
-    
+
     test <- wavenumber %in% wavenumber[!is.na(intensity)]
     place <- rep(NA, length.out= length(wavenumber))
-    
+
     #set innitial conditions
     intensity_cor <- intensity[!is.na(intensity)]
     wavenumber_cor <- wavenumber[!is.na(intensity)]
     test2 <-  length(wavenumber_cor[wavenumber_cor > min_range & wavenumber_cor < max_range]) > 11
-    
-    #Range criteria   
+
+    #Range criteria
     if(range_decision & test2) {
-        #assumes that all the wavenumbers exist, but they don't . Might be problematic when we try to use the wavenumber range for correlation afterward or 
+        #assumes that all the wavenumbers exist, but they don't . Might be problematic when we try to use the wavenumber range for correlation afterward or
         test <- test &  wavenumber >= min_range & wavenumber <= max_range
         intensity_cor <- intensity_cor[wavenumber_cor >= min_range & wavenumber_cor <= max_range]
         wavenumber_cor <- wavenumber_cor[wavenumber_cor >= min_range & wavenumber_cor <= max_range]
         #test <- std_wavenumbers %in% std_wavenumbers[std_wavenumbers >= min(wavenumber_cor) & std_wavenumbers <= max(wavenumber_cor)]
-        
-    } 
-    
-    #CO2 criteria   
+
+    }
+
+    #CO2 criteria
     if(carbon_dioxide_decision) {
-        #assumes that all the wavenumbers exist, but they don't 
+        #assumes that all the wavenumbers exist, but they don't
         intensity_cor[wavenumber_cor >= 2200 & wavenumber_cor <= 2420] <- mean(intensity_cor[wavenumber_cor %in% c(2200, 2420)])
         #test <- std_wavenumbers %in% std_wavenumbers[std_wavenumbers >= min(wavenumber_cor) & std_wavenumbers <= max(wavenumber_cor)]
-        
-    } 
-    
+
+    }
+
     #Smooth criteria
     if(smooth_decision) {
         intensity_cor <- smooth_intens(wavenumber_cor, intensity_cor, p = smoother)$intensity
@@ -248,16 +228,16 @@ process_intensity <- function(intensity, wavenumber, active_preprocessing = T, r
     else if(baseline_decision & baseline_selection == "Manual" & !is.null(trace$data)){
         intensity_cor <-  intensity_cor - approx(trace$data$wavenumber, trace$data$intensity, xout = wavenumber_cor, rule = 2, method = "linear", ties = mean)$y
     }
-    
+
     #Derivative
     if(derivative_decision) {
         intensity_cor <-  process_cor_os(intensity_cor)
     }
-    
+
     place[test] <- intensity_cor#try using this for other function
-    
+
     place
-    
+
 }
 
 
@@ -271,7 +251,7 @@ snr <- function(x) {
         0
     }
     else{
-        max  = runMax(x[!is.na(x)], n = 20) 
+        max  = runMax(x[!is.na(x)], n = 20)
         max[(length(max) - 19):length(max)] <- NA
         #mean = runMean(x[!is.na(x)], n = 10)
         #mean[(length(mean) - 9):length(mean)] <- NA
@@ -298,7 +278,7 @@ get_all_metadata <- function(sample_name, rsq, metadata) {
     left_join(data.table(sample_name = sample_name, rsq = rsq), metadata) %>%
         filter(!is.na(rsq)) %>%
         arrange(desc(rsq)) %>%
-        mutate(rsq = round(rsq, 2)) 
+        mutate(rsq = round(rsq, 2))
 }
 
 #library(future)
@@ -379,10 +359,10 @@ load_data <- function() {
 
   #if(any(test_lib == "warning")) get_lib(path = conf$library_path)
   std_wavenumbers <- seq(405, 3995, by = 5)
-  
+
   if(droptoken) {
       creds <- read.csv("s3_cred.csv")
-      
+
       Sys.setenv(
           "AWS_ACCESS_KEY_ID" = creds$Access.key.ID,
           "AWS_SECRET_ACCESS_KEY" = creds$Secret.access.key,
@@ -392,8 +372,8 @@ load_data <- function() {
 
   # Name keys for human readable column names
   load("data/namekey.RData")
-  load("data/metadata.RData") #Can make a few different options of these that can be loaded when needed and overwrite the existing file. 
-  
+  load("data/metadata.RData") #Can make a few different options of these that can be loaded when needed and overwrite the existing file.
+
 
   # Inject variables into the parent environment
   invisible(list2env(as.list(environment()), parent.frame()))
@@ -402,11 +382,11 @@ load_data <- function() {
 process_cor_os <- function(x){
   abs(
     c(
-      scale( 
+      scale(
         signal::sgolayfilt(x,
                            p = 3, n = 11, m = 1
         )
-      ) 
+      )
     )
   )
 }
@@ -437,7 +417,7 @@ is_empty <- function(x, first.only = TRUE, all.na.empty = TRUE) {
             zero_len <- length(x) == 0
         }
     }
-    
+
     any(is.null(x) || zero_len || (all.na.empty && all(is.na(x))))
 }
 
@@ -461,11 +441,11 @@ map_type <- function(filename){
 
 
 
-                         
+
 # This is the actual server functions, all functions before this point are not
 # reactive
 server <- shinyServer(function(input, output, session) {
-    
+
   session_id <- digest(runif(10))
 
   # Loading overlay
@@ -509,20 +489,20 @@ server <- shinyServer(function(input, output, session) {
 #      paste(digest(Sys.info()), digest(sessionInfo()), sep = "/")
 #    }
 #  })
-  
+
   #Reactive Values ----
   preprocessed <- reactiveValues(data = NULL)
   trace <- reactiveValues(data = NULL)
   data_click <- reactiveValues(data = NULL)
-  
-  
+
+
 observeEvent(input$file1, {
   # Read in data when uploaded based on the file type
   req(input$file1)
   file <- input$file1
   data_click$data <- 1
   #filename$data <- as.character(file$datapath)
-  
+
   if (!grepl("(\\.csv$)|(\\.asp$)|(\\.spa$)|(\\.spc$)|(\\.jdx$)|(\\.RData$)|(\\.zip$)|(\\.[0-9]$)",
              ignore.case = T, as.character(file$datapath))) {
     show_alert(
@@ -532,7 +512,7 @@ observeEvent(input$file1, {
       type = "warning")
     return(NULL)
   }
- 
+
   if (input$share_decision & curl::has_internet()) {
     #share <- conf$share
     progm <- "Sharing Spectrum to Community Library"
@@ -540,21 +520,21 @@ observeEvent(input$file1, {
     #share <- NULL
     progm <- "Reading Spectrum"
   }
-  
+
   withProgress(message = progm, value = 3/3, {
-     
+
       rout <- read_any(
           filename = as.character(file$datapath), share = NULL, id = "test", std_wavenumbers = std_wavenumbers
       )
-      
+
       if(droptoken & input$share_decision & input$file1$size < 10^7){
           put_object(
-              file = file.path(as.character(input$file1$datapath)), 
-              object = paste0("users/", "/", session_id, "/", digest(rout), "/", gsub(".*/", "", as.character(file$name))), 
+              file = file.path(as.character(input$file1$datapath)),
+              object = paste0("users/", "/", session_id, "/", digest(rout), "/", gsub(".*/", "", as.character(file$name))),
               bucket = "openspecy"
-          )    
+          )
       }
-    
+
     if (inherits(rout, "simpleError")) {
       reset("file1")
       show_alert(
@@ -566,7 +546,7 @@ observeEvent(input$file1, {
         type = "error"
       )
       return(NULL)
-    } 
+    }
     else {
       preprocessed$data <- rout
     }
@@ -576,8 +556,8 @@ observeEvent(input$file1, {
   # Corrects spectral intensity units using the user specified correction
   data <- reactive({
     req(input$file1)
-      conform_spectra(df = preprocessed$data$spectra, 
-                      wavenumber = preprocessed$data$wavenumber, 
+      conform_spectra(df = preprocessed$data$spectra,
+                      wavenumber = preprocessed$data$wavenumber,
                       correction = input$intensity_corr)
     })
 
@@ -590,25 +570,25 @@ observeEvent(input$file1, {
     #  data.table(wavenumber = numeric(), intensity = numeric(), SpectrumIdentity = factor())
     #}
     #else{
-    process_spectra(df = data(), 
-                    wavenumber = conform_wavenumber(preprocessed$data$wavenumber),
-                    active_preprocessing = input$active_preprocessing, 
-                    range_decision = input$range_decision, 
-                    min_range = input$MinRange, 
-                    max_range = input$MaxRange, 
-                    smooth_decision = input$smooth_decision, 
-                    smoother = input$smoother, 
-                    baseline_decision = input$baseline_decision, 
-                    baseline_selection = input$baseline_selection, 
-                    baseline = input$baseline, 
+    process_spectra(df = data(),
+                    wavenumber = conform_res(preprocessed$data$wavenumber),
+                    active_preprocessing = input$active_preprocessing,
+                    range_decision = input$range_decision,
+                    min_range = input$MinRange,
+                    max_range = input$MaxRange,
+                    smooth_decision = input$smooth_decision,
+                    smoother = input$smoother,
+                    baseline_decision = input$baseline_decision,
+                    baseline_selection = input$baseline_selection,
+                    baseline = input$baseline,
                     derivative_decision = input$derivative_decision,
                     carbon_dioxide_decision = input$co2_decision,
                     trace = trace)
-    
-    
+
+
     #}
   })
-  
+
 
 
 
@@ -642,70 +622,70 @@ observeEvent(input$reset, {
         data()
     }
   })
-  
+
   DataR_plot <- reactive({
     if(!input$active_identification | is.null(preprocessed$data)) {
-      data.table(wavenumber = numeric(), 
-                 intensity = numeric(), 
+      data.table(wavenumber = numeric(),
+                 intensity = numeric(),
                  SpectrumIdentity = factor())    }
     else{
-      data.table(wavenumber = conform_wavenumber(preprocessed$data$wavenumber),
+      data.table(wavenumber = conform_res(preprocessed$data$wavenumber),
                  intensity = make_rel(DataR()[[data_click$data]], na.rm = T),
                  SpectrumIdentity = factor()) %>%
         dplyr::filter(!is.na(intensity))
     }
   })
-  
+
   libraryR <- reactive({
     #req(input$file1)
     req(input$active_identification)
     if(input$derivative_decision & input$active_preprocessing) {
-        load("data/library_deriv.RData") #Nest these in here so that they don't load automatically unless needed. 
-        
+        load("data/library_deriv.RData") #Nest these in here so that they don't load automatically unless needed.
+
     }
     else{
-        load("data/library.RData") #Nest these in here so that they don't load automatically unless needed. 
+        load("data/library.RData") #Nest these in here so that they don't load automatically unless needed.
     }
     if(input$Spectra == "both") {
       library
     }
     else if (input$Spectra == "ftir"){
       cols <- meta %>% dplyr::filter(SpectrumType == "FTIR") %>% pull(sample_name)
-      library[, ..cols] 
+      library[, ..cols]
     }
     else if (input$Spectra == "raman"){
       cols <- meta %>% dplyr::filter(SpectrumType == "Raman") %>% pull(sample_name)
-      library[, ..cols] 
+      library[, ..cols]
     }
   })
-  
- 
-  
+
+
+
   #Correlation ----
   correlation <- reactive({
       req(input$file1)
       req(input$active_identification)
-      correlate_spectra(data = DataR(), search_wavenumbers = conform_wavenumber(preprocessed$data$wavenumber), std_wavenumbers = std_wavenumbers, library = libraryR())
+      correlate_spectra(data = DataR(), search_wavenumbers = conform_res(preprocessed$data$wavenumber), std_wavenumbers = std_wavenumbers, library = libraryR())
 
   })
-  
+
   signal_noise <- reactive({
           req(input$file1)
           unlist(lapply(DataR(), snr))
   })
-  
+
   max_cor <- reactive({
       req(input$file1)
       req(correlation())
       round(apply(correlation(), 2, function(x) max(x, na.rm = T)), 2)
   })
-  
+
   max_cor_id <- reactive({
       req(input$file1)
       req(correlation())
       colnames(libraryR())[apply(correlation(),2 , function(x) which.max(x))]
   })
-  
+
   # Joins their spectrum to the internal database.
   MatchSpectra <- reactive({
     #req(input$file1)
@@ -716,18 +696,18 @@ observeEvent(input$reset, {
       else{
           #input
           withProgress(message = 'Analyzing Spectrum', value = 1/3, {
-              
+
               incProgress(1/3, detail = "Finding Match")
-              
+
               Lib <- get_all_metadata(sample_name = names(libraryR()), rsq = correlation()[[data_click$data]], metadata = meta)
-              
-              
+
+
               incProgress(1/3, detail = "Making Plot")
       })
     }
     return(Lib)
   })
-  
+
   match_selected <- reactive({# Default to first row if not yet clicked
       #req(input$file1)
       #req(input$active_identification)
@@ -741,16 +721,16 @@ observeEvent(input$reset, {
                               MatchSpectra()[[input$event_rows_selected,
                                               "sample_name"]])
           # Get data from find_spec
-          current_spectrum <- data.table(wavenumber = std_wavenumbers, 
-                                         intensity = libraryR()[[id_select]], 
+          current_spectrum <- data.table(wavenumber = std_wavenumbers,
+                                         intensity = libraryR()[[id_select]],
                                          sample_name = id_select)
-          
+
           current_spectrum %>%
               inner_join(meta, by = "sample_name") %>%
               select(wavenumber, intensity, SpectrumIdentity) %>%
               mutate(intensity = make_rel(intensity, na.rm = T)) #%>%
       }
-      
+
   })
 
   top_matches <- reactive({
@@ -758,12 +738,12 @@ observeEvent(input$reset, {
       MatchSpectra() %>%
           dplyr::rename("Material" = SpectrumIdentity) %>%
           dplyr::rename("Pearson's r" = rsq) %>%
-          dplyr::select(if(input$id_level == "deep"){"Material"} 
+          dplyr::select(if(input$id_level == "deep"){"Material"}
                         else if(input$id_level == "pp_optimal"){"polymer"}
                         else if(input$id_level == "pp_groups"){"polymer_class"}
                         else{"plastic_or_not"}, if(!is.null(preprocessed$data)){"Pearson's r"}, sample_name)
   })
-  
+
   # Create the data tables for all matches
   output$event <- DT::renderDataTable({
     req(input$active_identification)
@@ -775,10 +755,10 @@ observeEvent(input$reset, {
               rownames = FALSE,
               filter = "top", caption = "Selectable Matches",
               style = "bootstrap",
-              
+
               selection = list(mode = "single", selected = c(1)))
   })
-  
+
 match_metadata <- reactive({
     req(input$active_identification)
     MatchSpectra()[input$event_rows_selected,] %>%
@@ -789,7 +769,7 @@ match_metadata <- reactive({
     req(input$active_identification)
     datatable(match_metadata(),
               escape = FALSE,
-              options = list(dom = 't', bSort = F, 
+              options = list(dom = 't', bSort = F,
                              scrollX = TRUE,
                              lengthChange = FALSE,
                              info = FALSE),
@@ -797,15 +777,15 @@ match_metadata <- reactive({
               style = 'bootstrap', caption = "Selection Metadata",
               selection = list(mode = 'none'))
   })
-  
- 
+
+
  observeEvent(event_data("plotly_click", source = "heat_plot"), {
      if(is.null(event_data("plotly_click", source = "heat_plot"))){
-        data_click$data <- 1  
-     } 
+        data_click$data <- 1
+     }
      else{
         data_click$data <- event_data("plotly_click", source = "heat_plot")[["pointNumber"]] + 1
-         
+
      }
  })
 
@@ -816,10 +796,10 @@ match_metadata <- reactive({
      #         ignore.case = T, filename$data)){
         #req(single_data$data)
       plot_ly(type = 'scatter', mode = 'lines', source = "B") %>%
-        add_trace(x = if(!is.null(preprocessed$data)) {conform_wavenumber(preprocessed$data$wavenumber)} else{NULL}, y = if(!is.null(preprocessed$data)){make_rel(data()[[data_click$data]], na.rm = T)} else{NULL},
+        add_trace(x = if(!is.null(preprocessed$data)) {conform_res(preprocessed$data$wavenumber)} else{NULL}, y = if(!is.null(preprocessed$data)){make_rel(data()[[data_click$data]], na.rm = T)} else{NULL},
                   name = 'Uploaded',
                   line = list(color = 'rgba(240,236,19,0.8)')) %>%
-          add_trace(x = if(input$active_preprocessing & !is.null(preprocessed$data)){conform_wavenumber(preprocessed$data$wavenumber)} else{NULL}, y = if(input$active_preprocessing & !is.null(preprocessed$data)){make_rel(baseline_data()[[data_click$data]], na.rm = T)} else{NULL},
+          add_trace(x = if(input$active_preprocessing & !is.null(preprocessed$data)){conform_res(preprocessed$data$wavenumber)} else{NULL}, y = if(input$active_preprocessing & !is.null(preprocessed$data)){make_rel(baseline_data()[[data_click$data]], na.rm = T)} else{NULL},
                     name = 'Processed',
                     line = list(color = 'rgb(240,19,207)')) %>%
           add_trace(data = match_selected(), x = ~wavenumber, y = ~intensity,
@@ -838,21 +818,21 @@ match_metadata <- reactive({
                title = list(
                    text = if(!is.null(preprocessed$data)) paste0(paste0("Signal to Noise = ", round(signal_noise()[[data_click$data]], 2)), if(input$active_identification) paste0("; ", "Max Correlation = ", max_cor())) else "",
                    x = 0
-               ), 
+               ),
                font = list(color = '#FFFFFF')) %>%
         config(modeBarButtonsToAdd = list("drawopenpath", "eraseshape"))
     #}
     })
-  
+
   output$heatmap <- renderPlotly({
       req(input$file1)
       #req(ncol(data()) > 2)
         plot_ly(source = "heat_plot") %>%
             add_trace(
-                x = preprocessed$data$coords$x, #Need to update this with the new rout format. 
-                y = preprocessed$data$coords$y, 
+                x = preprocessed$data$coords$x, #Need to update this with the new rout format.
+                y = preprocessed$data$coords$y,
                 z = if(input$active_identification){ifelse(signal_noise() < input$MinSNR | max_cor() < input$MinCor, NA, max_cor())} else {ifelse(signal_noise() > input$MinSNR, signal_noise(), NA)
-}, 
+},
                 type = "heatmap",
                 hoverinfo = 'text',
                 colors = if(input$active_identification){} else {heat.colors(n = sum(signal_noise() > input$MinSNR))
@@ -860,7 +840,7 @@ match_metadata <- reactive({
                 text = ~paste(
                     "x: ", preprocessed$data$coords$x,
                     "<br>y: ", preprocessed$data$coords$y,
-                    "<br>z: ", if(input$active_identification){round(max_cor(), 2)} else{round(signal_noise(), 2) 
+                    "<br>z: ", if(input$active_identification){round(max_cor(), 2)} else{round(signal_noise(), 2)
                     },
                     "<br>Filename: ", preprocessed$data$coords$filename)) %>%
             layout(
@@ -876,11 +856,11 @@ match_metadata <- reactive({
                    font = list(color = '#FFFFFF'),
                    #legend= list(title=list(text= '<b> Correlation </b>')),
                    title = if(input$active_identification) paste0(round((1 - sum(signal_noise() < input$MinSNR | max_cor() < input$MinCor)/length(signal_noise())), 2) * 100, "% Good ID")  else paste0(round((1 - sum(signal_noise() < input$MinSNR)/length(signal_noise())), 2) * 100, "% Good Signal")) %>%
-            event_register("plotly_click") 
+            event_register("plotly_click")
   })
-     
-      
-      
+
+
+
 
   # Data Download options
   output$downloadData5 <- downloadHandler(
@@ -907,30 +887,30 @@ match_metadata <- reactive({
     filename = function() {"testdata.csv"},
     content = function(file) {fwrite(testdata, file)}
   )
-  
+
   output$download_testbatch <- downloadHandler(
     filename = function() {"testbatch.zip"},
     content = function(file) {zip(zipfile = file, files = c("data/HDPE__1.csv", "data/HDPE__2.csv", "data/HDPE__3.csv"))}
   )
 
   ## Download own data ----
-  
+
   output$download_conformed <- downloadHandler(
       filename = function() {paste('data-conformed-', human_ts(), '.csv', sep='')},
-      content = function(file){fwrite(data()%>% mutate(wavenumber = conform_wavenumber(preprocessed$data$wavenumber)), file)}
+      content = function(file){fwrite(data()%>% mutate(wavenumber = conform_res(preprocessed$data$wavenumber)), file)}
   )
-  
+
   output$downloadData <- downloadHandler(
     filename = function() {paste('data-processed-', human_ts(), '.csv', sep='')},
-    content = function(file) {fwrite(baseline_data() %>% mutate(wavenumber = conform_wavenumber(preprocessed$data$wavenumber)), file)}
+    content = function(file) {fwrite(baseline_data() %>% mutate(wavenumber = conform_res(preprocessed$data$wavenumber)), file)}
   )
-  
+
   output$downloadsnr <- downloadHandler(
     filename = function() {paste('data-snr-', human_ts(), '.csv', sep='')},
     content = function(file) {fwrite(data.table(x = preprocessed$data$coords$x, y = preprocessed$data$coords$y, filename = preprocessed$data$coords$filename, signal_to_noise = signal_noise(), good_signal = signal_noise() > input$MinSNR), file)}
   )
-  
-  
+
+
   ## Download selected data ----
   output$download_selected <- downloadHandler(
     filename = function() {paste('data-selected-', human_ts(), '.csv', sep='')},
@@ -942,31 +922,31 @@ match_metadata <- reactive({
     filename = function() {paste('data-matched-', human_ts(), '.csv', sep='')},
     content = function(file) {fwrite(DataR_plot() %>% select(-SpectrumIdentity), file)}
   )
-  
+
   ## Download matched data ----
   output$download_metadata <- downloadHandler(
     filename = function() {paste('data-analysis-metadata-', human_ts(), '.csv', sep='')},
     content = function(file) {fwrite(user_metadata(), file)}
   )
-  
+
   ## Download validation data ----
   output$validation_download <- downloadHandler(
       filename = function() {paste('data-analysis-validation-', human_ts(), '.csv', sep='')},
       content = function(file) {fwrite(validation$data, file)}
   )
-  
+
   ## Download correlation matrix ----
   output$correlation_download <- downloadHandler(
       filename = function() {paste('data-analysis-correlations-', human_ts(), '.csv', sep='')},
       content = function(file) {fwrite(correlation %>% mutate(library_names = names(libraryR())), file)}
   )
-  
+
   output$topmatch_metadata_download <- downloadHandler(
       filename = function() {paste('data-analysis-topmatch-metadata-', human_ts(), '.csv', sep='')},
       content = function(file) {fwrite(data.table(x = preprocessed$data$coords$x, y = preprocessed$data$coords$y, filename = preprocessed$data$coords$filename, signal_to_noise = signal_noise(), good_signal = signal_noise() > input$MinSNR, max_cor = max_cor(), good_cor = max_cor() > input$MinCor, max_cor_id = max_cor_id()) %>% left_join(meta, by = c("max_cor_id" = "sample_name")), file)}
   )
-  
-  
+
+
   ## Sharing data ----
   # Hide functions which shouldn't exist when there is no internet or
   # when the API token doesn't exist
@@ -976,9 +956,9 @@ match_metadata <- reactive({
     toggle(id = "go", condition = input$baseline_selection == "Manual")
     toggle(id = "reset", condition = input$baseline_selection == "Manual")
     })
-  
+
   #hide(id = "heatmap")
-  
+
   observe({
       #req(input$file1)
       toggle(id = "download_conformed", condition = !is.null(preprocessed$data))
@@ -990,7 +970,7 @@ match_metadata <- reactive({
       }
       #if(ncol(data()) > 1)
   })
-  
+
   observe({
       toggle(id = "placeholder1", condition = is.null(preprocessed$data))
       toggle(id = "placeholder2", condition = !is.null(preprocessed$data) | input$active_identification)
@@ -1012,17 +992,17 @@ match_metadata <- reactive({
   })
 
   #Validate the app functionality for default identification ----
-  
-  #Can use this to update the library by increasing the count to the total library size. 
+
+  #Can use this to update the library by increasing the count to the total library size.
   observeEvent(input$validate, {
-    load("data/library.RData") 
+    load("data/library.RData")
     cols <- sample(1:ncol(library), 100, replace = F) # add in to reduce sample
     preprocessed$data$wavenumber <- std_wavenumbers
     preprocessed$data$spectra <- library[,..cols] #Bring this back if wanting less
     preprocessed$data$coords <- generate_grid(x = ncol(preprocessed$data$spectra))[,filename := "test"]
-    
+
  })
-  
+
   # Log events ----
 
   observeEvent(input$go, {
@@ -1039,7 +1019,7 @@ match_metadata <- reactive({
         }
     }
   })
-  
+
   user_metadata <- reactive({
     data.frame(
              #user_name = input$fingerprint,
@@ -1092,7 +1072,7 @@ match_metadata <- reactive({
     }
 
   })
-  
+
   #Test ----
   output$event_test <- renderPrint({
       #print(!is.null(preprocessed$data))
@@ -1103,16 +1083,16 @@ match_metadata <- reactive({
       #print(preprocessed$data$coords$x)
       #print(preprocessed$data$coords$y)
       #print(preprocessed$data$coords$filename)
-      
+
       #print(dim(data()))
       #print(input$active_preprocessing)
-      #print(input$range_decision) 
+      #print(input$range_decision)
       #print(input$MinRange)
       #print(input$MaxRange)
       #print(input$smooth_decision)
       #print(input$smoother)
-      #print(input$baseline_decision) 
-      #print(input$baseline_selection) 
+      #print(input$baseline_decision)
+      #print(input$baseline_selection)
       #print(input$baseline)
       #print(preprocessed$data$coords$snr)
       #print(baseline_data())
