@@ -29,11 +29,6 @@ if(droptoken) library(aws.s3)
 #plan(multisession) ## Run in parallel on local computer when processing full map
 
 
-generate_grid <- function(x) {
-  base <- sqrt(x)
-  as.data.table(expand.grid(x = 1:adj_res(base, 1, ceiling), y = 1:adj_res(base, 1, ceiling))[1:x,])
-}
-
 #Read spectra functions ----
 read_map <- function(filename, share, id, std_wavenumbers){
   files <- unzip(zipfile = filename, list = TRUE)
@@ -50,11 +45,11 @@ read_map <- function(filename, share, id, std_wavenumbers){
   }
   else if(nrow(files) == 1 & any(grepl("\\.RData$", ignore.case = T, files$Name))){
     assign("file", base::get(load(paste0(tempdir(), "/", files$Name))))
-    dt <- generate_grid(x = ncol(file))
+    dt <- gen_grid(x = ncol(file))
     list(
       "wavenumber" =  std_wavenumbers,
       "spectra" = file,
-      "coords" = generate_grid(x = ncol(file))[,filename := files$Name])
+      "coords" = gen_grid(x = ncol(file))[,filename := files$Name])
   }
 
   else{
@@ -65,7 +60,7 @@ read_map <- function(filename, share, id, std_wavenumbers){
       "wavenumber" = file$wavenumber...1,
       "spectra" = file %>%
         select(-starts_with("wave")),
-      "coords" = generate_grid(nrow(files))[,filename := files$Name])
+      "coords" = gen_grid(nrow(files))[,filename := files$Name])
   }
 }
 
@@ -157,7 +152,7 @@ read_formatted_spectrum <- function(filename, share, id){
          spectra$wavenumber,
        "spectra" =
          spectra %>% select(-wavenumber),
-       "coords" = generate_grid(x = ncol(spectra) - 1)[,filename := gsub(".*/", "", filename)]
+       "coords" = gen_grid(x = ncol(spectra) - 1)[,filename := gsub(".*/", "", filename)]
   )
 }
 
