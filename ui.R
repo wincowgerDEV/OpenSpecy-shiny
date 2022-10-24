@@ -72,22 +72,6 @@ css <- HTML(
   }"
 )
 
-# CSS for star
-appCSS <-
-  ".mandatory_star { color: red; }
-    #loading_overlay {
-      position: absolute;
-      margin-top: 10%;
-      background: #000000;
-      opacity: 0.9;
-      z-index: 100;
-      left: 0;
-      right: 0;
-      height: 100%;
-      text-align: center;
-      color: #f7f7f9;
-    }"
-
 containerfunction <- function(...) {
   div(
     style = "padding:5rem",
@@ -122,7 +106,12 @@ bodyformat <- function() {
 
 # UI ----
 ui <-  dashboardPage(dark = T,
-        dashboardHeader(title = "Open Specy"),
+        #Header ----
+        dashboardHeader(
+            title = tags$a(href="https://www.openanalysis.org", 
+                           target="_blank",
+                        tags$img(src = "logo.png", 
+                                 style = 'width: 15vw; padding:1rem;'))),
         #fluidRow(
         #    column(10, align = "left", img(src = "logo.png", width = 300, height = 75)),
         #    column(2, align = "right",
@@ -138,7 +127,8 @@ ui <-  dashboardPage(dark = T,
         #           )
         #    )
         #), windowTitle = "Open Specy"
-            dashboardSidebar(
+        #Sidebar ----
+        dashboardSidebar(
             sidebarUserPanel(
                 #image = "https://drive.google.com/file/d/13iCjC10dV3giFhCCoir_8mnbwtHM1rMA/view?usp=sharing",
                 name = "Welcome!"
@@ -158,6 +148,7 @@ ui <-  dashboardPage(dark = T,
                 )
             )
         ),
+        #Body ----
         dashboardBody(
             #Script for all pages ----
                 # Required for any of the shinyjs functions.
@@ -168,10 +159,6 @@ ui <-  dashboardPage(dark = T,
             #inputUserid("fingerprint"),
             # tags$head(uiOutput("name_get")),singleton(tags$head()),
             #
-            # Change this for other themes
-            setBackgroundImage("jumbotron.png"),
-            
-            shinyjs::inlineCSS(appCSS),
             
             tags$head(tags$style(css),
                       tags$script(async = NA, src = "https://platform.twitter.com/widgets.js"),
@@ -193,10 +180,10 @@ ui <-  dashboardPage(dark = T,
                       #This is for the error messages.
             ),
             tabItems(
+
+                # About Tab ----
                 tabItem(
-                    #Title Panel ----
                    tabName = "about",
-  # About Tab ----
                        containerfunction(
                          h2("Welcome"),
                          fluidRow(
@@ -234,8 +221,6 @@ ui <-  dashboardPage(dark = T,
                                           to be added to the Open Specy mailing list"),
                                ),
                                br(),
-                               h3("Citation"),
-                               p(class = "lead", citation),
                                br(),br(),
                                p(class = "lead", "Open Specy is free and open
                                source thanks to our partners:")),
@@ -407,6 +392,10 @@ ui <-  dashboardPage(dark = T,
                        )
               )
         )
+    ),
+    #Footer ----
+    footer = dashboardFooter(
+        left = p(citation)
     )
 )
 
