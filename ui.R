@@ -207,7 +207,7 @@ ui <-  dashboardPage(dark = T,
                                p(class = "lead",
                                  HTML("Or just e-mail <a href='mailto:wincowger@gmail.com?subject=Open Specy mailing list'>
                                           wincowger@gmail.com</a>
-                                          to be added to the Open Specy mailing list"),
+                                          to be added to the Open Specy mailing list")
                                ),
                                br(),
                                p(class = "lead", "Open Specy is free and open
@@ -452,14 +452,6 @@ ui <-  dashboardPage(dark = T,
                                                                 type = "info", 
                                                                 size = "medium", rounded = TRUE
                                                             ),
-                                                        # downloadButton("download_testbatch",
-                                                        #                "Batch Sample",
-                                                        #                style = "background-color: rgb(0,0,0); color: rgb(255,255,255); float: left;") %>%
-                                                        #   add_prompt(
-                                                        #     message = "This is a sample spectrum that can be uploaded to the tool for testing it out and understanding how the csv files should be formatted.",
-                                                        #     type = "info", 
-                                                        #     size = "medium", rounded = TRUE
-                                                        #   ),
                                                         downloadButton("download_metadata",
                                                                        "Metadata",
                                                                        style = "background-color: rgb(75,0,130); color: rgb(255,255,255); float: left;") %>%
@@ -501,206 +493,189 @@ ui <-  dashboardPage(dark = T,
                                   )
                                   
                            ),
-                           
-                           
                            column(9,
                                   fluidRow(
-                                      column(9, 
                                              box(
                                                  title = "Analysis Parameters",
                                                  maximizable = T,
                                                  width = 12,
-                                                 solidHeader = T,
-                                                 background = "purple", 
                                                  fluidRow( 
                                                      column(6, 
-                                                            h5("Preprocessing"),
-                                                            fluidRow(
-                                                                column(9, prettySwitch(inputId = "active_preprocessing",
-                                                                                       label = "Activate",
+                                                                box(width = 12,
+                                                                    collapsed = T,
+                                                                    title = prettySwitch(inputId = "active_preprocessing",
+                                                                                       label = "Preprocessing",
                                                                                        inline = T,
                                                                                        value = F,
                                                                                        status = "success",
-                                                                                       fill = T) %>%
-                                                                           add_prompt(
-                                                                               message = "Select if preprocessing should happen.",
-                                                                               type = "info", position = "left",
-                                                                               size = "medium", rounded = TRUE
-                                                                           )
-                                                                ),
-                                                                column(3,
-                                                                       prettyToggle("view_preprocessing",
-                                                                                    icon_on = icon("eye"),
-                                                                                    icon_off = icon("eye-slash"), 
-                                                                                    label_on = NULL, label_off = NULL,
-                                                                                    status_on = "success",
-                                                                                    status_off = "default",
-                                                                                    outline = TRUE,
-                                                                                    plain = TRUE,
-                                                                                    bigger = T) %>%
-                                                                           add_prompt(
-                                                                               message = "View advanced preprocessing options.",
-                                                                               type = "info", 
-                                                                               size = "medium", rounded = TRUE
-                                                                           )
-                                                                )),
-                                                            conditionalPanel("input.view_preprocessing == true",
+                                                                                       fill = T),
+                                                                box(
+                                                                  title =  prettySwitch(inputId = "intensity_decision",
+                                                                     label = "Intensity Adjustment",
+                                                                     inline = T,
+                                                                                                                           value = F,
+                                                                                                                           status = "success",
+                                                                                                                           fill = T),
+                                                                                                          width = 12,
+                                                                                                          collapsed = T,
+                                                                                                              
+                                                                                                radioButtons("intensity_corr", "Intensity Units",
+                                                                                                             c("Absorbance" = "none", "Transmittance" = "transmittance", "Reflectance" = "reflectance")) %>%
+                                                                                                    add_prompt(
+                                                                                                        message = "If the uploaded spectrum is not in absorbance units, use this input to specify the units to convert from.The transmittance adjustment uses the log10(1/T) calculation which does not correct for system and particle characteristics. The reflectance adjustment uses the Kubelka-Munk equation (1-R)2/(2*R). We assume that the reflectance is formatted as a percent from 1-100 and first correct the intensity by dividing by 100 so that it fits the form expected by the equation. If none is selected, Open Specy assumes that the uploaded data is an absorbance spectrum.",
+                                                                                                        type = "info", 
+                                                                                                        size = "medium", rounded = TRUE
+                                                                                                    )
+                                                                                        )%>%
+                                                                                        add_prompt(
+                                                                                            message = "Open Specy assumes spectra are in Absorbance units, if they are not, you can select the appropriate transformation.",
+                                                                                            type = "info", position = "left",
+                                                                                            size = "medium", rounded = TRUE
+                                                                                        ),
                                                                              fluidRow(
-                                                                                 column(9,
-                                                                                        prettySwitch(inputId = "intensity_decision",
-                                                                                                     label = "Intensity Adjustment",
-                                                                                                     inline = T,
-                                                                                                     value = F,
-                                                                                                     status = "success",
-                                                                                                     fill = T) %>%
-                                                                                            add_prompt(
-                                                                                                message = "Open Specy assumes spectra are in Absorbance units, if they are not, you can select the appropriate transformation.",
-                                                                                                type = "info", position = "left",
-                                                                                                size = "medium", rounded = TRUE
-                                                                                            )
-                                                                                 ),
-                                                                                 column(3, align = "center",
-                                                                                        prettyToggle("intensity_tools",
-                                                                                                     icon_on = icon("eye"),
-                                                                                                     icon_off = icon("eye-slash"), 
-                                                                                                     label_on = NULL, label_off = NULL,
-                                                                                                     status_on = "success",
-                                                                                                     status_off = "default",
-                                                                                                     outline = TRUE,
-                                                                                                     plain = TRUE,
-                                                                                                     bigger = T) %>%
-                                                                                            add_prompt(
-                                                                                                message = "Toggle advanced intensity adjustment options.",
-                                                                                                type = "info", 
-                                                                                                size = "medium", rounded = TRUE
-                                                                                            ),
-                                                                                 )
-                                                                             ),
-                                                                             fluidRow(
-                                                                                 column(9,
-                                                                                        prettySwitch(inputId = "smooth_decision",
+                                                                                 box(width = 12,
+                                                                                     collapsed = T,
+                                                                                     title =  prettySwitch(inputId = "smooth_decision",
                                                                                                      label = "Smoothing",
                                                                                                      inline = T,
                                                                                                      value = F,
                                                                                                      status = "success",
-                                                                                                     fill = T) %>%
-                                                                                            add_prompt(
-                                                                                                message = "This smoother can enhance the signal to noise ratio of the data and uses a Savitzky-Golay filter with 12 running data points and the polynomial specified.",
-                                                                                                position = "left", type = "info", 
-                                                                                                size = "medium", rounded = TRUE
-                                                                                            )
-                                                                                 ),
-                                                                                 column(3, align = "center",
-                                                                                        prettyToggle("smooth_tools",
-                                                                                                     icon_on = icon("eye"),
-                                                                                                     icon_off = icon("eye-slash"), 
-                                                                                                     label_on = NULL, label_off = NULL,
-                                                                                                     status_on = "success",
-                                                                                                     status_off = "default",
-                                                                                                     outline = TRUE,
-                                                                                                     plain = TRUE,
-                                                                                                     bigger = T) %>%
-                                                                                            add_prompt(
-                                                                                                message = "Toggle advanced smoothing options",
-                                                                                                position = "left", type = "info", 
-                                                                                                size = "medium", rounded = TRUE
-                                                                                            ),
-                                                                                 )
-                                                                             ),
+                                                                                                     fill = T),
+                                                                                     sliderInput("smoother", "Smoothing Polynomial", min = 0, max = 7, value = 3) %>%
+                                                                                                               add_prompt(
+                                                                                                                   message = "Smoothing uses the SG filter on an 11 data point window with the polynomial order specified.",
+                                                                                                                   type = "info", 
+                                                                                                                   size = "medium", rounded = TRUE
+                                                                                                               )
+                                                                                        ) %>%
+                                                                                 add_prompt(
+                                                                                     message = "This smoother can enhance the signal to noise ratio of the data and uses a Savitzky-Golay filter with 12 running data points and the polynomial specified.",
+                                                                                     position = "left", type = "info", 
+                                                                                     size = "medium", rounded = TRUE
+                                                                                 )),
                                                                              fluidRow(
-                                                                                 column(9,
-                                                                                        prettySwitch("baseline_decision",
+                                                                                 box(width = 12,
+                                                                                     collapsed = T,
+                                                                                     title = prettySwitch("baseline_decision",
                                                                                                      label = "Baseline Correction",
                                                                                                      inline = T,
                                                                                                      value = F,
                                                                                                      status = "success",
-                                                                                                     fill = T) %>%
-                                                                                            add_prompt(
-                                                                                                message = "This baseline correction routine has two options for baseline correction, 1) the polynomial imodpolyfit procedure to itteratively find the baseline of the spectrum using a polynomial fit to the entire region of the spectra. 2) manual lines can be drawn using the line tool on the plot and the correct button will use the lines to subtract the baseline.",
-                                                                                                position = "left", type = "info", 
-                                                                                                size = "medium", rounded = TRUE
-                                                                                            ),
+                                                                                                     fill = T),
+                                                                                                          selectInput(inputId = "baseline_selection", label = "Baseline Correction Technique", choices = c("Polynomial", "Manual")) %>%
+                                                                                                              add_prompt(
+                                                                                                                  message = "Baseline correction techniques can be manually drawn on the spectra or automated using one of the other options.",
+                                                                                                                  type = "info", 
+                                                                                                                  size = "medium", rounded = TRUE
+                                                                                                              ),
+                                                                                     sliderInput("baseline", "Baseline Correction Polynomial", min = 1, max = 20, value = 8) %>%
+                                                                                         add_prompt(
+                                                                                             message = "This algorithm automatically fits to the baseline by fitting polynomials of the provided order to the whole spectrum.",
+                                                                                             type = "info", 
+                                                                                             size = "medium", rounded = TRUE
+                                                                                         ),
+                                                                                     fluidRow(
+                                                                                         column(6,
+                                                                                                actionButton("go", "Correct With Trace") %>%
+                                                                                                    add_prompt(
+                                                                                                        message = "After tracing the baseline spectrum on the plot, select this to correct the spectra.",
+                                                                                                        type = "info", 
+                                                                                                        size = "medium", rounded = TRUE
+                                                                                                    )
+                                                                                         ),
+                                                                                         column(6,
+                                                                                                actionButton("reset", "Reset") %>%
+                                                                                                    add_prompt(
+                                                                                                        message = "Reset the manual baseline to zero baseline.",
+                                                                                                        type = "info", 
+                                                                                                        size = "medium", rounded = TRUE
+                                                                                                    )
+                                                                                         )
+                                                                                     )
                                                                                         
-                                                                                 ),
-                                                                                 column(3, align = "center",
-                                                                                        prettyToggle("baseline_tools",
-                                                                                                     icon_on = icon("eye"),
-                                                                                                     icon_off = icon("eye-slash"), 
-                                                                                                     label_on = NULL, label_off = NULL,
-                                                                                                     status_on = "success",
-                                                                                                     status_off = "default",
-                                                                                                     outline = TRUE,
-                                                                                                     plain = TRUE,
-                                                                                                     bigger = T) %>%
-                                                                                            add_prompt(
-                                                                                                message = "Toggle advanced options for baseline corrections",
-                                                                                                position = "left", type = "info", 
-                                                                                                size = "medium", rounded = TRUE
-                                                                                            ),
-                                                                                 )
+                                                                                 ) %>%
+                                                                                     add_prompt(
+                                                                                         message = "This baseline correction routine has two options for baseline correction, 1) the polynomial imodpolyfit procedure to itteratively find the baseline of the spectrum using a polynomial fit to the entire region of the spectra. 2) manual lines can be drawn using the line tool on the plot and the correct button will use the lines to subtract the baseline.",
+                                                                                         position = "left", type = "info", 
+                                                                                         size = "medium", rounded = TRUE
+                                                                                     )
                                                                              ),
                                                                              fluidRow(
-                                                                                 column(9,
-                                                                                        prettySwitch("range_decision",
+                                                                                 box(width = 12,
+                                                                                     collapsed = T,
+                                                                                     title =  prettySwitch("range_decision",
                                                                                                      label = "Range Selection",
                                                                                                      inline = T,
                                                                                                      value = F,
                                                                                                      status = "success",
-                                                                                                     fill = T) %>%
-                                                                                            add_prompt(
-                                                                                                message = "Restricting the spectral range can remove regions of spectrum where no peaks exist and improve matching.",
-                                                                                                position = "left", type = "info", 
-                                                                                                size = "medium", rounded = TRUE
-                                                                                            )
+                                                                                                     fill = T),
+                                                                                     plotcontainerfunction(
+                                                                                         numericInput(
+                                                                                             "MaxRange",
+                                                                                             "Maximum Spectral Range",
+                                                                                             value = 6000,
+                                                                                             min = NA,
+                                                                                             max = NA,
+                                                                                             step = NA,
+                                                                                             width = NULL
+                                                                                         ),
+                                                                                         numericInput(
+                                                                                             "MinRange",
+                                                                                             "Minimum Spectral Range",
+                                                                                             value = 0,
+                                                                                             min = NA,
+                                                                                             max = NA,
+                                                                                             step = NA,
+                                                                                             width = NULL
+                                                                                         )
+                                                                                         
+                                                                                     ) %>%
+                                                                                         add_prompt(
+                                                                                             message = "Maximum and minimum wavenumbers to focus on.",
+                                                                                             type = "info", 
+                                                                                             size = "medium", rounded = TRUE
+                                                                                         )
+                                                                                     
+                                                                                 )%>%
+                                                                                     add_prompt(
+                                                                                         message = "Restricting the spectral range can remove regions of spectrum where no peaks exist and improve matching.",
+                                                                                         position = "left", type = "info", 
+                                                                                         size = "medium", rounded = TRUE
+                                                                                     )
                                                                                  ),
-                                                                                 column(3, align = "center",
-                                                                                        prettyToggle("range_tools",
-                                                                                                     icon_on = icon("eye"),
-                                                                                                     icon_off = icon("eye-slash"), 
-                                                                                                     label_on = NULL, label_off = NULL,
-                                                                                                     status_on = "success",
-                                                                                                     status_off = "default",
-                                                                                                     outline = TRUE,
-                                                                                                     plain = TRUE,
-                                                                                                     bigger = T) %>%
-                                                                                            add_prompt(
-                                                                                                message = "Toggle advanced range selection",
-                                                                                                position = "left", type = "info", 
-                                                                                                size = "medium", rounded = TRUE
-                                                                                            ),
-                                                                                        
-                                                                                 )
-                                                                             ),
                                                                              fluidRow(
-                                                                                 column(9,
-                                                                                        prettySwitch("derivative_decision",
+                                                                                 box(width = 12,
+                                                                                     collapsed = T,
+                                                                                        title = prettySwitch("derivative_decision",
                                                                                                      label = "Derivative",
                                                                                                      inline = T,
                                                                                                      value = T,
                                                                                                      status = "success",
-                                                                                                     fill = T) %>%
-                                                                                            add_prompt(
-                                                                                                message = "Derivative transformation decreases baseline and can amplify peak contrast.",
-                                                                                                type = "info", position = "left",
-                                                                                                size = "medium", rounded = TRUE
-                                                                                            )
-                                                                                 )),
+                                                                                                     fill = T) 
+                                                                                 )%>%
+                                                                                     add_prompt(
+                                                                                         message = "Derivative transformation decreases baseline and can amplify peak contrast.",
+                                                                                         type = "info", position = "left",
+                                                                                         size = "medium", rounded = TRUE
+                                                                                     )),
                                                                              fluidRow(
-                                                                                 column(9,
-                                                                                        prettySwitch("co2_decision",
+                                                                                 box(width = 12,
+                                                                                     title = prettySwitch("co2_decision",
                                                                                                      label = "Flatten FTIR CO2",
                                                                                                      inline = T,
                                                                                                      value = F,
                                                                                                      status = "success",
-                                                                                                     fill = T) %>%
-                                                                                            add_prompt(
-                                                                                                message = "Replace the wavenumbers from 2420 - 2200 with the mean of intensities at 2420 and 2200.",
-                                                                                                type = "info", 
-                                                                                                size = "medium", rounded = TRUE
-                                                                                            )
-                                                                                 )), 
+                                                                                                     fill = T)
+                                                                                         
+                                                                                 ) %>% add_prompt(
+                                                                                         message = "Replace the wavenumbers from 2420 - 2200 with the mean of intensities at 2420 and 2200.",
+                                                                                         type = "info", 
+                                                                                         size = "medium", rounded = TRUE
+                                                                                     )), 
                                                                              fluidRow(
-                                                                                 column(9,
+                                                                                 box(width = 12,
+                                                                                     title = "Threshold Signal to Noise",
+                                                                                     collapsed = T,
                                                                                         numericInput(
                                                                                             "MinSNR",
                                                                                             "Minimum Signal to Noise",
@@ -716,9 +691,7 @@ ui <-  dashboardPage(dark = T,
                                                                                                 size = "medium", rounded = TRUE
                                                                                             )
                                                                                  )
-                                                                             )
-                                                            ),
-                                                            
+                                                                             ),
                                                             fluidRow(
                                                                 column(12, 
                                                                        conditionalPanel("input.active_preprocessing == true",
@@ -739,24 +712,19 @@ ui <-  dashboardPage(dark = T,
                                                                        )
                                                                        
                                                                 )
-                                                            ),
+                                                            )
                                                             
+                                                        )
                                                      ),
                                                      column(6, 
-                                                            fluidRow(column(12, h5("Identification"),
                                                                             fluidRow(
-                                                                                column(9,
-                                                                                       prettySwitch(inputId = "active_identification",
-                                                                                                    label = "Activate",
+                                                                                box(width = 12,
+                                                                                    title = prettySwitch(inputId = "active_identification",
+                                                                                                    label = "Identification",
                                                                                                     inline = T,
                                                                                                     value = F,
                                                                                                     status = "success",
-                                                                                                    fill = T) %>%
-                                                                                           add_prompt(
-                                                                                               message = "Select if you want identificaiton to happen.",
-                                                                                               type = "info", 
-                                                                                               size = "medium", rounded = TRUE
-                                                                                           )),
+                                                                                                    fill = T),
                                                                                 column(3, 
                                                                                        prettyToggle("view_identification",
                                                                                                     icon_on = icon("eye"),
@@ -772,7 +740,7 @@ ui <-  dashboardPage(dark = T,
                                                                                                type = "info", 
                                                                                                size = "medium", rounded = TRUE
                                                                                            )
-                                                                                )))),
+                                                                                ),
                                                             conditionalPanel("input.view_identification == true",
                                                                              fluidRow(
                                                                                  column(3,
@@ -838,100 +806,8 @@ ui <-  dashboardPage(dark = T,
                                                                                  ))
                                                             
                                                             
-                                                     )))),
-                                      column(3, 
-                                             fluidRow(
-                                                 column(12,
-                                                        
-                                                        conditionalPanel("input.intensity_tools == true",
-                                                                         plotcontainerfunction(radioButtons("intensity_corr", "Intensity Units",
-                                                                                                            c("Absorbance" = "none", "Transmittance" = "transmittance", "Reflectance" = "reflectance")) %>%
-                                                                                                   add_prompt(
-                                                                                                       message = "If the uploaded spectrum is not in absorbance units, use this input to specify the units to convert from.The transmittance adjustment uses the log10(1/T) calculation which does not correct for system and particle characteristics. The reflectance adjustment uses the Kubelka-Munk equation (1-R)2/(2*R). We assume that the reflectance is formatted as a percent from 1-100 and first correct the intensity by dividing by 100 so that it fits the form expected by the equation. If none is selected, Open Specy assumes that the uploaded data is an absorbance spectrum.",
-                                                                                                       type = "info", 
-                                                                                                       size = "medium", rounded = TRUE
-                                                                                                   )),
-                                                        ),
-                                                        conditionalPanel("input.smooth_tools == true",
-                                                                         plotcontainerfunction(sliderInput("smoother", "Smoothing Polynomial", min = 0, max = 7, value = 3) %>%
-                                                                                                   add_prompt(
-                                                                                                       message = "Smoothing uses the SG filter on an 11 data point window with the polynomial order specified.",
-                                                                                                       type = "info", 
-                                                                                                       size = "medium", rounded = TRUE
-                                                                                                   )
-                                                                         )),
-                                                        conditionalPanel("input.baseline_tools == true",
-                                                                         plotcontainerfunction(
-                                                                             selectInput(inputId = "baseline_selection", label = "Baseline Correction Technique", choices = c("Polynomial", "Manual")) %>%
-                                                                                 add_prompt(
-                                                                                     message = "Baseline correction techniques can be manually drawn on the spectra or automated using one of the other options.",
-                                                                                     type = "info", 
-                                                                                     size = "medium", rounded = TRUE
-                                                                                 ),
-                                                                             sliderInput("baseline", "Baseline Correction Polynomial", min = 1, max = 20, value = 8) %>%
-                                                                                 add_prompt(
-                                                                                     message = "This algorithm automatically fits to the baseline by fitting polynomials of the provided order to the whole spectrum.",
-                                                                                     type = "info", 
-                                                                                     size = "medium", rounded = TRUE
-                                                                                 ),
-                                                                             fluidRow(
-                                                                                 column(6,
-                                                                                        actionButton("go", "Correct With Trace") %>%
-                                                                                            add_prompt(
-                                                                                                message = "After tracing the baseline spectrum on the plot, select this to correct the spectra.",
-                                                                                                type = "info", 
-                                                                                                size = "medium", rounded = TRUE
-                                                                                            ),
-                                                                                 ),
-                                                                                 column(6,
-                                                                                        actionButton("reset", "Reset") %>%
-                                                                                            add_prompt(
-                                                                                                message = "Reset the manual baseline to zero baseline.",
-                                                                                                type = "info", 
-                                                                                                size = "medium", rounded = TRUE
-                                                                                            ),
-                                                                                 )
-                                                                             )
-                                                                         )
-                                                                         
-                                                        ),
-                                                        conditionalPanel("input.range_tools == true",
-                                                                         plotcontainerfunction(
-                                                                             numericInput(
-                                                                                 "MaxRange",
-                                                                                 "Maximum Spectral Range",
-                                                                                 value = 6000,
-                                                                                 min = NA,
-                                                                                 max = NA,
-                                                                                 step = NA,
-                                                                                 width = NULL
-                                                                             ),
-                                                                             numericInput(
-                                                                                 "MinRange",
-                                                                                 "Minimum Spectral Range",
-                                                                                 value = 0,
-                                                                                 min = NA,
-                                                                                 max = NA,
-                                                                                 step = NA,
-                                                                                 width = NULL
-                                                                             )
-                                                                             
-                                                                         ) %>%
-                                                                             add_prompt(
-                                                                                 message = "Maximum and minimum wavenumbers to focus on.",
-                                                                                 type = "info", 
-                                                                                 size = "medium", rounded = TRUE
-                                                                             )
-                                                                         
-                                                        )
-                                                 )
-                                                 
-                                             )
-                                      )
-                                      
-                                  ),
+                                                     )))))),
                                   fluidRow(
-                                      
                                       column(12, 
                                              box(title = "Spectral Comparisons", 
                                                  maximizable = T,
@@ -965,21 +841,7 @@ ui <-  dashboardPage(dark = T,
                                              verbatimTextOutput("event_test"),
                                              style = bodyformat()
                                       )
-                                      
-                                      
-                                  ),
-                                  hr(),
-                                  fluidRow(
-                                      column(3),
-                                      column(6, align = "center",
-                                             tags$p(citation),
-                                             tags$p(version)
-                                      ),
-                                      column(3)
-                                      
-                                  ))))
-        )
-    ),
+                                  )))))),
     
     #Footer ----
     footer = dashboardFooter(
