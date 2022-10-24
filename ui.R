@@ -841,6 +841,49 @@ ui <-  dashboardPage(dark = T,
                                              verbatimTextOutput("event_test"),
                                              style = bodyformat()
                                       )
+                                      
+                                      #Partner With Us tab ----
+                                      #tabPanel("Partner With Us",
+                                      #         titlePanel(h4("Help us reach our goal to revolutionize spectroscopy.")),
+                                      #         br(),
+                                      #         fluidRow(
+                                      #             column(1),
+                                      #             column(3,
+                                      #                    plotcontainerfunction(
+                                      #                        tags$h3("Donate Cash"),
+                                      #                        icon = icon("shopping-cart"),
+                                      #                        img(src = "https://p.turbosquid.com/ts-thumb/rX/Wm1eqB/t5/currencysymbolsgoldensetc4dmodel000/jpg/1613802168/300x300/sharp_fit_q85/a31625492ce9c8009ab3e4281ad752006e1163ec/currencysymbolsgoldensetc4dmodel000.jpg", style = "padding:1rem; background-color:rgba(255,255,255, 0.9)", width = "100%"),
+                                      #                        actionButton(inputId = "ab1", label = "Donate", style="padding:4px; background-color: #2a9fd6; font-size:200%", width = "100%",
+                                      #                                     icon = icon("donate"),
+                                      #                                     onclick = "window.open('https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=wincowger@gmail.com&lc=US&item_name=Donation+to+Open+Specy&no_note=0&cn=&currency_code=USD&bn=PP-DonationsBF:btn_donateCC_LG.gif:NonHosted', '_blank')")
+                                      #                    )),
+                                      #             column(3,
+                                      #                    plotcontainerfunction(tags$h3("Buy From Swag Store"),
+                                      #                                          img(src = "https://image.spreadshirtmedia.com/image-server/v1/products/T813A823PA3132PT17X42Y46D1038541132FS4033/views/1,width=650,height=650,appearanceId=823/updated-logo-for-open-specy-designed-by-alex-mcgoran.jpg", style = "padding:1rem; background-color:rgba(255,255,255, 0.9)", width = "100%"),
+                                      #                                          actionButton(inputId = "ab2", label = "Shop", style="padding:4px; background-color: #2a9fd6; font-size:200%", width = "100%",
+                                      ##                                                       icon = icon("shopping-cart"),
+                                      #                                                      onclick ="window.open('https://shop.spreadshirt.com/openspecy/all', '_blank')")
+                                      #                   )),
+                                      #            column(3,
+                                      #                   plotcontainerfunction(
+                                      #                       h2("Contribute time"),
+                                      #                       #p(class = "lead", "We are looking for coders, moderators, spectroscopy experts, microplastic researchers, industry, government, and others to join the Open Specy team. Please contact Win at wincowger@gmail.com"),
+                                      #                      img(src = "https://health.sunnybrook.ca/wp-content/uploads/2020/02/healthy-hands-810x424.jpg", style = "padding:1rem; background-color:rgba(255,255,255, 0.9)", width = "100%"),
+                                      #                      actionButton(inputId = "ab3", label = "Guidelines", style="padding:4px; background-color: #2a9fd6; font-size:200%", width = "100%",
+                                      #                                   icon = icon("clock"),
+                                      #                                   onclick ="window.open('https://docs.google.com/document/d/1SaFgAYKsLbMSYdJClR5s42TyGmPRWihLQcf5zun_yfo/edit?usp=sharing', '_blank')")
+                                      #                  )
+                                      #           ),
+                                      #           column(2)
+                                      #       ),
+                                      #       fluidRow(
+                                      #           column(1),
+                                      #           column(9,
+                                      #                  div(style = "font-size:150%",
+                                      #                      DT::dataTableOutput("event_goals"),
+                                      #                      br()
+                                      #                  ),
+                                      #           ),
                                   )))))),
     
     #Footer ----
