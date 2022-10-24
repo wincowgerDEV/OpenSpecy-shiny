@@ -2,9 +2,6 @@
 .Rhistory
 .Rapp.history
 
-# Desktop drive files
-*.ini
-
 # Session Data files
 .RData
 
@@ -36,6 +33,7 @@ Meta
 # Other tokens
 droptoken.rds
 google-analytics.js
+s3_cred.csv
 
 # knitr and R markdown default cache directories
 *_cache/
@@ -54,6 +52,7 @@ docs/
 # System files
 *.ini
 *.swp
+*.bat
 .DS_Store
 
 # Open Specy files
@@ -69,6 +68,3 @@ test_*.RDS
 rsconnect/
 .db_url
 loggit.log
-s3_cred.csv
-
-*.bat
