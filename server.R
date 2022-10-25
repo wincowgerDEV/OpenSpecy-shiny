@@ -834,7 +834,7 @@ match_metadata <- reactive({
                xaxis = list(title = "wavenumber [cm<sup>-1</sup>]",
                             autorange = "reversed"),
                plot_bgcolor = 'rgb(17,0,73)',
-               paper_bgcolor = 'rgba(0,0,0,0.5)',
+               paper_bgcolor = 'rgba(0,0,0,1)',
                title = list(
                    text = if(!is.null(preprocessed$data)) paste0(paste0("Signal to Noise = ", round(signal_noise()[[data_click$data]], 2)), if(input$active_identification) paste0("; ", "Max Correlation = ", max_cor())) else "",
                    x = 0

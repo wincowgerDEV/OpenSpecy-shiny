@@ -72,6 +72,11 @@ ui <-  dashboardPage(dark = T,
                     "Analyze Spectra",
                     tabName = "analyze",
                     icon = icon("bar-chart")
+                ),
+                menuItem(
+                    "Partner With Us",
+                    tabName = "partner",
+                    icon = icon("hands-helping")
                 )
             )
         ),
@@ -156,86 +161,6 @@ ui <-  dashboardPage(dark = T,
                                  HTML("<iframe width='100%' height='100%' src='https://www.youtube-nocookie.com/embed/w55WGtV2Dz4' title='YouTube video player' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>")
                              )
                          ),
-                         accordion(
-                             id = "accordion_partners",
-                             accordionItem(
-                                 title = "Partners",
-                                 status = "info",
-                                 collapsed = T,
-                         fluidRow(
-                           column(6,
-                                  h3("Monetary Partners"),
-                                  panel(style = "align: centre",
-                                        div(class = "jumbotron",
-                                            style = "padding:0rem 1rem 0rem;
-                               border:solid #f7f7f9;
-                               background-color:rgb(205, 127, 50, 0.5)",
-                               h3("Thriving (10,000–100,000$)"),
-                               img(src = "https://mooreplasticresearch.org/wp-content/uploads/2021/06/HorizontalLogo-FullName-1.png", style = "padding:1rem; width:20vw"),
-                               img(src = "https://www.helmholtz-hida.de/typo3conf/ext/hida_site_package/Resources/Public/dest/images/logos/hida-logo.svg", style = "padding:1rem; width:20vw"),
-                               h4("Mcpike Zima Charitable Foundation")
-                                        ),
-                               div(class = "jumbotron",
-                                   style = "padding:0rem 1rem 0rem;
-                               border:solid #f7f7f9;
-                               background-color:rgb(3, 252, 15, 0.5)",
-                               h3("Maintaining (1,000–10,000$)"),
-                               img(src = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/UC_Riverside_logo.svg/1024px-UC_Riverside_logo.svg.png", style = "padding:1rem; width:10vw"),
-                               img(src = "https://upload.wikimedia.org/wikipedia/commons/7/7e/NSF_logo.png", style = "padding:1rem; width:10vw"),
-                               img(src = "https://www.awi.de/typo3conf/ext/sms_boilerplate/Resources/Public/Images/AWI/awi_logo.svg", style = "padding:1rem; width:10vw"),
-                               img(src = "https://www.hpu.edu/_global/images/header-logo.png", style = "padding:1rem; width:10vw"),
-                               img(src = "https://www.nist.gov/libraries/nist-component-library/dist/img/logo/nist_logo_sidestack_rev.svg", style = "padding:1rem; width:10vw"),
-                               img(src = "https://www.utoronto.ca/sites/all/themes/uoft_stark/img/U-of-T-logo.svg", style = "padding:1rem; width:10vw"),
-                               img(src = "https://www.uni-koblenz-landau.de/logo.png", style = "padding:1rem; width:10vw"),
-                               img(src = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Thermo_Fisher_Scientific_logo.svg/2560px-Thermo_Fisher_Scientific_logo.svg.png", style = "padding:1rem; width:10vw")
-                               ),
-                               div(class = "jumbotron",
-                                   style = "padding:0rem 1rem 0rem;
-                               border:solid #f7f7f9;
-                               background-color:rgb(0, 0, 255, 0.5)",
-                               h3("Supporting (100–1,000$)"),
-                               h5( "Jennifer Gadd")
-                               ),
-                               div(class = "jumbotron",
-                                   style = "padding:0rem 1rem 0rem;
-                               border:solid #f7f7f9;
-                               background-color:rgb(128, 0, 128, 0.5)",
-                               h3("Saving (<100$)"),
-                               h6("Susanne Brander (Oregon State University), Jeremy Conkle (TEXAS  A&M  UNIVERSITY  CORPUS  CHRISTI)")
-                               )
-                                  )
-                           ),
-                           column(6,
-                                  h3("In-Kind Partners"),
-                                  panel(style = "align: centre",
-                                        div(class = "jumbotron",
-                                            style = "padding:0rem 1rem 0rem;
-                                    border:solid #f7f7f9;
-                                    background-color:rgb(205, 127, 50, 0.5)",
-                                    h3("Thriving (10,000–100,000$)"),
-                                    h4("Win Cowger, Zacharias Steinmetz")
-                                        ),
-                                    div(class = "jumbotron",
-                                        style = "padding:0rem 1rem 0rem;
-                                    border:solid #f7f7f9;
-                                    background-color:rgb(3, 252, 15, 0.5)",
-                                    h3("Maintaining (1,000–10,000$)"),
-                                    h5("Sebastian Primpke, Andrew Gray, Chelsea Rochman, Orestis Herodotu, Hannah De Frond, Keenan Munno, Hannah Hapich, Jennifer Lynch")
-                                    ),
-                                    div(class = "jumbotron",
-                                        style = "padding:0rem 1rem 0rem;
-                                    border:solid #f7f7f9;
-                                    background-color:rgb(0, 0, 255, 0.5)",
-                                    h3("Supporting (100–1,000$)"),
-                                    h6( "Shreyas Patankar, Andrea Faltynkova, Alexandre Dehaut, Gabriel Erni Cassola, Aline Carvalho")
-                                    )
-                                  )
-                                )
-                            )
-                        )
-                       ),
-
-                   
                    accordion(
                        id = "accordion_instructions",
                        accordionItem(
@@ -277,28 +202,6 @@ ui <-  dashboardPage(dark = T,
                            downloadButton("downloadData5", "FTIR Library", style = "background-color: #2a9fd6; width: 100%;"),
                            downloadButton("downloadData4", "Raman Metadata", style = "background-color: #2a9fd6; width: 100%;"),
                            downloadButton("downloadData3", "FTIR Metadata", style = "background-color: #2a9fd6; width: 100%;")
-                         )
-                        )
-                       ),
-                       
-                   accordion(
-                       id = "accordion_contribute",
-                       accordionItem(
-                           title = "Contribute Spectra",
-                           status = "info",
-                           collapsed = TRUE,
-                         p(class = "lead", "To share spectra upload a file to the upload file tab.
-                             If you selected Share a copy of your spectra will be sent to the Community
-                             Data Warehouse on Open Science Framework. To add additional metadata,
-                             fill in the avaliable metadata fields and click -Share Data-. The
-                             spectra file that you uploaded along with your responses will be copied
-                             to the a -With Metadata- subfolder at the link below. All shared data holds
-                             a Creative Commons Attribution License 4.0."),
-                         div(
-                           a("Community Data Warehouse",
-                             onclick = "window.open('https://osf.io/rjg3c/', '_blank')",
-                             class="btn btn-primary btn-lg",
-                             style = "width: 100%;")
                          )
                         )
                        ),
@@ -415,7 +318,7 @@ ui <-  dashboardPage(dark = T,
                                                                        )
                                                                 ),
                                              #Ethical Ads
-                                             HTML('<div class = "dark raised" data-ea-publisher="openanalysisorg" data-ea-type="image" data-ea-style="stickybox"></div>'),
+                                             HTML('<div class = "dark raised" data-ea-publisher="openanalysisorg" data-ea-type="image" data-ea-style="stickybox"></div>')
                                              
                                              # <!-- Show an image ad -->
                                              # <div data-ea-publisher="openanalysisorg" data-ea-type="image"></div>'), 
@@ -541,7 +444,6 @@ ui <-  dashboardPage(dark = T,
                                                                                                      value = F,
                                                                                                      status = "success",
                                                                                                      fill = T),
-                                                                                     plotcontainerfunction(
                                                                                          numericInput(
                                                                                              "MaxRange",
                                                                                              "Maximum Spectral Range",
@@ -559,9 +461,7 @@ ui <-  dashboardPage(dark = T,
                                                                                              max = NA,
                                                                                              step = NA,
                                                                                              width = NULL
-                                                                                         )
-                                                                                         
-                                                                                     ) %>%
+                                                                                         ) %>%
                                                                                          add_prompt(
                                                                                              message = "Maximum and minimum wavenumbers to focus on.",
                                                                                              type = "info", 
@@ -652,30 +552,14 @@ ui <-  dashboardPage(dark = T,
                                                      column(6, 
                                                                             fluidRow(
                                                                                 box(width = 12,
+                                                                                    collapsed = T,
                                                                                     title = prettySwitch(inputId = "active_identification",
                                                                                                     label = "Identification",
                                                                                                     inline = T,
                                                                                                     value = F,
                                                                                                     status = "success",
                                                                                                     fill = T),
-                                                                                column(3, 
-                                                                                       prettyToggle("view_identification",
-                                                                                                    icon_on = icon("eye"),
-                                                                                                    icon_off = icon("eye-slash"), 
-                                                                                                    label_on = NULL, label_off = NULL,
-                                                                                                    status_on = "success",
-                                                                                                    status_off = "default",
-                                                                                                    outline = TRUE,
-                                                                                                    plain = TRUE,
-                                                                                                    bigger = T) %>%
-                                                                                           add_prompt(
-                                                                                               message = "View advanced identification options.",
-                                                                                               type = "info", 
-                                                                                               size = "medium", rounded = TRUE
-                                                                                           )
-                                                                                ),
-                                                            conditionalPanel("input.view_identification == true",
-                                                                             fluidRow(
+                                                                                                                                                            fluidRow(
                                                                                  column(3,
                                                                                         pickerInput(inputId = "Spectra", label =  "Library Type",
                                                                                                     choices =  c("Both" = "both",
@@ -737,36 +621,34 @@ ui <-  dashboardPage(dark = T,
                                                                                      type = "info", 
                                                                                      size = "medium", rounded = TRUE
                                                                                  ))
-                                                            
-                                                            
-                                                     )))))),
+                                                     ))))),
                                   fluidRow(
-                                      column(12, 
+                                      conditionalPanel("input.active_identification == true",
+                                                       
+                                                       downloadButton("download_matched", "Matched",
+                                                                      style = "background-color: rgb(125,249,255); color: rgb(0,0,0); float: left;") %>%
+                                                           add_prompt(
+                                                               message = "Download the spectra you are trying to identify.",
+                                                               type = "info", 
+                                                               size = "medium", rounded = TRUE
+                                                           )), #Make colors align with the plot, Make only appear if on plot.
+                                      conditionalPanel("input.active_identification == true",
+                                                       downloadButton("download_selected", "Selected",
+                                                                      style = "background-color: rgb(255,255,255); color: rgb(0,0,0); float: left;") %>%
+                                                           add_prompt(
+                                                               message = "Download the spectra for the match you selected in Open Specy.",
+                                                               type = "info", 
+                                                               size = "medium", rounded = TRUE
+                                                           )),
                                              box(title = "Spectral Comparisons", 
                                                  maximizable = T,
                                                  width = 12,
                                                  h4(id = "placeholder1", "Upload some data to get started..."), 
-                                                                   plotlyOutput("MyPlotC"),
+                                                                plotlyOutput("MyPlotC"),
                                                                 div(style = "overflow-x: scroll",
                                                                     DT::dataTableOutput("eventmetadata")   
                                                                 )), 
-                                             conditionalPanel("input.active_identification == true",
-                                                              
-                                                              downloadButton("download_matched", "Matched",
-                                                                             style = "background-color: rgb(125,249,255); color: rgb(0,0,0); float: left;") %>%
-                                                                  add_prompt(
-                                                                      message = "Download the spectra you are trying to identify.",
-                                                                      type = "info", 
-                                                                      size = "medium", rounded = TRUE
-                                                                  )), #Make colors align with the plot, Make only appear if on plot.
-                                             conditionalPanel("input.active_identification == true",
-                                                              downloadButton("download_selected", "Selected",
-                                                                             style = "background-color: rgb(255,255,255); color: rgb(0,0,0); float: left;") %>%
-                                                                  add_prompt(
-                                                                      message = "Download the spectra for the match you selected in Open Specy.",
-                                                                      type = "info", 
-                                                                      size = "medium", rounded = TRUE
-                                                                  )),
+                                            
                                              actionButton("validate", "Validate Settings", style = "float: right;") %>%
                                                  add_prompt(
                                                      message = "Run 100 spectra from internal library through the current settings to validate the routine.",
@@ -774,51 +656,144 @@ ui <-  dashboardPage(dark = T,
                                                      size = "medium", rounded = TRUE
                                                  ), 
                                              verbatimTextOutput("event_test")
-                                      )
                                       
-                                      #Partner With Us tab ----
-                                      #tabPanel("Partner With Us",
-                                      #         titlePanel(h4("Help us reach our goal to revolutionize spectroscopy.")),
-                                      #         br(),
-                                      #         fluidRow(
-                                      #             column(1),
-                                      #             column(3,
-                                      #                    plotcontainerfunction(
-                                      #                        tags$h3("Donate Cash"),
-                                      #                        icon = icon("shopping-cart"),
-                                      #                        img(src = "https://p.turbosquid.com/ts-thumb/rX/Wm1eqB/t5/currencysymbolsgoldensetc4dmodel000/jpg/1613802168/300x300/sharp_fit_q85/a31625492ce9c8009ab3e4281ad752006e1163ec/currencysymbolsgoldensetc4dmodel000.jpg", style = "padding:1rem; background-color:rgba(255,255,255, 0.9)", width = "100%"),
-                                      #                        actionButton(inputId = "ab1", label = "Donate", style="padding:4px; background-color: #2a9fd6; font-size:200%", width = "100%",
-                                      #                                     icon = icon("donate"),
-                                      #                                     onclick = "window.open('https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=wincowger@gmail.com&lc=US&item_name=Donation+to+Open+Specy&no_note=0&cn=&currency_code=USD&bn=PP-DonationsBF:btn_donateCC_LG.gif:NonHosted', '_blank')")
-                                      #                    )),
-                                      #             column(3,
-                                      #                    plotcontainerfunction(tags$h3("Buy From Swag Store"),
-                                      #                                          img(src = "https://image.spreadshirtmedia.com/image-server/v1/products/T813A823PA3132PT17X42Y46D1038541132FS4033/views/1,width=650,height=650,appearanceId=823/updated-logo-for-open-specy-designed-by-alex-mcgoran.jpg", style = "padding:1rem; background-color:rgba(255,255,255, 0.9)", width = "100%"),
-                                      #                                          actionButton(inputId = "ab2", label = "Shop", style="padding:4px; background-color: #2a9fd6; font-size:200%", width = "100%",
-                                      ##                                                       icon = icon("shopping-cart"),
-                                      #                                                      onclick ="window.open('https://shop.spreadshirt.com/openspecy/all', '_blank')")
-                                      #                   )),
-                                      #            column(3,
-                                      #                   plotcontainerfunction(
-                                      #                       h2("Contribute time"),
-                                      #                       #p(class = "lead", "We are looking for coders, moderators, spectroscopy experts, microplastic researchers, industry, government, and others to join the Open Specy team. Please contact Win at wincowger@gmail.com"),
-                                      #                      img(src = "https://health.sunnybrook.ca/wp-content/uploads/2020/02/healthy-hands-810x424.jpg", style = "padding:1rem; background-color:rgba(255,255,255, 0.9)", width = "100%"),
-                                      #                      actionButton(inputId = "ab3", label = "Guidelines", style="padding:4px; background-color: #2a9fd6; font-size:200%", width = "100%",
-                                      #                                   icon = icon("clock"),
-                                      #                                   onclick ="window.open('https://docs.google.com/document/d/1SaFgAYKsLbMSYdJClR5s42TyGmPRWihLQcf5zun_yfo/edit?usp=sharing', '_blank')")
-                                      #                  )
-                                      #           ),
-                                      #           column(2)
-                                      #       ),
-                                      #       fluidRow(
-                                      #           column(1),
-                                      #           column(9,
-                                      #                  div(style = "font-size:150%",
-                                      #                      DT::dataTableOutput("event_goals"),
-                                      #                      br()
-                                      #                  ),
-                                      #           ),
-                                  )))))),
+                                      
+                                      
+                                  )))),
+              tabItem("partner", 
+                      #Partner With Us tab ----
+                               titlePanel(h4("Help us reach our goal to revolutionize spectroscopy.")),
+                               br(),
+                      accordion(
+                          id = "accordion_partners",
+                          accordionItem(
+                              title = "Partners",
+                              status = "info",
+                              collapsed = T,
+                              fluidRow(
+                                  column(6,
+                                         h3("Monetary Partners"),
+                                         panel(style = "align: centre",
+                                               div(class = "jumbotron",
+                                                   style = "padding:0rem 1rem 0rem;
+                               border:solid #f7f7f9;
+                               background-color:rgb(205, 127, 50, 0.5)",
+                                                   h3("Thriving (10,000–100,000$)"),
+                                                   img(src = "https://mooreplasticresearch.org/wp-content/uploads/2021/06/HorizontalLogo-FullName-1.png", style = "padding:1rem; width:20vw"),
+                                                   img(src = "https://www.helmholtz-hida.de/typo3conf/ext/hida_site_package/Resources/Public/dest/images/logos/hida-logo.svg", style = "padding:1rem; width:20vw"),
+                                                   h4("Mcpike Zima Charitable Foundation")
+                                               ),
+                                               div(class = "jumbotron",
+                                                   style = "padding:0rem 1rem 0rem;
+                               border:solid #f7f7f9;
+                               background-color:rgb(3, 252, 15, 0.5)",
+                                                   h3("Maintaining (1,000–10,000$)"),
+                                                   img(src = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/UC_Riverside_logo.svg/1024px-UC_Riverside_logo.svg.png", style = "padding:1rem; width:10vw"),
+                                                   img(src = "https://upload.wikimedia.org/wikipedia/commons/7/7e/NSF_logo.png", style = "padding:1rem; width:10vw"),
+                                                   img(src = "https://www.awi.de/typo3conf/ext/sms_boilerplate/Resources/Public/Images/AWI/awi_logo.svg", style = "padding:1rem; width:10vw"),
+                                                   img(src = "https://www.hpu.edu/_global/images/header-logo.png", style = "padding:1rem; width:10vw"),
+                                                   img(src = "https://www.nist.gov/libraries/nist-component-library/dist/img/logo/nist_logo_sidestack_rev.svg", style = "padding:1rem; width:10vw"),
+                                                   img(src = "https://www.utoronto.ca/sites/all/themes/uoft_stark/img/U-of-T-logo.svg", style = "padding:1rem; width:10vw"),
+                                                   img(src = "https://www.uni-koblenz-landau.de/logo.png", style = "padding:1rem; width:10vw"),
+                                                   img(src = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Thermo_Fisher_Scientific_logo.svg/2560px-Thermo_Fisher_Scientific_logo.svg.png", style = "padding:1rem; width:10vw")
+                                               ),
+                                               div(class = "jumbotron",
+                                                   style = "padding:0rem 1rem 0rem;
+                               border:solid #f7f7f9;
+                               background-color:rgb(0, 0, 255, 0.5)",
+                                                   h3("Supporting (100–1,000$)"),
+                                                   h5( "Jennifer Gadd")
+                                               ),
+                                               div(class = "jumbotron",
+                                                   style = "padding:0rem 1rem 0rem;
+                               border:solid #f7f7f9;
+                               background-color:rgb(128, 0, 128, 0.5)",
+                                                   h3("Saving (<100$)"),
+                                                   h6("Susanne Brander (Oregon State University), Jeremy Conkle (TEXAS  A&M  UNIVERSITY  CORPUS  CHRISTI)")
+                                               )
+                                         )
+                                  ),
+                                  column(6,
+                                         h3("In-Kind Partners"),
+                                         panel(style = "align: centre",
+                                               div(class = "jumbotron",
+                                                   style = "padding:0rem 1rem 0rem;
+                                    border:solid #f7f7f9;
+                                    background-color:rgb(205, 127, 50, 0.5)",
+                                                   h3("Thriving (10,000–100,000$)"),
+                                                   h4("Win Cowger, Zacharias Steinmetz")
+                                               ),
+                                               div(class = "jumbotron",
+                                                   style = "padding:0rem 1rem 0rem;
+                                    border:solid #f7f7f9;
+                                    background-color:rgb(3, 252, 15, 0.5)",
+                                                   h3("Maintaining (1,000–10,000$)"),
+                                                   h5("Sebastian Primpke, Andrew Gray, Chelsea Rochman, Orestis Herodotu, Hannah De Frond, Keenan Munno, Hannah Hapich, Jennifer Lynch")
+                                               ),
+                                               div(class = "jumbotron",
+                                                   style = "padding:0rem 1rem 0rem;
+                                    border:solid #f7f7f9;
+                                    background-color:rgb(0, 0, 255, 0.5)",
+                                                   h3("Supporting (100–1,000$)"),
+                                                   h6( "Shreyas Patankar, Andrea Faltynkova, Alexandre Dehaut, Gabriel Erni Cassola, Aline Carvalho")
+                                               )
+                                         )
+                                  )
+                              )
+                          ),
+                          
+                          accordionItem(
+                              title = "Donate Cash",
+                              status = "info",
+                              collapsed = TRUE,
+                              icon = icon("donate"),
+                              img(src = "https://p.turbosquid.com/ts-thumb/rX/Wm1eqB/t5/currencysymbolsgoldensetc4dmodel000/jpg/1613802168/300x300/sharp_fit_q85/a31625492ce9c8009ab3e4281ad752006e1163ec/currencysymbolsgoldensetc4dmodel000.jpg", style = "padding:1rem; background-color:rgba(255,255,255, 0.9)", width = "100%"),
+                              actionButton(inputId = "ab1", label = "Donate", style="padding:4px; background-color: #2a9fd6; font-size:200%", width = "100%",
+                                           onclick = "window.open('https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=wincowger@gmail.com&lc=US&item_name=Donation+to+Open+Specy&no_note=0&cn=&currency_code=USD&bn=PP-DonationsBF:btn_donateCC_LG.gif:NonHosted', '_blank')")
+                              ),
+                          
+                          accordionItem(
+                              title = "Buy Merch",
+                              status = "info",
+                              collapsed = TRUE,
+                              icon = icon("shopping-cart"),
+                              img(src = "https://image.spreadshirtmedia.com/image-server/v1/products/T813A823PA3132PT17X42Y46D1038541132FS4033/views/1,width=650,height=650,appearanceId=823/updated-logo-for-open-specy-designed-by-alex-mcgoran.jpg", style = "padding:1rem; background-color:rgba(255,255,255, 0.9)", width = "100%"),
+                              actionButton(inputId = "ab2", label = "Shop", style="padding:4px; background-color: #2a9fd6; font-size:200%", width = "100%",
+                                           onclick ="window.open('https://shop.spreadshirt.com/openspecy/all', '_blank')")
+                          ),
+                          accordionItem(
+                              title = "Contribute Time",
+                              status = "info",
+                              collapsed = T,
+                              icon = icon("clock"),
+                                  
+                                  img(src = "https://health.sunnybrook.ca/wp-content/uploads/2020/02/healthy-hands-810x424.jpg", style = "padding:1rem; background-color:rgba(255,255,255, 0.9)", width = "100%"),
+                              actionButton(inputId = "ab3", label = "Guidelines", style="padding:4px; background-color: #2a9fd6; font-size:200%", width = "100%",
+                                           onclick ="window.open('https://docs.google.com/document/d/1SaFgAYKsLbMSYdJClR5s42TyGmPRWihLQcf5zun_yfo/edit?usp=sharing', '_blank')")
+                          ),
+                          
+                              accordionItem(
+                                  title = "Contribute Spectra",
+                                  status = "info",
+                                  collapsed = TRUE,
+                                  p(class = "lead", "To share spectra upload a file to the upload file tab.
+                             If you selected Share a copy of your spectra will be sent to the Community
+                             Data Warehouse on Open Science Framework. To add additional metadata,
+                             fill in the avaliable metadata fields and click -Share Data-. The
+                             spectra file that you uploaded along with your responses will be copied
+                             to the a -With Metadata- subfolder at the link below. All shared data holds
+                             a Creative Commons Attribution License 4.0."),
+                                  div(
+                                      a("Community Data Warehouse",
+                                        onclick = "window.open('https://osf.io/rjg3c/', '_blank')",
+                                        class="btn btn-primary btn-lg",
+                                        style = "width: 100%;")
+                                  )
+                              )
+                      )
+                )
+              )
+            ),
     
     #Footer ----
     footer = dashboardFooter(
