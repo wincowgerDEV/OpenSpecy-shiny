@@ -28,50 +28,6 @@ citation <- HTML(
 )
 
 # Functions ----
-labelMandatory <- function(label) {
-  tagList(
-    label,
-    span("*", class = "mandatory_star")
-  )
-}
-
-inputUserid <- function(inputId, value="") {
-  #   print(paste(inputId, "=", value))
-  tagList(
-    singleton(tags$head(tags$script(src = "js/md5.js",
-                                    type="text/javascript"))),
-    singleton(tags$head(tags$script(src = "js/shinyBindings.js",
-                                    type="text/javascript"))),
-    tags$body(onload="setvalues()"),
-    tags$input(id = inputId, class = "userid", value=as.character(value),
-               type = "text", style = "display:none;")
-  )
-}
-
-inputIp <- function(inputId, value=""){
-  tagList(
-    singleton(tags$head(tags$script(src = "js/md5.js",
-                                    type="text/javascript"))),
-    singleton(tags$head(tags$script(src = "js/shinyBindings.js",
-                                    type="text/javascript"))),
-    tags$body(onload="setvalues()"),
-    tags$input(id = inputId, class = "ipaddr", value=as.character(value),
-               type = "text", style = "display:none;")
-  )
-}
-
-css <- HTML(
-  "body {
-    color: #fff;
-  }
-  .nav-tabs > li[class=active] > a,
-  .nav-tabs > li[class=active] > a:focus,
-  .nav-tabs > li[class=active] > a:hover
-  {
-    background-color: #000;
-  }"
-)
-
 containerfunction <- function(...) {
   div(
     style = "padding:5rem",
@@ -89,20 +45,6 @@ plotcontainerfunction <- function(...) {
         ...)
   )
 }
-
-columnformat <- function() {
-  # 'background-color:rgba(0, 0, 0, 0.5);
-  # padding-bottom: 2rem'
-}
-
-bodyformat <- function() {
-  # 'background-color:rgba(0, 0, 0, 0.5);
-  # padding-bottom: 2rem'
-}
-
-#linefunction <- function(...){
-#  hr(style = "color:#f7f7f9", ...)
-#}
 
 # UI ----
 ui <-  dashboardPage(dark = T,
@@ -139,28 +81,15 @@ ui <-  dashboardPage(dark = T,
                 # Required for any of the shinyjs functions.
             use_prompt(),
             shinyjs::useShinyjs(),
-            #extendShinyjs(text = "shinyjs.resetClick = function() { Shiny.onInputChange('.clientValue-plotly_click-A', 'null'); }", functions = "resetClick"),
-            #inputIp("ipid"),
-            #inputUserid("fingerprint"),
-            # tags$head(uiOutput("name_get")),singleton(tags$head()),
-            #
-            
-            tags$head(tags$style(css),
-                      tags$script(async = NA, src = "https://platform.twitter.com/widgets.js"),
+
+            tags$head(
                       tags$script(async = T, src = "https://buttons.github.io/buttons.js"),
                       tags$style(HTML("
                     .shiny-output-error-validation {
                     color: green; font-size: 300%;
                     }
                     ")),
-                      #Ethical Ads
-                      HTML('<script async src="https://media.ethicalads.io/media/client/ethicalads.min.js"></script>
-                   
-                   <!-- Show a text ad -->
-                   <div class = "dark raised" data-ea-publisher="openanalysisorg" data-ea-type="image" data-ea-style="stickybox"></div>'),
-                      
-                      # <!-- Show an image ad -->
-                      # <div data-ea-publisher="openanalysisorg" data-ea-type="image"></div>'), 
+                     HTML('<script async src="https://media.ethicalads.io/media/client/ethicalads.min.js"></script>'),
                       tags$link(rel = "icon", type = "image/png", href = "favicon.png")
                       #This is for the error messages.
             ),
@@ -373,6 +302,8 @@ ui <-  dashboardPage(dark = T,
                          )
                         )
                        ),
+                   #Ethical Ads
+                   HTML('<div class = "dark raised" data-ea-publisher="openanalysisorg" data-ea-type="image" data-ea-style="stickybox"></div>'),
                        
                    accordion(
                        id = "accordion_validation",
@@ -416,7 +347,7 @@ ui <-  dashboardPage(dark = T,
               tabItem("analyze", 
                        br(),
                        fluidRow(
-                           column(3, style = columnformat(),
+                           column(3,
                                   tags$label("Choose .csv (preferred), .zip, .asp, .jdx, .spc, .spa, or .0 File"),
                                   
                                   fluidRow(
@@ -476,17 +407,18 @@ ui <-  dashboardPage(dark = T,
                                                  id = "placeholder2", 
                                                  width = 12,
                                                  maximizable = T,
-                                                 background = "fuchsia",
-                                                 solidHeader = T,
-                                                                       fluidRow(style = "padding:1rem",
+                                                                       fluidRow(style = "padding:1rem; overflow-x: scroll",
                                                                                 plotlyOutput("heatmap"),
                                                                                 conditionalPanel("input.active_identification == true",
                                                                                                  DT::dataTableOutput("event"))
                                                                                 
                                                                        )
                                                                 ),
-                                             HTML(' <!-- Show an image ad -->
-                                                         <div class = "dark raised" data-ea-publisher="openanalysisorg" data-ea-type="image" data-ea-style="stickybox"></div>')
+                                             #Ethical Ads
+                                             HTML('<div class = "dark raised" data-ea-publisher="openanalysisorg" data-ea-type="image" data-ea-style="stickybox"></div>'),
+                                             
+                                             # <!-- Show an image ad -->
+                                             # <div data-ea-publisher="openanalysisorg" data-ea-type="image"></div>'), 
                                              
                                              
                                       )
@@ -511,14 +443,13 @@ ui <-  dashboardPage(dark = T,
                                                                                        fill = T),
                                                                 box(
                                                                   title =  prettySwitch(inputId = "intensity_decision",
-                                                                     label = "Intensity Adjustment",
-                                                                     inline = T,
-                                                                                                                           value = F,
-                                                                                                                           status = "success",
-                                                                                                                           fill = T),
-                                                                                                          width = 12,
-                                                                                                          collapsed = T,
-                                                                                                              
+                                                                                        label = "Intensity Adjustment",
+                                                                                        value = F,
+                                                                                        inline = T,
+                                                                                        status = "success",
+                                                                                        fill = T),
+                                                                                        width = 12,
+                                                                                        collapsed = T,
                                                                                                 radioButtons("intensity_corr", "Intensity Units",
                                                                                                              c("Absorbance" = "none", "Transmittance" = "transmittance", "Reflectance" = "reflectance")) %>%
                                                                                                     add_prompt(
@@ -660,6 +591,7 @@ ui <-  dashboardPage(dark = T,
                                                                                      )),
                                                                              fluidRow(
                                                                                  box(width = 12,
+                                                                                     collapsed = T,
                                                                                      title = prettySwitch("co2_decision",
                                                                                                      label = "Flatten FTIR CO2",
                                                                                                      inline = T,
@@ -814,7 +746,9 @@ ui <-  dashboardPage(dark = T,
                                                  width = 12,
                                                  h4(id = "placeholder1", "Upload some data to get started..."), 
                                                                    plotlyOutput("MyPlotC"),
-                                                                   DT::dataTableOutput("eventmetadata")), 
+                                                                div(style = "overflow-x: scroll",
+                                                                    DT::dataTableOutput("eventmetadata")   
+                                                                )), 
                                              conditionalPanel("input.active_identification == true",
                                                               
                                                               downloadButton("download_matched", "Matched",
@@ -838,8 +772,7 @@ ui <-  dashboardPage(dark = T,
                                                      type = "info", 
                                                      size = "medium", rounded = TRUE
                                                  ), 
-                                             verbatimTextOutput("event_test"),
-                                             style = bodyformat()
+                                             verbatimTextOutput("event_test")
                                       )
                                       
                                       #Partner With Us tab ----
