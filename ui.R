@@ -441,15 +441,16 @@ ui <-  dashboardPage(dark = T,
                                                                                        value = F,
                                                                                        status = "success",
                                                                                        fill = T),
-                                                                box(
-                                                                  title =  prettySwitch(inputId = "intensity_decision",
+                                                                fluidRow(
+                                                                    box(
+                                                                    width = 12,
+                                                                    collapsed = T,
+                                                                    title =  prettySwitch(inputId = "intensity_decision",
                                                                                         label = "Intensity Adjustment",
                                                                                         value = F,
                                                                                         inline = T,
                                                                                         status = "success",
                                                                                         fill = T),
-                                                                                        width = 12,
-                                                                                        collapsed = T,
                                                                                                 radioButtons("intensity_corr", "Intensity Units",
                                                                                                              c("Absorbance" = "none", "Transmittance" = "transmittance", "Reflectance" = "reflectance")) %>%
                                                                                                     add_prompt(
@@ -457,12 +458,12 @@ ui <-  dashboardPage(dark = T,
                                                                                                         type = "info", 
                                                                                                         size = "medium", rounded = TRUE
                                                                                                     )
-                                                                                        )%>%
+                                                                                        ) %>%
                                                                                         add_prompt(
                                                                                             message = "Open Specy assumes spectra are in Absorbance units, if they are not, you can select the appropriate transformation.",
                                                                                             type = "info", position = "left",
                                                                                             size = "medium", rounded = TRUE
-                                                                                        ),
+                                                                                        )),
                                                                              fluidRow(
                                                                                  box(width = 12,
                                                                                      collapsed = T,
