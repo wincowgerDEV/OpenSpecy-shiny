@@ -524,29 +524,29 @@ ui <-  dashboardPage(dark = T,
                                                                                                 size = "medium", rounded = TRUE
                                                                                             )
                                                                                  )
-                                                                             ),
-                                                            fluidRow(
-                                                                column(12, 
-                                                                       conditionalPanel("input.active_preprocessing == true",
-                                                                                        downloadButton("downloadData", "Processed",
-                                                                                                       style = "background-color: rgb(240,19,207); color: rgb(0,0,0); float: left;") %>%
-                                                                                            add_prompt(
-                                                                                                message = "Some users may wish to save a copy of their processed spectrum. This button downloads the processed spectrum as a csv file.",
-                                                                                                type = "info", 
-                                                                                                size = "medium", rounded = TRUE
-                                                                                            ),
-                                                                                        downloadButton("downloadsnr", "SNR Data",
-                                                                                                       style = "background-color: rgb(0,0,0); color: rgb(255,255,255); float: left;") %>%
-                                                                                            add_prompt(
-                                                                                                message = "Some users may wish to save a copy of their signal to noise information. This button downloads the signal to noise data as a csv file.",
-                                                                                                type = "info", 
-                                                                                                size = "medium", rounded = TRUE
-                                                                                            )
-                                                                       )
-                                                                       
-                                                                )
-                                                            )
+                                                                             )
                                                             
+                                                        ),
+                                                        fluidRow(
+                                                            column(12, 
+                                                                   conditionalPanel("input.active_preprocessing == true",
+                                                                                    downloadButton("downloadData", "Processed",
+                                                                                                   style = "background-color: rgb(240,19,207); color: rgb(0,0,0); float: left;") %>%
+                                                                                        add_prompt(
+                                                                                            message = "Some users may wish to save a copy of their processed spectrum. This button downloads the processed spectrum as a csv file.",
+                                                                                            type = "info", 
+                                                                                            size = "medium", rounded = TRUE
+                                                                                        ),
+                                                                                    downloadButton("downloadsnr", "SNR Data",
+                                                                                                   style = "background-color: rgb(0,0,0); color: rgb(255,255,255); float: left;") %>%
+                                                                                        add_prompt(
+                                                                                            message = "Some users may wish to save a copy of their signal to noise information. This button downloads the signal to noise data as a csv file.",
+                                                                                            type = "info", 
+                                                                                            size = "medium", rounded = TRUE
+                                                                                        )
+                                                                   )
+                                                                   
+                                                            )
                                                         )
                                                      ),
                                                      column(6, 
@@ -623,31 +623,33 @@ ui <-  dashboardPage(dark = T,
                                                                                  ))
                                                      ))))),
                                   fluidRow(
-                                      conditionalPanel("input.active_identification == true",
-                                                       
-                                                       downloadButton("download_matched", "Matched",
-                                                                      style = "background-color: rgb(125,249,255); color: rgb(0,0,0); float: left;") %>%
-                                                           add_prompt(
-                                                               message = "Download the spectra you are trying to identify.",
-                                                               type = "info", 
-                                                               size = "medium", rounded = TRUE
-                                                           )), #Make colors align with the plot, Make only appear if on plot.
-                                      conditionalPanel("input.active_identification == true",
-                                                       downloadButton("download_selected", "Selected",
-                                                                      style = "background-color: rgb(255,255,255); color: rgb(0,0,0); float: left;") %>%
-                                                           add_prompt(
-                                                               message = "Download the spectra for the match you selected in Open Specy.",
-                                                               type = "info", 
-                                                               size = "medium", rounded = TRUE
-                                                           )),
+                                      
                                              box(title = "Spectral Comparisons", 
                                                  maximizable = T,
                                                  width = 12,
-                                                 h4(id = "placeholder1", "Upload some data to get started..."), 
+                                                 
+                                                 h4(id = "placeholder1", "Upload some data to get started..."),
                                                                 plotlyOutput("MyPlotC"),
                                                                 div(style = "overflow-x: scroll",
                                                                     DT::dataTableOutput("eventmetadata")   
-                                                                )), 
+                                                                ),
+                                                 conditionalPanel("input.active_identification == true",
+                                                                  
+                                                                  downloadButton("download_matched", "Matched",
+                                                                                 style = "background-color: rgb(125,249,255); color: rgb(0,0,0); float: left;") %>%
+                                                                      add_prompt(
+                                                                          message = "Download the spectra you are trying to identify.",
+                                                                          type = "info", 
+                                                                          size = "medium", rounded = TRUE
+                                                                      )), #Make colors align with the plot, Make only appear if on plot.
+                                                 conditionalPanel("input.active_identification == true",
+                                                                  downloadButton("download_selected", "Selected",
+                                                                                 style = "background-color: rgb(255,255,255); color: rgb(0,0,0); float: left;") %>%
+                                                                      add_prompt(
+                                                                          message = "Download the spectra for the match you selected in Open Specy.",
+                                                                          type = "info", 
+                                                                          size = "medium", rounded = TRUE
+                                                                      ))), 
                                             
                                              actionButton("validate", "Validate Settings", style = "float: right;") %>%
                                                  add_prompt(
@@ -746,9 +748,9 @@ ui <-  dashboardPage(dark = T,
                               title = "Donate Cash",
                               status = "info",
                               collapsed = TRUE,
-                              icon = icon("donate"),
-                              img(src = "https://p.turbosquid.com/ts-thumb/rX/Wm1eqB/t5/currencysymbolsgoldensetc4dmodel000/jpg/1613802168/300x300/sharp_fit_q85/a31625492ce9c8009ab3e4281ad752006e1163ec/currencysymbolsgoldensetc4dmodel000.jpg", style = "padding:1rem; background-color:rgba(255,255,255, 0.9)", width = "100%"),
+                              #img(src = "https://p.turbosquid.com/ts-thumb/rX/Wm1eqB/t5/currencysymbolsgoldensetc4dmodel000/jpg/1613802168/300x300/sharp_fit_q85/a31625492ce9c8009ab3e4281ad752006e1163ec/currencysymbolsgoldensetc4dmodel000.jpg", style = "padding:1rem; background-color:rgba(255,255,255, 0.9)", width = "100%"),
                               actionButton(inputId = "ab1", label = "Donate", style="padding:4px; background-color: #2a9fd6; font-size:200%", width = "100%",
+                                           icon = icon("donate"),
                                            onclick = "window.open('https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=wincowger@gmail.com&lc=US&item_name=Donation+to+Open+Specy&no_note=0&cn=&currency_code=USD&bn=PP-DonationsBF:btn_donateCC_LG.gif:NonHosted', '_blank')")
                               ),
                           
@@ -756,20 +758,19 @@ ui <-  dashboardPage(dark = T,
                               title = "Buy Merch",
                               status = "info",
                               collapsed = TRUE,
-                              icon = icon("shopping-cart"),
                               img(src = "https://image.spreadshirtmedia.com/image-server/v1/products/T813A823PA3132PT17X42Y46D1038541132FS4033/views/1,width=650,height=650,appearanceId=823/updated-logo-for-open-specy-designed-by-alex-mcgoran.jpg", style = "padding:1rem; background-color:rgba(255,255,255, 0.9)", width = "100%"),
                               actionButton(inputId = "ab2", label = "Shop", style="padding:4px; background-color: #2a9fd6; font-size:200%", width = "100%",
+                                           icon = icon("shopping-cart"),
                                            onclick ="window.open('https://shop.spreadshirt.com/openspecy/all', '_blank')")
                           ),
                           accordionItem(
                               title = "Contribute Time",
                               status = "info",
                               collapsed = T,
-                              icon = icon("clock"),
-                                  
                                   img(src = "https://health.sunnybrook.ca/wp-content/uploads/2020/02/healthy-hands-810x424.jpg", style = "padding:1rem; background-color:rgba(255,255,255, 0.9)", width = "100%"),
-                              actionButton(inputId = "ab3", label = "Guidelines", style="padding:4px; background-color: #2a9fd6; font-size:200%", width = "100%",
-                                           onclick ="window.open('https://docs.google.com/document/d/1SaFgAYKsLbMSYdJClR5s42TyGmPRWihLQcf5zun_yfo/edit?usp=sharing', '_blank')")
+                                        actionButton(inputId = "ab3", label = "Guidelines", style="padding:4px; background-color: #2a9fd6; font-size:200%", width = "100%",
+                                                     icon = icon("clock"),
+                                                     onclick ="window.open('https://docs.google.com/document/d/1SaFgAYKsLbMSYdJClR5s42TyGmPRWihLQcf5zun_yfo/edit?usp=sharing', '_blank')")
                           ),
                           
                               accordionItem(
