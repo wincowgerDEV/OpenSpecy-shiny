@@ -47,9 +47,10 @@ plotcontainerfunction <- function(...) {
 }
 
 # UI ----
-ui <-  dashboardPage(dark = T,
+ui <-  dashboardPage(dark = T, 
+                     fullscreen = T,
         #Header ----
-        dashboardHeader(
+        dashboardHeader( 
             title = tags$a(href="https://www.openanalysis.org", 
                            target="_blank",
                         tags$img(src = "logo.png", 
