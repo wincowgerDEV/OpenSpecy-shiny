@@ -587,7 +587,7 @@ dashboardPage(dark = T,
                                                  
                                                  h4(id = "placeholder1", "Upload some data to get started..."),
                                                  fluidRow(
-                                                                plotlyOutput("MyPlotC", height = "50vw"),
+                                                                plotlyOutput("MyPlotC", inline = T, height = "40%"),
                                                                 div(style = "overflow-x: scroll",
                                                                     DT::dataTableOutput("eventmetadata")   
                                                                 )),
@@ -639,8 +639,8 @@ dashboardPage(dark = T,
                                border:solid #f7f7f9;
                                background-color:rgb(205, 127, 50, 0.5)",
                                                    h3("Thriving (10,000–100,000$)"),
-                                                   img(src = "https://mooreplasticresearch.org/wp-content/uploads/2021/06/HorizontalLogo-FullName-1.png", style = "padding:1rem; width:20vw"),
-                                                   img(src = "https://www.helmholtz-hida.de/typo3conf/ext/hida_site_package/Resources/Public/dest/images/logos/hida-logo.svg", style = "padding:1rem; width:20vw"),
+                                                   img(src = "https://mooreplasticresearch.org/wp-content/uploads/2021/06/HorizontalLogo-FullName-1.png", style = "width:20vw"),
+                                                   img(src = "https://www.helmholtz-hida.de/typo3conf/ext/hida_site_package/Resources/Public/dest/images/logos/hida-logo.svg", style = "width:20vw"),
                                                    h4("Mcpike Zima Charitable Foundation")
                                                ),
                                                div(class = "jumbotron",
@@ -648,14 +648,14 @@ dashboardPage(dark = T,
                                border:solid #f7f7f9;
                                background-color:rgb(3, 252, 15, 0.5)",
                                                    h3("Maintaining (1,000–10,000$)"),
-                                                   img(src = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/UC_Riverside_logo.svg/1024px-UC_Riverside_logo.svg.png", style = "padding:1rem; width:10vw"),
-                                                   img(src = "https://upload.wikimedia.org/wikipedia/commons/7/7e/NSF_logo.png", style = "padding:1rem; width:10vw"),
-                                                   img(src = "https://www.awi.de/typo3conf/ext/sms_boilerplate/Resources/Public/Images/AWI/awi_logo.svg", style = "padding:1rem; width:10vw"),
-                                                   img(src = "https://www.hpu.edu/_global/images/header-logo.png", style = "padding:1rem; width:10vw"),
-                                                   img(src = "https://www.nist.gov/libraries/nist-component-library/dist/img/logo/nist_logo_sidestack_rev.svg", style = "padding:1rem; width:10vw"),
-                                                   img(src = "https://www.utoronto.ca/sites/all/themes/uoft_stark/img/U-of-T-logo.svg", style = "padding:1rem; width:10vw"),
-                                                   img(src = "https://www.uni-koblenz-landau.de/logo.png", style = "padding:1rem; width:10vw"),
-                                                   img(src = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Thermo_Fisher_Scientific_logo.svg/2560px-Thermo_Fisher_Scientific_logo.svg.png", style = "padding:1rem; width:10vw")
+                                                   img(src = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/UC_Riverside_logo.svg/1024px-UC_Riverside_logo.svg.png", style = "width:10vw"),
+                                                   img(src = "https://upload.wikimedia.org/wikipedia/commons/7/7e/NSF_logo.png", style = "width:10vw"),
+                                                   img(src = "https://www.awi.de/typo3conf/ext/sms_boilerplate/Resources/Public/Images/AWI/awi_logo.svg", style = "width:10vw"),
+                                                   img(src = "https://www.hpu.edu/_global/images/header-logo.png", style = "width:10vw"),
+                                                   img(src = "https://www.nist.gov/libraries/nist-component-library/dist/img/logo/nist_logo_sidestack_rev.svg", style = "width:10vw"),
+                                                   img(src = "https://www.utoronto.ca/sites/all/themes/uoft_stark/img/U-of-T-logo.svg", style = "width:10vw"),
+                                                   img(src = "https://www.uni-koblenz-landau.de/logo.png", style = "width:10vw"),
+                                                   img(src = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Thermo_Fisher_Scientific_logo.svg/2560px-Thermo_Fisher_Scientific_logo.svg.png", style = "width:10vw")
                                                ),
                                                div(class = "jumbotron",
                                                    style = "padding:0rem 1rem 0rem;
