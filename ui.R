@@ -578,6 +578,7 @@ dashboardPage(dark = T,
                                                                                      size = "medium", rounded = TRUE
                                                                                  ))
                                                      ))))),
+                                  ## Plot ----
                                   fluidRow(
                                       
                                              box(title = "Spectral Comparisons", 
@@ -585,10 +586,11 @@ dashboardPage(dark = T,
                                                  width = 12,
                                                  
                                                  h4(id = "placeholder1", "Upload some data to get started..."),
-                                                                plotlyOutput("MyPlotC"),
+                                                 fluidRow(
+                                                                plotlyOutput("MyPlotC", height = "50vw"),
                                                                 div(style = "overflow-x: scroll",
                                                                     DT::dataTableOutput("eventmetadata")   
-                                                                ),
+                                                                )),
                                                  conditionalPanel("input.active_identification == true",
                                                                   
                                                                   downloadButton("download_matched", "Matched",
