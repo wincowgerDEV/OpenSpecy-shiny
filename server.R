@@ -84,7 +84,7 @@ observeEvent(input$file1, {
           filename = as.character(file$datapath), share = NULL, id = "test", std_wavenumbers = std_wavenumbers
       )
 
-      if(droptoken & input$share_decision & input$file1$size < 10^7){
+      if(droptoken & input$share_decision & input$file1$size < 10^7 & !inherits(tryCatch(curl(url = "www.google.com", open = "rb"), error = function(e) {e}), what = "simpleError")){
           put_object(
               file = file.path(as.character(input$file1$datapath)),
               object = paste0("users/", "/", session_id, "/", digest(rout), "/", gsub(".*/", "", as.character(file$name))),

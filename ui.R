@@ -159,8 +159,6 @@ dashboardPage(dark = T,
                          )
                         )
                        ),
-                   #Ethical Ads
-                   HTML('<div class = "dark raised" data-ea-publisher="openanalysisorg" data-ea-type="image" data-ea-style="stickybox"></div>'),
                        
                    accordion(
                        id = "accordion_validation",
@@ -270,14 +268,7 @@ dashboardPage(dark = T,
                                                                                                  DT::dataTableOutput("event"))
                                                                                 
                                                                        )
-                                                                ),
-                                             #Ethical Ads
-                                             HTML('<div class = "dark raised" data-ea-publisher="openanalysisorg" data-ea-type="image" data-ea-style="stickybox"></div>')
-                                             
-                                             # <!-- Show an image ad -->
-                                             # <div data-ea-publisher="openanalysisorg" data-ea-type="image"></div>'), 
-                                             
-                                             
+                                                                )
                                       )
                                   )
                                   
@@ -761,7 +752,9 @@ dashboardPage(dark = T,
                        a(href = "TOS.txt", "Terms And Conditions", class = "lead"),
                        br(),
                        a(href = "privacy_policy.txt", "Privacy Policy", class = "lead")
-                       )
+                       ),
+                     #Ethical Ads
+                     HTML('<div class = "dark raised" data-ea-publisher="openanalysisorg" data-ea-type="image" data-ea-style="stickybox"></div>')
         )
     )
 )
