@@ -417,93 +417,25 @@ match_metadata <- reactive({
             event_register("plotly_click")
   })
 
-
-
-
-  # Data Download options
-  output$downloadData5 <- downloadHandler(
-    filename = function() {"ftir_library.csv"},
-    content = function(file) {fwrite(spec_lib[["ftir"]][["library"]], file)}
-  )
-
-  output$downloadData6 <- downloadHandler(
-    filename = function() {"raman_library.csv"},
-    content = function(file) {fwrite(spec_lib[["raman"]][["library"]], file)}
-  )
-
-  output$downloadData4 <- downloadHandler(
-    filename = function() {"raman_metadata.csv"},
-    content = function(file) {fwrite(spec_lib[["raman"]][["metadata"]], file)}
-  )
-
-  output$downloadData3 <- downloadHandler(
-    filename = function() {"ftir_metadata.csv"},
-    content = function(file) {fwrite(spec_lib[["ftir"]][["metadata"]], file)}
-  )
-
-  output$download_testdata <- downloadHandler(
-    filename = function() {"testdata.csv"},
-    content = function(file) {fwrite(testdata, file)}
-  )
-
-  output$download_testbatch <- downloadHandler(
-    filename = function() {"testbatch.zip"},
-    content = function(file) {zip(zipfile = file, files = c("data/HDPE__1.csv", "data/HDPE__2.csv", "data/HDPE__3.csv"))}
-  )
-
-  ## Download own data ----
-
-  output$download_conformed <- downloadHandler(
-      filename = function() {paste('data-conformed-', human_ts(), '.csv', sep='')},
-      content = function(file){fwrite(data()%>% mutate(wavenumber = conform_res(preprocessed$data$wavenumber)), file)}
-  )
-
-  output$downloadData <- downloadHandler(
-    filename = function() {paste('data-processed-', human_ts(), '.csv', sep='')},
-    content = function(file) {fwrite(baseline_data() %>% mutate(wavenumber = conform_res(preprocessed$data$wavenumber)), file)}
-  )
-
-  output$downloadsnr <- downloadHandler(
-    filename = function() {paste('data-snr-', human_ts(), '.csv', sep='')},
-    content = function(file) {fwrite(data.table(x = preprocessed$data$coords$x, y = preprocessed$data$coords$y, filename = preprocessed$data$coords$filename, signal_to_noise = signal_noise(), good_signal = signal_noise() > input$MinSNR), file)}
-  )
-
-
-  ## Download selected data ----
-  output$download_selected <- downloadHandler(
-    filename = function() {paste('data-selected-', human_ts(), '.csv', sep='')},
-    content = function(file) {fwrite(match_selected() %>% select(-SpectrumIdentity), file)}
-  )
-
-  ## Download matched data ----
-  output$download_matched <- downloadHandler(
-    filename = function() {paste('data-matched-', human_ts(), '.csv', sep='')},
-    content = function(file) {fwrite(DataR_plot() %>% select(-SpectrumIdentity), file)}
-  )
-
-  ## Download matched data ----
-  output$download_metadata <- downloadHandler(
-    filename = function() {paste('data-analysis-metadata-', human_ts(), '.csv', sep='')},
-    content = function(file) {fwrite(user_metadata(), file)}
-  )
-
-  ## Download validation data ----
-  output$validation_download <- downloadHandler(
-      filename = function() {paste('data-analysis-validation-', human_ts(), '.csv', sep='')},
-      content = function(file) {fwrite(validation$data, file)}
-  )
-
-  ## Download correlation matrix ----
-  output$correlation_download <- downloadHandler(
-      filename = function() {paste('data-analysis-correlations-', human_ts(), '.csv', sep='')},
-      content = function(file) {fwrite(correlation %>% mutate(library_names = names(libraryR())), file)}
-  )
-
-  output$topmatch_metadata_download <- downloadHandler(
-      filename = function() {paste('data-analysis-topmatch-metadata-', human_ts(), '.csv', sep='')},
-      content = function(file) {fwrite(data.table(x = preprocessed$data$coords$x, y = preprocessed$data$coords$y, filename = preprocessed$data$coords$filename, signal_to_noise = signal_noise(), good_signal = signal_noise() > input$MinSNR, max_cor = max_cor(), good_cor = max_cor() > input$MinCor, max_cor_id = max_cor_id()) %>% left_join(meta, by = c("max_cor_id" = "sample_name")), file)}
-  )
-
+  # Data Download options ----
+  output$download_data <- downloadHandler(
+       filename = function() {paste0(input$download_selection, human_ts(), ".csv")},
+        content = function(file) {
+            if(input$download_selection == "Test Data") {fwrite(testdata, file)}
+            if(input$download_selection == "Spectra Conformed") {fwrite(data()%>% mutate(wavenumber = conform_res(preprocessed$data$wavenumber)), file)}
+            if(input$download_selection == "Spectra Processed") {fwrite(baseline_data() %>% mutate(wavenumber = conform_res(preprocessed$data$wavenumber)), file)}
+            if(input$download_selection == "Spectra SNR") {fwrite(data.table(x = preprocessed$data$coords$x, y = preprocessed$data$coords$y, filename = preprocessed$data$coords$filename, signal_to_noise = signal_noise(), good_signal = signal_noise() > input$MinSNR), file)}
+            if(input$download_selection == "Spectra Selected") {fwrite(match_selected() %>% select(-SpectrumIdentity), file)}
+            if(input$download_selection == "Match Selected") {fwrite(DataR_plot() %>% select(-SpectrumIdentity), file)}
+            if(input$download_selection == "Match Metadata") {fwrite(user_metadata(), file)}
+            if(input$download_selection == "All Correlation Data") {fwrite(correlation %>% mutate(library_names = names(libraryR())), file)}
+            if(input$download_selection == "Top Correlation Data") {fwrite(data.table(x = preprocessed$data$coords$x, y = preprocessed$data$coords$y, filename = preprocessed$data$coords$filename, signal_to_noise = signal_noise(), good_signal = signal_noise() > input$MinSNR, max_cor = max_cor(), good_cor = max_cor() > input$MinCor, max_cor_id = max_cor_id()) %>% left_join(meta, by = c("max_cor_id" = "sample_name")), file)}
+            if(input$download_selection == "Validation Data") {fwrite(validation$data, file)}
+            if(input$download_selection == "FTIR Library") {fwrite(spec_lib[["ftir"]][["library"]], file)}
+            if(input$download_selection == "Raman Library") {fwrite(spec_lib[["raman"]][["library"]], file)}
+            if(input$download_selection == "FTIR Library Metadata") {fwrite(spec_lib[["ftir"]][["metadata"]], file)}
+            if(input$download_selection == "Raman Library Metadata") {fwrite(spec_lib[["raman"]][["metadata"]], file)}
+            })
 
   ## Sharing data ----
   # Hide functions which shouldn't exist when there is no internet or
@@ -557,7 +489,7 @@ match_metadata <- reactive({
     cols <- sample(1:ncol(library), 100, replace = F) # add in to reduce sample
     preprocessed$data$wavenumber <- std_wavenumbers
     preprocessed$data$spectra <- library[,..cols] #Bring this back if wanting less
-    preprocessed$data$coords <- generate_grid(x = ncol(preprocessed$data$spectra))[,filename := "test"]
+    preprocessed$data$coords <- gen_grid(x = ncol(preprocessed$data$spectra))[,filename := "test"]
 
  })
 

@@ -30,6 +30,9 @@ if(droptoken) library(aws.s3)
 #plan(multisession) ## Run in parallel on local computer when processing full map
 
 
+#Download Data Functions ----
+
+
 #Read spectra functions ----
 read_map <- function(filename, share, id, std_wavenumbers){
   files <- unzip(zipfile = filename, list = TRUE)
@@ -309,8 +312,10 @@ render_tweet <- function(x){renderUI({
 
 # Load all data ----
 load_data <- function() {
-
-  testdata <- raman_hdpe
+  data("raman_hdpe")
+  
+  testdata <-  data.table(wavenumber = raman_hdpe$wavenumber, 
+                 intensity = raman_hdpe$spectra$intensity)
 
   tweets <- c("https://twitter.com/EnviroMichaela/status/1471622640183959555",
               #"https://twitter.com/OpenSpecy/status/1472361269093023744",

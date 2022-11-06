@@ -203,6 +203,7 @@ dashboardPage(dark = T,
                        br(),
                        fluidRow(
                            column(3,
+                                  #Upload/download ----
                                   tags$label("Choose .csv (preferred), .zip, .asp, .jdx, .spc, .spa, or .0 File"),
                                   
                                   fluidRow(
@@ -230,26 +231,32 @@ dashboardPage(dark = T,
                                                  ),
                                              fluidRow(
                                                  column(12, 
-                                                        downloadButton("download_testdata",
-                                                                       "Single Sample",
-                                                                       style = "background-color: rgb(0,0,0); color: rgb(255,255,255); float: left;") %>%
+                                                        selectInput(inputId = "download_selection", 
+                                                                    label = "Download Type", 
+                                                                    choices = c("Test Data",
+                                                                                "Spectra Conformed",
+                                                                                "Spectra Processed",
+                                                                                "Spectra SNR",
+                                                                                "Spectra Selected",
+                                                                                "Match Selected",
+                                                                                "Match Metadata",
+                                                                                "All Correlation Data",
+                                                                                "Top Correlation Data",
+                                                                                "Validation Data",
+                                                                                "FTIR Library", 
+                                                                                "Raman Library", 
+                                                                                "FTIR Library Metadata",
+                                                                                "Raman Library Metadata")) %>%
+                                                            add_prompt(
+                                                                message = "Options for downloading spectra and metadata from the analysis.",
+                                                                type = "info", 
+                                                                size = "medium", rounded = TRUE
+                                                            ),
+                                                        downloadButton("download_data",
+                                                                       "Download",
+                                                                       style = "background-color: rgb(0,0,0); color: rgb(255,255,255);") %>%
                                                             add_prompt(
                                                                 message = "This is a sample spectrum that can be uploaded to the tool for testing it out and understanding how the csv files should be formatted.",
-                                                                type = "info", 
-                                                                size = "medium", rounded = TRUE
-                                                            ),
-                                                        downloadButton("download_metadata",
-                                                                       "Metadata",
-                                                                       style = "background-color: rgb(75,0,130); color: rgb(255,255,255); float: left;") %>%
-                                                            add_prompt(
-                                                                message = "Download metadata for all settings currently used.",
-                                                                type = "info", 
-                                                                size = "medium", rounded = TRUE
-                                                            ),
-                                                        downloadButton("download_conformed", "Conformed",
-                                                                       style = "background-color: rgb(240,236,19); color: rgb(0,0,0); float: left;") %>%
-                                                            add_prompt(
-                                                                message = "Download the current spectra conformed to Open Specy's internal format used in the analysis you see.",
                                                                 type = "info", 
                                                                 size = "medium", rounded = TRUE
                                                             )
