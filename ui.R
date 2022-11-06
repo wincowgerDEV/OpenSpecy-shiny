@@ -290,6 +290,8 @@ dashboardPage(dark = T,
                                                  width = 12,
                                                  fluidRow( 
                                                      column(6, 
+                                                            ## Preprocessing ----
+                                                            fluidRow(
                                                                 box(width = 12,
                                                                     collapsed = T,
                                                                     title = prettySwitch(inputId = "active_preprocessing",
@@ -502,7 +504,9 @@ dashboardPage(dark = T,
                                                                    
                                                             )
                                                         )
+                                                    )
                                                      ),
+                                                     ## Identification ----
                                                      column(6, 
                                                                             fluidRow(
                                                                                 box(width = 12,
