@@ -228,7 +228,16 @@ observeEvent(input$reset, {
   
   observeEvent(input$MinCor | max_cor(), {
       req(input$file1)
-      updateProgressBar(session = session, id = "correlation_progress", value = sum(max_cor() > input$MinCor)/length(max_cor()) * 100)
+      updateProgressBar(session = session, 
+                        id = "correlation_progress", 
+                        value = sum(max_cor() > input$MinCor)/length(max_cor()) * 100)
+  })
+  
+  observeEvent(input$MinCor | max_cor(), {
+      req(input$file1)
+      updateProgressBar(session = session, 
+                        id = "match_progress", 
+                        value = (1 - sum(signal_noise() < input$MinSNR | max_cor() < input$MinCor)/length(signal_noise())) * 100)
   })
   
   correlation <- reactive({

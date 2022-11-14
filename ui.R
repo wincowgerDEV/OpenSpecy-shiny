@@ -251,9 +251,12 @@ dashboardPage(dark = T,
                                                  width = 12,
                                                  maximizable = T,
                                                  shinyWidgets::progressBar(id = "signal_progress", value = 0, status = "success", title = "Good Signal", display_pct = TRUE),
-                                                 shinyWidgets::progressBar(id = "correlation_progress", value = 0, status = "success", title = "Good Correlations", display_pct = TRUE),
-                                                                plotlyOutput("heatmap")
-                                                                ),
+                                                 conditionalPanel("input.active_identification == true",
+                                                        shinyWidgets::progressBar(id = "correlation_progress", value = 0, status = "success", title = "Good Correlations", display_pct = TRUE),
+                                                        shinyWidgets::progressBar(id = "match_progress", value = 0, status = "success", title = "Good Identifications", display_pct = TRUE)
+                                                    ),
+                                                    plotlyOutput("heatmap")
+                                                    ),
                                              conditionalPanel("input.active_identification == true",
                                              box(title = "Match Selection", 
                                                  id = "selection_box", 
