@@ -241,7 +241,6 @@ dashboardPage(dark = T,
                                                          size = "small", rounded = TRUE
                                                             ),
                                              br(),
-                                             
                                              box(title = "Map Selection",
                                                  id = "placeholder2", 
                                                  width = 12,

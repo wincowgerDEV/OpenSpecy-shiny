@@ -432,10 +432,6 @@ match_metadata <- reactive({
                             autorange = "reversed"),
                plot_bgcolor = 'rgb(17,0,73)',
                paper_bgcolor = 'rgba(0,0,0,0.5)',
-               title = list(
-                   text = if(!is.null(preprocessed$data)) paste0(paste0("Signal to Noise = ", round(signal_noise()[[data_click$data]], 2)), if(input$active_identification) paste0("; ", "Max Correlation = ", max_cor())) else "",
-                   x = 0
-               ),
                font = list(color = '#FFFFFF')) %>%
         config(modeBarButtonsToAdd = list("drawopenpath", "eraseshape"))
     #}
@@ -518,10 +514,30 @@ match_metadata <- reactive({
       }
       #if(ncol(data()) > 1)
   })
+  
+  observeEvent(ncol(preprocessed$data$spectra),{
+      if(ncol(preprocessed$data$spectra) > 1){
+          updateBox(
+          id = "placeholder2",
+          action = "restore",
+          options = NULL,
+          session = shiny::getDefaultReactiveDomain()
+      ) 
+      }
+      else{
+          updateBox(
+              id = "placeholder2",
+              action = "remove",
+              options = NULL,
+              session = shiny::getDefaultReactiveDomain()
+          )
+      }
+  })
+  
 
   observe({
       toggle(id = "placeholder1", condition = is.null(preprocessed$data))
-      toggle(id = "placeholder2", condition = !is.null(preprocessed$data) | input$active_identification)
+      toggle(id = "placeholder2", condition = ncol(preprocessed$data$spectra) > 1)
       toggle(id = "placeholder3", condition = is.null(preprocessed$data))
   })
 
