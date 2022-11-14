@@ -419,9 +419,10 @@ match_metadata <- reactive({
 
   # Data Download options ----
   output$download_data <- downloadHandler(
-       filename = function() {paste0(input$download_selection, human_ts(), ".csv")},
+       filename = function() {if(input$download_selection == "Test Map") {paste0(input$download_selection, human_ts(), ".zip")} else{paste0(input$download_selection, human_ts(), ".csv")}},
         content = function(file) {
             if(input$download_selection == "Test Data") {fwrite(testdata, file)}
+            if(input$download_selection == "Test Map") {zip(file, unzip("data/CA_tiny_map.zip"))}
             if(input$download_selection == "Spectra Conformed") {fwrite(data()%>% mutate(wavenumber = conform_res(preprocessed$data$wavenumber)), file)}
             if(input$download_selection == "Spectra Processed") {fwrite(baseline_data() %>% mutate(wavenumber = conform_res(preprocessed$data$wavenumber)), file)}
             if(input$download_selection == "Spectra SNR") {fwrite(data.table(x = preprocessed$data$coords$x, y = preprocessed$data$coords$y, filename = preprocessed$data$coords$filename, signal_to_noise = signal_noise(), good_signal = signal_noise() > input$MinSNR), file)}
