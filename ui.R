@@ -246,20 +246,24 @@ dashboardPage(dark = T,
                                              
                                              br(),
                                              
-                                             box(title = "Spectral Selection",
+                                             box(title = "Map Selection",
                                                  id = "placeholder2", 
                                                  width = 12,
                                                  maximizable = T,
-                                                                       fluidRow(style = "padding:1rem; overflow-x: scroll",
-                                                                                plotlyOutput("heatmap"),
-                                                                                conditionalPanel("input.active_identification == true",
-                                                                                                 DT::dataTableOutput("event"))
-                                                                                
-                                                                       )
-                                                                )
+                                                 shinyWidgets::progressBar(id = "signal_progress", value = 0, status = "success", title = "Good Signal", display_pct = TRUE),
+                                                 shinyWidgets::progressBar(id = "correlation_progress", value = 0, status = "success", title = "Good Correlations", display_pct = TRUE),
+                                                                plotlyOutput("heatmap")
+                                                                ),
+                                             conditionalPanel("input.active_identification == true",
+                                             box(title = "Match Selection", 
+                                                 id = "selection_box", 
+                                                 width = 12, 
+                                                 maximizable = T, 
+                                                                  fluidRow(style = "padding:1rem; overflow-x: scroll",
+                                                                           DT::dataTableOutput("event")))
                                       )
                                   )
-                                  
+                            )
                            ),
                            column(9,
                                   fluidRow(

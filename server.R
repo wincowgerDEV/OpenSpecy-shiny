@@ -120,6 +120,11 @@ observeEvent(input$file1, {
     })
 
   #Preprocess Spectra ----
+  observeEvent(input$MinSNR | signal_noise(), {
+      req(input$file1)
+      updateProgressBar(session = session, id = "signal_progress", value = sum(signal_noise() > input$MinSNR)/length(signal_noise()) * 100)
+  })
+  
   # All cleaning of the data happens here. Range selection, Smoothing, and Baseline removing
   baseline_data <- reactive({
      req(input$file1)
@@ -220,6 +225,12 @@ observeEvent(input$reset, {
 
 
   #Correlation ----
+  
+  observeEvent(input$MinCor | max_cor(), {
+      req(input$file1)
+      updateProgressBar(session = session, id = "correlation_progress", value = sum(max_cor() > input$MinCor)/length(max_cor()) * 100)
+  })
+  
   correlation <- reactive({
       req(input$file1)
       req(input$active_identification)
