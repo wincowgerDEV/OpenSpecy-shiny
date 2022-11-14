@@ -209,41 +209,37 @@ dashboardPage(dark = T,
                                                      type = "info", 
                                                      size = "medium", rounded = TRUE
                                                  ),
-                                             fluidRow(
-                                                 column(12, 
-                                                        selectInput(inputId = "download_selection", 
-                                                                    label = "Download Type", 
-                                                                    choices = c("Test Data",
-                                                                                "Test Map",
-                                                                                "Spectra Conformed",
-                                                                                "Spectra Processed",
-                                                                                "Spectra SNR",
-                                                                                "Spectra Selected",
-                                                                                "Match Selected",
-                                                                                "Match Metadata",
-                                                                                "All Correlation Data",
-                                                                                "Top Correlation Data",
-                                                                                "Validation Data",
-                                                                                "FTIR Library", 
-                                                                                "Raman Library", 
-                                                                                "FTIR Library Metadata",
-                                                                                "Raman Library Metadata")) %>%
-                                                            add_prompt(
-                                                                message = "Options for downloading spectra and metadata from the analysis.",
-                                                                type = "info", 
-                                                                size = "medium", rounded = TRUE
+                                                       selectInput(inputId = "download_selection",
+                                                                   label = "Download", 
+                                                                   choices = c("Test Data",
+                                                                               "Test Map",
+                                                                               "Spectra Conformed",
+                                                                               "Spectra Processed",
+                                                                               "Spectra SNR",
+                                                                               "Spectra Selected",
+                                                                               "Match Selected",
+                                                                               "Match Metadata",
+                                                                               "All Correlation Data",
+                                                                               "Top Correlation Data",
+                                                                               "Validation Data",
+                                                                               "FTIR Library", 
+                                                                               "Raman Library", 
+                                                                               "FTIR Library Metadata",
+                                                                               "Raman Library Metadata")) %>%
+                                                           add_prompt(
+                                                               message = "Options for downloading spectra and metadata from the analysis.",
+                                                               type = "info", 
+                                                               size = "medium", rounded = TRUE
+                                                           ),
+                                                       br(),
+                                                       downloadButton("download_data",
+                                                                "",
+                                                                style = "background-color: rgb(0,0,0); color: rgb(255,255,255);") %>%
+                                                     add_prompt(
+                                                         message = "This is a sample spectrum that can be uploaded to the tool for testing it out and understanding how the csv files should be formatted.",
+                                                         type = "info", 
+                                                         size = "small", rounded = TRUE
                                                             ),
-                                                        downloadButton("download_data",
-                                                                       "Download",
-                                                                       style = "background-color: rgb(0,0,0); color: rgb(255,255,255);") %>%
-                                                            add_prompt(
-                                                                message = "This is a sample spectrum that can be uploaded to the tool for testing it out and understanding how the csv files should be formatted.",
-                                                                type = "info", 
-                                                                size = "medium", rounded = TRUE
-                                                            )
-                                                 )
-                                             ), 
-                                             
                                              br(),
                                              
                                              box(title = "Map Selection",
