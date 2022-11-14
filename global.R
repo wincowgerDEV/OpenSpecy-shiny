@@ -68,6 +68,20 @@ read_map <- function(filename, share, id, std_wavenumbers){
   }
 }
 
+gen_grid <- function(x) {
+    base <- sqrt(x)
+    expand.grid(x = 1:ceiling(base), y = 1:ceiling(base))[1:x,] %>%
+        as.data.table
+}
+
+conform_res <- function(x, res = 5) {
+    seq(adj_res(min(x), res, ceiling), adj_res(max(x), res, floor), by = res)
+}
+
+adj_res <- function(x, res = 1, fun = round) {
+    fun(x / res) * res
+}
+
 read_any <- function(filename, share, id, std_wavenumbers){
   if(grepl("(\\.csv$)|(\\.asp$)|(\\.spa$)|(\\.spc$)|(\\.jdx$)|(\\.[0-9]$)", ignore.case = T, filename)){
     read_formatted_spectrum(filename = filename, share = share, id = id)
