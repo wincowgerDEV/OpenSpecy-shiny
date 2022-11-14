@@ -250,12 +250,12 @@ dashboardPage(dark = T,
                                                  id = "placeholder2", 
                                                  width = 12,
                                                  maximizable = T,
+                                                 plotlyOutput("heatmap"),
                                                  shinyWidgets::progressBar(id = "signal_progress", value = 0, status = "success", title = "Good Signal", display_pct = TRUE),
                                                  conditionalPanel("input.active_identification == true",
-                                                        shinyWidgets::progressBar(id = "correlation_progress", value = 0, status = "success", title = "Good Correlations", display_pct = TRUE),
-                                                        shinyWidgets::progressBar(id = "match_progress", value = 0, status = "success", title = "Good Identifications", display_pct = TRUE)
-                                                    ),
-                                                    plotlyOutput("heatmap")
+                                                                  shinyWidgets::progressBar(id = "correlation_progress", value = 0, status = "success", title = "Good Correlations", display_pct = TRUE),
+                                                                  shinyWidgets::progressBar(id = "match_progress", value = 0, status = "success", title = "Good Identifications", display_pct = TRUE)
+                                                                 )
                                                     ),
                                              conditionalPanel("input.active_identification == true",
                                              box(title = "Match Selection", 
@@ -536,6 +536,8 @@ dashboardPage(dark = T,
                                                  width = 12,
                                                  
                                                  h4(id = "placeholder1", "Upload some data to get started..."),
+                                                 uiOutput("comparison_head"),
+                                                 uiOutput("correlation_head"),
                                                  fluidRow(
                                                                 plotlyOutput("MyPlotC", inline = T, height = "40%"),
                                                                 div(style = "overflow-x: scroll",

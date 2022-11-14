@@ -226,6 +226,45 @@ observeEvent(input$reset, {
 
   #Correlation ----
   
+  
+  output$comparison_head <- renderUI({
+      req(input$file1)
+      tagList(
+          paste0("Signal to Noise = ", round(signal_noise()[[data_click$data]], 2)),
+          if(round(signal_noise()[[data_click$data]], 2) > input$MinSNR){
+              tags$i(
+                  class = "fa fa-check-square", 
+                  style = "color: rgb(0,166,90)"
+              )
+          }
+          else{
+              tags$i(
+                  class = "fa fa-times-circle", 
+                  style = "color: rgb(255,0,0)"
+              )
+          }
+          )
+  })
+  
+  output$correlation_head <- renderUI({
+      req(input$active_identification)
+      tagList(
+              paste0("Max Correlation = ", round(max_cor()[[data_click$data]], 2)), 
+              if(round(max_cor()[[data_click$data]], 2) > input$MinCor){
+                  tags$i(
+                      class = "fa fa-check-square", 
+                      style = "color: rgb(0,166,90)"
+                  ) 
+              }
+              else{
+                  tags$i(
+                      class = "fa fa-times-circle", 
+                      style = "color: rgb(255,0,0)"
+                  ) 
+              }
+      )
+  })
+  
   observeEvent(input$MinCor | max_cor(), {
       req(input$file1)
       updateProgressBar(session = session, 
@@ -431,9 +470,7 @@ match_metadata <- reactive({
                            showgrid = F),
                    plot_bgcolor = 'rgba(17,0,73, 0)',
                    paper_bgcolor = 'rgba(0,0,0,0.5)',
-                   font = list(color = '#FFFFFF'),
-                   #legend= list(title=list(text= '<b> Correlation </b>')),
-                   title = if(input$active_identification) paste0(round((1 - sum(signal_noise() < input$MinSNR | max_cor() < input$MinCor)/length(signal_noise())), 2) * 100, "% Good ID")  else paste0(round((1 - sum(signal_noise() < input$MinSNR)/length(signal_noise())), 2) * 100, "% Good Signal")) %>%
+                   font = list(color = '#FFFFFF')) %>%
             event_register("plotly_click")
   })
 
@@ -494,13 +531,6 @@ match_metadata <- reactive({
     }
   })
 
-  output$tweet1 <- renderUI({
-    render_tweet(tweets[1])
-  })
-
-  output$tweet2 <- renderUI({
-    render_tweet(tweets[2])
-  })
 
   #Validate the app functionality for default identification ----
 
