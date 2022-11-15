@@ -505,6 +505,7 @@ match_metadata <- reactive({
 
   observe({
       #req(input$file1)
+      #toggle(id = "signal_progress", condition = !is.null(preprocessed$data))
       toggle(id = "download_conformed", condition = !is.null(preprocessed$data))
       toggle(id = "download_matched", condition = !is.null(preprocessed$data))
       toggle(id = "downloadData", condition = !is.null(preprocessed$data))
@@ -515,23 +516,23 @@ match_metadata <- reactive({
       #if(ncol(data()) > 1)
   })
   
-  observeEvent(ncol(preprocessed$data$spectra),{
-      if(ncol(preprocessed$data$spectra) > 1){
-          updateBox(
-          id = "placeholder2",
-          action = "restore",
-          options = NULL,
-          session = shiny::getDefaultReactiveDomain()
-      ) 
-      }
-      else{
-          updateBox(
-              id = "placeholder2",
-              action = "remove",
-              options = NULL,
-              session = shiny::getDefaultReactiveDomain()
-          )
-      }
+  observe({
+          if(isTruthy(preprocessed$data$spectra) && ncol(preprocessed$data$spectra) > 1){
+              updateBox(
+                  id = "placeholder2",
+                  action = "restore",
+                  options = NULL,
+                  session = shiny::getDefaultReactiveDomain()
+              ) 
+          }
+          if(!isTruthy(ncol(preprocessed$data$spectra) > 1)){
+              updateBox(
+                  id = "placeholder2",
+                  action = "remove",
+                  options = NULL,
+                  session = shiny::getDefaultReactiveDomain()
+              )
+          }    
   })
   
 

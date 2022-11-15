@@ -183,7 +183,7 @@ dashboardPage(dark = T,
                        br(),
                        fluidRow(
                            column(3,
-                                  #Upload/download ----
+                                  ##Upload/download ----
                                   tags$label("Choose .csv (preferred), .zip, .asp, .jdx, .spc, .spa, or .0 File"),
                                   
                                   fluidRow(
@@ -210,7 +210,14 @@ dashboardPage(dark = T,
                                                      size = "medium", rounded = TRUE
                                                  ),
                                                        selectInput(inputId = "download_selection",
-                                                                   label = "Download", 
+                                                                   label = downloadButton("download_data",
+                                                                                  "",
+                                                                                  style = "background-color: rgb(0,0,0); color: rgb(255,255,255);") %>%
+                                                                       add_prompt(
+                                                                           message = "This is a sample spectrum that can be uploaded to the tool for testing it out and understanding how the csv files should be formatted.",
+                                                                           type = "info", 
+                                                                           size = "large", rounded = TRUE
+                                                                       ), 
                                                                    choices = c("Test Data",
                                                                                "Test Map",
                                                                                "Spectra Conformed",
@@ -231,15 +238,6 @@ dashboardPage(dark = T,
                                                                type = "info", 
                                                                size = "medium", rounded = TRUE
                                                            ),
-                                                       br(),
-                                                       downloadButton("download_data",
-                                                                "",
-                                                                style = "background-color: rgb(0,0,0); color: rgb(255,255,255);") %>%
-                                                     add_prompt(
-                                                         message = "This is a sample spectrum that can be uploaded to the tool for testing it out and understanding how the csv files should be formatted.",
-                                                         type = "info", 
-                                                         size = "small", rounded = TRUE
-                                                            ),
                                              br(),
                                              box(title = "Map Selection",
                                                  id = "placeholder2", 
