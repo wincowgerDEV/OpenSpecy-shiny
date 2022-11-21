@@ -632,6 +632,11 @@ match_metadata <- reactive({
 
   })
 
+  #Storage ----
+  #stores setup - insert at the bottom  !!!IMPORTANT
+  appid = "application31"
+  setupStorage(appId = appid,inputs = TRUE)
+  
   #Test ----
   output$event_test <- renderPrint({
       #print(!is.null(preprocessed$data))

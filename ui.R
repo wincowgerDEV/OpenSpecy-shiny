@@ -40,6 +40,8 @@ dashboardPage(dark = T,
                 # Required for any of the shinyjs functions.
             use_prompt(),
             shinyjs::useShinyjs(),
+            #initialize stores
+            initStore(),
 
             tags$head(
                       tags$script(async = T, src = "https://buttons.github.io/buttons.js"),

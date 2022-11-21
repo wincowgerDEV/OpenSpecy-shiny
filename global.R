@@ -23,6 +23,7 @@ library(loggit)
 library(hyperSpec)
 library(OpenSpecy)
 library(bs4Dash)
+library(shinyStorePlus)
 
 library(TTR)
 if(droptoken) library(aws.s3)
