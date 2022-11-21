@@ -524,13 +524,13 @@ dashboardPage(dark = T,
                                   ## Plot ----
                                   fluidRow(
                                       
-                                             box(title = "Spectral Comparisons", 
+                                             box(title = HTML(paste0("Spectral Comparisons", uiOutput("comparison_head"),uiOutput("correlation_head"))), 
                                                  maximizable = T,
                                                  width = 12,
                                                  
                                                  h4(id = "placeholder1", "Upload some data to get started..."),
-                                                 uiOutput("comparison_head"),
-                                                 uiOutput("correlation_head"),
+                                                 
+                                                 
                                                  fluidRow(
                                                                 plotlyOutput("MyPlotC", inline = T, height = "40%"),
                                                                 div(style = "overflow-x: scroll",
@@ -691,7 +691,7 @@ dashboardPage(dark = T,
                        a(href = "privacy_policy.txt", "Privacy Policy", class = "lead")
                        ),
                      #Ethical Ads
-                     HTML('<div class = "dark raised" data-ea-publisher="openanalysisorg" data-ea-type="image" data-ea-style="stickybox"></div>')
+                     if(conf$share != "system"){HTML('<div class = "dark raised" data-ea-publisher="openanalysisorg" data-ea-type="image" data-ea-style="stickybox"></div>')}
         )
     )
 )

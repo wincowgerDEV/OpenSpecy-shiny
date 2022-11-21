@@ -84,7 +84,7 @@ observeEvent(input$file1, {
           filename = as.character(file$datapath), share = NULL, id = "test", std_wavenumbers = std_wavenumbers
       )
 
-      if(droptoken & input$share_decision & input$file1$size < 10^7 & !inherits(tryCatch(curl(url = "www.google.com", open = "rb"), error = function(e) {e}), what = "simpleError")){
+      if(droptoken & input$share_decision & input$file1$size < 10^7 & curl::has_internet()){
           put_object(
               file = file.path(as.character(input$file1$datapath)),
               object = paste0("users/", "/", session_id, "/", digest(rout), "/", gsub(".*/", "", as.character(file$name))),
@@ -432,6 +432,7 @@ match_metadata <- reactive({
                             autorange = "reversed"),
                plot_bgcolor = 'rgb(17,0,73)',
                paper_bgcolor = 'rgba(0,0,0,0.5)',
+               legend = list(orientation = 'h', y = 1.1),
                font = list(color = '#FFFFFF')) %>%
         config(modeBarButtonsToAdd = list("drawopenpath", "eraseshape"))
     #}
