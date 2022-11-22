@@ -466,7 +466,6 @@ map_type <- function(filename){
 
 
 # Name keys for human readable column names ----
-options(shiny.maxRequestSize = 100*1024^2)
 
 version <- paste0("Open Specy v", packageVersion("OpenSpecy"))
 citation <- HTML(

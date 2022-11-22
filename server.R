@@ -2,7 +2,9 @@
 # This is the actual server functions, all functions before this point are not
 # reactive
 function(input, output, session) {
-
+    
+  if(conf$share != "system"){options(shiny.maxRequestSize = 100*1024^2)} else{options(shiny.maxRequestSize = 1000*1024^2)}
+    
   session_id <- digest(runif(10))
 
   # Loading overlay
@@ -449,6 +451,7 @@ match_metadata <- reactive({
 },
                 type = "heatmap",
                 hoverinfo = 'text',
+                showscale = F,
                 colors = if(input$active_identification){} else {heat.colors(n = sum(signal_noise() > input$MinSNR))
                 },
                 text = ~paste(
@@ -467,6 +470,8 @@ match_metadata <- reactive({
                            showgrid = F),
                    plot_bgcolor = 'rgba(17,0,73, 0)',
                    paper_bgcolor = 'rgba(0,0,0,0.5)',
+                   showlegend = FALSE,
+                   #legend = list(showlegend = F),
                    font = list(color = '#FFFFFF')) %>%
             event_register("plotly_click")
   })
