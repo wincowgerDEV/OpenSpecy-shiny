@@ -446,12 +446,26 @@ dashboardPage(dark = T,
                                                                                  box(width = 12,
                                                                                      title = "Threshold Signal to Noise",
                                                                                      collapsed = T,
+                                                                                     sliderInput(
+                                                                                         "noise_range",
+                                                                                         "Noise Wavenumber Range",
+                                                                                         value = c(0,0),
+                                                                                         min = 0,
+                                                                                         max = 6000,
+                                                                                         step = 10#,
+                                                                                         #width = '25%'
+                                                                                     ) %>%
+                                                                                         add_prompt(
+                                                                                             message = "Specify the wavenumber range of the noise.",
+                                                                                             type = "info", 
+                                                                                             size = "medium", rounded = TRUE
+                                                                                         ),
                                                                                         numericInput(
                                                                                             "MinSNR",
                                                                                             "Minimum Signal to Noise",
-                                                                                            value = 1,
+                                                                                            value = 10,
                                                                                             min = 0.5,
-                                                                                            max = 12,
+                                                                                            max = 100,
                                                                                             step = 0.1#,
                                                                                             #width = '25%'
                                                                                         ) %>%

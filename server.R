@@ -290,7 +290,15 @@ observeEvent(input$reset, {
 
   signal_noise <- reactive({
           req(input$file1)
-          unlist(lapply(DataR(), snr))
+          unlist(lapply(DataR(), function(x){
+              signal_to_noise(wavenumber = conform_res(preprocessed$data$wavenumber), 
+                           intensity = x, 
+                           remove_min = 0, 
+                           remove_max = 0, 
+                           include_min = if(input$noise_range[1] > min(conform_res(preprocessed$data$wavenumber))){input$noise_range[1]} else{min(conform_res(preprocessed$data$wavenumber))} , 
+                           include_max = if(input$noise_range[2] > min(conform_res(preprocessed$data$wavenumber)) & input$noise_range[2] < max(conform_res(preprocessed$data$wavenumber))){input$noise_range[2]} else{max(conform_res(preprocessed$data$wavenumber))} , 
+                           return = "signal_to_noise")
+          }))
   })
 
   max_cor <- reactive({
@@ -482,14 +490,14 @@ match_metadata <- reactive({
         content = function(file) {
             if(input$download_selection == "Test Data") {fwrite(testdata, file)}
             if(input$download_selection == "Test Map") {zip(file, unzip("data/CA_tiny_map.zip"))}
-            if(input$download_selection == "Spectra Conformed") {fwrite(data()%>% mutate(wavenumber = conform_res(preprocessed$data$wavenumber)), file)}
+            if(input$download_selection == "Spectra Conformed") {fwrite(data() %>% mutate(wavenumber = conform_res(preprocessed$data$wavenumber)), file)}
             if(input$download_selection == "Spectra Processed") {fwrite(baseline_data() %>% mutate(wavenumber = conform_res(preprocessed$data$wavenumber)), file)}
             if(input$download_selection == "Spectra SNR") {fwrite(data.table(x = preprocessed$data$coords$x, y = preprocessed$data$coords$y, filename = preprocessed$data$coords$filename, signal_to_noise = signal_noise(), good_signal = signal_noise() > input$MinSNR), file)}
             if(input$download_selection == "Spectra Selected") {fwrite(match_selected() %>% select(-SpectrumIdentity), file)}
             if(input$download_selection == "Match Selected") {fwrite(DataR_plot() %>% select(-SpectrumIdentity), file)}
             if(input$download_selection == "Match Metadata") {fwrite(user_metadata(), file)}
             if(input$download_selection == "All Correlation Data") {fwrite(correlation %>% mutate(library_names = names(libraryR())), file)}
-            if(input$download_selection == "Top Correlation Data") {fwrite(data.table(x = preprocessed$data$coords$x, y = preprocessed$data$coords$y, filename = preprocessed$data$coords$filename, signal_to_noise = signal_noise(), good_signal = signal_noise() > input$MinSNR, max_cor = max_cor(), good_cor = max_cor() > input$MinCor, max_cor_id = max_cor_id()) %>% left_join(meta, by = c("max_cor_id" = "sample_name")), file)}
+            if(input$download_selection == "Top Correlation Data") {fwrite(data.table(x = preprocessed$data$coords$x, y = preprocessed$data$coords$y, col_names = colnames(data()), filename = preprocessed$data$coords$filename, signal_to_noise = signal_noise(), good_signal = signal_noise() > input$MinSNR, max_cor = max_cor(), good_cor = max_cor() > input$MinCor, max_cor_id = max_cor_id()) %>% left_join(meta, by = c("max_cor_id" = "sample_name")), file)}
             if(input$download_selection == "Validation Data") {fwrite(validation$data, file)}
             if(input$download_selection == "FTIR Library") {fwrite(spec_lib[["ftir"]][["library"]], file)}
             if(input$download_selection == "Raman Library") {fwrite(spec_lib[["raman"]][["library"]], file)}
