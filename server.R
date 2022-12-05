@@ -230,43 +230,27 @@ observeEvent(input$reset, {
 
   #Correlation ----
   
-  
-  output$comparison_head <- renderUI({
-      req(input$file1)
-      tagList(
-          paste0("Signal to Noise = ", round(signal_noise()[[data_click$data]], 2)),
-          if(round(signal_noise()[[data_click$data]], 2) > input$MinSNR){
-              tags$i(
-                  class = "fa fa-check-square", 
-                  style = "color: rgb(0,166,90)"
-              )
-          }
-          else{
-              tags$i(
-                  class = "fa fa-times-circle", 
-                  style = "color: rgb(255,0,0)"
-              )
-          }
-          )
-  })
-  
   output$correlation_head <- renderUI({
-      req(input$active_identification)
-      tagList(
-              paste0("Max Correlation = ", round(max_cor()[[data_click$data]], 2)), 
-              if(round(max_cor()[[data_click$data]], 2) > input$MinCor){
-                  tags$i(
-                      class = "fa fa-check-square", 
-                      style = "color: rgb(0,166,90)"
-                  ) 
-              }
-              else{
-                  tags$i(
-                      class = "fa fa-times-circle", 
-                      style = "color: rgb(255,0,0)"
-                  ) 
-              }
-      )
+      #req(input$active_identification)
+      boxLabel(text = if(input$active_identification) {"Cor"} else{"SNR"}, 
+               status = if(input$active_identification) {if(round(max_cor()[[data_click$data]], 2) > input$MinCor & round(signal_noise()[[data_click$data]], 2) > input$MinSNR){"success"} else{"error"}} else{if(round(signal_noise()[[data_click$data]], 2) > input$MinSNR){"success"} else{"error"}}, 
+               tooltip = "This tells you whether the signal to noise ratio or the match observed is above or below the thresholds.")
+
+      #tagList(
+      #        paste0("Max Correlation = ", round(max_cor()[[data_click$data]], 2)), 
+      #        if(round(max_cor()[[data_click$data]], 2) > input$MinCor){
+      #            tags$i(
+      #                class = "fa fa-check-square", 
+      #                style = "color: rgb(0,166,90)"
+      #            ) 
+      #        }
+      #        else{
+      #            tags$i(
+      #                class = "fa fa-times-circle", 
+      #                style = "color: rgb(255,0,0)"
+      #            ) 
+      #        }
+      #)
   })
   
   observeEvent(input$MinCor | max_cor(), {
@@ -280,7 +264,7 @@ observeEvent(input$reset, {
       req(input$file1)
       updateProgressBar(session = session, 
                         id = "match_progress", 
-                        value = (1 - sum(signal_noise() < input$MinSNR | max_cor() < input$MinCor)/length(signal_noise())) * 100)
+                        value = (sum(signal_noise() > input$MinSNR & max_cor() > input$MinCor)/length(signal_noise())) * 100)
   })
   
   correlation <- reactive({
@@ -294,15 +278,12 @@ observeEvent(input$reset, {
 
   signal_noise <- reactive({
           req(input$file1)
-          unlist(lapply(DataR(), function(x){
+          vapply(DataR(), function(x){
               signal_to_noise(wavenumber = conform_res(preprocessed$data$wavenumber), 
                                    intensity = x, 
-                                   remove_min = 0, 
-                                   remove_max = 0, 
-                                   include_min = if(input$noise_range[1] > min(conform_res(preprocessed$data$wavenumber))){input$noise_range[1]} else{min(conform_res(preprocessed$data$wavenumber))} , 
-                                   include_max = if(input$noise_range[2] > min(conform_res(preprocessed$data$wavenumber)) & input$noise_range[2] < max(conform_res(preprocessed$data$wavenumber))){input$noise_range[2]} else{max(conform_res(preprocessed$data$wavenumber))} , 
+                                   method = "Auto", 
                                    return = "signal_to_noise")
-          }))
+          }, FUN.VALUE = numeric(1))
   })
 
   max_cor <- reactive({
@@ -567,19 +548,6 @@ match_metadata <- reactive({
       includeHTML("www/googletranslate.html")
     }
   })
-
-
-  #Validate the app functionality for default identification ----
-
-  #Can use this to update the library by increasing the count to the total library size.
-  observeEvent(input$validate, {
-    load("data/library.RData")
-    cols <- sample(1:ncol(library), 100, replace = F) # add in to reduce sample
-    preprocessed$data$wavenumber <- std_wavenumbers
-    preprocessed$data$spectra <- library[,..cols] #Bring this back if wanting less
-    preprocessed$data$coords <- gen_grid(x = ncol(preprocessed$data$spectra))[,filename := "test"]
-
- })
 
   # Log events ----
 

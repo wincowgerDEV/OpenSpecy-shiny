@@ -251,15 +251,7 @@ dashboardPage(dark = T,
                                                                   shinyWidgets::progressBar(id = "correlation_progress", value = 0, status = "success", title = "Good Correlations", display_pct = TRUE),
                                                                   shinyWidgets::progressBar(id = "match_progress", value = 0, status = "success", title = "Good Identifications", display_pct = TRUE)
                                                                  )
-                                                    ),
-                                             conditionalPanel("input.active_identification == true",
-                                             box(title = "Match Selection", 
-                                                 id = "selection_box", 
-                                                 width = 12, 
-                                                 maximizable = T, 
-                                                                  fluidRow(style = "padding:1rem; overflow-x: scroll",
-                                                                           DT::dataTableOutput("event")))
-                                      )
+                                                    )
                                   )
                             )
                            ),
@@ -446,27 +438,13 @@ dashboardPage(dark = T,
                                                                                  box(width = 12,
                                                                                      title = "Threshold Signal to Noise",
                                                                                      collapsed = T,
-                                                                                     sliderInput(
-                                                                                         "noise_range",
-                                                                                         "Noise Wavenumber Range",
-                                                                                         value = c(0,0),
-                                                                                         min = 0,
-                                                                                         max = 6000,
-                                                                                         step = 10#,
-                                                                                         #width = '25%'
-                                                                                     ) %>%
-                                                                                         add_prompt(
-                                                                                             message = "Specify the wavenumber range of the noise.",
-                                                                                             type = "info", 
-                                                                                             size = "medium", rounded = TRUE
-                                                                                         ),
                                                                                         numericInput(
                                                                                             "MinSNR",
                                                                                             "Minimum Signal to Noise",
                                                                                             value = 10,
-                                                                                            min = 0.5,
+                                                                                            min = 2,
                                                                                             max = 100,
-                                                                                            step = 0.1#,
+                                                                                            step = 1#,
                                                                                             #width = '25%'
                                                                                         ) %>%
                                                                                             add_prompt(
@@ -520,8 +498,8 @@ dashboardPage(dark = T,
                                                                                         numericInput(
                                                                                             "MinCor",
                                                                                             "Minimum Correlation",
-                                                                                            value = 0.6,
-                                                                                            min = 0.1,
+                                                                                            value = 0.7,
+                                                                                            min = 0.6,
                                                                                             max = 1,
                                                                                             step = 0.1#,
                                                                                             #width = '25%'
@@ -539,29 +517,25 @@ dashboardPage(dark = T,
                                   ## Plot ----
                                   fluidRow(
                                       
-                                             box(title = HTML(paste0("Spectral Comparisons", uiOutput("comparison_head"),uiOutput("correlation_head"))), 
+                                             box(title = HTML(paste0("Spectral Comparisons")), 
                                                  maximizable = T,
                                                  width = 12,
-                                                 
+                                                 label = uiOutput("correlation_head"),
                                                  h4(id = "placeholder1", "Upload some data to get started..."),
-                                                 
+                                            
                                                  
                                                  fluidRow(
                                                                 plotlyOutput("MyPlotC", inline = T, height = "40%"),
                                                                 div(style = "overflow-x: scroll",
                                                                     DT::dataTableOutput("eventmetadata")   
-                                                                ))), 
-                                            
-                                             actionButton("validate", "Validate Settings", style = "float: right;") %>%
-                                                 add_prompt(
-                                                     message = "Run 100 spectra from internal library through the current settings to validate the routine.",
-                                                     type = "info", 
-                                                     size = "medium", rounded = TRUE
-                                                 ), 
-                                             verbatimTextOutput("event_test")
-                                      
-                                      
-                                      
+                                                                )),
+                                                 sidebar = boxSidebar(
+                                                     id = "mycardsidebar",
+                                                     fluidRow(style = "padding:1rem; overflow-x: scroll",
+                                                              DT::dataTableOutput("event"))
+                                                    )
+                                                 )
+                                             
                                   )))),
               tabItem("partner", 
                       #Partner With Us tab ----

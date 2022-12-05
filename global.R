@@ -265,11 +265,23 @@ process_spectra <- function(df, wavenumber, active_preprocessing = T, range_deci
 
 #signal to noise ratio
 
-signal_to_noise <- function(wavenumber, intensity, remove_min = 2200, remove_max = 2420, include_min = 1900, include_max = 2700, return = "signal_times_noise") {
-    include_values <- wavenumber >= include_min & wavenumber <= include_max
-    remove_values <- wavenumber >= remove_min & wavenumber <= remove_max 
-    signal = mean(intensity[!remove_values], na.rm = T)
-    noise = sd(intensity[!remove_values & include_values], na.rm = T)
+signal_to_noise <- function(wavenumber, intensity, noise_min = 2200, noise_max = 2420, signal_min = 1900, signal_max = 2700, method = "Auto", return = "signal_times_noise") {
+    if(method == "Manual"){
+        signal_values <- wavenumber >= signal_min & wavenumber <= signal_max
+        noise_values <- wavenumber >= noise_min & wavenumber <= noise_max 
+        signal = mean(intensity[signal_values], na.rm = T)
+        noise = sd(intensity[noise_values], na.rm = T)    
+    }
+    if(method == "Auto"){
+        if(length(intensity[!is.na(intensity)]) < 20){
+        return(NA)
+    }
+    else{
+        max = runMax(intensity[!is.na(intensity)], n = 20)
+        signal = max(max, na.rm = T)
+        noise = median(max[max != 0], na.rm = T)
+        }
+    }
     if(return == "signal"){
         return(signal)
     }
