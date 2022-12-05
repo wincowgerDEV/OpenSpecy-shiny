@@ -206,7 +206,6 @@ observeEvent(input$reset, {
     req(input$active_identification)
     if(input$derivative_decision & input$active_preprocessing) {
         load("data/library_deriv.RData") #Nest these in here so that they don't load automatically unless needed.
-
     }
     else{
         load("data/library.RData") #Nest these in here so that they don't load automatically unless needed.
@@ -284,33 +283,35 @@ observeEvent(input$reset, {
   correlation <- reactive({
       req(input$file1)
       req(input$active_identification)
-      correlate_spectra(data = DataR(), search_wavenumbers = conform_res(preprocessed$data$wavenumber), std_wavenumbers = std_wavenumbers, library = libraryR())
-
+      correlate_spectra(data = DataR(), 
+                        search_wavenumbers = conform_res(preprocessed$data$wavenumber), 
+                        std_wavenumbers = std_wavenumbers, 
+                        library = libraryR())
   })
 
   signal_noise <- reactive({
           req(input$file1)
           unlist(lapply(DataR(), function(x){
               signal_to_noise(wavenumber = conform_res(preprocessed$data$wavenumber), 
-                           intensity = x, 
-                           remove_min = 0, 
-                           remove_max = 0, 
-                           include_min = if(input$noise_range[1] > min(conform_res(preprocessed$data$wavenumber))){input$noise_range[1]} else{min(conform_res(preprocessed$data$wavenumber))} , 
-                           include_max = if(input$noise_range[2] > min(conform_res(preprocessed$data$wavenumber)) & input$noise_range[2] < max(conform_res(preprocessed$data$wavenumber))){input$noise_range[2]} else{max(conform_res(preprocessed$data$wavenumber))} , 
-                           return = "signal_to_noise")
+                                   intensity = x, 
+                                   remove_min = 0, 
+                                   remove_max = 0, 
+                                   include_min = if(input$noise_range[1] > min(conform_res(preprocessed$data$wavenumber))){input$noise_range[1]} else{min(conform_res(preprocessed$data$wavenumber))} , 
+                                   include_max = if(input$noise_range[2] > min(conform_res(preprocessed$data$wavenumber)) & input$noise_range[2] < max(conform_res(preprocessed$data$wavenumber))){input$noise_range[2]} else{max(conform_res(preprocessed$data$wavenumber))} , 
+                                   return = "signal_to_noise")
           }))
   })
 
   max_cor <- reactive({
       req(input$file1)
       req(correlation())
-      round(apply(correlation(), 2, function(x) max(x, na.rm = T)), 2)
+      round(apply(correlation(), 1, function(x) max(x, na.rm = T)), 1)
   })
 
   max_cor_id <- reactive({
       req(input$file1)
       req(correlation())
-      colnames(libraryR())[apply(correlation(),2 , function(x) which.max(x))]
+      colnames(libraryR())[apply(correlation(), 1, function(x) which.max(x))]
   })
 
   # Joins their spectrum to the internal database.
@@ -318,7 +319,9 @@ observeEvent(input$reset, {
     #req(input$file1)
     req(input$active_identification)
       if(is.null(preprocessed$data)) {
-      Lib <-  meta %>% filter(sample_name %in% names(libraryR())) %>% mutate(rsq = NA)
+      Lib <-  meta %>% 
+          filter(sample_name %in% names(libraryR())) %>% 
+          mutate(rsq = NA)
       }
       else{
           #input
@@ -326,8 +329,9 @@ observeEvent(input$reset, {
 
               incProgress(1/3, detail = "Finding Match")
 
-              Lib <- get_all_metadata(sample_name = names(libraryR()), rsq = correlation()[[data_click$data]], metadata = meta)
-
+              Lib <- get_all_metadata(sample_name = names(libraryR()), 
+                                      rsq = correlation()[data_click$data,], 
+                                      metadata = meta)
 
               incProgress(1/3, detail = "Making Plot")
       })
@@ -355,11 +359,11 @@ observeEvent(input$reset, {
           current_spectrum %>%
               inner_join(meta, by = "sample_name") %>%
               select(wavenumber, intensity, SpectrumIdentity) %>%
-              mutate(intensity = make_rel(intensity, na.rm = T)) #%>%
+              mutate(intensity = make_rel(intensity, na.rm = T))
       }
-
   })
 
+  #All matches table for the current selection
   top_matches <- reactive({
       req(input$active_identification)
       MatchSpectra() %>%
@@ -412,7 +416,6 @@ match_metadata <- reactive({
      }
      else{
         data_click$data <- event_data("plotly_click", source = "heat_plot")[["pointNumber"]] + 1
-
      }
  })
 
@@ -657,6 +660,7 @@ match_metadata <- reactive({
       #print(paste0("users/", input$fingerprint,"/", session_id, "/", gsub(".*/", "", as.character(input$file1$name))))
       #print(max_cor())
       #print(max_cor_id())
+      #print(c(correlation()))
       #print(preprocessed$data$coords$x)
       #print(preprocessed$data$coords$y)
       #print(preprocessed$data$coords$filename)

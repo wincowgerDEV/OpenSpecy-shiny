@@ -304,11 +304,12 @@ correlate_intensity <- function(intensity, search_wavenumbers, lib){
 }
 
 correlate_spectra <- function(data, search_wavenumbers, std_wavenumbers, library){
-  data[search_wavenumbers %in% std_wavenumbers,][,lapply(.SD, mean_replace)][,lapply(.SD, correlate_intensity, search_wavenumbers = search_wavenumbers,  lib = library[std_wavenumbers %in% search_wavenumbers,][,lapply(.SD, mean_replace)])]
+    cor(data[search_wavenumbers %in% std_wavenumbers,][,lapply(.SD, mean_replace)], 
+        library[std_wavenumbers %in% search_wavenumbers,][,lapply(.SD, mean_replace)])
 }
 
 mean_replace <- function(intensity){
-  ifelse(is.na(intensity), mean(intensity, na.rm = T), intensity)
+  fifelse(is.na(intensity), mean(intensity, na.rm = T), intensity)
 }
 
 get_all_metadata <- function(sample_name, rsq, metadata) {
