@@ -516,7 +516,6 @@ dashboardPage(dark = T,
                                                      ))))),
                                   ## Plot ----
                                   fluidRow(
-                                      
                                              box(title = HTML(paste0("Spectral Comparisons")), 
                                                  maximizable = T,
                                                  width = 12,

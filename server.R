@@ -226,10 +226,7 @@ observeEvent(input$reset, {
     }
   })
 
-
-
   #Correlation ----
-  
   output$correlation_head <- renderUI({
       boxLabel(text = if(input$active_identification) {"Cor"} else{"SNR"}, 
                status = if(input$active_identification) {if(round(max_cor()[[data_click$data]], 2) > input$MinCor & round(signal_noise()[[data_click$data]], 2) > input$MinSNR){"success"} else{"error"}} else{if(round(signal_noise()[[data_click$data]], 2) > input$MinSNR){"success"} else{"error"}}, 
@@ -278,23 +275,23 @@ observeEvent(input$reset, {
       colnames(libraryR())[apply(correlation(), 1, function(x) which.max(x))]
   })
   
-  max_cor_name <- reactive({
-      req(input$file1)
-      req(correlation())
+  #max_cor_name <- reactive({
+  #    req(input$file1)
+  #    req(correlation())
       
-      if(input$id_level == "deep"){
-          meta$SpectrumIdentity[which(max_cor_id() %in% meta$sample_name)]
-          }
-      else if(input$id_level == "pp_optimal"){
-          meta$polymer[which(max_cor_id() %in% meta$sample_name)]
-          }
-      else if(input$id_level == "pp_groups"){
-          meta$polymer_class[which(max_cor_id() %in% meta$sample_name)]
-          }
-      else{
-          meta$plastic_or_not[which(max_cor_id() %in% meta$sample_name)]
-          }
-  })
+  #    if(input$id_level == "deep"){
+  #        meta$SpectrumIdentity[which(max_cor_id() %in% meta$sample_name)]
+  #        }
+  #    else if(input$id_level == "pp_optimal"){
+  #        meta$polymer[which(max_cor_id() %in% meta$sample_name)]
+  #        }
+  #    else if(input$id_level == "pp_groups"){
+  #        meta$polymer_class[which(max_cor_id() %in% meta$sample_name)]
+  #        }
+  #    else{
+  #        meta$plastic_or_not[which(max_cor_id() %in% meta$sample_name)]
+  #        }
+  #})
 
   # Joins their spectrum to the internal database.
   MatchSpectra <- reactive({
@@ -447,17 +444,21 @@ match_metadata <- reactive({
             add_trace(
                 x = preprocessed$data$coords$x, #Need to update this with the new rout format.
                 y = preprocessed$data$coords$y,
-                z = if(input$active_identification){ifelse(signal_noise() > input$MinSNR & max_cor() > input$MinCor, max_cor(), NA)} else {ifelse(signal_noise() > input$MinSNR, signal_noise(), NA)
-},
+                z = if(input$active_identification){
+                        ifelse(signal_noise() > input$MinSNR & max_cor() > input$MinCor, max_cor(), NA)
+                    }
+                    else{
+                        ifelse(signal_noise() > input$MinSNR, signal_noise(), NA)
+                    },
                 type = "heatmap",
                 hoverinfo = 'text',
                 showscale = F,
-                colors = if(input$active_identification){} else {heat.colors(n = sum(signal_noise() > input$MinSNR))
+                colors = if(input$active_identification){hcl.colors(n = sum(signal_noise() > input$MinSNR & max_cor() > input$MinCor), palette = "viridis")} else {heat.colors(n = sum(signal_noise() > input$MinSNR))
                 },
                 text = ~paste(
                     "x: ", preprocessed$data$coords$x,
                     "<br>y: ", preprocessed$data$coords$y,
-                    "<br>z: ", if(input$active_identification){round(max_cor(), 2)} else{round(signal_noise(), 2)
+                    "<br>z: ", if(input$active_identification){max_cor()} else{signal_noise()
                     },
                     "<br>Filename: ", preprocessed$data$coords$filename)) %>%
             layout(
