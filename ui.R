@@ -245,7 +245,7 @@ dashboardPage(dark = T,
                                                  id = "placeholder2", 
                                                  width = 12,
                                                  maximizable = T,
-                                                 plotlyOutput("heatmap"),
+                                                 plotlyOutput("heatmap",inline = T, height = "40%"),
                                                  shinyWidgets::progressBar(id = "signal_progress", value = 0, status = "success", title = "Good Signal", display_pct = TRUE),
                                                  conditionalPanel("input.active_identification == true",
                                                                   shinyWidgets::progressBar(id = "correlation_progress", value = 0, status = "success", title = "Good Correlations", display_pct = TRUE),
@@ -425,7 +425,7 @@ dashboardPage(dark = T,
                                                                                      title = prettySwitch("co2_decision",
                                                                                                      label = "Flatten FTIR CO2",
                                                                                                      inline = T,
-                                                                                                     value = F,
+                                                                                                     value = T,
                                                                                                      status = "success",
                                                                                                      fill = T)
                                                                                          
@@ -525,7 +525,7 @@ dashboardPage(dark = T,
                                             
                                                  
                                                  fluidRow(
-                                                                plotlyOutput("MyPlotC", inline = T, height = "40%"),
+                                                            plotlyOutput("MyPlotC", inline = T, height = "40%"),
                                                                 div(style = "overflow-x: scroll",
                                                                     DT::dataTableOutput("eventmetadata")   
                                                                 )),

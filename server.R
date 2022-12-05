@@ -231,26 +231,9 @@ observeEvent(input$reset, {
   #Correlation ----
   
   output$correlation_head <- renderUI({
-      #req(input$active_identification)
       boxLabel(text = if(input$active_identification) {"Cor"} else{"SNR"}, 
                status = if(input$active_identification) {if(round(max_cor()[[data_click$data]], 2) > input$MinCor & round(signal_noise()[[data_click$data]], 2) > input$MinSNR){"success"} else{"error"}} else{if(round(signal_noise()[[data_click$data]], 2) > input$MinSNR){"success"} else{"error"}}, 
                tooltip = "This tells you whether the signal to noise ratio or the match observed is above or below the thresholds.")
-
-      #tagList(
-      #        paste0("Max Correlation = ", round(max_cor()[[data_click$data]], 2)), 
-      #        if(round(max_cor()[[data_click$data]], 2) > input$MinCor){
-      #            tags$i(
-      #                class = "fa fa-check-square", 
-      #                style = "color: rgb(0,166,90)"
-      #            ) 
-      #        }
-      #        else{
-      #            tags$i(
-      #                class = "fa fa-times-circle", 
-      #                style = "color: rgb(255,0,0)"
-      #            ) 
-      #        }
-      #)
   })
   
   observeEvent(input$MinCor | max_cor(), {
@@ -258,14 +241,11 @@ observeEvent(input$reset, {
       updateProgressBar(session = session, 
                         id = "correlation_progress", 
                         value = sum(max_cor() > input$MinCor)/length(max_cor()) * 100)
-  })
-  
-  observeEvent(input$MinCor | max_cor(), {
-      req(input$file1)
       updateProgressBar(session = session, 
                         id = "match_progress", 
                         value = (sum(signal_noise() > input$MinSNR & max_cor() > input$MinCor)/length(signal_noise())) * 100)
   })
+  
   
   correlation <- reactive({
       req(input$file1)
@@ -356,7 +336,9 @@ observeEvent(input$reset, {
           dplyr::select(if(input$id_level == "deep"){"Material"}
                         else if(input$id_level == "pp_optimal"){"polymer"}
                         else if(input$id_level == "pp_groups"){"polymer_class"}
-                        else{"plastic_or_not"}, if(!is.null(preprocessed$data)){"Pearson's r"}, sample_name)
+                        else{"plastic_or_not"}, 
+                        if(!is.null(preprocessed$data)){"Pearson's r"}, 
+                        sample_name)
   })
 
   # Create the data tables for all matches
@@ -377,7 +359,12 @@ observeEvent(input$reset, {
 match_metadata <- reactive({
     req(input$active_identification)
     MatchSpectra()[input$event_rows_selected,] %>%
-        select(where(~!any(is_empty(.))))
+        select(where(~!any(is_empty(.)))) %>%
+        select(if(input$id_level == "deep"){"SpectrumIdentity"}
+                else if(input$id_level == "pp_optimal"){"polymer"}
+                else if(input$id_level == "pp_groups"){"polymer_class"}
+                else{"plastic_or_not"},
+                everything())
 })
     #Metadata for the selected value
  output$eventmetadata <- DT::renderDataTable({
@@ -442,7 +429,7 @@ match_metadata <- reactive({
             add_trace(
                 x = preprocessed$data$coords$x, #Need to update this with the new rout format.
                 y = preprocessed$data$coords$y,
-                z = if(input$active_identification){ifelse(signal_noise() < input$MinSNR | max_cor() < input$MinCor, NA, max_cor())} else {ifelse(signal_noise() > input$MinSNR, signal_noise(), NA)
+                z = if(input$active_identification){ifelse(signal_noise() > input$MinSNR & max_cor() > input$MinCor, max_cor(), NA)} else {ifelse(signal_noise() > input$MinSNR, signal_noise(), NA)
 },
                 type = "heatmap",
                 hoverinfo = 'text',
