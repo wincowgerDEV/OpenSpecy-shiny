@@ -277,6 +277,24 @@ observeEvent(input$reset, {
       req(correlation())
       colnames(libraryR())[apply(correlation(), 1, function(x) which.max(x))]
   })
+  
+  max_cor_name <- reactive({
+      req(input$file1)
+      req(correlation())
+      
+      if(input$id_level == "deep"){
+          meta$SpectrumIdentity[which(max_cor_id() %in% meta$sample_name)]
+          }
+      else if(input$id_level == "pp_optimal"){
+          meta$polymer[which(max_cor_id() %in% meta$sample_name)]
+          }
+      else if(input$id_level == "pp_groups"){
+          meta$polymer_class[which(max_cor_id() %in% meta$sample_name)]
+          }
+      else{
+          meta$plastic_or_not[which(max_cor_id() %in% meta$sample_name)]
+          }
+  })
 
   # Joins their spectrum to the internal database.
   MatchSpectra <- reactive({
