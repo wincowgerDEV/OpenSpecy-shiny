@@ -24,6 +24,7 @@ library(hyperSpec)
 library(OpenSpecy)
 library(bs4Dash)
 library(shinyStorePlus)
+library(qs)
 
 library(TTR)
 if(droptoken) library(aws.s3)
@@ -398,7 +399,7 @@ load_data <- function() {
   #                           warning = function(w) {w}))
 
   #if(any(test_lib == "warning")) get_lib(path = conf$library_path)
-  std_wavenumbers <- seq(405, 3995, by = 5)
+  std_wavenumbers <- seq(100, 4000, by = 5)
 
   if(droptoken) {
     creds <- read.csv("s3_cred.csv")
@@ -412,7 +413,7 @@ load_data <- function() {
 
   # Name keys for human readable column names
   load("data/namekey.RData")
-  load("data/metadata.RData") #Can make a few different options of these that can be loaded when needed and overwrite the existing file.
+  meta <- qread("data/joined_metadata.qs") #Can make a few different options of these that can be loaded when needed and overwrite the existing file.
 
 
   # Inject variables into the parent environment
