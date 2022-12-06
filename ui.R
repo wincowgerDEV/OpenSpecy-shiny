@@ -481,19 +481,6 @@ dashboardPage(dark = T,
                                                                                             )
                                                                                  ),
                                                                                  
-                                                                                 column(3,
-                                                                                        pickerInput(inputId = "id_level", label =  "Identity Level",
-                                                                                                    choices = c("Raw" = "deep", 
-                                                                                                                "Plastic Detailed" = "pp_optimal",
-                                                                                                                "Plastic Grouped" = "pp_groups",
-                                                                                                                "Plastic or Not" = "plastic_not")) %>%
-                                                                                            add_prompt(
-                                                                                                message = "Select how detailed or general you want the match description",
-                                                                                                position = "right", type = "info", 
-                                                                                                size = "medium", rounded = TRUE
-                                                                                            )
-                                                                                        
-                                                                                 ),
                                                                                  column(3, 
                                                                                         numericInput(
                                                                                             "MinCor",

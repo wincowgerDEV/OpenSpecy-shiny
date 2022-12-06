@@ -337,7 +337,7 @@ observeEvent(input$reset, {
 
           current_spectrum %>%
               inner_join(meta, by = "sample_name") %>%
-              select(wavenumber, intensity, SpectrumIdentity) %>%
+              select(wavenumber, intensity) %>%
               mutate(intensity = make_rel(intensity, na.rm = T))
       }
   })
@@ -348,10 +348,10 @@ observeEvent(input$reset, {
       MatchSpectra() %>%
           dplyr::rename("Material" = SpectrumIdentity) %>%
           dplyr::rename("Pearson's r" = rsq) %>%
-          dplyr::select(if(input$id_level == "deep"){"Material"}
-                        else if(input$id_level == "pp_optimal"){"polymer"}
-                        else if(input$id_level == "pp_groups"){"polymer_class"}
-                        else{"plastic_or_not"}, 
+          dplyr::select("Material",
+                        "polymer",
+                        "polymer_class", 
+                        "plastic_or_not", 
                         if(!is.null(preprocessed$data)){"Pearson's r"}, 
                         sample_name)
   })
@@ -375,10 +375,10 @@ match_metadata <- reactive({
     req(input$active_identification)
     MatchSpectra()[input$event_rows_selected,] %>%
         select(where(~!any(is_empty(.)))) %>%
-        select(if(input$id_level == "deep"){"SpectrumIdentity"}
-                else if(input$id_level == "pp_optimal"){"polymer"}
-                else if(input$id_level == "pp_groups"){"polymer_class"}
-                else{"plastic_or_not"},
+        select("SpectrumIdentity",
+               "polymer",
+               "polymer_class", 
+               "plastic_or_not",
                 everything())
 })
     #Metadata for the selected value
@@ -434,7 +434,6 @@ match_metadata <- reactive({
                legend = list(orientation = 'h', y = 1.1),
                font = list(color = '#FFFFFF')) %>%
         config(modeBarButtonsToAdd = list("drawopenpath", "eraseshape"))
-    #}
     })
 
   output$heatmap <- renderPlotly({
@@ -458,8 +457,7 @@ match_metadata <- reactive({
                 text = ~paste(
                     "x: ", preprocessed$data$coords$x,
                     "<br>y: ", preprocessed$data$coords$y,
-                    "<br>z: ", if(input$active_identification){max_cor()} else{signal_noise()
-                    },
+                    "<br>z: ", if(input$active_identification){round(max_cor(), 1)} else{round(signal_noise(), 0)},
                     "<br>Filename: ", preprocessed$data$coords$filename)) %>%
             layout(
               xaxis = list(title = 'x',
@@ -592,8 +590,8 @@ match_metadata <- reactive({
              active_identification = input$active_identification,
              spectra_type = input$Spectra,
              #analyze_type = input$Data,
-             #region_type = input$Library,
-             id_level = input$id_level)
+             #region_type = input$Library
+             )
   })
 
   observe({

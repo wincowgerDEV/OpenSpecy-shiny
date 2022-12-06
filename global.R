@@ -296,20 +296,6 @@ signal_to_noise <- function(wavenumber, intensity, noise_min = 2200, noise_max =
     }
 }
 
-snr <- function(x) {
-  if(length(x[!is.na(x)]) < 20){
-    0
-  }
-  else{
-    max  = runMax(x[!is.na(x)], n = 20)
-    max[(length(max) - 19):length(max)] <- NA
-    #mean = runMean(x[!is.na(x)], n = 10)
-    #mean[(length(mean) - 9):length(mean)] <- NA
-    signal = max(max, na.rm = T)#/mean(x, na.rm = T)
-    noise = median(max[max != 0], na.rm = T)
-    ifelse(is.finite(signal/noise) & is.numeric(signal/noise) & signal/noise > 0, log10(signal/noise), 0)
-  }
-}
 
 #Correlate functions ----
 correlate_intensity <- function(intensity, search_wavenumbers, lib){
