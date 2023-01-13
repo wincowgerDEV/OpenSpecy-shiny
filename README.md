@@ -45,7 +45,7 @@ gantt
     section Open Specy 1.0
     Network Building           :2022-01-01, 2022-06-01
     Beta Testing            :2022-06-01, 2022-08-31
-    Manuscript Drafting           :2022-08-31, 2022-12-31
+    Manuscript Drafting           :2022-08-31, 2023-02-31
     section Artificial Intelligence Development
     Scoping with Open Specy Community  :2022-01-01  , 2022-06-01
     MVP with Water PACT  :2022-08-01  , 2022-09-20
