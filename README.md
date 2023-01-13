@@ -37,19 +37,4 @@ shiny::runGitHub('OpenSpecy-shiny', 'wincowgerDEV')
 ```
 
 
-## Roadmap
-```mermaid
-gantt
-    title Development Timeline
-    dateFormat  YYYY-MM-DD
-    section Open Specy 1.0
-    Network Building           :2022-01-01, 2022-06-01
-    Beta Testing            :2022-06-01, 2022-08-31
-    Manuscript Drafting           :2022-08-31, 2023-02-31
-    section Artificial Intelligence Development
-    Scoping with Open Specy Community  :2022-01-01  , 2022-06-01
-    MVP with Water PACT  :2022-08-01  , 2022-09-20
-    Research at AWI w/Dr. Primpke     :2022-09-20  , 2022-12-20
-```
-
 
