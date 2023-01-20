@@ -3,7 +3,7 @@
 # reactive
 function(input, output, session) {
     
-  if(conf$share != "system"){options(shiny.maxRequestSize = 100*1024^2)} else{options(shiny.maxRequestSize = 1000*1024^2)}
+  if(conf$share != "system"){options(shiny.maxRequestSize = 1000*1024^2)} else{options(shiny.maxRequestSize = 10000*1024^2)}
     
   session_id <- digest(runif(10))
 
@@ -206,15 +206,15 @@ observeEvent(input$reset, {
     req(input$active_identification)
     if(!input$derivative_decision & input$active_preprocessing) {
         library <- qread("data/library_nobaseline.qs") %>%
-            select(meta$sample_name[meta$organization != "Win Cowger and Sebastian Primpke"])#Nest these in here so that they don't load automatically unless needed.
+            select(meta$sample_name[meta$Organization != "Win Cowger and Sebastian Primpke"])#Nest these in here so that they don't load automatically unless needed.
     }
     else if(input$derivative_decision & input$active_preprocessing) {
         library <- qread("data/library_deriv.qs") %>%
-            select(meta$sample_name[meta$organization != "Win Cowger and Sebastian Primpke"]) #Nest these in here so that they don't load automatically unless needed.
+            select(meta$sample_name[meta$Organization != "Win Cowger and Sebastian Primpke"]) #Nest these in here so that they don't load automatically unless needed.
     }
     else{
         library <- qread("data/library_raw.qs") %>%
-            select(meta$sample_name[meta$organization != "Win Cowger and Sebastian Primpke"]) #Nest these in here so that they don't load automatically unless needed.
+            select(meta$sample_name[meta$Organization != "Win Cowger and Sebastian Primpke"]) #Nest these in here so that they don't load automatically unless needed.
     }
     if(input$Spectra == "both") {
       library
