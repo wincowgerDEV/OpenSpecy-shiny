@@ -373,13 +373,13 @@ observeEvent(input$reset, {
 
 match_metadata <- reactive({
     req(input$active_identification)
-    MatchSpectra()[input$event_rows_selected,] %>%
-        select(where(~!any(is_empty(.)))) %>%
-        select("SpectrumIdentity",
-               "polymer",
-               "polymer_class", 
-               "plastic_or_not",
-                everything())
+    MatchSpectra()[input$event_rows_selected,] #%>%
+        #select(#"SpectrumIdentity",
+               #"polymer",
+               #"polymer_class", 
+               #"plastic_or_not",
+         #      everything()) %>%
+        #select(where(~!any(is_empty(.))))  #Causing errors, need to debug. 
 })
     #Metadata for the selected value
  output$eventmetadata <- DT::renderDataTable({
