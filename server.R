@@ -205,13 +205,16 @@ observeEvent(input$reset, {
     #req(input$file1)
     req(input$active_identification)
     if(!input$derivative_decision & input$active_preprocessing) {
-        library <- qread("data/library_nobaseline.qs") #Nest these in here so that they don't load automatically unless needed.
+        library <- qread("data/library_nobaseline.qs") %>%
+            select(meta$sample_name[meta$organization != "Win Cowger and Sebastian Primpke"])#Nest these in here so that they don't load automatically unless needed.
     }
     else if(input$derivative_decision & input$active_preprocessing) {
-        library <- qread("data/library_deriv.qs") #Nest these in here so that they don't load automatically unless needed.
+        library <- qread("data/library_deriv.qs") %>%
+            select(meta$sample_name[meta$organization != "Win Cowger and Sebastian Primpke"]) #Nest these in here so that they don't load automatically unless needed.
     }
     else{
-        library <- qread("data/library_raw.qs") #Nest these in here so that they don't load automatically unless needed.
+        library <- qread("data/library_raw.qs") %>%
+            select(meta$sample_name[meta$organization != "Win Cowger and Sebastian Primpke"]) #Nest these in here so that they don't load automatically unless needed.
     }
     if(input$Spectra == "both") {
       library
