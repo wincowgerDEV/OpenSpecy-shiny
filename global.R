@@ -35,18 +35,22 @@ if(droptoken) library(aws.s3)
 std_wavenumbers <- seq(100, 4000, by = 5)
 
 #Download Data Functions ----
+# Name keys for human readable column names
+load("data/namekey.RData")
+meta <- qread("data/joined_metadata.qs") %>%
+    dplyr::filter(Organization != "Win Cowger and Sebastian Primpke") %>%
+    distinct(sample_name, .keep_all = T) #Can make a few different options of these that can be loaded when needed and overwrite the existing file.
+
 #OpenSpecy AI ----
 
 model <- qread("data/all_lasso.qs")
 
 #Test only
-data <- list(wavenumber = std_wavenumbers, 
-             spectra = library)
 
-ai_classify <- function(data, model){
+ai_classify <- function(data, wavenumbers, model){
     #preprocessing
-    spectra_processed <- process_spectra(data$spectra, wavenumber = data$wavenumber) %>%
-                                mutate(wavenumber = data$wavenumber) %>%
+    spectra_processed <- data %>%
+                                mutate(wavenumber = wavenumbers) %>%
                                 transpose(., make.names = "wavenumber") %>%
                                 select(as.character(seq(400, 3995, by = 5))) %>%
                                 as.matrix(.)
@@ -62,8 +66,11 @@ ai_classify <- function(data, model){
                         group_by(V1) %>%
                         filter(value == max(value, na.rm = T) | is.na(value)) %>%
                         ungroup() %>%
-                        left_join(model$dimension_conversion, by = c("V2" = "factor_num"))
+                        left_join(model$dimension_conversion, by = c("V2" = "factor_num")) %>%
+                        arrange(V1)
 }
+
+#test <- ai_classify(data = library, wavenumbers = std_wavenumbers, model = model)
 
 #Read spectra functions ----
 read_map <- function(filename, share, id, std_wavenumbers){
@@ -439,11 +446,6 @@ load_data <- function() {
     )
   }
 
-  # Name keys for human readable column names
-  load("data/namekey.RData")
-  meta <- qread("data/joined_metadata.qs") %>%
-      dplyr::filter(Organization != "Win Cowger and Sebastian Primpke") %>%
-      distinct(sample_name, .keep_all = T) #Can make a few different options of these that can be loaded when needed and overwrite the existing file.
 
 
   # Inject variables into the parent environment

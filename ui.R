@@ -469,7 +469,7 @@ dashboardPage(dark = T,
                                                                                                     status = "success",
                                                                                                     fill = T),
                                                                                                                                                             fluidRow(
-                                                                                 column(3,
+                                                                                 column(4,
                                                                                         pickerInput(inputId = "Spectra", label =  "Library Type",
                                                                                                     choices =  c("Both" = "both",
                                                                                                                  "Raman" = "raman",
@@ -480,11 +480,20 @@ dashboardPage(dark = T,
                                                                                                 size = "medium", rounded = TRUE
                                                                                             )
                                                                                  ),
-                                                                                 
-                                                                                 column(3, 
+                                                                                 column(4,
+                                                                                        pickerInput(inputId = "id_strategy", label =  "ID Strategy",
+                                                                                                    choices =  c("Correlation" = "correlation",
+                                                                                                                 "AI (Multinomial)" = "ai")) %>%
+                                                                                            add_prompt(
+                                                                                                message = "This selection will choose the strategy for identification.",
+                                                                                                position = "left", type = "info", 
+                                                                                                size = "medium", rounded = TRUE
+                                                                                            )
+                                                                                 ),
+                                                                                 column(4, 
                                                                                         numericInput(
                                                                                             "MinCor",
-                                                                                            "Minimum Correlation",
+                                                                                            "Minimum Value",
                                                                                             value = 0.7,
                                                                                             min = 0.6,
                                                                                             max = 1,
@@ -492,10 +501,13 @@ dashboardPage(dark = T,
                                                                                             #width = '25%'
                                                                                         ) %>%
                                                                                             add_prompt(
-                                                                                                message = "Specify the Correlation Threshold to Use",
+                                                                                                message = "Specify the Correlation or AI Value Threshold to Use",
                                                                                                 type = "info", 
                                                                                                 size = "medium", rounded = TRUE
-                                                                                            ))
+                                                                                            )
+                                                                                        
+                                                                                        )
+                                                                                 
                                                                                  
                                                                              )  
                                                                              
