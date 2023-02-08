@@ -51,7 +51,7 @@ ai_classify <- function(data, model){
                                 select(as.character(seq(400, 3995, by = 5))) %>%
                                 as.matrix(.)
     #prediction
-    test_pred <- predict(model$model, 
+                    predict(model$model, 
                             newx = spectra_processed, 
                             min(model$model$lambda), 
                             type = "response") %>% 
