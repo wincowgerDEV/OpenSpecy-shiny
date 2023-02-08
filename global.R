@@ -25,15 +25,45 @@ library(OpenSpecy)
 library(bs4Dash)
 library(shinyStorePlus)
 library(qs)
+library(glmnet)
+
 
 library(TTR)
 if(droptoken) library(aws.s3)
 
 #plan(multisession) ## Run in parallel on local computer when processing full map
-
+std_wavenumbers <- seq(100, 4000, by = 5)
 
 #Download Data Functions ----
+#OpenSpecy AI ----
 
+model <- qread("data/all_lasso.qs")
+
+#Test only
+data <- list(wavenumber = std_wavenumbers, 
+             spectra = library)
+
+ai_classify <- function(data, model){
+    #preprocessing
+    spectra_processed <- process_spectra(data$spectra, wavenumber = data$wavenumber) %>%
+                                mutate(wavenumber = data$wavenumber) %>%
+                                transpose(., make.names = "wavenumber") %>%
+                                select(as.character(seq(400, 3995, by = 5))) %>%
+                                as.matrix(.)
+    #prediction
+    test_pred <- predict(model$model, 
+                            newx = spectra_processed, 
+                            min(model$model$lambda), 
+                            type = "response") %>% 
+                        as.data.table() %>%
+                        mutate(V1 = as.integer(V1),
+                               V2 = as.integer(V2)) %>%
+                        right_join(data.table(V1 = 1:dim(spectra_processed)[1])) %>%
+                        group_by(V1) %>%
+                        filter(value == max(value, na.rm = T) | is.na(value)) %>%
+                        ungroup() %>%
+                        left_join(model$dimension_conversion, by = c("V2" = "factor_num"))
+}
 
 #Read spectra functions ----
 read_map <- function(filename, share, id, std_wavenumbers){
@@ -212,7 +242,7 @@ process_intensity <- function(intensity, wavenumber, active_preprocessing = T,
   test <- wavenumber %in% wavenumber[!is.na(intensity)]
   place <- rep(NA, length.out= length(wavenumber))
 
-  #set innitial conditions
+  #set initial conditions
   intensity_cor <- intensity[!is.na(intensity)]
   wavenumber_cor <- wavenumber[!is.na(intensity)]
   test2 <-  length(wavenumber_cor[wavenumber_cor > min_range & wavenumber_cor < max_range]) > 11
@@ -397,7 +427,7 @@ load_data <- function() {
   #                           warning = function(w) {w}))
 
   #if(any(test_lib == "warning")) get_lib(path = conf$library_path)
-  std_wavenumbers <- seq(100, 4000, by = 5)
+
 
   if(droptoken) {
     creds <- read.csv("s3_cred.csv")
@@ -411,7 +441,9 @@ load_data <- function() {
 
   # Name keys for human readable column names
   load("data/namekey.RData")
-  meta <- qread("data/joined_metadata.qs") #Can make a few different options of these that can be loaded when needed and overwrite the existing file.
+  meta <- qread("data/joined_metadata.qs") %>%
+      dplyr::filter(Organization != "Win Cowger and Sebastian Primpke") %>%
+      distinct(sample_name, .keep_all = T) #Can make a few different options of these that can be loaded when needed and overwrite the existing file.
 
 
   # Inject variables into the parent environment
@@ -528,3 +560,4 @@ inputIp <- function(inputId, value=""){
                type = "text", style = "display:none;")
   )
 }
+
