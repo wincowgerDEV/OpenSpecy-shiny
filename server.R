@@ -281,19 +281,19 @@ observeEvent(input$reset, {
   
   max_cor <- reactive({
       req(input$file1)
-      req(input$id_strategy == "correlation")
+      #req(input$id_strategy == "correlation")
       req(input$active_identification)
       if(input$id_strategy == "correlation"){
           round(apply(correlation(), 1, function(x) max(x, na.rm = T)), 1)
       }
       else if(input$id_strategy == "ai"){
-          round(ai_output()[["values"]], 1)
+          round(ai_output()[["value"]], 1)
       }
   })
 
   max_cor_id <- reactive({
       req(input$file1)
-      req(input$id_strategy == "correlation")
+      #req(input$id_strategy == "correlation")
       req(input$active_identification)
       if(input$id_strategy == "correlation"){
           colnames(libraryR())[apply(correlation(), 1, function(x) which.max(x))]
@@ -473,7 +473,7 @@ match_metadata <- reactive({
     })
 
   output$heatmap <- renderPlotly({
-      req(input$id_strategy == "correlation")
+      #req(input$id_strategy == "correlation")
       req(input$file1)
       #req(ncol(data()) > 2)
         plot_ly(source = "heat_plot") %>%
@@ -494,8 +494,10 @@ match_metadata <- reactive({
                 text = ~paste(
                     "x: ", preprocessed$data$coords$x,
                     "<br>y: ", preprocessed$data$coords$y,
-                    "<br>z: ", if(input$active_identification){round(max_cor(), 1)} else{round(signal_noise(), 0)},
-                    "<br>Filename: ", preprocessed$data$coords$filename)) %>%
+                    "<br>snr: ", round(signal_noise(), 0),
+                    "<br>cor: ", if(input$active_identification){round(max_cor(), 1)} else{NA},
+                    "<br>identity: ", if(input$active_identification){max_cor_id()} else{NA},
+                    "<br>filename: ", preprocessed$data$coords$filename)) %>%
             layout(
               xaxis = list(title = 'x',
                            zeroline = F,
@@ -670,12 +672,13 @@ match_metadata <- reactive({
       #print(DataR())
       #print(conform_res(preprocessed$data$wavenumber))
       #print(model)
-      print(ai_output())
+      #print(max_cor_id())
+      print(max_cor())
+      print(signal_noise())
+      #print(ai_output())
       
       #print(input$file1)
       #print(paste0("users/", input$fingerprint,"/", session_id, "/", gsub(".*/", "", as.character(input$file1$name))))
-      #print(max_cor())
-      #print(max_cor_id())
       #print(c(correlation()))
       #print(preprocessed$data$coords$x)
       #print(preprocessed$data$coords$y)

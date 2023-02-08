@@ -59,6 +59,7 @@ ai_classify <- function(data, wavenumbers, model){
                                 dplyr::mutate(wavenumber = wavenumbers) %>%
                                 right_join(means) %>%
                                 dplyr::mutate(dplyr::across(where(is.numeric), ~fifelse(is.na(.x), mean, .x))) %>%
+                                select(-mean) %>%
                                 data.table::transpose(., make.names = "wavenumber") %>%
                                 select(as.character(seq(400, 3995, by = 5))) %>%
                                 as.matrix(.)
