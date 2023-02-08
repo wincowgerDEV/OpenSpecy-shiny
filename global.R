@@ -26,6 +26,7 @@ library(bs4Dash)
 library(shinyStorePlus)
 library(qs)
 library(glmnet)
+library(tidyr)
 
 
 library(TTR)
@@ -44,14 +45,21 @@ meta <- qread("data/joined_metadata.qs") %>%
 #OpenSpecy AI ----
 
 model <- qread("data/all_lasso.qs")
+means <- read.csv("data/means.csv") %>%
+    select(-X) %>%
+    pivot_longer(cols = everything(), names_to = "wavenumbers", values_to = "mean") %>%
+    mutate(wavenumber = as.numeric(gsub("X", "", wavenumbers))) %>%
+    select(-wavenumbers)
 
 #Test only
 
 ai_classify <- function(data, wavenumbers, model){
     #preprocessing
     spectra_processed <- data %>%
-                                mutate(wavenumber = wavenumbers) %>%
-                                transpose(., make.names = "wavenumber") %>%
+                                dplyr::mutate(wavenumber = wavenumbers) %>%
+                                right_join(means) %>%
+                                dplyr::mutate(dplyr::across(where(is.numeric), ~fifelse(is.na(.x), mean, .x))) %>%
+                                data.table::transpose(., make.names = "wavenumber") %>%
                                 select(as.character(seq(400, 3995, by = 5))) %>%
                                 as.matrix(.)
     #prediction

@@ -534,7 +534,9 @@ dashboardPage(dark = T,
                                                     )
                                                  )
                                              
-                                  )))),
+                                  ),
+                                  verbatimTextOutput("event_test")
+                                  ))),
               tabItem("partner", 
                       #Partner With Us tab ----
                                titlePanel(h4("Help us reach our goal to revolutionize spectroscopy.")),

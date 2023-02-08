@@ -124,7 +124,9 @@ observeEvent(input$file1, {
   #Preprocess Spectra ----
   observeEvent(input$MinSNR | signal_noise(), {
       req(input$file1)
-      updateProgressBar(session = session, id = "signal_progress", value = sum(signal_noise() > input$MinSNR)/length(signal_noise()) * 100)
+      updateProgressBar(session = session, 
+                        id = "signal_progress", 
+                        value = sum(signal_noise() > input$MinSNR)/length(signal_noise()) * 100)
   })
   
   # All cleaning of the data happens here. Range selection, Smoothing, and Baseline removing
@@ -231,6 +233,7 @@ observeEvent(input$reset, {
 
   #Correlation ----
   output$correlation_head <- renderUI({
+      req(input$id_strategy == "correlation")
       boxLabel(text = if(input$active_identification) {"Cor"} else{"SNR"}, 
                status = if(input$active_identification) {if(round(max_cor()[[data_click$data]], 2) > input$MinCor & round(signal_noise()[[data_click$data]], 2) > input$MinSNR){"success"} else{"error"}} else{if(round(signal_noise()[[data_click$data]], 2) > input$MinSNR){"success"} else{"error"}}, 
                tooltip = "This tells you whether the signal to noise ratio or the match observed is above or below the thresholds.")
@@ -267,32 +270,36 @@ observeEvent(input$reset, {
           }, FUN.VALUE = numeric(1))
   })
 
-  ai_output <- reactive({
+  ai_output <- reactive({ #tested working. 
       req(input$file1)
       req(input$active_identification)
       req(input$id_strategy == "ai")
-      ai_classify(data = DataR(), wavenumbers = conform_res(preprocessed$data$wavenumber), model = model)
+      ai_classify(data = DataR(), 
+                  wavenumbers = conform_res(preprocessed$data$wavenumber), 
+                  model = model)
   })
   
   max_cor <- reactive({
       req(input$file1)
+      req(input$id_strategy == "correlation")
       req(input$active_identification)
       if(input$id_strategy == "correlation"){
           round(apply(correlation(), 1, function(x) max(x, na.rm = T)), 1)
       }
       else if(input$id_strategy == "ai"){
-          ai_output()$values
+          round(ai_output()[["values"]], 1)
       }
   })
 
   max_cor_id <- reactive({
       req(input$file1)
+      req(input$id_strategy == "correlation")
       req(input$active_identification)
       if(input$id_strategy == "correlation"){
           colnames(libraryR())[apply(correlation(), 1, function(x) which.max(x))]
       }
       else if(input$id_strategy == "ai"){
-          ai_output()$name
+          ai_output()[["name"]]
       }
   })
   
@@ -434,6 +441,8 @@ match_metadata <- reactive({
 
   # Display matches based on table selection ----
   output$MyPlotC <- renderPlotly({
+      req(input$id_strategy == "correlation")
+      
     #req(input$file1)
     #if(grepl("(\\.csv$)|(\\.asp$)|(\\.spa$)|(\\.spc$)|(\\.jdx$)|(\\.[0-9]$)",
      #         ignore.case = T, filename$data)){
@@ -464,6 +473,7 @@ match_metadata <- reactive({
     })
 
   output$heatmap <- renderPlotly({
+      req(input$id_strategy == "correlation")
       req(input$file1)
       #req(ncol(data()) > 2)
         plot_ly(source = "heat_plot") %>%
@@ -657,7 +667,11 @@ match_metadata <- reactive({
   
   #Test ----
   output$event_test <- renderPrint({
-      #print(!is.null(preprocessed$data))
+      #print(DataR())
+      #print(conform_res(preprocessed$data$wavenumber))
+      #print(model)
+      print(ai_output())
+      
       #print(input$file1)
       #print(paste0("users/", input$fingerprint,"/", session_id, "/", gsub(".*/", "", as.character(input$file1$name))))
       #print(max_cor())
