@@ -558,7 +558,8 @@ dashboardPage(dark = T,
                                                    h3("Thriving (10,000–100,000$)"),
                                                    img(src = "https://mooreplasticresearch.org/wp-content/uploads/2021/06/HorizontalLogo-FullName-1.png", style = "width:20vw"),
                                                    img(src = "https://www.helmholtz-hida.de/typo3conf/ext/hida_site_package/Resources/Public/dest/images/logos/hida-logo.svg", style = "width:20vw"),
-                                                   h4("Mcpike Zima Charitable Foundation")
+                                                   img(src = "https://infrastructure.der-lab.net/wp-content/uploads/2017/05/logo_nrel_c.jpg", style = "width:20vw"),
+                                                   img(src = "https://mcpzfoundation.org/wp-content/uploads/2021/07/McPZ-Logo-Horizontal-RGB.png", style = "width:20vw")
                                                ),
                                                div(class = "jumbotron",
                                                    style = "padding:0rem 1rem 0rem;
