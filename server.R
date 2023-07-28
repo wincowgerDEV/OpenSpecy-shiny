@@ -142,17 +142,21 @@ observeEvent(input$reset, {
   })
 
   DataR_plot <- reactive({
-      req(DataR())
-      filter_spec(DataR(), logic = 1:ncol(DataR()$spectra) == data_click$data)
+      if(is.null(preprocessed$data)){
+          list(wavenumber = numeric(), spectra = data.table(empty = numeric()))
+      }
+      else{
+          filter_spec(DataR(), logic = 1:ncol(DataR()$spectra) == data_click$data)
+      }
   })
 
   libraryR <- reactive({
     req(input$active_identification)
     if(!input$derivative_decision) {
-        library <- readRDS("both_nobaseline.rds")
+        library <- readRDS("data/both_nobaseline.rds")
     }
     else {
-        library <- readRDS("both_derivative.rds")#Nest these in here so that they don't load automatically unless needed.
+        library <- readRDS("data/both_derivative.rds")#Nest these in here so that they don't load automatically unless needed.
     }
     if(input$Spectra == "both") {
       library
@@ -201,10 +205,11 @@ observeEvent(input$reset, {
       req(input$file)
       req(input$active_identification)
       req(input$id_strategy == "correlation")
-      correlate_spectra(data = DataR(), 
-                        search_wavenumbers = conform_res(preprocessed$data$wavenumber), 
-                        std_wavenumbers = std_wavenumbers, 
-                        library = libraryR())
+      withProgress(message = 'Analyzing Spectrum', value = 1/3, {
+      correlate_spectra(object = DataR(), 
+                        library = libraryR(),
+                        add_library_metadata = "sample_name")
+      })
   })
 
   signal_to_noise <- reactive({
@@ -216,17 +221,22 @@ observeEvent(input$reset, {
       req(input$file)
       req(input$active_identification)
       req(input$id_strategy == "ai")
-      ai_classify(data = DataR(), 
-                  wavenumbers = conform_res(preprocessed$data$wavenumber), 
+      ai_classify(data = DataR()$spectra, 
+                  wavenumbers = DataR()$wavenumber, 
                   model = model)
+  })
+  
+  top_correlation <- reactive({
+      req(input$file)
+      req(input$active_identification)
+      correlation[order(-match_val), head(.SD, 1), by = object_id][data.table(object_id = as.character(names(DataR()$spectra))), on = "object_id"]
   })
   
   max_cor <- reactive({
       req(input$file)
-      #req(input$id_strategy == "correlation")
       req(input$active_identification)
       if(input$id_strategy == "correlation"){
-          round(apply(correlation(), 1, function(x) max(x, na.rm = T)), 1)
+          top_correlation$match_value
       }
       else if(input$id_strategy == "ai"){
           round(ai_output()[["value"]], 1)
@@ -238,55 +248,22 @@ observeEvent(input$reset, {
       #req(input$id_strategy == "correlation")
       req(input$active_identification)
       if(input$id_strategy == "correlation"){
-          colnames(libraryR())[apply(correlation(), 1, function(x) which.max(x))]
+          max_cor$library_id
       }
       else if(input$id_strategy == "ai"){
           ai_output()[["name"]]
       }
   })
   
-  #max_cor_name <- reactive({
-  #    req(input$file)
-  #    req(correlation())
-      
-  #    if(input$id_level == "deep"){
-  #        meta$SpectrumIdentity[which(max_cor_id() %in% meta$sample_name)]
-  #        }
-  #    else if(input$id_level == "pp_optimal"){
-  #        meta$polymer[which(max_cor_id() %in% meta$sample_name)]
-  #        }
-  #    else if(input$id_level == "pp_groups"){
-  #        meta$polymer_class[which(max_cor_id() %in% meta$sample_name)]
-  #        }
-  #    else{
-  #        meta$plastic_or_not[which(max_cor_id() %in% meta$sample_name)]
-  #        }
-  #})
-
-  # Joins their spectrum to the internal database.
-  MatchSpectra <- reactive({
-    #req(input$file)
-    req(input$active_identification)
-    req(input$id_strategy == "correlation")
-      if(is.null(preprocessed$data)) {
-      Lib <-  meta %>% 
-          filter(sample_name %in% names(libraryR())) %>% 
-          mutate(rsq = NA)
+  matches_to_single <- reactive({
+      req(input$active_identification)
+      req(input$id_strategy == "correlation")
+      if(is.null(preprocessed$data)){
+          libraryR()$metadata
       }
       else{
-          #input
-          withProgress(message = 'Analyzing Spectrum', value = 1/3, {
-
-              incProgress(1/3, detail = "Finding Match")
-
-              Lib <- get_all_metadata(sample_name = names(libraryR()), 
-                                      rsq = correlation()[data_click$data,], 
-                                      metadata = meta)
-
-              incProgress(1/3, detail = "Making Plot")
-      })
-    }
-    return(Lib)
+          correlation()[object_id == names(DataR_plot()$spectra)[data_click$data],]
+      }
   })
 
   match_selected <- reactive({# Default to first row if not yet clicked
@@ -297,20 +274,22 @@ observeEvent(input$reset, {
           data.table(intensity = numeric(), wavenumber = numeric())
       }
       else{
-          id_select <- ifelse(is.null(input$event_rows_selected),
-                              MatchSpectra()[[1,
-                                              "sample_name"]],
-                              MatchSpectra()[[input$event_rows_selected,
-                                              "sample_name"]])
+         column_name <-  ifelse(is.null(preprocessed$data),
+                                "sample_name",
+                                "library_id")
+          
+         #need to make reactive
+          id_select <-  ifelse(is.null(input$event_rows_selected),
+                              matches_to_single()[[1,column_name]],
+                              matches_to_single()[[input$event_rows_selected,column_name]])#"00087f78d45c571524fce483ef10752e"	#matches_to_single[[1,column_name]]
+              
+              
+          
           # Get data from find_spec
-          current_spectrum <- data.table(wavenumber = std_wavenumbers,
-                                         intensity = libraryR()[[id_select]],
-                                         sample_name = id_select)
+         data.table(wavenumber = libraryR()$wavenumber,
+                    intensity = make_rel(libraryR()[["spectra"]][[id_select]], na.rm = T)) %>%
+             filter(!is.na(intensity))
 
-          current_spectrum %>%
-              inner_join(meta, by = "sample_name") %>%
-              select(wavenumber, intensity) %>%
-              mutate(intensity = make_rel(intensity, na.rm = T))
       }
   })
 
@@ -318,15 +297,15 @@ observeEvent(input$reset, {
   top_matches <- reactive({
       req(input$active_identification)
       req(input$id_strategy == "correlation")
-      MatchSpectra() %>%
-          dplyr::rename("Material" = SpectrumIdentity) %>%
-          dplyr::rename("Pearson's r" = rsq) %>%
-          dplyr::select("Material",
-                        "polymer",
-                        "polymer_class", 
-                        "plastic_or_not", 
-                        if(!is.null(preprocessed$data)){"Pearson's r"}, 
-                        sample_name)
+      matches_to_single() #%>%
+          #dplyr::rename("Material" = SpectrumIdentity) %>%
+          #dplyr::rename("Pearson's r" = match_val) %>%
+          #dplyr::select("Material",
+          #              "polymer",
+          #              "polymer_class", 
+          #              "plastic_or_not", 
+          #              if(!is.null(preprocessed$data)){"Pearson's r"}, 
+          #              sample_name)
   })
 
   # Create the data tables for all matches
@@ -341,14 +320,13 @@ observeEvent(input$reset, {
               rownames = FALSE,
               filter = "top", caption = "Selectable Matches",
               style = "bootstrap",
-
               selection = list(mode = "single", selected = c(1)))
   })
 
 match_metadata <- reactive({
     req(input$active_identification)
     req(input$id_strategy == "correlation")
-    MatchSpectra()[input$event_rows_selected,] #%>%
+    matches_to_single()[input$event_rows_selected,] #%>%
         #select(#"SpectrumIdentity",
                #"polymer",
                #"polymer_class", 
@@ -356,7 +334,8 @@ match_metadata <- reactive({
          #      everything()) %>%
         #select(where(~!any(is_empty(.))))  #Causing errors, need to debug. 
 })
-    #Metadata for the selected value
+
+#Metadata for the selected value
  output$eventmetadata <- DT::renderDataTable({
     req(input$active_identification)
     req(input$id_strategy == "correlation")
@@ -389,7 +368,7 @@ match_metadata <- reactive({
           add_trace(data = match_selected(), x = ~wavenumber, y = ~intensity,
                     name = 'Library Spectra',
                     line = list(color = 'rgb(255,255,255)')) %>%
-          add_trace(x = ~DataR_plot()$wavenumber, y = ~DataR_plot()[["spectra"]][[1]],
+          add_trace(x = DataR_plot()$wavenumber, y = DataR_plot()[["spectra"]][[1]],
                     name = 'Your Spectra',
                     line = list(color = 'rgb(125,249,255)')) %>%
         # Dark blue rgb(63,96,130)
