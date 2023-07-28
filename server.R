@@ -75,19 +75,18 @@ observeEvent(input$file, {
     })
 
   #Preprocess Spectra ----
-  observeEvent(input$MinSNR | signal_noise(), {
+  observeEvent(input$MinSNR | signal_to_noise(), {
       req(input$file)
       updateProgressBar(session = session, 
                         id = "signal_progress", 
-                        value = sum(signal_noise() > input$MinSNR)/length(signal_noise()) * 100)
+                        value = sum(signal_to_noise() > input$MinSNR)/length(signal_to_noise()) * 100)
   })
   
   # All cleaning of the data happens here. Range selection, Smoothing, and Baseline removing
   baseline_data <- reactive({
      req(input$file)
      req(input$active_preprocessing)
-    process_spectra(df = data(),
-                    wavenumber = conform_res(preprocessed$data$wavenumber),
+    process_spectra(object = data(),
                     active_processing = input$active_preprocessing,
                     adj_intensity_decision = input$intensity_decision, 
                     type = input$intensity_corr,
@@ -141,16 +140,8 @@ observeEvent(input$reset, {
   })
 
   DataR_plot <- reactive({
-    if(!input$active_identification | is.null(preprocessed$data)) {
-      data.table(wavenumber = numeric(),
-                 intensity = numeric(),
-                 SpectrumIdentity = factor())}
-    else{
-      data.table(wavenumber = DataR()$wavenumber,
-                 intensity = make_rel(DataR()[[data_click$data]], na.rm = T),
-                 SpectrumIdentity = factor()) %>%
-        dplyr::filter(!is.na(intensity))
-    }
+      req(DataR())
+      filter_spec(DataR(), logic = 1:ncol(DataR()$spectra) == data_click$data)
   })
 
   libraryR <- reactive({
@@ -168,15 +159,28 @@ observeEvent(input$reset, {
       filter_spec(library, logic = library$metadata$SpectrumType == "FTIR")
     }
     else if (input$Spectra == "raman"){
-        filter_spec(library, logic = library$metadata$SpectrumType == "Raman")
+      filter_spec(library, logic = library$metadata$SpectrumType == "Raman")
     }
   })
 
   #Correlation ----
   output$correlation_head <- renderUI({
-      req(input$id_strategy == "correlation")
       boxLabel(text = if(input$active_identification) {"Cor"} else{"SNR"}, 
-               status = if(input$active_identification) {if(round(max_cor()[[data_click$data]], 2) > input$MinCor & round(signal_noise()[[data_click$data]], 2) > input$MinSNR){"success"} else{"error"}} else{if(round(signal_noise()[[data_click$data]], 2) > input$MinSNR){"success"} else{"error"}}, 
+               status = if(input$active_identification) {
+                   if(round(max_cor()[[data_click$data]], 2) > input$MinCor & round(signal_to_noise()[[data_click$data]], 2) > input$MinSNR){
+                       "success"
+                       } 
+                   else{
+                       "error"
+                       }
+                   } else{
+                       if(round(signal_to_noise()[[data_click$data]], 2) > input$MinSNR){
+                           "success"
+                           } 
+                       else{
+                           "error"
+                           }
+                       }, 
                tooltip = "This tells you whether the signal to noise ratio or the match observed is above or below the thresholds.")
   })
   
@@ -187,7 +191,7 @@ observeEvent(input$reset, {
                         value = sum(max_cor() > input$MinCor)/length(max_cor()) * 100)
       updateProgressBar(session = session, 
                         id = "match_progress", 
-                        value = (sum(signal_noise() > input$MinSNR & max_cor() > input$MinCor)/length(signal_noise())) * 100)
+                        value = (sum(signal_to_noise() > input$MinSNR & max_cor() > input$MinCor)/length(signal_to_noise())) * 100)
   })
   
   
@@ -201,14 +205,9 @@ observeEvent(input$reset, {
                         library = libraryR())
   })
 
-  signal_noise <- reactive({
-          req(input$file)
-          vapply(DataR(), function(x){
-              signal_to_noise(wavenumber = conform_res(preprocessed$data$wavenumber), 
-                                   intensity = x, 
-                                   method = "Auto", 
-                                   return = "signal_to_noise")
-          }, FUN.VALUE = numeric(1))
+  signal_to_noise <- reactive({
+          req(DataR)
+          signal_noise(DataR())
   })
 
   ai_output <- reactive({ #tested working. 
@@ -383,23 +382,13 @@ match_metadata <- reactive({
   # Display matches based on table selection ----
   output$MyPlotC <- renderPlotly({
       req(input$id_strategy == "correlation")
-      
-    #req(input$file)
-    #if(grepl("(\\.csv$)|(\\.asp$)|(\\.spa$)|(\\.spc$)|(\\.jdx$)|(\\.[0-9]$)",
-     #         ignore.case = T, filename$data)){
-        #req(single_data$data)
+     
       plot_ly(type = 'scatter', mode = 'lines', source = "B") %>%
-        add_trace(x = if(!is.null(preprocessed$data)) {conform_res(preprocessed$data$wavenumber)} else{NULL}, y = if(!is.null(preprocessed$data)){make_rel(data()[[data_click$data]], na.rm = T)} else{NULL},
-                  name = 'Uploaded',
-                  line = list(color = 'rgba(240,236,19,0.8)')) %>%
-          add_trace(x = if(input$active_preprocessing & !is.null(preprocessed$data)){conform_res(preprocessed$data$wavenumber)} else{NULL}, y = if(input$active_preprocessing & !is.null(preprocessed$data)){make_rel(baseline_data()[[data_click$data]], na.rm = T)} else{NULL},
-                    name = 'Processed',
-                    line = list(color = 'rgb(240,19,207)')) %>%
           add_trace(data = match_selected(), x = ~wavenumber, y = ~intensity,
-                    name = 'Selected',
+                    name = 'Library Spectra',
                     line = list(color = 'rgb(255,255,255)')) %>%
-          add_trace(data = DataR_plot(), x = ~wavenumber, y = ~intensity,
-                    name = 'Matched',
+          add_trace(x = ~DataR_plot()$wavenumber, y = ~DataR_plot()[["spectra"]][[1]],
+                    name = 'Your Spectra',
                     line = list(color = 'rgb(125,249,255)')) %>%
         # Dark blue rgb(63,96,130)
         # https://www.rapidtables.com/web/color/RGB_Color.html https://www.color-hex.com/color-names.html
@@ -422,20 +411,20 @@ match_metadata <- reactive({
                 x = preprocessed$data$metadata$x, #Need to update this with the new rout format.
                 y = preprocessed$data$metadata$y,
                 z = if(input$active_identification){
-                        ifelse(signal_noise() > input$MinSNR & max_cor() > input$MinCor, max_cor(), NA)
+                        ifelse(signal_to_noise() > input$MinSNR & max_cor() > input$MinCor, max_cor(), NA)
                     }
                     else{
-                        ifelse(signal_noise() > input$MinSNR, signal_noise(), NA)
+                        ifelse(signal_to_noise() > input$MinSNR, signal_to_noise(), NA)
                     },
                 type = "heatmap",
                 hoverinfo = 'text',
                 showscale = F,
-                colors = if(input$active_identification){hcl.colors(n = sum(signal_noise() > input$MinSNR & max_cor() > input$MinCor), palette = "viridis")} else {heat.colors(n = sum(signal_noise() > input$MinSNR))
+                colors = if(input$active_identification){hcl.colors(n = sum(signal_to_noise() > input$MinSNR & max_cor() > input$MinCor), palette = "viridis")} else {heat.colors(n = sum(signal_to_noise() > input$MinSNR))
                 },
                 text = ~paste(
                     "x: ", preprocessed$data$metadata$x,
                     "<br>y: ", preprocessed$data$metadata$y,
-                    "<br>snr: ", round(signal_noise(), 0),
+                    "<br>snr: ", round(signal_to_noise(), 0),
                     "<br>cor: ", if(input$active_identification){round(max_cor(), 1)} else{NA},
                     "<br>identity: ", if(input$active_identification){max_cor_id()} else{NA},
                     "<br>filename: ", preprocessed$data$metadata$filename)) %>%
@@ -463,7 +452,7 @@ match_metadata <- reactive({
             if(input$download_selection == "Test Map") {zip(file, unzip("data/CA_tiny_map.zip"))}
             if(input$download_selection == "Your Spectra") {fwrite(data() %>% mutate(wavenumber = conform_res(preprocessed$data$wavenumber)), file)}
             if(input$download_selection == "Library Spectra") {fwrite(libraryR() %>% mutate(wavenumber = conform_res(preprocessed$data$wavenumber)), file)}
-            if(input$download_selection == "Top Matches") {fwrite(data.table(x = preprocessed$data$metadata$x, y = preprocessed$data$metadata$y, filename = preprocessed$data$metadata$filename, signal_to_noise = signal_noise(), good_signal = signal_noise() > input$MinSNR), file)}
+            if(input$download_selection == "Top Matches") {fwrite(data.table(x = preprocessed$data$metadata$x, y = preprocessed$data$metadata$y, filename = preprocessed$data$metadata$filename, signal_to_noise = signal_to_noise(), good_signal = signal_to_noise() > input$MinSNR), file)}
             })
 
   ## Sharing data ----
@@ -480,7 +469,6 @@ match_metadata <- reactive({
 
   observe({
       #req(input$file)
-      #toggle(id = "signal_progress", condition = !is.null(preprocessed$data))
       toggle(id = "download_conformed", condition = !is.null(preprocessed$data))
       toggle(id = "download_matched", condition = !is.null(preprocessed$data))
       toggle(id = "downloadData", condition = !is.null(preprocessed$data))
@@ -488,7 +476,6 @@ match_metadata <- reactive({
       if(!is.null(preprocessed$data)){
           toggle(id = "heatmap", condition = ncol(preprocessed$data$spectra) > 1)
       }
-      #if(ncol(data()) > 1)
   })
   
   observe({
