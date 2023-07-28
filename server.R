@@ -100,12 +100,14 @@ observeEvent(input$file, {
                     flatten_min = 2200, #update
                     flatten_max = 2420, #update
                     smooth_decision = input$smooth_decision,
-                    smoother = input$smoother,
+                    smooth_polynomial = input$smoother,
                     baseline_decision = input$baseline_decision,
                     baseline_selection = input$baseline_selection,
-                    baseline = input$baseline,
-                    derivative_decision = input$derivative_decision,
-                    trace = trace)
+                    baseline_polynomial = input$baseline,
+                    raw_baseline = F,
+                    wavenumber_fit = trace$data$intensity,
+                    intensity_fit = trace$data$intensity,
+                    derivative_decision = input$derivative_decision)
   })
 
 observeEvent(input$go, {
