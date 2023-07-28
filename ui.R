@@ -415,7 +415,7 @@ dashboardPage(dark = T,
                                                                                      title = prettySwitch("co2_decision",
                                                                                                      label = "Flatten FTIR CO2",
                                                                                                      inline = T,
-                                                                                                     value = T,
+                                                                                                     value = F,
                                                                                                      status = "success",
                                                                                                      fill = T)
                                                                                          
