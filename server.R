@@ -3,6 +3,7 @@
 # reactive
 function(input, output, session) {
     
+  #Set upload size
   if(conf$share != "system"){options(shiny.maxRequestSize = 1000*1024^2)} else{options(shiny.maxRequestSize = 10000*1024^2)}
     
   session_id <- digest(runif(10))
@@ -11,14 +12,6 @@ function(input, output, session) {
   load_data()
   hide(id = "loading_overlay", anim = TRUE, animType = "fade")
   show("app_content")
-
-# For desktop version of the app.
-#  if (!interactive()) {
-#    session$onSessionEnded(function() {
-#      stopApp()
-#      q("no")
-#    })
-#  }
 
   output$event_goals <- DT::renderDataTable({
     datatable(goals,
@@ -206,28 +199,20 @@ observeEvent(input$reset, {
   libraryR <- reactive({
     #req(input$file1)
     req(input$active_identification)
-    if(!input$derivative_decision & input$active_preprocessing) {
-        library <- qread("data/library_nobaseline.qs") %>%
-            select(meta$sample_name)#Nest these in here so that they don't load automatically unless needed.
+    if(!input$derivative_decision) {
+        library <- readRDS("both_nobaseline.rds")
     }
-    else if(input$derivative_decision & input$active_preprocessing) {
-        library <- qread("data/library_deriv.qs") %>%
-            select(meta$sample_name) #Nest these in here so that they don't load automatically unless needed.
-    }
-    else{
-        library <- qread("data/library_raw.qs") %>%
-            select(meta$sample_name) #Nest these in here so that they don't load automatically unless needed.
+    else {
+        library <- readRDS("both_derivative.rds")#Nest these in here so that they don't load automatically unless needed.
     }
     if(input$Spectra == "both") {
       library
     }
     else if (input$Spectra == "ftir"){
-      cols <- meta %>% dplyr::filter(SpectrumType == "FTIR") %>% pull(sample_name)
-      library[, ..cols]
+      filter_spec(library, logic = library$metadata$SpectrumType == "FTIR")
     }
     else if (input$Spectra == "raman"){
-      cols <- meta %>% dplyr::filter(SpectrumType == "Raman") %>% pull(sample_name)
-      library[, ..cols]
+        filter_spec(library, logic = library$metadata$SpectrumType == "Raman")
     }
   })
 
@@ -520,19 +505,9 @@ match_metadata <- reactive({
         content = function(file) {
             if(input$download_selection == "Test Data") {fwrite(testdata, file)}
             if(input$download_selection == "Test Map") {zip(file, unzip("data/CA_tiny_map.zip"))}
-            if(input$download_selection == "Spectra Conformed") {fwrite(data() %>% mutate(wavenumber = conform_res(preprocessed$data$wavenumber)), file)}
-            if(input$download_selection == "Spectra Processed") {fwrite(baseline_data() %>% mutate(wavenumber = conform_res(preprocessed$data$wavenumber)), file)}
-            if(input$download_selection == "Spectra SNR") {fwrite(data.table(x = preprocessed$data$coords$x, y = preprocessed$data$coords$y, filename = preprocessed$data$coords$filename, signal_to_noise = signal_noise(), good_signal = signal_noise() > input$MinSNR), file)}
-            if(input$download_selection == "Spectra Selected") {fwrite(match_selected() %>% select(-SpectrumIdentity), file)}
-            if(input$download_selection == "Match Selected") {fwrite(DataR_plot() %>% select(-SpectrumIdentity), file)}
-            if(input$download_selection == "Match Metadata") {fwrite(user_metadata(), file)}
-            if(input$download_selection == "All Correlation Data") {fwrite(correlation %>% mutate(library_names = names(libraryR())), file)}
-            if(input$download_selection == "Top Correlation Data") {fwrite(data.table(x = preprocessed$data$coords$x, y = preprocessed$data$coords$y, col_names = colnames(data()), filename = preprocessed$data$coords$filename, signal_to_noise = signal_noise(), good_signal = signal_noise() > input$MinSNR, max_cor = max_cor(), good_cor = max_cor() > input$MinCor, max_cor_id = max_cor_id()) %>% left_join(meta, by = c("max_cor_id" = "sample_name")), file)}
-            if(input$download_selection == "Validation Data") {fwrite(validation$data, file)}
-            if(input$download_selection == "FTIR Library") {fwrite(spec_lib[["ftir"]][["library"]], file)}
-            if(input$download_selection == "Raman Library") {fwrite(spec_lib[["raman"]][["library"]], file)}
-            if(input$download_selection == "FTIR Library Metadata") {fwrite(spec_lib[["ftir"]][["metadata"]], file)}
-            if(input$download_selection == "Raman Library Metadata") {fwrite(spec_lib[["raman"]][["metadata"]], file)}
+            if(input$download_selection == "Your Spectra") {fwrite(data() %>% mutate(wavenumber = conform_res(preprocessed$data$wavenumber)), file)}
+            if(input$download_selection == "Library Spectra") {fwrite(baseline_data() %>% mutate(wavenumber = conform_res(preprocessed$data$wavenumber)), file)}
+            if(input$download_selection == "Top Matches") {fwrite(data.table(x = preprocessed$data$coords$x, y = preprocessed$data$coords$y, filename = preprocessed$data$coords$filename, signal_to_noise = signal_noise(), good_signal = signal_noise() > input$MinSNR), file)}
             })
 
   ## Sharing data ----
@@ -666,37 +641,6 @@ match_metadata <- reactive({
   #stores setup - insert at the bottom  !!!IMPORTANT
   appid = "application_OpenSpecy"
   setupStorage(appId = appid,inputs = TRUE)
-  
-  #Test ----
-  output$event_test <- renderPrint({
-      #print(DataR())
-      #print(conform_res(preprocessed$data$wavenumber))
-      #print(model)
-      #print(max_cor_id())
-      print(max_cor())
-      print(signal_noise())
-      #print(ai_output())
-      
-      #print(input$file1)
-      #print(paste0("users/", input$fingerprint,"/", session_id, "/", gsub(".*/", "", as.character(input$file1$name))))
-      #print(c(correlation()))
-      #print(preprocessed$data$coords$x)
-      #print(preprocessed$data$coords$y)
-      #print(preprocessed$data$coords$filename)
-
-      #print(dim(data()))
-      #print(input$active_preprocessing)
-      #print(input$range_decision)
-      #print(input$MinRange)
-      #print(input$MaxRange)
-      #print(input$smooth_decision)
-      #print(input$smoother)
-      #print(input$baseline_decision)
-      #print(input$baseline_selection)
-      #print(input$baseline)
-      #print(preprocessed$data$coords$snr)
-      #print(baseline_data())
-  })
 
 }
 

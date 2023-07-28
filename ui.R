@@ -16,16 +16,16 @@ dashboardPage(dark = T,
             ),
             sidebarMenu(
                 id = "sidebarmenu",
+                menuItem(
+                    "Analyze Spectra",
+                    tabName = "analyze",
+                    icon = icon("bar-chart")
+                ),
                 #sidebarHeader("Header 1"),
                 menuItem(
                     "About",
                     tabName = "about",
                     icon = icon("sliders-h")
-                ),
-                menuItem(
-                    "Analyze Spectra",
-                    tabName = "analyze",
-                    icon = icon("bar-chart")
                 ),
                 menuItem(
                     "Partner With Us",
