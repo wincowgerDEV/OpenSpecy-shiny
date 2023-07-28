@@ -85,24 +85,6 @@ load_data <- function() {
   testdata <-  data.table(wavenumber = raman_hdpe$wavenumber, 
                  intensity = raman_hdpe$spectra$intensity)
 
-  goals <- tibble(
-    Status =      c("Revolutionizing",
-                    "Thriving",
-                    "Maintaining",
-                    "Supporting",
-                    "Saving"),
-    Description = c("A paid team that is pushing Open Specy closer to the ultimate goal of 100% accurate spectral identification and deep spectral diagnostics with a single click",
-                    "A single paid staff person working to update and build the community and the tool",
-                    "Maintenance costs and minor ad-hoc updates and bug fixes",
-                    "Keeping the app online and essential maintenance",
-                    "Long term storage only"),
-    'Annual Need'  = c(">100,000$",
-                       "10,000–100,000$",
-                       "1,000–10,000$",
-                       "100–1,000$",
-                       "<100$")
-  )
-
   if(droptoken) {
     creds <- read.csv("s3_cred.csv")
 

@@ -1,11 +1,9 @@
-
-# This is the actual server functions, all functions before this point are not
-# reactive
 function(input, output, session) {
     
   #Set upload size
   if(conf$share != "system"){options(shiny.maxRequestSize = 1000*1024^2)} else{options(shiny.maxRequestSize = 10000*1024^2)}
     
+  #create a random session id
   session_id <- digest(runif(10))
 
   # Loading overlay
@@ -13,50 +11,19 @@ function(input, output, session) {
   hide(id = "loading_overlay", anim = TRUE, animType = "fade")
   show("app_content")
 
-  output$event_goals <- DT::renderDataTable({
-    datatable(goals,
-              options = list(
-                             dom = "t",
-                             ordering = FALSE,
-                             paging = FALSE,
-                             searching = FALSE
-                             #sDom  = '<"top">lrt<"bottom">ip',
-
-                             ),
-              caption = "Progress (current status selected)",
-              style = "bootstrap",
-              class = 'row-border',
-              escape = FALSE,
-              rownames = FALSE,
-              #formatStyle(c("Annual Need"), backgroundColor = styleColorBar(color = clrs)),
-              selection = list(mode = "single", selected = c(2)))
-  })
-
-  #Reading Data and Startup ----
-  # Sharing USER ID
- # id <- reactive({
-#    if (!is.null(input$fingerprint)) {
-#      paste(input$fingerprint, session_id, sep = "/")
-#    } else {
-#      paste(digest(Sys.info()), digest(sessionInfo()), sep = "/")
-#    }
-#  })
-
   #Reactive Values ----
   preprocessed <- reactiveValues(data = NULL)
   trace <- reactiveValues(data = NULL)
   data_click <- reactiveValues(data = NULL)
 
 
-observeEvent(input$file1, {
+observeEvent(input$file, {
   # Read in data when uploaded based on the file type
-  req(input$file1)
-  file <- input$file1
+  req(input$file)
   data_click$data <- 1
-  #filename$data <- as.character(file$datapath)
 
   if (!grepl("(\\.csv$)|(\\.asp$)|(\\.spa$)|(\\.spc$)|(\\.jdx$)|(\\.RData$)|(\\.zip$)|(\\.[0-9]$)",
-             ignore.case = T, as.character(file$datapath))) {
+             ignore.case = T, as.character(input$file$datapath))) {
     show_alert(
       title = "Data type not supported!",
       text = paste0("Uploaded data type is not currently supported; please
@@ -66,29 +33,25 @@ observeEvent(input$file1, {
   }
 
   if (input$share_decision & curl::has_internet()) {
-    #share <- conf$share
     progm <- "Sharing Spectrum to Community Library"
   } else {
-    #share <- NULL
     progm <- "Reading Spectrum"
   }
 
   withProgress(message = progm, value = 3/3, {
 
-      rout <- read_any(
-          filename = as.character(file$datapath), share = NULL, id = "test", std_wavenumbers = std_wavenumbers
-      )
+      rout <- read_any(file = as.character(input$file$datapath))
 
-      if(droptoken & input$share_decision & input$file1$size < 10^7 & curl::has_internet()){
+      if(droptoken & input$share_decision & input$file$size < 10^7 & curl::has_internet()){
           put_object(
-              file = file.path(as.character(input$file1$datapath)),
-              object = paste0("users/", "/", session_id, "/", digest(rout), "/", gsub(".*/", "", as.character(file$name))),
+              file = file.path(as.character(input$file$datapath)),
+              object = paste0("users/", "/", session_id, "/", digest(rout), "/", gsub(".*/", "", as.character(input$file$name))),
               bucket = "openspecy"
           )
       }
 
     if (inherits(rout, "simpleError")) {
-      reset("file1")
+      reset("file")
       show_alert(
         title = "Something went wrong :-(",
         text = paste0("R says: '", rout$message, "'. ",
@@ -107,16 +70,13 @@ observeEvent(input$file1, {
 
   # Corrects spectral intensity units using the user specified correction
   data <- reactive({
-    req(input$file1)
-      # TODO: replace with conform_intens()
-      conform_spectra(df = preprocessed$data$spectra,
-                      wavenumber = preprocessed$data$wavenumber,
-                      correction = input$intensity_corr)
+    req(input$file)
+      preprocessed$data
     })
 
   #Preprocess Spectra ----
   observeEvent(input$MinSNR | signal_noise(), {
-      req(input$file1)
+      req(input$file)
       updateProgressBar(session = session, 
                         id = "signal_progress", 
                         value = sum(signal_noise() > input$MinSNR)/length(signal_noise()) * 100)
@@ -124,33 +84,30 @@ observeEvent(input$file1, {
   
   # All cleaning of the data happens here. Range selection, Smoothing, and Baseline removing
   baseline_data <- reactive({
-     req(input$file1)
+     req(input$file)
      req(input$active_preprocessing)
-    #if(!length(data()) | !input$active_preprocessing) {
-    #  data.table(wavenumber = numeric(), intensity = numeric(), SpectrumIdentity = factor())
-    #}
-    #else{
     process_spectra(df = data(),
                     wavenumber = conform_res(preprocessed$data$wavenumber),
-                    active_preprocessing = input$active_preprocessing,
+                    active_processing = input$active_preprocessing,
+                    adj_intensity_decision = input$intensity_decision, 
+                    type = input$intensity_corr,
+                    conform_decision = T, 
+                    new_wavenumbers = seq(100, 4000, by = 5), 
+                    res = 5,
                     range_decision = input$range_decision,
                     min_range = input$MinRange,
                     max_range = input$MaxRange,
+                    flatten_decision = input$co2_decision,
+                    flatten_min = 2200, #update
+                    flatten_max = 2420, #update
                     smooth_decision = input$smooth_decision,
                     smoother = input$smoother,
                     baseline_decision = input$baseline_decision,
                     baseline_selection = input$baseline_selection,
                     baseline = input$baseline,
                     derivative_decision = input$derivative_decision,
-                    carbon_dioxide_decision = input$co2_decision,
                     trace = trace)
-
-
-    #}
   })
-
-
-
 
 observeEvent(input$go, {
   pathinfo <- event_data(event = "plotly_relayout", source = "B")$shapes$path
@@ -187,9 +144,9 @@ observeEvent(input$reset, {
     if(!input$active_identification | is.null(preprocessed$data)) {
       data.table(wavenumber = numeric(),
                  intensity = numeric(),
-                 SpectrumIdentity = factor())    }
+                 SpectrumIdentity = factor())}
     else{
-      data.table(wavenumber = conform_res(preprocessed$data$wavenumber),
+      data.table(wavenumber = DataR()$wavenumber,
                  intensity = make_rel(DataR()[[data_click$data]], na.rm = T),
                  SpectrumIdentity = factor()) %>%
         dplyr::filter(!is.na(intensity))
@@ -197,7 +154,6 @@ observeEvent(input$reset, {
   })
 
   libraryR <- reactive({
-    #req(input$file1)
     req(input$active_identification)
     if(!input$derivative_decision) {
         library <- readRDS("both_nobaseline.rds")
@@ -225,7 +181,7 @@ observeEvent(input$reset, {
   })
   
   observeEvent(input$MinCor | max_cor(), {
-      req(input$file1)
+      req(input$file)
       updateProgressBar(session = session, 
                         id = "correlation_progress", 
                         value = sum(max_cor() > input$MinCor)/length(max_cor()) * 100)
@@ -236,7 +192,7 @@ observeEvent(input$reset, {
   
   
   correlation <- reactive({
-      req(input$file1)
+      req(input$file)
       req(input$active_identification)
       req(input$id_strategy == "correlation")
       correlate_spectra(data = DataR(), 
@@ -246,7 +202,7 @@ observeEvent(input$reset, {
   })
 
   signal_noise <- reactive({
-          req(input$file1)
+          req(input$file)
           vapply(DataR(), function(x){
               signal_to_noise(wavenumber = conform_res(preprocessed$data$wavenumber), 
                                    intensity = x, 
@@ -256,7 +212,7 @@ observeEvent(input$reset, {
   })
 
   ai_output <- reactive({ #tested working. 
-      req(input$file1)
+      req(input$file)
       req(input$active_identification)
       req(input$id_strategy == "ai")
       ai_classify(data = DataR(), 
@@ -265,7 +221,7 @@ observeEvent(input$reset, {
   })
   
   max_cor <- reactive({
-      req(input$file1)
+      req(input$file)
       #req(input$id_strategy == "correlation")
       req(input$active_identification)
       if(input$id_strategy == "correlation"){
@@ -277,7 +233,7 @@ observeEvent(input$reset, {
   })
 
   max_cor_id <- reactive({
-      req(input$file1)
+      req(input$file)
       #req(input$id_strategy == "correlation")
       req(input$active_identification)
       if(input$id_strategy == "correlation"){
@@ -289,7 +245,7 @@ observeEvent(input$reset, {
   })
   
   #max_cor_name <- reactive({
-  #    req(input$file1)
+  #    req(input$file)
   #    req(correlation())
       
   #    if(input$id_level == "deep"){
@@ -308,7 +264,7 @@ observeEvent(input$reset, {
 
   # Joins their spectrum to the internal database.
   MatchSpectra <- reactive({
-    #req(input$file1)
+    #req(input$file)
     req(input$active_identification)
     req(input$id_strategy == "correlation")
       if(is.null(preprocessed$data)) {
@@ -333,7 +289,7 @@ observeEvent(input$reset, {
   })
 
   match_selected <- reactive({# Default to first row if not yet clicked
-      #req(input$file1)
+      #req(input$file)
       #req(input$active_identification)
       req(input$id_strategy == "correlation")
       if(!input$active_identification) {
@@ -428,7 +384,7 @@ match_metadata <- reactive({
   output$MyPlotC <- renderPlotly({
       req(input$id_strategy == "correlation")
       
-    #req(input$file1)
+    #req(input$file)
     #if(grepl("(\\.csv$)|(\\.asp$)|(\\.spa$)|(\\.spc$)|(\\.jdx$)|(\\.[0-9]$)",
      #         ignore.case = T, filename$data)){
         #req(single_data$data)
@@ -459,12 +415,12 @@ match_metadata <- reactive({
 
   output$heatmap <- renderPlotly({
       #req(input$id_strategy == "correlation")
-      req(input$file1)
+      req(input$file)
       #req(ncol(data()) > 2)
         plot_ly(source = "heat_plot") %>%
             add_trace(
-                x = preprocessed$data$coords$x, #Need to update this with the new rout format.
-                y = preprocessed$data$coords$y,
+                x = preprocessed$data$metadata$x, #Need to update this with the new rout format.
+                y = preprocessed$data$metadata$y,
                 z = if(input$active_identification){
                         ifelse(signal_noise() > input$MinSNR & max_cor() > input$MinCor, max_cor(), NA)
                     }
@@ -477,12 +433,12 @@ match_metadata <- reactive({
                 colors = if(input$active_identification){hcl.colors(n = sum(signal_noise() > input$MinSNR & max_cor() > input$MinCor), palette = "viridis")} else {heat.colors(n = sum(signal_noise() > input$MinSNR))
                 },
                 text = ~paste(
-                    "x: ", preprocessed$data$coords$x,
-                    "<br>y: ", preprocessed$data$coords$y,
+                    "x: ", preprocessed$data$metadata$x,
+                    "<br>y: ", preprocessed$data$metadata$y,
                     "<br>snr: ", round(signal_noise(), 0),
                     "<br>cor: ", if(input$active_identification){round(max_cor(), 1)} else{NA},
                     "<br>identity: ", if(input$active_identification){max_cor_id()} else{NA},
-                    "<br>filename: ", preprocessed$data$coords$filename)) %>%
+                    "<br>filename: ", preprocessed$data$metadata$filename)) %>%
             layout(
               xaxis = list(title = 'x',
                            zeroline = F,
@@ -506,8 +462,8 @@ match_metadata <- reactive({
             if(input$download_selection == "Test Data") {fwrite(testdata, file)}
             if(input$download_selection == "Test Map") {zip(file, unzip("data/CA_tiny_map.zip"))}
             if(input$download_selection == "Your Spectra") {fwrite(data() %>% mutate(wavenumber = conform_res(preprocessed$data$wavenumber)), file)}
-            if(input$download_selection == "Library Spectra") {fwrite(baseline_data() %>% mutate(wavenumber = conform_res(preprocessed$data$wavenumber)), file)}
-            if(input$download_selection == "Top Matches") {fwrite(data.table(x = preprocessed$data$coords$x, y = preprocessed$data$coords$y, filename = preprocessed$data$coords$filename, signal_to_noise = signal_noise(), good_signal = signal_noise() > input$MinSNR), file)}
+            if(input$download_selection == "Library Spectra") {fwrite(libraryR() %>% mutate(wavenumber = conform_res(preprocessed$data$wavenumber)), file)}
+            if(input$download_selection == "Top Matches") {fwrite(data.table(x = preprocessed$data$metadata$x, y = preprocessed$data$metadata$y, filename = preprocessed$data$metadata$filename, signal_to_noise = signal_noise(), good_signal = signal_noise() > input$MinSNR), file)}
             })
 
   ## Sharing data ----
@@ -523,7 +479,7 @@ match_metadata <- reactive({
   #hide(id = "heatmap")
 
   observe({
-      #req(input$file1)
+      #req(input$file)
       #toggle(id = "signal_progress", condition = !is.null(preprocessed$data))
       toggle(id = "download_conformed", condition = !is.null(preprocessed$data))
       toggle(id = "download_matched", condition = !is.null(preprocessed$data))
@@ -609,7 +565,7 @@ match_metadata <- reactive({
   })
 
   observe({
-    req(input$file1)
+    req(input$file)
     req(input$share_decision)
     if(conf$log) {
       if(db) {
