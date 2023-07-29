@@ -146,7 +146,7 @@ observeEvent(input$reset, {
           list(wavenumber = numeric(), spectra = data.table(empty = numeric()))
       }
       else{
-          filter_spec(DataR(), logic = 1:ncol(DataR()$spectra) == data_click$data)
+          filter_spec(DataR(), logic = 1:ncol(DataR()$spectra) == data_click$data) 
       }
   })
 
@@ -214,7 +214,7 @@ observeEvent(input$reset, {
 
   signal_to_noise <- reactive({
           req(DataR)
-          signal_noise(DataR())
+          signal_noise(object = DataR())
   })
 
   ai_output <- reactive({ #tested working. 
@@ -229,14 +229,14 @@ observeEvent(input$reset, {
   top_correlation <- reactive({
       req(input$file)
       req(input$active_identification)
-      correlation[order(-match_val), head(.SD, 1), by = object_id][data.table(object_id = as.character(names(DataR()$spectra))), on = "object_id"]
+      correlation()[order(-match_val), head(.SD, 1), by = object_id][data.table(object_id = as.character(names(DataR()$spectra))), on = "object_id"]
   })
   
   max_cor <- reactive({
       req(input$file)
       req(input$active_identification)
       if(input$id_strategy == "correlation"){
-          top_correlation$match_value
+          top_correlation()$match_value
       }
       else if(input$id_strategy == "ai"){
           round(ai_output()[["value"]], 1)
@@ -248,7 +248,7 @@ observeEvent(input$reset, {
       #req(input$id_strategy == "correlation")
       req(input$active_identification)
       if(input$id_strategy == "correlation"){
-          max_cor$library_id
+          top_correlation()$library_id
       }
       else if(input$id_strategy == "ai"){
           ai_output()[["name"]]
@@ -262,7 +262,7 @@ observeEvent(input$reset, {
           libraryR()$metadata
       }
       else{
-          correlation()[object_id == names(DataR_plot()$spectra)[data_click$data],]
+          correlation()[object_id == names(DataR_plot()$spectra)[data_click$data],][order(-match_val),]
       }
   })
 
@@ -365,10 +365,10 @@ match_metadata <- reactive({
       req(input$id_strategy == "correlation")
      
       plot_ly(type = 'scatter', mode = 'lines', source = "B") %>%
-          add_trace(data = match_selected(), x = ~wavenumber, y = ~intensity,
+          add_trace(x = match_selected()$wavenumber, y = make_rel(match_selected()$intensity, na.rm = T),
                     name = 'Library Spectra',
                     line = list(color = 'rgb(255,255,255)')) %>%
-          add_trace(x = DataR_plot()$wavenumber, y = DataR_plot()[["spectra"]][[1]],
+          add_trace(x = DataR_plot()$wavenumber, y = make_rel(DataR_plot()[["spectra"]][[1]], na.rm = T),
                     name = 'Your Spectra',
                     line = list(color = 'rgb(125,249,255)')) %>%
         # Dark blue rgb(63,96,130)
