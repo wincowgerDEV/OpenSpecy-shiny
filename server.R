@@ -207,8 +207,7 @@ observeEvent(input$reset, {
       req(input$id_strategy == "correlation")
       withProgress(message = 'Analyzing Spectrum', value = 1/3, {
       correlate_spectra(object = DataR(), 
-                        library = libraryR(),
-                        add_library_metadata = "sample_name")
+                        library = libraryR())
       })
   })
 
@@ -226,33 +225,25 @@ observeEvent(input$reset, {
                   model = model)
   })
   
-  top_correlation <- reactive({
-      req(input$file)
-      req(input$active_identification)
-      correlation()[order(-match_val), head(.SD, 1), by = object_id][data.table(object_id = as.character(names(DataR()$spectra))), on = "object_id"]
-  })
-  
   max_cor <- reactive({
       req(input$file)
       req(input$active_identification)
       if(input$id_strategy == "correlation"){
-          top_correlation()$match_value
+          max_cor_named(correlation(), libraryR())
       }
       else if(input$id_strategy == "ai"){
-          round(ai_output()[["value"]], 1)
+          ai <- round(ai_output()[["value"]], 1)
+          names(ai) <- ai_output()[["name"]]
+          ai
       }
   })
-
-  max_cor_id <- reactive({
+  
+  top_correlation <- reactive({
       req(input$file)
-      #req(input$id_strategy == "correlation")
       req(input$active_identification)
-      if(input$id_strategy == "correlation"){
-          top_correlation()$library_id
-      }
-      else if(input$id_strategy == "ai"){
-          ai_output()[["name"]]
-      }
+      data.table(object_id = names(DataR()$spectra), 
+                 library_id = names(max_cor()),
+                 match_val = max_cor())
   })
   
   matches_to_single <- reactive({
@@ -262,7 +253,9 @@ observeEvent(input$reset, {
           libraryR()$metadata
       }
       else{
-          correlation()[object_id == names(DataR_plot()$spectra)[data_click$data],][order(-match_val),]
+          data.table(object_id = names(DataR()$spectra)[data_click$data], 
+                     library_id = names(libraryR()$spectra),
+                     match_val = c(correlation()[,data_click$data]))[order(-match_val),]
       }
   })
 
@@ -274,14 +267,10 @@ observeEvent(input$reset, {
           data.table(intensity = numeric(), wavenumber = numeric())
       }
       else{
-         column_name <-  ifelse(is.null(preprocessed$data),
-                                "sample_name",
-                                "library_id")
-          
          #need to make reactive
           id_select <-  ifelse(is.null(input$event_rows_selected),
-                              matches_to_single()[[1,column_name]],
-                              matches_to_single()[[input$event_rows_selected,column_name]])#"00087f78d45c571524fce483ef10752e"	#matches_to_single[[1,column_name]]
+                              matches_to_single()[[1,"library_id"]],
+                              matches_to_single()[[input$event_rows_selected,"library_id"]])#"00087f78d45c571524fce483ef10752e"	#matches_to_single[[1,column_name]]
               
               
           
@@ -407,7 +396,7 @@ match_metadata <- reactive({
                     "<br>y: ", preprocessed$data$metadata$y,
                     "<br>snr: ", round(signal_to_noise(), 0),
                     "<br>cor: ", if(input$active_identification){round(max_cor(), 1)} else{NA},
-                    "<br>identity: ", if(input$active_identification){max_cor_id()} else{NA},
+                    "<br>identity: ", if(input$active_identification){names(max_cor())} else{NA},
                     "<br>filename: ", preprocessed$data$metadata$filename)) %>%
             layout(
               xaxis = list(title = 'x',
