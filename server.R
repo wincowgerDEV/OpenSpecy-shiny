@@ -225,7 +225,11 @@ observeEvent(input$reset, {
   #The signal to noise ratio
   signal_to_noise <- reactive({
           req(DataR)
-          signal_noise(object = DataR())
+      signal_option <- switch(input$signal_selection,
+             "Signal Over Noise" = "run_signal_over_noise", 
+             "Signal Times Noise" = "signal_times_noise", 
+             "Total Signal" = "total_signal")
+      signal_noise(object = DataR(), return = signal_option)
   })
 
   #The output from the AI classification algorithm. 

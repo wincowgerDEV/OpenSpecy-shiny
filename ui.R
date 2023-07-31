@@ -389,22 +389,28 @@ dashboardPage(dark = T,
                                                                                      )), 
                                                                              fluidRow(
                                                                                  box(width = 12,
-                                                                                     title = "Threshold Signal to Noise",
+                                                                                     title = "Threshold Signal and Noise",
                                                                                      collapsed = T,
                                                                                         numericInput(
                                                                                             "MinSNR",
-                                                                                            "Minimum Signal to Noise",
-                                                                                            value = 10,
+                                                                                            "Minimum Value",
+                                                                                            value = 4,
                                                                                             min = 2,
-                                                                                            max = 100,
-                                                                                            step = 1#,
-                                                                                            #width = '25%'
+                                                                                            max = 10000,
+                                                                                            step = 1
                                                                                         ) %>%
                                                                                             add_prompt(
                                                                                                 message = "Specify the signal to noise threshold to use.",
                                                                                                 type = "info", 
                                                                                                 size = "medium", rounded = TRUE
-                                                                                            )
+                                                                                            ),
+                                                                                     br(),
+                                                                                     selectInput(inputId = "signal_selection", label = "Signal Thresholding Technique", choices = c("Signal Over Noise", "Signal Times Noise", "Total Signal")) %>%
+                                                                                         add_prompt(
+                                                                                             message = "Signal thresholding technique used.",
+                                                                                             type = "info", 
+                                                                                             size = "medium", rounded = TRUE
+                                                                                         )
                                                                                  )
                                                                              )
                                                             )
