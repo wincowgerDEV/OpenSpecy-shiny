@@ -17,6 +17,7 @@ function(input, output, session) {
   data_click <- reactiveValues(data = NULL)
 
 
+  #Sending data to a remote repo. 
 observeEvent(input$file, {
   # Read in data when uploaded based on the file type
   req(input$file)
@@ -69,18 +70,14 @@ observeEvent(input$file, {
 })
 
   # Corrects spectral intensity units using the user specified correction
-  data <- reactive({
+
+ # Redirecting preprocessed data to be a reactive variable. Not totally sure why this is happening in addition to the other. 
+ data <- reactive({
     req(input$file)
       preprocessed$data
     })
 
   #Preprocess Spectra ----
-  observeEvent(input$MinSNR | signal_to_noise(), {
-      req(input$file)
-      updateProgressBar(session = session, 
-                        id = "signal_progress", 
-                        value = sum(signal_to_noise() > input$MinSNR)/length(signal_to_noise()) * 100)
-  })
   
   # All cleaning of the data happens here. Range selection, Smoothing, and Baseline removing
   baseline_data <- reactive({
@@ -110,6 +107,7 @@ observeEvent(input$file, {
                     derivative_decision = input$derivative_decision)
   })
 
+#Updating the trace value when the user says go. 
 observeEvent(input$go, {
   pathinfo <- event_data(event = "plotly_relayout", source = "B")$shapes$path
   if (is.null(pathinfo)) trace$data <- NULL
@@ -125,22 +123,26 @@ observeEvent(input$go, {
   }
 })
 
+#Resetting the trace if the user specifies. 
 observeEvent(input$reset, {
   trace$data <- NULL
 })
 
 # Identify Spectra function ----
 
-  # Choose which spectrum to use
+  # Choose which spectra to use for matching and plotting. 
   DataR <- reactive({
       if(input$active_preprocessing) {
         baseline_data()
     }
     else {
-        data()
+        conform_spec(data(), 
+                     new_wavenumbers = seq(100, 4000, by = 5), 
+                     res = 5)
     }
   })
 
+  #The data to use in the plot. 
   DataR_plot <- reactive({
       if(is.null(preprocessed$data)){
           list(wavenumber = numeric(), spectra = data.table(empty = numeric()))
@@ -150,13 +152,14 @@ observeEvent(input$reset, {
       }
   })
 
+  #The matching library to use. 
   libraryR <- reactive({
     req(input$active_identification)
-    if(!input$derivative_decision) {
+    if(!(input$derivative_decision & input$active_preprocessing)) {
         library <- readRDS("data/both_nobaseline.rds")
     }
     else {
-        library <- readRDS("data/both_derivative.rds")#Nest these in here so that they don't load automatically unless needed.
+        library <- readRDS("data/both_derivative.rds")
     }
     if(input$Spectra == "both") {
       library
@@ -190,6 +193,14 @@ observeEvent(input$reset, {
                tooltip = "This tells you whether the signal to noise ratio or the match observed is above or below the thresholds.")
   })
   
+  #Progress bar for how many of the spectra have good signal. 
+  observeEvent(input$MinSNR | signal_to_noise(), {
+      req(input$file)
+      updateProgressBar(session = session, 
+                        id = "signal_progress", 
+                        value = sum(signal_to_noise() > input$MinSNR)/length(signal_to_noise()) * 100)
+  })
+  #Bars stating how many of the uploaded spectra have good correlations or signals. 
   observeEvent(input$MinCor | max_cor(), {
       req(input$file)
       updateProgressBar(session = session, 
@@ -200,7 +211,7 @@ observeEvent(input$reset, {
                         value = (sum(signal_to_noise() > input$MinSNR & max_cor() > input$MinCor)/length(signal_to_noise())) * 100)
   })
   
-  
+  #The correlation matrix between the unknowns and the library. 
   correlation <- reactive({
       req(input$file)
       req(input$active_identification)
@@ -211,11 +222,13 @@ observeEvent(input$reset, {
       })
   })
 
+  #The signal to noise ratio
   signal_to_noise <- reactive({
           req(DataR)
           signal_noise(object = DataR())
   })
 
+  #The output from the AI classification algorithm. 
   ai_output <- reactive({ #tested working. 
       req(input$file)
       req(input$active_identification)
@@ -225,6 +238,7 @@ observeEvent(input$reset, {
                   model = model)
   })
   
+  #The maximum correlation or AI value. 
   max_cor <- reactive({
       req(input$file)
       req(input$active_identification)
@@ -238,6 +252,7 @@ observeEvent(input$reset, {
       }
   })
   
+  #Metadata for all the top correlations. 
   top_correlation <- reactive({
       req(input$file)
       req(input$active_identification)
@@ -246,6 +261,7 @@ observeEvent(input$reset, {
                  match_val = max_cor())
   })
   
+  #Metadata for all the matches for a single unknown spectrum
   matches_to_single <- reactive({
       req(input$active_identification)
       req(input$id_strategy == "correlation")
@@ -255,10 +271,12 @@ observeEvent(input$reset, {
       else{
           data.table(object_id = names(DataR()$spectra)[data_click$data], 
                      library_id = names(libraryR()$spectra),
-                     match_val = c(correlation()[,data_click$data]))[order(-match_val),]
+                     match_val = c(correlation()[,data_click$data]))[order(-match_val),] %>%
+              left_join(libraryR()$metadata, by = c("library_id" = "sample_name"))
       }
   })
 
+  #Spectral data for the selected match. 
   match_selected <- reactive({# Default to first row if not yet clicked
       #req(input$file)
       #req(input$active_identification)
@@ -278,7 +296,6 @@ observeEvent(input$reset, {
          data.table(wavenumber = libraryR()$wavenumber,
                     intensity = make_rel(libraryR()[["spectra"]][[id_select]], na.rm = T)) %>%
              filter(!is.na(intensity))
-
       }
   })
 
@@ -286,15 +303,15 @@ observeEvent(input$reset, {
   top_matches <- reactive({
       req(input$active_identification)
       req(input$id_strategy == "correlation")
-      matches_to_single() #%>%
-          #dplyr::rename("Material" = SpectrumIdentity) %>%
-          #dplyr::rename("Pearson's r" = match_val) %>%
-          #dplyr::select("Material",
-          #              "polymer",
-          #              "polymer_class", 
-          #              "plastic_or_not", 
-          #              if(!is.null(preprocessed$data)){"Pearson's r"}, 
-          #              sample_name)
+      matches_to_single() %>%
+          mutate(match_val = round(match_val, 2)) %>%
+          dplyr::rename("Material" = SpectrumIdentity,
+                        "Pearson's r" = match_val,
+                        "Plastic Pollution Category" = "polymer_class") %>%
+          dplyr::select(if(!is.null(preprocessed$data)){"Pearson's r"},
+                        "Material",
+                        "Plastic Pollution Category", 
+                        "library_id")
   })
 
   # Create the data tables for all matches
@@ -312,10 +329,15 @@ observeEvent(input$reset, {
               selection = list(mode = "single", selected = c(1)))
   })
 
+  #Create the data table that goes below the plot which provides extra metadata. 
 match_metadata <- reactive({
     req(input$active_identification)
     req(input$id_strategy == "correlation")
-    matches_to_single()[input$event_rows_selected,] #%>%
+    matches_to_single()[input$event_rows_selected,] %>%
+        dplyr::rename("Material" = SpectrumIdentity,
+                      "Pearson's r" = match_val,
+                      "Plastic Pollution Category" = "polymer_class") %>%
+        .[, !sapply(., OpenSpecy::is_empty_vector), with = F]
         #select(#"SpectrumIdentity",
                #"polymer",
                #"polymer_class", 
@@ -324,7 +346,7 @@ match_metadata <- reactive({
         #select(where(~!any(is_empty(.))))  #Causing errors, need to debug. 
 })
 
-#Metadata for the selected value
+#Table of metadata for the selected library value
  output$eventmetadata <- DT::renderDataTable({
     req(input$active_identification)
     req(input$id_strategy == "correlation")
@@ -339,7 +361,7 @@ match_metadata <- reactive({
               selection = list(mode = 'none'))
   })
 
-
+# Update the data_click variable when the plotly is clicked. 
  observeEvent(event_data("plotly_click", source = "heat_plot"), {
      if(is.null(event_data("plotly_click", source = "heat_plot"))){
         data_click$data <- 1
@@ -349,7 +371,7 @@ match_metadata <- reactive({
      }
  })
 
-  # Display matches based on table selection ----
+  # Display paired spectral matches based on table selection ----
   output$MyPlotC <- renderPlotly({
       req(input$id_strategy == "correlation")
      
@@ -372,6 +394,7 @@ match_metadata <- reactive({
         config(modeBarButtonsToAdd = list("drawopenpath", "eraseshape"))
     })
 
+ #Display the map or batch data in a selectable heatmap. 
   output$heatmap <- renderPlotly({
       #req(input$id_strategy == "correlation")
       req(input$file)
@@ -395,7 +418,7 @@ match_metadata <- reactive({
                     "x: ", preprocessed$data$metadata$x,
                     "<br>y: ", preprocessed$data$metadata$y,
                     "<br>snr: ", round(signal_to_noise(), 0),
-                    "<br>cor: ", if(input$active_identification){round(max_cor(), 1)} else{NA},
+                    "<br>cor: ", if(input$active_identification){max_cor()} else{NA},
                     "<br>identity: ", if(input$active_identification){names(max_cor())} else{NA},
                     "<br>filename: ", preprocessed$data$metadata$filename)) %>%
             layout(
@@ -403,9 +426,12 @@ match_metadata <- reactive({
                            zeroline = F,
                            showgrid = F
               ),
-              yaxis = list(title = 'y',
-                           zeroline = F,
-                           showgrid = F),
+              yaxis = list(
+                            #scaleanchor = "x",
+                            #scaleratio = 1,
+                            title = 'y',
+                            zeroline = F,
+                            showgrid = F),
                    plot_bgcolor = 'rgba(17,0,73, 0)',
                    paper_bgcolor = 'rgba(0,0,0,0.5)',
                    showlegend = FALSE,
@@ -425,55 +451,24 @@ match_metadata <- reactive({
             if(input$download_selection == "Top Matches") {fwrite(data.table(x = preprocessed$data$metadata$x, y = preprocessed$data$metadata$y, filename = preprocessed$data$metadata$filename, signal_to_noise = signal_to_noise(), good_signal = signal_to_noise() > input$MinSNR), file)}
             })
 
-  ## Sharing data ----
-  # Hide functions which shouldn't exist when there is no internet or
-  # when the API token doesn't exist
-
+  # Hide functions or objects when the shouldn't exist. 
   observe({
+    toggle(id = "signal_progress", condition = !is.null(preprocessed$data))
+    toggle(id = "correlation_progress", condition = !is.null(preprocessed$data))
+    toggle(id = "match_progress", condition = !is.null(preprocessed$data))
     toggle(id = "baseline", condition = input$baseline_selection == "Polynomial")
     toggle(id = "go", condition = input$baseline_selection == "Manual")
     toggle(id = "reset", condition = input$baseline_selection == "Manual")
+    toggle(id = "heatmap", condition = !is.null(preprocessed$data))
+    toggle(id = "heatmap_stats", condition = !is.null(preprocessed$data))
+    toggle(id = "placeholder1", condition = is.null(preprocessed$data))
+    if(!is.null(preprocessed$data)){
+        toggle(id = "heatmap", condition = ncol(preprocessed$data$spectra) > 1)
+        toggle(id = "heatmap_stats", condition = ncol(preprocessed$data$spectra) > 1)
+    }
     })
 
-  #hide(id = "heatmap")
-
-  observe({
-      #req(input$file)
-      toggle(id = "download_conformed", condition = !is.null(preprocessed$data))
-      toggle(id = "download_matched", condition = !is.null(preprocessed$data))
-      toggle(id = "downloadData", condition = !is.null(preprocessed$data))
-      toggle(id = "heatmap", condition = !is.null(preprocessed$data))
-      if(!is.null(preprocessed$data)){
-          toggle(id = "heatmap", condition = ncol(preprocessed$data$spectra) > 1)
-      }
-  })
-  
-  observe({
-          if(isTruthy(preprocessed$data$spectra) && ncol(preprocessed$data$spectra) > 1){
-              updateBox(
-                  id = "placeholder2",
-                  action = "restore",
-                  options = NULL,
-                  session = shiny::getDefaultReactiveDomain()
-              ) 
-          }
-          if(!isTruthy(ncol(preprocessed$data$spectra) > 1)){
-              updateBox(
-                  id = "placeholder2",
-                  action = "remove",
-                  options = NULL,
-                  session = shiny::getDefaultReactiveDomain()
-              )
-          }    
-  })
-  
-
-  observe({
-      toggle(id = "placeholder1", condition = is.null(preprocessed$data))
-      toggle(id = "placeholder2", condition = ncol(preprocessed$data$spectra) > 1)
-      toggle(id = "placeholder3", condition = is.null(preprocessed$data))
-  })
-
+  #Google translate. 
   output$translate <- renderUI({
     if(translate & curl::has_internet()) {
       includeHTML("www/googletranslate.html")
@@ -552,8 +547,8 @@ match_metadata <- reactive({
 
   #Storage ----
   #stores setup - insert at the bottom  !!!IMPORTANT
-  appid = "application_OpenSpecy"
-  setupStorage(appId = appid,inputs = TRUE)
+  #appid = "application_OpenSpecy"
+  #setupStorage(appId = appid,inputs = TRUE)
 
 }
 

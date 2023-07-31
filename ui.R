@@ -184,10 +184,9 @@ dashboardPage(dark = T,
               tabItem("analyze", 
                        br(),
                        fluidRow(
-                           column(3,
+                           column(2,
                                   ##Upload/download ----
-                                  tags$label("Choose .csv (preferred), .zip, .asp, .jdx, .spc, .spa, or .0 File"),
-                                  
+                                  tags$label("Upload File"),
                                   fluidRow(
                                       column(12, 
                                              fileInput("file", NULL,
@@ -210,47 +209,11 @@ dashboardPage(dark = T,
                                                      message = "If you like, we share your uploaded spectra and settings with the spectroscopy community. By default, all data will be licensed under Creative Commons Attribution 4.0 International (CC BY 4.0). Uploaded spectra will appear here: https://osf.io/rjg3c. If you have spectra of known identities you can share, please upload a JDX file titled with the name of the material it is.",
                                                      type = "info", 
                                                      size = "medium", rounded = TRUE
-                                                 ),
-                                                       selectInput(inputId = "download_selection",
-                                                                   label = downloadButton("download_data",
-                                                                                  "",
-                                                                                  style = "background-color: rgb(0,0,0); color: rgb(255,255,255);") %>%
-                                                                       add_prompt(
-                                                                           message = "This is a sample spectrum that can be uploaded to the tool for testing it out and understanding how the csv files should be formatted.",
-                                                                           type = "info", 
-                                                                           size = "large", rounded = TRUE
-                                                                       ), 
-                                                                   choices = c("Test Data",
-                                                                               "Test Map",
-                                                                               "Your Spectra",
-                                                                               "Library Spectra",
-                                                                               "Top Matches")) %>%
-                                                           add_prompt(
-                                                               message = "Options for downloading spectra and metadata from the analysis.",
-                                                               type = "info", 
-                                                               size = "medium", rounded = TRUE
-                                                           ),
-                                             br(),
-                                             box(title = "Map Selection",
-                                                 id = "placeholder2", 
-                                                 width = 12,
-                                                 maximizable = T,
-                                                 plotlyOutput("heatmap",inline = T, height = "40%"),
-                                                 shinyWidgets::progressBar(id = "signal_progress", value = 0, status = "success", title = "Good Signal", display_pct = TRUE),
-                                                 conditionalPanel("input.active_identification == true",
-                                                                  shinyWidgets::progressBar(id = "correlation_progress", value = 0, status = "success", title = "Good Correlations", display_pct = TRUE),
-                                                                  shinyWidgets::progressBar(id = "match_progress", value = 0, status = "success", title = "Good Identifications", display_pct = TRUE)
-                                                                 )
-                                                    )
+                                                 )
                                   )
                             )
                            ),
-                           column(9,
-                                  fluidRow(
-                                             box(
-                                                 title = "Analysis Parameters",
-                                                 maximizable = T,
-                                                 width = 12,
+                           column(8,
                                                  fluidRow( 
                                                      column(6, 
                                                             ## Preprocessing ----
@@ -502,31 +465,66 @@ dashboardPage(dark = T,
                                                                              )  
                                                                              
                                                             )
-                                                     ))))),
-                                  ## Plot ----
-                                  fluidRow(
-                                             box(title = HTML(paste0("Spectral Comparisons")), 
-                                                 maximizable = T,
-                                                 width = 12,
-                                                 label = uiOutput("correlation_head"),
-                                                 h4(id = "placeholder1", "Upload some data to get started..."),
-                                            
-                                                 
-                                                 fluidRow(
-                                                            plotlyOutput("MyPlotC", inline = T, height = "40%"),
-                                                                div(style = "overflow-x: scroll",
-                                                                    DT::dataTableOutput("eventmetadata")   
-                                                                )),
-                                                 sidebar = boxSidebar(
-                                                     id = "mycardsidebar",
-                                                     fluidRow(style = "padding:1rem; overflow-x: scroll",
-                                                              DT::dataTableOutput("event"))
-                                                    )
+                                                     )))),
+                           column(2,
+                                  selectInput(inputId = "download_selection",
+                                              label = downloadButton("download_data",
+                                                                     "",
+                                                                     style = "background-color: rgb(0,0,0); color: rgb(255,255,255);") %>%
+                                                  add_prompt(
+                                                      message = "This is a sample spectrum that can be uploaded to the tool for testing it out and understanding how the csv files should be formatted.",
+                                                      type = "info", 
+                                                      size = "large", rounded = TRUE
+                                                  ), 
+                                              choices = c("Test Data",
+                                                          "Test Map",
+                                                          "Your Spectra",
+                                                          "Library Spectra",
+                                                          "Top Matches")) %>%
+                                      add_prompt(
+                                          message = "Options for downloading spectra and metadata from the analysis.",
+                                          type = "info", 
+                                          size = "medium", rounded = TRUE
+                                      )
+                           )
+                           ),
+                          ## Plot ----
+                          fluidRow(
+                              box(title = HTML(paste0("Spectra")), 
+                                  maximizable = T,
+                                  width = 12,
+                                  label = uiOutput("correlation_head"),
+                                  h4(id = "placeholder1", "Upload some data to get started..."),
+                                  plotlyOutput("heatmap",inline = T),
+                                  box(title = "Heatmap Stats", 
+                                      id = "heatmap_stats",
+                                      width = 12,
+                                      fluidRow(
+                                          column(4, 
+                                                 shinyWidgets::progressBar(id = "signal_progress", value = 0, status = "success", title = "Good Signal", display_pct = TRUE)
+                                                 ),
+                                          column(4, 
+                                                 shinyWidgets::progressBar(id = "correlation_progress", value = 0, status = "success", title = "Good Correlations", display_pct = TRUE)
+                                                 ),
+                                          column(4,
+                                                 shinyWidgets::progressBar(id = "match_progress", value = 0, status = "success", title = "Good Identifications", display_pct = TRUE)
                                                  )
-                                             
-                                  ),
-                                  verbatimTextOutput("event_test")
-                                  ))),
+                                        )
+                                      ),
+                                  fluidRow(
+                                      plotlyOutput("MyPlotC", inline = T),
+                                      div(style = "overflow-x: scroll",
+                                          DT::dataTableOutput("eventmetadata")   
+                                      )),
+                                  sidebar = boxSidebar(
+                                      id = "mycardsidebar",
+                                      fluidRow(style = "padding:1rem; overflow-x: scroll",
+                                               DT::dataTableOutput("event"))
+                                  )
+                              ),
+                              verbatimTextOutput("event_test")
+                          )
+                      ),
               tabItem("partner", 
                       #Partner With Us tab ----
                                titlePanel(h4("Help us reach our goal to revolutionize spectroscopy.")),
