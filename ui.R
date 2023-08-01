@@ -193,7 +193,8 @@ dashboardPage(dark = T,
                                                        placeholder = ".csv, .zip, .asp, .jdx, .spc, .spa, .0",
                                                        accept=c("text/csv",
                                                                 "text/comma-separated-values,text/plain",
-                                                                ".csv", ".asp", ".spc", ".jdx", ".spa", ".0", ".zip")) %>%
+                                                                ".csv", ".asp", ".spc", ".jdx", ".spa", ".0", ".zip", 
+                                                                ".json", ".rds", ".yml")) %>%
                                                  add_prompt(
                                                      message = "Upload Raman or FTIR spectrum files as a csv, zip, asp, jdx, spc, 0, or spa. A csv file is preferred. If a csv, the file must contain one column labeled wavenumber in units of (1/cm) and another column labeled intensity in absorbance units. If jdx, spc, spa, or 0 the file should be a single absorbance spectrum with wavenumber in (1/cm). If zip, batch upload using a zip file with multiple spectral files that all have the same wavenumbers or a map file formatted as .hdr and .dat. Hit the Sample button to download a sample Raman spectrum.",
                                                      type = "info", 
@@ -389,7 +390,12 @@ dashboardPage(dark = T,
                                                                                      )), 
                                                                              fluidRow(
                                                                                  box(width = 12,
-                                                                                     title = "Threshold Signal and Noise",
+                                                                                     title = prettySwitch("threshold_decision",
+                                                                                                          label = "Thresholding Signal and Noise",
+                                                                                                          inline = T,
+                                                                                                          value = T,
+                                                                                                          status = "success",
+                                                                                                          fill = T),
                                                                                      collapsed = T,
                                                                                         numericInput(
                                                                                             "MinSNR",
@@ -486,7 +492,8 @@ dashboardPage(dark = T,
                                                           "Test Map",
                                                           "Your Spectra",
                                                           "Library Spectra",
-                                                          "Top Matches")) %>%
+                                                          "Top Matches",
+                                                          "Thresholded Particles")) %>%
                                       add_prompt(
                                           message = "Options for downloading spectra and metadata from the analysis.",
                                           type = "info", 

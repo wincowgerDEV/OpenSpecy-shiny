@@ -23,7 +23,7 @@ observeEvent(input$file, {
   req(input$file)
   data_click$data <- 1
 
-  if (!grepl("(\\.csv$)|(\\.asp$)|(\\.spa$)|(\\.spc$)|(\\.jdx$)|(\\.RData$)|(\\.zip$)|(\\.[0-9]$)",
+  if (!grepl("(\\.json$)|(\\.rds$)|(\\.yml$)|(\\.csv$)|(\\.asp$)|(\\.spa$)|(\\.spc$)|(\\.jdx$)|(\\.RData$)|(\\.zip$)|(\\.[0-9]$)",
              ignore.case = T, as.character(input$file$datapath))) {
     show_alert(
       title = "Data type not supported!",
@@ -170,6 +170,15 @@ observeEvent(input$reset, {
     else if (input$Spectra == "raman"){
       filter_spec(library, logic = library$metadata$SpectrumType == "Raman")
     }
+  })
+  
+  MinCor <- reactive({
+      if(input$threshold_decision){
+          -Inf
+      }
+      else{
+          input$MinCor
+      }
   })
 
   #Correlation ----
@@ -342,12 +351,6 @@ match_metadata <- reactive({
                       "Pearson's r" = match_val,
                       "Plastic Pollution Category" = "polymer_class") %>%
         .[, !sapply(., OpenSpecy::is_empty_vector), with = F]
-        #select(#"SpectrumIdentity",
-               #"polymer",
-               #"polymer_class", 
-               #"plastic_or_not",
-         #      everything()) %>%
-        #select(where(~!any(is_empty(.))))  #Causing errors, need to debug. 
 })
 
 #Table of metadata for the selected library value
@@ -366,7 +369,8 @@ match_metadata <- reactive({
   })
 
 # Update the data_click variable when the plotly is clicked. 
- observeEvent(event_data("plotly_click", source = "heat_plot"), {
+ observeEvent(preprocessed$data$spectra, {
+     req(ncol(preprocessed$data$spectra) > 1)
      if(is.null(event_data("plotly_click", source = "heat_plot"))){
         data_click$data <- 1
      }
@@ -403,12 +407,12 @@ match_metadata <- reactive({
       #req(input$id_strategy == "correlation")
       req(input$file)
       #req(ncol(data()) > 2)
-        plot_ly(source = "heat_plot") %>%
+        plot <- plot_ly(source = "heat_plot") %>%
             add_trace(
                 x = preprocessed$data$metadata$x, #Need to update this with the new rout format.
                 y = preprocessed$data$metadata$y,
                 z = if(input$active_identification){
-                        ifelse(signal_to_noise() > input$MinSNR & max_cor() > input$MinCor, max_cor(), NA)
+                        ifelse((signal_to_noise() > input$MinSNR & max_cor() > input$MinCor), max_cor(), NA)
                     }
                     else{
                         ifelse(signal_to_noise() > input$MinSNR, signal_to_noise(), NA)
@@ -416,8 +420,7 @@ match_metadata <- reactive({
                 type = "heatmap",
                 hoverinfo = 'text',
                 showscale = F,
-                colors = if(input$active_identification){hcl.colors(n = sum(signal_to_noise() > input$MinSNR & max_cor() > input$MinCor), palette = "viridis")} else {heat.colors(n = sum(signal_to_noise() > input$MinSNR))
-                },
+                colors = if(input$active_identification){hcl.colors(n = sum(signal_to_noise() > input$MinSNR & max_cor() > input$MinCor), palette = "viridis")} else {heat.colors(n = sum(signal_to_noise() > input$MinSNR))},
                 text = ~paste(
                     "x: ", preprocessed$data$metadata$x,
                     "<br>y: ", preprocessed$data$metadata$y,
@@ -426,13 +429,14 @@ match_metadata <- reactive({
                     "<br>identity: ", if(input$active_identification){names(max_cor())} else{NA},
                     "<br>filename: ", preprocessed$data$metadata$filename)) %>%
             layout(
+              title = paste0(nrow(preprocessed$data$metadata), " Spectra"),
               xaxis = list(title = 'x',
                            zeroline = F,
                            showgrid = F
               ),
               yaxis = list(
-                            #scaleanchor = "x",
-                            #scaleratio = 1,
+                            scaleanchor = "x",
+                            scaleratio = 1,
                             title = 'y',
                             zeroline = F,
                             showgrid = F),
@@ -440,19 +444,36 @@ match_metadata <- reactive({
                    paper_bgcolor = 'rgba(0,0,0,0.5)',
                    showlegend = FALSE,
                    #legend = list(showlegend = F),
-                   font = list(color = '#FFFFFF')) %>%
-            event_register("plotly_click")
+                   font = list(color = '#FFFFFF')) 
+        
+            plot <- event_register(plot, "plotly_click")
+            
+            plot
   })
 
+  thresholded_particles <- reactive({
+      if(input$active_identification){
+          particles_logi <- signal_to_noise() > input$MinSNR & max_cor() > input$MinCor
+      }
+      else{
+          particles_logi <- signal_to_noise() > input$MinSNR
+      }
+      collapse_spectra(
+          characterize_particles(DataR(), particles = particles_logi)
+      ) %>%
+          filter_spec(., logic = .$metadata$particle_ids != "-88")
+  })
+  
   # Data Download options ----
   output$download_data <- downloadHandler(
-       filename = function() {if(input$download_selection == "Test Map") {paste0(input$download_selection, human_ts(), ".zip")} else{paste0(input$download_selection, human_ts(), ".csv")}},
+       filename = function() {if(input$download_selection == "Test Map") {paste0(input$download_selection, human_ts(), ".zip")} else if(input$download_selection == "Thresholded Particles"){paste0(input$download_selection, human_ts(), ".rds")} else{paste0(input$download_selection, human_ts(), ".csv")}},
         content = function(file) {
             if(input$download_selection == "Test Data") {fwrite(testdata, file)}
             if(input$download_selection == "Test Map") {zip(file, unzip("data/CA_tiny_map.zip"))}
             if(input$download_selection == "Your Spectra") {fwrite(data() %>% mutate(wavenumber = conform_res(preprocessed$data$wavenumber)), file)}
             if(input$download_selection == "Library Spectra") {fwrite(libraryR() %>% mutate(wavenumber = conform_res(preprocessed$data$wavenumber)), file)}
             if(input$download_selection == "Top Matches") {fwrite(data.table(x = preprocessed$data$metadata$x, y = preprocessed$data$metadata$y, filename = preprocessed$data$metadata$filename, signal_to_noise = signal_to_noise(), good_signal = signal_to_noise() > input$MinSNR), file)}
+            if(input$download_selection == "Thresholded Particles") {saveRDS(thresholded_particles(), file = file)}
             })
 
   # Hide functions or objects when the shouldn't exist. 
@@ -480,22 +501,6 @@ match_metadata <- reactive({
   })
 
   # Log events ----
-
-  observeEvent(input$go, {
-    if(conf$log) {
-      if(db) {
-        database$insert(data.frame(#user_name = input$fingerprint,
-                                   session_name = session_id,
-                                   wavenumber = trace$data$wavenumber,
-                                   intensity = trace$data$intensity,
-                                   data_id = digest::digest(preprocessed$data,
-                                                            algo = "md5"),
-                                   #ipid = input$ipid,
-                                   time = human_ts()))
-        }
-    }
-  })
-
   user_metadata <- reactive({
     data.frame(
              #user_name = input$fingerprint,
