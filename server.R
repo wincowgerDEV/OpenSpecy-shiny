@@ -393,8 +393,8 @@ match_metadata <- reactive({
   output$heatmap <- renderPlotly({
       req(input$file)
       heatmap_OpenSpecy(object = DataR(), 
-                        sn = signal_to_noise(), 
-                        cor = max_cor(), 
+                        sn = round(signal_to_noise(), 0), 
+                        cor = round(max_cor(), 2), 
                         min_sn = input$MinSNR,
                         min_cor = input$MinCor,
                         selected_spectrum = data_click$data,
