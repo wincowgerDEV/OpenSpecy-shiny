@@ -503,6 +503,7 @@ dashboardPage(dark = T,
                            ),
                           ## Plot ----
                           fluidRow(
+                              verbatimTextOutput("event_test"),
                               box(title = HTML(paste0("Spectra")), 
                                   maximizable = T,
                                   width = 12,
@@ -534,8 +535,7 @@ dashboardPage(dark = T,
                                       fluidRow(style = "padding:1rem; overflow-x: scroll",
                                                DT::dataTableOutput("event"))
                                   )
-                              ),
-                              verbatimTextOutput("event_test")
+                              )
                           )
                       ),
               tabItem("partner", 

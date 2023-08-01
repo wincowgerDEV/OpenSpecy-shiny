@@ -254,18 +254,23 @@ observeEvent(input$reset, {
   #The maximum correlation or AI value. 
   max_cor <- reactive({
       req(input$file)
-      req(input$active_identification)
-      if(input$id_strategy == "correlation"){
-          max_cor_named(correlation(), libraryR())
+      #req(input$active_identification)
+      if(isTruthy(input$active_identification)){
+          if(input$id_strategy == "correlation"){
+          max_cor_named(correlation())
       }
       else if(input$id_strategy == "ai"){
           ai <- round(ai_output()[["value"]], 1)
           names(ai) <- ai_output()[["name"]]
           ai
+        }
+      }
+      else{
+          NULL
       }
   })
   
-  #Metadata for all the top correlations. 
+  #Metadata for all the top correlations.Actually not currently being used for anything. 
   top_correlation <- reactive({
       req(input$file)
       req(input$active_identification)
@@ -295,7 +300,7 @@ observeEvent(input$reset, {
       #req(input$active_identification)
       req(input$id_strategy == "correlation")
       if(!input$active_identification) {
-          data.table(intensity = numeric(), wavenumber = numeric())
+          as_OpenSpecy(x = numeric(), spectra = data.table(empty = numeric()))
       }
       else{
          #need to make reactive
@@ -303,12 +308,8 @@ observeEvent(input$reset, {
                               matches_to_single()[[1,"library_id"]],
                               matches_to_single()[[input$event_rows_selected,"library_id"]])#"00087f78d45c571524fce483ef10752e"	#matches_to_single[[1,column_name]]
               
-              
-          
-          # Get data from find_spec
-         data.table(wavenumber = libraryR()$wavenumber,
-                    intensity = make_rel(libraryR()[["spectra"]][[id_select]], na.rm = T)) %>%
-             filter(!is.na(intensity))
+          # Get data from filter_spec
+          filter_spec(libraryR(), logic = id_select)
       }
   })
 
@@ -382,73 +383,23 @@ match_metadata <- reactive({
   # Display paired spectral matches based on table selection ----
   output$MyPlotC <- renderPlotly({
       req(input$id_strategy == "correlation")
-     
-      plot_ly(type = 'scatter', mode = 'lines', source = "B") %>%
-          add_trace(x = match_selected()$wavenumber, y = make_rel(match_selected()$intensity, na.rm = T),
-                    name = 'Library Spectra',
-                    line = list(color = 'rgb(255,255,255)')) %>%
-          add_trace(x = DataR_plot()$wavenumber, y = make_rel(DataR_plot()[["spectra"]][[1]], na.rm = T),
-                    name = 'Your Spectra',
-                    line = list(color = 'rgb(125,249,255)')) %>%
-        # Dark blue rgb(63,96,130)
-        # https://www.rapidtables.com/web/color/RGB_Color.html https://www.color-hex.com/color-names.html
-        layout(yaxis = list(title = "absorbance intensity [-]"),
-               xaxis = list(title = "wavenumber [cm<sup>-1</sup>]",
-                            autorange = "reversed"),
-               plot_bgcolor = 'rgb(17,0,73)',
-               paper_bgcolor = 'rgba(0,0,0,0.5)',
-               legend = list(orientation = 'h', y = 1.1),
-               font = list(color = '#FFFFFF')) %>%
+      req(preprocessed$data)
+      
+      plot_OpenSpecy(x = DataR_plot(),x2 = match_selected(), source = "B") %>%
         config(modeBarButtonsToAdd = list("drawopenpath", "eraseshape"))
     })
 
  #Display the map or batch data in a selectable heatmap. 
   output$heatmap <- renderPlotly({
-      #req(input$id_strategy == "correlation")
       req(input$file)
-      #req(ncol(data()) > 2)
-        plot <- plot_ly(source = "heat_plot") %>%
-            add_trace(
-                x = preprocessed$data$metadata$x, #Need to update this with the new rout format.
-                y = preprocessed$data$metadata$y,
-                z = if(input$active_identification){
-                        ifelse((signal_to_noise() > input$MinSNR & max_cor() > input$MinCor), max_cor(), NA)
-                    }
-                    else{
-                        ifelse(signal_to_noise() > input$MinSNR, signal_to_noise(), NA)
-                    },
-                type = "heatmap",
-                hoverinfo = 'text',
-                showscale = F,
-                colors = if(input$active_identification){hcl.colors(n = sum(signal_to_noise() > input$MinSNR & max_cor() > input$MinCor), palette = "viridis")} else {heat.colors(n = sum(signal_to_noise() > input$MinSNR))},
-                text = ~paste(
-                    "x: ", preprocessed$data$metadata$x,
-                    "<br>y: ", preprocessed$data$metadata$y,
-                    "<br>snr: ", round(signal_to_noise(), 0),
-                    "<br>cor: ", if(input$active_identification){max_cor()} else{NA},
-                    "<br>identity: ", if(input$active_identification){names(max_cor())} else{NA},
-                    "<br>filename: ", preprocessed$data$metadata$filename)) %>%
-            layout(
-              title = paste0(nrow(preprocessed$data$metadata), " Spectra"),
-              xaxis = list(title = 'x',
-                           zeroline = F,
-                           showgrid = F
-              ),
-              yaxis = list(
-                            scaleanchor = "x",
-                            scaleratio = 1,
-                            title = 'y',
-                            zeroline = F,
-                            showgrid = F),
-                   plot_bgcolor = 'rgba(17,0,73, 0)',
-                   paper_bgcolor = 'rgba(0,0,0,0.5)',
-                   showlegend = FALSE,
-                   #legend = list(showlegend = F),
-                   font = list(color = '#FFFFFF')) 
-        
-            plot <- event_register(plot, "plotly_click")
-            
-            plot
+      heatmap_OpenSpecy(object = DataR(), 
+                        sn = signal_to_noise(), 
+                        cor = max_cor(), 
+                        min_sn = input$MinSNR,
+                        min_cor = input$MinCor,
+                        selected_spectrum = data_click$data,
+                        source = "heat_plot") %>%
+          event_register("plotly_click")
   })
 
   thresholded_particles <- reactive({
@@ -553,6 +504,42 @@ match_metadata <- reactive({
     }
 
   })
+  
+  output$event_test <- renderPrint({
+      list(
+          object = tryCatch({
+              DataR()
+          }, error = function(e) {
+              paste("Error:", e$message)
+          }),
+          sn = tryCatch({
+              signal_to_noise()
+          }, error = function(e) {
+              paste("Error:", e$message)
+          }),
+          cor = tryCatch({
+              max_cor()
+          }, error = function(e) {
+              paste("Error:", e$message)
+          }),
+          min_sn = tryCatch({
+              input$MinSNR
+          }, error = function(e) {
+              paste("Error:", e$message)
+          }),
+          min_cor = tryCatch({
+              input$MinCor
+          }, error = function(e) {
+              paste("Error:", e$message)
+          }),
+          selected_spectrum = tryCatch({
+              data_click$data
+          }, error = function(e) {
+              paste("Error:", e$message)
+          })
+      )
+  })
+  
 
   #Storage ----
   #stores setup - insert at the bottom  !!!IMPORTANT
