@@ -503,28 +503,26 @@ dashboardPage(dark = T,
                            ),
                           ## Plot ----
                           fluidRow(
-                              verbatimTextOutput("event_test"),
+                              #verbatimTextOutput("event_test"),
                               box(title = HTML(paste0("Spectra")), 
                                   maximizable = T,
                                   width = 12,
                                   label = uiOutput("correlation_head"),
                                   h4(id = "placeholder1", "Upload some data to get started..."),
-                                  plotlyOutput("heatmap",inline = T),
-                                  box(title = "Heatmap Stats", 
-                                      id = "heatmap_stats",
-                                      width = 12,
+                                  div(id = "heatmap_stats",
                                       fluidRow(
                                           column(4, 
                                                  shinyWidgets::progressBar(id = "signal_progress", value = 0, status = "success", title = "Good Signal", display_pct = TRUE)
-                                                 ),
+                                          ),
                                           column(4, 
                                                  shinyWidgets::progressBar(id = "correlation_progress", value = 0, status = "success", title = "Good Correlations", display_pct = TRUE)
-                                                 ),
+                                          ),
                                           column(4,
                                                  shinyWidgets::progressBar(id = "match_progress", value = 0, status = "success", title = "Good Identifications", display_pct = TRUE)
-                                                 )
-                                        )
-                                      ),
+                                          )
+                                      )
+                                  ),
+                                  plotlyOutput("heatmap",inline = T),
                                   fluidRow(
                                       plotlyOutput("MyPlotC", inline = T),
                                       div(style = "overflow-x: scroll",

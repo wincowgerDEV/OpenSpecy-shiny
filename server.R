@@ -173,11 +173,20 @@ observeEvent(input$reset, {
   })
   
   MinCor <- reactive({
-      if(input$threshold_decision){
+      if(!input$threshold_decision){
           -Inf
       }
       else{
           input$MinCor
+      }
+  })
+  
+  MinSNR <- reactive({
+      if(!input$threshold_decision){
+          -Inf
+      }
+      else{
+          input$MinSNR
       }
   })
 
@@ -185,14 +194,14 @@ observeEvent(input$reset, {
   output$correlation_head <- renderUI({
       boxLabel(text = if(input$active_identification) {"Cor"} else{"SNR"}, 
                status = if(input$active_identification) {
-                   if(round(max_cor()[[data_click$data]], 2) > input$MinCor & round(signal_to_noise()[[data_click$data]], 2) > input$MinSNR){
+                   if(round(max_cor()[[data_click$data]], 2) > MinCor() & round(signal_to_noise()[[data_click$data]], 2) > MinSNR()){
                        "success"
                        } 
                    else{
                        "error"
                        }
                    } else{
-                       if(round(signal_to_noise()[[data_click$data]], 2) > input$MinSNR){
+                       if(round(signal_to_noise()[[data_click$data]], 2) > MinSNR()){
                            "success"
                            } 
                        else{
@@ -203,21 +212,21 @@ observeEvent(input$reset, {
   })
   
   #Progress bar for how many of the spectra have good signal. 
-  observeEvent(input$MinSNR | signal_to_noise(), {
+  observeEvent(MinSNR() | signal_to_noise(), {
       req(input$file)
       updateProgressBar(session = session, 
                         id = "signal_progress", 
-                        value = sum(signal_to_noise() > input$MinSNR)/length(signal_to_noise()) * 100)
+                        value = sum(signal_to_noise() > MinSNR())/length(signal_to_noise()) * 100)
   })
   #Bars stating how many of the uploaded spectra have good correlations or signals. 
-  observeEvent(input$MinCor | max_cor(), {
+  observeEvent(MinCor() | max_cor(), {
       req(input$file)
       updateProgressBar(session = session, 
                         id = "correlation_progress", 
-                        value = sum(max_cor() > input$MinCor)/length(max_cor()) * 100)
+                        value = sum(max_cor() > MinCor())/length(max_cor()) * 100)
       updateProgressBar(session = session, 
                         id = "match_progress", 
-                        value = (sum(signal_to_noise() > input$MinSNR & max_cor() > input$MinCor)/length(signal_to_noise())) * 100)
+                        value = (sum(signal_to_noise() > MinSNR() & max_cor() > MinCor())/length(signal_to_noise())) * 100)
   })
   
   #The correlation matrix between the unknowns and the library. 
@@ -369,16 +378,6 @@ match_metadata <- reactive({
               selection = list(mode = 'none'))
   })
 
-# Update the data_click variable when the plotly is clicked. 
- observeEvent(preprocessed$data$spectra, {
-     req(ncol(preprocessed$data$spectra) > 1)
-     if(is.null(event_data("plotly_click", source = "heat_plot"))){
-        data_click$data <- 1
-     }
-     else{
-        data_click$data <- event_data("plotly_click", source = "heat_plot")[["pointNumber"]] + 1
-     }
- })
 
   # Display paired spectral matches based on table selection ----
   output$MyPlotC <- renderPlotly({
@@ -394,9 +393,9 @@ match_metadata <- reactive({
       req(input$file)
       heatmap_OpenSpecy(object = DataR(), 
                         sn = round(signal_to_noise(), 0), 
-                        cor = round(max_cor(), 2), 
-                        min_sn = input$MinSNR,
-                        min_cor = input$MinCor,
+                        cor = if(is.null(max_cor())){max_cor()} else{round(max_cor(), 2)}, 
+                        min_sn = MinSNR(),
+                        min_cor = MinCor(),
                         selected_spectrum = data_click$data,
                         source = "heat_plot") %>%
           event_register("plotly_click")
@@ -404,10 +403,10 @@ match_metadata <- reactive({
 
   thresholded_particles <- reactive({
       if(input$active_identification){
-          particles_logi <- signal_to_noise() > input$MinSNR & max_cor() > input$MinCor
+          particles_logi <- signal_to_noise() > MinSNR() & max_cor() > MinCor()
       }
       else{
-          particles_logi <- signal_to_noise() > input$MinSNR
+          particles_logi <- signal_to_noise() > MinSNR()
       }
       collapse_spectra(
           characterize_particles(DataR(), particles = particles_logi)
@@ -423,13 +422,13 @@ match_metadata <- reactive({
             if(input$download_selection == "Test Map") {zip(file, unzip("data/CA_tiny_map.zip"))}
             if(input$download_selection == "Your Spectra") {fwrite(data() %>% mutate(wavenumber = conform_res(preprocessed$data$wavenumber)), file)}
             if(input$download_selection == "Library Spectra") {fwrite(libraryR() %>% mutate(wavenumber = conform_res(preprocessed$data$wavenumber)), file)}
-            if(input$download_selection == "Top Matches") {fwrite(data.table(x = preprocessed$data$metadata$x, y = preprocessed$data$metadata$y, filename = preprocessed$data$metadata$filename, signal_to_noise = signal_to_noise(), good_signal = signal_to_noise() > input$MinSNR), file)}
+            if(input$download_selection == "Top Matches") {fwrite(data.table(x = preprocessed$data$metadata$x, y = preprocessed$data$metadata$y, filename = preprocessed$data$metadata$filename, signal_to_noise = signal_to_noise(), good_signal = signal_to_noise() > MinSNR()), file)}
             if(input$download_selection == "Thresholded Particles") {saveRDS(thresholded_particles(), file = file)}
             })
 
   # Hide functions or objects when the shouldn't exist. 
   observe({
-    toggle(id = "signal_progress", condition = !is.null(preprocessed$data))
+    toggle(id = "signal_progress", condition = !is.null(preprocessed$data) & input$threshold_decision)
     toggle(id = "correlation_progress", condition = !is.null(preprocessed$data))
     toggle(id = "match_progress", condition = !is.null(preprocessed$data))
     toggle(id = "baseline", condition = input$baseline_selection == "Polynomial")
@@ -441,6 +440,12 @@ match_metadata <- reactive({
     if(!is.null(preprocessed$data)){
         toggle(id = "heatmap", condition = ncol(preprocessed$data$spectra) > 1)
         toggle(id = "heatmap_stats", condition = ncol(preprocessed$data$spectra) > 1)
+    }
+    if(is.null(event_data("plotly_click", source = "heat_plot"))){
+        data_click$data <- 1
+    }
+    else{
+        data_click$data <- event_data("plotly_click", source = "heat_plot")[["pointNumber"]] + 1
     }
     })
 
@@ -505,46 +510,46 @@ match_metadata <- reactive({
 
   })
   
-  output$event_test <- renderPrint({
-      list(
-          object = tryCatch({
-              DataR()
-          }, error = function(e) {
-              paste("Error:", e$message)
-          }),
-          sn = tryCatch({
-              signal_to_noise()
-          }, error = function(e) {
-              paste("Error:", e$message)
-          }),
-          cor = tryCatch({
-              max_cor()
-          }, error = function(e) {
-              paste("Error:", e$message)
-          }),
-          min_sn = tryCatch({
-              input$MinSNR
-          }, error = function(e) {
-              paste("Error:", e$message)
-          }),
-          min_cor = tryCatch({
-              input$MinCor
-          }, error = function(e) {
-              paste("Error:", e$message)
-          }),
-          selected_spectrum = tryCatch({
-              data_click$data
-          }, error = function(e) {
-              paste("Error:", e$message)
-          })
-      )
-  })
+  #output$event_test <- renderPrint({
+  #    list(
+  #        object = tryCatch({
+  #            DataR()
+  #        }, error = function(e) {
+  #            paste("Error:", e$message)
+  #        }),
+  #        sn = tryCatch({
+  #            signal_to_noise()
+  #        }, error = function(e) {
+  #            paste("Error:", e$message)
+  #        }),
+  #        cor = tryCatch({
+  #            max_cor()
+  #        }, error = function(e) {
+  #           paste("Error:", e$message)
+  #        }),
+  #        min_sn = tryCatch({
+  #            MinSNR()
+  #        }, error = function(e) {
+  #            paste("Error:", e$message)
+  #        }),
+  #        min_cor = tryCatch({
+  #            MinCor()
+  #        }, error = function(e) {
+  #            paste("Error:", e$message)
+  #        }),
+  #        selected_spectrum = tryCatch({
+  #            data_click$data
+  #        }, error = function(e) {
+  #            paste("Error:", e$message)
+  #        })
+  #    )
+  #})
   
 
   #Storage ----
   #stores setup - insert at the bottom  !!!IMPORTANT
-  #appid = "application_OpenSpecy"
-  #setupStorage(appId = appid,inputs = TRUE)
+  appid = "application_OpenSpecy"
+  setupStorage(appId = appid,inputs = TRUE)
 
 }
 
