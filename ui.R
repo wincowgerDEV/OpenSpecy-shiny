@@ -221,7 +221,7 @@ dashboardPage(dark = T,
                                                             fluidRow(
                                                                 box(width = 12,
                                                                     collapsed = T,
-                                                                    style = "overflow-y: scroll",
+                                                                    style = "height: 30vh; overflow-y: auto;",
                                                                     title = prettySwitch(inputId = "active_preprocessing",
                                                                                        label = "Preprocessing",
                                                                                        inline = T,
@@ -419,7 +419,7 @@ dashboardPage(dark = T,
                                                                                              size = "medium", rounded = TRUE
                                                                                          ), 
                                                                                      br(), 
-                                                                                     plotOutput("snr_plot")
+                                                                                     plotOutput("snr_plot", height = "10vh")
                                                                                  )
                                                                              )
                                                             )
@@ -429,8 +429,8 @@ dashboardPage(dark = T,
                                                      column(6, 
                                                                             fluidRow(
                                                                                 box(width = 12,
-                                                                                    style = "height: 10vh; overflow-y: auto;",
                                                                                     collapsed = T,
+                                                                                    style = "height: 30vh; overflow-y: auto;",
                                                                                     title = prettySwitch(inputId = "active_identification",
                                                                                                     label = "Identification",
                                                                                                     inline = T,
@@ -483,7 +483,7 @@ dashboardPage(dark = T,
                                                                                                    type = "info", 
                                                                                                    size = "medium", rounded = TRUE
                                                                                                ),
-                                                                                        plotOutput("cor_plot")
+                                                                                        plotOutput("cor_plot", height = "10vh")
                                                                                         
                                                                                     )
                                                                                 )

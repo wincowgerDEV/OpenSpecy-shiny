@@ -309,7 +309,8 @@ observeEvent(input$reset, {
       req(input$active_identification)
       req(input$id_strategy == "correlation")
       if(is.null(preprocessed$data)){
-          libraryR()$metadata
+          libraryR()$metadata %>%
+              rename("library_id" = "sample_name")
       }
       else{
           data.table(object_id = names(DataR()$spectra)[data_click$data], 
@@ -340,17 +341,29 @@ observeEvent(input$reset, {
 
   #All matches table for the current selection
   top_matches <- reactive({
+      #req(input$file)
       req(input$active_identification)
       req(input$id_strategy == "correlation")
-      matches_to_single() %>%
-          mutate(match_val = round(match_val, 2)) %>%
-          dplyr::rename("Material" = SpectrumIdentity,
-                        "Pearson's r" = match_val,
-                        "Plastic Pollution Category" = "polymer_class") %>%
-          dplyr::select(if(!is.null(preprocessed$data)){"Pearson's r"},
-                        "Material",
-                        "Plastic Pollution Category", 
-                        "library_id")
+      if(is.null(preprocessed$data)){
+          matches_to_single() %>%
+              dplyr::rename("Material" = 'SpectrumIdentity',
+                            "Plastic Pollution Category" = "polymer_class") %>%
+              dplyr::select("Material",
+                            "Plastic Pollution Category", 
+                            "library_id")
+      }
+      else{
+          matches_to_single() %>%
+              mutate(match_val = round(match_val, 2))  %>%
+              dplyr::rename("Material" = SpectrumIdentity,
+                            "Pearson's r" = match_val,
+                            "Plastic Pollution Category" = "polymer_class") %>%
+              dplyr::select("Pearson's r",
+                            "Material",
+                            "Plastic Pollution Category", 
+                            "library_id")
+      }
+      
   })
 
   # Create the data tables for all matches
@@ -372,11 +385,19 @@ observeEvent(input$reset, {
 match_metadata <- reactive({
     req(input$active_identification)
     req(input$id_strategy == "correlation")
-    matches_to_single()[input$event_rows_selected,] %>%
-        dplyr::rename("Material" = SpectrumIdentity,
-                      "Pearson's r" = match_val,
-                      "Plastic Pollution Category" = "polymer_class") %>%
-        .[, !sapply(., OpenSpecy::is_empty_vector), with = F]
+    if(is.null(preprocessed$data)){
+        matches_to_single()[input$event_rows_selected,] %>%
+            dplyr::rename("Material" = SpectrumIdentity,
+                          "Plastic Pollution Category" = "polymer_class") %>%
+            .[, !sapply(., OpenSpecy::is_empty_vector), with = F]
+    }
+    else{
+        matches_to_single()[input$event_rows_selected,] %>%
+            dplyr::rename("Material" = SpectrumIdentity,
+                          "Pearson's r" = match_val,
+                          "Plastic Pollution Category" = "polymer_class") %>%
+            .[, !sapply(., OpenSpecy::is_empty_vector), with = F]
+    }
 })
 
 #Table of metadata for the selected library value
@@ -398,9 +419,9 @@ match_metadata <- reactive({
   # Display paired spectral matches based on table selection ----
   output$MyPlotC <- renderPlotly({
       req(input$id_strategy == "correlation")
-      req(preprocessed$data)
+      #req(preprocessed$data)
       
-      plot_OpenSpecy(x = DataR_plot(),x2 = match_selected(), source = "B") %>%
+      plot_OpenSpecy(x = if(!is.null(preprocessed$data)){DataR_plot()} else{match_selected()},x2 = if(!is.null(preprocessed$data)) {match_selected()} else{NULL}, source = "B") %>%
         config(modeBarButtonsToAdd = list("drawopenpath", "eraseshape"))
     })
 
@@ -526,40 +547,16 @@ match_metadata <- reactive({
 
   })
   
-  #output$event_test <- renderPrint({
-  #    list(
-  #        object = tryCatch({
-  #            DataR()
-  #        }, error = function(e) {
-  #            paste("Error:", e$message)
-  #        }),
-  #        sn = tryCatch({
-  #            signal_to_noise()
-  #        }, error = function(e) {
-  #            paste("Error:", e$message)
-  #        }),
-  #        cor = tryCatch({
-  #            max_cor()
-  #        }, error = function(e) {
-  #           paste("Error:", e$message)
-  #        }),
-  #        min_sn = tryCatch({
-  #            MinSNR()
-  #        }, error = function(e) {
-  #            paste("Error:", e$message)
-  #        }),
-  #        min_cor = tryCatch({
-  #            MinCor()
-  #        }, error = function(e) {
-  #            paste("Error:", e$message)
-  #        }),
-  #        selected_spectrum = tryCatch({
-  #            data_click$data
-  #        }, error = function(e) {
-  #            paste("Error:", e$message)
-  #        })
-  #    )
-  #})
+ # output$event_test <- renderPrint({
+ #     list(
+ #         preprocessed = tryCatch({
+ #             preprocessed$data
+ #         }, error = function(e) {
+ #             paste("Error:", e$message)
+ #         })
+ #         
+ #     )
+ # })
   
 
   #Storage ----
