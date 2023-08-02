@@ -27,6 +27,7 @@ library(shinyStorePlus)
 library(qs)
 library(glmnet)
 library(tidyr)
+library(ggplot2)
 
 library(TTR)
 if(droptoken) library(aws.s3)

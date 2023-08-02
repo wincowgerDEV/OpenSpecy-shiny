@@ -221,6 +221,7 @@ dashboardPage(dark = T,
                                                             fluidRow(
                                                                 box(width = 12,
                                                                     collapsed = T,
+                                                                    style = "overflow-y: scroll",
                                                                     title = prettySwitch(inputId = "active_preprocessing",
                                                                                        label = "Preprocessing",
                                                                                        inline = T,
@@ -416,7 +417,9 @@ dashboardPage(dark = T,
                                                                                              message = "Signal thresholding technique used.",
                                                                                              type = "info", 
                                                                                              size = "medium", rounded = TRUE
-                                                                                         )
+                                                                                         ), 
+                                                                                     br(), 
+                                                                                     plotOutput("snr_plot")
                                                                                  )
                                                                              )
                                                             )
@@ -426,6 +429,7 @@ dashboardPage(dark = T,
                                                      column(6, 
                                                                             fluidRow(
                                                                                 box(width = 12,
+                                                                                    style = "height: 10vh; overflow-y: auto;",
                                                                                     collapsed = T,
                                                                                     title = prettySwitch(inputId = "active_identification",
                                                                                                     label = "Identification",
@@ -433,51 +437,59 @@ dashboardPage(dark = T,
                                                                                                     value = F,
                                                                                                     status = "success",
                                                                                                     fill = T),
-                                                                                                                                                            fluidRow(
-                                                                                 column(4,
-                                                                                        pickerInput(inputId = "Spectra", label =  "Library Type",
-                                                                                                    choices =  c("Both" = "both",
-                                                                                                                 "Raman" = "raman",
-                                                                                                                 "FTIR" = "ftir")) %>%
-                                                                                            add_prompt(
-                                                                                                message = "This selection will determine whether both libraries, FTIR only, or Raman only matching library is used. Choose the spectrum type that was uploaded.",
-                                                                                                position = "left", type = "info", 
-                                                                                                size = "medium", rounded = TRUE
-                                                                                            )
-                                                                                 ),
-                                                                                 column(4,
-                                                                                        pickerInput(inputId = "id_strategy", label =  "ID Strategy",
-                                                                                                    choices =  c("Correlation" = "correlation",
-                                                                                                                 "AI (Multinomial)" = "ai")) %>%
-                                                                                            add_prompt(
-                                                                                                message = "This selection will choose the strategy for identification.",
-                                                                                                position = "left", type = "info", 
-                                                                                                size = "medium", rounded = TRUE
-                                                                                            )
-                                                                                 ),
-                                                                                 column(4, 
-                                                                                        numericInput(
-                                                                                            "MinCor",
-                                                                                            "Minimum Value",
-                                                                                            value = 0.7,
-                                                                                            min = 0.6,
-                                                                                            max = 1,
-                                                                                            step = 0.1#,
-                                                                                            #width = '25%'
-                                                                                        ) %>%
-                                                                                            add_prompt(
-                                                                                                message = "Specify the Correlation or AI Value Threshold to Use",
-                                                                                                type = "info", 
-                                                                                                size = "medium", rounded = TRUE
-                                                                                            )
+                                                                                fluidRow(
+                                                                                    box(width = 12,
+                                                                                        collapsed = T,
+                                                                                        title = "Library Options",
+                                                                                               pickerInput(inputId = "Spectra", label =  "Library Type",
+                                                                                                           choices =  c("Both" = "both",
+                                                                                                                        "Raman" = "raman",
+                                                                                                                        "FTIR" = "ftir")) %>%
+                                                                                                   add_prompt(
+                                                                                                       message = "This selection will determine whether both libraries, FTIR only, or Raman only matching library is used. Choose the spectrum type that was uploaded.",
+                                                                                                       position = "left", type = "info", 
+                                                                                                       size = "medium", rounded = TRUE
+                                                                                                   ),
+                                                                                               pickerInput(inputId = "id_strategy", label =  "ID Strategy",
+                                                                                                           choices =  c("Correlation" = "correlation",
+                                                                                                                        "AI (Multinomial)" = "ai")) %>%
+                                                                                                   add_prompt(
+                                                                                                       message = "This selection will choose the strategy for identification.",
+                                                                                                       position = "left", type = "info", 
+                                                                                                       size = "medium", rounded = TRUE
+                                                                                                   )
+                                                                                    )
+                                                                                ),
+                                                                                fluidRow(
+                                                                                    box(width = 12, 
+                                                                                        collapsed = T,
+                                                                                                 title = prettySwitch("cor_threshold_decision",
+                                                                                                 label = "Thresholding by Correlation",
+                                                                                                 inline = T,
+                                                                                                 value = T,
+                                                                                                 status = "success",
+                                                                                                 fill = T), 
+                                                                                           numericInput(
+                                                                                               "MinCor",
+                                                                                               "Minimum Value",
+                                                                                               value = 0.7,
+                                                                                               min = 0.6,
+                                                                                               max = 1,
+                                                                                               step = 0.1#,
+                                                                                               #width = '25%'
+                                                                                           ) %>%
+                                                                                               add_prompt(
+                                                                                                   message = "Specify the Correlation or AI Value Threshold to Use",
+                                                                                                   type = "info", 
+                                                                                                   size = "medium", rounded = TRUE
+                                                                                               ),
+                                                                                        plotOutput("cor_plot")
                                                                                         
-                                                                                        )
-                                                                                 
-                                                                                 
+                                                                                    )
+                                                                                )
                                                                              )  
-                                                                             
                                                             )
-                                                     )))),
+                                                     ))),
                            column(2,
                                   selectInput(inputId = "download_selection",
                                               label = downloadButton("download_data",

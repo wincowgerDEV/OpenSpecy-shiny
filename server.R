@@ -172,24 +172,6 @@ observeEvent(input$reset, {
     }
   })
   
-  MinCor <- reactive({
-      if(!input$threshold_decision){
-          -Inf
-      }
-      else{
-          input$MinCor
-      }
-  })
-  
-  MinSNR <- reactive({
-      if(!input$threshold_decision){
-          -Inf
-      }
-      else{
-          input$MinSNR
-      }
-  })
-
   #Correlation ----
   output$correlation_head <- renderUI({
       boxLabel(text = if(input$active_identification) {"Cor"} else{"SNR"}, 
@@ -249,6 +231,23 @@ observeEvent(input$reset, {
              "Total Signal" = "total_signal")
       signal_noise(object = DataR(), return = signal_option)
   })
+  
+  MinSNR <- reactive({
+      if(!input$threshold_decision){
+          -Inf
+      }
+      else{
+          input$MinSNR
+      }
+  })
+  
+  output$snr_plot <- renderPlot({
+        ggplot() +
+          geom_histogram(aes(x = signal_to_noise())) +
+          scale_x_log10() +
+          geom_vline(xintercept = MinSNR(), color = "red") +
+          theme_minimal()
+  })
 
   #The output from the AI classification algorithm. 
   ai_output <- reactive({ #tested working. 
@@ -277,6 +276,23 @@ observeEvent(input$reset, {
       else{
           NULL
       }
+  })
+  
+  MinCor <- reactive({
+      if(!input$cor_threshold_decision){
+          -Inf
+      }
+      else{
+          input$MinCor
+      }
+  })
+  
+  output$cor_plot <- renderPlot({
+      ggplot() +
+          geom_histogram(aes(x = max_cor())) +
+          scale_x_log10() +
+          geom_vline(xintercept = MinCor(), color = "red") +
+          theme_minimal()
   })
   
   #Metadata for all the top correlations.Actually not currently being used for anything. 
