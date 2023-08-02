@@ -186,8 +186,8 @@ dashboardPage(dark = T,
                        fluidRow(
                            column(2,
                                   ##Upload/download ----
-                                  tags$label("Upload File"),
-                                  fluidRow(
+                                  #tags$label("Upload File"),
+                                  fluidRow(style = "display: flex; align-items: flex-end;",
                                       column(12, 
                                              fileInput("file", NULL,
                                                        placeholder = ".csv, .zip, .asp, .jdx, .spc, .spa, .0",
@@ -519,9 +519,10 @@ dashboardPage(dark = T,
                               box(title = HTML(paste0("Spectra")), 
                                   maximizable = T,
                                   width = 12,
+                                  #background = "black",
                                   label = uiOutput("correlation_head"),
                                   h4(id = "placeholder1", "Upload some data to get started..."),
-                                  div(id = "heatmap_stats",
+                                  div(id = "heatmap_stats", 
                                       fluidRow(
                                           column(4, 
                                                  shinyWidgets::progressBar(id = "signal_progress", value = 0, status = "success", title = "Good Signal", display_pct = TRUE)
@@ -534,8 +535,8 @@ dashboardPage(dark = T,
                                           )
                                       )
                                   ),
-                                  plotlyOutput("heatmap",inline = T),
                                   fluidRow(
+                                      plotlyOutput("heatmap",inline = T),
                                       plotlyOutput("MyPlotC", inline = T),
                                       div(style = "overflow-x: scroll",
                                           DT::dataTableOutput("eventmetadata")   
