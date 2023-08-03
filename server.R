@@ -94,17 +94,22 @@ observeEvent(input$file, {
                     min_range = input$MinRange,
                     max_range = input$MaxRange,
                     flatten_decision = input$co2_decision,
-                    flatten_min = 2200, #update
-                    flatten_max = 2420, #update
+                    flatten_min = input$MinFlat, #update
+                    flatten_max = input$MaxFlat, #update
                     smooth_decision = input$smooth_decision,
                     smooth_polynomial = input$smoother,
+                    smooth_window = input$smoother_window,
                     baseline_decision = input$baseline_decision,
                     baseline_selection = input$baseline_selection,
                     baseline_polynomial = input$baseline,
                     raw_baseline = F,
                     wavenumber_fit = trace$data$intensity,
                     intensity_fit = trace$data$intensity,
-                    derivative_decision = input$derivative_decision)
+                    derivative_decision = input$derivative_decision, 
+                    derivative_order = input$derivative_order,
+                    derivative_polynomial = input$derivative_polynomial,
+                    derivative_window = input$derivative_window,
+                    abs =  input$derivative_abs)
   })
 
 #Updating the trace value when the user says go. 

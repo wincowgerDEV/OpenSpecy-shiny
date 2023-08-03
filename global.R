@@ -7,14 +7,11 @@ translate <- file.exists("www/googletranslate.html")
 # Libraries ----
 library(shiny)
 library(shinyjs)
-library(shinythemes)
 library(shinyWidgets)
-library(shinyBS)
 library(dplyr)
 library(plotly)
 library(data.table)
 library(DT)
-library(prompter)
 library(digest)
 library(curl)
 library(config)
@@ -29,7 +26,6 @@ library(glmnet)
 library(tidyr)
 library(ggplot2)
 
-library(TTR)
 if(droptoken) library(aws.s3)
 
 #Download Data Functions ----
