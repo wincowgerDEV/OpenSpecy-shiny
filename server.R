@@ -161,10 +161,10 @@ observeEvent(input$reset, {
   libraryR <- reactive({
     req(input$active_identification)
     if(!(input$derivative_decision & input$active_preprocessing)) {
-        library <- readRDS("data/both_nobaseline.rds")
+        library <- nobaseline_library
     }
     else {
-        library <- readRDS("data/both_derivative.rds")
+        library <- derivative_library
     }
     if(input$Spectra == "both") {
       library

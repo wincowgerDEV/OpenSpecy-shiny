@@ -28,13 +28,12 @@ library(ggplot2)
 
 if(droptoken) library(aws.s3)
 
-#Download Data Functions ----
+
 
 #OpenSpecy AI ----
-
-
 model <- qread("data/all_lasso.qs")
-
+nobaseline_library <- read_any("data/both_nobaseline.rds")
+derivative_library <- read_any("data/both_derivative.rds")
 
 #Test only
 
