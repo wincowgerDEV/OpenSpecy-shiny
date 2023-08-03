@@ -4,6 +4,8 @@ droptoken <- file.exists("s3_cred.csv") #file.exists("data/droptoken.rds") #remo
 db <- F #file.exists(".db_url") #reminder, this will break if you login to a new wifi network even with the token.
 translate <- file.exists("www/googletranslate.html")
 
+#remotes::install_github("wincowgerDEV/OpenSpecy-package@v1.0-prep")
+
 # Libraries ----
 library(shiny)
 library(shinyjs)
