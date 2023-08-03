@@ -599,7 +599,7 @@ dashboardPage(dark = T,
                                border:solid #f7f7f9;
                                background-color:rgb(128, 0, 128, 0.5)",
                                                    h3("Saving (<100$)"),
-                                                   h6("Susanne Brander (Oregon State University), Jeremy Conkle (TEXAS  A&M  UNIVERSITY  CORPUS  CHRISTI)")
+                                                   h6("Anne Jefferson, Heather Szafranski, Gwendolyn Lattin, Collin Weber, Gregory Gearhart, Anika Ballent, Shelly Moore, Susanne Brander (Oregon State University), Jeremy Conkle (TEXAS  A&M  UNIVERSITY  CORPUS  CHRISTI)")
                                                )
                                          )
                                   ),
@@ -618,14 +618,14 @@ dashboardPage(dark = T,
                                     border:solid #f7f7f9;
                                     background-color:rgb(3, 252, 15, 0.5)",
                                                    h3("Maintaining (1,000–10,000$)"),
-                                                   h5("Sebastian Primpke, Andrew Gray, Chelsea Rochman, Orestis Herodotu, Hannah De Frond, Keenan Munno, Hannah Hapich, Jennifer Lynch")
+                                                   h5("Rachel Kozloski, Katherine Lasdin, Aleksandra Karapetrova, Laura Markley, Walter Yu, Walter Waldman, Vesna Teofilovic, Monica Arienzo, Mary Fey Long Norris, Cristiane Vidal, Scott Coffin, Charles Moore, Aline Carvalho, Shreyas Patankar, Andrea Faltynkova, Sebastian Primpke, Andrew Gray, Chelsea Rochman, Orestis Herodotu, Hannah De Frond, Keenan Munno, Hannah Hapich, Jennifer Lynch")
                                                ),
                                                div(class = "jumbotron",
                                                    style = "padding:0rem 1rem 0rem;
                                     border:solid #f7f7f9;
                                     background-color:rgb(0, 0, 255, 0.5)",
                                                    h3("Supporting (100–1,000$)"),
-                                                   h6( "Shreyas Patankar, Andrea Faltynkova, Alexandre Dehaut, Gabriel Erni Cassola, Aline Carvalho")
+                                                   h6( "Alexandre Dehaut, Gabriel Erni Cassola")
                                                )
                                          )
                                   )
