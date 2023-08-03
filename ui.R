@@ -528,12 +528,7 @@ dashboardPage(dark = T,
                            column(2,
                                   selectInput(inputId = "download_selection",
                                               label = downloadButton("download_data",
-                                                                     "",
-                                                                     style = "background-color: rgb(0,0,0); color: rgb(255,255,255);") %>%
-                                                  popover(
-                                                      title = "This is a sample spectrum that can be uploaded to the tool for testing it out and understanding how the csv files should be formatted.",
-                                                      content = "Download"
-                                                  ), 
+                                                                     style = "background-color: rgb(0,0,0); color: rgb(255,255,255);"),
                                               choices = c("Test Data",
                                                           "Test Map",
                                                           "Your Spectra",

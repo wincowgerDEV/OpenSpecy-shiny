@@ -300,13 +300,15 @@ observeEvent(input$reset, {
           theme_minimal()
   })
   
-  #Metadata for all the top correlations.Actually not currently being used for anything. 
+  #Metadata for all the top correlations.
   top_correlation <- reactive({
       req(input$file)
       req(input$active_identification)
       data.table(object_id = names(DataR()$spectra), 
                  library_id = names(max_cor()),
-                 match_val = max_cor())
+                 match_val = max_cor(), 
+                 signal_to_noise = signal_to_noise()) %>%
+          left_join(libraryR()$metadata, by = c("library_id" = "sample_name"))
   })
   
   #Metadata for all the matches for a single unknown spectrum
@@ -462,10 +464,10 @@ match_metadata <- reactive({
         content = function(file) {
             if(input$download_selection == "Test Data") {fwrite(testdata, file)}
             if(input$download_selection == "Test Map") {zip(file, unzip("data/CA_tiny_map.zip"))}
-            if(input$download_selection == "Your Spectra") {fwrite(data() %>% mutate(wavenumber = conform_res(preprocessed$data$wavenumber)), file)}
-            if(input$download_selection == "Library Spectra") {fwrite(libraryR() %>% mutate(wavenumber = conform_res(preprocessed$data$wavenumber)), file)}
-            if(input$download_selection == "Top Matches") {fwrite(data.table(x = preprocessed$data$metadata$x, y = preprocessed$data$metadata$y, filename = preprocessed$data$metadata$filename, signal_to_noise = signal_to_noise(), good_signal = signal_to_noise() > MinSNR()), file)}
-            if(input$download_selection == "Thresholded Particles") {saveRDS(thresholded_particles(), file = file)}
+            if(input$download_selection == "Your Spectra") {fwrite(cbind(wavenumber = DataR()$wavenumber, DataR()$spectra), file)}
+            if(input$download_selection == "Library Spectra") {fwrite(cbind(wavenumber = libraryR()$wavenumber, libraryR()$spectra), file)}
+            if(input$download_selection == "Top Matches") {fwrite(top_correlation(), file)}
+            if(input$download_selection == "Thresholded Particles") {write_spec(thresholded_particles(), file = file)}
             })
 
   # Hide functions or objects when the shouldn't exist. 
