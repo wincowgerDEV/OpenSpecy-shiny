@@ -160,7 +160,11 @@ observeEvent(input$reset, {
   #The matching library to use. 
   libraryR <- reactive({
     req(input$active_identification)
-    if(!(input$derivative_decision & input$active_preprocessing)) {
+    if(input$id_strategy == "mediod"){
+        library <- test_lib 
+        library$metadata$SpectrumIdentity <- library$metadata$polymer_class 
+    }
+    else if(!(input$derivative_decision & input$active_preprocessing)) {
         library <- nobaseline_library
     }
     else {
@@ -220,7 +224,7 @@ observeEvent(input$reset, {
   correlation <- reactive({
       req(input$file)
       req(input$active_identification)
-      req(input$id_strategy == "correlation")
+      req(input$id_strategy %in% c("correlation", "mediod"))
       withProgress(message = 'Analyzing Spectrum', value = 1/3, {
       correlate_spectra(object = DataR(), 
                         library = libraryR())
@@ -263,7 +267,8 @@ observeEvent(input$reset, {
       req(input$id_strategy == "ai")
       ai_classify(data = DataR()$spectra, 
                   wavenumbers = DataR()$wavenumber, 
-                  model = model)
+                  model = model,
+                  means = means)
   })
   
   #The maximum correlation or AI value. 
@@ -271,7 +276,7 @@ observeEvent(input$reset, {
       req(input$file)
       #req(input$active_identification)
       if(isTruthy(input$active_identification)){
-          if(input$id_strategy == "correlation"){
+          if(input$id_strategy %in% c("correlation", "mediod")){
           max_cor_named(correlation())
       }
       else if(input$id_strategy == "ai"){
@@ -316,7 +321,7 @@ observeEvent(input$reset, {
   #Metadata for all the matches for a single unknown spectrum
   matches_to_single <- reactive({
       req(input$active_identification)
-      req(input$id_strategy == "correlation")
+      req(input$id_strategy %in% c("correlation", "mediod"))
       if(is.null(preprocessed$data)){
           libraryR()$metadata %>%
               rename("library_id" = "sample_name")
@@ -333,7 +338,7 @@ observeEvent(input$reset, {
   match_selected <- reactive({# Default to first row if not yet clicked
       #req(input$file)
       #req(input$active_identification)
-      req(input$id_strategy == "correlation")
+      req(input$id_strategy %in% c("correlation", "mediod"))
       if(!input$active_identification) {
           as_OpenSpecy(x = numeric(), spectra = data.table(empty = numeric()))
       }
@@ -352,7 +357,7 @@ observeEvent(input$reset, {
   top_matches <- reactive({
       #req(input$file)
       req(input$active_identification)
-      req(input$id_strategy == "correlation")
+      req(input$id_strategy %in% c("correlation", "mediod"))
       if(is.null(preprocessed$data)){
           matches_to_single() %>%
               dplyr::rename("Material" = 'SpectrumIdentity',
@@ -378,7 +383,7 @@ observeEvent(input$reset, {
   # Create the data tables for all matches
   output$event <- DT::renderDataTable({
     req(input$active_identification)
-    req(input$id_strategy == "correlation")
+    req(input$id_strategy %in% c("correlation", "mediod"))
     datatable(top_matches(),
               options = list(searchHighlight = TRUE,
                              scrollX = TRUE,
@@ -393,7 +398,7 @@ observeEvent(input$reset, {
   #Create the data table that goes below the plot which provides extra metadata. 
 match_metadata <- reactive({
     req(input$active_identification)
-    req(input$id_strategy == "correlation")
+    req(input$id_strategy %in% c("correlation", "mediod"))
     if(is.null(preprocessed$data)){
         matches_to_single()[input$event_rows_selected,] %>%
             dplyr::rename("Material" = SpectrumIdentity,
@@ -412,7 +417,7 @@ match_metadata <- reactive({
 #Table of metadata for the selected library value
  output$eventmetadata <- DT::renderDataTable({
     req(input$active_identification)
-    req(input$id_strategy == "correlation")
+    req(input$id_strategy %in% c("correlation", "mediod"))
     datatable(match_metadata(),
               escape = FALSE,
               options = list(dom = 't', bSort = F,
@@ -427,7 +432,7 @@ match_metadata <- reactive({
 
   # Display paired spectral matches based on table selection ----
   output$MyPlotC <- renderPlotly({
-      req(input$id_strategy == "correlation")
+      #req(input$id_strategy == "correlation")
       #req(preprocessed$data)
       
       plot_OpenSpecy(x = if(!is.null(preprocessed$data)){DataR_plot()} else{match_selected()},x2 = if(!is.null(preprocessed$data)) {match_selected()} else{NULL}, source = "B") %>%
@@ -556,12 +561,12 @@ match_metadata <- reactive({
 
   })
   
- # output$event_test <- renderPrint({
- #     list(
- #         preprocessed = tryCatch({
- #             preprocessed$data
- #         }, error = function(e) {
- #             paste("Error:", e$message)
+  #output$event_test <- renderPrint({
+  #    list(
+  #        preprocessed = tryCatch({
+  #            libraryR()
+  #        }, error = function(e) {
+  #            paste("Error:", e$message)
  #         })
  #         
  #     )

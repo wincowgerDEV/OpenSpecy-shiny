@@ -37,12 +37,20 @@ model <- qread("data/all_lasso.qs")
 nobaseline_library <- read_any("data/both_nobaseline.rds")
 derivative_library <- read_any("data/both_derivative.rds")
 
+means <- read.csv("data/means.csv") %>%
+    select(-"X") %>%
+    data.table::transpose(., keep.names = "wavenumber") %>%
+    mutate(wavenumber = gsub("X", "", wavenumber)) %>%
+    rename(mean = V1)
+
+data("test_lib")
+
 #Test only
 
-ai_classify <- function(data, wavenumbers, model){
+ai_classify <- function(data, wavenumbers, model, means){
     #preprocessing
     spectra_processed <- data %>%
-                                dplyr::mutate(wavenumber = wavenumbers) %>%
+                                dplyr::mutate(wavenumber = as.character(wavenumbers)) %>%
                                 right_join(means) %>%
                                 dplyr::mutate(dplyr::across(where(is.numeric), ~fifelse(is.na(.x), mean, .x))) %>%
                                 select(-mean) %>%

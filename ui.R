@@ -488,7 +488,7 @@ dashboardPage(dark = T,
                                                                                                 "MinCor",
                                                                                                 "Minimum Value",
                                                                                                 value = 0.7,
-                                                                                                min = 0.6,
+                                                                                                min = 0,
                                                                                                 max = 1,
                                                                                                 step = 0.1#,
                                                                                                 #width = '25%'
@@ -515,7 +515,8 @@ dashboardPage(dark = T,
                                                                                                    ),
                                                                                                pickerInput(inputId = "id_strategy", label =  "ID Strategy",
                                                                                                            choices =  c("Correlation" = "correlation",
-                                                                                                                        "AI (Multinomial)" = "ai")) %>%
+                                                                                                                        "AI (FTIR Deriv Multinomial)" = "ai",
+                                                                                                                        "AI (FTIR Deriv Mediod)" = "mediod")) %>%
                                                                                                    popover(
                                                                                                        title = "This selection will choose the strategy for identification.",
                                                                                                        content = "ID"
