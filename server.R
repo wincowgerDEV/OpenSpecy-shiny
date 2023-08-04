@@ -316,7 +316,9 @@ observeEvent(input$reset, {
                  library_id = names(max_cor()),
                  match_val = max_cor(), 
                  signal_to_noise = signal_to_noise()) %>%
-          left_join(libraryR()$metadata, by = c("library_id" = "sample_name"))
+          {if(!grepl("^ai$", input$id_strategy)){bind_cols(., DataR()$metadata)} else{.}} %>%
+          {if(!grepl("^ai$", input$id_strategy)){left_join(., libraryR()$metadata, by = c("library_id" = "sample_name"))} else{.}}
+          
   })
   
   #Metadata for all the matches for a single unknown spectrum
