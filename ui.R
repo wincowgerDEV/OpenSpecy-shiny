@@ -468,13 +468,25 @@ dashboardPage(dark = T,
                                                                             fluidRow(
                                                                                 box(width = 12,
                                                                                     collapsed = T,
-                                                                                    style = "height: 30vh; overflow-y: auto;",
                                                                                     title = prettySwitch(inputId = "active_identification",
                                                                                                     label = "Identification",
                                                                                                     inline = T,
                                                                                                     value = F,
                                                                                                     status = "success",
                                                                                                     fill = T),
+                                                                                            pickerInput(inputId = "id_strategy", label =  "ID Library",
+                                                                                                        choices =  c("Cor: Both Deriv" = "both_deriv",
+                                                                                                                     "Cor: Both No Baseline" = "both_nobaseline",
+                                                                                                                     "Cor: FTIR Deriv" = "ftir_deriv",
+                                                                                                                     "Cor: Raman Deriv" = "raman_deriv",
+                                                                                                                     "Cor: FTIR No Baseline" = "ftir_nobaseline",
+                                                                                                                     "Cor: Raman No Baseline" = "raman_nobaseline",
+                                                                                                                     "AI: FTIR Deriv Multinomial" = "ai",
+                                                                                                                     "AI: FTIR Deriv Mediod" = "mediod")) %>%
+                                                                                                popover(
+                                                                                                    title = "This selection will choose the strategy for identification.",
+                                                                                                    content = "ID"
+                                                                                                ),
                                                                                     fluidRow(
                                                                                         box(width = 12, 
                                                                                             collapsed = T,
@@ -500,29 +512,7 @@ dashboardPage(dark = T,
                                                                                             plotOutput("cor_plot", height = "10vh")
                                                                                             
                                                                                         )
-                                                                                    ),
-                                                                                fluidRow(
-                                                                                    box(width = 12,
-                                                                                        collapsed = T,
-                                                                                        title = "Library Options",
-                                                                                               pickerInput(inputId = "Spectra", label =  "Library Type",
-                                                                                                           choices =  c("Both" = "both",
-                                                                                                                        "Raman" = "raman",
-                                                                                                                        "FTIR" = "ftir")) %>%
-                                                                                                   popover(
-                                                                                                       title = "This selection will determine whether both libraries, FTIR only, or Raman only matching library is used. Choose the spectrum type that was uploaded.",
-                                                                                                       content = "Library"
-                                                                                                   ),
-                                                                                               pickerInput(inputId = "id_strategy", label =  "ID Strategy",
-                                                                                                           choices =  c("Correlation" = "correlation",
-                                                                                                                        "AI (FTIR Deriv Multinomial)" = "ai",
-                                                                                                                        "AI (FTIR Deriv Mediod)" = "mediod")) %>%
-                                                                                                   popover(
-                                                                                                       title = "This selection will choose the strategy for identification.",
-                                                                                                       content = "ID"
-                                                                                                   )
                                                                                     )
-                                                                                )
                                                                              )  
                                                             )
                                                      ))),

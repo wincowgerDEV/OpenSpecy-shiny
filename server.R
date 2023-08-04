@@ -163,20 +163,21 @@ observeEvent(input$reset, {
     if(input$id_strategy == "mediod"){
         library <- test_lib 
         library$metadata$SpectrumIdentity <- library$metadata$polymer_class 
+        return(library)
     }
-    else if(!(input$derivative_decision & input$active_preprocessing)) {
+    else if(grepl("nobaseline$", input$id_strategy)) {
         library <- nobaseline_library
     }
-    else {
+    else if(grepl("deriv$", input$id_strategy)){
         library <- derivative_library
     }
-    if(input$Spectra == "both") {
+    if(grepl("^both", input$id_strategy)) {
       library
     }
-    else if (input$Spectra == "ftir"){
+    else if (grepl("^ftir", input$id_strategy)){
       filter_spec(library, logic = library$metadata$SpectrumType == "FTIR")
     }
-    else if (input$Spectra == "raman"){
+    else if (grepl("^raman", input$id_strategy)){
       filter_spec(library, logic = library$metadata$SpectrumType == "Raman")
     }
   })
@@ -224,7 +225,7 @@ observeEvent(input$reset, {
   correlation <- reactive({
       req(input$file)
       req(input$active_identification)
-      req(input$id_strategy %in% c("correlation", "mediod"))
+      req(!grepl("^ai$", input$id_strategy))
       withProgress(message = 'Analyzing Spectrum', value = 1/3, {
       correlate_spectra(object = DataR(), 
                         library = libraryR())
@@ -276,7 +277,7 @@ observeEvent(input$reset, {
       req(input$file)
       #req(input$active_identification)
       if(isTruthy(input$active_identification)){
-          if(input$id_strategy %in% c("correlation", "mediod")){
+          if(!grepl("^ai$", input$id_strategy)){
           max_cor_named(correlation())
       }
       else if(input$id_strategy == "ai"){
@@ -321,7 +322,7 @@ observeEvent(input$reset, {
   #Metadata for all the matches for a single unknown spectrum
   matches_to_single <- reactive({
       req(input$active_identification)
-      req(input$id_strategy %in% c("correlation", "mediod"))
+      req(!grepl("^ai$", input$id_strategy))
       if(is.null(preprocessed$data)){
           libraryR()$metadata %>%
               rename("library_id" = "sample_name")
@@ -338,7 +339,7 @@ observeEvent(input$reset, {
   match_selected <- reactive({# Default to first row if not yet clicked
       #req(input$file)
       #req(input$active_identification)
-      req(input$id_strategy %in% c("correlation", "mediod"))
+      req(!grepl("^ai$", input$id_strategy))
       if(!input$active_identification) {
           as_OpenSpecy(x = numeric(), spectra = data.table(empty = numeric()))
       }
@@ -357,7 +358,7 @@ observeEvent(input$reset, {
   top_matches <- reactive({
       #req(input$file)
       req(input$active_identification)
-      req(input$id_strategy %in% c("correlation", "mediod"))
+      req(!grepl("^ai$", input$id_strategy))
       if(is.null(preprocessed$data)){
           matches_to_single() %>%
               dplyr::rename("Material" = 'SpectrumIdentity',
@@ -383,7 +384,7 @@ observeEvent(input$reset, {
   # Create the data tables for all matches
   output$event <- DT::renderDataTable({
     req(input$active_identification)
-    req(input$id_strategy %in% c("correlation", "mediod"))
+    req(!grepl("^ai$", input$id_strategy))
     datatable(top_matches(),
               options = list(searchHighlight = TRUE,
                              scrollX = TRUE,
@@ -398,7 +399,7 @@ observeEvent(input$reset, {
   #Create the data table that goes below the plot which provides extra metadata. 
 match_metadata <- reactive({
     req(input$active_identification)
-    req(input$id_strategy %in% c("correlation", "mediod"))
+    req(!grepl("^ai$", input$id_strategy))
     if(is.null(preprocessed$data)){
         matches_to_single()[input$event_rows_selected,] %>%
             dplyr::rename("Material" = SpectrumIdentity,
@@ -417,7 +418,7 @@ match_metadata <- reactive({
 #Table of metadata for the selected library value
  output$eventmetadata <- DT::renderDataTable({
     req(input$active_identification)
-    req(input$id_strategy %in% c("correlation", "mediod"))
+    req(!grepl("^ai$", input$id_strategy))
     datatable(match_metadata(),
               escape = FALSE,
               options = list(dom = 't', bSort = F,
@@ -526,7 +527,7 @@ match_metadata <- reactive({
              max_range = input$MinRange,
              min_range = input$MaxRange,
              active_identification = input$active_identification,
-             spectra_type = input$Spectra,
+             #spectra_type = input$Spectra,
              #analyze_type = input$Data,
              #region_type = input$Library
              )
@@ -551,7 +552,7 @@ match_metadata <- reactive({
                min_range = input$MaxRange,
                range_decision = input$range_decision,
                data_id = digest::digest(preprocessed$data, algo = "md5"),
-               spectra_type = input$Spectra,
+               #spectra_type = input$Spectra,
                #analyze_type = input$Data,
                #region_type = input$Library,
                #ipid = input$ipid,
