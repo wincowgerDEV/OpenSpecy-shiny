@@ -238,7 +238,7 @@ dashboardPage(dark = T,
                                                                                 "MinSNR",
                                                                                 "Minimum Value",
                                                                                 value = 4,
-                                                                                min = 2,
+                                                                                min = -10000,
                                                                                 max = 10000,
                                                                                 step = 1
                                                                             ) %>%

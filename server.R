@@ -181,14 +181,14 @@ observeEvent(input$reset, {
   output$correlation_head <- renderUI({
       boxLabel(text = if(input$active_identification) {"Cor"} else{"SNR"}, 
                status = if(input$active_identification) {
-                   if(round(max_cor()[[data_click$data]], 2) > MinCor() & round(signal_to_noise()[[data_click$data]], 2) > MinSNR()){
+                   if(max_cor()[[data_click$data]] > MinCor() & signal_to_noise()[[data_click$data]] > MinSNR()){
                        "success"
                        } 
                    else{
                        "error"
                        }
                    } else{
-                       if(round(signal_to_noise()[[data_click$data]], 2) > MinSNR()){
+                       if(signal_to_noise()[[data_click$data]] > MinSNR()){
                            "success"
                            } 
                        else{
@@ -246,10 +246,12 @@ observeEvent(input$reset, {
       }
   })
   
+
+  
   output$snr_plot <- renderPlot({
         ggplot() +
           geom_histogram(aes(x = signal_to_noise())) +
-          scale_x_log10() +
+          scale_x_continuous(trans =  scales::modulus_trans(p = 0, offset = 1)) +
           geom_vline(xintercept = MinSNR(), color = "red") +
           theme_minimal()
   })
@@ -273,7 +275,7 @@ observeEvent(input$reset, {
           max_cor_named(correlation())
       }
       else if(input$id_strategy == "ai"){
-          ai <- round(ai_output()[["value"]], 1)
+          ai <- signif(ai_output()[["value"]], 1)
           names(ai) <- ai_output()[["name"]]
           ai
         }
@@ -295,7 +297,7 @@ observeEvent(input$reset, {
   output$cor_plot <- renderPlot({
       ggplot() +
           geom_histogram(aes(x = max_cor())) +
-          scale_x_log10() +
+          scale_x_continuous(trans =  scales::modulus_trans(p = 0, offset = 1)) +
           geom_vline(xintercept = MinCor(), color = "red") +
           theme_minimal()
   })
@@ -361,7 +363,7 @@ observeEvent(input$reset, {
       }
       else{
           matches_to_single() %>%
-              mutate(match_val = round(match_val, 2))  %>%
+              mutate(match_val = signif(match_val, 2))  %>%
               dplyr::rename("Material" = SpectrumIdentity,
                             "Pearson's r" = match_val,
                             "Plastic Pollution Category" = "polymer_class") %>%
@@ -436,8 +438,8 @@ match_metadata <- reactive({
   output$heatmap <- renderPlotly({
       req(input$file)
       heatmap_OpenSpecy(object = DataR(), 
-                        sn = round(signal_to_noise(), 0), 
-                        cor = if(is.null(max_cor())){max_cor()} else{round(max_cor(), 2)}, 
+                        sn = signif(signal_to_noise(), 2), 
+                        cor = if(is.null(max_cor())){max_cor()} else{signif(max_cor(), 2)}, 
                         min_sn = MinSNR(),
                         min_cor = MinCor(),
                         selected_spectrum = data_click$data,
