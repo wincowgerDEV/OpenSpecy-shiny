@@ -83,7 +83,7 @@ observeEvent(input$file, {
   baseline_data <- reactive({
      req(input$file)
      req(input$active_preprocessing)
-    process_spectra(object = data(),
+    process_spectra(x = data(),
                     active_processing = input$active_preprocessing,
                     adj_intensity_decision = input$intensity_decision, 
                     type = input$intensity_corr,
@@ -251,7 +251,6 @@ observeEvent(input$reset, {
       }
   })
   
-
   
   output$snr_plot <- renderPlot({
         ggplot() +
@@ -315,7 +314,12 @@ observeEvent(input$reset, {
       data.table(object_id = names(DataR()$spectra), 
                  library_id = names(max_cor()),
                  match_val = max_cor(), 
-                 signal_to_noise = signal_to_noise()) %>%
+                 match_threshold = MinCor(),
+                 good_correlations = max_cor() > MinCor(),
+                 signal_to_noise = signal_to_noise(), 
+                 signal_threshold = MinSNR(),
+                 good_signal = signal_to_noise() > MinSNR(), 
+                 good_matches = max_cor() > MinCor() & signal_to_noise() > MinSNR()) %>%
           {if(!grepl("^ai$", input$id_strategy)){bind_cols(., DataR()$metadata)} else{.}} %>%
           {if(!grepl("^ai$", input$id_strategy)){left_join(., libraryR()$metadata, by = c("library_id" = "sample_name"))} else{.}}
           
