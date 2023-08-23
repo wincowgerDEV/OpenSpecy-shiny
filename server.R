@@ -250,7 +250,7 @@ observeEvent(input$file, {
           max_cor_named(correlation())
       }
       else if(input$id_strategy == "ai"){
-          ai <- signif(ai_output()[["value"]], 1)
+          ai <- signif(ai_output()[["value"]], 2)
           names(ai) <- ai_output()[["name"]]
           ai
         }
@@ -412,7 +412,7 @@ match_metadata <- reactive({
       #req(input$id_strategy == "correlation")
       #req(preprocessed$data)
       
-      plotly_spec(x = if(!is.null(preprocessed$data)){DataR_plot()} else{match_selected()},x2 = if(!is.null(preprocessed$data)) {match_selected()} else{NULL}, line2 = list(dash = "dot", color = "rgb(255,0,0)"), source = "B") %>%
+      plotly_spec(x = if(!is.null(preprocessed$data)){DataR_plot()} else{match_selected()},x2 = if(!is.null(preprocessed$data)) {match_selected()} else{NULL}, source = "B") %>%
         config(modeBarButtonsToAdd = list("drawopenpath", "eraseshape"))
     })
 
