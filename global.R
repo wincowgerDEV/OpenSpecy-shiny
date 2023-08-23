@@ -34,8 +34,6 @@ if(droptoken) library(aws.s3)
 
 #OpenSpecy AI ----
 model <- qread("data/all_lasso.qs")
-nobaseline_library <- read_any("data/both_nobaseline.rds")
-derivative_library <- read_any("data/both_derivative.rds")
 
 means <- read.csv("data/means.csv") %>%
     select(-"X") %>%

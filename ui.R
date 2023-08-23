@@ -485,7 +485,7 @@ dashboardPage(dark = T,
                            ),
                           ## Plot ----
                           fluidRow(
-                              verbatimTextOutput("event_test"),
+                              #verbatimTextOutput("event_test"),
                               box(title = HTML(paste0("Spectra")), 
                                   maximizable = T,
                                   width = 12,
@@ -601,7 +601,6 @@ dashboardPage(dark = T,
                                   )
                               )
                           ),
-                          
                           accordionItem(
                               title = "Donate Cash",
                               status = "info",
@@ -611,7 +610,6 @@ dashboardPage(dark = T,
                                            icon = icon("donate"),
                                            onclick = "window.open('https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=wincowger@gmail.com&lc=US&item_name=Donation+to+Open+Specy&no_note=0&cn=&currency_code=USD&bn=PP-DonationsBF:btn_donateCC_LG.gif:NonHosted', '_blank')")
                               ),
-                          
                           accordionItem(
                               title = "Buy Merch",
                               status = "info",

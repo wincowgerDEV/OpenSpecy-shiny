@@ -136,10 +136,10 @@ observeEvent(input$file, {
         return(library)
     }
     else if(grepl("nobaseline$", input$id_strategy)) {
-        library <- nobaseline_library
+        library <- read_any("data/both_nobaseline.rds")
     }
     else if(grepl("deriv$", input$id_strategy)){
-        library <- derivative_library
+        library <- read_any("data/both_derivative.rds")
     }
     if(grepl("^both", input$id_strategy)) {
       library
@@ -447,7 +447,7 @@ match_metadata <- reactive({
        filename = function() {if(input$download_selection == "Test Map") {paste0(input$download_selection, human_ts(), ".zip")} else if(input$download_selection == "Thresholded Particles"){paste0(input$download_selection, human_ts(), ".rds")} else{paste0(input$download_selection, human_ts(), ".csv")}},
         content = function(file) {
             if(input$download_selection == "Test Data") {fwrite(testdata, file)}
-            if(input$download_selection == "Test Map") {zip(file, unzip("data/CA_tiny_map.zip"))}
+            if(input$download_selection == "Test Map") {zip(file, unzip(read_extdata("CA_tiny_map.zip")))}
             if(input$download_selection == "Your Spectra") {fwrite(cbind(wavenumber = DataR()$wavenumber, DataR()$spectra), file)}
             if(input$download_selection == "Library Spectra") {fwrite(cbind(wavenumber = libraryR()$wavenumber, libraryR()$spectra), file)}
             if(input$download_selection == "Top Matches") {fwrite(top_correlation(), file)}
@@ -538,19 +538,19 @@ match_metadata <- reactive({
 
   })
   
-  output$event_test <- renderPrint({
-      list(
-          input$range_decision, 
-          input$MinRange, 
-          input$MaxRange
+  #output$event_test <- renderPrint({
+  #    list(
+  #        input$range_decision, 
+  #        input$MinRange, 
+  #        input$MaxRange
           #preprocessed = tryCatch({
               
           #}, error = function(e) {
           #   paste("Error:", e$message)
          # })
           
-      )
-  })
+  #    )
+  #})
   
 
   #Storage ----
