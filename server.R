@@ -100,7 +100,7 @@ observeEvent(input$file, {
                     subtr_baseline_args = list(type = "polynomial", degree = input$baseline, raw = FALSE, baseline = NULL),
                     smooth_intens = input$smooth_decision, 
                     smooth_intens_args = list(polynomial = input$smoother, window = input$smoother_window, derivative = input$derivative_order, abs = input$derivative_abs),
-                    make_rel = T)
+                    make_rel = F)
   })
 
 # Identify Spectra function ----
@@ -209,7 +209,7 @@ observeEvent(input$file, {
              "Signal Over Noise" = "run_sig_over_noise", 
              "Signal Times Noise" = "sig_times_noise", 
              "Total Signal" = "log_tot_sig")
-      sig_noise(x = DataR(), return = signal_option)
+      sig_noise(x = DataR(), metric = signal_option)
   })
   
   MinSNR <- reactive({
@@ -412,7 +412,7 @@ match_metadata <- reactive({
       #req(input$id_strategy == "correlation")
       #req(preprocessed$data)
       
-      plotly_spec(x = if(!is.null(preprocessed$data)){DataR_plot()} else{match_selected()},x2 = if(!is.null(preprocessed$data)) {match_selected()} else{NULL}, source = "B") %>%
+      plotly_spec(x = if(!is.null(preprocessed$data)){DataR_plot()} else{match_selected()},x2 = if(!is.null(preprocessed$data)) {match_selected()} else{NULL}, line2 = list(dash = "dot", color = "rgb(255,0,0)"), source = "B") %>%
         config(modeBarButtonsToAdd = list("drawopenpath", "eraseshape"))
     })
 
