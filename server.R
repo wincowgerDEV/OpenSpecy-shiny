@@ -1,7 +1,7 @@
 function(input, output, session) {
     
   #Set upload size
-  if(conf$share != "system"){options(shiny.maxRequestSize = 1000*1024^2)} else{options(shiny.maxRequestSize = 10000*1024^2)}
+  if(isTruthy(conf$share) && conf$share != "system"){options(shiny.maxRequestSize = 1000*1024^2)} else{options(shiny.maxRequestSize = 10000*1024^2)}
     
   #create a random session id
   session_id <- digest(runif(10))
@@ -513,7 +513,7 @@ match_metadata <- reactive({
   observe({
     req(input$file)
     req(input$share_decision)
-    if(conf$log) {
+    if(isTruthy(conf$log)) {
       if(db) {
         database$insert(user_metadata())
       } else {

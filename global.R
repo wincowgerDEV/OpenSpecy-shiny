@@ -3,6 +3,7 @@
 droptoken <- file.exists("s3_cred.csv") #file.exists("data/droptoken.rds") #remove for prototyping with maps
 db <- F #file.exists(".db_url") #reminder, this will break if you login to a new wifi network even with the token.
 translate <- file.exists("www/googletranslate.html")
+config_exists <- file.exists("config.yml")
 
 #remotes::install_github("wincowgerDEV/OpenSpecy-package@v1.0-prep")
 
@@ -67,10 +68,12 @@ ai_classify <- function(data, wavenumbers, model, means){
 }
 
 # Global config ----
-conf <- config::get() #Add config = "shinyapps" for ec2 server
+if(config_exists){
+    conf <- config::get() #Add config = "shinyapps" for ec2 server
+}
 
 # Logging ----
-if(conf$log) {
+if(isTruthy(conf$log)) {
   if(db) {
     database <- mongo(url = readLines(".db_url"))
   } else {
