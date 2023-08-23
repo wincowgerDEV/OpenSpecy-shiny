@@ -83,7 +83,7 @@ observeEvent(input$file, {
   baseline_data <- reactive({
      req(input$file)
      req(input$active_preprocessing)
-    process_spectra(x = data(),
+    process_spec(x = data(),
                     active_processing = input$active_preprocessing,
                     adj_intensity_decision = input$intensity_decision, 
                     type = input$intensity_corr,
@@ -227,7 +227,7 @@ observeEvent(input$reset, {
       req(input$active_identification)
       req(!grepl("^ai$", input$id_strategy))
       withProgress(message = 'Analyzing Spectrum', value = 1/3, {
-      correlate_spectra(object = DataR(), 
+      cor_spec(x = DataR(), 
                         library = libraryR())
       })
   })
@@ -236,10 +236,10 @@ observeEvent(input$reset, {
   signal_to_noise <- reactive({
           req(DataR)
       signal_option <- switch(input$signal_selection,
-             "Signal Over Noise" = "run_signal_over_noise", 
-             "Signal Times Noise" = "signal_times_noise", 
-             "Total Signal" = "total_signal")
-      signal_noise(object = DataR(), return = signal_option)
+             "Signal Over Noise" = "run_sig_over_noise", 
+             "Signal Times Noise" = "sig_times_noise", 
+             "Total Signal" = "log_tot_sig")
+      sig_noise(x = DataR(), return = signal_option)
   })
   
   MinSNR <- reactive({
@@ -442,14 +442,14 @@ match_metadata <- reactive({
       #req(input$id_strategy == "correlation")
       #req(preprocessed$data)
       
-      plot_OpenSpecy(x = if(!is.null(preprocessed$data)){DataR_plot()} else{match_selected()},x2 = if(!is.null(preprocessed$data)) {match_selected()} else{NULL}, source = "B") %>%
+      plotly_spec(x = if(!is.null(preprocessed$data)){DataR_plot()} else{match_selected()},x2 = if(!is.null(preprocessed$data)) {match_selected()} else{NULL}, source = "B") %>%
         config(modeBarButtonsToAdd = list("drawopenpath", "eraseshape"))
     })
 
  #Display the map or batch data in a selectable heatmap. 
   output$heatmap <- renderPlotly({
       req(input$file)
-      heatmap_OpenSpecy(object = DataR(), 
+      heatmap_spec(x = DataR(), 
                         sn = signif(signal_to_noise(), 2), 
                         cor = if(is.null(max_cor())){max_cor()} else{signif(max_cor(), 2)}, 
                         min_sn = MinSNR(),
@@ -466,8 +466,8 @@ match_metadata <- reactive({
       else{
           particles_logi <- signal_to_noise() > MinSNR()
       }
-      collapse_spectra(
-          characterize_particles(DataR(), particles = particles_logi)
+      collapse_spec(
+          def_features(DataR(), features = particles_logi)
       ) %>%
           filter_spec(., logic = .$metadata$particle_ids != "-88")
   })
