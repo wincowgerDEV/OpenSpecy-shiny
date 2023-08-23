@@ -41,7 +41,11 @@ observeEvent(input$file, {
 
   withProgress(message = progm, value = 3/3, {
 
-      rout <- read_any(file = as.character(input$file$datapath))
+      rout <- tryCatch({
+                      read_any(file = as.character(input$file$datapath))
+                  }, error = function(e) {
+                      paste("Error:", e$message)
+                   })
 
       if(droptoken & input$share_decision & input$file$size < 10^7 & curl::has_internet()){
           put_object(
@@ -61,7 +65,7 @@ observeEvent(input$file, {
                       "'intensity'."),
         type = "error"
       )
-      return(NULL)
+      preprocessed$data <- NULL
     }
     else {
       preprocessed$data <- rout
@@ -84,32 +88,20 @@ observeEvent(input$file, {
      req(input$file)
      req(input$active_preprocessing)
     process_spec(x = data(),
-                    active_processing = input$active_preprocessing,
-                    adj_intensity_decision = input$intensity_decision, 
-                    type = input$intensity_corr,
-                    conform_decision = T, 
-                    new_wavenumbers = seq(100, 4000, by = 5), 
-                    res = 5,
-                    range_decision = input$range_decision,
-                    min_range = input$MinRange,
-                    max_range = input$MaxRange,
-                    flatten_decision = input$co2_decision,
-                    flatten_min = input$MinFlat, #update
-                    flatten_max = input$MaxFlat, #update
-                    smooth_decision = input$smooth_decision,
-                    smooth_polynomial = input$smoother,
-                    smooth_window = input$smoother_window,
-                    baseline_decision = input$baseline_decision,
-                    baseline_selection = input$baseline_selection,
-                    baseline_polynomial = input$baseline,
-                    raw_baseline = F,
-                    wavenumber_fit = trace$data$intensity,
-                    intensity_fit = trace$data$intensity,
-                    derivative_decision = input$derivative_decision, 
-                    derivative_order = input$derivative_order,
-                    derivative_polynomial = input$derivative_polynomial,
-                    derivative_window = input$derivative_window,
-                    abs =  input$derivative_abs)
+                    active = input$active_preprocessing,
+                    adj_intens = input$intensity_decision, 
+                    adj_intens_args = list(type = input$intensity_corr),
+                    conform_spec = T, 
+                    conform_args = list(range = seq(100, 4000, by = 5), res = 5),
+                    restric_range = input$range_decision,
+                    restric_range_args = list(min = input$MinRange, max = input$MaxRange),
+                    flatten_range = input$co2_decision,
+                    flatten_range_args = list(min = input$MinFlat, max = input$MaxFlat),
+                    subtr_baseline = input$baseline_decision, 
+                    subtr_baseline_args = list(type = "polynomial", degree = input$baseline, raw = FALSE, baseline = NULL),
+                    smooth_intens = input$smooth_decision, 
+                    smooth_intens_args = list(polynomial = input$smoother, window = input$smoother_window, derivative = input$derivative_order, abs = input$derivative_abs),
+                    make_rel = T)
   })
 
 #Updating the trace value when the user says go. 
@@ -142,7 +134,7 @@ observeEvent(input$reset, {
     }
     else {
         conform_spec(data(), 
-                     new_wavenumbers = seq(100, 4000, by = 5), 
+                     range = seq(100, 4000, by = 5), 
                      res = 5)
     }
   })
@@ -582,8 +574,8 @@ match_metadata <- reactive({
 
   #Storage ----
   #stores setup - insert at the bottom  !!!IMPORTANT
-  appid = "application_OpenSpecy"
-  setupStorage(appId = appid,inputs = TRUE)
+  #appid = "application_OpenSpecy"
+  #setupStorage(appId = appid,inputs = TRUE)
 
 }
 

@@ -259,30 +259,29 @@ dashboardPage(dark = T,
                                                                     fluidRow(
                                                                         box(width = 12,
                                                                             collapsed = T,
-                                                                            title = prettySwitch("derivative_decision",
-                                                                                                 label = "Derivative",
-                                                                                                 inline = T,
-                                                                                                 value = T,
-                                                                                                 status = "success",
-                                                                                                 fill = T), 
-                                                                            
+                                                                            title =  prettySwitch(inputId = "smooth_decision",
+                                                                                                  label = "Smoothing/Derivative",
+                                                                                                  inline = T,
+                                                                                                  value = T,
+                                                                                                  status = "success",
+                                                                                                  fill = T),
+                                                                            sliderInput("smoother", "Polynomial", min = 0, max = 5, value = 3) %>%
+                                                                                popover(
+                                                                                    title = "Smoothing uses the SG filter with the polynomial order specified, 3 default usually works well.",
+                                                                                    content = "Smoothing"
+                                                                                ),
                                                                             sliderInput("derivative_order", "Derivative Order", min = 0, max = 3, value = 1) %>%
                                                                                 popover(
                                                                                     title = "Derivative transformation uses the SG filter with the order specified. If doing identification, 1 is required.",
                                                                                     content = "Derivative"
                                                                                 ),
-                                                                            sliderInput("derivative_polynomial", "Derivative Polynomial", min = 0, max = 5, value = 3) %>%
+                                                                            sliderInput("smoother_window", "Window", min = 7, max = 21, value = 11, step = 2) %>%
                                                                                 popover(
-                                                                                    title = "Derivative transformation uses the SG filter with the polynomial specified.",
-                                                                                    content = "Derivative"
-                                                                                ),
-                                                                            sliderInput("derivative_window", "Derivative Window",  min = 7, max = 21, value = 11, step = 2) %>%
-                                                                                popover(
-                                                                                    title = "Derivative transformation uses the SG filter with the window specified.",
-                                                                                    content = "Derivative"
+                                                                                    title = "Smoothing uses the SG filter on an 11 data point window by default, this can be used to expand that window.",
+                                                                                    content = "Smoothing"
                                                                                 ),
                                                                             prettySwitch("derivative_abs", 
-                                                                                         label = "Derivative Absolute Value",  
+                                                                                         label = "Absolute Value",  
                                                                                          inline = T,
                                                                                          value = T,
                                                                                          status = "success",
@@ -291,10 +290,10 @@ dashboardPage(dark = T,
                                                                                     title = "Derivative transformation uses the SG filter and will be transformed to its absolute value if specified, this helps make first order derivatives look more like absorbance spectra regardless of the intensity units.",
                                                                                     content = "Derivative"
                                                                                 )
-                                                                        )%>%
+                                                                        ) %>%
                                                                             popover(
-                                                                                title = "Derivative transformation decreases baseline and can amplify peak contrast.",
-                                                                                content = "Derivative"
+                                                                                title = "This smoother can enhance the signal to noise ratio of the data and uses a Savitzky-Golay filter with 12 running data points and the polynomial specified.",
+                                                                                content = "Smoother"
                                                                             )),
                                                                 fluidRow(
                                                                     box(
@@ -320,69 +319,18 @@ dashboardPage(dark = T,
                                                                              fluidRow(
                                                                                  box(width = 12,
                                                                                      collapsed = T,
-                                                                                     title =  prettySwitch(inputId = "smooth_decision",
-                                                                                                     label = "Smoothing",
-                                                                                                     inline = T,
-                                                                                                     value = F,
-                                                                                                     status = "success",
-                                                                                                     fill = T),
-                                                                                     sliderInput("smoother", "Smoothing Polynomial", min = 0, max = 5, value = 3) %>%
-                                                                                                               popover(
-                                                                                                                   title = "Smoothing uses the SG filter with the polynomial order specified, 3 default usually works well.",
-                                                                                                                   content = "Smoothing"
-                                                                                                               ),
-                                                                                     sliderInput("smoother_window", "Smoothing Window", min = 7, max = 21, value = 11, step = 2) %>%
-                                                                                         popover(
-                                                                                             title = "Smoothing uses the SG filter on an 11 data point window by default, this can be used to expand that window.",
-                                                                                             content = "Smoothing"
-                                                                                         )
-                                                                                        ) %>%
-                                                                                 popover(
-                                                                                     title = "This smoother can enhance the signal to noise ratio of the data and uses a Savitzky-Golay filter with 12 running data points and the polynomial specified.",
-                                                                                     content = "Smoother"
-                                                                                 )),
-                                                                             fluidRow(
-                                                                                 box(width = 12,
-                                                                                     collapsed = T,
                                                                                      title = prettySwitch("baseline_decision",
                                                                                                      label = "Baseline Correction",
                                                                                                      inline = T,
                                                                                                      value = F,
                                                                                                      status = "success",
                                                                                                      fill = T),
-                                                                                                          selectInput(inputId = "baseline_selection", label = "Baseline Correction Technique", choices = c("Polynomial", "Manual")) %>%
-                                                                                                              popover(
-                                                                                                                  title = "Baseline correction techniques can be manually drawn on the spectra or automated using one of the other options.",
-                                                                                                                  content = "Baseline"
-                                                                                                              ),
                                                                                      sliderInput("baseline", "Baseline Correction Polynomial", min = 1, max = 20, value = 8) %>%
                                                                                          popover(
                                                                                              title = "This algorithm automatically fits to the baseline by fitting polynomials of the provided order to the whole spectrum.",
                                                                                              content = "Baseline"
-                                                                                         ),
-                                                                                     fluidRow(
-                                                                                         column(6,
-                                                                                                actionButton("go", "Correct With Trace") %>%
-                                                                                                    popover(
-                                                                                                        title = "After tracing the baseline spectrum on the plot, select this to correct the spectra.",
-                                                                                                        content = "Tracing"
-                                                                                                    )
-                                                                                         ),
-                                                                                         column(6,
-                                                                                                actionButton("reset", "Reset") %>%
-                                                                                                    popover(
-                                                                                                        title = "Reset the manual baseline to zero baseline.",
-                                                                                                        content = "Tracing"
-                                                                                                    )
                                                                                          )
-                                                                                     )
-                                                                                        
-                                                                                 ) %>%
-                                                                                     popover(
-                                                                                         title = "This baseline correction routine has two options for baseline correction, 1) the polynomial imodpolyfit procedure to itteratively find the baseline of the spectrum using a polynomial fit to the entire region of the spectra. 2) manual lines can be drawn using the line tool on the plot and the correct button will use the lines to subtract the baseline.",
-                                                                                         content = "Baseline"
-                                                                                     )
-                                                                             ),
+                                                                             )),
                                                                              fluidRow(
                                                                                  box(width = 12,
                                                                                      collapsed = T,
