@@ -19,18 +19,12 @@ library(curl)
 library(config)
 library(mongolite)
 library(loggit)
-library(hyperSpec)
 library(OpenSpecy)
 library(bs4Dash)
-#library(shinyStorePlus)
-library(qs)
 library(glmnet)
-library(tidyr)
 library(ggplot2)
 
 if(droptoken) library(aws.s3)
-
-
 
 #OpenSpecy AI ----
 model <- qread("data/all_lasso.qs")

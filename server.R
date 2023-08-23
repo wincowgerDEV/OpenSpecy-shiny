@@ -491,21 +491,22 @@ match_metadata <- reactive({
              time = human_ts(),
              session_name = session_id,
              data_id = digest::digest(preprocessed$data, algo = "md5"),
-             #ipid = input$ipid,
-             active_preprocessing = input$active_preprocessing,
-             intensity_adj = input$intensity_corr,
-             smooth_decision = input$smooth_decision,
-             smoother = input$smoother,
-             baseline_decision = input$baseline_decision,
-             baseline_type = input$baseline_selection,
-             baseline = input$baseline,
-             range_decision = input$range_decision,
-             max_range = input$MaxRange,
-             min_range = input$MinRange,
-             active_identification = input$active_identification,
-             #spectra_type = input$Spectra,
-             #analyze_type = input$Data,
-             #region_type = input$Library
+             active = input$active_preprocessing,
+             adj_intens = input$intensity_decision, 
+             type = input$intensity_corr,
+             restric_range = input$range_decision,
+             restric_range_min = input$MinRange, 
+             restric_range_max = input$MaxRange,
+             flatten_range = input$co2_decision,
+             flatten_range_min = input$MinFlat, 
+             flatten_range_max = input$MaxFlat,
+             subtr_baseline = input$baseline_decision, 
+             subtr_baseline = input$baseline,
+             smooth_intens = input$smooth_decision, 
+             polynomial = input$smoother, 
+             window = input$smoother_window, 
+             derivative = input$derivative_order, 
+             abs = input$derivative_abs
              )
   })
 
@@ -528,10 +529,6 @@ match_metadata <- reactive({
                min_range = input$MinRange,
                range_decision = input$range_decision,
                data_id = digest::digest(preprocessed$data, algo = "md5"),
-               #spectra_type = input$Spectra,
-               #analyze_type = input$Data,
-               #region_type = input$Library,
-               #ipid = input$ipid,
                time = human_ts())
       }
     }
@@ -553,10 +550,6 @@ match_metadata <- reactive({
   #})
   
 
-  #Storage ----
-  #stores setup - insert at the bottom  !!!IMPORTANT
-  #appid = "application_OpenSpecy"
-  #setupStorage(appId = appid,inputs = TRUE)
 
 }
 
