@@ -500,8 +500,8 @@ match_metadata <- reactive({
              baseline_type = input$baseline_selection,
              baseline = input$baseline,
              range_decision = input$range_decision,
-             max_range = input$MinRange,
-             min_range = input$MaxRange,
+             max_range = input$MaxRange,
+             min_range = input$MinRange,
              active_identification = input$active_identification,
              #spectra_type = input$Spectra,
              #analyze_type = input$Data,
@@ -524,8 +524,8 @@ match_metadata <- reactive({
                smooth_decision = input$smooth_decision,
                baseline = input$baseline,
                baseline_decision = input$baseline_decision,
-               max_range = input$MinRange,
-               min_range = input$MaxRange,
+               max_range = input$MaxRange,
+               min_range = input$MinRange,
                range_decision = input$range_decision,
                data_id = digest::digest(preprocessed$data, algo = "md5"),
                #spectra_type = input$Spectra,
@@ -538,16 +538,19 @@ match_metadata <- reactive({
 
   })
   
-  #output$event_test <- renderPrint({
-  #    list(
-  #        preprocessed = tryCatch({
-  #            libraryR()
-  #        }, error = function(e) {
-  #            paste("Error:", e$message)
- #         })
- #         
- #     )
- # })
+  output$event_test <- renderPrint({
+      list(
+          input$range_decision, 
+          input$MinRange, 
+          input$MaxRange
+          #preprocessed = tryCatch({
+              
+          #}, error = function(e) {
+          #   paste("Error:", e$message)
+         # })
+          
+      )
+  })
   
 
   #Storage ----

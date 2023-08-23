@@ -341,17 +341,8 @@ dashboardPage(dark = T,
                                                                                                      status = "success",
                                                                                                      fill = T),
                                                                                          numericInput(
-                                                                                             "MaxRange",
-                                                                                             "Maximum Spectral Range",
-                                                                                             value = 6000,
-                                                                                             min = NA,
-                                                                                             max = NA,
-                                                                                             step = NA,
-                                                                                             width = NULL
-                                                                                         ),
-                                                                                         numericInput(
                                                                                              "MinRange",
-                                                                                             "Minimum Spectral Range",
+                                                                                             "Minimum Wavenumber",
                                                                                              value = 0,
                                                                                              min = NA,
                                                                                              max = NA,
@@ -361,8 +352,20 @@ dashboardPage(dark = T,
                                                                                          popover(
                                                                                              title = "Maximum and minimum wavenumbers to focus on.",
                                                                                              content = "Range"
+                                                                                         ),
+                                                                                     numericInput(
+                                                                                         "MaxRange",
+                                                                                         "Maximum Wavenumber",
+                                                                                         value = 6000,
+                                                                                         min = NA,
+                                                                                         max = NA,
+                                                                                         step = NA,
+                                                                                         width = NULL
+                                                                                     ) %>%
+                                                                                         popover(
+                                                                                             title = "Maximum and minimum wavenumbers to focus on.",
+                                                                                             content = "Range"
                                                                                          )
-                                                                                     
                                                                                  )%>%
                                                                                      popover(
                                                                                          title = "Restricting the spectral range can remove regions of spectrum where no peaks exist and improve matching.",
@@ -482,7 +485,7 @@ dashboardPage(dark = T,
                            ),
                           ## Plot ----
                           fluidRow(
-                              #verbatimTextOutput("event_test"),
+                              verbatimTextOutput("event_test"),
                               box(title = HTML(paste0("Spectra")), 
                                   maximizable = T,
                                   width = 12,
