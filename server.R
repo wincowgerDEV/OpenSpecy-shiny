@@ -13,7 +13,6 @@ function(input, output, session) {
 
   #Reactive Values ----
   preprocessed <- reactiveValues(data = NULL)
-  trace <- reactiveValues(data = NULL)
   data_click <- reactiveValues(data = NULL)
 
 
@@ -103,27 +102,6 @@ observeEvent(input$file, {
                     smooth_intens_args = list(polynomial = input$smoother, window = input$smoother_window, derivative = input$derivative_order, abs = input$derivative_abs),
                     make_rel = T)
   })
-
-#Updating the trace value when the user says go. 
-observeEvent(input$go, {
-  pathinfo <- event_data(event = "plotly_relayout", source = "B")$shapes$path
-  if (is.null(pathinfo)) trace$data <- NULL
-  else {
-   nodes <- unlist(strsplit(
-             gsub("(L)|(M)", "_",
-                  paste(unlist(pathinfo), collapse = "")),
-             "(,)|(_)"))
-   nodes = nodes[-1]
-   df <- as.data.frame(matrix(nodes, ncol = 2, byrow = T))
-   names(df) <- c("wavenumber", "intensity")
-   trace$data <- df
-  }
-})
-
-#Resetting the trace if the user specifies. 
-observeEvent(input$reset, {
-  trace$data <- NULL
-})
 
 # Identify Spectra function ----
 
