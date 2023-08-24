@@ -136,10 +136,41 @@ observeEvent(input$file, {
         return(library)
     }
     else if(grepl("nobaseline$", input$id_strategy)) {
-        library <- read_any("data/both_nobaseline.rds")
+        if(file.exists("data/both_nobaseline.rds")){
+            library <- read_any("data/both_nobaseline.rds")
+        }
+        else{
+            if(class(tryCatch({
+                check_lib(type = "nobaseline")
+            }, warning = function(w) {
+                paste("warning:", conditionMessage(w))
+            })) == "character"){
+                get_lib(type = "nobaseline")
+                library <- load_lib("nobaseline")
+            }
+            else{
+                library <- load_lib("nobaseline")
+            }
+        }
     }
     else if(grepl("deriv$", input$id_strategy)){
-        library <- read_any("data/both_derivative.rds")
+        if(file.exists("data/both_derivative.rds")){
+            library <- read_any("data/both_derivative.rds")
+        }
+        else{
+            if(class(tryCatch({
+                check_lib(type = "derivative")
+            }, warning = function(w) {
+                paste("warning:", conditionMessage(w))
+            })) == "character"){
+                get_lib(type = "derivative")
+                library <- load_lib("derivative")
+            }
+            else{
+                library <- load_lib("derivative")
+            }
+        }
+        
     }
     if(grepl("^both", input$id_strategy)) {
       library
