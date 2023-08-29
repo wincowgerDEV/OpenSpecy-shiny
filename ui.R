@@ -217,6 +217,7 @@ dashboardPage(dark = T,
                                                                 box(width = 12,
                                                                     collapsed = T,
                                                                     style = "height: 30vh; overflow-y: auto;",
+                                                                    footer = "Options for processing the spectra.",
                                                                     title = prettySwitch(inputId = "active_preprocessing",
                                                                                        label = "Preprocessing",
                                                                                        inline = T,
@@ -225,6 +226,7 @@ dashboardPage(dark = T,
                                                                                        fill = T),
                                                                     fluidRow(
                                                                         box(width = 12,
+                                                                            footer = "Signal thresholding technique, value, and histogram threshold plot.",
                                                                             title = prettySwitch("threshold_decision",
                                                                                                  label = "Thresholding Signal and Noise",
                                                                                                  inline = T,
@@ -239,17 +241,11 @@ dashboardPage(dark = T,
                                                                                 min = -10000,
                                                                                 max = 10000,
                                                                                 step = 1
-                                                                            ) %>%
-                                                                                popover(
-                                                                                    title = "Specify the signal to noise threshold to use.",
-                                                                                    content = "SNR"
-                                                                                ),
+                                                                            ),
                                                                             br(),
-                                                                            selectInput(inputId = "signal_selection", label = "Signal Thresholding Technique", choices = c("Signal Over Noise", "Signal Times Noise", "Total Signal")) %>%
-                                                                                popover(
-                                                                                    title = "Signal thresholding technique used.",
-                                                                                    content = "SNR"
-                                                                                ), 
+                                                                            selectInput(inputId = "signal_selection", 
+                                                                                        label = "Signal Thresholding Technique", 
+                                                                                        choices = c("Signal Over Noise", "Signal Times Noise", "Total Signal")), 
                                                                             br(), 
                                                                             plotOutput("snr_plot", height = "10vh")
                                                                         )
@@ -257,46 +253,36 @@ dashboardPage(dark = T,
                                                                     fluidRow(
                                                                         box(width = 12,
                                                                             collapsed = T,
+                                                                            footer = "Smoothing can enhance signal to noise and uses the SG filter with the polynomial order specified, 3 default usually works well. 
+                                                                            Derivative transformation uses the order specified. 
+                                                                            If doing identification with a derivative library, 1 is required, 0 should be used if no derivative transformation is desired. 
+                                                                            Smoothing uses the SG filter on an 11 data point window by default, this can be used to expand that window.
+                                                                            The absolute value does something similar to intensity correction to make the spectra more absorbance-like.",
                                                                             title =  prettySwitch(inputId = "smooth_decision",
                                                                                                   label = "Smoothing/Derivative",
                                                                                                   inline = T,
                                                                                                   value = T,
                                                                                                   status = "success",
                                                                                                   fill = T),
-                                                                            sliderInput("smoother", "Polynomial", min = 0, max = 5, value = 3) %>%
-                                                                                popover(
-                                                                                    title = "Smoothing uses the SG filter with the polynomial order specified, 3 default usually works well.",
-                                                                                    content = "Smoothing"
-                                                                                ),
-                                                                            sliderInput("derivative_order", "Derivative Order", min = 0, max = 3, value = 1) %>%
-                                                                                popover(
-                                                                                    title = "Derivative transformation uses the SG filter with the order specified. If doing identification, 1 is required.",
-                                                                                    content = "Derivative"
-                                                                                ),
-                                                                            sliderInput("smoother_window", "Window", min = 7, max = 21, value = 11, step = 2) %>%
-                                                                                popover(
-                                                                                    title = "Smoothing uses the SG filter on an 11 data point window by default, this can be used to expand that window.",
-                                                                                    content = "Smoothing"
-                                                                                ),
+                                                                            sliderInput("smoother", "Polynomial", min = 0, max = 5, value = 3),
+                                                                            sliderInput("derivative_order", "Derivative Order", min = 0, max = 3, value = 1),
+                                                                            sliderInput("smoother_window", "Window", min = 7, max = 21, value = 11, step = 2),
                                                                             prettySwitch("derivative_abs", 
                                                                                          label = "Absolute Value",  
                                                                                          inline = T,
                                                                                          value = T,
                                                                                          status = "success",
-                                                                                         fill = T) %>%
-                                                                                popover(
-                                                                                    title = "Derivative transformation uses the SG filter and will be transformed to its absolute value if specified, this helps make first order derivatives look more like absorbance spectra regardless of the intensity units.",
-                                                                                    content = "Derivative"
-                                                                                )
-                                                                        ) %>%
-                                                                            popover(
-                                                                                title = "This smoother can enhance the signal to noise ratio of the data and uses a Savitzky-Golay filter with 12 running data points and the polynomial specified.",
-                                                                                content = "Smoother"
-                                                                            )),
+                                                                                         fill = T))),
                                                                 fluidRow(
                                                                     box(
                                                                     width = 12,
                                                                     collapsed = T,
+                                                                    footer = "Open Specy assumes spectra are in Absorbance units. If the uploaded spectrum is not in absorbance units, 
+                                                                    use this input to specify the units to convert from.The transmittance adjustment uses the log10(1/T) calculation 
+                                                                    which does not correct for system and particle characteristics. The reflectance adjustment uses the Kubelka-Munk 
+                                                                    equation (1-R)2/(2*R). We assume that the reflectance is formatted as a percent from 1-100 and first correct the 
+                                                                    intensity by dividing by 100 so that it fits the form expected by the equation. If none is selected, Open Specy
+                                                                    assumes that the uploaded data is an absorbance spectrum.",
                                                                     title =  prettySwitch(inputId = "intensity_decision",
                                                                                         label = "Intensity Adjustment",
                                                                                         value = F,
@@ -304,34 +290,26 @@ dashboardPage(dark = T,
                                                                                         status = "success",
                                                                                         fill = T),
                                                                                                 radioButtons("intensity_corr", "Intensity Units",
-                                                                                                             c("Absorbance" = "none", "Transmittance" = "transmittance", "Reflectance" = "reflectance")) %>%
-                                                                                                    popover(
-                                                                                                        title = "If the uploaded spectrum is not in absorbance units, use this input to specify the units to convert from.The transmittance adjustment uses the log10(1/T) calculation which does not correct for system and particle characteristics. The reflectance adjustment uses the Kubelka-Munk equation (1-R)2/(2*R). We assume that the reflectance is formatted as a percent from 1-100 and first correct the intensity by dividing by 100 so that it fits the form expected by the equation. If none is selected, Open Specy assumes that the uploaded data is an absorbance spectrum.",
-                                                                                                        content = "Absorbance Correction"
-                                                                                                    )
-                                                                                        ) %>%
-                                                                                        popover(
-                                                                                            title = "Open Specy assumes spectra are in Absorbance units, if they are not, you can select the appropriate transformation.",
-                                                                                            content = "Absorbance Correction"
+                                                                                                             c("Absorbance" = "none", "Transmittance" = "transmittance", "Reflectance" = "reflectance"))
                                                                                         )),
                                                                              fluidRow(
                                                                                  box(width = 12,
                                                                                      collapsed = T,
+                                                                                     footer = "This algorithm automatically fits to the baseline by fitting 
+                                                                                     polynomials of the provided order to the whole spectrum using the iModPolyFit algorithm.",
                                                                                      title = prettySwitch("baseline_decision",
                                                                                                      label = "Baseline Correction",
                                                                                                      inline = T,
                                                                                                      value = F,
                                                                                                      status = "success",
                                                                                                      fill = T),
-                                                                                     sliderInput("baseline", "Baseline Correction Polynomial", min = 1, max = 20, value = 8) %>%
-                                                                                         popover(
-                                                                                             title = "This algorithm automatically fits to the baseline by fitting polynomials of the provided order to the whole spectrum.",
-                                                                                             content = "Baseline"
-                                                                                         )
+                                                                                     sliderInput("baseline", "Baseline Correction Polynomial", min = 1, max = 20, value = 8)
                                                                              )),
                                                                              fluidRow(
                                                                                  box(width = 12,
                                                                                      collapsed = T,
+                                                                                     footer = "Restricting the spectral range can remove regions of spectrum where no peaks exist and improve matching.
+                                                                                     These options control the maximum and minimum wavenumbers in the range to crop the spectra.",
                                                                                      title =  prettySwitch("range_decision",
                                                                                                      label = "Range Selection",
                                                                                                      inline = T,
@@ -346,10 +324,6 @@ dashboardPage(dark = T,
                                                                                              max = NA,
                                                                                              step = NA,
                                                                                              width = NULL
-                                                                                         ) %>%
-                                                                                         popover(
-                                                                                             title = "Maximum and minimum wavenumbers to focus on.",
-                                                                                             content = "Range"
                                                                                          ),
                                                                                      numericInput(
                                                                                          "MaxRange",
@@ -359,20 +333,14 @@ dashboardPage(dark = T,
                                                                                          max = NA,
                                                                                          step = NA,
                                                                                          width = NULL
-                                                                                     ) %>%
-                                                                                         popover(
-                                                                                             title = "Maximum and minimum wavenumbers to focus on.",
-                                                                                             content = "Range"
-                                                                                         )
-                                                                                 )%>%
-                                                                                     popover(
-                                                                                         title = "Restricting the spectral range can remove regions of spectrum where no peaks exist and improve matching.",
-                                                                                         content = "Range"
-                                                                                     )
-                                                                                 ),
+                                                                                     ))),
                                                                              fluidRow(
                                                                                  box(width = 12,
                                                                                      collapsed = T,
+                                                                                     footer = "Sometimes peaks are undersireable. 
+                                                                                     These options will replace peak regions with the mean of their edges. 
+                                                                                     Specify the edge locations of the peaks minimum and maximum wavenumbers to use for flattening.
+                                                                                     Defaults are set to flatten the CO2 region in infrared spectra.",
                                                                                      title = prettySwitch("co2_decision",
                                                                                                      label = "Flatten Region",
                                                                                                      inline = T,
@@ -386,11 +354,7 @@ dashboardPage(dark = T,
                                                                                          min = 1,
                                                                                          max = 6000,
                                                                                          step = 1
-                                                                                     ) %>%
-                                                                                         popover(
-                                                                                             title = "Specify the minimum wavenumber to use for flattening.",
-                                                                                             content = "Flatten"
-                                                                                         ),
+                                                                                     ),
                                                                                      numericInput(
                                                                                          "MaxFlat",
                                                                                          "Maximum Wavenumber",
@@ -398,16 +362,7 @@ dashboardPage(dark = T,
                                                                                          min = 1,
                                                                                          max = 6000,
                                                                                          step = 1
-                                                                                     ) %>%
-                                                                                         popover(
-                                                                                             title = "Specify the maximum wavenumber to use for flattening.",
-                                                                                             content = "Flatten"
-                                                                                         )
-                                                                                         
-                                                                                 ) %>% popover(
-                                                                                         title = "Replace the wavenumbers from with the mean of intensities at 2420 and 2200.",
-                                                                                         content = "Flatten"
-                                                                                     ))
+                                                                                     )))
                                                                              
                                                             )
                                                         )
