@@ -554,7 +554,7 @@ dashboardPage(dark = T,
                                     border:solid #f7f7f9;
                                     background-color:rgb(0, 0, 255, 0.5)",
                                                    h3("Supporting (100–1,000$)"),
-                                                   h6( "Alexandre Dehaut, Gabriel Erni Cassola")
+                                                   h6("Alexandre Dehaut, Gabriel Erni Cassola")
                                                )
                                          )
                                   )
@@ -620,7 +620,7 @@ dashboardPage(dark = T,
                        a(href = "privacy_policy.txt", "Privacy Policy", class = "lead")
                        ),
                      #Ethical Ads
-                     if(isTruthy(conf$share) && conf$share != "system"){HTML('<div class = "dark raised" data-ea-publisher="openanalysisorg" data-ea-type="image" data-ea-style="stickybox"></div>')}
+                     if(isTruthy(conf$share) && conf$share != "system"){HTML('<div class = "dark raised" data-ea-publisher="openanalysisorg" data-ea-type="image" data-ea-style="stickybox"></div>')}else{""}
         )
     )
 )
