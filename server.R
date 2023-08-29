@@ -100,7 +100,7 @@ observeEvent(input$file, {
                     subtr_baseline_args = list(type = "polynomial", degree = input$baseline, raw = FALSE, baseline = NULL),
                     smooth_intens = input$smooth_decision, 
                     smooth_intens_args = list(polynomial = input$smoother, window = input$smoother_window, derivative = input$derivative_order, abs = input$derivative_abs),
-                    make_rel = F)
+                    make_rel = T)
   })
 
 # Identify Spectra function ----
