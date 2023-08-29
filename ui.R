@@ -217,7 +217,7 @@ dashboardPage(dark = T,
                                                                 box(width = 12,
                                                                     collapsed = T,
                                                                     style = "height: 30vh; overflow-y: auto;",
-                                                                    footer = "Options for processing the spectra.",
+                                                                    footer = tags$small("Options for processing the spectra."),
                                                                     title = prettySwitch(inputId = "active_preprocessing",
                                                                                        label = "Preprocessing",
                                                                                        inline = T,
@@ -226,7 +226,7 @@ dashboardPage(dark = T,
                                                                                        fill = T),
                                                                     fluidRow(
                                                                         box(width = 12,
-                                                                            footer = "Signal thresholding technique, value, and histogram threshold plot.",
+                                                                            footer = tags$small("Signal thresholding technique, value, and histogram threshold plot."),
                                                                             title = prettySwitch("threshold_decision",
                                                                                                  label = "Thresholding Signal and Noise",
                                                                                                  inline = T,
@@ -253,11 +253,11 @@ dashboardPage(dark = T,
                                                                     fluidRow(
                                                                         box(width = 12,
                                                                             collapsed = T,
-                                                                            footer = "Smoothing can enhance signal to noise and uses the SG filter with the polynomial order specified, 3 default usually works well. 
+                                                                            footer = tags$small("Smoothing can enhance signal to noise and uses the SG filter with the polynomial order specified, 3 default usually works well. 
                                                                             Derivative transformation uses the order specified. 
                                                                             If doing identification with a derivative library, 1 is required, 0 should be used if no derivative transformation is desired. 
                                                                             Smoothing uses the SG filter on an 11 data point window by default, this can be used to expand that window.
-                                                                            The absolute value does something similar to intensity correction to make the spectra more absorbance-like.",
+                                                                            The absolute value does something similar to intensity correction to make the spectra more absorbance-like."),
                                                                             title =  prettySwitch(inputId = "smooth_decision",
                                                                                                   label = "Smoothing/Derivative",
                                                                                                   inline = T,
@@ -277,12 +277,12 @@ dashboardPage(dark = T,
                                                                     box(
                                                                     width = 12,
                                                                     collapsed = T,
-                                                                    footer = "Open Specy assumes spectra are in Absorbance units. If the uploaded spectrum is not in absorbance units, 
+                                                                    footer = tags$small("Open Specy assumes spectra are in Absorbance units. If the uploaded spectrum is not in absorbance units, 
                                                                     use this input to specify the units to convert from.The transmittance adjustment uses the log10(1/T) calculation 
                                                                     which does not correct for system and particle characteristics. The reflectance adjustment uses the Kubelka-Munk 
                                                                     equation (1-R)2/(2*R). We assume that the reflectance is formatted as a percent from 1-100 and first correct the 
                                                                     intensity by dividing by 100 so that it fits the form expected by the equation. If none is selected, Open Specy
-                                                                    assumes that the uploaded data is an absorbance spectrum.",
+                                                                    assumes that the uploaded data is an absorbance spectrum."),
                                                                     title =  prettySwitch(inputId = "intensity_decision",
                                                                                         label = "Intensity Adjustment",
                                                                                         value = F,
@@ -295,8 +295,8 @@ dashboardPage(dark = T,
                                                                              fluidRow(
                                                                                  box(width = 12,
                                                                                      collapsed = T,
-                                                                                     footer = "This algorithm automatically fits to the baseline by fitting 
-                                                                                     polynomials of the provided order to the whole spectrum using the iModPolyFit algorithm.",
+                                                                                     footer = tags$small("This algorithm automatically fits to the baseline by fitting 
+                                                                                     polynomials of the provided order to the whole spectrum using the iModPolyFit algorithm."),
                                                                                      title = prettySwitch("baseline_decision",
                                                                                                      label = "Baseline Correction",
                                                                                                      inline = T,
@@ -308,8 +308,8 @@ dashboardPage(dark = T,
                                                                              fluidRow(
                                                                                  box(width = 12,
                                                                                      collapsed = T,
-                                                                                     footer = "Restricting the spectral range can remove regions of spectrum where no peaks exist and improve matching.
-                                                                                     These options control the maximum and minimum wavenumbers in the range to crop the spectra.",
+                                                                                     footer = tags$small("Restricting the spectral range can remove regions of spectrum where no peaks exist and improve matching.
+                                                                                     These options control the maximum and minimum wavenumbers in the range to crop the spectra."),
                                                                                      title =  prettySwitch("range_decision",
                                                                                                      label = "Range Selection",
                                                                                                      inline = T,
@@ -337,10 +337,10 @@ dashboardPage(dark = T,
                                                                              fluidRow(
                                                                                  box(width = 12,
                                                                                      collapsed = T,
-                                                                                     footer = "Sometimes peaks are undersireable. 
+                                                                                     footer = tags$small("Sometimes peaks are undersireable. 
                                                                                      These options will replace peak regions with the mean of their edges. 
                                                                                      Specify the edge locations of the peaks minimum and maximum wavenumbers to use for flattening.
-                                                                                     Defaults are set to flatten the CO2 region in infrared spectra.",
+                                                                                     Defaults are set to flatten the CO2 region in infrared spectra."),
                                                                                      title = prettySwitch("co2_decision",
                                                                                                      label = "Flatten Region",
                                                                                                      inline = T,
@@ -372,6 +372,14 @@ dashboardPage(dark = T,
                                                                             fluidRow(
                                                                                 box(width = 12,
                                                                                     collapsed = T,
+                                                                                    footer = tags$small("These options define the strategy for identification.
+                                                                                    The ID Library will inform which library is used. Both (default) will search both
+                                                                                    FTIR and Raman libraries. Deriv will search against a derivative transformed library. 
+                                                                                    No Baseline will search against a baseline corrected library. This should be in line 
+                                                                                    with how you choose to process your spectra. Cor options use a simple Pearson correlation
+                                                                                    search algorithm. AI is currently experimental and uses either a multinomial model or 
+                                                                                    correlation on mediod spectra from the library. Correlation thresholding will set the minimum 
+                                                                                    value from matching to use as a 'positive identification'"),
                                                                                     title = prettySwitch(inputId = "active_identification",
                                                                                                     label = "Identification",
                                                                                                     inline = T,
@@ -386,11 +394,7 @@ dashboardPage(dark = T,
                                                                                                                      "Cor: FTIR No Baseline" = "ftir_nobaseline",
                                                                                                                      "Cor: Raman No Baseline" = "raman_nobaseline",
                                                                                                                      "AI: FTIR Deriv Multinomial" = "ai",
-                                                                                                                     "AI: FTIR Deriv Mediod" = "mediod")) %>%
-                                                                                                popover(
-                                                                                                    title = "This selection will choose the strategy for identification.",
-                                                                                                    content = "ID"
-                                                                                                ),
+                                                                                                                     "AI: FTIR Deriv Mediod" = "mediod")),
                                                                                     fluidRow(
                                                                                         box(width = 12, 
                                                                                             collapsed = T,
@@ -408,11 +412,7 @@ dashboardPage(dark = T,
                                                                                                 max = 1,
                                                                                                 step = 0.1#,
                                                                                                 #width = '25%'
-                                                                                            ) %>%
-                                                                                                popover(
-                                                                                                    title = "Specify the Correlation or AI Value Threshold to Use",
-                                                                                                    content = "Cor Threshold"
-                                                                                                ),
+                                                                                            ),
                                                                                             plotOutput("cor_plot", height = "10vh")
                                                                                             
                                                                                         )
@@ -431,7 +431,13 @@ dashboardPage(dark = T,
                                                           "Top Matches",
                                                           "Thresholded Particles")) %>%
                                       popover(
-                                          title = "Options for downloading spectra and metadata from the analysis.",
+                                          title = "Options for downloading spectra and metadata from the analysis.
+                                          Test Data is a Raman HDPE spectrum in csv format. Test Map is an FTIR ENVI file of a CA particle.
+                                          Your Spectra will download your data with whatever processing options are active. Library Spectra
+                                          will download the current library selected. Top Matches downloads the top identifications in the
+                                          active analysis. Thresholded Particles will download a version of your spectra using the active
+                                          thresholds selected to infer where particles are in spectral maps, particle spectra are collapsed
+                                          to their medians and locations to their centroids.",
                                           content = "Download Options"
                                       )
                            )
