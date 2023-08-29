@@ -40,11 +40,8 @@ observeEvent(input$file, {
 
   withProgress(message = progm, value = 3/3, {
 
-      rout <- tryCatch({
-                      read_any(file = as.character(input$file$datapath))
-                  }, error = function(e) {
-                      paste("Error:", e$message)
-                   })
+      rout <- try(read_any(file = as.character(input$file$datapath)),
+                  silent = T)
 
       if(droptoken & input$share_decision & input$file$size < 10^7 & curl::has_internet()){
           put_object(
@@ -54,16 +51,13 @@ observeEvent(input$file, {
           )
       }
 
-    if (inherits(rout, "simpleError")) {
-      reset("file")
+    if (inherits(rout, "try-error")) {
       show_alert(
-        title = "Something went wrong :-(",
-        text = paste0("R says: '", rout$message, "'. ",
-                      "If you uploaded a text/csv file, make sure that the ",
-                      "columns are numeric and named 'wavenumber' and ",
-                      "'intensity'."),
-        type = "error"
+        title = "Something went wrong with the data :-(",
+        text =  "If you uploaded a text/csv file, make sure that the columns are numeric and named 'wavenumber' and 'intensity'.",
+        type =  "error"
       )
+      reset("file")
       preprocessed$data <- NULL
     }
     else {
@@ -84,8 +78,8 @@ observeEvent(input$file, {
   
   # All cleaning of the data happens here. Range selection, Smoothing, and Baseline removing
   baseline_data <- reactive({
-     req(input$file)
-     req(input$active_preprocessing)
+    req(!is.null(preprocessed$data))
+    req(input$active_preprocessing)
     process_spec(x = data(),
                     active = input$active_preprocessing,
                     adj_intens = input$intensity_decision, 
@@ -107,7 +101,8 @@ observeEvent(input$file, {
 
   # Choose which spectra to use for matching and plotting. 
   DataR <- reactive({
-      if(input$active_preprocessing) {
+    req(!is.null(preprocessed$data))
+    if(input$active_preprocessing) {
         baseline_data()
     }
     else {
@@ -219,6 +214,7 @@ observeEvent(input$file, {
   
   #Correlation ----
   output$correlation_head <- renderUI({
+      req(!is.null(preprocessed$data))
       boxLabel(text = if(input$active_identification) {"Cor"} else{"SNR"}, 
                status = if(input$active_identification) {
                    if(max_cor()[[data_click$data]] > MinCor() & signal_to_noise()[[data_click$data]] > MinSNR()){
@@ -240,14 +236,14 @@ observeEvent(input$file, {
   
   #Progress bar for how many of the spectra have good signal. 
   observeEvent(MinSNR() | signal_to_noise(), {
-      req(input$file)
+      req(!is.null(preprocessed$data))
       updateProgressBar(session = session, 
                         id = "signal_progress", 
                         value = sum(signal_to_noise() > MinSNR())/length(signal_to_noise()) * 100)
   })
   #Bars stating how many of the uploaded spectra have good correlations or signals. 
   observeEvent(MinCor() | max_cor(), {
-      req(input$file)
+      req(!is.null(preprocessed$data))
       updateProgressBar(session = session, 
                         id = "correlation_progress", 
                         value = sum(max_cor() > MinCor())/length(max_cor()) * 100)
@@ -258,7 +254,7 @@ observeEvent(input$file, {
   
   #The correlation matrix between the unknowns and the library. 
   correlation <- reactive({
-      req(input$file)
+      req(!is.null(preprocessed$data))
       req(input$active_identification)
       req(!grepl("^ai$", input$id_strategy))
       withProgress(message = 'Analyzing Spectrum', value = 1/3, {
@@ -269,7 +265,7 @@ observeEvent(input$file, {
 
   #The signal to noise ratio
   signal_to_noise <- reactive({
-          req(DataR)
+      req(!is.null(preprocessed$data))
       signal_option <- switch(input$signal_selection,
              "Signal Over Noise" = "run_sig_over_noise", 
              "Signal Times Noise" = "sig_times_noise", 
@@ -278,6 +274,7 @@ observeEvent(input$file, {
   })
   
   MinSNR <- reactive({
+      req(!is.null(preprocessed$data))
       if(!input$threshold_decision){
           -Inf
       }
@@ -288,6 +285,7 @@ observeEvent(input$file, {
   
   
   output$snr_plot <- renderPlot({
+      req(!is.null(preprocessed$data))
         ggplot() +
           geom_histogram(aes(x = signal_to_noise())) +
           scale_x_continuous(trans =  scales::modulus_trans(p = 0, offset = 1)) +
@@ -297,7 +295,7 @@ observeEvent(input$file, {
 
   #The output from the AI classification algorithm. 
   ai_output <- reactive({ #tested working. 
-      req(input$file)
+      req(!is.null(preprocessed$data))
       req(input$active_identification)
       req(input$id_strategy == "ai")
       rn <- runif(n = length(unique(libraryR()$variables_in)))
@@ -308,7 +306,7 @@ observeEvent(input$file, {
   
   #The maximum correlation or AI value. 
   max_cor <- reactive({
-      req(input$file)
+      req(!is.null(preprocessed$data))
       #req(input$active_identification)
       if(isTruthy(input$active_identification)){
           if(!grepl("^ai$", input$id_strategy)){
@@ -326,6 +324,7 @@ observeEvent(input$file, {
   })
   
   MinCor <- reactive({
+      req(!is.null(preprocessed$data))
       if(!input$cor_threshold_decision){
           -Inf
       }
@@ -335,6 +334,7 @@ observeEvent(input$file, {
   })
   
   output$cor_plot <- renderPlot({
+      req(!is.null(preprocessed$data))
       ggplot() +
           geom_histogram(aes(x = max_cor())) +
           scale_x_continuous(trans =  scales::modulus_trans(p = 0, offset = 1)) +
@@ -344,7 +344,7 @@ observeEvent(input$file, {
   
   #Metadata for all the top correlations.
   top_correlation <- reactive({
-      req(input$file)
+      req(!is.null(preprocessed$data))
       req(input$active_identification)
       data.table(object_id = names(DataR()$spectra), 
                  library_id = names(max_cor()),
@@ -482,7 +482,7 @@ match_metadata <- reactive({
 
  #Display the map or batch data in a selectable heatmap. 
   output$heatmap <- renderPlotly({
-      req(input$file)
+      req(!is.null(preprocessed$data))
       heatmap_spec(x = DataR(), 
                         z = if(!is.null(max_cor())){names(max_cor())} else{NULL},
                         sn = signif(signal_to_noise(), 2), 
@@ -576,7 +576,7 @@ match_metadata <- reactive({
   })
 
   observe({
-    req(input$file)
+    req(!is.null(preprocessed$data))
     req(input$share_decision)
     if(isTruthy(conf$log)) {
       if(db) {
@@ -614,7 +614,5 @@ match_metadata <- reactive({
   #    )
   #})
   
-
-
 }
 
