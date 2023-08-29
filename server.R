@@ -131,10 +131,44 @@ observeEvent(input$file, {
   libraryR <- reactive({
     req(input$active_identification)
     if(input$id_strategy == "mediod"){
-        library <- test_lib 
-        library$metadata$SpectrumIdentity <- library$metadata$polymer_class 
+        if(file.exists("data/mediod.rds")){
+            library <- read_any("data/mediod.rds")
+        }
+        else{
+            if(class(tryCatch({
+                check_lib(type = "mediod")
+            }, warning = function(w) {
+                paste("warning:", conditionMessage(w))
+            })) == "character"){
+                get_lib(type = "mediod")
+                library <- load_lib("mediod")
+            }
+            else{
+                library <- load_lib("mediod")
+            }
+        }
+        library$metadata$SpectrumIdentity <- library$metadata$polymer_class
         return(library)
     }
+      else if(grepl("ai$", input$id_strategy)) {
+          if(file.exists("data/model.rds")){
+              library <- read_any("data/model.rds")
+          }
+          else{
+              if(class(tryCatch({
+                  check_lib(type = "model")
+              }, warning = function(w) {
+                  paste("warning:", conditionMessage(w))
+              })) == "character"){
+                  get_lib(type = "model")
+                  library <- load_lib("model")
+              }
+              else{
+                  library <- load_lib("model")
+              }
+          }
+          return(library)
+      }
     else if(grepl("nobaseline$", input$id_strategy)) {
         if(file.exists("data/both_nobaseline.rds")){
             library <- read_any("data/both_nobaseline.rds")
@@ -266,10 +300,10 @@ observeEvent(input$file, {
       req(input$file)
       req(input$active_identification)
       req(input$id_strategy == "ai")
-      ai_classify(data = DataR()$spectra, 
-                  wavenumbers = DataR()$wavenumber, 
-                  model = model,
-                  means = means)
+      rn <- runif(n = length(unique(libraryR()$variables_in)))
+      fill <- as_OpenSpecy(as.numeric(unique(libraryR()$variables_in)),
+                           spectra = data.frame(rn))
+      match_spec(DataR(), library = libraryR(), na.rm = T, fill = fill)
   })
   
   #The maximum correlation or AI value. 
@@ -442,8 +476,7 @@ match_metadata <- reactive({
   output$MyPlotC <- renderPlotly({
       #req(input$id_strategy == "correlation")
       #req(preprocessed$data)
-      
-      plotly_spec(x = if(!is.null(preprocessed$data)){DataR_plot()} else{match_selected()},x2 = if(!is.null(preprocessed$data)) {match_selected()} else{NULL}, source = "B") %>%
+      plotly_spec(x = if(!is.null(preprocessed$data)){DataR_plot()} else{match_selected()},x2 = if(!is.null(preprocessed$data) & !grepl("^ai$", input$id_strategy)) {match_selected()} else{NULL}, source = "B") %>%
         config(modeBarButtonsToAdd = list("drawopenpath", "eraseshape"))
     })
 
@@ -451,11 +484,12 @@ match_metadata <- reactive({
   output$heatmap <- renderPlotly({
       req(input$file)
       heatmap_spec(x = DataR(), 
+                        z = if(!is.null(max_cor())){names(max_cor())} else{NULL},
                         sn = signif(signal_to_noise(), 2), 
                         cor = if(is.null(max_cor())){max_cor()} else{signif(max_cor(), 2)}, 
                         min_sn = MinSNR(),
                         min_cor = MinCor(),
-                        selected_spectrum = data_click$data,
+                        select = data_click$data,
                         source = "heat_plot") %>%
           event_register("plotly_click")
   })

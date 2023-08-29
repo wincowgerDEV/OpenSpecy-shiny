@@ -22,50 +22,11 @@ library(mongolite)
 library(loggit)
 library(OpenSpecy)
 library(bs4Dash)
-library(qs)
 library(glmnet)
 library(ggplot2)
 
 if(droptoken) library(aws.s3)
 
-#OpenSpecy AI ----
-model <- qread("data/all_lasso.qs")
-
-means <- read.csv("data/means.csv") %>%
-    select(-"X") %>%
-    data.table::transpose(., keep.names = "wavenumber") %>%
-    mutate(wavenumber = gsub("X", "", wavenumber)) %>%
-    rename(mean = V1)
-
-data("test_lib")
-
-#Test only
-
-ai_classify <- function(data, wavenumbers, model, means){
-    #preprocessing
-    spectra_processed <- data %>%
-                                dplyr::mutate(wavenumber = as.character(wavenumbers)) %>%
-                                right_join(means) %>%
-                                dplyr::mutate(dplyr::across(where(is.numeric), ~fifelse(is.na(.x), mean, .x))) %>%
-                                select(-mean) %>%
-                                data.table::transpose(., make.names = "wavenumber") %>%
-                                select(as.character(seq(400, 3995, by = 5))) %>%
-                                as.matrix(.)
-    #prediction
-                    predict(model$model, 
-                            newx = spectra_processed, 
-                            min(model$model$lambda), 
-                            type = "response") %>% 
-                        as.data.table() %>%
-                        mutate(V1 = as.integer(V1),
-                               V2 = as.integer(V2)) %>%
-                        right_join(data.table(V1 = 1:dim(spectra_processed)[1])) %>%
-                        group_by(V1) %>%
-                        filter(value == max(value, na.rm = T) | is.na(value)) %>%
-                        ungroup() %>%
-                        left_join(model$dimension_conversion, by = c("V2" = "factor_num")) %>%
-                        arrange(V1)
-}
 
 # Global config ----
 if(config_exists){
