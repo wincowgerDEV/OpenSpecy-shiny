@@ -266,11 +266,7 @@ observeEvent(input$file, {
   #The signal to noise ratio
   signal_to_noise <- reactive({
       req(!is.null(preprocessed$data))
-      signal_option <- switch(input$signal_selection,
-             "Signal Over Noise" = "run_sig_over_noise", 
-             "Signal Times Noise" = "sig_times_noise", 
-             "Total Signal" = "log_tot_sig")
-      sig_noise(x = DataR(), metric = signal_option)
+      sig_noise(x = DataR(), metric = input$signal_selection)
   })
   
   MinSNR <- reactive({

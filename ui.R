@@ -228,7 +228,7 @@ dashboardPage(dark = T,
                                                                         box(width = 12,
                                                                             footer = tags$small("Signal thresholding technique, value, and histogram threshold plot."),
                                                                             title = prettySwitch("threshold_decision",
-                                                                                                 label = "Thresholding Signal and Noise",
+                                                                                                 label = "Threshold Signal-Noise",
                                                                                                  inline = T,
                                                                                                  value = T,
                                                                                                  status = "success",
@@ -245,7 +245,9 @@ dashboardPage(dark = T,
                                                                             br(),
                                                                             selectInput(inputId = "signal_selection", 
                                                                                         label = "Signal Thresholding Technique", 
-                                                                                        choices = c("Signal Over Noise", "Signal Times Noise", "Total Signal")), 
+                                                                                        choices = c("Signal Over Noise" = "run_sig_over_noise", 
+                                                                                                    "Signal Times Noise" = "sig_times_noise", 
+                                                                                                    "Total Signal" = "log_tot_sig")), 
                                                                             br(), 
                                                                             plotOutput("snr_plot", height = "10vh")
                                                                         )
@@ -399,7 +401,7 @@ dashboardPage(dark = T,
                                                                                         box(width = 12, 
                                                                                             collapsed = T,
                                                                                             title = prettySwitch("cor_threshold_decision",
-                                                                                                                 label = "Thresholding by Correlation",
+                                                                                                                 label = "Threshold Correlation",
                                                                                                                  inline = T,
                                                                                                                  value = T,
                                                                                                                  status = "success",
@@ -620,7 +622,7 @@ dashboardPage(dark = T,
                        a(href = "privacy_policy.txt", "Privacy Policy", class = "lead")
                        ),
                      #Ethical Ads
-                     if(isTruthy(conf$share) && conf$share != "system"){HTML('<div class = "dark raised" data-ea-publisher="openanalysisorg" data-ea-type="image" data-ea-style="stickybox"></div>')}else{""}
+                     if(isTruthy(conf$share) && conf$share != "system"){HTML('<div class = "dark raised" data-ea-publisher="openanalysisorg" data-ea-type="text" data-ea-style="fixedfooter"></div>')}else{""}
         )
     )
 )
