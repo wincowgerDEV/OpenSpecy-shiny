@@ -216,7 +216,7 @@ dashboardPage(dark = T,
                                                             fluidRow(
                                                                 box(width = 12,
                                                                     collapsed = T,
-                                                                    style = "height: 30vh; overflow-y: auto;",
+                                                                    style = "height: 50vh; overflow-y: auto;",
                                                                     footer = tags$small("Options for processing the spectra."),
                                                                     title = prettySwitch(inputId = "active_preprocessing",
                                                                                        label = "Preprocessing",
