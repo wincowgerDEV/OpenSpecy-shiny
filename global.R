@@ -5,7 +5,7 @@ db <- F #file.exists(".db_url") #reminder, this will break if you login to a new
 translate <- file.exists("www/googletranslate.html")
 config_exists <- file.exists("config.yml")
 
-#remotes::install_github("wincowgerDEV/OpenSpecy-package@v1.0-prep")
+#remotes::install_github("wincowgerDEV/OpenSpecy-package@vignettes")
 
 # Libraries ----
 library(shiny)
