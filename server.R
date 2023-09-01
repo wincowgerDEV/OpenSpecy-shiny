@@ -231,14 +231,6 @@ observeEvent(input$file, {
   })
   
   
-  output$snr_plot <- renderPlot({
-      req(!is.null(preprocessed$data))
-      ggplot() +
-          geom_histogram(aes(x = signal_to_noise())) +
-          scale_x_continuous(trans =  scales::modulus_trans(p = 0, offset = 1)) +
-          geom_vline(xintercept = MinSNR(), color = "red") +
-          theme_minimal()
-  })
   
   #Identification ----
   output$correlation_head <- renderUI({
@@ -422,6 +414,16 @@ match_metadata <- reactive({
 
   # Display ----
 
+#Histogram of SNR
+output$snr_plot <- renderPlot({
+    req(!is.null(preprocessed$data))
+    ggplot() +
+        geom_histogram(aes(x = signal_to_noise())) +
+        scale_x_continuous(trans =  scales::modulus_trans(p = 0, offset = 1)) +
+        geom_vline(xintercept = MinSNR(), color = "red") +
+        theme_minimal()
+})
+
 #Table of metadata for the selected library value
 output$eventmetadata <- DT::renderDataTable({
     req(input$active_identification)
@@ -497,6 +499,8 @@ output$event <- DT::renderDataTable({
  #Display the map or batch data in a selectable heatmap. 
   output$heatmap <- renderPlotly({
       req(!is.null(preprocessed$data))
+      req(ncol(preprocessed$data$spectra) > 1)
+      
       heatmap_spec(x = DataR(), 
                         z = if(!is.null(max_cor())){names(max_cor())} else{NULL},
                         sn = signif(signal_to_noise(), 2), 
@@ -535,11 +539,7 @@ output$event <- DT::renderDataTable({
 
   # Hide functions or objects when the shouldn't exist. 
   observe({
-    toggle(id = "baseline", condition = input$baseline_selection == "Polynomial")
-    toggle(id = "go", condition = input$baseline_selection == "Manual")
-    toggle(id = "reset", condition = input$baseline_selection == "Manual")
     toggle(id = "heatmap", condition = !is.null(preprocessed$data))
-    toggle(id = "heatmap_stats", condition = !is.null(preprocessed$data))
     toggle(id = "placeholder1", condition = is.null(preprocessed$data))
     if(!is.null(preprocessed$data)){
         toggle(id = "heatmap", condition = ncol(preprocessed$data$spectra) > 1)
@@ -610,19 +610,16 @@ output$event <- DT::renderDataTable({
 
   })
   
-  #output$event_test <- renderPrint({
-  #    list(
-  #        input$range_decision, 
-  #        input$MinRange, 
-  #        input$MaxRange
-          #preprocessed = tryCatch({
-              
-          #}, error = function(e) {
-          #   paste("Error:", e$message)
-         # })
-          
-  #    )
-  #})
+  output$event_test <- renderPrint({
+      list(
+          z = if(!is.null(max_cor())){names(max_cor())} else{NULL},
+          sn = signif(signal_to_noise(), 2), 
+          cor = if(is.null(max_cor())){max_cor()} else{signif(max_cor(), 2)}, 
+          min_sn = MinSNR(),
+          min_cor = MinCor(),
+          select = data_click$data
+      )
+  })
   
 }
 

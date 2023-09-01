@@ -446,7 +446,7 @@ dashboardPage(dark = T,
                            ),
                           ## Plot ----
                           fluidRow(
-                              #verbatimTextOutput("event_test"),
+                              verbatimTextOutput("event_test"),
                               box(title = HTML(paste0("Spectra")), 
                                   maximizable = T,
                                   width = 12,
