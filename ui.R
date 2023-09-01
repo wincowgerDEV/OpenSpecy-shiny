@@ -453,19 +453,7 @@ dashboardPage(dark = T,
                                   #background = "black",
                                   label = uiOutput("correlation_head"),
                                   h4(id = "placeholder1", "Upload some data to get started..."),
-                                  div(id = "heatmap_stats", 
-                                      fluidRow(
-                                          column(4, 
-                                                 shinyWidgets::progressBar(id = "signal_progress", value = 0, status = "success", title = "Good Signal", display_pct = TRUE)
-                                          ),
-                                          column(4, 
-                                                 shinyWidgets::progressBar(id = "correlation_progress", value = 0, status = "success", title = "Good Correlations", display_pct = TRUE)
-                                          ),
-                                          column(4,
-                                                 shinyWidgets::progressBar(id = "match_progress", value = 0, status = "success", title = "Good Identifications", display_pct = TRUE)
-                                          )
-                                      )
-                                  ),
+                                  uiOutput("progress_bars"),
                                   fluidRow(
                                       plotlyOutput("heatmap",inline = T),
                                       plotlyOutput("MyPlotC", inline = T),

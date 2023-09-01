@@ -1,5 +1,7 @@
 function(input, output, session) {
     
+  #Setup ----
+    
   #Set upload size
   if(isTruthy(conf$share) && conf$share != "system"){options(shiny.maxRequestSize = 1000*1024^2)} else{options(shiny.maxRequestSize = 10000*1024^2)}
     
@@ -11,11 +13,11 @@ function(input, output, session) {
   hide(id = "loading_overlay", anim = TRUE, animType = "fade")
   show("app_content")
 
-  #Reactive Values ----
   preprocessed <- reactiveValues(data = NULL)
   data_click <- reactiveValues(data = NULL)
 
 
+  #Read Data ----
   #Sending data to a remote repo. 
 observeEvent(input$file, {
   # Read in data when uploaded based on the file type
@@ -65,6 +67,96 @@ observeEvent(input$file, {
     }
 })
 })
+  
+  #The matching library to use. 
+  libraryR <- reactive({
+      req(input$active_identification)
+      if(input$id_strategy == "mediod"){
+          if(file.exists("data/mediod.rds")){
+              library <- read_any("data/mediod.rds")
+          }
+          else{
+              if(class(tryCatch({
+                  check_lib(type = "mediod")
+              }, warning = function(w) {
+                  paste("warning:", conditionMessage(w))
+              })) == "character"){
+                  get_lib(type = "mediod")
+                  library <- load_lib("mediod")
+              }
+              else{
+                  library <- load_lib("mediod")
+              }
+          }
+          library$metadata$SpectrumIdentity <- library$metadata$polymer_class
+          return(library)
+      }
+      else if(grepl("ai$", input$id_strategy)) {
+          if(file.exists("data/model.rds")){
+              library <- read_any("data/model.rds")
+          }
+          else{
+              if(class(tryCatch({
+                  check_lib(type = "model")
+              }, warning = function(w) {
+                  paste("warning:", conditionMessage(w))
+              })) == "character"){
+                  get_lib(type = "model")
+                  library <- load_lib("model")
+              }
+              else{
+                  library <- load_lib("model")
+              }
+          }
+          return(library)
+      }
+      else if(grepl("nobaseline$", input$id_strategy)) {
+          if(file.exists("data/both_nobaseline.rds")){
+              library <- read_any("data/both_nobaseline.rds")
+          }
+          else{
+              if(class(tryCatch({
+                  check_lib(type = "nobaseline")
+              }, warning = function(w) {
+                  paste("warning:", conditionMessage(w))
+              })) == "character"){
+                  get_lib(type = "nobaseline")
+                  library <- load_lib("nobaseline")
+              }
+              else{
+                  library <- load_lib("nobaseline")
+              }
+          }
+      }
+      else if(grepl("deriv$", input$id_strategy)){
+          if(file.exists("data/both_derivative.rds")){
+              library <- read_any("data/both_derivative.rds")
+          }
+          else{
+              if(class(tryCatch({
+                  check_lib(type = "derivative")
+              }, warning = function(w) {
+                  paste("warning:", conditionMessage(w))
+              })) == "character"){
+                  get_lib(type = "derivative")
+                  library <- load_lib("derivative")
+              }
+              else{
+                  library <- load_lib("derivative")
+              }
+          }
+          
+      }
+      if(grepl("^both", input$id_strategy)) {
+          library
+      }
+      else if (grepl("^ftir", input$id_strategy)){
+          filter_spec(library, logic = library$metadata$SpectrumType == "FTIR")
+      }
+      else if (grepl("^raman", input$id_strategy)){
+          filter_spec(library, logic = library$metadata$SpectrumType == "Raman")
+      }
+  })
 
   # Corrects spectral intensity units using the user specified correction
 
@@ -74,7 +166,7 @@ observeEvent(input$file, {
       preprocessed$data
     })
 
-  #Preprocess Spectra ----
+  #Preprocess ----
   
   # All cleaning of the data happens here. Range selection, Smoothing, and Baseline removing
   baseline_data <- reactive({
@@ -97,7 +189,6 @@ observeEvent(input$file, {
                     make_rel = T)
   })
 
-# Identify Spectra function ----
 
   # Choose which spectra to use for matching and plotting. 
   DataR <- reactive({
@@ -121,98 +212,35 @@ observeEvent(input$file, {
           filter_spec(DataR(), logic = 1:ncol(DataR()$spectra) == data_click$data) 
       }
   })
-
-  #The matching library to use. 
-  libraryR <- reactive({
-    req(input$active_identification)
-    if(input$id_strategy == "mediod"){
-        if(file.exists("data/mediod.rds")){
-            library <- read_any("data/mediod.rds")
-        }
-        else{
-            if(class(tryCatch({
-                check_lib(type = "mediod")
-            }, warning = function(w) {
-                paste("warning:", conditionMessage(w))
-            })) == "character"){
-                get_lib(type = "mediod")
-                library <- load_lib("mediod")
-            }
-            else{
-                library <- load_lib("mediod")
-            }
-        }
-        library$metadata$SpectrumIdentity <- library$metadata$polymer_class
-        return(library)
-    }
-      else if(grepl("ai$", input$id_strategy)) {
-          if(file.exists("data/model.rds")){
-              library <- read_any("data/model.rds")
-          }
-          else{
-              if(class(tryCatch({
-                  check_lib(type = "model")
-              }, warning = function(w) {
-                  paste("warning:", conditionMessage(w))
-              })) == "character"){
-                  get_lib(type = "model")
-                  library <- load_lib("model")
-              }
-              else{
-                  library <- load_lib("model")
-              }
-          }
-          return(library)
-      }
-    else if(grepl("nobaseline$", input$id_strategy)) {
-        if(file.exists("data/both_nobaseline.rds")){
-            library <- read_any("data/both_nobaseline.rds")
-        }
-        else{
-            if(class(tryCatch({
-                check_lib(type = "nobaseline")
-            }, warning = function(w) {
-                paste("warning:", conditionMessage(w))
-            })) == "character"){
-                get_lib(type = "nobaseline")
-                library <- load_lib("nobaseline")
-            }
-            else{
-                library <- load_lib("nobaseline")
-            }
-        }
-    }
-    else if(grepl("deriv$", input$id_strategy)){
-        if(file.exists("data/both_derivative.rds")){
-            library <- read_any("data/both_derivative.rds")
-        }
-        else{
-            if(class(tryCatch({
-                check_lib(type = "derivative")
-            }, warning = function(w) {
-                paste("warning:", conditionMessage(w))
-            })) == "character"){
-                get_lib(type = "derivative")
-                library <- load_lib("derivative")
-            }
-            else{
-                library <- load_lib("derivative")
-            }
-        }
-        
-    }
-    if(grepl("^both", input$id_strategy)) {
-      library
-    }
-    else if (grepl("^ftir", input$id_strategy)){
-      filter_spec(library, logic = library$metadata$SpectrumType == "FTIR")
-    }
-    else if (grepl("^raman", input$id_strategy)){
-      filter_spec(library, logic = library$metadata$SpectrumType == "Raman")
-    }
+  
+  # SNR ----
+  #The signal to noise ratio
+  signal_to_noise <- reactive({
+      req(!is.null(preprocessed$data))
+      sig_noise(x = DataR(), metric = input$signal_selection)
   })
   
-  #Correlation ----
+  MinSNR <- reactive({
+      req(!is.null(preprocessed$data))
+      if(!input$threshold_decision){
+          -Inf
+      }
+      else{
+          input$MinSNR
+      }
+  })
+  
+  
+  output$snr_plot <- renderPlot({
+      req(!is.null(preprocessed$data))
+      ggplot() +
+          geom_histogram(aes(x = signal_to_noise())) +
+          scale_x_continuous(trans =  scales::modulus_trans(p = 0, offset = 1)) +
+          geom_vline(xintercept = MinSNR(), color = "red") +
+          theme_minimal()
+  })
+  
+  #Identification ----
   output$correlation_head <- renderUI({
       req(!is.null(preprocessed$data))
       boxLabel(text = if(input$active_identification) {"Cor"} else{"SNR"}, 
@@ -234,24 +262,6 @@ observeEvent(input$file, {
                tooltip = "This tells you whether the signal to noise ratio or the match observed is above or below the thresholds.")
   })
   
-  #Progress bar for how many of the spectra have good signal. 
-  observeEvent(MinSNR() | signal_to_noise(), {
-      req(!is.null(preprocessed$data))
-      updateProgressBar(session = session, 
-                        id = "signal_progress", 
-                        value = sum(signal_to_noise() > MinSNR())/length(signal_to_noise()) * 100)
-  })
-  #Bars stating how many of the uploaded spectra have good correlations or signals. 
-  observeEvent(MinCor() | max_cor(), {
-      req(!is.null(preprocessed$data))
-      updateProgressBar(session = session, 
-                        id = "correlation_progress", 
-                        value = sum(max_cor() > MinCor())/length(max_cor()) * 100)
-      updateProgressBar(session = session, 
-                        id = "match_progress", 
-                        value = (sum(signal_to_noise() > MinSNR() & max_cor() > MinCor())/length(signal_to_noise())) * 100)
-  })
-  
   #The correlation matrix between the unknowns and the library. 
   correlation <- reactive({
       req(!is.null(preprocessed$data))
@@ -261,32 +271,6 @@ observeEvent(input$file, {
       cor_spec(x = DataR(), 
                         library = libraryR())
       })
-  })
-
-  #The signal to noise ratio
-  signal_to_noise <- reactive({
-      req(!is.null(preprocessed$data))
-      sig_noise(x = DataR(), metric = input$signal_selection)
-  })
-  
-  MinSNR <- reactive({
-      req(!is.null(preprocessed$data))
-      if(!input$threshold_decision){
-          -Inf
-      }
-      else{
-          input$MinSNR
-      }
-  })
-  
-  
-  output$snr_plot <- renderPlot({
-      req(!is.null(preprocessed$data))
-        ggplot() +
-          geom_histogram(aes(x = signal_to_noise())) +
-          scale_x_continuous(trans =  scales::modulus_trans(p = 0, offset = 1)) +
-          geom_vline(xintercept = MinSNR(), color = "red") +
-          theme_minimal()
   })
 
   #The output from the AI classification algorithm. 
@@ -415,22 +399,6 @@ observeEvent(input$file, {
                             "Plastic Pollution Category", 
                             "library_id")
       }
-      
-  })
-
-  # Create the data tables for all matches
-  output$event <- DT::renderDataTable({
-    req(input$active_identification)
-    req(!grepl("^ai$", input$id_strategy))
-    datatable(top_matches(),
-              options = list(searchHighlight = TRUE,
-                             scrollX = TRUE,
-                             sDom  = '<"top">lrt<"bottom">ip',
-                             lengthChange = FALSE, pageLength = 5),
-              rownames = FALSE,
-              filter = "top", caption = "Selectable Matches",
-              style = "bootstrap",
-              selection = list(mode = "single", selected = c(1)))
   })
 
   #Create the data table that goes below the plot which provides extra metadata. 
@@ -452,8 +420,10 @@ match_metadata <- reactive({
     }
 })
 
+  # Display ----
+
 #Table of metadata for the selected library value
- output$eventmetadata <- DT::renderDataTable({
+output$eventmetadata <- DT::renderDataTable({
     req(input$active_identification)
     req(!grepl("^ai$", input$id_strategy))
     datatable(match_metadata(),
@@ -465,11 +435,59 @@ match_metadata <- reactive({
               rownames = FALSE,
               style = 'bootstrap', caption = "Selection Metadata",
               selection = list(mode = 'none'))
-  })
+})
 
+# Create the data tables for all matches
+output$event <- DT::renderDataTable({
+    req(input$active_identification)
+    req(!grepl("^ai$", input$id_strategy))
+    datatable(top_matches(),
+              options = list(searchHighlight = TRUE,
+                             scrollX = TRUE,
+                             sDom  = '<"top">lrt<"bottom">ip',
+                             lengthChange = FALSE, pageLength = 5),
+              rownames = FALSE,
+              filter = "top", caption = "Selectable Matches",
+              style = "bootstrap",
+              selection = list(mode = "single", selected = c(1)))
+})
 
-  # Display paired spectral matches based on table selection ----
-  output$MyPlotC <- renderPlotly({
+# Progress Bars
+ output$progress_bars <- renderUI({
+     req(ncol(preprocessed$data$spectra) > 1)
+     req(input$threshold_decision | (input$cor_threshold_decision & input$active_identification))
+     
+     if(input$threshold_decision & (!input$cor_threshold_decision| !input$active_identification)){
+         fluidRow(
+             column(4, 
+                    shinyWidgets::progressBar(id = "signal_progress", value = sum(signal_to_noise() > MinSNR())/length(signal_to_noise()) * 100, status = "success", title = "Good Signal", display_pct = TRUE)
+             )
+         )
+     }
+     
+     else if(!input$threshold_decision & input$cor_threshold_decision & input$active_identification){
+         fluidRow(
+             column(4),
+             column(4, 
+                    shinyWidgets::progressBar(id = "correlation_progress", value = sum(max_cor() > MinCor())/length(max_cor()) * 100, status = "success", title = "Good Correlations", display_pct = TRUE)
+             )
+         )
+     }
+         else{
+             fluidRow(
+                 column(4, 
+                        shinyWidgets::progressBar(id = "signal_progress", value = sum(signal_to_noise() > MinSNR())/length(signal_to_noise()) * 100, status = "success", title = "Good Signal", display_pct = TRUE)
+                 ),
+                 column(4, 
+                        shinyWidgets::progressBar(id = "correlation_progress", value = sum(max_cor() > MinCor())/length(max_cor()) * 100, status = "success", title = "Good Correlations", display_pct = TRUE)
+                 ),
+                 column(4,
+                        shinyWidgets::progressBar(id = "match_progress", value = sum(signal_to_noise() > MinSNR() & max_cor() > MinCor())/length(signal_to_noise()) * 100, status = "success", title = "Good Identifications", display_pct = TRUE)
+                 )
+             )
+         }
+ }) 
+ output$MyPlotC <- renderPlotly({
       #req(input$id_strategy == "correlation")
       #req(preprocessed$data)
       plotly_spec(x = if(!is.null(preprocessed$data)){DataR_plot()} else{match_selected()},x2 = if(!is.null(preprocessed$data) & !grepl("^ai$", input$id_strategy)) {match_selected()} else{NULL}, source = "B") %>%
@@ -517,9 +535,6 @@ match_metadata <- reactive({
 
   # Hide functions or objects when the shouldn't exist. 
   observe({
-    toggle(id = "signal_progress", condition = !is.null(preprocessed$data) & input$threshold_decision)
-    toggle(id = "correlation_progress", condition = !is.null(preprocessed$data))
-    toggle(id = "match_progress", condition = !is.null(preprocessed$data))
     toggle(id = "baseline", condition = input$baseline_selection == "Polynomial")
     toggle(id = "go", condition = input$baseline_selection == "Manual")
     toggle(id = "reset", condition = input$baseline_selection == "Manual")
@@ -528,7 +543,6 @@ match_metadata <- reactive({
     toggle(id = "placeholder1", condition = is.null(preprocessed$data))
     if(!is.null(preprocessed$data)){
         toggle(id = "heatmap", condition = ncol(preprocessed$data$spectra) > 1)
-        toggle(id = "heatmap_stats", condition = ncol(preprocessed$data$spectra) > 1)
     }
     if(is.null(event_data("plotly_click", source = "heat_plot"))){
         data_click$data <- 1
