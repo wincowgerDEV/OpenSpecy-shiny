@@ -31,6 +31,11 @@ dashboardPage(dark = T,
                     "Partner With Us",
                     tabName = "partner",
                     icon = icon("hands-helping")
+                ),
+                menuItem(
+                    "Contract Us",
+                    tabName = "contract",
+                    icon = icon("file-contract")
                 )
             )
         ),
@@ -61,9 +66,8 @@ dashboardPage(dark = T,
                            title = "Welcome",
                            status = "info",
                            collapsed = F,
-                         h2("Welcome"),
                          fluidRow(
-                           column(9,
+                           column(6,
                                   p(class = "lead", "Join the hundreds of
                                researchers from around the world who are part of
                                the Open Specy community by
@@ -99,25 +103,15 @@ dashboardPage(dark = T,
                                br(),
                                p(class = "lead", "Open Specy is free and open
                                source thanks to our partners.")),
-                           column(3, img(src = "dancing.jpg", width = "100%")
+                           column(6, HTML("<iframe width='100%' height='100%' src='https://www.youtube-nocookie.com/embed/w55WGtV2Dz4' title='YouTube video player' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>")
                                 )
                             )
                          )
                        ),
-                         
-                         accordion(
-                             id = "accordion_video",
-                             accordionItem(
-                                 title = "Quick Video Tutorial",
-                                 status = "info",
-                                 collapsed = F,
-                                 HTML("<iframe width='100%' height='100%' src='https://www.youtube-nocookie.com/embed/w55WGtV2Dz4' title='YouTube video player' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>")
-                             )
-                         ),
                    accordion(
                        id = "accordion_instructions",
                        accordionItem(
-                           title = "Instructions",
+                           title = "Detailed Instructions",
                            status = "info",
                            collapsed = TRUE,
                          fluidRow(
@@ -125,42 +119,21 @@ dashboardPage(dark = T,
                                   HTML("<iframe width='100%' height='100%' src='https://www.youtube-nocookie.com/embed/JjhCdhjdcRY' title='YouTube video player' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>")
                            ),
                            column(6,
-                                  p(class = "lead", "In Brief: To use the tool upload a csv, asp, jdx, spc, or spa file to the upload file tab.
-                                  If csv, one column should be named 'wavenumber' (in units of 1/cm) and another named 'intensity'.
-                                  You can smooth your data using an SG filter, baseline correct your data using the polynomial order of iModPolyFit, and restrict the wavelength range for the match.
-                                  The result will be compared to an internal Raman or FTIR spectra library. The strongest 1000 matches along with your
-                                  uploaded or processed data will be presented in an interactive plot and table. For more details click the button below
-                                  or watch the detailed instructional video."),
+                                  tags$ol(
+                                  tags$li("Upload a .zip, .csv, .0, .asp, .jdx, .spc, or .spa file to the upload file tab."),
+                                  tags$li("Process your data using smoothing, derivative, baseline correction, flattening, range selection, and intensity adjustment."),
+                                  tags$li("Identify your spectra using onboard reference libraries and/or AI"),
+                                  tags$li("Download your results"),
+                                  tags$li("For more details click the button below for the SOP or watch the detailed instructional video.")
+                                  ),
                                   a("SOP",
-                                    onclick = "window.open('https://cran.r-project.org/web/packages/OpenSpecy/vignettes/sop.html', '_blank')",
+                                    onclick = "window.open('http://wincowger.com/OpenSpecy-package/articles/app.html', '_blank')",
                                     class="btn btn-primary btn-lg", 
                                     style = "width: 100%;")
                            )
                          )
                         )
                        ),
-                   accordion(
-                       id = "accordion_validation",
-                       accordionItem(
-                           title = "Tool Validation",
-                           status = "info",
-                           collapsed = TRUE,
-                         p(class = "lead", "All parameters in this tool are tested to validate that
-                                the tool is functioning as best as possible and determine the best default
-                                parameters to use. Our current validation proceedure includes correcting
-                                duplicated entries in the reference libraries, checking for spectra in
-                                metadata that isn't in the spectral library, and ensuring the the default
-                                parameters provide over 80% accuracy in the first match."
-                         ),
-                         div(
-                           a("Detailed Validation Procedure",
-                             onclick = "window.open('https://docs.google.com/document/d/1Zd2GY4bWIwegGeE4JpX8O0S5l_IYju0sLDl1ddTTMxU/edit?usp=sharing', '_blank')",
-                             class="btn btn-primary btn-lg",
-                             style = "width: 100%;")
-                         )
-                        )
-                       ),
-                       
                        accordion(
                            id = "accordion_links",
                            accordionItem(
@@ -168,6 +141,10 @@ dashboardPage(dark = T,
                                status = "info",
                                collapsed = TRUE,
                                a(href = "https://simple-plastics.eu/", "Free FTIR Software: siMPle microplastic IR spectral identification software", class = "lead"),
+                               br(),
+                               a(href = "https://molview.org/", "Free chemical modeling tool with built in spectral query, MolView.", class = "lead"),
+                               br(),
+                               a(href = "https://webbook.nist.gov/", "Free spectroscopy and chemical database NIST Chemistry WebBook", class = "lead"),
                                br(),
                                a(href = "https://www.thermofisher.com/us/en/home/industrial/spectroscopy-elemental-isotope-analysis/spectroscopy-elemental-isotope-analysis-learning-center/molecular-spectroscopy-information.html", "Free Spectroscopy Learning Academy from ThermoFisher", class = "lead"),
                                br(),
@@ -597,7 +574,22 @@ dashboardPage(dark = T,
                                   )
                               )
                       )
-                )
+                ),
+              tabItem("contract",
+                      div(
+                          h2("We are a group of experienced spectroscopists and can provide a variety of services for hire, please contact wincowger@gmail.com to inquire about any of the services below.", style = "color: lightblue;"),
+                          h3(tags$ul(
+                              tags$li("Adding new features to OpenSpecy"),
+                              tags$li("Creating spectroscopy software"),
+                              tags$li("Microplastic sample analysis"),
+                              tags$li("Spectral identification"),
+                              tags$li("Study design"),
+                              tags$li("So much more...")
+                          ), style = "color: lightyellow;"), 
+                          style = "padding: 50px"
+                      )
+                      
+              )
               )
             ),
     
