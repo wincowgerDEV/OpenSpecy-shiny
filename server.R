@@ -610,16 +610,16 @@ output$event <- DT::renderDataTable({
 
   })
   
-  output$event_test <- renderPrint({
-      list(
-          z = if(!is.null(max_cor())){names(max_cor())} else{NULL},
-          sn = signif(signal_to_noise(), 2), 
-          cor = if(is.null(max_cor())){max_cor()} else{signif(max_cor(), 2)}, 
-          min_sn = MinSNR(),
-          min_cor = MinCor(),
-          select = data_click$data
-      )
-  })
+  #output$event_test <- renderPrint({
+  #    list(
+  #        z = if(!is.null(max_cor())){names(max_cor())} else{NULL},
+  #        sn = signif(signal_to_noise(), 2), 
+  #        cor = if(is.null(max_cor())){max_cor()} else{signif(max_cor(), 2)}, 
+  #        min_sn = MinSNR(),
+  #        min_cor = MinCor(),
+  #        select = data_click$data
+  #    )
+  #})
   
 }
 
