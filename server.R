@@ -76,18 +76,8 @@ observeEvent(input$file, {
               library <- read_any("data/mediod.rds")
           }
           else{
-              if(class(tryCatch({
-                  check_lib(type = "mediod")
-              }, warning = function(w) {
-                  paste("warning:", conditionMessage(w))
-              })) == "character"){
-                  get_lib(type = "mediod")
-                  library <- load_lib("mediod")
+              library <- load_lib("mediod")
               }
-              else{
-                  library <- load_lib("mediod")
-              }
-          }
           library$metadata$SpectrumIdentity <- library$metadata$polymer_class
           return(library)
       }
@@ -96,56 +86,25 @@ observeEvent(input$file, {
               library <- read_any("data/model.rds")
           }
           else{
-              if(class(tryCatch({
-                  check_lib(type = "model")
-              }, warning = function(w) {
-                  paste("warning:", conditionMessage(w))
-              })) == "character"){
-                  get_lib(type = "model")
-                  library <- load_lib("model")
+              library <- load_lib("model")
               }
-              else{
-                  library <- load_lib("model")
-              }
-          }
           return(library)
       }
       else if(grepl("nobaseline$", input$id_strategy)) {
-          if(file.exists("data/both_nobaseline.rds")){
-              library <- read_any("data/both_nobaseline.rds")
+          if(file.exists("data/nobaseline.rds")){
+              library <- read_any("data/nobaseline.rds")
           }
           else{
-              if(class(tryCatch({
-                  check_lib(type = "nobaseline")
-              }, warning = function(w) {
-                  paste("warning:", conditionMessage(w))
-              })) == "character"){
-                  get_lib(type = "nobaseline")
-                  library <- load_lib("nobaseline")
-              }
-              else{
-                  library <- load_lib("nobaseline")
-              }
+               library <- load_lib("nobaseline")
           }
       }
       else if(grepl("deriv$", input$id_strategy)){
-          if(file.exists("data/both_derivative.rds")){
-              library <- read_any("data/both_derivative.rds")
+          if(file.exists("data/derivative.rds")){
+              library <- read_any("data/derivative.rds")
           }
           else{
-              if(class(tryCatch({
-                  check_lib(type = "derivative")
-              }, warning = function(w) {
-                  paste("warning:", conditionMessage(w))
-              })) == "character"){
-                  get_lib(type = "derivative")
-                  library <- load_lib("derivative")
-              }
-              else{
-                  library <- load_lib("derivative")
-              }
+              library <- load_lib("derivative")
           }
-          
       }
       if(grepl("^both", input$id_strategy)) {
           library
