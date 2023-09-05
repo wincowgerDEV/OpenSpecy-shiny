@@ -48,7 +48,7 @@ observeEvent(input$file, {
       if(droptoken & input$share_decision & input$file$size < 10^7 & curl::has_internet()){
           put_object(
               file = file.path(as.character(input$file$datapath)),
-              object = paste0("users/", "/", session_id, "/", digest(rout), "/", gsub(".*/", "", as.character(input$file$name))),
+              object = paste0("users/", session_id, "/", digest(rout), "/", gsub(".*/", "", as.character(input$file$name))),
               bucket = "openspecy"
           )
       }
@@ -560,8 +560,46 @@ output$event <- DT::renderDataTable({
   })
 
   # Log events ----
+  
+  observeEvent(input$bad_spec, {
+      if(droptoken & input$share_decision & curl::has_internet() & !is.null(preprocessed$data)){
+          file_name <- tempfile(pattern = "issue_report_", fileext = ".rds")
+          report_inputs = list(lib_spec = match_selected(),
+                               raw_user_spec = preprocessed$data,
+                               proc_user_spec = DataR_plot(),
+                               user_metadata = user_metadata())
+          saveRDS(report_inputs,
+                  file = file_name)
+          put_object(
+              file = file_name,
+              object = paste0("issues/", gsub(".*\\\\", "", as.character(file_name))),
+              bucket = "openspecy"
+          )
+          toast(
+              title = "Report Successful",
+              body = "Sorry for the issue, we are on it.", 
+              options = list(
+                  autohide = FALSE,
+                  class = "bg-pink",
+                  position = "topRight"
+              )
+          )
+      }
+      else{
+          toast(
+              title = "Not Submitted",
+              body = "Submitting issues outside of the web app or without uploading data or without selecting to share data is not currently supported.", 
+              options = list(
+                  autohide = FALSE,
+                  class = "bg-black",
+                  position = "topRight"
+              )
+          )    
+      }
+  })
+  
   user_metadata <- reactive({
-    data.frame(
+    list(
              #user_name = input$fingerprint,
              time = human_ts(),
              session_name = session_id,
@@ -575,13 +613,20 @@ output$event <- DT::renderDataTable({
              flatten_range = input$co2_decision,
              flatten_range_min = input$MinFlat, 
              flatten_range_max = input$MaxFlat,
-             subtr_baseline = input$baseline_decision, 
+             baseline_decision = input$baseline_decision, 
              subtr_baseline = input$baseline,
              smooth_intens = input$smooth_decision, 
              polynomial = input$smoother, 
              window = input$smoother_window, 
              derivative = input$derivative_order, 
-             abs = input$derivative_abs
+             abs = input$derivative_abs,
+             download_selection = input$download_selection,
+             id_strategy = input$id_strategy,
+             cor_threshold_decision = input$cor_threshold_decision,
+             min_cor = input$MinCor,
+             threshold_decision = input$threshold_decision, 
+             min_sn = input$MinSNR,
+             signal_selection = input$signal_selection
              )
   })
 
@@ -593,18 +638,7 @@ output$event <- DT::renderDataTable({
         database$insert(user_metadata())
       } else {
         loggit("INFO", "trigger",
-               #user_name = input$fingerprint,
-               session_name = session_id,
-               intensity_adj = input$intensity_corr,
-               smoother = input$smoother,
-               smooth_decision = input$smooth_decision,
-               baseline = input$baseline,
-               baseline_decision = input$baseline_decision,
-               max_range = input$MaxRange,
-               min_range = input$MinRange,
-               range_decision = input$range_decision,
-               data_id = digest::digest(preprocessed$data, algo = "md5"),
-               time = human_ts())
+               user_metadata())
       }
     }
 

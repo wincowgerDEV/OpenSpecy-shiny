@@ -437,6 +437,9 @@ dashboardPage(dark = T,
                                       div(style = "overflow-x: scroll",
                                           DT::dataTableOutput("eventmetadata")   
                                       )),
+                                  dropdownMenu = boxDropdown(
+                                      boxDropdownItem("Bad Processing or Library Spectra", id = "bad_spec", icon = icon("face-sad-tear")),
+                                  ),
                                   sidebar = boxSidebar(
                                       id = "mycardsidebar",
                                       fluidRow(style = "padding:1rem; overflow-x: scroll",
