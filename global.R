@@ -42,6 +42,10 @@ if(isTruthy(conf$log)) {
   }
 }
 
+if(is(tryCatch(check_lib(),error=function(e) e, warning=function(w) w), "warning")){
+    get_lib()
+}
+
 # Load all data ----
 load_data <- function() {
   data("raman_hdpe")
