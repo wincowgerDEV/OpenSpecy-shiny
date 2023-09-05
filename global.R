@@ -42,7 +42,7 @@ if(isTruthy(conf$log)) {
   }
 }
 
-if(is(tryCatch(check_lib(),error=function(e) e, warning=function(w) w), "warning")){
+if(is(tryCatch(check_lib(),error=function(e) e, warning=function(w) w), "warning") | !all(file.exists("data/mediod.rds"), file.exists("data/model.rds"), file.exists("data/nobaseline.rds"), file.exists("data/derivative.rds"))){
     get_lib()
 }
 
