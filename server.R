@@ -338,13 +338,20 @@ observeEvent(input$file, {
       req(!grepl("^ai$", input$id_strategy))
       if(is.null(preprocessed$data)){
           libraryR()$metadata %>%
-              rename("library_id" = "sample_name")
+              mutate("Pearson's r" = NA) %>%
+              rename("Material" = "SpectrumIdentity",
+                     "Plastic Pollution Category" = "polymer_class",
+                     "library_id" = "sample_name")
       }
       else{
           data.table(object_id = names(DataR()$spectra)[data_click$data], 
                      library_id = names(libraryR()$spectra),
                      match_val = c(correlation()[,data_click$data]))[order(-match_val),] %>%
-              left_join(libraryR()$metadata, by = c("library_id" = "sample_name"))
+              left_join(libraryR()$metadata, by = c("library_id" = "sample_name")) %>%
+              mutate(match_val = signif(match_val, 2)) %>%
+              rename("Material" = "SpectrumIdentity",
+              "Pearson's r" = "match_val",
+              "Plastic Pollution Category" = "polymer_class")
       }
   })
 
@@ -374,18 +381,12 @@ observeEvent(input$file, {
       req(!grepl("^ai$", input$id_strategy))
       if(is.null(preprocessed$data)){
           matches_to_single() %>%
-              dplyr::rename("Material" = 'SpectrumIdentity',
-                            "Plastic Pollution Category" = "polymer_class") %>%
               dplyr::select("Material",
                             "Plastic Pollution Category", 
                             "library_id")
       }
       else{
           matches_to_single() %>%
-              mutate(match_val = signif(match_val, 2))  %>%
-              dplyr::rename("Material" = SpectrumIdentity,
-                            "Pearson's r" = match_val,
-                            "Plastic Pollution Category" = "polymer_class") %>%
               dplyr::select("Pearson's r",
                             "Material",
                             "Plastic Pollution Category", 
@@ -397,19 +398,11 @@ observeEvent(input$file, {
 match_metadata <- reactive({
     req(input$active_identification)
     req(!grepl("^ai$", input$id_strategy))
-    if(is.null(preprocessed$data)){
         matches_to_single()[input$event_rows_selected,] %>%
-            dplyr::rename("Material" = SpectrumIdentity,
-                          "Plastic Pollution Category" = "polymer_class") %>%
-            .[, !sapply(., OpenSpecy::is_empty_vector), with = F]
-    }
-    else{
-        matches_to_single()[input$event_rows_selected,] %>%
-            dplyr::rename("Material" = SpectrumIdentity,
-                          "Pearson's r" = match_val,
-                          "Plastic Pollution Category" = "polymer_class") %>%
-            .[, !sapply(., OpenSpecy::is_empty_vector), with = F]
-    }
+            .[, !sapply(., OpenSpecy::is_empty_vector), with = F] %>%
+            dplyr::select("Material",
+                          "Plastic Pollution Category", 
+                          "library_id", everything())
 })
 
   # Display ----
