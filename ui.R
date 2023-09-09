@@ -1,7 +1,8 @@
 
 # UI ----
 dashboardPage(dark = T, 
-                     fullscreen = T,
+              help = T, 
+              fullscreen = T,
         #Header ----
         dashboardHeader( 
             title = tags$a(href="https://www.openanalysis.org", 
