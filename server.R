@@ -41,29 +41,50 @@ observeEvent(input$file, {
   }
 
   withProgress(message = progm, value = 3/3, {
+      
+      rout <- tryCatch(expr = {read_any(file = as.character(input$file$datapath))},
+                       error = function(e){
+                           class(e$message) <- "simpleWarning"
+                           e$message
+                       },
+                       warning = function(w){
+                           class(w$message) <- "simpleWarning"
+                           w$message
+                       })
+      
+      checkit <- tryCatch(expr = {check_OpenSpecy(rout)},
+                          error = function(e){
+                              class(e$message) <- "simpleWarning"
+                              e$message
+                          },
+                          warning = function(w){
+                              class(w$message) <- "simpleWarning"
+                              w$message
+                          })
 
-      rout <- try(read_any(file = as.character(input$file$datapath)),
-                  silent = T)
-
-      if(droptoken & input$share_decision & input$file$size < 10^7 & curl::has_internet()){
-          put_object(
-              file = file.path(as.character(input$file$datapath)),
-              object = paste0("users/", session_id, "/", digest(rout), "/", gsub(".*/", "", as.character(input$file$name))),
-              bucket = "openspecy"
-          )
-      }
-
-    if (inherits(rout, "try-error")) {
+    if (inherits(rout, "simpleWarning") | inherits(checkit, "simpleWarning")) {
       show_alert(
-        title = "Something went wrong with the data :-(",
-        text =  "If you uploaded a text/csv file, make sure that the columns are numeric and named 'wavenumber' and 'intensity'.",
+        title = "Something went wrong with reading the data :-(",
+        text =  paste0(if(inherits(rout, "simpleWarning")){paste0("There was an error during data loading that said ", 
+                                                                  rout, ".")} else{""},
+                       if(inherits(checkit, "simpleWarning")){paste0(" There was an error during data checking that said ", 
+                                                                  checkit, ".")} else{""},
+                       ". If you uploaded a text/csv file, make sure that the columns are numeric and named 'wavenumber' and 'intensity'."),
         type =  "error"
       )
       reset("file")
       preprocessed$data <- NULL
     }
+      
     else {
-      preprocessed$data <- rout
+        if(droptoken & input$share_decision & input$file$size < 10^7 & curl::has_internet()){
+            put_object(
+                file = file.path(as.character(input$file$datapath)),
+                object = paste0("users/", session_id, "/", digest(rout), "/", gsub(".*/", "", as.character(input$file$name))),
+                bucket = "openspecy"
+            )
+        }
+        preprocessed$data <- rout
     }
 })
 })
