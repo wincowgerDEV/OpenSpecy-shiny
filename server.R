@@ -471,7 +471,7 @@ output$event <- DT::renderDataTable({
       else{
           particles_logi <- signal_to_noise() > MinSNR()
       }
-      collapsed <- collapse_spec(
+      collapse_spec(
           def_features(DataR(), features = particles_logi)
       ) %>%
           filter_spec(., logic = .$metadata$feature_id != "-88")
