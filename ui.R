@@ -174,7 +174,7 @@ dashboardPage(dark = T,
                                                                 ".json", ".rds", ".yml")) %>%
                                                  bs4Dash::popover(
                                                      title = "Upload Raman or FTIR spectrum files as a csv, zip, asp, jdx, spc, 0, or spa. A csv file is preferred. If a csv, the file must contain one column labeled wavenumber in units of (1/cm) and another column labeled intensity in absorbance units. If jdx, spc, spa, or 0 the file should be a single absorbance spectrum with wavenumber in (1/cm). If zip, batch upload using a zip file with multiple spectral files that all have the same wavenumbers or a map file formatted as .hdr and .dat. Hit the Sample button to download a sample Raman spectrum.",
-                                                     content = "File Upload"
+                                                     content = "File Upload", placement = "right"
                                                  ),
                                              prettySwitch("share_decision",
                                                           label = "Share Your Data?",
@@ -184,7 +184,7 @@ dashboardPage(dark = T,
                                                           fill = T) %>%
                                                  popover(
                                                      title = "If you like, we share your uploaded spectra and settings with the spectroscopy community. By default, all data will be licensed under Creative Commons Attribution 4.0 International (CC BY 4.0). Uploaded spectra will appear here: https://osf.io/rjg3c. If you have spectra of known identities you can share, please upload a JDX file titled with the name of the material it is.",
-                                                     content = "Share Decision"
+                                                     content = "Share Decision", placement = "right"
                                                  )
                                   )
                             )
@@ -420,7 +420,7 @@ dashboardPage(dark = T,
                                           active analysis. Thresholded Particles will download a version of your spectra using the active
                                           thresholds selected to infer where particles are in spectral maps, particle spectra are collapsed
                                           to their medians and locations to their centroids.",
-                                          content = "Download Options"
+                                          content = "Download Options", placement = "left"
                                       )
                            )
                            ),
