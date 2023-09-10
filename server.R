@@ -99,7 +99,6 @@ observeEvent(input$file, {
           else{
               library <- load_lib("mediod")
               }
-          library$metadata$SpectrumIdentity <- library$metadata$polymer_class
           return(library)
       }
       else if(grepl("ai$", input$id_strategy)) {
