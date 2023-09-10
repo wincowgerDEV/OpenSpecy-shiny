@@ -359,8 +359,8 @@ dashboardPage(dark = T,
                                                                                     FTIR and Raman libraries. Deriv will search against a derivative transformed library. 
                                                                                     No Baseline will search against a baseline corrected library. This should be in line 
                                                                                     with how you choose to process your spectra. Cor options use a simple Pearson correlation
-                                                                                    search algorithm. AI is currently experimental and uses either a multinomial model or 
-                                                                                    correlation on mediod spectra from the library. Correlation thresholding will set the minimum 
+                                                                                    search algorithm. AI is uses either a multinomial model (experimental) or 
+                                                                                    correlation on mediod (default) spectra from the library. Correlation thresholding will set the minimum 
                                                                                     value from matching to use as a 'positive identification'"),
                                                                                     title = prettySwitch(inputId = "active_identification",
                                                                                                     label = "Identification",
@@ -369,14 +369,14 @@ dashboardPage(dark = T,
                                                                                                     status = "success",
                                                                                                     fill = T),
                                                                                             pickerInput(inputId = "id_strategy", label =  "ID Library",
-                                                                                                        choices =  c("Cor: Both Deriv" = "both_deriv",
+                                                                                                        choices =  c("AI: Both Deriv Mediod" = "mediod",
+                                                                                                                     "Cor: Both Deriv" = "both_deriv",
                                                                                                                      "Cor: Both No Baseline" = "both_nobaseline",
                                                                                                                      "Cor: FTIR Deriv" = "ftir_deriv",
                                                                                                                      "Cor: Raman Deriv" = "raman_deriv",
                                                                                                                      "Cor: FTIR No Baseline" = "ftir_nobaseline",
                                                                                                                      "Cor: Raman No Baseline" = "raman_nobaseline",
-                                                                                                                     "AI: FTIR Deriv Multinomial" = "ai",
-                                                                                                                     "AI: FTIR Deriv Mediod" = "mediod")),
+                                                                                                                     "AI: FTIR Deriv Multinomial" = "ai")),
                                                                                     fluidRow(
                                                                                         box(width = 12, 
                                                                                             collapsed = T,

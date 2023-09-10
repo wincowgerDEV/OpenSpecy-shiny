@@ -157,7 +157,7 @@ observeEvent(input$file, {
                     adj_intens = input$intensity_decision, 
                     adj_intens_args = list(type = input$intensity_corr),
                     conform_spec = T, 
-                    conform_args = list(range = seq(100, 4000, by = 5), res = 5),
+                    conform_args = list(range = seq(100, 4000, by = 5), res = NULL, type = "roll"),
                     restrict_range = input$range_decision,
                     restrict_range_args = list(min = input$MinRange, max = input$MaxRange),
                     flatten_range = input$co2_decision,
