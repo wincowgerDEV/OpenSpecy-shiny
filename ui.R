@@ -119,7 +119,8 @@ dashboardPage(dark = T,
                            collapsed = TRUE,
                          fluidRow(
                            column(6,
-                                  HTML("<iframe width='100%' height='100%' src='https://www.youtube-nocookie.com/embed/JjhCdhjdcRY' title='YouTube video player' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>")
+                                  HTML("<iframe width='100%' height='50%' src='https://www.youtube-nocookie.com/embed/oWwRWwXf0sc' title='YouTube video player' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>"),
+                                  HTML("<iframe width='100%' height='50%' src='https://www.youtube-nocookie.com/embed/cZZ3hgvIcao' title='YouTube video player' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>")
                            ),
                            column(6,
                                   tags$ol(
@@ -127,7 +128,7 @@ dashboardPage(dark = T,
                                   tags$li("Process your data using smoothing, derivative, baseline correction, flattening, range selection, and intensity adjustment."),
                                   tags$li("Identify your spectra using onboard reference libraries and/or AI"),
                                   tags$li("Download your results"),
-                                  tags$li("For more details click the button below for the SOP or watch the detailed instructional video.")
+                                  tags$li("For more details click the button below for the SOP or watch the detailed instructional videos.")
                                   ),
                                   a("SOP",
                                     onclick = "window.open('http://wincowger.com/OpenSpecy-package/articles/app.html', '_blank')",
