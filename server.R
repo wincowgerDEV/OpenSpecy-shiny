@@ -362,14 +362,16 @@ observeEvent(input$file, {
           matches_to_single() %>%
               dplyr::select("Material",
                             "Plastic Pollution Category", 
-                            "Organization")
+                            "Organization",
+                            "library_id")
       }
       else{
           matches_to_single() %>%
               dplyr::select("Pearson's r",
                             "Material",
                             "Plastic Pollution Category", 
-                            "Organization")
+                            "Organization",
+                            "library_id")
       }
   })
 
