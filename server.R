@@ -213,23 +213,38 @@ observeEvent(input$file, {
   
   #Identification ----
   output$correlation_head <- renderUI({
-      req(!is.null(preprocessed$data))
-      boxLabel(text = if(input$active_identification) {"Cor"} else{"SNR"}, 
-               status = if(input$active_identification) {
-                   if(max_cor()[[data_click$data]] > MinCor() & signal_to_noise()[[data_click$data]] > MinSNR()){
+      req(!is.null(preprocessed$data), (input$threshold_decision | input$cor_threshold_decision))
+      
+      good_cor <- max_cor()[[data_click$data]] > MinCor() & signal_to_noise()[[data_click$data]] > MinSNR()
+      good_sig <- signal_to_noise()[[data_click$data]] > MinSNR()
+      good_match <- good_cor & good_sig
+      
+      boxLabel(text = if(input$cor_threshold_decision & input$threshold_decision & input$active_identification) {"Match"} else if(input$cor_threshold_decision & input$active_identification) {"Cor"} else if (input$threshold_decision){"SNR"} else{""}, 
+               status = if(input$cor_threshold_decision & input$threshold_decision & input$active_identification) {
+                   if(good_match){
                        "success"
                        } 
                    else{
                        "error"
                        }
-                   } else{
-                       if(signal_to_noise()[[data_click$data]] > MinSNR()){
+                   }
+               else if(input$cor_threshold_decision & input$active_identification){
+                   if(good_cor){
+                       "success"
+                   } 
+                   else {
+                       "error"
+                   }
+               }
+               else if(input$threshold_decision){
+                       if(good_sig){
                            "success"
                            } 
                        else{
                            "error"
                            }
-                       }, 
+                       }
+               else{NULL}, 
                tooltip = "This tells you whether the signal to noise ratio or the match observed is above or below the thresholds.")
   })
   
