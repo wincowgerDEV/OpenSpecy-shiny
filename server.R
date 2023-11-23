@@ -155,7 +155,7 @@ observeEvent(input$file, {
                     active = input$active_preprocessing,
                     adj_intens = input$intensity_decision, 
                     adj_intens_args = list(type = input$intensity_corr),
-                    conform_spec = T, 
+                    conform_spec = F, 
                     conform_args = list(range = seq(100, 4000, by = 5), res = NULL, type = "roll"),
                     restrict_range = input$range_decision,
                     restrict_range_args = list(min = input$MinRange, max = input$MaxRange),
@@ -176,9 +176,7 @@ observeEvent(input$file, {
         baseline_data()
     }
     else {
-        conform_spec(data(), 
-                     range = seq(100, 4000, by = 5), 
-                     res = 5)
+        data()
     }
   })
 
@@ -196,7 +194,7 @@ observeEvent(input$file, {
   #The signal to noise ratio
   signal_to_noise <- reactive({
       req(!is.null(preprocessed$data))
-      sig_noise(x = DataR(), metric = input$signal_selection)
+      sig_noise(x = DataR(), metric = input$signal_selection, abs = F)
   })
   
   MinSNR <- reactive({
@@ -255,7 +253,9 @@ observeEvent(input$file, {
       req(!grepl("^ai$", input$id_strategy))
       withProgress(message = 'Analyzing Spectrum', value = 1/3, {
       cor_spec(x = DataR(), 
-                        library = libraryR())
+               library = libraryR(),
+               conform = T, 
+               type = "roll")
       })
   })
 
@@ -450,9 +450,9 @@ output$progress_bars <- renderUI({
     
     if(input$threshold_decision & (!input$cor_threshold_decision | !input$active_identification)){
         tagList(
-            fluidRow(
-                column(6, selectInput(inputId = "map_color", label = "Map Color", choices = c("Signal/Noise")))
-            ),
+                fluidRow(
+                    column(6, selectInput(inputId = "map_color", label = "Map Color", choices = c(input$signal_selection)))
+                ),
             fluidRow(
                 column(4, 
                        shinyWidgets::progressBar(id = "signal_progress", value = sum(signal_to_noise() > MinSNR())/length(signal_to_noise()) * 100, status = "success", title = "Good Signal", display_pct = TRUE)
@@ -462,7 +462,7 @@ output$progress_bars <- renderUI({
     } else if(!input$threshold_decision & input$cor_threshold_decision & input$active_identification){
         tagList(
             fluidRow(
-                column(6, selectInput(inputId = "map_color", label = "Map Color", choices = c("Correlation", "Match ID", "Match Name")))
+                column(6, selectInput(inputId = "map_color", label = "Map Color", choices = c("Match Name", "Correlation", "Match ID")))
             ), 
             fluidRow(
                 column(4, 
@@ -473,7 +473,7 @@ output$progress_bars <- renderUI({
     } else {
         tagList(
             fluidRow(
-                column(6, selectInput(inputId = "map_color", label = "Map Color", choices = c("Signal/Noise", "Correlation", "Match ID", "Match Name")))
+                column(6, selectInput(inputId = "map_color", label = "Map Color", choices = c("Match Name", "Correlation", "Match ID", input$signal_selection)))
             ),
             fluidRow(
                 column(4, 
