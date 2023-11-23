@@ -450,6 +450,7 @@ output$event <- DT::renderDataTable({
      
      if(input$threshold_decision & (!input$cor_threshold_decision| !input$active_identification)){
          fluidRow(
+             selectInput(inputId = "map_color", label = "Map Color", choices = c("Signal/Noise")),
              column(4, 
                     shinyWidgets::progressBar(id = "signal_progress", value = sum(signal_to_noise() > MinSNR())/length(signal_to_noise()) * 100, status = "success", title = "Good Signal", display_pct = TRUE)
              )
@@ -458,6 +459,7 @@ output$event <- DT::renderDataTable({
      
      else if(!input$threshold_decision & input$cor_threshold_decision & input$active_identification){
          fluidRow(
+             selectInput(inputId = "map_color", label = "Map Color", choices = c("Correlation", "Match ID", "Match Name")), 
              column(4),
              column(4, 
                     shinyWidgets::progressBar(id = "correlation_progress", value = sum(max_cor() > MinCor())/length(max_cor()) * 100, status = "success", title = "Good Correlations", display_pct = TRUE)
@@ -466,7 +468,9 @@ output$event <- DT::renderDataTable({
      }
          else{
              fluidRow(
-                 column(4, 
+                 fluidRow(selectInput(inputId = "map_color", label = "Map Color", choices = c("Signal/Noise", "Correlation", "Match ID", "Match Name"))),
+                 fluidRow(
+                     column(4, 
                         shinyWidgets::progressBar(id = "signal_progress", value = sum(signal_to_noise() > MinSNR())/length(signal_to_noise()) * 100, status = "success", title = "Good Signal", display_pct = TRUE)
                  ),
                  column(4, 
@@ -474,6 +478,7 @@ output$event <- DT::renderDataTable({
                  ),
                  column(4,
                         shinyWidgets::progressBar(id = "match_progress", value = sum(signal_to_noise() > MinSNR() & max_cor() > MinCor())/length(signal_to_noise()) * 100, status = "success", title = "Good Identifications", display_pct = TRUE)
+                 )
                  )
              )
          }
@@ -485,13 +490,26 @@ output$event <- DT::renderDataTable({
         config(modeBarButtonsToAdd = list("drawopenpath", "eraseshape"))
     })
 
+ #Heatmap ----
  #Display the map or batch data in a selectable heatmap. 
   output$heatmap <- renderPlotly({
       req(!is.null(preprocessed$data))
       req(ncol(preprocessed$data$spectra) > 1)
       
       heatmap_spec(x = DataR(), 
-                        z = if(!is.null(max_cor())){names(max_cor())} else{NULL},
+                        z = if(!is.null(max_cor()) & input$map_color == "Match ID"){
+                                names(max_cor())
+                        }
+                   else if(!is.null(max_cor()) & input$map_color == "Correlation"){
+                       max_cor()
+                   }
+                   else if(!is.null(signal_to_noise()) & input$map_color == "Signal/Noise"){
+                       signal_to_noise()
+                   }
+                   else if(!is.null(max_cor()) & input$map_color == "Match Name"){
+                       libraryR()$metadata$polymer_class[match(names(max_cor()), libraryR()$metadata$sample_name)]
+                   }
+                   else{NULL},
                         sn = signif(signal_to_noise(), 2), 
                         cor = if(is.null(max_cor())){max_cor()} else{signif(max_cor(), 2)}, 
                         min_sn = MinSNR(),

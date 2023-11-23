@@ -444,7 +444,7 @@ dashboardPage(dark = T,
                                           DT::dataTableOutput("eventmetadata")   
                                       )),
                                   dropdownMenu = boxDropdown(
-                                      boxDropdownItem("Bad Processing or Library Spectra", id = "bad_spec", icon = icon("face-sad-tear")),
+                                      boxDropdownItem("Bad Processing or Library Spectra", id = "bad_spec", icon = icon("face-sad-tear"))
                                   ),
                                   sidebar = boxSidebar(
                                       id = "mycardsidebar",
