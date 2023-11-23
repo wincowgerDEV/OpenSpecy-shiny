@@ -444,45 +444,52 @@ output$event <- DT::renderDataTable({
 })
 
 # Progress Bars
- output$progress_bars <- renderUI({
-     req(ncol(preprocessed$data$spectra) > 1)
-     req(input$threshold_decision | (input$cor_threshold_decision & input$active_identification))
-     
-     if(input$threshold_decision & (!input$cor_threshold_decision| !input$active_identification)){
-         fluidRow(
-             selectInput(inputId = "map_color", label = "Map Color", choices = c("Signal/Noise")),
-             column(4, 
-                    shinyWidgets::progressBar(id = "signal_progress", value = sum(signal_to_noise() > MinSNR())/length(signal_to_noise()) * 100, status = "success", title = "Good Signal", display_pct = TRUE)
-             )
-         )
-     }
-     
-     else if(!input$threshold_decision & input$cor_threshold_decision & input$active_identification){
-         fluidRow(
-             selectInput(inputId = "map_color", label = "Map Color", choices = c("Correlation", "Match ID", "Match Name")), 
-             column(4),
-             column(4, 
-                    shinyWidgets::progressBar(id = "correlation_progress", value = sum(max_cor() > MinCor())/length(max_cor()) * 100, status = "success", title = "Good Correlations", display_pct = TRUE)
-             )
-         )
-     }
-         else{
-             fluidRow(
-                 fluidRow(selectInput(inputId = "map_color", label = "Map Color", choices = c("Signal/Noise", "Correlation", "Match ID", "Match Name"))),
-                 fluidRow(
-                     column(4, 
-                        shinyWidgets::progressBar(id = "signal_progress", value = sum(signal_to_noise() > MinSNR())/length(signal_to_noise()) * 100, status = "success", title = "Good Signal", display_pct = TRUE)
-                 ),
-                 column(4, 
-                        shinyWidgets::progressBar(id = "correlation_progress", value = sum(max_cor() > MinCor())/length(max_cor()) * 100, status = "success", title = "Good Correlations", display_pct = TRUE)
-                 ),
-                 column(4,
-                        shinyWidgets::progressBar(id = "match_progress", value = sum(signal_to_noise() > MinSNR() & max_cor() > MinCor())/length(signal_to_noise()) * 100, status = "success", title = "Good Identifications", display_pct = TRUE)
-                 )
-                 )
-             )
-         }
- }) 
+output$progress_bars <- renderUI({
+    req(ncol(preprocessed$data$spectra) > 1)
+    req(input$threshold_decision | (input$cor_threshold_decision & input$active_identification))
+    
+    if(input$threshold_decision & (!input$cor_threshold_decision | !input$active_identification)){
+        tagList(
+            fluidRow(
+                column(6, selectInput(inputId = "map_color", label = "Map Color", choices = c("Signal/Noise")))
+            ),
+            fluidRow(
+                column(4, 
+                       shinyWidgets::progressBar(id = "signal_progress", value = sum(signal_to_noise() > MinSNR())/length(signal_to_noise()) * 100, status = "success", title = "Good Signal", display_pct = TRUE)
+                )
+            )
+        )
+    } else if(!input$threshold_decision & input$cor_threshold_decision & input$active_identification){
+        tagList(
+            fluidRow(
+                column(6, selectInput(inputId = "map_color", label = "Map Color", choices = c("Correlation", "Match ID", "Match Name")))
+            ), 
+            fluidRow(
+                column(4, 
+                       shinyWidgets::progressBar(id = "correlation_progress", value = sum(max_cor() > MinCor())/length(max_cor()) * 100, status = "success", title = "Good Correlations", display_pct = TRUE)
+                )
+            )
+        )
+    } else {
+        tagList(
+            fluidRow(
+                column(6, selectInput(inputId = "map_color", label = "Map Color", choices = c("Signal/Noise", "Correlation", "Match ID", "Match Name")))
+            ),
+            fluidRow(
+                column(4, 
+                       shinyWidgets::progressBar(id = "signal_progress", value = sum(signal_to_noise() > MinSNR())/length(signal_to_noise()) * 100, status = "success", title = "Good Signal", display_pct = TRUE)
+                ),
+                column(4, 
+                       shinyWidgets::progressBar(id = "correlation_progress", value = sum(max_cor() > MinCor())/length(max_cor()) * 100, status = "success", title = "Good Correlations", display_pct = TRUE)
+                ),
+                column(4,
+                       shinyWidgets::progressBar(id = "match_progress", value = sum(signal_to_noise() > MinSNR() & max_cor() > MinCor())/length(signal_to_noise()) * 100, status = "success", title = "Good Identifications", display_pct = TRUE)
+                )
+            )
+        )
+    }
+})
+
  output$MyPlotC <- renderPlotly({
       #req(input$id_strategy == "correlation")
       #req(preprocessed$data)
