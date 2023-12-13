@@ -372,14 +372,14 @@ dashboardPage(dark = T,
                                                                                                     status = "success",
                                                                                                     fill = T),
                                                                                             pickerInput(inputId = "id_strategy", label =  "ID Library",
-                                                                                                        choices =  c("AI: Both Deriv Mediod" = "mediod",
-                                                                                                                     "Cor: Both Deriv" = "both_deriv",
+                                                                                                        choices =  c("Cor: Both Deriv" = "both_deriv",
                                                                                                                      "Cor: Both No Baseline" = "both_nobaseline",
                                                                                                                      "Cor: FTIR Deriv" = "ftir_deriv",
                                                                                                                      "Cor: Raman Deriv" = "raman_deriv",
                                                                                                                      "Cor: FTIR No Baseline" = "ftir_nobaseline",
                                                                                                                      "Cor: Raman No Baseline" = "raman_nobaseline",
-                                                                                                                     "AI: FTIR Deriv Multinomial" = "ai")),
+                                                                                                                     "AI: FTIR Deriv Multinomial" = "ai", 
+                                                                                                                     "AI: Both Deriv Mediod" = "mediod")),
                                                                                     fluidRow(
                                                                                         box(width = 12, 
                                                                                             collapsed = T,
@@ -611,7 +611,7 @@ dashboardPage(dark = T,
                        a(href = "privacy_policy.txt", "Privacy Policy", class = "lead")
                        ),
                      #Ethical Ads
-                     if(isTruthy(conf$share) && conf$share != "system"){HTML('<div class = "dark raised" data-ea-publisher="openanalysisorg" data-ea-type="text" data-ea-style="fixedfooter"></div>')}else{""}
+                     HTML('<div class = "dark raised" data-ea-publisher="openanalysisorg" data-ea-type="text" data-ea-style="fixedfooter"></div>')
         )
     )
 )

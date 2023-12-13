@@ -36,7 +36,7 @@ if(config_exists){
 # Logging ----
 if(isTruthy(conf$log)) {
   if(db) {
-    database <- mongo(url = readLines(".db_url"))
+    database <- mongo(url = readLines("mongo.txt"))
   } else {
     set_logfile(file.path(tempdir(), "OpenSpecy.log"))
   }
