@@ -542,12 +542,12 @@ output$progress_bars <- renderUI({
   
   # Data Download options ----
   output$download_data <- downloadHandler(
-       filename = function() {if(input$download_selection == "Test Map") {paste0(input$download_selection, human_ts(), ".zip")} else if(input$download_selection == "Thresholded Particles"){paste0(input$download_selection, human_ts(), ".rds")} else{paste0(input$download_selection, human_ts(), ".csv")}},
+       filename = function() {if(input$download_selection == "Test Map") {paste0(input$download_selection, human_ts(), ".zip")} else{paste0(input$download_selection, human_ts(), ".csv")}},
         content = function(file) {
             if(input$download_selection == "Test Data") {fwrite(testdata, file)}
             if(input$download_selection == "Test Map") {file.copy(read_extdata("CA_tiny_map.zip"), file)}
-            if(input$download_selection == "Your Spectra") {fwrite(cbind(wavenumber = DataR()$wavenumber, DataR()$spectra), file)}
-            if(input$download_selection == "Library Spectra") {fwrite(cbind(wavenumber = libraryR()$wavenumber, libraryR()$spectra), file)}
+            if(input$download_selection == "Your Spectra") {write_spec(DataR(), file)}
+            if(input$download_selection == "Library Spectra") {write_spec(libraryR(), file)}
             if(input$download_selection == "Top Matches") {fwrite(top_correlation(), file)}
             if(input$download_selection == "Thresholded Particles") {write_spec(thresholded_particles(), file = file)}
             })
