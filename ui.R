@@ -237,6 +237,20 @@ dashboardPage(dark = T,
                                                                     ),
                                                                     fluidRow(
                                                                         box(width = 12,
+                                                                            footer = tags$small("Min-Max normalization improves comparability, for many applications, between spectra except in cases
+                                                                                                where raw intensity values are necessary for interpreation. For example raw values can be useful for thresholding. 
+                                                                                                Min-Max normalization rescales spectral intensity values between 0-1"),
+                                                                            title = prettySwitch("make_rel_decision",
+                                                                                                 label = "Min-Max Normalize",
+                                                                                                 inline = T,
+                                                                                                 value = T,
+                                                                                                 status = "success",
+                                                                                                 fill = T),
+                                                                            collapsed = T
+                                                                        )
+                                                                    ),
+                                                                    fluidRow(
+                                                                        box(width = 12,
                                                                             collapsed = T,
                                                                             footer = tags$small("Smoothing can enhance signal to noise and uses the SG filter with the polynomial order specified, 3 default usually works well. 
                                                                             Derivative transformation uses the order specified. 

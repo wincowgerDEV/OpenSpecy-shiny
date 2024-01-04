@@ -165,7 +165,7 @@ observeEvent(input$file, {
                     subtr_baseline_args = list(type = "polynomial", degree = input$baseline, raw = FALSE, baseline = NULL),
                     smooth_intens = input$smooth_decision, 
                     smooth_intens_args = list(polynomial = input$smoother, window = calc_window_points(data(), input$smoother_window), derivative = input$derivative_order, abs = input$derivative_abs),
-                    make_rel = T)
+                    make_rel = input$make_rel_decision)
   })
 
 
@@ -186,7 +186,7 @@ observeEvent(input$file, {
           list(wavenumber = numeric(), spectra = data.table(empty = numeric()))
       }
       else{
-          filter_spec(DataR(), logic = 1:ncol(DataR()$spectra) == data_click$data) 
+          filter_spec(DataR(), logic = 1:ncol(DataR()$spectra) == data_click$data)
       }
   })
   
