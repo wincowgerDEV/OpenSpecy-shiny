@@ -241,7 +241,7 @@ dashboardPage(dark = T,
                                                                             footer = tags$small("Smoothing can enhance signal to noise and uses the SG filter with the polynomial order specified, 3 default usually works well. 
                                                                             Derivative transformation uses the order specified. 
                                                                             If doing identification with a derivative library, 1 is required, 0 should be used if no derivative transformation is desired. 
-                                                                            Smoothing uses the SG filter on an 11 data point window by default, this can be used to expand that window.
+                                                                            Smoothing uses the SG filter on an window of points, specifying the wavenumber window larger will make the spectra more smooth.
                                                                             The absolute value does something similar to intensity correction to make the spectra more absorbance-like."),
                                                                             title =  prettySwitch(inputId = "smooth_decision",
                                                                                                   label = "Smoothing/Derivative",
@@ -251,13 +251,37 @@ dashboardPage(dark = T,
                                                                                                   fill = T),
                                                                             sliderInput("smoother", "Polynomial", min = 0, max = 5, value = 3),
                                                                             sliderInput("derivative_order", "Derivative Order", min = 0, max = 3, value = 1),
-                                                                            sliderInput("smoother_window", "Window", min = 7, max = 21, value = 11, step = 2),
+                                                                            sliderInput("smoother_window", "Wavenumber Window", min = 50, max = 200, value = 50, step = 10),
                                                                             prettySwitch("derivative_abs", 
                                                                                          label = "Absolute Value",  
                                                                                          inline = T,
                                                                                          value = T,
                                                                                          status = "success",
                                                                                          fill = T))),
+                                                                    fluidRow(
+                                                                        box(width = 12,
+                                                                            footer = tags$small("Options for conforming spectra to a new wavenumber resolution.
+                                                                                                Conformation technique specifies the strategy for performing the conformation. 
+                                                                                                Nearest will use the nearest value to the wavenumber resolution specified, this is 
+                                                                                                faster but less accurate. Linear Interpolation will perform a linear regression between 
+                                                                                                the nearest points to identify the intensity values at the new wavenumbers. Wavenumber Resolution 
+                                                                                                will set the step size in wavenumbers for the new wavenumber values."),
+                                                                            title = prettySwitch("conform_decision",
+                                                                                                 label = "Conform Wavenumbers",
+                                                                                                 inline = T,
+                                                                                                 value = F,
+                                                                                                 status = "success",
+                                                                                                 fill = T),
+                                                                            collapsed = T,
+                                                                            selectInput(inputId = "conform_selection", 
+                                                                                        label = "Conformation Technique", 
+                                                                                        choices = c("Nearest" = "roll",
+                                                                                                    "Linear Interpolation" = "interp")), 
+                                                                            br(),
+                                                                            sliderInput("conform_res", "Wavenumber Resolution", min = 4, max = 16, value = 5)
+                                                                            
+                                                                        )
+                                                                    ),
                                                                 fluidRow(
                                                                     box(
                                                                     width = 12,

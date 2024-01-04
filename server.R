@@ -155,8 +155,8 @@ observeEvent(input$file, {
                     active = input$active_preprocessing,
                     adj_intens = input$intensity_decision, 
                     adj_intens_args = list(type = input$intensity_corr),
-                    conform_spec = F, 
-                    conform_args = list(range = seq(100, 4000, by = 5), res = NULL, type = "roll"),
+                    conform_spec = input$conform_decision, 
+                    conform_spec_args = list(range = NULL, res = input$conform_res, type = input$conform_selection),
                     restrict_range = input$range_decision,
                     restrict_range_args = list(min = input$MinRange, max = input$MaxRange),
                     flatten_range = input$co2_decision,
@@ -164,7 +164,7 @@ observeEvent(input$file, {
                     subtr_baseline = input$baseline_decision, 
                     subtr_baseline_args = list(type = "polynomial", degree = input$baseline, raw = FALSE, baseline = NULL),
                     smooth_intens = input$smooth_decision, 
-                    smooth_intens_args = list(polynomial = input$smoother, window = input$smoother_window, derivative = input$derivative_order, abs = input$derivative_abs),
+                    smooth_intens_args = list(polynomial = input$smoother, window = calc_window_points(data(), input$smoother_window), derivative = input$derivative_order, abs = input$derivative_abs),
                     make_rel = T)
   })
 
@@ -661,12 +661,8 @@ output$progress_bars <- renderUI({
   
   #output$event_test <- renderPrint({
   #    list(
-  #        z = if(!is.null(max_cor())){names(max_cor())} else{NULL},
-  #        sn = signif(signal_to_noise(), 2), 
-  #        cor = if(is.null(max_cor())){max_cor()} else{signif(max_cor(), 2)}, 
-  #        min_sn = MinSNR(),
-  #        min_cor = MinCor(),
-  #        select = data_click$data
+  #        conform_spec = input$conform_decision, 
+  #        conform_args = list(range = NULL, res = input$conform_res, type = input$conform_selection)
   #    )
   #})
   
