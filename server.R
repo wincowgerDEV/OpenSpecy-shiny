@@ -451,7 +451,7 @@ output$progress_bars <- renderUI({
     if(input$threshold_decision & (!input$cor_threshold_decision | !input$active_identification)){
         tagList(
                 fluidRow(
-                    column(6, selectInput(inputId = "map_color", label = "Map Color", choices = c(input$signal_selection)))
+                    column(6, selectInput(inputId = "map_color", label = "Map Color", choices = "Signal/Noise"))
                 ),
             fluidRow(
                 column(4, 
@@ -473,7 +473,7 @@ output$progress_bars <- renderUI({
     } else {
         tagList(
             fluidRow(
-                column(6, selectInput(inputId = "map_color", label = "Map Color", choices = c("Match Name", "Correlation", "Match ID", input$signal_selection)))
+                column(6, selectInput(inputId = "map_color", label = "Map Color", choices = c("Match Name", "Correlation", "Match ID", "Signal/Noise")))
             ),
             fluidRow(
                 column(4, 
