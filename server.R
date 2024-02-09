@@ -393,7 +393,7 @@ observeEvent(input$file, {
           matches_to_single() %>%
               dplyr::select("Material",
                             "Plastic Pollution Category", 
-                            "Organization",
+                            "organization",
                             "library_id")
       }
       else{
@@ -518,12 +518,18 @@ output$progress_bars <- renderUI({
   output$heatmap <- renderPlotly({
       req(!is.null(preprocessed$data))
       req(ncol(preprocessed$data$spectra) > 1)
-      req(input$map_color)
+      #req(input$map_color)
       
       heatmap_spec(x = DataR(), 
-                        z = if(!is.null(max_cor()) & input$map_color == "Match ID"){
-                                names(max_cor())
+                        z = if(!is.null(max_cor()) & !isTruthy(input$map_color)){
+                                max_cor()
                         }
+                   else if(!is.null(signal_to_noise()) & !isTruthy(input$map_color)){
+                       signal_to_noise()
+                   }
+                   else if(!is.null(max_cor()) & input$map_color == "Match ID"){
+                       names(max_cor())
+                   }
                    else if(!is.null(max_cor()) & input$map_color == "Correlation"){
                        max_cor()
                    }
