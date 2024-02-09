@@ -448,7 +448,9 @@ output$eventmetadata <- DT::renderDataTable({
 output$event <- DT::renderDataTable({
     req(input$active_identification)
     req(!grepl("^ai$", input$id_strategy))
-    datatable(top_matches(),
+    datatable(top_matches() %>%
+                  mutate(organization = as.factor(organization),
+                         `Plastic Pollution Category` = as.factor(`Plastic Pollution Category`)),
               options = list(searchHighlight = TRUE,
                              scrollX = TRUE,
                              sDom  = '<"top">lrt<"bottom">ip',
