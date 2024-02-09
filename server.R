@@ -130,10 +130,10 @@ observeEvent(input$file, {
           library
       }
       else if (grepl("^ftir", input$id_strategy)){
-          filter_spec(library, logic = library$metadata$SpectrumType == "FTIR")
+          filter_spec(library, logic = library$metadata$SpectrumType == "ftir")
       }
       else if (grepl("^raman", input$id_strategy)){
-          filter_spec(library, logic = library$metadata$SpectrumType == "Raman")
+          filter_spec(library, logic = library$metadata$SpectrumType == "raman")
       }
   })
 
@@ -210,7 +210,7 @@ observeEvent(input$file, {
   #The signal to noise ratio
   signal_to_noise <- reactive({
       req(!is.null(preprocessed$data))
-      sig_noise(x = DataR(), metric = input$signal_selection, abs = F)
+      sig_noise(x = DataR(), step = 10, metric = input$signal_selection, abs = F)
   })
   
   MinSNR <- reactive({
@@ -349,8 +349,8 @@ observeEvent(input$file, {
       if(is.null(preprocessed$data)){
           libraryR()$metadata %>%
               mutate("Pearson's r" = NA) %>%
-              rename("Material" = "SpectrumIdentity",
-                     "Plastic Pollution Category" = "polymer_class",
+              rename("Material" = "spectrum_identity",
+                     "Plastic Pollution Category" = "material_class",
                      "library_id" = "sample_name")
       }
       else{
@@ -359,9 +359,9 @@ observeEvent(input$file, {
                      match_val = c(correlation()[,data_click$data]))[order(-match_val),] %>%
               left_join(libraryR()$metadata, by = c("library_id" = "sample_name")) %>%
               mutate(match_val = signif(match_val, 2)) %>%
-              rename("Material" = "SpectrumIdentity",
+              rename("Material" = "spectrum_identity",
               "Pearson's r" = "match_val",
-              "Plastic Pollution Category" = "polymer_class")
+              "Plastic Pollution Category" = "material_class")
       }
   })
 
@@ -401,7 +401,7 @@ observeEvent(input$file, {
               dplyr::select("Pearson's r",
                             "Material",
                             "Plastic Pollution Category", 
-                            "Organization",
+                            "organization",
                             "library_id")
       }
   })
@@ -411,10 +411,10 @@ match_metadata <- reactive({
     req(input$active_identification)
     req(!grepl("^ai$", input$id_strategy))
         matches_to_single()[input$event_rows_selected,] %>%
-            .[, !sapply(., OpenSpecy::is_empty_vector), with = F] %>%
-            dplyr::select("Material",
-                          "Plastic Pollution Category", 
-                          "library_id", everything())
+            .[, !sapply(., OpenSpecy::is_empty_vector), with = F] #%>%
+           # dplyr::select("Material",
+        #                  "Plastic Pollution Category", 
+        #                  "library_id", everything())
 })
 
   # Display ----
@@ -531,7 +531,7 @@ output$progress_bars <- renderUI({
                        signal_to_noise()
                    }
                    else if(!is.null(max_cor()) & input$map_color == "Match Name"){
-                       libraryR()$metadata$polymer_class[match(names(max_cor()), libraryR()$metadata$sample_name)]
+                       libraryR()$metadata$material_class[match(names(max_cor()), libraryR()$metadata$sample_name)]
                    }
                    else{NULL},
                         sn = signif(signal_to_noise(), 2), 
