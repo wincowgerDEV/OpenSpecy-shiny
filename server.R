@@ -42,7 +42,7 @@ observeEvent(input$file, {
 
   withProgress(message = progm, value = 3/3, {
       
-      rout <- tryCatch(expr = {read_any(file = as.character(input$file$datapath), range = "common", res = 8)},
+      rout <- tryCatch(expr = {read_any(file = as.character(input$file$datapath), range = "common", res = 8) |> manage_na(ig = c(NA, 0), type = "remove")},
                        error = function(e){
                            class(e$message) <- "simpleWarning"
                            e$message
