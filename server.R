@@ -23,9 +23,10 @@ observeEvent(input$file, {
   # Read in data when uploaded based on the file type
   req(input$file)
   data_click$data <- 1
+  preprocessed$data <- NULL
 
-  if (!grepl("(\\.json$)|(\\.rds$)|(\\.yml$)|(\\.csv$)|(\\.asp$)|(\\.spa$)|(\\.spc$)|(\\.jdx$)|(\\.RData$)|(\\.zip$)|(\\.[0-9]$)",
-             ignore.case = T, as.character(input$file$datapath))) {
+  if (!all(grepl("(\\.json$)|(\\.rds$)|(\\.yml$)|(\\.csv$)|(\\.asp$)|(\\.spa$)|(\\.spc$)|(\\.jdx$)|(\\.RData$)|(\\.zip$)|(\\.[0-9]$)",
+             ignore.case = T, as.character(input$file$datapath)))) {
     show_alert(
       title = "Data type not supported!",
       text = paste0("Uploaded data type is not currently supported; please
@@ -46,14 +47,16 @@ observeEvent(input$file, {
           read_any(file = as.character(input$file$datapath)) |>
               c_spec(os, range = "common", res = 8) |>
               manage_na(ig = c(NA, 0), type = "remove")},
-                       error = function(e){
-                           class(e$message) <- "simpleWarning"
-                           e$message
-                       },
-                       warning = function(w){
-                           class(w$message) <- "simpleWarning"
-                           w$message
-                       })
+          error = function(e){
+              class(e$message) <- "simpleWarning"
+              e$message
+          }#,
+          #warning = function(w){
+          #class(w$message) <- "simpleWarning"
+          #    w$message
+          #}
+      )
+      #print(rout)
       
       checkit <- tryCatch(expr = {check_OpenSpecy(rout)},
                           error = function(e){
@@ -64,7 +67,7 @@ observeEvent(input$file, {
                               class(w$message) <- "simpleWarning"
                               w$message
                           })
-
+    #print(checkit)
     if (inherits(rout, "simpleWarning") | inherits(checkit, "simpleWarning")) {
       show_alert(
         title = "Something went wrong with reading the data :-(",
@@ -80,14 +83,17 @@ observeEvent(input$file, {
     }
       
     else {
-        if(droptoken & input$share_decision & input$file$size < 10^7 & curl::has_internet()){
-            put_object(
-                file = file.path(as.character(input$file$datapath)),
-                object = paste0("users/", session_id, "/", digest(rout), "/", gsub(".*/", "", as.character(input$file$name))),
-                bucket = "openspecy"
-            )
+        if(length(input$file$datapath) == 1){
+            if(droptoken & input$share_decision & input$file$size < 10^7 & curl::has_internet()){
+                put_object(
+                    file = file.path(as.character(input$file$datapath)),
+                    object = paste0("users/", session_id, "/", digest(rout), "/", gsub(".*/", "", as.character(input$file$name))),
+                    bucket = "openspecy"
+                )
+            }
         }
-        preprocessed$data <- rout
+        preprocessed$data <- rout 
+        #print(preprocessed$data)
     }
 })
 })
