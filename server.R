@@ -139,10 +139,10 @@ observeEvent(input$file, {
           library
       }
       else if (grepl("^ftir", input$id_strategy)){
-          filter_spec(library, logic = library$metadata$SpectrumType == "ftir")
+          filter_spec(library, logic = library$metadata$spectrum_type == "ftir")
       }
       else if (grepl("^raman", input$id_strategy)){
-          filter_spec(library, logic = library$metadata$SpectrumType == "raman")
+          filter_spec(library, logic = library$metadata$spectrum_type == "raman")
       }
   })
 
