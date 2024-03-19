@@ -336,7 +336,7 @@ dashboardPage(dark = T,
                                                                                      title =  prettySwitch("range_decision",
                                                                                                      label = "Range Selection",
                                                                                                      inline = T,
-                                                                                                     value = T,
+                                                                                                     value = F,
                                                                                                      status = "success",
                                                                                                      fill = T),
                                                                                          numericInput(
