@@ -25,7 +25,7 @@ observeEvent(input$file, {
   data_click$data <- 1
   preprocessed$data <- NULL
 
-  if (!all(grepl("(\\.json$)|(\\.rds$)|(\\.yml$)|(\\.csv$)|(\\.asp$)|(\\.spa$)|(\\.spc$)|(\\.jdx$)|(\\.RData$)|(\\.zip$)|(\\.[0-9]$)",
+  if (!all(grepl("(\\.dat$)|(\\.hdr$)|(\\.json$)|(\\.rds$)|(\\.yml$)|(\\.csv$)|(\\.asp$)|(\\.spa$)|(\\.spc$)|(\\.jdx$)|(\\.RData$)|(\\.zip$)|(\\.[0-9]$)",
              ignore.case = T, as.character(input$file$datapath)))) {
     show_alert(
       title = "Data type not supported!",
@@ -57,6 +57,10 @@ observeEvent(input$file, {
           #}
       )
       #print(rout)
+      
+      if(length(input$file$datapath > 1) & all(!grepl("(\\.hdr$)|(\\.dat$)", input$file$datapath))){
+          rout$metadata$file_name <- input$file$name
+      }
       
       checkit <- tryCatch(expr = {check_OpenSpecy(rout)},
                           error = function(e){
