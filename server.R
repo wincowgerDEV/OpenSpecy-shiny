@@ -45,7 +45,7 @@ observeEvent(input$file, {
       
       rout <- tryCatch(expr = {
           read_any(file = as.character(input$file$datapath)) |>
-              c_spec(os, range = "common", res = 8) |>
+              c_spec(os, range = "common", res = if(input$conform_decision){input$conform_res} else{8}) |>
               manage_na(ig = c(NA, 0), type = "remove")},
           error = function(e){
               class(e$message) <- "simpleWarning"
@@ -169,10 +169,8 @@ observeEvent(input$file, {
                     adj_intens = input$intensity_decision, 
                     adj_intens_args = list(type = input$intensity_corr),
                     conform_spec = input$conform_decision, 
-                    conform_spec_args = list(range = seq(100, 
-                                                         4000, 
-                                                         by = input$conform_res), 
-                                             res = NULL, 
+                    conform_spec_args = list(range = NULL, 
+                                             res = input$conform_res, 
                                              type = input$conform_selection),
                     restrict_range = input$range_decision,
                     restrict_range_args = list(min = input$MinRange, 
