@@ -25,7 +25,7 @@ observeEvent(input$file, {
   data_click$data <- 1
   preprocessed$data <- NULL
 
-  if (!all(grepl("(\\.dat$)|(\\.hdr$)|(\\.json$)|(\\.rds$)|(\\.yml$)|(\\.csv$)|(\\.asp$)|(\\.spa$)|(\\.spc$)|(\\.jdx$)|(\\.RData$)|(\\.zip$)|(\\.[0-9]$)",
+  if (!all(grepl("(\\.dat$)|(\\.hdr$)|(\\.json$)|(\\.rds$)|(\\.yml$)|(\\.csv$)|(\\.asp$)|(\\.spa$)|(\\.spc$)|(\\.jdx$)|(\\.dx$)|(\\.RData$)|(\\.zip$)|(\\.[0-9]$)",
              ignore.case = T, as.character(input$file$datapath)))) {
     show_alert(
       title = "Data type not supported!",
@@ -45,7 +45,7 @@ observeEvent(input$file, {
       
       rout <- tryCatch(expr = {
           read_any(file = as.character(input$file$datapath)) |>
-              c_spec(os, range = "common", res = if(input$conform_decision){input$conform_res} else{8}) |>
+              c_spec(range = "common", res = if(input$conform_decision){input$conform_res} else{8}) |>
               manage_na(ig = c(NA, 0), type = "remove")},
           error = function(e){
               class(e$message) <- "simpleWarning"
@@ -58,7 +58,7 @@ observeEvent(input$file, {
       )
       #print(rout)
       
-      if(length(input$file$datapath > 1) & all(!grepl("(\\.hdr$)|(\\.dat$)", input$file$datapath))){
+      if(length(input$file$datapath) > 1 & all(!grepl("(\\.hdr$)|(\\.dat$)", input$file$datapath))){
           rout$metadata$file_name <- input$file$name
       }
       
