@@ -11,8 +11,8 @@ dashboardPage(dark = T,
                                  style = 'width: 15vw; padding:1rem;'))),
         #Sidebar ----
         dashboardSidebar(
+            skin = "dark",
             sidebarUserPanel(
-                #image = "https://drive.google.com/file/d/13iCjC10dV3giFhCCoir_8mnbwtHM1rMA/view?usp=sharing",
                 name = "Welcome!"
             ),
             sidebarMenu(
@@ -22,7 +22,6 @@ dashboardPage(dark = T,
                     tabName = "analyze",
                     icon = icon("bar-chart")
                 ),
-                #sidebarHeader("Header 1"),
                 menuItem(
                     "About",
                     tabName = "about",
