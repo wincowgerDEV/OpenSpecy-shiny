@@ -161,7 +161,7 @@ dashboardPage(dark = T,
               ),
               #Analyze Spectra Tab ----
               tabItem("analyze", 
-                       br(),
+                      br(),
                        fluidRow(
                            column(2,
                                   ##Upload/download ----
@@ -172,7 +172,7 @@ dashboardPage(dark = T,
                                                        placeholder = ".csv, .zip, .asp, .jdx, .spc, .spa, .0",
                                                        accept=c("text/csv",
                                                                 "text/comma-separated-values,text/plain",
-                                                                ".csv", ".asp", ".spc", ".jdx", ".spa", ".0", ".zip", 
+                                                                ".csv", ".asp", ".spc", ".jdx", ".dx", ".spa", ".0", ".zip", 
                                                                 ".json", ".rds", ".yml", ".hdr", ".dat")) %>%
                                                  bs4Dash::popover(
                                                      title = "Upload Raman or FTIR spectrum files as a csv, zip, asp, jdx, spc, 0, or spa. A csv file is preferred. If a csv, the file must contain one column labeled wavenumber in units of (1/cm) and another column labeled intensity in absorbance units. If jdx, spc, spa, or 0 the file should be a single absorbance spectrum with wavenumber in (1/cm). If zip, batch upload using a zip file with multiple spectral files that all have the same wavenumbers or a map file formatted as .hdr and .dat. Hit the Sample button to download a sample Raman spectrum.",

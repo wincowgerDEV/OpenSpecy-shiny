@@ -2,6 +2,26 @@ function(input, output, session) {
     
   #Setup ----
     
+    #URL Query
+    observe({
+        query <- parseQueryString(session$clientData$url_search)
+        
+        for (i in 1:(length(reactiveValuesToList(input)))) {
+            nameval = names(reactiveValuesToList(input)[i])
+            valuetoupdate = query[[nameval]]
+            
+            if (!is.null(query[[nameval]])) {
+                if (is.na(as.numeric(valuetoupdate))) {
+                    updateTextInput(session, nameval, value = valuetoupdate)
+                }
+                else {
+                    updateTextInput(session, nameval, value = as.numeric(valuetoupdate))
+                }
+            }
+            
+        }
+        
+    })
   #Set upload size
   if(isTruthy(conf$share) && conf$share != "system"){options(shiny.maxRequestSize = 1000*1024^2)} else{options(shiny.maxRequestSize = 10000*1024^2)}
     
@@ -522,7 +542,10 @@ output$progress_bars <- renderUI({
  output$MyPlotC <- renderPlotly({
       #req(input$id_strategy == "correlation")
       #req(preprocessed$data)
-      plotly_spec(x = if(!is.null(preprocessed$data)){DataR_plot()} else{match_selected()},x2 = if(!is.null(preprocessed$data) & !grepl("^ai$", input$id_strategy)) {match_selected()} else{NULL}, source = "B") %>%
+      plotly_spec(x = if(!is.null(preprocessed$data)){DataR_plot()} else{match_selected()},
+                  x2 = if(!is.null(preprocessed$data) & !grepl("^ai$", input$id_strategy)) {match_selected()} else{NULL}, 
+                  make_rel = input$make_rel_decision,
+                  source = "B") %>%
         config(modeBarButtonsToAdd = list("drawopenpath", "eraseshape"))
     })
 

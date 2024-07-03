@@ -1,7 +1,7 @@
 # Check for Auth Tokens and setup, you can change these to test the triggering
 # of functions without removing the files.
 droptoken <- file.exists("s3_cred.csv") #file.exists("data/droptoken.rds") #remove for prototyping with maps
-db <- file.exists("mongo.txt") #reminder, this will break if you login to a new wifi network even with the token.
+db <- F#file.exists("mongo.txt") #reminder, this will break if you login to a new wifi network even with the token.
 translate <- file.exists("www/googletranslate.html")
 config_exists <- file.exists("config.yml")
 
@@ -43,7 +43,7 @@ if(isTruthy(conf$log)) {
 }
 
 if(is(tryCatch(check_lib(),error=function(e) e, warning=function(w) w), "warning") & !all(file.exists("data/mediod.rds"), file.exists("data/model.rds"), file.exists("data/nobaseline.rds"), file.exists("data/derivative.rds"))){
-    get_lib()
+    get_lib(type = c("derivative", "nobaseline", "mediod", "model"))
 }
 
 # Load all data ----
