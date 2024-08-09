@@ -291,7 +291,7 @@ dashboardPage(dark = T,
                                                                                         choices = c("Linear Interpolation" = "interp",
                                                                                                     "Nearest" = "roll")), 
                                                                             br(),
-                                                                            sliderInput("conform_res", "Wavenumber Resolution", min = 4, max = 16, value = 8)
+                                                                            sliderInput("conform_res", "Wavenumber Resolution", min = 4, max = 16, value = 6)
                                                                             
                                                                         )
                                                                     ),
