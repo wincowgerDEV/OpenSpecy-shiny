@@ -78,7 +78,7 @@ observeEvent(input$file, {
       )
       #print(rout)
       
-      if(length(input$file$datapath) > 1 & all(!grepl("(\\.hdr$)|(\\.dat$)", input$file$datapath))){
+      if(all(!grepl("(\\.hdr$)|(\\.dat$)", input$file$datapath))){
           rout$metadata$file_name <- input$file$name
       }
       
@@ -604,7 +604,10 @@ output$progress_bars <- renderUI({
         content = function(file) {
             if(input$download_selection == "Test Data") {fwrite(testdata, file)}
             if(input$download_selection == "Test Map") {file.copy(read_extdata("CA_tiny_map.zip"), file)}
-            if(input$download_selection == "Your Spectra") {write_spec(DataR(), file)}
+            if(input$download_selection == "Your Spectra") {
+                your_spec <- DataR()
+                your_spec$metadata$signal_to_noise <- signal_to_noise()
+                write_spec(your_spec, file)}
             if(input$download_selection == "Library Spectra") {write_spec(libraryR(), file)}
             if(input$download_selection == "Top Matches") {fwrite(top_correlation(), file)}
             if(input$download_selection == "Thresholded Particles") {write_spec(thresholded_particles(), file = file)}
