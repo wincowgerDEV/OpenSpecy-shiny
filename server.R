@@ -78,7 +78,7 @@ observeEvent(input$file, {
       )
       #print(rout)
       
-      if(all(!grepl("(\\.hdr$)|(\\.dat$)", input$file$datapath))){
+      if(all(!grepl("(\\.hdr$)|(\\.dat$)|(\\.zip$)", input$file$datapath))){
           rout$metadata$file_name <- input$file$name
       }
       
