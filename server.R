@@ -45,7 +45,7 @@ observeEvent(input$file, {
   data_click$data <- 1
   preprocessed$data <- NULL
 
-  if (!all(grepl("(\\.dat$)|(\\.hdr$)|(\\.json$)|(\\.rds$)|(\\.yml$)|(\\.csv$)|(\\.asp$)|(\\.spa$)|(\\.spc$)|(\\.jdx$)|(\\.dx$)|(\\.RData$)|(\\.zip$)|(\\.[0-9]$)",
+  if (!all(grepl("(\\.tsv$)|(\\.dat$)|(\\.hdr$)|(\\.json$)|(\\.rds$)|(\\.yml$)|(\\.csv$)|(\\.asp$)|(\\.spa$)|(\\.spc$)|(\\.jdx$)|(\\.dx$)|(\\.RData$)|(\\.zip$)|(\\.[0-9]$)",
              ignore.case = T, as.character(input$file$datapath)))) {
     show_alert(
       title = "Data type not supported!",
