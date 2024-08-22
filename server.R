@@ -111,38 +111,18 @@ observeEvent(input$file, {
   libraryR <- reactive({
       req(input$active_identification)
       if(input$id_strategy == "mediod"){
-          if(file.exists("data/mediod.rds")){
               library <- read_any("data/mediod.rds")
-          }
-          else{
-              library <- load_lib("mediod")
-              }
           return(library)
       }
       else if(grepl("ai$", input$id_strategy)) {
-          if(file.exists("data/model.rds")){
               library <- read_any("data/model.rds")
-          }
-          else{
-              library <- load_lib("model")
-              }
           return(library)
       }
       else if(grepl("nobaseline$", input$id_strategy)) {
-          if(file.exists("data/nobaseline.rds")){
               library <- read_any("data/nobaseline.rds")
-          }
-          else{
-               library <- load_lib("nobaseline")
-          }
       }
       else if(grepl("deriv$", input$id_strategy)){
-          if(file.exists("data/derivative.rds")){
               library <- read_any("data/derivative.rds")
-          }
-          else{
-              library <- load_lib("derivative")
-          }
       }
       if(grepl("^both", input$id_strategy)) {
           library

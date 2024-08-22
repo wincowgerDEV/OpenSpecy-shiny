@@ -18,8 +18,8 @@ library(bs4Dash)
 library(ggplot2)
 
 
-if(is(tryCatch(check_lib(),error=function(e) e, warning=function(w) w), "warning") & !all(file.exists("data/mediod.rds"), file.exists("data/model.rds"), file.exists("data/nobaseline.rds"), file.exists("data/derivative.rds"))){
-    download.file(url = "https://osf.io/download/2qbkt/", destfile = "derivative.rds")
+if(!file.exists("data/derivative.rds")){
+    download.file(url = "https://osf.io/download/2qbkt/", destfile = "data/derivative.rds")
 }
 
 # Load all data ----
