@@ -17,11 +17,6 @@ library(OpenSpecy)
 library(bs4Dash)
 library(ggplot2)
 
-
-if(!file.exists("data/derivative.rds")){
-    download.file(url = "https://osf.io/download/2qbkt/", destfile = "data/derivative.rds")
-}
-
 # Load all data ----
 load_data <- function() {
   data("raman_hdpe")

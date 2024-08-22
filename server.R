@@ -110,20 +110,7 @@ observeEvent(input$file, {
   #The matching library to use. 
   libraryR <- reactive({
       req(input$active_identification)
-      if(input$id_strategy == "mediod"){
-              library <- read_any("data/mediod.rds")
-          return(library)
-      }
-      else if(grepl("ai$", input$id_strategy)) {
-              library <- read_any("data/model.rds")
-          return(library)
-      }
-      else if(grepl("nobaseline$", input$id_strategy)) {
-              library <- read_any("data/nobaseline.rds")
-      }
-      else if(grepl("deriv$", input$id_strategy)){
-              library <- read_any("data/derivative.rds")
-      }
+      library <- read_any("data/mediod.rds")
       if(grepl("^both", input$id_strategy)) {
           library
       }
