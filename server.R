@@ -22,9 +22,7 @@ function(input, output, session) {
         }
         
     })
-  #Set upload size
-  if(isTruthy(conf$share) && conf$share != "system"){options(shiny.maxRequestSize = 1000*1024^2)} else{options(shiny.maxRequestSize = 10000*1024^2)}
-    
+
   #create a random session id
   session_id <- digest(runif(10))
 
@@ -54,12 +52,8 @@ observeEvent(input$file, {
       type = "warning")
     return(NULL)
   }
-
-  if (input$share_decision & curl::has_internet()) {
-    progm <- "Sharing Spectrum to Community Library"
-  } else {
-    progm <- "Reading Spectrum"
-  }
+  
+  progm <- "Reading Spectrum"
 
   withProgress(message = progm, value = 3/3, {
       
@@ -107,15 +101,6 @@ observeEvent(input$file, {
     }
       
     else {
-        if(length(input$file$datapath) == 1){
-            if(droptoken & input$share_decision & input$file$size < 10^7 & curl::has_internet()){
-                put_object(
-                    file = file.path(as.character(input$file$datapath)),
-                    object = paste0("users/", session_id, "/", digest(rout), "/", gsub(".*/", "", as.character(input$file$name))),
-                    bucket = "openspecy"
-                )
-            }
-        }
         preprocessed$data <- rout 
         #print(preprocessed$data)
     }
@@ -633,91 +618,6 @@ output$progress_bars <- renderUI({
     if(translate & curl::has_internet()) {
       includeHTML("www/googletranslate.html")
     }
-  })
-
-  # Log events ----
-  
-  observeEvent(input$bad_spec, {
-      if(droptoken & input$share_decision & curl::has_internet() & !is.null(preprocessed$data)){
-          file_name <- tempfile(pattern = "issue_report_", fileext = ".rds")
-          report_inputs = list(lib_spec = match_selected(),
-                               raw_user_spec = preprocessed$data,
-                               proc_user_spec = DataR_plot(),
-                               user_metadata = user_metadata())
-          saveRDS(report_inputs,
-                  file = file_name)
-          put_object(
-              file = file_name,
-              object = paste0("issues/", gsub(".*\\\\", "", as.character(file_name))),
-              bucket = "openspecy"
-          )
-          toast(
-              title = "Report Successful",
-              body = "Sorry for the issue, we are on it.", 
-              options = list(
-                  autohide = FALSE,
-                  class = "bg-pink",
-                  position = "topRight"
-              )
-          )
-      }
-      else{
-          toast(
-              title = "Not Submitted",
-              body = "Submitting issues outside of the web app or without uploading data or without selecting to share data is not currently supported.", 
-              options = list(
-                  autohide = FALSE,
-                  class = "bg-black",
-                  position = "topRight"
-              )
-          )    
-      }
-  })
-  
-  user_metadata <- reactive({
-    list(
-             #user_name = input$fingerprint,
-             time = human_ts(),
-             session_name = session_id,
-             data_id = digest::digest(preprocessed$data, algo = "md5"),
-             active = input$active_preprocessing,
-             adj_intens = input$intensity_decision, 
-             type = input$intensity_corr,
-             restric_range = input$range_decision,
-             restric_range_min = input$MinRange, 
-             restric_range_max = input$MaxRange,
-             flatten_range = input$co2_decision,
-             flatten_range_min = input$MinFlat, 
-             flatten_range_max = input$MaxFlat,
-             baseline_decision = input$baseline_decision, 
-             subtr_baseline = input$baseline,
-             smooth_intens = input$smooth_decision, 
-             polynomial = input$smoother, 
-             window = input$smoother_window, 
-             derivative = input$derivative_order, 
-             abs = input$derivative_abs,
-             download_selection = input$download_selection,
-             id_strategy = input$id_strategy,
-             cor_threshold_decision = input$cor_threshold_decision,
-             min_cor = input$MinCor,
-             threshold_decision = input$threshold_decision, 
-             min_sn = input$MinSNR,
-             signal_selection = input$signal_selection
-             )
-  })
-
-  observe({
-    req(!is.null(preprocessed$data))
-    req(input$share_decision)
-    if(isTruthy(conf$log)) {
-      if(db) {
-        database$insert(user_metadata())
-      } else {
-        loggit("INFO", "trigger",
-               user_metadata())
-      }
-    }
-
   })
   
   #output$event_test <- renderPrint({
