@@ -1,7 +1,5 @@
 library(shiny)
 library(shinyWidgets)
-library(shinydashboard)
-library(shinydashboardPlus)
 library(bslib)
 library(caTools)
 library(data.table)
@@ -10,9 +8,18 @@ library(hyperSpec)
 library(mmand)
 library(plotly)
 library(signal)
+library(bs4Dash)
 webr::install("OpenSpecyWebr", repos = "https://moore-institute-4-plastic-pollution-res.github.io/OpenSpecyWebr/")
 library(OpenSpecyWebr)
-#library(OpenSpecy)
+
+
+# Workaround for Chromium Issue 468227
+downloadButton <- function(...) {
+  tag <- shiny::downloadButton(...)
+  tag$attribs$download <- NULL
+  tag
+}
+
 
 # Load all data ----
 
