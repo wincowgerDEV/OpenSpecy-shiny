@@ -33,8 +33,7 @@ s3_cred.csv
 *.knit.md
 # R Environment Variables
 .Renviron
-# pkgdown site
-docs/
+
 # System files
 *.ini
 *.swp
