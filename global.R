@@ -9,8 +9,10 @@ library(mmand)
 library(plotly)
 library(signal)
 library(bs4Dash)
-webr::install("OpenSpecyWebr", repos = "https://moore-institute-4-plastic-pollution-res.github.io/OpenSpecyWebr/")
-library(OpenSpecyWebr)
+library(digest)
+library(shinyjs)
+#webr::install("OpenSpecyWebr", repos = "https://moore-institute-4-plastic-pollution-res.github.io/OpenSpecyWebr/")
+#library(OpenSpecyWebr)
 
 
 # Workaround for Chromium Issue 468227
