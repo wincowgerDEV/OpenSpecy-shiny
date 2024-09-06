@@ -14,6 +14,9 @@ library(shinyjs)
 #webr::install("OpenSpecyWebr", repos = "https://moore-institute-4-plastic-pollution-res.github.io/OpenSpecyWebr/")
 #library(OpenSpecyWebr)
 
+# Load in all functions in R folder
+lapply(list.files("R", full.names = TRUE), source)
+
 
 # Workaround for Chromium Issue 468227
 downloadButton <- function(...) {
