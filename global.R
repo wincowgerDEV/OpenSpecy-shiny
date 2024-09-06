@@ -11,6 +11,8 @@ library(signal)
 library(bs4Dash)
 library(digest)
 library(shinyjs)
+library(dplyr)
+library(DT)
 #webr::install("OpenSpecyWebr", repos = "https://moore-institute-4-plastic-pollution-res.github.io/OpenSpecyWebr/")
 #library(OpenSpecyWebr)
 
