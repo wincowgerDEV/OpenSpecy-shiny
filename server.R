@@ -89,7 +89,7 @@ function(input, output, session) {
       if (inherits(rout, "simpleWarning") | inherits(checkit, "simpleWarning")) {
         show_alert(
           title = "Something went wrong with reading the data :-(",
-          text =  paste0(if(inherits(rout, "simpleWarning")){paste0("There was an error during data loading that said ", 
+          text =  paste0(if(inherits(rout, "simpleWarning")){paste0("There was an error during data loading that sa ", 
                                                                     rout, ".")} else{""},
                          if(inherits(checkit, "simpleWarning")){paste0(" There was an error during data checking that said ", 
                                                                        checkit, ".")} else{""},
@@ -130,6 +130,7 @@ function(input, output, session) {
     preprocessed$data
   })
   
+  
   #Preprocess ----
   
   # All cleaning of the data happens here. Range selection, Smoothing, and Baseline removing
@@ -169,6 +170,7 @@ function(input, output, session) {
   
   
   # Choose which spectra to use for matching and plotting. 
+  # Add a debounce
   DataR <- reactive({
     req(!is.null(preprocessed$data))
     if(input$active_preprocessing) {
@@ -178,7 +180,7 @@ function(input, output, session) {
       data()
     }
   })
-  
+
   #The data to use in the plot. 
   DataR_plot <- reactive({
     if(is.null(preprocessed$data)){
@@ -394,7 +396,7 @@ function(input, output, session) {
     req(input$active_identification)
     req(!grepl("^ai$", input$id_strategy))
     matches_to_single()[input$event_rows_selected,] %>%
-      .[, !sapply(., OpenSpecy::is_empty_vector), with = F] #%>%
+      .[, !sapply(., is_empty_vector), with = F] #%>%
     # dplyr::select("Material",
     #                  "Plastic Pollution Category", 
     #                  "library_id", everything())
@@ -416,7 +418,7 @@ function(input, output, session) {
   output$eventmetadata <- DT::renderDataTable({
     req(input$active_identification)
     req(!grepl("^ai$", input$id_strategy))
-    datatable(match_metadata(),
+    DT::datatable(match_metadata(),
               escape = FALSE,
               options = list(dom = 't', bSort = F,
                              scrollX = TRUE,
@@ -431,7 +433,7 @@ function(input, output, session) {
   output$event <- DT::renderDataTable({
     req(input$active_identification)
     req(!grepl("^ai$", input$id_strategy))
-    datatable(top_matches() %>%
+    DT::datatable(top_matches() %>%
                 mutate(organization = as.factor(organization),
                        `Plastic Pollution Category` = as.factor(`Plastic Pollution Category`)),
               options = list(searchHighlight = TRUE,
