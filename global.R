@@ -11,6 +11,7 @@ library(signal)
 library(bs4Dash)
 library(digest)
 library(shinyjs)
+library(dplyr)
 #webr::install("OpenSpecyWebr", repos = "https://moore-institute-4-plastic-pollution-res.github.io/OpenSpecyWebr/")
 #library(OpenSpecyWebr)
 
@@ -21,6 +22,8 @@ downloadButton <- function(...) {
   tag$attribs$download <- NULL
   tag
 }
+
+lapply(list.files("R", full.names = TRUE), source)
 
 
 # Load all data ----
