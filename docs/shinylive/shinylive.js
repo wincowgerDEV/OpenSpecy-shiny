@@ -1,4 +1,4 @@
-// Shinylive 0.5.0
+// Shinylive 0.6.0
 // Copyright 2024 Posit, PBC
 import {
   FCJSONtoFC,
@@ -16,14 +16,14 @@ import {
   sleep,
   stringToUint8Array,
   uint8ArrayToString
-} from "./chunk-ZBWGEFNY.js";
+} from "./chunk-AJTY4Q7P.js";
 import {
   __commonJS,
   __privateAdd,
   __privateMethod,
   __require,
   __toESM
-} from "./chunk-BQSUMDFT.js";
+} from "./chunk-5ORBLRID.js";
 
 // node_modules/scheduler/cjs/scheduler.development.js
 var require_scheduler_development = __commonJS({
@@ -497,9 +497,9 @@ var require_react_dom_development = __commonJS({
         if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== "undefined" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart === "function") {
           __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(new Error());
         }
-        var React10 = require_react();
+        var React11 = require_react();
         var Scheduler = require_scheduler();
-        var ReactSharedInternals = React10.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+        var ReactSharedInternals = React11.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
         var suppressWarning = false;
         function setSuppressWarning(newSuppressWarning) {
           {
@@ -1479,17 +1479,17 @@ var require_react_dom_development = __commonJS({
               var sampleLines = sample.stack.split("\n");
               var controlLines = control.stack.split("\n");
               var s = sampleLines.length - 1;
-              var c = controlLines.length - 1;
-              while (s >= 1 && c >= 0 && sampleLines[s] !== controlLines[c]) {
-                c--;
+              var c2 = controlLines.length - 1;
+              while (s >= 1 && c2 >= 0 && sampleLines[s] !== controlLines[c2]) {
+                c2--;
               }
-              for (; s >= 1 && c >= 0; s--, c--) {
-                if (sampleLines[s] !== controlLines[c]) {
-                  if (s !== 1 || c !== 1) {
+              for (; s >= 1 && c2 >= 0; s--, c2--) {
+                if (sampleLines[s] !== controlLines[c2]) {
+                  if (s !== 1 || c2 !== 1) {
                     do {
                       s--;
-                      c--;
-                      if (c < 0 || sampleLines[s] !== controlLines[c]) {
+                      c2--;
+                      if (c2 < 0 || sampleLines[s] !== controlLines[c2]) {
                         var _frame = "\n" + sampleLines[s].replace(" at new ", " at ");
                         if (fn.displayName && _frame.includes("<anonymous>")) {
                           _frame = _frame.replace("<anonymous>", fn.displayName);
@@ -1501,7 +1501,7 @@ var require_react_dom_development = __commonJS({
                         }
                         return _frame;
                       }
-                    } while (s >= 1 && c >= 0);
+                    } while (s >= 1 && c2 >= 0);
                   }
                   break;
                 }
@@ -2104,7 +2104,7 @@ var require_react_dom_development = __commonJS({
           {
             if (props.value == null) {
               if (typeof props.children === "object" && props.children !== null) {
-                React10.Children.forEach(props.children, function(child) {
+                React11.Children.forEach(props.children, function(child) {
                   if (child == null) {
                     return;
                   }
@@ -2536,7 +2536,7 @@ var require_react_dom_development = __commonJS({
           var warnedForNaNValue = false;
           var warnedForInfinityValue = false;
           var camelize = function(string) {
-            return string.replace(hyphenPattern, function(_, character) {
+            return string.replace(hyphenPattern, function(_2, character) {
               return character.toUpperCase();
             });
           };
@@ -3660,7 +3660,7 @@ var require_react_dom_development = __commonJS({
             passiveBrowserEventsSupported = false;
           }
         }
-        function invokeGuardedCallbackProd(name, func, context, a2, b2, c, d2, e, f3) {
+        function invokeGuardedCallbackProd(name, func, context, a2, b2, c2, d2, e, f2) {
           var funcArgs = Array.prototype.slice.call(arguments, 3);
           try {
             func.apply(context, funcArgs);
@@ -3672,7 +3672,7 @@ var require_react_dom_development = __commonJS({
         {
           if (typeof window !== "undefined" && typeof window.dispatchEvent === "function" && typeof document !== "undefined" && typeof document.createEvent === "function") {
             var fakeNode = document.createElement("react");
-            invokeGuardedCallbackImpl = function invokeGuardedCallbackDev(name, func, context, a2, b2, c, d2, e, f3) {
+            invokeGuardedCallbackImpl = function invokeGuardedCallbackDev(name, func, context, a2, b2, c2, d2, e, f2) {
               if (typeof document === "undefined" || document === null) {
                 throw new Error("The `document` global was defined when React was initialized, but is not defined anymore. This can happen in a test environment if a component schedules an update from an asynchronous callback, but the test has already finished running. To solve this, you can either unmount the component at the end of your test (and ensure that any asynchronous operations get canceled in `componentWillUnmount`), or you can change the test itself to be asynchronous.");
               }
@@ -3747,12 +3747,12 @@ var require_react_dom_development = __commonJS({
             caughtError = error2;
           }
         };
-        function invokeGuardedCallback(name, func, context, a2, b2, c, d2, e, f3) {
+        function invokeGuardedCallback(name, func, context, a2, b2, c2, d2, e, f2) {
           hasError = false;
           caughtError = null;
           invokeGuardedCallbackImpl$1.apply(reporter, arguments);
         }
-        function invokeGuardedCallbackAndCatchFirstError(name, func, context, a2, b2, c, d2, e, f3) {
+        function invokeGuardedCallbackAndCatchFirstError(name, func, context, a2, b2, c2, d2, e, f2) {
           invokeGuardedCallback.apply(this, arguments);
           if (hasError) {
             var error2 = clearCaughtError();
@@ -10551,7 +10551,7 @@ var require_react_dom_development = __commonJS({
           }
         }
         var fakeInternalInstance = {};
-        var emptyRefsObject = new React10.Component().refs;
+        var emptyRefsObject = new React11.Component().refs;
         var didWarnAboutStateAssignmentForComponent;
         var didWarnAboutUninitializedState;
         var didWarnAboutGetSnapshotBeforeUpdateWithoutDidUpdate;
@@ -11914,11 +11914,11 @@ var require_react_dom_development = __commonJS({
         var contextStackCursor$1 = createCursor(NO_CONTEXT);
         var contextFiberStackCursor = createCursor(NO_CONTEXT);
         var rootInstanceStackCursor = createCursor(NO_CONTEXT);
-        function requiredContext(c) {
-          if (c === NO_CONTEXT) {
+        function requiredContext(c2) {
+          if (c2 === NO_CONTEXT) {
             throw new Error("Expected host context to exist. This error is likely caused by a bug in React. Please file an issue.");
           }
-          return c;
+          return c2;
         }
         function getRootHostContainer() {
           var rootInstance = requiredContext(rootInstanceStackCursor.current);
@@ -18936,13 +18936,13 @@ var require_react_dom_development = __commonJS({
             }
           }
         }
-        function discreteUpdates(fn, a2, b2, c, d2) {
+        function discreteUpdates(fn, a2, b2, c2, d2) {
           var previousPriority = getCurrentUpdatePriority();
           var prevTransition = ReactCurrentBatchConfig$3.transition;
           try {
             ReactCurrentBatchConfig$3.transition = null;
             setCurrentUpdatePriority(DiscreteEventPriority);
-            return fn(a2, b2, c, d2);
+            return fn(a2, b2, c2, d2);
           } finally {
             setCurrentUpdatePriority(previousPriority);
             ReactCurrentBatchConfig$3.transition = prevTransition;
@@ -21601,18 +21601,18 @@ var require_client = __commonJS({
       exports.hydrateRoot = m2.hydrateRoot;
     } else {
       i = m2.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
-      exports.createRoot = function(c, o) {
+      exports.createRoot = function(c2, o) {
         i.usingClientEntryPoint = true;
         try {
-          return m2.createRoot(c, o);
+          return m2.createRoot(c2, o);
         } finally {
           i.usingClientEntryPoint = false;
         }
       };
-      exports.hydrateRoot = function(c, h, o) {
+      exports.hydrateRoot = function(c2, h2, o) {
         i.usingClientEntryPoint = true;
         try {
-          return m2.hydrateRoot(c, h, o);
+          return m2.hydrateRoot(c2, h2, o);
         } finally {
           i.usingClientEntryPoint = false;
         }
@@ -21652,15 +21652,15 @@ var require_xterm = __commonJS({
           };
         };
         Object.defineProperty(t2, "__esModule", { value: true }), t2.AccessibilityManager = void 0;
-        const n = i2(9042), o = i2(6114), a2 = i2(9924), h = i2(844), c = i2(5596), l2 = i2(4725), d2 = i2(3656);
-        let _ = t2.AccessibilityManager = class extends h.Disposable {
+        const n = i2(9042), o = i2(6114), a2 = i2(9924), h2 = i2(844), c2 = i2(5596), l2 = i2(4725), d2 = i2(3656);
+        let _2 = t2.AccessibilityManager = class extends h2.Disposable {
           constructor(e3, t3) {
             super(), this._terminal = e3, this._renderService = t3, this._liveRegionLineCount = 0, this._charsToConsume = [], this._charsToAnnounce = "", this._accessibilityContainer = document.createElement("div"), this._accessibilityContainer.classList.add("xterm-accessibility"), this._rowContainer = document.createElement("div"), this._rowContainer.setAttribute("role", "list"), this._rowContainer.classList.add("xterm-accessibility-tree"), this._rowElements = [];
             for (let e4 = 0; e4 < this._terminal.rows; e4++)
               this._rowElements[e4] = this._createAccessibilityTreeNode(), this._rowContainer.appendChild(this._rowElements[e4]);
             if (this._topBoundaryFocusListener = (e4) => this._handleBoundaryFocus(e4, 0), this._bottomBoundaryFocusListener = (e4) => this._handleBoundaryFocus(e4, 1), this._rowElements[0].addEventListener("focus", this._topBoundaryFocusListener), this._rowElements[this._rowElements.length - 1].addEventListener("focus", this._bottomBoundaryFocusListener), this._refreshRowsDimensions(), this._accessibilityContainer.appendChild(this._rowContainer), this._liveRegion = document.createElement("div"), this._liveRegion.classList.add("live-region"), this._liveRegion.setAttribute("aria-live", "assertive"), this._accessibilityContainer.appendChild(this._liveRegion), this._liveRegionDebouncer = this.register(new a2.TimeBasedDebouncer(this._renderRows.bind(this))), !this._terminal.element)
               throw new Error("Cannot enable accessibility before Terminal.open");
-            this._terminal.element.insertAdjacentElement("afterbegin", this._accessibilityContainer), this.register(this._terminal.onResize((e4) => this._handleResize(e4.rows))), this.register(this._terminal.onRender((e4) => this._refreshRows(e4.start, e4.end))), this.register(this._terminal.onScroll(() => this._refreshRows())), this.register(this._terminal.onA11yChar((e4) => this._handleChar(e4))), this.register(this._terminal.onLineFeed(() => this._handleChar("\n"))), this.register(this._terminal.onA11yTab((e4) => this._handleTab(e4))), this.register(this._terminal.onKey((e4) => this._handleKey(e4.key))), this.register(this._terminal.onBlur(() => this._clearLiveRegion())), this.register(this._renderService.onDimensionsChange(() => this._refreshRowsDimensions())), this._screenDprMonitor = new c.ScreenDprMonitor(window), this.register(this._screenDprMonitor), this._screenDprMonitor.setListener(() => this._refreshRowsDimensions()), this.register((0, d2.addDisposableDomListener)(window, "resize", () => this._refreshRowsDimensions())), this._refreshRows(), this.register((0, h.toDisposable)(() => {
+            this._terminal.element.insertAdjacentElement("afterbegin", this._accessibilityContainer), this.register(this._terminal.onResize((e4) => this._handleResize(e4.rows))), this.register(this._terminal.onRender((e4) => this._refreshRows(e4.start, e4.end))), this.register(this._terminal.onScroll(() => this._refreshRows())), this.register(this._terminal.onA11yChar((e4) => this._handleChar(e4))), this.register(this._terminal.onLineFeed(() => this._handleChar("\n"))), this.register(this._terminal.onA11yTab((e4) => this._handleTab(e4))), this.register(this._terminal.onKey((e4) => this._handleKey(e4.key))), this.register(this._terminal.onBlur(() => this._clearLiveRegion())), this.register(this._renderService.onDimensionsChange(() => this._refreshRowsDimensions())), this._screenDprMonitor = new c2.ScreenDprMonitor(window), this.register(this._screenDprMonitor), this._screenDprMonitor.setListener(() => this._refreshRowsDimensions()), this.register((0, d2.addDisposableDomListener)(window, "resize", () => this._refreshRowsDimensions())), this._refreshRows(), this.register((0, h2.toDisposable)(() => {
               this._accessibilityContainer.remove(), this._rowElements.length = 0;
             }));
           }
@@ -21732,7 +21732,7 @@ var require_xterm = __commonJS({
             e3.style.height = `${this._renderService.dimensions.css.cell.height}px`;
           }
         };
-        t2.AccessibilityManager = _ = s2([r(1, l2.IRenderService)], _);
+        t2.AccessibilityManager = _2 = s2([r(1, l2.IRenderService)], _2);
       }, 3614: (e2, t2) => {
         function i2(e3) {
           return e3.replace(/\r?\n/g, "\r");
@@ -21800,8 +21800,8 @@ var require_xterm = __commonJS({
           };
         };
         Object.defineProperty(t2, "__esModule", { value: true }), t2.Linkifier2 = void 0;
-        const n = i2(3656), o = i2(8460), a2 = i2(844), h = i2(2585);
-        let c = t2.Linkifier2 = class extends a2.Disposable {
+        const n = i2(3656), o = i2(8460), a2 = i2(844), h2 = i2(2585);
+        let c2 = t2.Linkifier2 = class extends a2.Disposable {
           get currentLink() {
             return this._currentLink;
           }
@@ -21964,7 +21964,7 @@ var require_xterm = __commonJS({
             return { x1: e3, y1: t3, x2: i3, y2: s3, cols: this._bufferService.cols, fg: r2 };
           }
         };
-        t2.Linkifier2 = c = s2([r(0, h.IBufferService)], c);
+        t2.Linkifier2 = c2 = s2([r(0, h2.IBufferService)], c2);
       }, 9042: (e2, t2) => {
         Object.defineProperty(t2, "__esModule", { value: true }), t2.tooMuchOutput = t2.promptLabel = void 0, t2.promptLabel = "Terminal input", t2.tooMuchOutput = "Too much output to announce, navigate to rows manually to read";
       }, 3730: function(e2, t2, i2) {
@@ -21992,22 +21992,22 @@ var require_xterm = __commonJS({
             const s3 = this._bufferService.buffer.lines.get(e3 - 1);
             if (!s3)
               return void t3(void 0);
-            const r2 = [], o2 = this._optionsService.rawOptions.linkHandler, a3 = new n.CellData(), c = s3.getTrimmedLength();
-            let l2 = -1, d2 = -1, _ = false;
-            for (let t4 = 0; t4 < c; t4++)
+            const r2 = [], o2 = this._optionsService.rawOptions.linkHandler, a3 = new n.CellData(), c2 = s3.getTrimmedLength();
+            let l2 = -1, d2 = -1, _2 = false;
+            for (let t4 = 0; t4 < c2; t4++)
               if (-1 !== d2 || s3.hasContent(t4)) {
                 if (s3.loadCell(t4, a3), a3.hasExtendedAttrs() && a3.extended.urlId) {
                   if (-1 === d2) {
                     d2 = t4, l2 = a3.extended.urlId;
                     continue;
                   }
-                  _ = a3.extended.urlId !== l2;
+                  _2 = a3.extended.urlId !== l2;
                 } else
-                  -1 !== d2 && (_ = true);
-                if (_ || -1 !== d2 && t4 === c - 1) {
+                  -1 !== d2 && (_2 = true);
+                if (_2 || -1 !== d2 && t4 === c2 - 1) {
                   const s4 = null === (i3 = this._oscLinkService.getLinkData(l2)) || void 0 === i3 ? void 0 : i3.uri;
                   if (s4) {
-                    const i4 = { start: { x: d2 + 1, y: e3 }, end: { x: t4 + (_ || t4 !== c - 1 ? 0 : 1), y: e3 } };
+                    const i4 = { start: { x: d2 + 1, y: e3 }, end: { x: t4 + (_2 || t4 !== c2 - 1 ? 0 : 1), y: e3 } };
                     let n2 = false;
                     if (!(null == o2 ? void 0 : o2.allowNonHttpProtocols))
                       try {
@@ -22016,7 +22016,7 @@ var require_xterm = __commonJS({
                       } catch (e4) {
                         n2 = true;
                       }
-                    n2 || r2.push({ text: s4, range: i4, activate: (e4, t5) => o2 ? o2.activate(e4, t5, i4) : h(0, t5), hover: (e4, t5) => {
+                    n2 || r2.push({ text: s4, range: i4, activate: (e4, t5) => o2 ? o2.activate(e4, t5, i4) : h2(0, t5), hover: (e4, t5) => {
                       var s5;
                       return null === (s5 = null == o2 ? void 0 : o2.hover) || void 0 === s5 ? void 0 : s5.call(o2, e4, t5, i4);
                     }, leave: (e4, t5) => {
@@ -22024,13 +22024,13 @@ var require_xterm = __commonJS({
                       return null === (s5 = null == o2 ? void 0 : o2.leave) || void 0 === s5 ? void 0 : s5.call(o2, e4, t5, i4);
                     } });
                   }
-                  _ = false, a3.hasExtendedAttrs() && a3.extended.urlId ? (d2 = t4, l2 = a3.extended.urlId) : (d2 = -1, l2 = -1);
+                  _2 = false, a3.hasExtendedAttrs() && a3.extended.urlId ? (d2 = t4, l2 = a3.extended.urlId) : (d2 = -1, l2 = -1);
                 }
               }
             t3(r2);
           }
         };
-        function h(e3, t3) {
+        function h2(e3, t3) {
           if (confirm(`Do you want to navigate to ${t3}?
 
 WARNING: This link could potentially be dangerous`)) {
@@ -22097,7 +22097,7 @@ WARNING: This link could potentially be dangerous`)) {
         t2.ScreenDprMonitor = r;
       }, 3236: (e2, t2, i2) => {
         Object.defineProperty(t2, "__esModule", { value: true }), t2.Terminal = void 0;
-        const s2 = i2(3614), r = i2(3656), n = i2(6465), o = i2(9042), a2 = i2(3730), h = i2(1680), c = i2(3107), l2 = i2(5744), d2 = i2(2950), _ = i2(1296), u2 = i2(428), f3 = i2(4269), v2 = i2(5114), p = i2(8934), g3 = i2(3230), m2 = i2(9312), S3 = i2(4725), C2 = i2(6731), b2 = i2(8055), y2 = i2(8969), w3 = i2(8460), E3 = i2(844), k2 = i2(6114), L2 = i2(8437), D2 = i2(2584), R2 = i2(7399), x3 = i2(5941), A3 = i2(9074), B3 = i2(2585), T2 = i2(5435), M3 = i2(4567), O3 = "undefined" != typeof window ? window.document : null;
+        const s2 = i2(3614), r = i2(3656), n = i2(6465), o = i2(9042), a2 = i2(3730), h2 = i2(1680), c2 = i2(3107), l2 = i2(5744), d2 = i2(2950), _2 = i2(1296), u2 = i2(428), f2 = i2(4269), v3 = i2(5114), p2 = i2(8934), g3 = i2(3230), m2 = i2(9312), S2 = i2(4725), C2 = i2(6731), b2 = i2(8055), y2 = i2(8969), w3 = i2(8460), E3 = i2(844), k3 = i2(6114), L3 = i2(8437), D2 = i2(2584), R3 = i2(7399), x3 = i2(5941), A3 = i2(9074), B3 = i2(2585), T3 = i2(5435), M2 = i2(4567), O3 = "undefined" != typeof window ? window.document : null;
         class P3 extends y2.CoreTerminal {
           get onFocus() {
             return this._onFocus.event;
@@ -22115,7 +22115,7 @@ WARNING: This link could potentially be dangerous`)) {
             return this._onWillOpen.event;
           }
           constructor(e3 = {}) {
-            super(e3), this.browser = k2, this._keyDownHandled = false, this._keyDownSeen = false, this._keyPressHandled = false, this._unprocessedDeadKey = false, this._accessibilityManager = this.register(new E3.MutableDisposable()), this._onCursorMove = this.register(new w3.EventEmitter()), this.onCursorMove = this._onCursorMove.event, this._onKey = this.register(new w3.EventEmitter()), this.onKey = this._onKey.event, this._onRender = this.register(new w3.EventEmitter()), this.onRender = this._onRender.event, this._onSelectionChange = this.register(new w3.EventEmitter()), this.onSelectionChange = this._onSelectionChange.event, this._onTitleChange = this.register(new w3.EventEmitter()), this.onTitleChange = this._onTitleChange.event, this._onBell = this.register(new w3.EventEmitter()), this.onBell = this._onBell.event, this._onFocus = this.register(new w3.EventEmitter()), this._onBlur = this.register(new w3.EventEmitter()), this._onA11yCharEmitter = this.register(new w3.EventEmitter()), this._onA11yTabEmitter = this.register(new w3.EventEmitter()), this._onWillOpen = this.register(new w3.EventEmitter()), this._setup(), this.linkifier2 = this.register(this._instantiationService.createInstance(n.Linkifier2)), this.linkifier2.registerLinkProvider(this._instantiationService.createInstance(a2.OscLinkProvider)), this._decorationService = this._instantiationService.createInstance(A3.DecorationService), this._instantiationService.setService(B3.IDecorationService, this._decorationService), this.register(this._inputHandler.onRequestBell(() => this._onBell.fire())), this.register(this._inputHandler.onRequestRefreshRows((e4, t3) => this.refresh(e4, t3))), this.register(this._inputHandler.onRequestSendFocus(() => this._reportFocus())), this.register(this._inputHandler.onRequestReset(() => this.reset())), this.register(this._inputHandler.onRequestWindowsOptionsReport((e4) => this._reportWindowsOptions(e4))), this.register(this._inputHandler.onColor((e4) => this._handleColorEvent(e4))), this.register((0, w3.forwardEvent)(this._inputHandler.onCursorMove, this._onCursorMove)), this.register((0, w3.forwardEvent)(this._inputHandler.onTitleChange, this._onTitleChange)), this.register((0, w3.forwardEvent)(this._inputHandler.onA11yChar, this._onA11yCharEmitter)), this.register((0, w3.forwardEvent)(this._inputHandler.onA11yTab, this._onA11yTabEmitter)), this.register(this._bufferService.onResize((e4) => this._afterResize(e4.cols, e4.rows))), this.register((0, E3.toDisposable)(() => {
+            super(e3), this.browser = k3, this._keyDownHandled = false, this._keyDownSeen = false, this._keyPressHandled = false, this._unprocessedDeadKey = false, this._accessibilityManager = this.register(new E3.MutableDisposable()), this._onCursorMove = this.register(new w3.EventEmitter()), this.onCursorMove = this._onCursorMove.event, this._onKey = this.register(new w3.EventEmitter()), this.onKey = this._onKey.event, this._onRender = this.register(new w3.EventEmitter()), this.onRender = this._onRender.event, this._onSelectionChange = this.register(new w3.EventEmitter()), this.onSelectionChange = this._onSelectionChange.event, this._onTitleChange = this.register(new w3.EventEmitter()), this.onTitleChange = this._onTitleChange.event, this._onBell = this.register(new w3.EventEmitter()), this.onBell = this._onBell.event, this._onFocus = this.register(new w3.EventEmitter()), this._onBlur = this.register(new w3.EventEmitter()), this._onA11yCharEmitter = this.register(new w3.EventEmitter()), this._onA11yTabEmitter = this.register(new w3.EventEmitter()), this._onWillOpen = this.register(new w3.EventEmitter()), this._setup(), this.linkifier2 = this.register(this._instantiationService.createInstance(n.Linkifier2)), this.linkifier2.registerLinkProvider(this._instantiationService.createInstance(a2.OscLinkProvider)), this._decorationService = this._instantiationService.createInstance(A3.DecorationService), this._instantiationService.setService(B3.IDecorationService, this._decorationService), this.register(this._inputHandler.onRequestBell(() => this._onBell.fire())), this.register(this._inputHandler.onRequestRefreshRows((e4, t3) => this.refresh(e4, t3))), this.register(this._inputHandler.onRequestSendFocus(() => this._reportFocus())), this.register(this._inputHandler.onRequestReset(() => this.reset())), this.register(this._inputHandler.onRequestWindowsOptionsReport((e4) => this._reportWindowsOptions(e4))), this.register(this._inputHandler.onColor((e4) => this._handleColorEvent(e4))), this.register((0, w3.forwardEvent)(this._inputHandler.onCursorMove, this._onCursorMove)), this.register((0, w3.forwardEvent)(this._inputHandler.onTitleChange, this._onTitleChange)), this.register((0, w3.forwardEvent)(this._inputHandler.onA11yChar, this._onA11yCharEmitter)), this.register((0, w3.forwardEvent)(this._inputHandler.onA11yTab, this._onA11yTabEmitter)), this.register(this._bufferService.onResize((e4) => this._afterResize(e4.cols, e4.rows))), this.register((0, E3.toDisposable)(() => {
               var e4, t3;
               this._customKeyEventHandler = void 0, null === (t3 = null === (e4 = this.element) || void 0 === e4 ? void 0 : e4.parentNode) || void 0 === t3 || t3.removeChild(this.element);
             }));
@@ -22165,7 +22165,7 @@ WARNING: This link could potentially be dangerous`)) {
             this.textarea && this.textarea.focus({ preventScroll: true });
           }
           _handleScreenReaderModeOptionChange(e3) {
-            e3 ? !this._accessibilityManager.value && this._renderService && (this._accessibilityManager.value = this._instantiationService.createInstance(M3.AccessibilityManager, this)) : this._accessibilityManager.clear();
+            e3 ? !this._accessibilityManager.value && this._renderService && (this._accessibilityManager.value = this._instantiationService.createInstance(M2.AccessibilityManager, this)) : this._accessibilityManager.clear();
           }
           _handleTextAreaFocus(e3) {
             this.coreService.decPrivateModes.sendFocus && this.coreService.triggerDataEvent(D2.C0.ESC + "[I"), this.updateCursorStyle(e3), this.element.classList.add("focus"), this._showCursor(), this._onFocus.fire();
@@ -22191,11 +22191,11 @@ WARNING: This link could potentially be dangerous`)) {
               this.hasSelection() && (0, s2.copyHandler)(e4, this._selectionService);
             }));
             const e3 = (e4) => (0, s2.handlePasteEvent)(e4, this.textarea, this.coreService, this.optionsService);
-            this.register((0, r.addDisposableDomListener)(this.textarea, "paste", e3)), this.register((0, r.addDisposableDomListener)(this.element, "paste", e3)), k2.isFirefox ? this.register((0, r.addDisposableDomListener)(this.element, "mousedown", (e4) => {
+            this.register((0, r.addDisposableDomListener)(this.textarea, "paste", e3)), this.register((0, r.addDisposableDomListener)(this.element, "paste", e3)), k3.isFirefox ? this.register((0, r.addDisposableDomListener)(this.element, "mousedown", (e4) => {
               2 === e4.button && (0, s2.rightClickHandler)(e4, this.textarea, this.screenElement, this._selectionService, this.options.rightClickSelectsWord);
             })) : this.register((0, r.addDisposableDomListener)(this.element, "contextmenu", (e4) => {
               (0, s2.rightClickHandler)(e4, this.textarea, this.screenElement, this._selectionService, this.options.rightClickSelectsWord);
-            })), k2.isLinux && this.register((0, r.addDisposableDomListener)(this.element, "auxclick", (e4) => {
+            })), k3.isLinux && this.register((0, r.addDisposableDomListener)(this.element, "auxclick", (e4) => {
               1 === e4.button && (0, s2.moveTextAreaUnderMouseCursor)(e4, this.textarea, this.screenElement);
             }));
           }
@@ -22208,23 +22208,23 @@ WARNING: This link could potentially be dangerous`)) {
               throw new Error("Terminal requires a parent element.");
             e3.isConnected || this._logService.debug("Terminal.open was called on an element that was not attached to the DOM"), this._document = e3.ownerDocument, this.element = this._document.createElement("div"), this.element.dir = "ltr", this.element.classList.add("terminal"), this.element.classList.add("xterm"), e3.appendChild(this.element);
             const i3 = O3.createDocumentFragment();
-            this._viewportElement = O3.createElement("div"), this._viewportElement.classList.add("xterm-viewport"), i3.appendChild(this._viewportElement), this._viewportScrollArea = O3.createElement("div"), this._viewportScrollArea.classList.add("xterm-scroll-area"), this._viewportElement.appendChild(this._viewportScrollArea), this.screenElement = O3.createElement("div"), this.screenElement.classList.add("xterm-screen"), this._helperContainer = O3.createElement("div"), this._helperContainer.classList.add("xterm-helpers"), this.screenElement.appendChild(this._helperContainer), i3.appendChild(this.screenElement), this.textarea = O3.createElement("textarea"), this.textarea.classList.add("xterm-helper-textarea"), this.textarea.setAttribute("aria-label", o.promptLabel), k2.isChromeOS || this.textarea.setAttribute("aria-multiline", "false"), this.textarea.setAttribute("autocorrect", "off"), this.textarea.setAttribute("autocapitalize", "off"), this.textarea.setAttribute("spellcheck", "false"), this.textarea.tabIndex = 0, this._coreBrowserService = this._instantiationService.createInstance(v2.CoreBrowserService, this.textarea, null !== (t3 = this._document.defaultView) && void 0 !== t3 ? t3 : window), this._instantiationService.setService(S3.ICoreBrowserService, this._coreBrowserService), this.register((0, r.addDisposableDomListener)(this.textarea, "focus", (e4) => this._handleTextAreaFocus(e4))), this.register((0, r.addDisposableDomListener)(this.textarea, "blur", () => this._handleTextAreaBlur())), this._helperContainer.appendChild(this.textarea), this._charSizeService = this._instantiationService.createInstance(u2.CharSizeService, this._document, this._helperContainer), this._instantiationService.setService(S3.ICharSizeService, this._charSizeService), this._themeService = this._instantiationService.createInstance(C2.ThemeService), this._instantiationService.setService(S3.IThemeService, this._themeService), this._characterJoinerService = this._instantiationService.createInstance(f3.CharacterJoinerService), this._instantiationService.setService(S3.ICharacterJoinerService, this._characterJoinerService), this._renderService = this.register(this._instantiationService.createInstance(g3.RenderService, this.rows, this.screenElement)), this._instantiationService.setService(S3.IRenderService, this._renderService), this.register(this._renderService.onRenderedViewportChange((e4) => this._onRender.fire(e4))), this.onResize((e4) => this._renderService.resize(e4.cols, e4.rows)), this._compositionView = O3.createElement("div"), this._compositionView.classList.add("composition-view"), this._compositionHelper = this._instantiationService.createInstance(d2.CompositionHelper, this.textarea, this._compositionView), this._helperContainer.appendChild(this._compositionView), this.element.appendChild(i3);
+            this._viewportElement = O3.createElement("div"), this._viewportElement.classList.add("xterm-viewport"), i3.appendChild(this._viewportElement), this._viewportScrollArea = O3.createElement("div"), this._viewportScrollArea.classList.add("xterm-scroll-area"), this._viewportElement.appendChild(this._viewportScrollArea), this.screenElement = O3.createElement("div"), this.screenElement.classList.add("xterm-screen"), this._helperContainer = O3.createElement("div"), this._helperContainer.classList.add("xterm-helpers"), this.screenElement.appendChild(this._helperContainer), i3.appendChild(this.screenElement), this.textarea = O3.createElement("textarea"), this.textarea.classList.add("xterm-helper-textarea"), this.textarea.setAttribute("aria-label", o.promptLabel), k3.isChromeOS || this.textarea.setAttribute("aria-multiline", "false"), this.textarea.setAttribute("autocorrect", "off"), this.textarea.setAttribute("autocapitalize", "off"), this.textarea.setAttribute("spellcheck", "false"), this.textarea.tabIndex = 0, this._coreBrowserService = this._instantiationService.createInstance(v3.CoreBrowserService, this.textarea, null !== (t3 = this._document.defaultView) && void 0 !== t3 ? t3 : window), this._instantiationService.setService(S2.ICoreBrowserService, this._coreBrowserService), this.register((0, r.addDisposableDomListener)(this.textarea, "focus", (e4) => this._handleTextAreaFocus(e4))), this.register((0, r.addDisposableDomListener)(this.textarea, "blur", () => this._handleTextAreaBlur())), this._helperContainer.appendChild(this.textarea), this._charSizeService = this._instantiationService.createInstance(u2.CharSizeService, this._document, this._helperContainer), this._instantiationService.setService(S2.ICharSizeService, this._charSizeService), this._themeService = this._instantiationService.createInstance(C2.ThemeService), this._instantiationService.setService(S2.IThemeService, this._themeService), this._characterJoinerService = this._instantiationService.createInstance(f2.CharacterJoinerService), this._instantiationService.setService(S2.ICharacterJoinerService, this._characterJoinerService), this._renderService = this.register(this._instantiationService.createInstance(g3.RenderService, this.rows, this.screenElement)), this._instantiationService.setService(S2.IRenderService, this._renderService), this.register(this._renderService.onRenderedViewportChange((e4) => this._onRender.fire(e4))), this.onResize((e4) => this._renderService.resize(e4.cols, e4.rows)), this._compositionView = O3.createElement("div"), this._compositionView.classList.add("composition-view"), this._compositionHelper = this._instantiationService.createInstance(d2.CompositionHelper, this.textarea, this._compositionView), this._helperContainer.appendChild(this._compositionView), this.element.appendChild(i3);
             try {
               this._onWillOpen.fire(this.element);
             } catch (e4) {
             }
-            this._renderService.hasRenderer() || this._renderService.setRenderer(this._createRenderer()), this._mouseService = this._instantiationService.createInstance(p.MouseService), this._instantiationService.setService(S3.IMouseService, this._mouseService), this.viewport = this._instantiationService.createInstance(h.Viewport, this._viewportElement, this._viewportScrollArea), this.viewport.onRequestScrollLines((e4) => this.scrollLines(e4.amount, e4.suppressScrollEvent, 1)), this.register(this._inputHandler.onRequestSyncScrollBar(() => this.viewport.syncScrollArea())), this.register(this.viewport), this.register(this.onCursorMove(() => {
+            this._renderService.hasRenderer() || this._renderService.setRenderer(this._createRenderer()), this._mouseService = this._instantiationService.createInstance(p2.MouseService), this._instantiationService.setService(S2.IMouseService, this._mouseService), this.viewport = this._instantiationService.createInstance(h2.Viewport, this._viewportElement, this._viewportScrollArea), this.viewport.onRequestScrollLines((e4) => this.scrollLines(e4.amount, e4.suppressScrollEvent, 1)), this.register(this._inputHandler.onRequestSyncScrollBar(() => this.viewport.syncScrollArea())), this.register(this.viewport), this.register(this.onCursorMove(() => {
               this._renderService.handleCursorMove(), this._syncTextArea();
-            })), this.register(this.onResize(() => this._renderService.handleResize(this.cols, this.rows))), this.register(this.onBlur(() => this._renderService.handleBlur())), this.register(this.onFocus(() => this._renderService.handleFocus())), this.register(this._renderService.onDimensionsChange(() => this.viewport.syncScrollArea())), this._selectionService = this.register(this._instantiationService.createInstance(m2.SelectionService, this.element, this.screenElement, this.linkifier2)), this._instantiationService.setService(S3.ISelectionService, this._selectionService), this.register(this._selectionService.onRequestScrollLines((e4) => this.scrollLines(e4.amount, e4.suppressScrollEvent))), this.register(this._selectionService.onSelectionChange(() => this._onSelectionChange.fire())), this.register(this._selectionService.onRequestRedraw((e4) => this._renderService.handleSelectionChanged(e4.start, e4.end, e4.columnSelectMode))), this.register(this._selectionService.onLinuxMouseSelection((e4) => {
+            })), this.register(this.onResize(() => this._renderService.handleResize(this.cols, this.rows))), this.register(this.onBlur(() => this._renderService.handleBlur())), this.register(this.onFocus(() => this._renderService.handleFocus())), this.register(this._renderService.onDimensionsChange(() => this.viewport.syncScrollArea())), this._selectionService = this.register(this._instantiationService.createInstance(m2.SelectionService, this.element, this.screenElement, this.linkifier2)), this._instantiationService.setService(S2.ISelectionService, this._selectionService), this.register(this._selectionService.onRequestScrollLines((e4) => this.scrollLines(e4.amount, e4.suppressScrollEvent))), this.register(this._selectionService.onSelectionChange(() => this._onSelectionChange.fire())), this.register(this._selectionService.onRequestRedraw((e4) => this._renderService.handleSelectionChanged(e4.start, e4.end, e4.columnSelectMode))), this.register(this._selectionService.onLinuxMouseSelection((e4) => {
               this.textarea.value = e4, this.textarea.focus(), this.textarea.select();
             })), this.register(this._onScroll.event((e4) => {
               this.viewport.syncScrollArea(), this._selectionService.refresh();
-            })), this.register((0, r.addDisposableDomListener)(this._viewportElement, "scroll", () => this._selectionService.refresh())), this.linkifier2.attachToDom(this.screenElement, this._mouseService, this._renderService), this.register(this._instantiationService.createInstance(c.BufferDecorationRenderer, this.screenElement)), this.register((0, r.addDisposableDomListener)(this.element, "mousedown", (e4) => this._selectionService.handleMouseDown(e4))), this.coreMouseService.areMouseEventsActive ? (this._selectionService.disable(), this.element.classList.add("enable-mouse-events")) : this._selectionService.enable(), this.options.screenReaderMode && (this._accessibilityManager.value = this._instantiationService.createInstance(M3.AccessibilityManager, this)), this.register(this.optionsService.onSpecificOptionChange("screenReaderMode", (e4) => this._handleScreenReaderModeOptionChange(e4))), this.options.overviewRulerWidth && (this._overviewRulerRenderer = this.register(this._instantiationService.createInstance(l2.OverviewRulerRenderer, this._viewportElement, this.screenElement))), this.optionsService.onSpecificOptionChange("overviewRulerWidth", (e4) => {
+            })), this.register((0, r.addDisposableDomListener)(this._viewportElement, "scroll", () => this._selectionService.refresh())), this.linkifier2.attachToDom(this.screenElement, this._mouseService, this._renderService), this.register(this._instantiationService.createInstance(c2.BufferDecorationRenderer, this.screenElement)), this.register((0, r.addDisposableDomListener)(this.element, "mousedown", (e4) => this._selectionService.handleMouseDown(e4))), this.coreMouseService.areMouseEventsActive ? (this._selectionService.disable(), this.element.classList.add("enable-mouse-events")) : this._selectionService.enable(), this.options.screenReaderMode && (this._accessibilityManager.value = this._instantiationService.createInstance(M2.AccessibilityManager, this)), this.register(this.optionsService.onSpecificOptionChange("screenReaderMode", (e4) => this._handleScreenReaderModeOptionChange(e4))), this.options.overviewRulerWidth && (this._overviewRulerRenderer = this.register(this._instantiationService.createInstance(l2.OverviewRulerRenderer, this._viewportElement, this.screenElement))), this.optionsService.onSpecificOptionChange("overviewRulerWidth", (e4) => {
               !this._overviewRulerRenderer && e4 && this._viewportElement && this.screenElement && (this._overviewRulerRenderer = this.register(this._instantiationService.createInstance(l2.OverviewRulerRenderer, this._viewportElement, this.screenElement)));
             }), this._charSizeService.measure(), this.refresh(0, this.rows - 1), this._initGlobal(), this.bindMouse();
           }
           _createRenderer() {
-            return this._instantiationService.createInstance(_.DomRenderer, this.element, this.screenElement, this._viewportElement, this.linkifier2);
+            return this._instantiationService.createInstance(_2.DomRenderer, this.element, this.screenElement, this._viewportElement, this.linkifier2);
           }
           bindMouse() {
             const e3 = this, t3 = this.element;
@@ -22361,7 +22361,7 @@ WARNING: This link could potentially be dangerous`)) {
             if (!t3 && !this._compositionHelper.keydown(e3))
               return this.options.scrollOnUserInput && this.buffer.ybase !== this.buffer.ydisp && this.scrollToBottom(), false;
             t3 || "Dead" !== e3.key && "AltGraph" !== e3.key || (this._unprocessedDeadKey = true);
-            const i3 = (0, R2.evaluateKeyboardEvent)(e3, this.coreService.decPrivateModes.applicationCursorKeys, this.browser.isMac, this.options.macOptionIsMeta);
+            const i3 = (0, R3.evaluateKeyboardEvent)(e3, this.coreService.decPrivateModes.applicationCursorKeys, this.browser.isMac, this.options.macOptionIsMeta);
             if (this.updateCursorStyle(e3), 3 === i3.type || 2 === i3.type) {
               const t4 = this.rows - 1;
               return this.scrollLines(2 === i3.type ? -t4 : t4), this.cancel(e3, true);
@@ -22416,7 +22416,7 @@ WARNING: This link could potentially be dangerous`)) {
             if (0 !== this.buffer.ybase || 0 !== this.buffer.y) {
               this.buffer.clearAllMarkers(), this.buffer.lines.set(0, this.buffer.lines.get(this.buffer.ybase + this.buffer.y)), this.buffer.lines.length = 1, this.buffer.ydisp = 0, this.buffer.ybase = 0, this.buffer.y = 0;
               for (let e4 = 1; e4 < this.rows; e4++)
-                this.buffer.lines.push(this.buffer.getBlankLine(L2.DEFAULT_ATTR_DATA));
+                this.buffer.lines.push(this.buffer.getBlankLine(L3.DEFAULT_ATTR_DATA));
               this._onScroll.fire({ position: this.buffer.ydisp, source: 0 }), null === (e3 = this.viewport) || void 0 === e3 || e3.reset(), this.refresh(0, this.rows - 1);
             }
           }
@@ -22437,11 +22437,11 @@ WARNING: This link could potentially be dangerous`)) {
           _reportWindowsOptions(e3) {
             if (this._renderService)
               switch (e3) {
-                case T2.WindowsOptionsReportType.GET_WIN_SIZE_PIXELS:
+                case T3.WindowsOptionsReportType.GET_WIN_SIZE_PIXELS:
                   const e4 = this._renderService.dimensions.css.canvas.width.toFixed(0), t3 = this._renderService.dimensions.css.canvas.height.toFixed(0);
                   this.coreService.triggerDataEvent(`${D2.C0.ESC}[4;${t3};${e4}t`);
                   break;
-                case T2.WindowsOptionsReportType.GET_CELL_SIZE_PIXELS:
+                case T3.WindowsOptionsReportType.GET_CELL_SIZE_PIXELS:
                   const i3 = this._renderService.dimensions.css.cell.width.toFixed(0), s3 = this._renderService.dimensions.css.cell.height.toFixed(0);
                   this.coreService.triggerDataEvent(`${D2.C0.ESC}[6;${s3};${i3}t`);
               }
@@ -22494,10 +22494,10 @@ WARNING: This link could potentially be dangerous`)) {
           };
         };
         Object.defineProperty(t2, "__esModule", { value: true }), t2.Viewport = void 0;
-        const n = i2(3656), o = i2(4725), a2 = i2(8460), h = i2(844), c = i2(2585);
-        let l2 = t2.Viewport = class extends h.Disposable {
-          constructor(e3, t3, i3, s3, r2, o2, h2, c2) {
-            super(), this._viewportElement = e3, this._scrollArea = t3, this._bufferService = i3, this._optionsService = s3, this._charSizeService = r2, this._renderService = o2, this._coreBrowserService = h2, this.scrollBarWidth = 0, this._currentRowHeight = 0, this._currentDeviceCellHeight = 0, this._lastRecordedBufferLength = 0, this._lastRecordedViewportHeight = 0, this._lastRecordedBufferHeight = 0, this._lastTouchY = 0, this._lastScrollTop = 0, this._wheelPartialScroll = 0, this._refreshAnimationFrame = null, this._ignoreNextScrollEvent = false, this._smoothScrollState = { startTime: 0, origin: -1, target: -1 }, this._onRequestScrollLines = this.register(new a2.EventEmitter()), this.onRequestScrollLines = this._onRequestScrollLines.event, this.scrollBarWidth = this._viewportElement.offsetWidth - this._scrollArea.offsetWidth || 15, this.register((0, n.addDisposableDomListener)(this._viewportElement, "scroll", this._handleScroll.bind(this))), this._activeBuffer = this._bufferService.buffer, this.register(this._bufferService.buffers.onBufferActivate((e4) => this._activeBuffer = e4.activeBuffer)), this._renderDimensions = this._renderService.dimensions, this.register(this._renderService.onDimensionsChange((e4) => this._renderDimensions = e4)), this._handleThemeChange(c2.colors), this.register(c2.onChangeColors((e4) => this._handleThemeChange(e4))), this.register(this._optionsService.onSpecificOptionChange("scrollback", () => this.syncScrollArea())), setTimeout(() => this.syncScrollArea());
+        const n = i2(3656), o = i2(4725), a2 = i2(8460), h2 = i2(844), c2 = i2(2585);
+        let l2 = t2.Viewport = class extends h2.Disposable {
+          constructor(e3, t3, i3, s3, r2, o2, h3, c3) {
+            super(), this._viewportElement = e3, this._scrollArea = t3, this._bufferService = i3, this._optionsService = s3, this._charSizeService = r2, this._renderService = o2, this._coreBrowserService = h3, this.scrollBarWidth = 0, this._currentRowHeight = 0, this._currentDeviceCellHeight = 0, this._lastRecordedBufferLength = 0, this._lastRecordedViewportHeight = 0, this._lastRecordedBufferHeight = 0, this._lastTouchY = 0, this._lastScrollTop = 0, this._wheelPartialScroll = 0, this._refreshAnimationFrame = null, this._ignoreNextScrollEvent = false, this._smoothScrollState = { startTime: 0, origin: -1, target: -1 }, this._onRequestScrollLines = this.register(new a2.EventEmitter()), this.onRequestScrollLines = this._onRequestScrollLines.event, this.scrollBarWidth = this._viewportElement.offsetWidth - this._scrollArea.offsetWidth || 15, this.register((0, n.addDisposableDomListener)(this._viewportElement, "scroll", this._handleScroll.bind(this))), this._activeBuffer = this._bufferService.buffer, this.register(this._bufferService.buffers.onBufferActivate((e4) => this._activeBuffer = e4.activeBuffer)), this._renderDimensions = this._renderService.dimensions, this.register(this._renderService.onDimensionsChange((e4) => this._renderDimensions = e4)), this._handleThemeChange(c3.colors), this.register(c3.onChangeColors((e4) => this._handleThemeChange(e4))), this.register(this._optionsService.onSpecificOptionChange("scrollback", () => this.syncScrollArea())), setTimeout(() => this.syncScrollArea());
           }
           _handleThemeChange(e3) {
             this._viewportElement.style.backgroundColor = e3.background.css;
@@ -22600,7 +22600,7 @@ WARNING: This link could potentially be dangerous`)) {
             return this._lastTouchY = e3.touches[0].pageY, 0 !== t3 && (this._viewportElement.scrollTop += t3, this._bubbleScroll(e3, t3));
           }
         };
-        t2.Viewport = l2 = s2([r(2, c.IBufferService), r(3, c.IOptionsService), r(4, o.ICharSizeService), r(5, o.IRenderService), r(6, o.ICoreBrowserService), r(7, o.IThemeService)], l2);
+        t2.Viewport = l2 = s2([r(2, c2.IBufferService), r(3, c2.IOptionsService), r(4, o.ICharSizeService), r(5, o.IRenderService), r(6, o.ICoreBrowserService), r(7, o.IThemeService)], l2);
       }, 3107: function(e2, t2, i2) {
         var s2 = this && this.__decorate || function(e3, t3, i3, s3) {
           var r2, n2 = arguments.length, o2 = n2 < 3 ? t3 : null === s3 ? s3 = Object.getOwnPropertyDescriptor(t3, i3) : s3;
@@ -22616,8 +22616,8 @@ WARNING: This link could potentially be dangerous`)) {
           };
         };
         Object.defineProperty(t2, "__esModule", { value: true }), t2.BufferDecorationRenderer = void 0;
-        const n = i2(3656), o = i2(4725), a2 = i2(844), h = i2(2585);
-        let c = t2.BufferDecorationRenderer = class extends a2.Disposable {
+        const n = i2(3656), o = i2(4725), a2 = i2(844), h2 = i2(2585);
+        let c2 = t2.BufferDecorationRenderer = class extends a2.Disposable {
           constructor(e3, t3, i3, s3) {
             super(), this._screenElement = e3, this._bufferService = t3, this._decorationService = i3, this._renderService = s3, this._decorationElements = /* @__PURE__ */ new Map(), this._altBufferIsActive = false, this._dimensionsChanged = false, this._container = document.createElement("div"), this._container.classList.add("xterm-decoration-container"), this._screenElement.appendChild(this._container), this.register(this._renderService.onRenderedViewportChange(() => this._doRefreshDecorations())), this.register(this._renderService.onDimensionsChange(() => {
               this._dimensionsChanged = true, this._queueRefresh();
@@ -22670,7 +22670,7 @@ WARNING: This link could potentially be dangerous`)) {
             null === (t3 = this._decorationElements.get(e3)) || void 0 === t3 || t3.remove(), this._decorationElements.delete(e3), e3.dispose();
           }
         };
-        t2.BufferDecorationRenderer = c = s2([r(1, h.IBufferService), r(2, h.IDecorationService), r(3, o.IRenderService)], c);
+        t2.BufferDecorationRenderer = c2 = s2([r(1, h2.IBufferService), r(2, h2.IDecorationService), r(3, o.IRenderService)], c2);
       }, 5871: (e2, t2) => {
         Object.defineProperty(t2, "__esModule", { value: true }), t2.ColorZoneStore = void 0, t2.ColorZoneStore = class {
           constructor() {
@@ -22724,18 +22724,18 @@ WARNING: This link could potentially be dangerous`)) {
           };
         };
         Object.defineProperty(t2, "__esModule", { value: true }), t2.OverviewRulerRenderer = void 0;
-        const n = i2(5871), o = i2(3656), a2 = i2(4725), h = i2(844), c = i2(2585), l2 = { full: 0, left: 0, center: 0, right: 0 }, d2 = { full: 0, left: 0, center: 0, right: 0 }, _ = { full: 0, left: 0, center: 0, right: 0 };
-        let u2 = t2.OverviewRulerRenderer = class extends h.Disposable {
+        const n = i2(5871), o = i2(3656), a2 = i2(4725), h2 = i2(844), c2 = i2(2585), l2 = { full: 0, left: 0, center: 0, right: 0 }, d2 = { full: 0, left: 0, center: 0, right: 0 }, _2 = { full: 0, left: 0, center: 0, right: 0 };
+        let u2 = t2.OverviewRulerRenderer = class extends h2.Disposable {
           get _width() {
             return this._optionsService.options.overviewRulerWidth || 0;
           }
           constructor(e3, t3, i3, s3, r2, o2, a3) {
-            var c2;
-            super(), this._viewportElement = e3, this._screenElement = t3, this._bufferService = i3, this._decorationService = s3, this._renderService = r2, this._optionsService = o2, this._coreBrowseService = a3, this._colorZoneStore = new n.ColorZoneStore(), this._shouldUpdateDimensions = true, this._shouldUpdateAnchor = true, this._lastKnownBufferLength = 0, this._canvas = document.createElement("canvas"), this._canvas.classList.add("xterm-decoration-overview-ruler"), this._refreshCanvasDimensions(), null === (c2 = this._viewportElement.parentElement) || void 0 === c2 || c2.insertBefore(this._canvas, this._viewportElement);
+            var c3;
+            super(), this._viewportElement = e3, this._screenElement = t3, this._bufferService = i3, this._decorationService = s3, this._renderService = r2, this._optionsService = o2, this._coreBrowseService = a3, this._colorZoneStore = new n.ColorZoneStore(), this._shouldUpdateDimensions = true, this._shouldUpdateAnchor = true, this._lastKnownBufferLength = 0, this._canvas = document.createElement("canvas"), this._canvas.classList.add("xterm-decoration-overview-ruler"), this._refreshCanvasDimensions(), null === (c3 = this._viewportElement.parentElement) || void 0 === c3 || c3.insertBefore(this._canvas, this._viewportElement);
             const l3 = this._canvas.getContext("2d");
             if (!l3)
               throw new Error("Ctx cannot be null");
-            this._ctx = l3, this._registerDecorationListeners(), this._registerBufferChangeListeners(), this._registerDimensionChangeListeners(), this.register((0, h.toDisposable)(() => {
+            this._ctx = l3, this._registerDecorationListeners(), this._registerBufferChangeListeners(), this._registerDimensionChangeListeners(), this.register((0, h2.toDisposable)(() => {
               var e4;
               null === (e4 = this._canvas) || void 0 === e4 || e4.remove();
             }));
@@ -22757,7 +22757,7 @@ WARNING: This link could potentially be dangerous`)) {
           }
           _refreshDrawConstants() {
             const e3 = Math.floor(this._canvas.width / 3), t3 = Math.ceil(this._canvas.width / 3);
-            d2.full = this._canvas.width, d2.left = e3, d2.center = t3, d2.right = e3, this._refreshDrawHeightConstants(), _.full = 0, _.left = 0, _.center = d2.left, _.right = d2.left + d2.center;
+            d2.full = this._canvas.width, d2.left = e3, d2.center = t3, d2.right = e3, this._refreshDrawHeightConstants(), _2.full = 0, _2.left = 0, _2.center = d2.left, _2.right = d2.left + d2.center;
           }
           _refreshDrawHeightConstants() {
             l2.full = Math.round(2 * this._coreBrowseService.dpr);
@@ -22783,7 +22783,7 @@ WARNING: This link could potentially be dangerous`)) {
             this._shouldUpdateDimensions = false, this._shouldUpdateAnchor = false;
           }
           _renderColorZone(e3) {
-            this._ctx.fillStyle = e3.color, this._ctx.fillRect(_[e3.position || "full"], Math.round((this._canvas.height - 1) * (e3.startBufferLine / this._bufferService.buffers.active.lines.length) - l2[e3.position || "full"] / 2), d2[e3.position || "full"], Math.round((this._canvas.height - 1) * ((e3.endBufferLine - e3.startBufferLine) / this._bufferService.buffers.active.lines.length) + l2[e3.position || "full"]));
+            this._ctx.fillStyle = e3.color, this._ctx.fillRect(_2[e3.position || "full"], Math.round((this._canvas.height - 1) * (e3.startBufferLine / this._bufferService.buffers.active.lines.length) - l2[e3.position || "full"] / 2), d2[e3.position || "full"], Math.round((this._canvas.height - 1) * ((e3.endBufferLine - e3.startBufferLine) / this._bufferService.buffers.active.lines.length) + l2[e3.position || "full"]));
           }
           _queueRefresh(e3, t3) {
             this._shouldUpdateDimensions = e3 || this._shouldUpdateDimensions, this._shouldUpdateAnchor = t3 || this._shouldUpdateAnchor, void 0 === this._animationFrame && (this._animationFrame = this._coreBrowseService.window.requestAnimationFrame(() => {
@@ -22791,7 +22791,7 @@ WARNING: This link could potentially be dangerous`)) {
             }));
           }
         };
-        t2.OverviewRulerRenderer = u2 = s2([r(2, c.IBufferService), r(3, c.IDecorationService), r(4, a2.IRenderService), r(5, c.IOptionsService), r(6, a2.ICoreBrowserService)], u2);
+        t2.OverviewRulerRenderer = u2 = s2([r(2, c2.IBufferService), r(3, c2.IDecorationService), r(4, a2.IRenderService), r(5, c2.IOptionsService), r(6, a2.ICoreBrowserService)], u2);
       }, 2950: function(e2, t2, i2) {
         var s2 = this && this.__decorate || function(e3, t3, i3, s3) {
           var r2, n2 = arguments.length, o2 = n2 < 3 ? t3 : null === s3 ? s3 = Object.getOwnPropertyDescriptor(t3, i3) : s3;
@@ -22808,7 +22808,7 @@ WARNING: This link could potentially be dangerous`)) {
         };
         Object.defineProperty(t2, "__esModule", { value: true }), t2.CompositionHelper = void 0;
         const n = i2(4725), o = i2(2585), a2 = i2(2584);
-        let h = t2.CompositionHelper = class {
+        let h2 = t2.CompositionHelper = class {
           get isComposing() {
             return this._isComposing;
           }
@@ -22872,17 +22872,17 @@ WARNING: This link could potentially be dangerous`)) {
             }
           }
         };
-        t2.CompositionHelper = h = s2([r(2, o.IBufferService), r(3, o.IOptionsService), r(4, o.ICoreService), r(5, n.IRenderService)], h);
+        t2.CompositionHelper = h2 = s2([r(2, o.IBufferService), r(3, o.IOptionsService), r(4, o.ICoreService), r(5, n.IRenderService)], h2);
       }, 9806: (e2, t2) => {
         function i2(e3, t3, i3) {
           const s2 = i3.getBoundingClientRect(), r = e3.getComputedStyle(i3), n = parseInt(r.getPropertyValue("padding-left")), o = parseInt(r.getPropertyValue("padding-top"));
           return [t3.clientX - s2.left - n, t3.clientY - s2.top - o];
         }
-        Object.defineProperty(t2, "__esModule", { value: true }), t2.getCoords = t2.getCoordsRelativeToElement = void 0, t2.getCoordsRelativeToElement = i2, t2.getCoords = function(e3, t3, s2, r, n, o, a2, h, c) {
+        Object.defineProperty(t2, "__esModule", { value: true }), t2.getCoords = t2.getCoordsRelativeToElement = void 0, t2.getCoordsRelativeToElement = i2, t2.getCoords = function(e3, t3, s2, r, n, o, a2, h2, c2) {
           if (!o)
             return;
           const l2 = i2(e3, t3, s2);
-          return l2 ? (l2[0] = Math.ceil((l2[0] + (c ? a2 / 2 : 0)) / a2), l2[1] = Math.ceil(l2[1] / h), l2[0] = Math.min(Math.max(l2[0], 1), r + (c ? 1 : 0)), l2[1] = Math.min(Math.max(l2[1], 1), n), l2) : void 0;
+          return l2 ? (l2[0] = Math.ceil((l2[0] + (c2 ? a2 / 2 : 0)) / a2), l2[1] = Math.ceil(l2[1] / h2), l2[0] = Math.min(Math.max(l2[0], 1), r + (c2 ? 1 : 0)), l2[1] = Math.min(Math.max(l2[1], 1), n), l2) : void 0;
         };
       }, 9504: (e2, t2, i2) => {
         Object.defineProperty(t2, "__esModule", { value: true }), t2.moveToCellSequence = void 0;
@@ -22892,12 +22892,12 @@ WARNING: This link could potentially be dangerous`)) {
             let s4 = 0;
             const r3 = e4 - n(e4, i4), a4 = t4 - n(t4, i4);
             for (let n2 = 0; n2 < Math.abs(r3 - a4); n2++) {
-              const a5 = "A" === o(e4, t4) ? -1 : 1, h2 = i4.buffer.lines.get(r3 + a5 * n2);
-              (null == h2 ? void 0 : h2.isWrapped) && s4++;
+              const a5 = "A" === o(e4, t4) ? -1 : 1, h3 = i4.buffer.lines.get(r3 + a5 * n2);
+              (null == h3 ? void 0 : h3.isWrapped) && s4++;
             }
             return s4;
           }(e3, t3, i3);
-          return c(l2, h(o(e3, t3), s3));
+          return c2(l2, h2(o(e3, t3), s3));
         }
         function n(e3, t3) {
           let i3 = 0, s3 = t3.buffer.lines.get(e3), r2 = null == s3 ? void 0 : s3.isWrapped;
@@ -22909,16 +22909,16 @@ WARNING: This link could potentially be dangerous`)) {
           return e3 > t3 ? "A" : "B";
         }
         function a2(e3, t3, i3, s3, r2, n2) {
-          let o2 = e3, a3 = t3, h2 = "";
+          let o2 = e3, a3 = t3, h3 = "";
           for (; o2 !== i3 || a3 !== s3; )
-            o2 += r2 ? 1 : -1, r2 && o2 > n2.cols - 1 ? (h2 += n2.buffer.translateBufferLineToString(a3, false, e3, o2), o2 = 0, e3 = 0, a3++) : !r2 && o2 < 0 && (h2 += n2.buffer.translateBufferLineToString(a3, false, 0, e3 + 1), o2 = n2.cols - 1, e3 = o2, a3--);
-          return h2 + n2.buffer.translateBufferLineToString(a3, false, e3, o2);
+            o2 += r2 ? 1 : -1, r2 && o2 > n2.cols - 1 ? (h3 += n2.buffer.translateBufferLineToString(a3, false, e3, o2), o2 = 0, e3 = 0, a3++) : !r2 && o2 < 0 && (h3 += n2.buffer.translateBufferLineToString(a3, false, 0, e3 + 1), o2 = n2.cols - 1, e3 = o2, a3--);
+          return h3 + n2.buffer.translateBufferLineToString(a3, false, e3, o2);
         }
-        function h(e3, t3) {
+        function h2(e3, t3) {
           const i3 = t3 ? "O" : "[";
           return s2.C0.ESC + i3 + e3;
         }
-        function c(e3, t3) {
+        function c2(e3, t3) {
           e3 = Math.floor(e3);
           let i3 = "";
           for (let s3 = 0; s3 < e3; s3++)
@@ -22929,24 +22929,24 @@ WARNING: This link could potentially be dangerous`)) {
           const o2 = i3.buffer.x, l2 = i3.buffer.y;
           if (!i3.buffer.hasScrollback)
             return function(e4, t4, i4, s4, o3, l3) {
-              return 0 === r(t4, s4, o3, l3).length ? "" : c(a2(e4, t4, e4, t4 - n(t4, o3), false, o3).length, h("D", l3));
+              return 0 === r(t4, s4, o3, l3).length ? "" : c2(a2(e4, t4, e4, t4 - n(t4, o3), false, o3).length, h2("D", l3));
             }(o2, l2, 0, t3, i3, s3) + r(l2, t3, i3, s3) + function(e4, t4, i4, s4, o3, l3) {
               let d3;
               d3 = r(t4, s4, o3, l3).length > 0 ? s4 - n(s4, o3) : t4;
-              const _2 = s4, u2 = function(e5, t5, i5, s5, o4, a3) {
-                let h2;
-                return h2 = r(i5, s5, o4, a3).length > 0 ? s5 - n(s5, o4) : t5, e5 < i5 && h2 <= s5 || e5 >= i5 && h2 < s5 ? "C" : "D";
+              const _3 = s4, u2 = function(e5, t5, i5, s5, o4, a3) {
+                let h3;
+                return h3 = r(i5, s5, o4, a3).length > 0 ? s5 - n(s5, o4) : t5, e5 < i5 && h3 <= s5 || e5 >= i5 && h3 < s5 ? "C" : "D";
               }(e4, t4, i4, s4, o3, l3);
-              return c(a2(e4, d3, i4, _2, "C" === u2, o3).length, h(u2, l3));
+              return c2(a2(e4, d3, i4, _3, "C" === u2, o3).length, h2(u2, l3));
             }(o2, l2, e3, t3, i3, s3);
           let d2;
           if (l2 === t3)
-            return d2 = o2 > e3 ? "D" : "C", c(Math.abs(o2 - e3), h(d2, s3));
+            return d2 = o2 > e3 ? "D" : "C", c2(Math.abs(o2 - e3), h2(d2, s3));
           d2 = l2 > t3 ? "D" : "C";
-          const _ = Math.abs(l2 - t3);
-          return c(function(e4, t4) {
+          const _2 = Math.abs(l2 - t3);
+          return c2(function(e4, t4) {
             return t4.cols - e4;
-          }(l2 > t3 ? e3 : o2, i3) + (_ - 1) * i3.cols + 1 + ((l2 > t3 ? o2 : e3) - 1), h(d2, s3));
+          }(l2 > t3 ? e3 : o2, i3) + (_2 - 1) * i3.cols + 1 + ((l2 > t3 ? o2 : e3) - 1), h2(d2, s3));
         };
       }, 1296: function(e2, t2, i2) {
         var s2 = this && this.__decorate || function(e3, t3, i3, s3) {
@@ -22963,11 +22963,11 @@ WARNING: This link could potentially be dangerous`)) {
           };
         };
         Object.defineProperty(t2, "__esModule", { value: true }), t2.DomRenderer = void 0;
-        const n = i2(3787), o = i2(2550), a2 = i2(2223), h = i2(6171), c = i2(4725), l2 = i2(8055), d2 = i2(8460), _ = i2(844), u2 = i2(2585), f3 = "xterm-dom-renderer-owner-", v2 = "xterm-rows", p = "xterm-fg-", g3 = "xterm-bg-", m2 = "xterm-focus", S3 = "xterm-selection";
-        let C2 = 1, b2 = t2.DomRenderer = class extends _.Disposable {
-          constructor(e3, t3, i3, s3, r2, a3, c2, l3, u3, p2) {
-            super(), this._element = e3, this._screenElement = t3, this._viewportElement = i3, this._linkifier2 = s3, this._charSizeService = a3, this._optionsService = c2, this._bufferService = l3, this._coreBrowserService = u3, this._themeService = p2, this._terminalClass = C2++, this._rowElements = [], this.onRequestRedraw = this.register(new d2.EventEmitter()).event, this._rowContainer = document.createElement("div"), this._rowContainer.classList.add(v2), this._rowContainer.style.lineHeight = "normal", this._rowContainer.setAttribute("aria-hidden", "true"), this._refreshRowElements(this._bufferService.cols, this._bufferService.rows), this._selectionContainer = document.createElement("div"), this._selectionContainer.classList.add(S3), this._selectionContainer.setAttribute("aria-hidden", "true"), this.dimensions = (0, h.createRenderDimensions)(), this._updateDimensions(), this.register(this._optionsService.onOptionChange(() => this._handleOptionsChanged())), this.register(this._themeService.onChangeColors((e4) => this._injectCss(e4))), this._injectCss(this._themeService.colors), this._rowFactory = r2.createInstance(n.DomRendererRowFactory, document), this._element.classList.add(f3 + this._terminalClass), this._screenElement.appendChild(this._rowContainer), this._screenElement.appendChild(this._selectionContainer), this.register(this._linkifier2.onShowLinkUnderline((e4) => this._handleLinkHover(e4))), this.register(this._linkifier2.onHideLinkUnderline((e4) => this._handleLinkLeave(e4))), this.register((0, _.toDisposable)(() => {
-              this._element.classList.remove(f3 + this._terminalClass), this._rowContainer.remove(), this._selectionContainer.remove(), this._widthCache.dispose(), this._themeStyleElement.remove(), this._dimensionsStyleElement.remove();
+        const n = i2(3787), o = i2(2550), a2 = i2(2223), h2 = i2(6171), c2 = i2(4725), l2 = i2(8055), d2 = i2(8460), _2 = i2(844), u2 = i2(2585), f2 = "xterm-dom-renderer-owner-", v3 = "xterm-rows", p2 = "xterm-fg-", g3 = "xterm-bg-", m2 = "xterm-focus", S2 = "xterm-selection";
+        let C2 = 1, b2 = t2.DomRenderer = class extends _2.Disposable {
+          constructor(e3, t3, i3, s3, r2, a3, c3, l3, u3, p3) {
+            super(), this._element = e3, this._screenElement = t3, this._viewportElement = i3, this._linkifier2 = s3, this._charSizeService = a3, this._optionsService = c3, this._bufferService = l3, this._coreBrowserService = u3, this._themeService = p3, this._terminalClass = C2++, this._rowElements = [], this.onRequestRedraw = this.register(new d2.EventEmitter()).event, this._rowContainer = document.createElement("div"), this._rowContainer.classList.add(v3), this._rowContainer.style.lineHeight = "normal", this._rowContainer.setAttribute("aria-hidden", "true"), this._refreshRowElements(this._bufferService.cols, this._bufferService.rows), this._selectionContainer = document.createElement("div"), this._selectionContainer.classList.add(S2), this._selectionContainer.setAttribute("aria-hidden", "true"), this.dimensions = (0, h2.createRenderDimensions)(), this._updateDimensions(), this.register(this._optionsService.onOptionChange(() => this._handleOptionsChanged())), this.register(this._themeService.onChangeColors((e4) => this._injectCss(e4))), this._injectCss(this._themeService.colors), this._rowFactory = r2.createInstance(n.DomRendererRowFactory, document), this._element.classList.add(f2 + this._terminalClass), this._screenElement.appendChild(this._rowContainer), this._screenElement.appendChild(this._selectionContainer), this.register(this._linkifier2.onShowLinkUnderline((e4) => this._handleLinkHover(e4))), this.register(this._linkifier2.onHideLinkUnderline((e4) => this._handleLinkLeave(e4))), this.register((0, _2.toDisposable)(() => {
+              this._element.classList.remove(f2 + this._terminalClass), this._rowContainer.remove(), this._selectionContainer.remove(), this._widthCache.dispose(), this._themeStyleElement.remove(), this._dimensionsStyleElement.remove();
             })), this._widthCache = new o.WidthCache(document), this._widthCache.setFont(this._optionsService.rawOptions.fontFamily, this._optionsService.rawOptions.fontSize, this._optionsService.rawOptions.fontWeight, this._optionsService.rawOptions.fontWeightBold), this._setDefaultSpacing();
           }
           _updateDimensions() {
@@ -22976,16 +22976,16 @@ WARNING: This link could potentially be dangerous`)) {
             for (const e4 of this._rowElements)
               e4.style.width = `${this.dimensions.css.canvas.width}px`, e4.style.height = `${this.dimensions.css.cell.height}px`, e4.style.lineHeight = `${this.dimensions.css.cell.height}px`, e4.style.overflow = "hidden";
             this._dimensionsStyleElement || (this._dimensionsStyleElement = document.createElement("style"), this._screenElement.appendChild(this._dimensionsStyleElement));
-            const t3 = `${this._terminalSelector} .${v2} span { display: inline-block; height: 100%; vertical-align: top;}`;
+            const t3 = `${this._terminalSelector} .${v3} span { display: inline-block; height: 100%; vertical-align: top;}`;
             this._dimensionsStyleElement.textContent = t3, this._selectionContainer.style.height = this._viewportElement.style.height, this._screenElement.style.width = `${this.dimensions.css.canvas.width}px`, this._screenElement.style.height = `${this.dimensions.css.canvas.height}px`;
           }
           _injectCss(e3) {
             this._themeStyleElement || (this._themeStyleElement = document.createElement("style"), this._screenElement.appendChild(this._themeStyleElement));
-            let t3 = `${this._terminalSelector} .${v2} { color: ${e3.foreground.css}; font-family: ${this._optionsService.rawOptions.fontFamily}; font-size: ${this._optionsService.rawOptions.fontSize}px; font-kerning: none; white-space: pre}`;
-            t3 += `${this._terminalSelector} .${v2} .xterm-dim { color: ${l2.color.multiplyOpacity(e3.foreground, 0.5).css};}`, t3 += `${this._terminalSelector} span:not(.xterm-bold) { font-weight: ${this._optionsService.rawOptions.fontWeight};}${this._terminalSelector} span.xterm-bold { font-weight: ${this._optionsService.rawOptions.fontWeightBold};}${this._terminalSelector} span.xterm-italic { font-style: italic;}`, t3 += "@keyframes blink_box_shadow_" + this._terminalClass + " { 50% {  border-bottom-style: hidden; }}", t3 += "@keyframes blink_block_" + this._terminalClass + ` { 0% {  background-color: ${e3.cursor.css};  color: ${e3.cursorAccent.css}; } 50% {  background-color: inherit;  color: ${e3.cursor.css}; }}`, t3 += `${this._terminalSelector} .${v2}.${m2} .xterm-cursor.xterm-cursor-blink:not(.xterm-cursor-block) { animation: blink_box_shadow_` + this._terminalClass + ` 1s step-end infinite;}${this._terminalSelector} .${v2}.${m2} .xterm-cursor.xterm-cursor-blink.xterm-cursor-block { animation: blink_block_` + this._terminalClass + ` 1s step-end infinite;}${this._terminalSelector} .${v2} .xterm-cursor.xterm-cursor-block { background-color: ${e3.cursor.css}; color: ${e3.cursorAccent.css};}${this._terminalSelector} .${v2} .xterm-cursor.xterm-cursor-outline { outline: 1px solid ${e3.cursor.css}; outline-offset: -1px;}${this._terminalSelector} .${v2} .xterm-cursor.xterm-cursor-bar { box-shadow: ${this._optionsService.rawOptions.cursorWidth}px 0 0 ${e3.cursor.css} inset;}${this._terminalSelector} .${v2} .xterm-cursor.xterm-cursor-underline { border-bottom: 1px ${e3.cursor.css}; border-bottom-style: solid; height: calc(100% - 1px);}`, t3 += `${this._terminalSelector} .${S3} { position: absolute; top: 0; left: 0; z-index: 1; pointer-events: none;}${this._terminalSelector}.focus .${S3} div { position: absolute; background-color: ${e3.selectionBackgroundOpaque.css};}${this._terminalSelector} .${S3} div { position: absolute; background-color: ${e3.selectionInactiveBackgroundOpaque.css};}`;
+            let t3 = `${this._terminalSelector} .${v3} { color: ${e3.foreground.css}; font-family: ${this._optionsService.rawOptions.fontFamily}; font-size: ${this._optionsService.rawOptions.fontSize}px; font-kerning: none; white-space: pre}`;
+            t3 += `${this._terminalSelector} .${v3} .xterm-dim { color: ${l2.color.multiplyOpacity(e3.foreground, 0.5).css};}`, t3 += `${this._terminalSelector} span:not(.xterm-bold) { font-weight: ${this._optionsService.rawOptions.fontWeight};}${this._terminalSelector} span.xterm-bold { font-weight: ${this._optionsService.rawOptions.fontWeightBold};}${this._terminalSelector} span.xterm-italic { font-style: italic;}`, t3 += "@keyframes blink_box_shadow_" + this._terminalClass + " { 50% {  border-bottom-style: hidden; }}", t3 += "@keyframes blink_block_" + this._terminalClass + ` { 0% {  background-color: ${e3.cursor.css};  color: ${e3.cursorAccent.css}; } 50% {  background-color: inherit;  color: ${e3.cursor.css}; }}`, t3 += `${this._terminalSelector} .${v3}.${m2} .xterm-cursor.xterm-cursor-blink:not(.xterm-cursor-block) { animation: blink_box_shadow_` + this._terminalClass + ` 1s step-end infinite;}${this._terminalSelector} .${v3}.${m2} .xterm-cursor.xterm-cursor-blink.xterm-cursor-block { animation: blink_block_` + this._terminalClass + ` 1s step-end infinite;}${this._terminalSelector} .${v3} .xterm-cursor.xterm-cursor-block { background-color: ${e3.cursor.css}; color: ${e3.cursorAccent.css};}${this._terminalSelector} .${v3} .xterm-cursor.xterm-cursor-outline { outline: 1px solid ${e3.cursor.css}; outline-offset: -1px;}${this._terminalSelector} .${v3} .xterm-cursor.xterm-cursor-bar { box-shadow: ${this._optionsService.rawOptions.cursorWidth}px 0 0 ${e3.cursor.css} inset;}${this._terminalSelector} .${v3} .xterm-cursor.xterm-cursor-underline { border-bottom: 1px ${e3.cursor.css}; border-bottom-style: solid; height: calc(100% - 1px);}`, t3 += `${this._terminalSelector} .${S2} { position: absolute; top: 0; left: 0; z-index: 1; pointer-events: none;}${this._terminalSelector}.focus .${S2} div { position: absolute; background-color: ${e3.selectionBackgroundOpaque.css};}${this._terminalSelector} .${S2} div { position: absolute; background-color: ${e3.selectionInactiveBackgroundOpaque.css};}`;
             for (const [i3, s3] of e3.ansi.entries())
-              t3 += `${this._terminalSelector} .${p}${i3} { color: ${s3.css}; }${this._terminalSelector} .${p}${i3}.xterm-dim { color: ${l2.color.multiplyOpacity(s3, 0.5).css}; }${this._terminalSelector} .${g3}${i3} { background-color: ${s3.css}; }`;
-            t3 += `${this._terminalSelector} .${p}${a2.INVERTED_DEFAULT_COLOR} { color: ${l2.color.opaque(e3.background).css}; }${this._terminalSelector} .${p}${a2.INVERTED_DEFAULT_COLOR}.xterm-dim { color: ${l2.color.multiplyOpacity(l2.color.opaque(e3.background), 0.5).css}; }${this._terminalSelector} .${g3}${a2.INVERTED_DEFAULT_COLOR} { background-color: ${e3.foreground.css}; }`, this._themeStyleElement.textContent = t3;
+              t3 += `${this._terminalSelector} .${p2}${i3} { color: ${s3.css}; }${this._terminalSelector} .${p2}${i3}.xterm-dim { color: ${l2.color.multiplyOpacity(s3, 0.5).css}; }${this._terminalSelector} .${g3}${i3} { background-color: ${s3.css}; }`;
+            t3 += `${this._terminalSelector} .${p2}${a2.INVERTED_DEFAULT_COLOR} { color: ${l2.color.opaque(e3.background).css}; }${this._terminalSelector} .${p2}${a2.INVERTED_DEFAULT_COLOR}.xterm-dim { color: ${l2.color.multiplyOpacity(l2.color.opaque(e3.background), 0.5).css}; }${this._terminalSelector} .${g3}${a2.INVERTED_DEFAULT_COLOR} { background-color: ${e3.foreground.css}; }`, this._themeStyleElement.textContent = t3;
           }
           _setDefaultSpacing() {
             const e3 = this.dimensions.css.cell.width - this._widthCache.get("W", false, false);
@@ -23025,10 +23025,10 @@ WARNING: This link could potentially be dangerous`)) {
               const i4 = e3[0] > t3[0];
               a3.appendChild(this._createSelectionElement(n2, i4 ? t3[0] : e3[0], i4 ? e3[0] : t3[0], o2 - n2 + 1));
             } else {
-              const i4 = s3 === n2 ? e3[0] : 0, h2 = n2 === r2 ? t3[0] : this._bufferService.cols;
-              a3.appendChild(this._createSelectionElement(n2, i4, h2));
-              const c2 = o2 - n2 - 1;
-              if (a3.appendChild(this._createSelectionElement(n2 + 1, 0, this._bufferService.cols, c2)), n2 !== o2) {
+              const i4 = s3 === n2 ? e3[0] : 0, h3 = n2 === r2 ? t3[0] : this._bufferService.cols;
+              a3.appendChild(this._createSelectionElement(n2, i4, h3));
+              const c3 = o2 - n2 - 1;
+              if (a3.appendChild(this._createSelectionElement(n2 + 1, 0, this._bufferService.cols, c3)), n2 !== o2) {
                 const e4 = r2 === o2 ? t3[0] : this._bufferService.cols;
                 a3.appendChild(this._createSelectionElement(o2, 0, e4));
               }
@@ -23050,15 +23050,15 @@ WARNING: This link could potentially be dangerous`)) {
           }
           renderRows(e3, t3) {
             const i3 = this._bufferService.buffer, s3 = i3.ybase + i3.y, r2 = Math.min(i3.x, this._bufferService.cols - 1), n2 = this._optionsService.rawOptions.cursorBlink, o2 = this._optionsService.rawOptions.cursorStyle, a3 = this._optionsService.rawOptions.cursorInactiveStyle;
-            for (let h2 = e3; h2 <= t3; h2++) {
-              const e4 = h2 + i3.ydisp, t4 = this._rowElements[h2], c2 = i3.lines.get(e4);
-              if (!t4 || !c2)
+            for (let h3 = e3; h3 <= t3; h3++) {
+              const e4 = h3 + i3.ydisp, t4 = this._rowElements[h3], c3 = i3.lines.get(e4);
+              if (!t4 || !c3)
                 break;
-              t4.replaceChildren(...this._rowFactory.createRow(c2, e4, e4 === s3, o2, a3, r2, n2, this.dimensions.css.cell.width, this._widthCache, -1, -1));
+              t4.replaceChildren(...this._rowFactory.createRow(c3, e4, e4 === s3, o2, a3, r2, n2, this.dimensions.css.cell.width, this._widthCache, -1, -1));
             }
           }
           get _terminalSelector() {
-            return `.${f3}${this._terminalClass}`;
+            return `.${f2}${this._terminalClass}`;
           }
           _handleLinkHover(e3) {
             this._setCellUnderline(e3.x1, e3.x2, e3.y1, e3.y2, e3.cols, true);
@@ -23070,16 +23070,16 @@ WARNING: This link could potentially be dangerous`)) {
             i3 < 0 && (e3 = 0), s3 < 0 && (t3 = 0);
             const o2 = this._bufferService.rows - 1;
             i3 = Math.max(Math.min(i3, o2), 0), s3 = Math.max(Math.min(s3, o2), 0), r2 = Math.min(r2, this._bufferService.cols);
-            const a3 = this._bufferService.buffer, h2 = a3.ybase + a3.y, c2 = Math.min(a3.x, r2 - 1), l3 = this._optionsService.rawOptions.cursorBlink, d3 = this._optionsService.rawOptions.cursorStyle, _2 = this._optionsService.rawOptions.cursorInactiveStyle;
+            const a3 = this._bufferService.buffer, h3 = a3.ybase + a3.y, c3 = Math.min(a3.x, r2 - 1), l3 = this._optionsService.rawOptions.cursorBlink, d3 = this._optionsService.rawOptions.cursorStyle, _3 = this._optionsService.rawOptions.cursorInactiveStyle;
             for (let o3 = i3; o3 <= s3; ++o3) {
-              const u3 = o3 + a3.ydisp, f4 = this._rowElements[o3], v3 = a3.lines.get(u3);
-              if (!f4 || !v3)
+              const u3 = o3 + a3.ydisp, f3 = this._rowElements[o3], v4 = a3.lines.get(u3);
+              if (!f3 || !v4)
                 break;
-              f4.replaceChildren(...this._rowFactory.createRow(v3, u3, u3 === h2, d3, _2, c2, l3, this.dimensions.css.cell.width, this._widthCache, n2 ? o3 === i3 ? e3 : 0 : -1, n2 ? (o3 === s3 ? t3 : r2) - 1 : -1));
+              f3.replaceChildren(...this._rowFactory.createRow(v4, u3, u3 === h3, d3, _3, c3, l3, this.dimensions.css.cell.width, this._widthCache, n2 ? o3 === i3 ? e3 : 0 : -1, n2 ? (o3 === s3 ? t3 : r2) - 1 : -1));
             }
           }
         };
-        t2.DomRenderer = b2 = s2([r(4, u2.IInstantiationService), r(5, c.ICharSizeService), r(6, u2.IOptionsService), r(7, u2.IBufferService), r(8, c.ICoreBrowserService), r(9, c.IThemeService)], b2);
+        t2.DomRenderer = b2 = s2([r(4, u2.IInstantiationService), r(5, c2.ICharSizeService), r(6, u2.IOptionsService), r(7, u2.IBufferService), r(8, c2.ICoreBrowserService), r(9, c2.IThemeService)], b2);
       }, 3787: function(e2, t2, i2) {
         var s2 = this && this.__decorate || function(e3, t3, i3, s3) {
           var r2, n2 = arguments.length, o2 = n2 < 3 ? t3 : null === s3 ? s3 = Object.getOwnPropertyDescriptor(t3, i3) : s3;
@@ -23095,48 +23095,48 @@ WARNING: This link could potentially be dangerous`)) {
           };
         };
         Object.defineProperty(t2, "__esModule", { value: true }), t2.DomRendererRowFactory = void 0;
-        const n = i2(2223), o = i2(643), a2 = i2(511), h = i2(2585), c = i2(8055), l2 = i2(4725), d2 = i2(4269), _ = i2(6171), u2 = i2(3734);
-        let f3 = t2.DomRendererRowFactory = class {
+        const n = i2(2223), o = i2(643), a2 = i2(511), h2 = i2(2585), c2 = i2(8055), l2 = i2(4725), d2 = i2(4269), _2 = i2(6171), u2 = i2(3734);
+        let f2 = t2.DomRendererRowFactory = class {
           constructor(e3, t3, i3, s3, r2, n2, o2) {
             this._document = e3, this._characterJoinerService = t3, this._optionsService = i3, this._coreBrowserService = s3, this._coreService = r2, this._decorationService = n2, this._themeService = o2, this._workCell = new a2.CellData(), this._columnSelectMode = false, this.defaultSpacing = 0;
           }
           handleSelectionChanged(e3, t3, i3) {
             this._selectionStart = e3, this._selectionEnd = t3, this._columnSelectMode = i3;
           }
-          createRow(e3, t3, i3, s3, r2, a3, h2, l3, _2, f4, p) {
-            const g3 = [], m2 = this._characterJoinerService.getJoinedCharacters(t3), S3 = this._themeService.colors;
+          createRow(e3, t3, i3, s3, r2, a3, h3, l3, _3, f3, p2) {
+            const g3 = [], m2 = this._characterJoinerService.getJoinedCharacters(t3), S2 = this._themeService.colors;
             let C2, b2 = e3.getNoBgTrimmedLength();
             i3 && b2 < a3 + 1 && (b2 = a3 + 1);
-            let y2 = 0, w3 = "", E3 = 0, k2 = 0, L2 = 0, D2 = false, R2 = 0, x3 = false, A3 = 0;
-            const B3 = [], T2 = -1 !== f4 && -1 !== p;
-            for (let M3 = 0; M3 < b2; M3++) {
-              e3.loadCell(M3, this._workCell);
+            let y2 = 0, w3 = "", E3 = 0, k3 = 0, L3 = 0, D2 = false, R3 = 0, x3 = false, A3 = 0;
+            const B3 = [], T3 = -1 !== f3 && -1 !== p2;
+            for (let M2 = 0; M2 < b2; M2++) {
+              e3.loadCell(M2, this._workCell);
               let b3 = this._workCell.getWidth();
               if (0 === b3)
                 continue;
-              let O3 = false, P3 = M3, I3 = this._workCell;
-              if (m2.length > 0 && M3 === m2[0][0]) {
+              let O3 = false, P3 = M2, I3 = this._workCell;
+              if (m2.length > 0 && M2 === m2[0][0]) {
                 O3 = true;
                 const t4 = m2.shift();
                 I3 = new d2.JoinedCellData(this._workCell, e3.translateToString(true, t4[0], t4[1]), t4[1] - t4[0]), P3 = t4[1] - 1, b3 = I3.getWidth();
               }
-              const H2 = this._isCellInSelection(M3, t3), F3 = i3 && M3 === a3, W3 = T2 && M3 >= f4 && M3 <= p;
-              let U = false;
-              this._decorationService.forEachDecorationAtCell(M3, t3, void 0, (e4) => {
-                U = true;
+              const H2 = this._isCellInSelection(M2, t3), F3 = i3 && M2 === a3, W3 = T3 && M2 >= f3 && M2 <= p2;
+              let U3 = false;
+              this._decorationService.forEachDecorationAtCell(M2, t3, void 0, (e4) => {
+                U3 = true;
               });
-              let N2 = I3.getChars() || o.WHITESPACE_CELL_CHAR;
-              if (" " === N2 && (I3.isUnderline() || I3.isOverline()) && (N2 = "\xA0"), A3 = b3 * l3 - _2.get(N2, I3.isBold(), I3.isItalic()), C2) {
-                if (y2 && (H2 && x3 || !H2 && !x3 && I3.bg === E3) && (H2 && x3 && S3.selectionForeground || I3.fg === k2) && I3.extended.ext === L2 && W3 === D2 && A3 === R2 && !F3 && !O3 && !U) {
-                  w3 += N2, y2++;
+              let N3 = I3.getChars() || o.WHITESPACE_CELL_CHAR;
+              if (" " === N3 && (I3.isUnderline() || I3.isOverline()) && (N3 = "\xA0"), A3 = b3 * l3 - _3.get(N3, I3.isBold(), I3.isItalic()), C2) {
+                if (y2 && (H2 && x3 || !H2 && !x3 && I3.bg === E3) && (H2 && x3 && S2.selectionForeground || I3.fg === k3) && I3.extended.ext === L3 && W3 === D2 && A3 === R3 && !F3 && !O3 && !U3) {
+                  w3 += N3, y2++;
                   continue;
                 }
                 y2 && (C2.textContent = w3), C2 = this._document.createElement("span"), y2 = 0, w3 = "";
               } else
                 C2 = this._document.createElement("span");
-              if (E3 = I3.bg, k2 = I3.fg, L2 = I3.extended.ext, D2 = W3, R2 = A3, x3 = H2, O3 && a3 >= M3 && a3 <= P3 && (a3 = M3), !this._coreService.isCursorHidden && F3) {
+              if (E3 = I3.bg, k3 = I3.fg, L3 = I3.extended.ext, D2 = W3, R3 = A3, x3 = H2, O3 && a3 >= M2 && a3 <= P3 && (a3 = M2), !this._coreService.isCursorHidden && F3) {
                 if (B3.push("xterm-cursor"), this._coreBrowserService.isFocused)
-                  h2 && B3.push("xterm-cursor-blink"), B3.push("bar" === s3 ? "xterm-cursor-bar" : "underline" === s3 ? "xterm-cursor-underline" : "xterm-cursor-block");
+                  h3 && B3.push("xterm-cursor-blink"), B3.push("bar" === s3 ? "xterm-cursor-bar" : "underline" === s3 ? "xterm-cursor-underline" : "xterm-cursor-block");
                 else if (r2)
                   switch (r2) {
                     case "outline":
@@ -23157,55 +23157,55 @@ WARNING: This link could potentially be dangerous`)) {
                   C2.style.textDecorationColor = `rgb(${u2.AttributeData.toColorRGB(I3.getUnderlineColor()).join(",")})`;
                 else {
                   let e4 = I3.getUnderlineColor();
-                  this._optionsService.rawOptions.drawBoldTextInBrightColors && I3.isBold() && e4 < 8 && (e4 += 8), C2.style.textDecorationColor = S3.ansi[e4].css;
+                  this._optionsService.rawOptions.drawBoldTextInBrightColors && I3.isBold() && e4 < 8 && (e4 += 8), C2.style.textDecorationColor = S2.ansi[e4].css;
                 }
               I3.isOverline() && (B3.push("xterm-overline"), " " === w3 && (w3 = "\xA0")), I3.isStrikethrough() && B3.push("xterm-strikethrough"), W3 && (C2.style.textDecoration = "underline");
-              let $2 = I3.getFgColor(), j3 = I3.getFgColorMode(), z3 = I3.getBgColor(), K2 = I3.getBgColorMode();
+              let $3 = I3.getFgColor(), j2 = I3.getFgColorMode(), z2 = I3.getBgColor(), K2 = I3.getBgColorMode();
               const q3 = !!I3.isInverse();
               if (q3) {
-                const e4 = $2;
-                $2 = z3, z3 = e4;
-                const t4 = j3;
-                j3 = K2, K2 = t4;
+                const e4 = $3;
+                $3 = z2, z2 = e4;
+                const t4 = j2;
+                j2 = K2, K2 = t4;
               }
-              let V2, G3, X3, J2 = false;
-              switch (this._decorationService.forEachDecorationAtCell(M3, t3, void 0, (e4) => {
-                "top" !== e4.options.layer && J2 || (e4.backgroundColorRGB && (K2 = 50331648, z3 = e4.backgroundColorRGB.rgba >> 8 & 16777215, V2 = e4.backgroundColorRGB), e4.foregroundColorRGB && (j3 = 50331648, $2 = e4.foregroundColorRGB.rgba >> 8 & 16777215, G3 = e4.foregroundColorRGB), J2 = "top" === e4.options.layer);
-              }), !J2 && H2 && (V2 = this._coreBrowserService.isFocused ? S3.selectionBackgroundOpaque : S3.selectionInactiveBackgroundOpaque, z3 = V2.rgba >> 8 & 16777215, K2 = 50331648, J2 = true, S3.selectionForeground && (j3 = 50331648, $2 = S3.selectionForeground.rgba >> 8 & 16777215, G3 = S3.selectionForeground)), J2 && B3.push("xterm-decoration-top"), K2) {
+              let V3, G3, X2, J2 = false;
+              switch (this._decorationService.forEachDecorationAtCell(M2, t3, void 0, (e4) => {
+                "top" !== e4.options.layer && J2 || (e4.backgroundColorRGB && (K2 = 50331648, z2 = e4.backgroundColorRGB.rgba >> 8 & 16777215, V3 = e4.backgroundColorRGB), e4.foregroundColorRGB && (j2 = 50331648, $3 = e4.foregroundColorRGB.rgba >> 8 & 16777215, G3 = e4.foregroundColorRGB), J2 = "top" === e4.options.layer);
+              }), !J2 && H2 && (V3 = this._coreBrowserService.isFocused ? S2.selectionBackgroundOpaque : S2.selectionInactiveBackgroundOpaque, z2 = V3.rgba >> 8 & 16777215, K2 = 50331648, J2 = true, S2.selectionForeground && (j2 = 50331648, $3 = S2.selectionForeground.rgba >> 8 & 16777215, G3 = S2.selectionForeground)), J2 && B3.push("xterm-decoration-top"), K2) {
                 case 16777216:
                 case 33554432:
-                  X3 = S3.ansi[z3], B3.push(`xterm-bg-${z3}`);
+                  X2 = S2.ansi[z2], B3.push(`xterm-bg-${z2}`);
                   break;
                 case 50331648:
-                  X3 = c.rgba.toColor(z3 >> 16, z3 >> 8 & 255, 255 & z3), this._addStyle(C2, `background-color:#${v2((z3 >>> 0).toString(16), "0", 6)}`);
+                  X2 = c2.rgba.toColor(z2 >> 16, z2 >> 8 & 255, 255 & z2), this._addStyle(C2, `background-color:#${v3((z2 >>> 0).toString(16), "0", 6)}`);
                   break;
                 default:
-                  q3 ? (X3 = S3.foreground, B3.push(`xterm-bg-${n.INVERTED_DEFAULT_COLOR}`)) : X3 = S3.background;
+                  q3 ? (X2 = S2.foreground, B3.push(`xterm-bg-${n.INVERTED_DEFAULT_COLOR}`)) : X2 = S2.background;
               }
-              switch (V2 || I3.isDim() && (V2 = c.color.multiplyOpacity(X3, 0.5)), j3) {
+              switch (V3 || I3.isDim() && (V3 = c2.color.multiplyOpacity(X2, 0.5)), j2) {
                 case 16777216:
                 case 33554432:
-                  I3.isBold() && $2 < 8 && this._optionsService.rawOptions.drawBoldTextInBrightColors && ($2 += 8), this._applyMinimumContrast(C2, X3, S3.ansi[$2], I3, V2, void 0) || B3.push(`xterm-fg-${$2}`);
+                  I3.isBold() && $3 < 8 && this._optionsService.rawOptions.drawBoldTextInBrightColors && ($3 += 8), this._applyMinimumContrast(C2, X2, S2.ansi[$3], I3, V3, void 0) || B3.push(`xterm-fg-${$3}`);
                   break;
                 case 50331648:
-                  const e4 = c.rgba.toColor($2 >> 16 & 255, $2 >> 8 & 255, 255 & $2);
-                  this._applyMinimumContrast(C2, X3, e4, I3, V2, G3) || this._addStyle(C2, `color:#${v2($2.toString(16), "0", 6)}`);
+                  const e4 = c2.rgba.toColor($3 >> 16 & 255, $3 >> 8 & 255, 255 & $3);
+                  this._applyMinimumContrast(C2, X2, e4, I3, V3, G3) || this._addStyle(C2, `color:#${v3($3.toString(16), "0", 6)}`);
                   break;
                 default:
-                  this._applyMinimumContrast(C2, X3, S3.foreground, I3, V2, void 0) || q3 && B3.push(`xterm-fg-${n.INVERTED_DEFAULT_COLOR}`);
+                  this._applyMinimumContrast(C2, X2, S2.foreground, I3, V3, void 0) || q3 && B3.push(`xterm-fg-${n.INVERTED_DEFAULT_COLOR}`);
               }
-              B3.length && (C2.className = B3.join(" "), B3.length = 0), F3 || O3 || U ? C2.textContent = w3 : y2++, A3 !== this.defaultSpacing && (C2.style.letterSpacing = `${A3}px`), g3.push(C2), M3 = P3;
+              B3.length && (C2.className = B3.join(" "), B3.length = 0), F3 || O3 || U3 ? C2.textContent = w3 : y2++, A3 !== this.defaultSpacing && (C2.style.letterSpacing = `${A3}px`), g3.push(C2), M2 = P3;
             }
             return C2 && y2 && (C2.textContent = w3), g3;
           }
           _applyMinimumContrast(e3, t3, i3, s3, r2, n2) {
-            if (1 === this._optionsService.rawOptions.minimumContrastRatio || (0, _.excludeFromContrastRatioDemands)(s3.getCode()))
+            if (1 === this._optionsService.rawOptions.minimumContrastRatio || (0, _2.excludeFromContrastRatioDemands)(s3.getCode()))
               return false;
             const o2 = this._getContrastCache(s3);
             let a3;
             if (r2 || n2 || (a3 = o2.getColor(t3.rgba, i3.rgba)), void 0 === a3) {
               const e4 = this._optionsService.rawOptions.minimumContrastRatio / (s3.isDim() ? 2 : 1);
-              a3 = c.color.ensureContrastRatio(r2 || t3, n2 || i3, e4), o2.setColor((r2 || t3).rgba, (n2 || i3).rgba, null != a3 ? a3 : null);
+              a3 = c2.color.ensureContrastRatio(r2 || t3, n2 || i3, e4), o2.setColor((r2 || t3).rgba, (n2 || i3).rgba, null != a3 ? a3 : null);
             }
             return !!a3 && (this._addStyle(e3, `color:${a3.css}`), true);
           }
@@ -23220,12 +23220,12 @@ WARNING: This link could potentially be dangerous`)) {
             return !(!i3 || !s3) && (this._columnSelectMode ? i3[0] <= s3[0] ? e3 >= i3[0] && t3 >= i3[1] && e3 < s3[0] && t3 <= s3[1] : e3 < i3[0] && t3 >= i3[1] && e3 >= s3[0] && t3 <= s3[1] : t3 > i3[1] && t3 < s3[1] || i3[1] === s3[1] && t3 === i3[1] && e3 >= i3[0] && e3 < s3[0] || i3[1] < s3[1] && t3 === s3[1] && e3 < s3[0] || i3[1] < s3[1] && t3 === i3[1] && e3 >= i3[0]);
           }
         };
-        function v2(e3, t3, i3) {
+        function v3(e3, t3, i3) {
           for (; e3.length < i3; )
             e3 = t3 + e3;
           return e3;
         }
-        t2.DomRendererRowFactory = f3 = s2([r(1, l2.ICharacterJoinerService), r(2, h.IOptionsService), r(3, l2.ICoreBrowserService), r(4, h.ICoreService), r(5, h.IDecorationService), r(6, l2.IThemeService)], f3);
+        t2.DomRendererRowFactory = f2 = s2([r(1, l2.ICharacterJoinerService), r(2, h2.IOptionsService), r(3, l2.ICoreBrowserService), r(4, h2.ICoreService), r(5, h2.IDecorationService), r(6, l2.IThemeService)], f2);
       }, 2550: (e2, t2) => {
         Object.defineProperty(t2, "__esModule", { value: true }), t2.WidthCache = void 0, t2.WidthCache = class {
           constructor(e3) {
@@ -23335,20 +23335,20 @@ WARNING: This link could potentially be dangerous`)) {
         };
         Object.defineProperty(t2, "__esModule", { value: true }), t2.CharSizeService = void 0;
         const n = i2(2585), o = i2(8460), a2 = i2(844);
-        let h = t2.CharSizeService = class extends a2.Disposable {
+        let h2 = t2.CharSizeService = class extends a2.Disposable {
           get hasValidSize() {
             return this.width > 0 && this.height > 0;
           }
           constructor(e3, t3, i3) {
-            super(), this._optionsService = i3, this.width = 0, this.height = 0, this._onCharSizeChange = this.register(new o.EventEmitter()), this.onCharSizeChange = this._onCharSizeChange.event, this._measureStrategy = new c(e3, t3, this._optionsService), this.register(this._optionsService.onMultipleOptionChange(["fontFamily", "fontSize"], () => this.measure()));
+            super(), this._optionsService = i3, this.width = 0, this.height = 0, this._onCharSizeChange = this.register(new o.EventEmitter()), this.onCharSizeChange = this._onCharSizeChange.event, this._measureStrategy = new c2(e3, t3, this._optionsService), this.register(this._optionsService.onMultipleOptionChange(["fontFamily", "fontSize"], () => this.measure()));
           }
           measure() {
             const e3 = this._measureStrategy.measure();
             e3.width === this.width && e3.height === this.height || (this.width = e3.width, this.height = e3.height, this._onCharSizeChange.fire());
           }
         };
-        t2.CharSizeService = h = s2([r(2, n.IOptionsService)], h);
-        class c {
+        t2.CharSizeService = h2 = s2([r(2, n.IOptionsService)], h2);
+        class c2 {
           constructor(e3, t3, i3) {
             this._document = e3, this._parentElement = t3, this._optionsService = i3, this._result = { width: 0, height: 0 }, this._measureElement = this._document.createElement("span"), this._measureElement.classList.add("xterm-char-measure-element"), this._measureElement.textContent = "W".repeat(32), this._measureElement.setAttribute("aria-hidden", "true"), this._measureElement.style.whiteSpace = "pre", this._measureElement.style.fontKerning = "none", this._parentElement.appendChild(this._measureElement);
           }
@@ -23373,8 +23373,8 @@ WARNING: This link could potentially be dangerous`)) {
           };
         };
         Object.defineProperty(t2, "__esModule", { value: true }), t2.CharacterJoinerService = t2.JoinedCellData = void 0;
-        const n = i2(3734), o = i2(643), a2 = i2(511), h = i2(2585);
-        class c extends n.AttributeData {
+        const n = i2(3734), o = i2(643), a2 = i2(511), h2 = i2(2585);
+        class c2 extends n.AttributeData {
           constructor(e3, t3, i3) {
             super(), this.content = 0, this.combinedData = "", this.fg = e3.fg, this.bg = e3.bg, this.combinedData = t3, this._width = i3;
           }
@@ -23397,7 +23397,7 @@ WARNING: This link could potentially be dangerous`)) {
             return [this.fg, this.getChars(), this.getWidth(), this.getCode()];
           }
         }
-        t2.JoinedCellData = c;
+        t2.JoinedCellData = c2;
         let l2 = t2.CharacterJoinerService = class e3 {
           constructor(e4) {
             this._bufferService = e4, this._characterJoiners = [], this._nextCharacterJoinerId = 0, this._workCell = new a2.CellData();
@@ -23419,16 +23419,16 @@ WARNING: This link could potentially be dangerous`)) {
             if (!t3 || 0 === t3.length)
               return [];
             const i3 = [], s3 = t3.translateToString(true);
-            let r2 = 0, n2 = 0, a3 = 0, h2 = t3.getFg(0), c2 = t3.getBg(0);
+            let r2 = 0, n2 = 0, a3 = 0, h3 = t3.getFg(0), c3 = t3.getBg(0);
             for (let e5 = 0; e5 < t3.getTrimmedLength(); e5++)
               if (t3.loadCell(e5, this._workCell), 0 !== this._workCell.getWidth()) {
-                if (this._workCell.fg !== h2 || this._workCell.bg !== c2) {
+                if (this._workCell.fg !== h3 || this._workCell.bg !== c3) {
                   if (e5 - r2 > 1) {
                     const e6 = this._getJoinedRanges(s3, a3, n2, t3, r2);
                     for (let t4 = 0; t4 < e6.length; t4++)
                       i3.push(e6[t4]);
                   }
-                  r2 = e5, a3 = n2, h2 = this._workCell.fg, c2 = this._workCell.bg;
+                  r2 = e5, a3 = n2, h3 = this._workCell.fg, c3 = this._workCell.bg;
                 }
                 n2 += this._workCell.getChars().length || o.WHITESPACE_CELL_CHAR.length;
               }
@@ -23460,15 +23460,15 @@ WARNING: This link could potentially be dangerous`)) {
           _stringRangesToCellRanges(e4, t3, i3) {
             let s3 = 0, r2 = false, n2 = 0, a3 = e4[s3];
             if (a3) {
-              for (let h2 = i3; h2 < this._bufferService.cols; h2++) {
-                const i4 = t3.getWidth(h2), c2 = t3.getString(h2).length || o.WHITESPACE_CELL_CHAR.length;
+              for (let h3 = i3; h3 < this._bufferService.cols; h3++) {
+                const i4 = t3.getWidth(h3), c3 = t3.getString(h3).length || o.WHITESPACE_CELL_CHAR.length;
                 if (0 !== i4) {
-                  if (!r2 && a3[0] <= n2 && (a3[0] = h2, r2 = true), a3[1] <= n2) {
-                    if (a3[1] = h2, a3 = e4[++s3], !a3)
+                  if (!r2 && a3[0] <= n2 && (a3[0] = h3, r2 = true), a3[1] <= n2) {
+                    if (a3[1] = h3, a3 = e4[++s3], !a3)
                       break;
-                    a3[0] <= n2 ? (a3[0] = h2, r2 = true) : r2 = false;
+                    a3[0] <= n2 ? (a3[0] = h3, r2 = true) : r2 = false;
                   }
-                  n2 += c2;
+                  n2 += c3;
                 }
               }
               a3 && (a3[1] = this._bufferService.cols);
@@ -23495,7 +23495,7 @@ WARNING: This link could potentially be dangerous`)) {
             return i3 ? e4[e4.length - 1][1] = t3[1] : e4.push(t3), e4;
           }
         };
-        t2.CharacterJoinerService = l2 = s2([r(0, h.IBufferService)], l2);
+        t2.CharacterJoinerService = l2 = s2([r(0, h2.IBufferService)], l2);
       }, 5114: (e2, t2) => {
         Object.defineProperty(t2, "__esModule", { value: true }), t2.CoreBrowserService = void 0, t2.CoreBrowserService = class {
           constructor(e3, t3) {
@@ -23553,19 +23553,19 @@ WARNING: This link could potentially be dangerous`)) {
           };
         };
         Object.defineProperty(t2, "__esModule", { value: true }), t2.RenderService = void 0;
-        const n = i2(3656), o = i2(6193), a2 = i2(5596), h = i2(4725), c = i2(8460), l2 = i2(844), d2 = i2(7226), _ = i2(2585);
+        const n = i2(3656), o = i2(6193), a2 = i2(5596), h2 = i2(4725), c2 = i2(8460), l2 = i2(844), d2 = i2(7226), _2 = i2(2585);
         let u2 = t2.RenderService = class extends l2.Disposable {
           get dimensions() {
             return this._renderer.value.dimensions;
           }
-          constructor(e3, t3, i3, s3, r2, h2, _2, u3) {
-            if (super(), this._rowCount = e3, this._charSizeService = s3, this._renderer = this.register(new l2.MutableDisposable()), this._pausedResizeTask = new d2.DebouncedIdleTask(), this._isPaused = false, this._needsFullRefresh = false, this._isNextRenderRedrawOnly = true, this._needsSelectionRefresh = false, this._canvasWidth = 0, this._canvasHeight = 0, this._selectionState = { start: void 0, end: void 0, columnSelectMode: false }, this._onDimensionsChange = this.register(new c.EventEmitter()), this.onDimensionsChange = this._onDimensionsChange.event, this._onRenderedViewportChange = this.register(new c.EventEmitter()), this.onRenderedViewportChange = this._onRenderedViewportChange.event, this._onRender = this.register(new c.EventEmitter()), this.onRender = this._onRender.event, this._onRefreshRequest = this.register(new c.EventEmitter()), this.onRefreshRequest = this._onRefreshRequest.event, this._renderDebouncer = new o.RenderDebouncer(_2.window, (e4, t4) => this._renderRows(e4, t4)), this.register(this._renderDebouncer), this._screenDprMonitor = new a2.ScreenDprMonitor(_2.window), this._screenDprMonitor.setListener(() => this.handleDevicePixelRatioChange()), this.register(this._screenDprMonitor), this.register(h2.onResize(() => this._fullRefresh())), this.register(h2.buffers.onBufferActivate(() => {
+          constructor(e3, t3, i3, s3, r2, h3, _3, u3) {
+            if (super(), this._rowCount = e3, this._charSizeService = s3, this._renderer = this.register(new l2.MutableDisposable()), this._pausedResizeTask = new d2.DebouncedIdleTask(), this._isPaused = false, this._needsFullRefresh = false, this._isNextRenderRedrawOnly = true, this._needsSelectionRefresh = false, this._canvasWidth = 0, this._canvasHeight = 0, this._selectionState = { start: void 0, end: void 0, columnSelectMode: false }, this._onDimensionsChange = this.register(new c2.EventEmitter()), this.onDimensionsChange = this._onDimensionsChange.event, this._onRenderedViewportChange = this.register(new c2.EventEmitter()), this.onRenderedViewportChange = this._onRenderedViewportChange.event, this._onRender = this.register(new c2.EventEmitter()), this.onRender = this._onRender.event, this._onRefreshRequest = this.register(new c2.EventEmitter()), this.onRefreshRequest = this._onRefreshRequest.event, this._renderDebouncer = new o.RenderDebouncer(_3.window, (e4, t4) => this._renderRows(e4, t4)), this.register(this._renderDebouncer), this._screenDprMonitor = new a2.ScreenDprMonitor(_3.window), this._screenDprMonitor.setListener(() => this.handleDevicePixelRatioChange()), this.register(this._screenDprMonitor), this.register(h3.onResize(() => this._fullRefresh())), this.register(h3.buffers.onBufferActivate(() => {
               var e4;
               return null === (e4 = this._renderer.value) || void 0 === e4 ? void 0 : e4.clear();
             })), this.register(i3.onOptionChange(() => this._handleOptionsChanged())), this.register(this._charSizeService.onCharSizeChange(() => this.handleCharSizeChanged())), this.register(r2.onDecorationRegistered(() => this._fullRefresh())), this.register(r2.onDecorationRemoved(() => this._fullRefresh())), this.register(i3.onMultipleOptionChange(["customGlyphs", "drawBoldTextInBrightColors", "letterSpacing", "lineHeight", "fontFamily", "fontSize", "fontWeight", "fontWeightBold", "minimumContrastRatio"], () => {
-              this.clear(), this.handleResize(h2.cols, h2.rows), this._fullRefresh();
-            })), this.register(i3.onMultipleOptionChange(["cursorBlink", "cursorStyle"], () => this.refreshRows(h2.buffer.y, h2.buffer.y, true))), this.register((0, n.addDisposableDomListener)(_2.window, "resize", () => this.handleDevicePixelRatioChange())), this.register(u3.onChangeColors(() => this._fullRefresh())), "IntersectionObserver" in _2.window) {
-              const e4 = new _2.window.IntersectionObserver((e5) => this._handleIntersectionChange(e5[e5.length - 1]), { threshold: 0 });
+              this.clear(), this.handleResize(h3.cols, h3.rows), this._fullRefresh();
+            })), this.register(i3.onMultipleOptionChange(["cursorBlink", "cursorStyle"], () => this.refreshRows(h3.buffer.y, h3.buffer.y, true))), this.register((0, n.addDisposableDomListener)(_3.window, "resize", () => this.handleDevicePixelRatioChange())), this.register(u3.onChangeColors(() => this._fullRefresh())), "IntersectionObserver" in _3.window) {
+              const e4 = new _3.window.IntersectionObserver((e5) => this._handleIntersectionChange(e5[e5.length - 1]), { threshold: 0 });
               e4.observe(t3), this.register({ dispose: () => e4.disconnect() });
             }
           }
@@ -23634,7 +23634,7 @@ WARNING: This link could potentially be dangerous`)) {
             null === (e3 = this._renderer.value) || void 0 === e3 || e3.clear();
           }
         };
-        t2.RenderService = u2 = s2([r(2, _.IOptionsService), r(3, h.ICharSizeService), r(4, _.IDecorationService), r(5, _.IBufferService), r(6, h.ICoreBrowserService), r(7, h.IThemeService)], u2);
+        t2.RenderService = u2 = s2([r(2, _2.IOptionsService), r(3, h2.ICharSizeService), r(4, _2.IDecorationService), r(5, _2.IBufferService), r(6, h2.ICoreBrowserService), r(7, h2.IThemeService)], u2);
       }, 9312: function(e2, t2, i2) {
         var s2 = this && this.__decorate || function(e3, t3, i3, s3) {
           var r2, n2 = arguments.length, o2 = n2 < 3 ? t3 : null === s3 ? s3 = Object.getOwnPropertyDescriptor(t3, i3) : s3;
@@ -23650,10 +23650,10 @@ WARNING: This link could potentially be dangerous`)) {
           };
         };
         Object.defineProperty(t2, "__esModule", { value: true }), t2.SelectionService = void 0;
-        const n = i2(9806), o = i2(9504), a2 = i2(456), h = i2(4725), c = i2(8460), l2 = i2(844), d2 = i2(6114), _ = i2(4841), u2 = i2(511), f3 = i2(2585), v2 = String.fromCharCode(160), p = new RegExp(v2, "g");
+        const n = i2(9806), o = i2(9504), a2 = i2(456), h2 = i2(4725), c2 = i2(8460), l2 = i2(844), d2 = i2(6114), _2 = i2(4841), u2 = i2(511), f2 = i2(2585), v3 = String.fromCharCode(160), p2 = new RegExp(v3, "g");
         let g3 = t2.SelectionService = class extends l2.Disposable {
-          constructor(e3, t3, i3, s3, r2, n2, o2, h2, d3) {
-            super(), this._element = e3, this._screenElement = t3, this._linkifier = i3, this._bufferService = s3, this._coreService = r2, this._mouseService = n2, this._optionsService = o2, this._renderService = h2, this._coreBrowserService = d3, this._dragScrollAmount = 0, this._enabled = true, this._workCell = new u2.CellData(), this._mouseDownTimeStamp = 0, this._oldHasSelection = false, this._oldSelectionStart = void 0, this._oldSelectionEnd = void 0, this._onLinuxMouseSelection = this.register(new c.EventEmitter()), this.onLinuxMouseSelection = this._onLinuxMouseSelection.event, this._onRedrawRequest = this.register(new c.EventEmitter()), this.onRequestRedraw = this._onRedrawRequest.event, this._onSelectionChange = this.register(new c.EventEmitter()), this.onSelectionChange = this._onSelectionChange.event, this._onRequestScrollLines = this.register(new c.EventEmitter()), this.onRequestScrollLines = this._onRequestScrollLines.event, this._mouseMoveListener = (e4) => this._handleMouseMove(e4), this._mouseUpListener = (e4) => this._handleMouseUp(e4), this._coreService.onUserInput(() => {
+          constructor(e3, t3, i3, s3, r2, n2, o2, h3, d3) {
+            super(), this._element = e3, this._screenElement = t3, this._linkifier = i3, this._bufferService = s3, this._coreService = r2, this._mouseService = n2, this._optionsService = o2, this._renderService = h3, this._coreBrowserService = d3, this._dragScrollAmount = 0, this._enabled = true, this._workCell = new u2.CellData(), this._mouseDownTimeStamp = 0, this._oldHasSelection = false, this._oldSelectionStart = void 0, this._oldSelectionEnd = void 0, this._onLinuxMouseSelection = this.register(new c2.EventEmitter()), this.onLinuxMouseSelection = this._onLinuxMouseSelection.event, this._onRedrawRequest = this.register(new c2.EventEmitter()), this.onRequestRedraw = this._onRedrawRequest.event, this._onSelectionChange = this.register(new c2.EventEmitter()), this.onSelectionChange = this._onSelectionChange.event, this._onRequestScrollLines = this.register(new c2.EventEmitter()), this.onRequestScrollLines = this._onRequestScrollLines.event, this._mouseMoveListener = (e4) => this._handleMouseMove(e4), this._mouseUpListener = (e4) => this._handleMouseUp(e4), this._coreService.onUserInput(() => {
               this.hasSelection && this.clearSelection();
             }), this._trimListener = this._bufferService.buffer.lines.onTrim((e4) => this._handleTrim(e4)), this.register(this._bufferService.buffers.onBufferActivate((e4) => this._handleBufferActivate(e4))), this.enable(), this._model = new a2.SelectionModel(this._bufferService), this._activeSelectionMode = 0, this.register((0, l2.toDisposable)(() => {
               this._removeMouseDownListeners();
@@ -23703,7 +23703,7 @@ WARNING: This link could potentially be dangerous`)) {
                 e4 && e4.isWrapped ? s3[s3.length - 1] += r3 : s3.push(r3);
               }
             }
-            return s3.map((e4) => e4.replace(p, " ")).join(d2.isWindows ? "\r\n" : "\n");
+            return s3.map((e4) => e4.replace(p2, " ")).join(d2.isWindows ? "\r\n" : "\n");
           }
           clearSelection() {
             this._model.clearSelection(), this._removeMouseDownListeners(), this.refresh(), this._onSelectionChange.fire();
@@ -23729,7 +23729,7 @@ WARNING: This link could potentially be dangerous`)) {
             var i3, s3;
             const r2 = null === (s3 = null === (i3 = this._linkifier.currentLink) || void 0 === i3 ? void 0 : i3.link) || void 0 === s3 ? void 0 : s3.range;
             if (r2)
-              return this._model.selectionStart = [r2.start.x - 1, r2.start.y - 1], this._model.selectionStartLength = (0, _.getRangeLength)(r2, this._bufferService.cols), this._model.selectionEnd = void 0, true;
+              return this._model.selectionStart = [r2.start.x - 1, r2.start.y - 1], this._model.selectionStartLength = (0, _2.getRangeLength)(r2, this._bufferService.cols), this._model.selectionEnd = void 0, true;
             const n2 = this._getMouseBufferCoords(e3);
             return !!n2 && (this._selectWordAt(n2, t3), this._model.selectionEnd = void 0, true);
           }
@@ -23856,50 +23856,50 @@ WARNING: This link could potentially be dangerous`)) {
             if (!n2)
               return;
             const o2 = r2.translateBufferLineToString(e3[1], false);
-            let a3 = this._convertViewportColToCharacterIndex(n2, e3[0]), h2 = a3;
-            const c2 = e3[0] - a3;
-            let l3 = 0, d3 = 0, _2 = 0, u3 = 0;
+            let a3 = this._convertViewportColToCharacterIndex(n2, e3[0]), h3 = a3;
+            const c3 = e3[0] - a3;
+            let l3 = 0, d3 = 0, _3 = 0, u3 = 0;
             if (" " === o2.charAt(a3)) {
               for (; a3 > 0 && " " === o2.charAt(a3 - 1); )
                 a3--;
-              for (; h2 < o2.length && " " === o2.charAt(h2 + 1); )
-                h2++;
+              for (; h3 < o2.length && " " === o2.charAt(h3 + 1); )
+                h3++;
             } else {
               let t4 = e3[0], i4 = e3[0];
               0 === n2.getWidth(t4) && (l3++, t4--), 2 === n2.getWidth(i4) && (d3++, i4++);
               const s4 = n2.getString(i4).length;
-              for (s4 > 1 && (u3 += s4 - 1, h2 += s4 - 1); t4 > 0 && a3 > 0 && !this._isCharWordSeparator(n2.loadCell(t4 - 1, this._workCell)); ) {
+              for (s4 > 1 && (u3 += s4 - 1, h3 += s4 - 1); t4 > 0 && a3 > 0 && !this._isCharWordSeparator(n2.loadCell(t4 - 1, this._workCell)); ) {
                 n2.loadCell(t4 - 1, this._workCell);
                 const e4 = this._workCell.getChars().length;
-                0 === this._workCell.getWidth() ? (l3++, t4--) : e4 > 1 && (_2 += e4 - 1, a3 -= e4 - 1), a3--, t4--;
+                0 === this._workCell.getWidth() ? (l3++, t4--) : e4 > 1 && (_3 += e4 - 1, a3 -= e4 - 1), a3--, t4--;
               }
-              for (; i4 < n2.length && h2 + 1 < o2.length && !this._isCharWordSeparator(n2.loadCell(i4 + 1, this._workCell)); ) {
+              for (; i4 < n2.length && h3 + 1 < o2.length && !this._isCharWordSeparator(n2.loadCell(i4 + 1, this._workCell)); ) {
                 n2.loadCell(i4 + 1, this._workCell);
                 const e4 = this._workCell.getChars().length;
-                2 === this._workCell.getWidth() ? (d3++, i4++) : e4 > 1 && (u3 += e4 - 1, h2 += e4 - 1), h2++, i4++;
+                2 === this._workCell.getWidth() ? (d3++, i4++) : e4 > 1 && (u3 += e4 - 1, h3 += e4 - 1), h3++, i4++;
               }
             }
-            h2++;
-            let f4 = a3 + c2 - l3 + _2, v3 = Math.min(this._bufferService.cols, h2 - a3 + l3 + d3 - _2 - u3);
-            if (t3 || "" !== o2.slice(a3, h2).trim()) {
-              if (i3 && 0 === f4 && 32 !== n2.getCodePoint(0)) {
+            h3++;
+            let f3 = a3 + c3 - l3 + _3, v4 = Math.min(this._bufferService.cols, h3 - a3 + l3 + d3 - _3 - u3);
+            if (t3 || "" !== o2.slice(a3, h3).trim()) {
+              if (i3 && 0 === f3 && 32 !== n2.getCodePoint(0)) {
                 const t4 = r2.lines.get(e3[1] - 1);
                 if (t4 && n2.isWrapped && 32 !== t4.getCodePoint(this._bufferService.cols - 1)) {
                   const t5 = this._getWordAt([this._bufferService.cols - 1, e3[1] - 1], false, true, false);
                   if (t5) {
                     const e4 = this._bufferService.cols - t5.start;
-                    f4 -= e4, v3 += e4;
+                    f3 -= e4, v4 += e4;
                   }
                 }
               }
-              if (s3 && f4 + v3 === this._bufferService.cols && 32 !== n2.getCodePoint(this._bufferService.cols - 1)) {
+              if (s3 && f3 + v4 === this._bufferService.cols && 32 !== n2.getCodePoint(this._bufferService.cols - 1)) {
                 const t4 = r2.lines.get(e3[1] + 1);
                 if ((null == t4 ? void 0 : t4.isWrapped) && 32 !== t4.getCodePoint(0)) {
                   const t5 = this._getWordAt([0, e3[1] + 1], false, false, true);
-                  t5 && (v3 += t5.length);
+                  t5 && (v4 += t5.length);
                 }
               }
-              return { start: f4, length: v3 };
+              return { start: f3, length: v4 };
             }
           }
           _selectWordAt(e3, t3) {
@@ -23927,10 +23927,10 @@ WARNING: This link could potentially be dangerous`)) {
           }
           _selectLineAt(e3) {
             const t3 = this._bufferService.buffer.getWrappedRangeForLine(e3), i3 = { start: { x: 0, y: t3.first }, end: { x: this._bufferService.cols - 1, y: t3.last } };
-            this._model.selectionStart = [0, t3.first], this._model.selectionEnd = void 0, this._model.selectionStartLength = (0, _.getRangeLength)(i3, this._bufferService.cols);
+            this._model.selectionStart = [0, t3.first], this._model.selectionEnd = void 0, this._model.selectionStartLength = (0, _2.getRangeLength)(i3, this._bufferService.cols);
           }
         };
-        t2.SelectionService = g3 = s2([r(3, f3.IBufferService), r(4, f3.ICoreService), r(5, h.IMouseService), r(6, f3.IOptionsService), r(7, h.IRenderService), r(8, h.ICoreBrowserService)], g3);
+        t2.SelectionService = g3 = s2([r(3, f2.IBufferService), r(4, f2.ICoreService), r(5, h2.IMouseService), r(6, f2.IOptionsService), r(7, h2.IRenderService), r(8, h2.ICoreBrowserService)], g3);
       }, 4725: (e2, t2, i2) => {
         Object.defineProperty(t2, "__esModule", { value: true }), t2.IThemeService = t2.ICharacterJoinerService = t2.ISelectionService = t2.IRenderService = t2.IMouseService = t2.ICoreBrowserService = t2.ICharSizeService = void 0;
         const s2 = i2(8343);
@@ -23950,7 +23950,7 @@ WARNING: This link could potentially be dangerous`)) {
           };
         };
         Object.defineProperty(t2, "__esModule", { value: true }), t2.ThemeService = t2.DEFAULT_ANSI_COLORS = void 0;
-        const n = i2(7239), o = i2(8055), a2 = i2(8460), h = i2(844), c = i2(2585), l2 = o.css.toColor("#ffffff"), d2 = o.css.toColor("#000000"), _ = o.css.toColor("#ffffff"), u2 = o.css.toColor("#000000"), f3 = { css: "rgba(255, 255, 255, 0.3)", rgba: 4294967117 };
+        const n = i2(7239), o = i2(8055), a2 = i2(8460), h2 = i2(844), c2 = i2(2585), l2 = o.css.toColor("#ffffff"), d2 = o.css.toColor("#000000"), _2 = o.css.toColor("#ffffff"), u2 = o.css.toColor("#000000"), f2 = { css: "rgba(255, 255, 255, 0.3)", rgba: 4294967117 };
         t2.DEFAULT_ANSI_COLORS = Object.freeze((() => {
           const e3 = [o.css.toColor("#2e3436"), o.css.toColor("#cc0000"), o.css.toColor("#4e9a06"), o.css.toColor("#c4a000"), o.css.toColor("#3465a4"), o.css.toColor("#75507b"), o.css.toColor("#06989a"), o.css.toColor("#d3d7cf"), o.css.toColor("#555753"), o.css.toColor("#ef2929"), o.css.toColor("#8ae234"), o.css.toColor("#fce94f"), o.css.toColor("#729fcf"), o.css.toColor("#ad7fa8"), o.css.toColor("#34e2e2"), o.css.toColor("#eeeeec")], t3 = [0, 95, 135, 175, 215, 255];
           for (let i3 = 0; i3 < 216; i3++) {
@@ -23963,16 +23963,16 @@ WARNING: This link could potentially be dangerous`)) {
           }
           return e3;
         })());
-        let v2 = t2.ThemeService = class extends h.Disposable {
+        let v3 = t2.ThemeService = class extends h2.Disposable {
           get colors() {
             return this._colors;
           }
           constructor(e3) {
-            super(), this._optionsService = e3, this._contrastCache = new n.ColorContrastCache(), this._halfContrastCache = new n.ColorContrastCache(), this._onChangeColors = this.register(new a2.EventEmitter()), this.onChangeColors = this._onChangeColors.event, this._colors = { foreground: l2, background: d2, cursor: _, cursorAccent: u2, selectionForeground: void 0, selectionBackgroundTransparent: f3, selectionBackgroundOpaque: o.color.blend(d2, f3), selectionInactiveBackgroundTransparent: f3, selectionInactiveBackgroundOpaque: o.color.blend(d2, f3), ansi: t2.DEFAULT_ANSI_COLORS.slice(), contrastCache: this._contrastCache, halfContrastCache: this._halfContrastCache }, this._updateRestoreColors(), this._setTheme(this._optionsService.rawOptions.theme), this.register(this._optionsService.onSpecificOptionChange("minimumContrastRatio", () => this._contrastCache.clear())), this.register(this._optionsService.onSpecificOptionChange("theme", () => this._setTheme(this._optionsService.rawOptions.theme)));
+            super(), this._optionsService = e3, this._contrastCache = new n.ColorContrastCache(), this._halfContrastCache = new n.ColorContrastCache(), this._onChangeColors = this.register(new a2.EventEmitter()), this.onChangeColors = this._onChangeColors.event, this._colors = { foreground: l2, background: d2, cursor: _2, cursorAccent: u2, selectionForeground: void 0, selectionBackgroundTransparent: f2, selectionBackgroundOpaque: o.color.blend(d2, f2), selectionInactiveBackgroundTransparent: f2, selectionInactiveBackgroundOpaque: o.color.blend(d2, f2), ansi: t2.DEFAULT_ANSI_COLORS.slice(), contrastCache: this._contrastCache, halfContrastCache: this._halfContrastCache }, this._updateRestoreColors(), this._setTheme(this._optionsService.rawOptions.theme), this.register(this._optionsService.onSpecificOptionChange("minimumContrastRatio", () => this._contrastCache.clear())), this.register(this._optionsService.onSpecificOptionChange("theme", () => this._setTheme(this._optionsService.rawOptions.theme)));
           }
           _setTheme(e3 = {}) {
             const i3 = this._colors;
-            if (i3.foreground = p(e3.foreground, l2), i3.background = p(e3.background, d2), i3.cursor = p(e3.cursor, _), i3.cursorAccent = p(e3.cursorAccent, u2), i3.selectionBackgroundTransparent = p(e3.selectionBackground, f3), i3.selectionBackgroundOpaque = o.color.blend(i3.background, i3.selectionBackgroundTransparent), i3.selectionInactiveBackgroundTransparent = p(e3.selectionInactiveBackground, i3.selectionBackgroundTransparent), i3.selectionInactiveBackgroundOpaque = o.color.blend(i3.background, i3.selectionInactiveBackgroundTransparent), i3.selectionForeground = e3.selectionForeground ? p(e3.selectionForeground, o.NULL_COLOR) : void 0, i3.selectionForeground === o.NULL_COLOR && (i3.selectionForeground = void 0), o.color.isOpaque(i3.selectionBackgroundTransparent)) {
+            if (i3.foreground = p2(e3.foreground, l2), i3.background = p2(e3.background, d2), i3.cursor = p2(e3.cursor, _2), i3.cursorAccent = p2(e3.cursorAccent, u2), i3.selectionBackgroundTransparent = p2(e3.selectionBackground, f2), i3.selectionBackgroundOpaque = o.color.blend(i3.background, i3.selectionBackgroundTransparent), i3.selectionInactiveBackgroundTransparent = p2(e3.selectionInactiveBackground, i3.selectionBackgroundTransparent), i3.selectionInactiveBackgroundOpaque = o.color.blend(i3.background, i3.selectionInactiveBackgroundTransparent), i3.selectionForeground = e3.selectionForeground ? p2(e3.selectionForeground, o.NULL_COLOR) : void 0, i3.selectionForeground === o.NULL_COLOR && (i3.selectionForeground = void 0), o.color.isOpaque(i3.selectionBackgroundTransparent)) {
               const e4 = 0.3;
               i3.selectionBackgroundTransparent = o.color.opacity(i3.selectionBackgroundTransparent, e4);
             }
@@ -23980,10 +23980,10 @@ WARNING: This link could potentially be dangerous`)) {
               const e4 = 0.3;
               i3.selectionInactiveBackgroundTransparent = o.color.opacity(i3.selectionInactiveBackgroundTransparent, e4);
             }
-            if (i3.ansi = t2.DEFAULT_ANSI_COLORS.slice(), i3.ansi[0] = p(e3.black, t2.DEFAULT_ANSI_COLORS[0]), i3.ansi[1] = p(e3.red, t2.DEFAULT_ANSI_COLORS[1]), i3.ansi[2] = p(e3.green, t2.DEFAULT_ANSI_COLORS[2]), i3.ansi[3] = p(e3.yellow, t2.DEFAULT_ANSI_COLORS[3]), i3.ansi[4] = p(e3.blue, t2.DEFAULT_ANSI_COLORS[4]), i3.ansi[5] = p(e3.magenta, t2.DEFAULT_ANSI_COLORS[5]), i3.ansi[6] = p(e3.cyan, t2.DEFAULT_ANSI_COLORS[6]), i3.ansi[7] = p(e3.white, t2.DEFAULT_ANSI_COLORS[7]), i3.ansi[8] = p(e3.brightBlack, t2.DEFAULT_ANSI_COLORS[8]), i3.ansi[9] = p(e3.brightRed, t2.DEFAULT_ANSI_COLORS[9]), i3.ansi[10] = p(e3.brightGreen, t2.DEFAULT_ANSI_COLORS[10]), i3.ansi[11] = p(e3.brightYellow, t2.DEFAULT_ANSI_COLORS[11]), i3.ansi[12] = p(e3.brightBlue, t2.DEFAULT_ANSI_COLORS[12]), i3.ansi[13] = p(e3.brightMagenta, t2.DEFAULT_ANSI_COLORS[13]), i3.ansi[14] = p(e3.brightCyan, t2.DEFAULT_ANSI_COLORS[14]), i3.ansi[15] = p(e3.brightWhite, t2.DEFAULT_ANSI_COLORS[15]), e3.extendedAnsi) {
+            if (i3.ansi = t2.DEFAULT_ANSI_COLORS.slice(), i3.ansi[0] = p2(e3.black, t2.DEFAULT_ANSI_COLORS[0]), i3.ansi[1] = p2(e3.red, t2.DEFAULT_ANSI_COLORS[1]), i3.ansi[2] = p2(e3.green, t2.DEFAULT_ANSI_COLORS[2]), i3.ansi[3] = p2(e3.yellow, t2.DEFAULT_ANSI_COLORS[3]), i3.ansi[4] = p2(e3.blue, t2.DEFAULT_ANSI_COLORS[4]), i3.ansi[5] = p2(e3.magenta, t2.DEFAULT_ANSI_COLORS[5]), i3.ansi[6] = p2(e3.cyan, t2.DEFAULT_ANSI_COLORS[6]), i3.ansi[7] = p2(e3.white, t2.DEFAULT_ANSI_COLORS[7]), i3.ansi[8] = p2(e3.brightBlack, t2.DEFAULT_ANSI_COLORS[8]), i3.ansi[9] = p2(e3.brightRed, t2.DEFAULT_ANSI_COLORS[9]), i3.ansi[10] = p2(e3.brightGreen, t2.DEFAULT_ANSI_COLORS[10]), i3.ansi[11] = p2(e3.brightYellow, t2.DEFAULT_ANSI_COLORS[11]), i3.ansi[12] = p2(e3.brightBlue, t2.DEFAULT_ANSI_COLORS[12]), i3.ansi[13] = p2(e3.brightMagenta, t2.DEFAULT_ANSI_COLORS[13]), i3.ansi[14] = p2(e3.brightCyan, t2.DEFAULT_ANSI_COLORS[14]), i3.ansi[15] = p2(e3.brightWhite, t2.DEFAULT_ANSI_COLORS[15]), e3.extendedAnsi) {
               const s3 = Math.min(i3.ansi.length - 16, e3.extendedAnsi.length);
               for (let r2 = 0; r2 < s3; r2++)
-                i3.ansi[r2 + 16] = p(e3.extendedAnsi[r2], t2.DEFAULT_ANSI_COLORS[r2 + 16]);
+                i3.ansi[r2 + 16] = p2(e3.extendedAnsi[r2], t2.DEFAULT_ANSI_COLORS[r2 + 16]);
             }
             this._contrastCache.clear(), this._halfContrastCache.clear(), this._updateRestoreColors(), this._onChangeColors.fire(this.colors);
           }
@@ -24016,7 +24016,7 @@ WARNING: This link could potentially be dangerous`)) {
             this._restoreColors = { foreground: this._colors.foreground, background: this._colors.background, cursor: this._colors.cursor, ansi: this._colors.ansi.slice() };
           }
         };
-        function p(e3, t3) {
+        function p2(e3, t3) {
           if (void 0 !== e3)
             try {
               return o.css.toColor(e3);
@@ -24024,7 +24024,7 @@ WARNING: This link could potentially be dangerous`)) {
             }
           return t3;
         }
-        t2.ThemeService = v2 = s2([r(0, c.IOptionsService)], v2);
+        t2.ThemeService = v3 = s2([r(0, c2.IOptionsService)], v3);
       }, 6349: (e2, t2, i2) => {
         Object.defineProperty(t2, "__esModule", { value: true }), t2.CircularList = void 0;
         const s2 = i2(8460), r = i2(844);
@@ -24127,12 +24127,12 @@ WARNING: This link could potentially be dangerous`)) {
         Object.defineProperty(t2, "__esModule", { value: true }), t2.contrastRatio = t2.toPaddedHex = t2.rgba = t2.rgb = t2.css = t2.color = t2.channels = t2.NULL_COLOR = void 0;
         const s2 = i2(6114);
         let r = 0, n = 0, o = 0, a2 = 0;
-        var h, c, l2, d2, _;
+        var h2, c2, l2, d2, _2;
         function u2(e3) {
           const t3 = e3.toString(16);
           return t3.length < 2 ? "0" + t3 : t3;
         }
-        function f3(e3, t3) {
+        function f2(e3, t3) {
           return e3 < t3 ? (t3 + 0.05) / (e3 + 0.05) : (e3 + 0.05) / (t3 + 0.05);
         }
         t2.NULL_COLOR = { css: "#00000000", rgba: 0 }, function(e3) {
@@ -24141,30 +24141,30 @@ WARNING: This link could potentially be dangerous`)) {
           }, e3.toRgba = function(e4, t3, i3, s3 = 255) {
             return (e4 << 24 | t3 << 16 | i3 << 8 | s3) >>> 0;
           };
-        }(h || (t2.channels = h = {})), function(e3) {
+        }(h2 || (t2.channels = h2 = {})), function(e3) {
           function t3(e4, t4) {
-            return a2 = Math.round(255 * t4), [r, n, o] = _.toChannels(e4.rgba), { css: h.toCss(r, n, o, a2), rgba: h.toRgba(r, n, o, a2) };
+            return a2 = Math.round(255 * t4), [r, n, o] = _2.toChannels(e4.rgba), { css: h2.toCss(r, n, o, a2), rgba: h2.toRgba(r, n, o, a2) };
           }
           e3.blend = function(e4, t4) {
             if (a2 = (255 & t4.rgba) / 255, 1 === a2)
               return { css: t4.css, rgba: t4.rgba };
-            const i3 = t4.rgba >> 24 & 255, s3 = t4.rgba >> 16 & 255, c2 = t4.rgba >> 8 & 255, l3 = e4.rgba >> 24 & 255, d3 = e4.rgba >> 16 & 255, _2 = e4.rgba >> 8 & 255;
-            return r = l3 + Math.round((i3 - l3) * a2), n = d3 + Math.round((s3 - d3) * a2), o = _2 + Math.round((c2 - _2) * a2), { css: h.toCss(r, n, o), rgba: h.toRgba(r, n, o) };
+            const i3 = t4.rgba >> 24 & 255, s3 = t4.rgba >> 16 & 255, c3 = t4.rgba >> 8 & 255, l3 = e4.rgba >> 24 & 255, d3 = e4.rgba >> 16 & 255, _3 = e4.rgba >> 8 & 255;
+            return r = l3 + Math.round((i3 - l3) * a2), n = d3 + Math.round((s3 - d3) * a2), o = _3 + Math.round((c3 - _3) * a2), { css: h2.toCss(r, n, o), rgba: h2.toRgba(r, n, o) };
           }, e3.isOpaque = function(e4) {
             return 255 == (255 & e4.rgba);
           }, e3.ensureContrastRatio = function(e4, t4, i3) {
-            const s3 = _.ensureContrastRatio(e4.rgba, t4.rgba, i3);
+            const s3 = _2.ensureContrastRatio(e4.rgba, t4.rgba, i3);
             if (s3)
-              return _.toColor(s3 >> 24 & 255, s3 >> 16 & 255, s3 >> 8 & 255);
+              return _2.toColor(s3 >> 24 & 255, s3 >> 16 & 255, s3 >> 8 & 255);
           }, e3.opaque = function(e4) {
             const t4 = (255 | e4.rgba) >>> 0;
-            return [r, n, o] = _.toChannels(t4), { css: h.toCss(r, n, o), rgba: t4 };
+            return [r, n, o] = _2.toChannels(t4), { css: h2.toCss(r, n, o), rgba: t4 };
           }, e3.opacity = t3, e3.multiplyOpacity = function(e4, i3) {
             return a2 = 255 & e4.rgba, t3(e4, a2 * i3 / 255);
           }, e3.toColorRGB = function(e4) {
             return [e4.rgba >> 24 & 255, e4.rgba >> 16 & 255, e4.rgba >> 8 & 255];
           };
-        }(c || (t2.color = c = {})), function(e3) {
+        }(c2 || (t2.color = c2 = {})), function(e3) {
           let t3, i3;
           if (!s2.isNode) {
             const e4 = document.createElement("canvas");
@@ -24176,9 +24176,9 @@ WARNING: This link could potentially be dangerous`)) {
             if (e4.match(/#[\da-f]{3,8}/i))
               switch (e4.length) {
                 case 4:
-                  return r = parseInt(e4.slice(1, 2).repeat(2), 16), n = parseInt(e4.slice(2, 3).repeat(2), 16), o = parseInt(e4.slice(3, 4).repeat(2), 16), _.toColor(r, n, o);
+                  return r = parseInt(e4.slice(1, 2).repeat(2), 16), n = parseInt(e4.slice(2, 3).repeat(2), 16), o = parseInt(e4.slice(3, 4).repeat(2), 16), _2.toColor(r, n, o);
                 case 5:
-                  return r = parseInt(e4.slice(1, 2).repeat(2), 16), n = parseInt(e4.slice(2, 3).repeat(2), 16), o = parseInt(e4.slice(3, 4).repeat(2), 16), a2 = parseInt(e4.slice(4, 5).repeat(2), 16), _.toColor(r, n, o, a2);
+                  return r = parseInt(e4.slice(1, 2).repeat(2), 16), n = parseInt(e4.slice(2, 3).repeat(2), 16), o = parseInt(e4.slice(3, 4).repeat(2), 16), a2 = parseInt(e4.slice(4, 5).repeat(2), 16), _2.toColor(r, n, o, a2);
                 case 7:
                   return { css: e4, rgba: (parseInt(e4.slice(1), 16) << 8 | 255) >>> 0 };
                 case 9:
@@ -24186,14 +24186,14 @@ WARNING: This link could potentially be dangerous`)) {
               }
             const s3 = e4.match(/rgba?\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*(,\s*(0|1|\d?\.(\d+))\s*)?\)/);
             if (s3)
-              return r = parseInt(s3[1]), n = parseInt(s3[2]), o = parseInt(s3[3]), a2 = Math.round(255 * (void 0 === s3[5] ? 1 : parseFloat(s3[5]))), _.toColor(r, n, o, a2);
+              return r = parseInt(s3[1]), n = parseInt(s3[2]), o = parseInt(s3[3]), a2 = Math.round(255 * (void 0 === s3[5] ? 1 : parseFloat(s3[5]))), _2.toColor(r, n, o, a2);
             if (!t3 || !i3)
               throw new Error("css.toColor: Unsupported css format");
             if (t3.fillStyle = i3, t3.fillStyle = e4, "string" != typeof t3.fillStyle)
               throw new Error("css.toColor: Unsupported css format");
             if (t3.fillRect(0, 0, 1, 1), [r, n, o, a2] = t3.getImageData(0, 0, 1, 1).data, 255 !== a2)
               throw new Error("css.toColor: Unsupported css format");
-            return { rgba: h.toRgba(r, n, o, a2), css: e4 };
+            return { rgba: h2.toRgba(r, n, o, a2), css: e4 };
           };
         }(l2 || (t2.css = l2 = {})), function(e3) {
           function t3(e4, t4, i3) {
@@ -24206,47 +24206,47 @@ WARNING: This link could potentially be dangerous`)) {
         }(d2 || (t2.rgb = d2 = {})), function(e3) {
           function t3(e4, t4, i4) {
             const s3 = e4 >> 24 & 255, r2 = e4 >> 16 & 255, n2 = e4 >> 8 & 255;
-            let o2 = t4 >> 24 & 255, a3 = t4 >> 16 & 255, h2 = t4 >> 8 & 255, c2 = f3(d2.relativeLuminance2(o2, a3, h2), d2.relativeLuminance2(s3, r2, n2));
-            for (; c2 < i4 && (o2 > 0 || a3 > 0 || h2 > 0); )
-              o2 -= Math.max(0, Math.ceil(0.1 * o2)), a3 -= Math.max(0, Math.ceil(0.1 * a3)), h2 -= Math.max(0, Math.ceil(0.1 * h2)), c2 = f3(d2.relativeLuminance2(o2, a3, h2), d2.relativeLuminance2(s3, r2, n2));
-            return (o2 << 24 | a3 << 16 | h2 << 8 | 255) >>> 0;
+            let o2 = t4 >> 24 & 255, a3 = t4 >> 16 & 255, h3 = t4 >> 8 & 255, c3 = f2(d2.relativeLuminance2(o2, a3, h3), d2.relativeLuminance2(s3, r2, n2));
+            for (; c3 < i4 && (o2 > 0 || a3 > 0 || h3 > 0); )
+              o2 -= Math.max(0, Math.ceil(0.1 * o2)), a3 -= Math.max(0, Math.ceil(0.1 * a3)), h3 -= Math.max(0, Math.ceil(0.1 * h3)), c3 = f2(d2.relativeLuminance2(o2, a3, h3), d2.relativeLuminance2(s3, r2, n2));
+            return (o2 << 24 | a3 << 16 | h3 << 8 | 255) >>> 0;
           }
           function i3(e4, t4, i4) {
             const s3 = e4 >> 24 & 255, r2 = e4 >> 16 & 255, n2 = e4 >> 8 & 255;
-            let o2 = t4 >> 24 & 255, a3 = t4 >> 16 & 255, h2 = t4 >> 8 & 255, c2 = f3(d2.relativeLuminance2(o2, a3, h2), d2.relativeLuminance2(s3, r2, n2));
-            for (; c2 < i4 && (o2 < 255 || a3 < 255 || h2 < 255); )
-              o2 = Math.min(255, o2 + Math.ceil(0.1 * (255 - o2))), a3 = Math.min(255, a3 + Math.ceil(0.1 * (255 - a3))), h2 = Math.min(255, h2 + Math.ceil(0.1 * (255 - h2))), c2 = f3(d2.relativeLuminance2(o2, a3, h2), d2.relativeLuminance2(s3, r2, n2));
-            return (o2 << 24 | a3 << 16 | h2 << 8 | 255) >>> 0;
+            let o2 = t4 >> 24 & 255, a3 = t4 >> 16 & 255, h3 = t4 >> 8 & 255, c3 = f2(d2.relativeLuminance2(o2, a3, h3), d2.relativeLuminance2(s3, r2, n2));
+            for (; c3 < i4 && (o2 < 255 || a3 < 255 || h3 < 255); )
+              o2 = Math.min(255, o2 + Math.ceil(0.1 * (255 - o2))), a3 = Math.min(255, a3 + Math.ceil(0.1 * (255 - a3))), h3 = Math.min(255, h3 + Math.ceil(0.1 * (255 - h3))), c3 = f2(d2.relativeLuminance2(o2, a3, h3), d2.relativeLuminance2(s3, r2, n2));
+            return (o2 << 24 | a3 << 16 | h3 << 8 | 255) >>> 0;
           }
           e3.ensureContrastRatio = function(e4, s3, r2) {
             const n2 = d2.relativeLuminance(e4 >> 8), o2 = d2.relativeLuminance(s3 >> 8);
-            if (f3(n2, o2) < r2) {
+            if (f2(n2, o2) < r2) {
               if (o2 < n2) {
-                const o3 = t3(e4, s3, r2), a4 = f3(n2, d2.relativeLuminance(o3 >> 8));
+                const o3 = t3(e4, s3, r2), a4 = f2(n2, d2.relativeLuminance(o3 >> 8));
                 if (a4 < r2) {
                   const t4 = i3(e4, s3, r2);
-                  return a4 > f3(n2, d2.relativeLuminance(t4 >> 8)) ? o3 : t4;
+                  return a4 > f2(n2, d2.relativeLuminance(t4 >> 8)) ? o3 : t4;
                 }
                 return o3;
               }
-              const a3 = i3(e4, s3, r2), h2 = f3(n2, d2.relativeLuminance(a3 >> 8));
-              if (h2 < r2) {
+              const a3 = i3(e4, s3, r2), h3 = f2(n2, d2.relativeLuminance(a3 >> 8));
+              if (h3 < r2) {
                 const i4 = t3(e4, s3, r2);
-                return h2 > f3(n2, d2.relativeLuminance(i4 >> 8)) ? a3 : i4;
+                return h3 > f2(n2, d2.relativeLuminance(i4 >> 8)) ? a3 : i4;
               }
               return a3;
             }
           }, e3.reduceLuminance = t3, e3.increaseLuminance = i3, e3.toChannels = function(e4) {
             return [e4 >> 24 & 255, e4 >> 16 & 255, e4 >> 8 & 255, 255 & e4];
           }, e3.toColor = function(e4, t4, i4, s3) {
-            return { css: h.toCss(e4, t4, i4, s3), rgba: h.toRgba(e4, t4, i4, s3) };
+            return { css: h2.toCss(e4, t4, i4, s3), rgba: h2.toRgba(e4, t4, i4, s3) };
           };
-        }(_ || (t2.rgba = _ = {})), t2.toPaddedHex = u2, t2.contrastRatio = f3;
+        }(_2 || (t2.rgba = _2 = {})), t2.toPaddedHex = u2, t2.contrastRatio = f2;
       }, 8969: (e2, t2, i2) => {
         Object.defineProperty(t2, "__esModule", { value: true }), t2.CoreTerminal = void 0;
-        const s2 = i2(844), r = i2(2585), n = i2(4348), o = i2(7866), a2 = i2(744), h = i2(7302), c = i2(6975), l2 = i2(8460), d2 = i2(1753), _ = i2(1480), u2 = i2(7994), f3 = i2(9282), v2 = i2(5435), p = i2(5981), g3 = i2(2660);
+        const s2 = i2(844), r = i2(2585), n = i2(4348), o = i2(7866), a2 = i2(744), h2 = i2(7302), c2 = i2(6975), l2 = i2(8460), d2 = i2(1753), _2 = i2(1480), u2 = i2(7994), f2 = i2(9282), v3 = i2(5435), p2 = i2(5981), g3 = i2(2660);
         let m2 = false;
-        class S3 extends s2.Disposable {
+        class S2 extends s2.Disposable {
           get onScroll() {
             return this._onScrollApi || (this._onScrollApi = this.register(new l2.EventEmitter()), this._onScroll.event((e3) => {
               var t3;
@@ -24270,11 +24270,11 @@ WARNING: This link could potentially be dangerous`)) {
               this.optionsService.options[t3] = e3[t3];
           }
           constructor(e3) {
-            super(), this._windowsWrappingHeuristics = this.register(new s2.MutableDisposable()), this._onBinary = this.register(new l2.EventEmitter()), this.onBinary = this._onBinary.event, this._onData = this.register(new l2.EventEmitter()), this.onData = this._onData.event, this._onLineFeed = this.register(new l2.EventEmitter()), this.onLineFeed = this._onLineFeed.event, this._onResize = this.register(new l2.EventEmitter()), this.onResize = this._onResize.event, this._onWriteParsed = this.register(new l2.EventEmitter()), this.onWriteParsed = this._onWriteParsed.event, this._onScroll = this.register(new l2.EventEmitter()), this._instantiationService = new n.InstantiationService(), this.optionsService = this.register(new h.OptionsService(e3)), this._instantiationService.setService(r.IOptionsService, this.optionsService), this._bufferService = this.register(this._instantiationService.createInstance(a2.BufferService)), this._instantiationService.setService(r.IBufferService, this._bufferService), this._logService = this.register(this._instantiationService.createInstance(o.LogService)), this._instantiationService.setService(r.ILogService, this._logService), this.coreService = this.register(this._instantiationService.createInstance(c.CoreService)), this._instantiationService.setService(r.ICoreService, this.coreService), this.coreMouseService = this.register(this._instantiationService.createInstance(d2.CoreMouseService)), this._instantiationService.setService(r.ICoreMouseService, this.coreMouseService), this.unicodeService = this.register(this._instantiationService.createInstance(_.UnicodeService)), this._instantiationService.setService(r.IUnicodeService, this.unicodeService), this._charsetService = this._instantiationService.createInstance(u2.CharsetService), this._instantiationService.setService(r.ICharsetService, this._charsetService), this._oscLinkService = this._instantiationService.createInstance(g3.OscLinkService), this._instantiationService.setService(r.IOscLinkService, this._oscLinkService), this._inputHandler = this.register(new v2.InputHandler(this._bufferService, this._charsetService, this.coreService, this._logService, this.optionsService, this._oscLinkService, this.coreMouseService, this.unicodeService)), this.register((0, l2.forwardEvent)(this._inputHandler.onLineFeed, this._onLineFeed)), this.register(this._inputHandler), this.register((0, l2.forwardEvent)(this._bufferService.onResize, this._onResize)), this.register((0, l2.forwardEvent)(this.coreService.onData, this._onData)), this.register((0, l2.forwardEvent)(this.coreService.onBinary, this._onBinary)), this.register(this.coreService.onRequestScrollToBottom(() => this.scrollToBottom())), this.register(this.coreService.onUserInput(() => this._writeBuffer.handleUserInput())), this.register(this.optionsService.onMultipleOptionChange(["windowsMode", "windowsPty"], () => this._handleWindowsPtyOptionChange())), this.register(this._bufferService.onScroll((e4) => {
+            super(), this._windowsWrappingHeuristics = this.register(new s2.MutableDisposable()), this._onBinary = this.register(new l2.EventEmitter()), this.onBinary = this._onBinary.event, this._onData = this.register(new l2.EventEmitter()), this.onData = this._onData.event, this._onLineFeed = this.register(new l2.EventEmitter()), this.onLineFeed = this._onLineFeed.event, this._onResize = this.register(new l2.EventEmitter()), this.onResize = this._onResize.event, this._onWriteParsed = this.register(new l2.EventEmitter()), this.onWriteParsed = this._onWriteParsed.event, this._onScroll = this.register(new l2.EventEmitter()), this._instantiationService = new n.InstantiationService(), this.optionsService = this.register(new h2.OptionsService(e3)), this._instantiationService.setService(r.IOptionsService, this.optionsService), this._bufferService = this.register(this._instantiationService.createInstance(a2.BufferService)), this._instantiationService.setService(r.IBufferService, this._bufferService), this._logService = this.register(this._instantiationService.createInstance(o.LogService)), this._instantiationService.setService(r.ILogService, this._logService), this.coreService = this.register(this._instantiationService.createInstance(c2.CoreService)), this._instantiationService.setService(r.ICoreService, this.coreService), this.coreMouseService = this.register(this._instantiationService.createInstance(d2.CoreMouseService)), this._instantiationService.setService(r.ICoreMouseService, this.coreMouseService), this.unicodeService = this.register(this._instantiationService.createInstance(_2.UnicodeService)), this._instantiationService.setService(r.IUnicodeService, this.unicodeService), this._charsetService = this._instantiationService.createInstance(u2.CharsetService), this._instantiationService.setService(r.ICharsetService, this._charsetService), this._oscLinkService = this._instantiationService.createInstance(g3.OscLinkService), this._instantiationService.setService(r.IOscLinkService, this._oscLinkService), this._inputHandler = this.register(new v3.InputHandler(this._bufferService, this._charsetService, this.coreService, this._logService, this.optionsService, this._oscLinkService, this.coreMouseService, this.unicodeService)), this.register((0, l2.forwardEvent)(this._inputHandler.onLineFeed, this._onLineFeed)), this.register(this._inputHandler), this.register((0, l2.forwardEvent)(this._bufferService.onResize, this._onResize)), this.register((0, l2.forwardEvent)(this.coreService.onData, this._onData)), this.register((0, l2.forwardEvent)(this.coreService.onBinary, this._onBinary)), this.register(this.coreService.onRequestScrollToBottom(() => this.scrollToBottom())), this.register(this.coreService.onUserInput(() => this._writeBuffer.handleUserInput())), this.register(this.optionsService.onMultipleOptionChange(["windowsMode", "windowsPty"], () => this._handleWindowsPtyOptionChange())), this.register(this._bufferService.onScroll((e4) => {
               this._onScroll.fire({ position: this._bufferService.buffer.ydisp, source: 0 }), this._inputHandler.markRangeDirty(this._bufferService.buffer.scrollTop, this._bufferService.buffer.scrollBottom);
             })), this.register(this._inputHandler.onScroll((e4) => {
               this._onScroll.fire({ position: this._bufferService.buffer.ydisp, source: 0 }), this._inputHandler.markRangeDirty(this._bufferService.buffer.scrollTop, this._bufferService.buffer.scrollBottom);
-            })), this._writeBuffer = this.register(new p.WriteBuffer((e4, t3) => this._inputHandler.parse(e4, t3))), this.register((0, l2.forwardEvent)(this._writeBuffer.onWriteParsed, this._onWriteParsed));
+            })), this._writeBuffer = this.register(new p2.WriteBuffer((e4, t3) => this._inputHandler.parse(e4, t3))), this.register((0, l2.forwardEvent)(this._writeBuffer.onWriteParsed, this._onWriteParsed));
           }
           write(e3, t3) {
             this._writeBuffer.write(e3, t3);
@@ -24330,14 +24330,14 @@ WARNING: This link could potentially be dangerous`)) {
           _enableWindowsWrappingHeuristics() {
             if (!this._windowsWrappingHeuristics.value) {
               const e3 = [];
-              e3.push(this.onLineFeed(f3.updateWindowsModeWrappedState.bind(null, this._bufferService))), e3.push(this.registerCsiHandler({ final: "H" }, () => ((0, f3.updateWindowsModeWrappedState)(this._bufferService), false))), this._windowsWrappingHeuristics.value = (0, s2.toDisposable)(() => {
+              e3.push(this.onLineFeed(f2.updateWindowsModeWrappedState.bind(null, this._bufferService))), e3.push(this.registerCsiHandler({ final: "H" }, () => ((0, f2.updateWindowsModeWrappedState)(this._bufferService), false))), this._windowsWrappingHeuristics.value = (0, s2.toDisposable)(() => {
                 for (const t3 of e3)
                   t3.dispose();
               });
             }
           }
         }
-        t2.CoreTerminal = S3;
+        t2.CoreTerminal = S2;
       }, 8460: (e2, t2) => {
         Object.defineProperty(t2, "__esModule", { value: true }), t2.forwardEvent = t2.EventEmitter = void 0, t2.EventEmitter = class {
           constructor() {
@@ -24383,7 +24383,7 @@ WARNING: This link could potentially be dangerous`)) {
           };
         };
         Object.defineProperty(t2, "__esModule", { value: true }), t2.InputHandler = t2.WindowsOptionsReportType = void 0;
-        const n = i2(2584), o = i2(7116), a2 = i2(2015), h = i2(844), c = i2(482), l2 = i2(8437), d2 = i2(8460), _ = i2(643), u2 = i2(511), f3 = i2(3734), v2 = i2(2585), p = i2(6242), g3 = i2(6351), m2 = i2(5941), S3 = { "(": 0, ")": 1, "*": 2, "+": 3, "-": 1, ".": 2 }, C2 = 131072;
+        const n = i2(2584), o = i2(7116), a2 = i2(2015), h2 = i2(844), c2 = i2(482), l2 = i2(8437), d2 = i2(8460), _2 = i2(643), u2 = i2(511), f2 = i2(3734), v3 = i2(2585), p2 = i2(6242), g3 = i2(6351), m2 = i2(5941), S2 = { "(": 0, ")": 1, "*": 2, "+": 3, "-": 1, ".": 2 }, C2 = 131072;
         function b2(e3, t3) {
           if (e3 > 24)
             return t3.setWinLines || false;
@@ -24440,12 +24440,12 @@ WARNING: This link could potentially be dangerous`)) {
           e3[e3.GET_WIN_SIZE_PIXELS = 0] = "GET_WIN_SIZE_PIXELS", e3[e3.GET_CELL_SIZE_PIXELS = 1] = "GET_CELL_SIZE_PIXELS";
         }(y2 || (t2.WindowsOptionsReportType = y2 = {}));
         let w3 = 0;
-        class E3 extends h.Disposable {
+        class E3 extends h2.Disposable {
           getAttrData() {
             return this._curAttrData;
           }
-          constructor(e3, t3, i3, s3, r2, h2, _2, f4, v3 = new a2.EscapeSequenceParser()) {
-            super(), this._bufferService = e3, this._charsetService = t3, this._coreService = i3, this._logService = s3, this._optionsService = r2, this._oscLinkService = h2, this._coreMouseService = _2, this._unicodeService = f4, this._parser = v3, this._parseBuffer = new Uint32Array(4096), this._stringDecoder = new c.StringToUtf32(), this._utf8Decoder = new c.Utf8ToUtf32(), this._workCell = new u2.CellData(), this._windowTitle = "", this._iconName = "", this._windowTitleStack = [], this._iconNameStack = [], this._curAttrData = l2.DEFAULT_ATTR_DATA.clone(), this._eraseAttrDataInternal = l2.DEFAULT_ATTR_DATA.clone(), this._onRequestBell = this.register(new d2.EventEmitter()), this.onRequestBell = this._onRequestBell.event, this._onRequestRefreshRows = this.register(new d2.EventEmitter()), this.onRequestRefreshRows = this._onRequestRefreshRows.event, this._onRequestReset = this.register(new d2.EventEmitter()), this.onRequestReset = this._onRequestReset.event, this._onRequestSendFocus = this.register(new d2.EventEmitter()), this.onRequestSendFocus = this._onRequestSendFocus.event, this._onRequestSyncScrollBar = this.register(new d2.EventEmitter()), this.onRequestSyncScrollBar = this._onRequestSyncScrollBar.event, this._onRequestWindowsOptionsReport = this.register(new d2.EventEmitter()), this.onRequestWindowsOptionsReport = this._onRequestWindowsOptionsReport.event, this._onA11yChar = this.register(new d2.EventEmitter()), this.onA11yChar = this._onA11yChar.event, this._onA11yTab = this.register(new d2.EventEmitter()), this.onA11yTab = this._onA11yTab.event, this._onCursorMove = this.register(new d2.EventEmitter()), this.onCursorMove = this._onCursorMove.event, this._onLineFeed = this.register(new d2.EventEmitter()), this.onLineFeed = this._onLineFeed.event, this._onScroll = this.register(new d2.EventEmitter()), this.onScroll = this._onScroll.event, this._onTitleChange = this.register(new d2.EventEmitter()), this.onTitleChange = this._onTitleChange.event, this._onColor = this.register(new d2.EventEmitter()), this.onColor = this._onColor.event, this._parseStack = { paused: false, cursorStartX: 0, cursorStartY: 0, decodedLength: 0, position: 0 }, this._specialColors = [256, 257, 258], this.register(this._parser), this._dirtyRowTracker = new k2(this._bufferService), this._activeBuffer = this._bufferService.buffer, this.register(this._bufferService.buffers.onBufferActivate((e4) => this._activeBuffer = e4.activeBuffer)), this._parser.setCsiHandlerFallback((e4, t4) => {
+          constructor(e3, t3, i3, s3, r2, h3, _3, f3, v4 = new a2.EscapeSequenceParser()) {
+            super(), this._bufferService = e3, this._charsetService = t3, this._coreService = i3, this._logService = s3, this._optionsService = r2, this._oscLinkService = h3, this._coreMouseService = _3, this._unicodeService = f3, this._parser = v4, this._parseBuffer = new Uint32Array(4096), this._stringDecoder = new c2.StringToUtf32(), this._utf8Decoder = new c2.Utf8ToUtf32(), this._workCell = new u2.CellData(), this._windowTitle = "", this._iconName = "", this._windowTitleStack = [], this._iconNameStack = [], this._curAttrData = l2.DEFAULT_ATTR_DATA.clone(), this._eraseAttrDataInternal = l2.DEFAULT_ATTR_DATA.clone(), this._onRequestBell = this.register(new d2.EventEmitter()), this.onRequestBell = this._onRequestBell.event, this._onRequestRefreshRows = this.register(new d2.EventEmitter()), this.onRequestRefreshRows = this._onRequestRefreshRows.event, this._onRequestReset = this.register(new d2.EventEmitter()), this.onRequestReset = this._onRequestReset.event, this._onRequestSendFocus = this.register(new d2.EventEmitter()), this.onRequestSendFocus = this._onRequestSendFocus.event, this._onRequestSyncScrollBar = this.register(new d2.EventEmitter()), this.onRequestSyncScrollBar = this._onRequestSyncScrollBar.event, this._onRequestWindowsOptionsReport = this.register(new d2.EventEmitter()), this.onRequestWindowsOptionsReport = this._onRequestWindowsOptionsReport.event, this._onA11yChar = this.register(new d2.EventEmitter()), this.onA11yChar = this._onA11yChar.event, this._onA11yTab = this.register(new d2.EventEmitter()), this.onA11yTab = this._onA11yTab.event, this._onCursorMove = this.register(new d2.EventEmitter()), this.onCursorMove = this._onCursorMove.event, this._onLineFeed = this.register(new d2.EventEmitter()), this.onLineFeed = this._onLineFeed.event, this._onScroll = this.register(new d2.EventEmitter()), this.onScroll = this._onScroll.event, this._onTitleChange = this.register(new d2.EventEmitter()), this.onTitleChange = this._onTitleChange.event, this._onColor = this.register(new d2.EventEmitter()), this.onColor = this._onColor.event, this._parseStack = { paused: false, cursorStartX: 0, cursorStartY: 0, decodedLength: 0, position: 0 }, this._specialColors = [256, 257, 258], this.register(this._parser), this._dirtyRowTracker = new k3(this._bufferService), this._activeBuffer = this._bufferService.buffer, this.register(this._bufferService.buffers.onBufferActivate((e4) => this._activeBuffer = e4.activeBuffer)), this._parser.setCsiHandlerFallback((e4, t4) => {
               this._logService.debug("Unknown CSI code: ", { identifier: this._parser.identToString(e4), params: t4.toArray() });
             }), this._parser.setEscHandlerFallback((e4) => {
               this._logService.debug("Unknown ESC code: ", { identifier: this._parser.identToString(e4) });
@@ -24455,7 +24455,7 @@ WARNING: This link could potentially be dangerous`)) {
               this._logService.debug("Unknown OSC code: ", { identifier: e4, action: t4, data: i4 });
             }), this._parser.setDcsHandlerFallback((e4, t4, i4) => {
               "HOOK" === t4 && (i4 = i4.toArray()), this._logService.debug("Unknown DCS code: ", { identifier: this._parser.identToString(e4), action: t4, payload: i4 });
-            }), this._parser.setPrintHandler((e4, t4, i4) => this.print(e4, t4, i4)), this._parser.registerCsiHandler({ final: "@" }, (e4) => this.insertChars(e4)), this._parser.registerCsiHandler({ intermediates: " ", final: "@" }, (e4) => this.scrollLeft(e4)), this._parser.registerCsiHandler({ final: "A" }, (e4) => this.cursorUp(e4)), this._parser.registerCsiHandler({ intermediates: " ", final: "A" }, (e4) => this.scrollRight(e4)), this._parser.registerCsiHandler({ final: "B" }, (e4) => this.cursorDown(e4)), this._parser.registerCsiHandler({ final: "C" }, (e4) => this.cursorForward(e4)), this._parser.registerCsiHandler({ final: "D" }, (e4) => this.cursorBackward(e4)), this._parser.registerCsiHandler({ final: "E" }, (e4) => this.cursorNextLine(e4)), this._parser.registerCsiHandler({ final: "F" }, (e4) => this.cursorPrecedingLine(e4)), this._parser.registerCsiHandler({ final: "G" }, (e4) => this.cursorCharAbsolute(e4)), this._parser.registerCsiHandler({ final: "H" }, (e4) => this.cursorPosition(e4)), this._parser.registerCsiHandler({ final: "I" }, (e4) => this.cursorForwardTab(e4)), this._parser.registerCsiHandler({ final: "J" }, (e4) => this.eraseInDisplay(e4, false)), this._parser.registerCsiHandler({ prefix: "?", final: "J" }, (e4) => this.eraseInDisplay(e4, true)), this._parser.registerCsiHandler({ final: "K" }, (e4) => this.eraseInLine(e4, false)), this._parser.registerCsiHandler({ prefix: "?", final: "K" }, (e4) => this.eraseInLine(e4, true)), this._parser.registerCsiHandler({ final: "L" }, (e4) => this.insertLines(e4)), this._parser.registerCsiHandler({ final: "M" }, (e4) => this.deleteLines(e4)), this._parser.registerCsiHandler({ final: "P" }, (e4) => this.deleteChars(e4)), this._parser.registerCsiHandler({ final: "S" }, (e4) => this.scrollUp(e4)), this._parser.registerCsiHandler({ final: "T" }, (e4) => this.scrollDown(e4)), this._parser.registerCsiHandler({ final: "X" }, (e4) => this.eraseChars(e4)), this._parser.registerCsiHandler({ final: "Z" }, (e4) => this.cursorBackwardTab(e4)), this._parser.registerCsiHandler({ final: "`" }, (e4) => this.charPosAbsolute(e4)), this._parser.registerCsiHandler({ final: "a" }, (e4) => this.hPositionRelative(e4)), this._parser.registerCsiHandler({ final: "b" }, (e4) => this.repeatPrecedingCharacter(e4)), this._parser.registerCsiHandler({ final: "c" }, (e4) => this.sendDeviceAttributesPrimary(e4)), this._parser.registerCsiHandler({ prefix: ">", final: "c" }, (e4) => this.sendDeviceAttributesSecondary(e4)), this._parser.registerCsiHandler({ final: "d" }, (e4) => this.linePosAbsolute(e4)), this._parser.registerCsiHandler({ final: "e" }, (e4) => this.vPositionRelative(e4)), this._parser.registerCsiHandler({ final: "f" }, (e4) => this.hVPosition(e4)), this._parser.registerCsiHandler({ final: "g" }, (e4) => this.tabClear(e4)), this._parser.registerCsiHandler({ final: "h" }, (e4) => this.setMode(e4)), this._parser.registerCsiHandler({ prefix: "?", final: "h" }, (e4) => this.setModePrivate(e4)), this._parser.registerCsiHandler({ final: "l" }, (e4) => this.resetMode(e4)), this._parser.registerCsiHandler({ prefix: "?", final: "l" }, (e4) => this.resetModePrivate(e4)), this._parser.registerCsiHandler({ final: "m" }, (e4) => this.charAttributes(e4)), this._parser.registerCsiHandler({ final: "n" }, (e4) => this.deviceStatus(e4)), this._parser.registerCsiHandler({ prefix: "?", final: "n" }, (e4) => this.deviceStatusPrivate(e4)), this._parser.registerCsiHandler({ intermediates: "!", final: "p" }, (e4) => this.softReset(e4)), this._parser.registerCsiHandler({ intermediates: " ", final: "q" }, (e4) => this.setCursorStyle(e4)), this._parser.registerCsiHandler({ final: "r" }, (e4) => this.setScrollRegion(e4)), this._parser.registerCsiHandler({ final: "s" }, (e4) => this.saveCursor(e4)), this._parser.registerCsiHandler({ final: "t" }, (e4) => this.windowOptions(e4)), this._parser.registerCsiHandler({ final: "u" }, (e4) => this.restoreCursor(e4)), this._parser.registerCsiHandler({ intermediates: "'", final: "}" }, (e4) => this.insertColumns(e4)), this._parser.registerCsiHandler({ intermediates: "'", final: "~" }, (e4) => this.deleteColumns(e4)), this._parser.registerCsiHandler({ intermediates: '"', final: "q" }, (e4) => this.selectProtected(e4)), this._parser.registerCsiHandler({ intermediates: "$", final: "p" }, (e4) => this.requestMode(e4, true)), this._parser.registerCsiHandler({ prefix: "?", intermediates: "$", final: "p" }, (e4) => this.requestMode(e4, false)), this._parser.setExecuteHandler(n.C0.BEL, () => this.bell()), this._parser.setExecuteHandler(n.C0.LF, () => this.lineFeed()), this._parser.setExecuteHandler(n.C0.VT, () => this.lineFeed()), this._parser.setExecuteHandler(n.C0.FF, () => this.lineFeed()), this._parser.setExecuteHandler(n.C0.CR, () => this.carriageReturn()), this._parser.setExecuteHandler(n.C0.BS, () => this.backspace()), this._parser.setExecuteHandler(n.C0.HT, () => this.tab()), this._parser.setExecuteHandler(n.C0.SO, () => this.shiftOut()), this._parser.setExecuteHandler(n.C0.SI, () => this.shiftIn()), this._parser.setExecuteHandler(n.C1.IND, () => this.index()), this._parser.setExecuteHandler(n.C1.NEL, () => this.nextLine()), this._parser.setExecuteHandler(n.C1.HTS, () => this.tabSet()), this._parser.registerOscHandler(0, new p.OscHandler((e4) => (this.setTitle(e4), this.setIconName(e4), true))), this._parser.registerOscHandler(1, new p.OscHandler((e4) => this.setIconName(e4))), this._parser.registerOscHandler(2, new p.OscHandler((e4) => this.setTitle(e4))), this._parser.registerOscHandler(4, new p.OscHandler((e4) => this.setOrReportIndexedColor(e4))), this._parser.registerOscHandler(8, new p.OscHandler((e4) => this.setHyperlink(e4))), this._parser.registerOscHandler(10, new p.OscHandler((e4) => this.setOrReportFgColor(e4))), this._parser.registerOscHandler(11, new p.OscHandler((e4) => this.setOrReportBgColor(e4))), this._parser.registerOscHandler(12, new p.OscHandler((e4) => this.setOrReportCursorColor(e4))), this._parser.registerOscHandler(104, new p.OscHandler((e4) => this.restoreIndexedColor(e4))), this._parser.registerOscHandler(110, new p.OscHandler((e4) => this.restoreFgColor(e4))), this._parser.registerOscHandler(111, new p.OscHandler((e4) => this.restoreBgColor(e4))), this._parser.registerOscHandler(112, new p.OscHandler((e4) => this.restoreCursorColor(e4))), this._parser.registerEscHandler({ final: "7" }, () => this.saveCursor()), this._parser.registerEscHandler({ final: "8" }, () => this.restoreCursor()), this._parser.registerEscHandler({ final: "D" }, () => this.index()), this._parser.registerEscHandler({ final: "E" }, () => this.nextLine()), this._parser.registerEscHandler({ final: "H" }, () => this.tabSet()), this._parser.registerEscHandler({ final: "M" }, () => this.reverseIndex()), this._parser.registerEscHandler({ final: "=" }, () => this.keypadApplicationMode()), this._parser.registerEscHandler({ final: ">" }, () => this.keypadNumericMode()), this._parser.registerEscHandler({ final: "c" }, () => this.fullReset()), this._parser.registerEscHandler({ final: "n" }, () => this.setgLevel(2)), this._parser.registerEscHandler({ final: "o" }, () => this.setgLevel(3)), this._parser.registerEscHandler({ final: "|" }, () => this.setgLevel(3)), this._parser.registerEscHandler({ final: "}" }, () => this.setgLevel(2)), this._parser.registerEscHandler({ final: "~" }, () => this.setgLevel(1)), this._parser.registerEscHandler({ intermediates: "%", final: "@" }, () => this.selectDefaultCharset()), this._parser.registerEscHandler({ intermediates: "%", final: "G" }, () => this.selectDefaultCharset());
+            }), this._parser.setPrintHandler((e4, t4, i4) => this.print(e4, t4, i4)), this._parser.registerCsiHandler({ final: "@" }, (e4) => this.insertChars(e4)), this._parser.registerCsiHandler({ intermediates: " ", final: "@" }, (e4) => this.scrollLeft(e4)), this._parser.registerCsiHandler({ final: "A" }, (e4) => this.cursorUp(e4)), this._parser.registerCsiHandler({ intermediates: " ", final: "A" }, (e4) => this.scrollRight(e4)), this._parser.registerCsiHandler({ final: "B" }, (e4) => this.cursorDown(e4)), this._parser.registerCsiHandler({ final: "C" }, (e4) => this.cursorForward(e4)), this._parser.registerCsiHandler({ final: "D" }, (e4) => this.cursorBackward(e4)), this._parser.registerCsiHandler({ final: "E" }, (e4) => this.cursorNextLine(e4)), this._parser.registerCsiHandler({ final: "F" }, (e4) => this.cursorPrecedingLine(e4)), this._parser.registerCsiHandler({ final: "G" }, (e4) => this.cursorCharAbsolute(e4)), this._parser.registerCsiHandler({ final: "H" }, (e4) => this.cursorPosition(e4)), this._parser.registerCsiHandler({ final: "I" }, (e4) => this.cursorForwardTab(e4)), this._parser.registerCsiHandler({ final: "J" }, (e4) => this.eraseInDisplay(e4, false)), this._parser.registerCsiHandler({ prefix: "?", final: "J" }, (e4) => this.eraseInDisplay(e4, true)), this._parser.registerCsiHandler({ final: "K" }, (e4) => this.eraseInLine(e4, false)), this._parser.registerCsiHandler({ prefix: "?", final: "K" }, (e4) => this.eraseInLine(e4, true)), this._parser.registerCsiHandler({ final: "L" }, (e4) => this.insertLines(e4)), this._parser.registerCsiHandler({ final: "M" }, (e4) => this.deleteLines(e4)), this._parser.registerCsiHandler({ final: "P" }, (e4) => this.deleteChars(e4)), this._parser.registerCsiHandler({ final: "S" }, (e4) => this.scrollUp(e4)), this._parser.registerCsiHandler({ final: "T" }, (e4) => this.scrollDown(e4)), this._parser.registerCsiHandler({ final: "X" }, (e4) => this.eraseChars(e4)), this._parser.registerCsiHandler({ final: "Z" }, (e4) => this.cursorBackwardTab(e4)), this._parser.registerCsiHandler({ final: "`" }, (e4) => this.charPosAbsolute(e4)), this._parser.registerCsiHandler({ final: "a" }, (e4) => this.hPositionRelative(e4)), this._parser.registerCsiHandler({ final: "b" }, (e4) => this.repeatPrecedingCharacter(e4)), this._parser.registerCsiHandler({ final: "c" }, (e4) => this.sendDeviceAttributesPrimary(e4)), this._parser.registerCsiHandler({ prefix: ">", final: "c" }, (e4) => this.sendDeviceAttributesSecondary(e4)), this._parser.registerCsiHandler({ final: "d" }, (e4) => this.linePosAbsolute(e4)), this._parser.registerCsiHandler({ final: "e" }, (e4) => this.vPositionRelative(e4)), this._parser.registerCsiHandler({ final: "f" }, (e4) => this.hVPosition(e4)), this._parser.registerCsiHandler({ final: "g" }, (e4) => this.tabClear(e4)), this._parser.registerCsiHandler({ final: "h" }, (e4) => this.setMode(e4)), this._parser.registerCsiHandler({ prefix: "?", final: "h" }, (e4) => this.setModePrivate(e4)), this._parser.registerCsiHandler({ final: "l" }, (e4) => this.resetMode(e4)), this._parser.registerCsiHandler({ prefix: "?", final: "l" }, (e4) => this.resetModePrivate(e4)), this._parser.registerCsiHandler({ final: "m" }, (e4) => this.charAttributes(e4)), this._parser.registerCsiHandler({ final: "n" }, (e4) => this.deviceStatus(e4)), this._parser.registerCsiHandler({ prefix: "?", final: "n" }, (e4) => this.deviceStatusPrivate(e4)), this._parser.registerCsiHandler({ intermediates: "!", final: "p" }, (e4) => this.softReset(e4)), this._parser.registerCsiHandler({ intermediates: " ", final: "q" }, (e4) => this.setCursorStyle(e4)), this._parser.registerCsiHandler({ final: "r" }, (e4) => this.setScrollRegion(e4)), this._parser.registerCsiHandler({ final: "s" }, (e4) => this.saveCursor(e4)), this._parser.registerCsiHandler({ final: "t" }, (e4) => this.windowOptions(e4)), this._parser.registerCsiHandler({ final: "u" }, (e4) => this.restoreCursor(e4)), this._parser.registerCsiHandler({ intermediates: "'", final: "}" }, (e4) => this.insertColumns(e4)), this._parser.registerCsiHandler({ intermediates: "'", final: "~" }, (e4) => this.deleteColumns(e4)), this._parser.registerCsiHandler({ intermediates: '"', final: "q" }, (e4) => this.selectProtected(e4)), this._parser.registerCsiHandler({ intermediates: "$", final: "p" }, (e4) => this.requestMode(e4, true)), this._parser.registerCsiHandler({ prefix: "?", intermediates: "$", final: "p" }, (e4) => this.requestMode(e4, false)), this._parser.setExecuteHandler(n.C0.BEL, () => this.bell()), this._parser.setExecuteHandler(n.C0.LF, () => this.lineFeed()), this._parser.setExecuteHandler(n.C0.VT, () => this.lineFeed()), this._parser.setExecuteHandler(n.C0.FF, () => this.lineFeed()), this._parser.setExecuteHandler(n.C0.CR, () => this.carriageReturn()), this._parser.setExecuteHandler(n.C0.BS, () => this.backspace()), this._parser.setExecuteHandler(n.C0.HT, () => this.tab()), this._parser.setExecuteHandler(n.C0.SO, () => this.shiftOut()), this._parser.setExecuteHandler(n.C0.SI, () => this.shiftIn()), this._parser.setExecuteHandler(n.C1.IND, () => this.index()), this._parser.setExecuteHandler(n.C1.NEL, () => this.nextLine()), this._parser.setExecuteHandler(n.C1.HTS, () => this.tabSet()), this._parser.registerOscHandler(0, new p2.OscHandler((e4) => (this.setTitle(e4), this.setIconName(e4), true))), this._parser.registerOscHandler(1, new p2.OscHandler((e4) => this.setIconName(e4))), this._parser.registerOscHandler(2, new p2.OscHandler((e4) => this.setTitle(e4))), this._parser.registerOscHandler(4, new p2.OscHandler((e4) => this.setOrReportIndexedColor(e4))), this._parser.registerOscHandler(8, new p2.OscHandler((e4) => this.setHyperlink(e4))), this._parser.registerOscHandler(10, new p2.OscHandler((e4) => this.setOrReportFgColor(e4))), this._parser.registerOscHandler(11, new p2.OscHandler((e4) => this.setOrReportBgColor(e4))), this._parser.registerOscHandler(12, new p2.OscHandler((e4) => this.setOrReportCursorColor(e4))), this._parser.registerOscHandler(104, new p2.OscHandler((e4) => this.restoreIndexedColor(e4))), this._parser.registerOscHandler(110, new p2.OscHandler((e4) => this.restoreFgColor(e4))), this._parser.registerOscHandler(111, new p2.OscHandler((e4) => this.restoreBgColor(e4))), this._parser.registerOscHandler(112, new p2.OscHandler((e4) => this.restoreCursorColor(e4))), this._parser.registerEscHandler({ final: "7" }, () => this.saveCursor()), this._parser.registerEscHandler({ final: "8" }, () => this.restoreCursor()), this._parser.registerEscHandler({ final: "D" }, () => this.index()), this._parser.registerEscHandler({ final: "E" }, () => this.nextLine()), this._parser.registerEscHandler({ final: "H" }, () => this.tabSet()), this._parser.registerEscHandler({ final: "M" }, () => this.reverseIndex()), this._parser.registerEscHandler({ final: "=" }, () => this.keypadApplicationMode()), this._parser.registerEscHandler({ final: ">" }, () => this.keypadNumericMode()), this._parser.registerEscHandler({ final: "c" }, () => this.fullReset()), this._parser.registerEscHandler({ final: "n" }, () => this.setgLevel(2)), this._parser.registerEscHandler({ final: "o" }, () => this.setgLevel(3)), this._parser.registerEscHandler({ final: "|" }, () => this.setgLevel(3)), this._parser.registerEscHandler({ final: "}" }, () => this.setgLevel(2)), this._parser.registerEscHandler({ final: "~" }, () => this.setgLevel(1)), this._parser.registerEscHandler({ intermediates: "%", final: "@" }, () => this.selectDefaultCharset()), this._parser.registerEscHandler({ intermediates: "%", final: "G" }, () => this.selectDefaultCharset());
             for (const e4 in o.CHARSETS)
               this._parser.registerEscHandler({ intermediates: "(", final: e4 }, () => this.selectCharset("(" + e4)), this._parser.registerEscHandler({ intermediates: ")", final: e4 }, () => this.selectCharset(")" + e4)), this._parser.registerEscHandler({ intermediates: "*", final: e4 }, () => this.selectCharset("*" + e4)), this._parser.registerEscHandler({ intermediates: "+", final: e4 }, () => this.selectCharset("+" + e4)), this._parser.registerEscHandler({ intermediates: "-", final: e4 }, () => this.selectCharset("-" + e4)), this._parser.registerEscHandler({ intermediates: ".", final: e4 }, () => this.selectCharset("." + e4)), this._parser.registerEscHandler({ intermediates: "/", final: e4 }, () => this.selectCharset("/" + e4));
             this._parser.registerEscHandler({ intermediates: "#", final: "8" }, () => this.screenAlignmentPattern()), this._parser.setErrorHandler((e4) => (this._logService.error("Parsing error: ", e4), e4)), this._parser.registerDcsHandler({ intermediates: "$", final: "q" }, new g3.DcsHandler((e4, t4) => this.requestStatusString(e4, t4)));
@@ -24464,7 +24464,7 @@ WARNING: This link could potentially be dangerous`)) {
             this._parseStack.paused = true, this._parseStack.cursorStartX = e3, this._parseStack.cursorStartY = t3, this._parseStack.decodedLength = i3, this._parseStack.position = s3;
           }
           _logSlowResolvingAsync(e3) {
-            this._logService.logLevel <= v2.LogLevelEnum.WARN && Promise.race([e3, new Promise((e4, t3) => setTimeout(() => t3("#SLOW_TIMEOUT"), 5e3))]).catch((e4) => {
+            this._logService.logLevel <= v3.LogLevelEnum.WARN && Promise.race([e3, new Promise((e4, t3) => setTimeout(() => t3("#SLOW_TIMEOUT"), 5e3))]).catch((e4) => {
               if ("#SLOW_TIMEOUT" !== e4)
                 throw e4;
               console.warn("async parser handler taking longer than 5000 ms");
@@ -24481,7 +24481,7 @@ WARNING: This link could potentially be dangerous`)) {
                 return this._logSlowResolvingAsync(i3), i3;
               s3 = this._parseStack.cursorStartX, r2 = this._parseStack.cursorStartY, this._parseStack.paused = false, e3.length > C2 && (n2 = this._parseStack.position + C2);
             }
-            if (this._logService.logLevel <= v2.LogLevelEnum.DEBUG && this._logService.debug("parsing data" + ("string" == typeof e3 ? ` "${e3}"` : ` "${Array.prototype.map.call(e3, (e4) => String.fromCharCode(e4)).join("")}"`), "string" == typeof e3 ? e3.split("").map((e4) => e4.charCodeAt(0)) : e3), this._parseBuffer.length < e3.length && this._parseBuffer.length < C2 && (this._parseBuffer = new Uint32Array(Math.min(e3.length, C2))), o2 || this._dirtyRowTracker.clearRange(), e3.length > C2)
+            if (this._logService.logLevel <= v3.LogLevelEnum.DEBUG && this._logService.debug("parsing data" + ("string" == typeof e3 ? ` "${e3}"` : ` "${Array.prototype.map.call(e3, (e4) => String.fromCharCode(e4)).join("")}"`), "string" == typeof e3 ? e3.split("").map((e4) => e4.charCodeAt(0)) : e3), this._parseBuffer.length < e3.length && this._parseBuffer.length < C2 && (this._parseBuffer = new Uint32Array(Math.min(e3.length, C2))), o2 || this._dirtyRowTracker.clearRange(), e3.length > C2)
               for (let t4 = n2; t4 < e3.length; t4 += C2) {
                 const n3 = t4 + C2 < e3.length ? t4 + C2 : e3.length, o3 = "string" == typeof e3 ? this._stringDecoder.decode(e3.substring(t4, n3), this._parseBuffer) : this._utf8Decoder.decode(e3.subarray(t4, n3), this._parseBuffer);
                 if (i3 = this._parser.parse(this._parseBuffer, o3))
@@ -24496,24 +24496,24 @@ WARNING: This link could potentially be dangerous`)) {
           }
           print(e3, t3, i3) {
             let s3, r2;
-            const n2 = this._charsetService.charset, o2 = this._optionsService.rawOptions.screenReaderMode, a3 = this._bufferService.cols, h2 = this._coreService.decPrivateModes.wraparound, l3 = this._coreService.modes.insertMode, d3 = this._curAttrData;
+            const n2 = this._charsetService.charset, o2 = this._optionsService.rawOptions.screenReaderMode, a3 = this._bufferService.cols, h3 = this._coreService.decPrivateModes.wraparound, l3 = this._coreService.modes.insertMode, d3 = this._curAttrData;
             let u3 = this._activeBuffer.lines.get(this._activeBuffer.ybase + this._activeBuffer.y);
             this._dirtyRowTracker.markDirty(this._activeBuffer.y), this._activeBuffer.x && i3 - t3 > 0 && 2 === u3.getWidth(this._activeBuffer.x - 1) && u3.setCellFromCodePoint(this._activeBuffer.x - 1, 0, 1, d3.fg, d3.bg, d3.extended);
-            for (let f4 = t3; f4 < i3; ++f4) {
-              if (s3 = e3[f4], r2 = this._unicodeService.wcwidth(s3), s3 < 127 && n2) {
+            for (let f3 = t3; f3 < i3; ++f3) {
+              if (s3 = e3[f3], r2 = this._unicodeService.wcwidth(s3), s3 < 127 && n2) {
                 const e4 = n2[String.fromCharCode(s3)];
                 e4 && (s3 = e4.charCodeAt(0));
               }
-              if (o2 && this._onA11yChar.fire((0, c.stringFromCodePoint)(s3)), this._getCurrentLinkId() && this._oscLinkService.addLineToLink(this._getCurrentLinkId(), this._activeBuffer.ybase + this._activeBuffer.y), r2 || !this._activeBuffer.x) {
+              if (o2 && this._onA11yChar.fire((0, c2.stringFromCodePoint)(s3)), this._getCurrentLinkId() && this._oscLinkService.addLineToLink(this._getCurrentLinkId(), this._activeBuffer.ybase + this._activeBuffer.y), r2 || !this._activeBuffer.x) {
                 if (this._activeBuffer.x + r2 - 1 >= a3) {
-                  if (h2) {
+                  if (h3) {
                     for (; this._activeBuffer.x < a3; )
                       u3.setCellFromCodePoint(this._activeBuffer.x++, 0, 1, d3.fg, d3.bg, d3.extended);
                     this._activeBuffer.x = 0, this._activeBuffer.y++, this._activeBuffer.y === this._activeBuffer.scrollBottom + 1 ? (this._activeBuffer.y--, this._bufferService.scroll(this._eraseAttrData(), true)) : (this._activeBuffer.y >= this._bufferService.rows && (this._activeBuffer.y = this._bufferService.rows - 1), this._activeBuffer.lines.get(this._activeBuffer.ybase + this._activeBuffer.y).isWrapped = true), u3 = this._activeBuffer.lines.get(this._activeBuffer.ybase + this._activeBuffer.y);
                   } else if (this._activeBuffer.x = a3 - 1, 2 === r2)
                     continue;
                 }
-                if (l3 && (u3.insertCells(this._activeBuffer.x, r2, this._activeBuffer.getNullCell(d3), d3), 2 === u3.getWidth(a3 - 1) && u3.setCellFromCodePoint(a3 - 1, _.NULL_CELL_CODE, _.NULL_CELL_WIDTH, d3.fg, d3.bg, d3.extended)), u3.setCellFromCodePoint(this._activeBuffer.x++, s3, r2, d3.fg, d3.bg, d3.extended), r2 > 0)
+                if (l3 && (u3.insertCells(this._activeBuffer.x, r2, this._activeBuffer.getNullCell(d3), d3), 2 === u3.getWidth(a3 - 1) && u3.setCellFromCodePoint(a3 - 1, _2.NULL_CELL_CODE, _2.NULL_CELL_WIDTH, d3.fg, d3.bg, d3.extended)), u3.setCellFromCodePoint(this._activeBuffer.x++, s3, r2, d3.fg, d3.bg, d3.extended), r2 > 0)
                   for (; --r2; )
                     u3.setCellFromCodePoint(this._activeBuffer.x++, 0, 0, d3.fg, d3.bg, d3.extended);
               } else
@@ -24531,7 +24531,7 @@ WARNING: This link could potentially be dangerous`)) {
             return this._parser.registerEscHandler(e3, t3);
           }
           registerOscHandler(e3, t3) {
-            return this._parser.registerOscHandler(e3, new p.OscHandler(t3));
+            return this._parser.registerOscHandler(e3, new p2.OscHandler(t3));
           }
           bell() {
             return this._onRequestBell.fire(), true;
@@ -24944,12 +24944,12 @@ WARNING: This link could potentially be dangerous`)) {
             return true;
           }
           requestMode(e3, t3) {
-            const i3 = this._coreService.decPrivateModes, { activeProtocol: s3, activeEncoding: r2 } = this._coreMouseService, o2 = this._coreService, { buffers: a3, cols: h2 } = this._bufferService, { active: c2, alt: l3 } = a3, d3 = this._optionsService.rawOptions, _2 = (e4) => e4 ? 1 : 2, u3 = e3.params[0];
-            return f4 = u3, v3 = t3 ? 2 === u3 ? 4 : 4 === u3 ? _2(o2.modes.insertMode) : 12 === u3 ? 3 : 20 === u3 ? _2(d3.convertEol) : 0 : 1 === u3 ? _2(i3.applicationCursorKeys) : 3 === u3 ? d3.windowOptions.setWinLines ? 80 === h2 ? 2 : 132 === h2 ? 1 : 0 : 0 : 6 === u3 ? _2(i3.origin) : 7 === u3 ? _2(i3.wraparound) : 8 === u3 ? 3 : 9 === u3 ? _2("X10" === s3) : 12 === u3 ? _2(d3.cursorBlink) : 25 === u3 ? _2(!o2.isCursorHidden) : 45 === u3 ? _2(i3.reverseWraparound) : 66 === u3 ? _2(i3.applicationKeypad) : 67 === u3 ? 4 : 1e3 === u3 ? _2("VT200" === s3) : 1002 === u3 ? _2("DRAG" === s3) : 1003 === u3 ? _2("ANY" === s3) : 1004 === u3 ? _2(i3.sendFocus) : 1005 === u3 ? 4 : 1006 === u3 ? _2("SGR" === r2) : 1015 === u3 ? 4 : 1016 === u3 ? _2("SGR_PIXELS" === r2) : 1048 === u3 ? 1 : 47 === u3 || 1047 === u3 || 1049 === u3 ? _2(c2 === l3) : 2004 === u3 ? _2(i3.bracketedPasteMode) : 0, o2.triggerDataEvent(`${n.C0.ESC}[${t3 ? "" : "?"}${f4};${v3}$y`), true;
-            var f4, v3;
+            const i3 = this._coreService.decPrivateModes, { activeProtocol: s3, activeEncoding: r2 } = this._coreMouseService, o2 = this._coreService, { buffers: a3, cols: h3 } = this._bufferService, { active: c3, alt: l3 } = a3, d3 = this._optionsService.rawOptions, _3 = (e4) => e4 ? 1 : 2, u3 = e3.params[0];
+            return f3 = u3, v4 = t3 ? 2 === u3 ? 4 : 4 === u3 ? _3(o2.modes.insertMode) : 12 === u3 ? 3 : 20 === u3 ? _3(d3.convertEol) : 0 : 1 === u3 ? _3(i3.applicationCursorKeys) : 3 === u3 ? d3.windowOptions.setWinLines ? 80 === h3 ? 2 : 132 === h3 ? 1 : 0 : 0 : 6 === u3 ? _3(i3.origin) : 7 === u3 ? _3(i3.wraparound) : 8 === u3 ? 3 : 9 === u3 ? _3("X10" === s3) : 12 === u3 ? _3(d3.cursorBlink) : 25 === u3 ? _3(!o2.isCursorHidden) : 45 === u3 ? _3(i3.reverseWraparound) : 66 === u3 ? _3(i3.applicationKeypad) : 67 === u3 ? 4 : 1e3 === u3 ? _3("VT200" === s3) : 1002 === u3 ? _3("DRAG" === s3) : 1003 === u3 ? _3("ANY" === s3) : 1004 === u3 ? _3(i3.sendFocus) : 1005 === u3 ? 4 : 1006 === u3 ? _3("SGR" === r2) : 1015 === u3 ? 4 : 1016 === u3 ? _3("SGR_PIXELS" === r2) : 1048 === u3 ? 1 : 47 === u3 || 1047 === u3 || 1049 === u3 ? _3(c3 === l3) : 2004 === u3 ? _3(i3.bracketedPasteMode) : 0, o2.triggerDataEvent(`${n.C0.ESC}[${t3 ? "" : "?"}${f3};${v4}$y`), true;
+            var f3, v4;
           }
           _updateAttrColor(e3, t3, i3, s3, r2) {
-            return 2 === t3 ? (e3 |= 50331648, e3 &= -16777216, e3 |= f3.AttributeData.fromColorRGB([i3, s3, r2])) : 5 === t3 && (e3 &= -50331904, e3 |= 33554432 | 255 & i3), e3;
+            return 2 === t3 ? (e3 |= 50331648, e3 &= -16777216, e3 |= f2.AttributeData.fromColorRGB([i3, s3, r2])) : 5 === t3 && (e3 &= -50331904, e3 |= 33554432 | 255 & i3), e3;
           }
           _extractColor(e3, t3, i3) {
             const s3 = [0, 0, -1, 0, 0, 0];
@@ -25081,7 +25081,7 @@ WARNING: This link could potentially be dangerous`)) {
               const e4 = i3.shift(), s3 = i3.shift();
               if (/^\d+$/.exec(e4)) {
                 const i4 = parseInt(e4);
-                if (L2(i4))
+                if (L3(i4))
                   if ("?" === s3)
                     t3.push({ type: 0, index: i4 });
                   else {
@@ -25133,7 +25133,7 @@ WARNING: This link could potentially be dangerous`)) {
             for (let e4 = 0; e4 < i3.length; ++e4)
               if (/^\d+$/.exec(i3[e4])) {
                 const s3 = parseInt(i3[e4]);
-                L2(s3) && t3.push({ type: 2, index: s3 });
+                L3(s3) && t3.push({ type: 2, index: s3 });
               }
             return t3.length && this._onColor.fire(t3), true;
           }
@@ -25159,7 +25159,7 @@ WARNING: This link could potentially be dangerous`)) {
             return this._charsetService.setgLevel(0), this._charsetService.setgCharset(0, o.DEFAULT_CHARSET), true;
           }
           selectCharset(e3) {
-            return 2 !== e3.length ? (this.selectDefaultCharset(), true) : ("/" === e3[0] || this._charsetService.setgCharset(S3[e3[0]], o.CHARSETS[e3[1]] || o.DEFAULT_CHARSET), true);
+            return 2 !== e3.length ? (this.selectDefaultCharset(), true) : ("/" === e3[0] || this._charsetService.setgCharset(S2[e3[0]], o.CHARSETS[e3[1]] || o.DEFAULT_CHARSET), true);
           }
           index() {
             return this._restrictCursor(), this._activeBuffer.y++, this._activeBuffer.y === this._activeBuffer.scrollBottom + 1 ? (this._activeBuffer.y--, this._bufferService.scroll(this._eraseAttrData())) : this._activeBuffer.y >= this._bufferService.rows && (this._activeBuffer.y = this._bufferService.rows - 1), this._restrictCursor(), true;
@@ -25205,7 +25205,7 @@ WARNING: This link could potentially be dangerous`)) {
           }
         }
         t2.InputHandler = E3;
-        let k2 = class {
+        let k3 = class {
           constructor(e3) {
             this._bufferService = e3, this.clearRange();
           }
@@ -25222,10 +25222,10 @@ WARNING: This link could potentially be dangerous`)) {
             this.markRangeDirty(0, this._bufferService.rows - 1);
           }
         };
-        function L2(e3) {
+        function L3(e3) {
           return 0 <= e3 && e3 < 256;
         }
-        k2 = s2([r(0, v2.IBufferService)], k2);
+        k3 = s2([r(0, v3.IBufferService)], k3);
       }, 844: (e2, t2) => {
         function i2(e3) {
           for (const t3 of e3)
@@ -25613,10 +25613,10 @@ WARNING: This link could potentially be dangerous`)) {
         t2.ExtendedAttrs = s2;
       }, 9092: (e2, t2, i2) => {
         Object.defineProperty(t2, "__esModule", { value: true }), t2.Buffer = t2.MAX_BUFFER_SIZE = void 0;
-        const s2 = i2(6349), r = i2(7226), n = i2(3734), o = i2(8437), a2 = i2(4634), h = i2(511), c = i2(643), l2 = i2(4863), d2 = i2(7116);
+        const s2 = i2(6349), r = i2(7226), n = i2(3734), o = i2(8437), a2 = i2(4634), h2 = i2(511), c2 = i2(643), l2 = i2(4863), d2 = i2(7116);
         t2.MAX_BUFFER_SIZE = 4294967295, t2.Buffer = class {
           constructor(e3, t3, i3) {
-            this._hasScrollback = e3, this._optionsService = t3, this._bufferService = i3, this.ydisp = 0, this.ybase = 0, this.y = 0, this.x = 0, this.tabs = {}, this.savedY = 0, this.savedX = 0, this.savedCurAttrData = o.DEFAULT_ATTR_DATA.clone(), this.savedCharset = d2.DEFAULT_CHARSET, this.markers = [], this._nullCell = h.CellData.fromCharData([0, c.NULL_CELL_CHAR, c.NULL_CELL_WIDTH, c.NULL_CELL_CODE]), this._whitespaceCell = h.CellData.fromCharData([0, c.WHITESPACE_CELL_CHAR, c.WHITESPACE_CELL_WIDTH, c.WHITESPACE_CELL_CODE]), this._isClearing = false, this._memoryCleanupQueue = new r.IdleTaskQueue(), this._memoryCleanupPosition = 0, this._cols = this._bufferService.cols, this._rows = this._bufferService.rows, this.lines = new s2.CircularList(this._getCorrectBufferLength(this._rows)), this.scrollTop = 0, this.scrollBottom = this._rows - 1, this.setupTabStops();
+            this._hasScrollback = e3, this._optionsService = t3, this._bufferService = i3, this.ydisp = 0, this.ybase = 0, this.y = 0, this.x = 0, this.tabs = {}, this.savedY = 0, this.savedX = 0, this.savedCurAttrData = o.DEFAULT_ATTR_DATA.clone(), this.savedCharset = d2.DEFAULT_CHARSET, this.markers = [], this._nullCell = h2.CellData.fromCharData([0, c2.NULL_CELL_CHAR, c2.NULL_CELL_WIDTH, c2.NULL_CELL_CODE]), this._whitespaceCell = h2.CellData.fromCharData([0, c2.WHITESPACE_CELL_CHAR, c2.WHITESPACE_CELL_WIDTH, c2.WHITESPACE_CELL_CODE]), this._isClearing = false, this._memoryCleanupQueue = new r.IdleTaskQueue(), this._memoryCleanupPosition = 0, this._cols = this._bufferService.cols, this._rows = this._bufferService.rows, this.lines = new s2.CircularList(this._getCorrectBufferLength(this._rows)), this.scrollTop = 0, this.scrollBottom = this._rows - 1, this.setupTabStops();
           }
           getNullCell(e3) {
             return e3 ? (this._nullCell.fg = e3.fg, this._nullCell.bg = e3.bg, this._nullCell.extended = e3.extended) : (this._nullCell.fg = 0, this._nullCell.bg = 0, this._nullCell.extended = new n.ExtendedAttrs()), this._nullCell;
@@ -25711,40 +25711,40 @@ WARNING: This link could potentially be dangerous`)) {
             const i3 = this.getNullCell(o.DEFAULT_ATTR_DATA), s3 = [];
             let r2 = 0;
             for (let n2 = this.lines.length - 1; n2 >= 0; n2--) {
-              let h2 = this.lines.get(n2);
-              if (!h2 || !h2.isWrapped && h2.getTrimmedLength() <= e3)
+              let h3 = this.lines.get(n2);
+              if (!h3 || !h3.isWrapped && h3.getTrimmedLength() <= e3)
                 continue;
-              const c2 = [h2];
-              for (; h2.isWrapped && n2 > 0; )
-                h2 = this.lines.get(--n2), c2.unshift(h2);
+              const c3 = [h3];
+              for (; h3.isWrapped && n2 > 0; )
+                h3 = this.lines.get(--n2), c3.unshift(h3);
               const l3 = this.ybase + this.y;
-              if (l3 >= n2 && l3 < n2 + c2.length)
+              if (l3 >= n2 && l3 < n2 + c3.length)
                 continue;
-              const d3 = c2[c2.length - 1].getTrimmedLength(), _ = (0, a2.reflowSmallerGetNewLineLengths)(c2, this._cols, e3), u2 = _.length - c2.length;
-              let f3;
-              f3 = 0 === this.ybase && this.y !== this.lines.length - 1 ? Math.max(0, this.y - this.lines.maxLength + u2) : Math.max(0, this.lines.length - this.lines.maxLength + u2);
-              const v2 = [];
+              const d3 = c3[c3.length - 1].getTrimmedLength(), _2 = (0, a2.reflowSmallerGetNewLineLengths)(c3, this._cols, e3), u2 = _2.length - c3.length;
+              let f2;
+              f2 = 0 === this.ybase && this.y !== this.lines.length - 1 ? Math.max(0, this.y - this.lines.maxLength + u2) : Math.max(0, this.lines.length - this.lines.maxLength + u2);
+              const v3 = [];
               for (let e4 = 0; e4 < u2; e4++) {
                 const e5 = this.getBlankLine(o.DEFAULT_ATTR_DATA, true);
-                v2.push(e5);
+                v3.push(e5);
               }
-              v2.length > 0 && (s3.push({ start: n2 + c2.length + r2, newLines: v2 }), r2 += v2.length), c2.push(...v2);
-              let p = _.length - 1, g3 = _[p];
-              0 === g3 && (p--, g3 = _[p]);
-              let m2 = c2.length - u2 - 1, S3 = d3;
+              v3.length > 0 && (s3.push({ start: n2 + c3.length + r2, newLines: v3 }), r2 += v3.length), c3.push(...v3);
+              let p2 = _2.length - 1, g3 = _2[p2];
+              0 === g3 && (p2--, g3 = _2[p2]);
+              let m2 = c3.length - u2 - 1, S2 = d3;
               for (; m2 >= 0; ) {
-                const e4 = Math.min(S3, g3);
-                if (void 0 === c2[p])
+                const e4 = Math.min(S2, g3);
+                if (void 0 === c3[p2])
                   break;
-                if (c2[p].copyCellsFrom(c2[m2], S3 - e4, g3 - e4, e4, true), g3 -= e4, 0 === g3 && (p--, g3 = _[p]), S3 -= e4, 0 === S3) {
+                if (c3[p2].copyCellsFrom(c3[m2], S2 - e4, g3 - e4, e4, true), g3 -= e4, 0 === g3 && (p2--, g3 = _2[p2]), S2 -= e4, 0 === S2) {
                   m2--;
                   const e5 = Math.max(m2, 0);
-                  S3 = (0, a2.getWrappedLineTrimmedLength)(c2, e5, this._cols);
+                  S2 = (0, a2.getWrappedLineTrimmedLength)(c3, e5, this._cols);
                 }
               }
-              for (let t4 = 0; t4 < c2.length; t4++)
-                _[t4] < e3 && c2[t4].setCell(_[t4], i3);
-              let C2 = u2 - f3;
+              for (let t4 = 0; t4 < c3.length; t4++)
+                _2[t4] < e3 && c3[t4].setCell(_2[t4], i3);
+              let C2 = u2 - f2;
               for (; C2-- > 0; )
                 0 === this.ybase ? this.y < t3 - 1 ? (this.y++, this.lines.pop()) : (this.ybase++, this.ydisp++) : this.ybase < Math.min(this.lines.maxLength, this.lines.length + r2) - t3 && (this.ybase === this.ydisp && this.ydisp++, this.ybase++);
               this.savedY = Math.min(this.savedY + u2, this.ybase + t3 - 1);
@@ -25756,17 +25756,17 @@ WARNING: This link could potentially be dangerous`)) {
               const i4 = this.lines.length;
               let n2 = i4 - 1, o2 = 0, a3 = s3[o2];
               this.lines.length = Math.min(this.lines.maxLength, this.lines.length + r2);
-              let h2 = 0;
-              for (let c3 = Math.min(this.lines.maxLength - 1, i4 + r2 - 1); c3 >= 0; c3--)
-                if (a3 && a3.start > n2 + h2) {
+              let h3 = 0;
+              for (let c4 = Math.min(this.lines.maxLength - 1, i4 + r2 - 1); c4 >= 0; c4--)
+                if (a3 && a3.start > n2 + h3) {
                   for (let e5 = a3.newLines.length - 1; e5 >= 0; e5--)
-                    this.lines.set(c3--, a3.newLines[e5]);
-                  c3++, e4.push({ index: n2 + 1, amount: a3.newLines.length }), h2 += a3.newLines.length, a3 = s3[++o2];
+                    this.lines.set(c4--, a3.newLines[e5]);
+                  c4++, e4.push({ index: n2 + 1, amount: a3.newLines.length }), h3 += a3.newLines.length, a3 = s3[++o2];
                 } else
-                  this.lines.set(c3, t4[n2--]);
-              let c2 = 0;
+                  this.lines.set(c4, t4[n2--]);
+              let c3 = 0;
               for (let t5 = e4.length - 1; t5 >= 0; t5--)
-                e4[t5].index += c2, this.lines.onInsertEmitter.fire(e4[t5]), c2 += e4[t5].amount;
+                e4[t5].index += c3, this.lines.onInsertEmitter.fire(e4[t5]), c3 += e4[t5].amount;
               const l3 = Math.max(0, i4 + r2 - this.lines.maxLength);
               l3 > 0 && this.lines.onTrimEmitter.fire(l3);
             }
@@ -25828,7 +25828,7 @@ WARNING: This link could potentially be dangerous`)) {
         const s2 = i2(3734), r = i2(511), n = i2(643), o = i2(482);
         t2.DEFAULT_ATTR_DATA = Object.freeze(new s2.AttributeData());
         let a2 = 0;
-        class h {
+        class h2 {
           constructor(e3, t3, i3 = false) {
             this.isWrapped = i3, this._combined = {}, this._extendedAttrs = {}, this._data = new Uint32Array(3 * e3);
             const s3 = t3 || r.CellData.fromCharData([0, n.NULL_CELL_CHAR, n.NULL_CELL_WIDTH, n.NULL_CELL_CODE]);
@@ -25972,7 +25972,7 @@ WARNING: This link could potentially be dangerous`)) {
             this.isWrapped = e3.isWrapped;
           }
           clone() {
-            const e3 = new h(0);
+            const e3 = new h2(0);
             e3._data = new Uint32Array(this._data), e3.length = this.length;
             for (const t3 in this._combined)
               e3._combined[t3] = this._combined[t3];
@@ -26022,7 +26022,7 @@ WARNING: This link could potentially be dangerous`)) {
             return s3;
           }
         }
-        t2.BufferLine = h;
+        t2.BufferLine = h2;
       }, 4841: (e2, t2) => {
         Object.defineProperty(t2, "__esModule", { value: true }), t2.getRangeLength = void 0, t2.getRangeLength = function(e3, t3) {
           if (e3.start.y > e3.end.y)
@@ -26039,26 +26039,26 @@ WARNING: This link could potentially be dangerous`)) {
         Object.defineProperty(t2, "__esModule", { value: true }), t2.getWrappedLineTrimmedLength = t2.reflowSmallerGetNewLineLengths = t2.reflowLargerApplyNewLayout = t2.reflowLargerCreateNewLayout = t2.reflowLargerGetLinesToRemove = void 0, t2.reflowLargerGetLinesToRemove = function(e3, t3, s2, r, n) {
           const o = [];
           for (let a2 = 0; a2 < e3.length - 1; a2++) {
-            let h = a2, c = e3.get(++h);
-            if (!c.isWrapped)
+            let h2 = a2, c2 = e3.get(++h2);
+            if (!c2.isWrapped)
               continue;
             const l2 = [e3.get(a2)];
-            for (; h < e3.length && c.isWrapped; )
-              l2.push(c), c = e3.get(++h);
-            if (r >= a2 && r < h) {
+            for (; h2 < e3.length && c2.isWrapped; )
+              l2.push(c2), c2 = e3.get(++h2);
+            if (r >= a2 && r < h2) {
               a2 += l2.length - 1;
               continue;
             }
-            let d2 = 0, _ = i2(l2, d2, t3), u2 = 1, f3 = 0;
+            let d2 = 0, _2 = i2(l2, d2, t3), u2 = 1, f2 = 0;
             for (; u2 < l2.length; ) {
-              const e4 = i2(l2, u2, t3), r2 = e4 - f3, o2 = s2 - _, a3 = Math.min(r2, o2);
-              l2[d2].copyCellsFrom(l2[u2], f3, _, a3, false), _ += a3, _ === s2 && (d2++, _ = 0), f3 += a3, f3 === e4 && (u2++, f3 = 0), 0 === _ && 0 !== d2 && 2 === l2[d2 - 1].getWidth(s2 - 1) && (l2[d2].copyCellsFrom(l2[d2 - 1], s2 - 1, _++, 1, false), l2[d2 - 1].setCell(s2 - 1, n));
+              const e4 = i2(l2, u2, t3), r2 = e4 - f2, o2 = s2 - _2, a3 = Math.min(r2, o2);
+              l2[d2].copyCellsFrom(l2[u2], f2, _2, a3, false), _2 += a3, _2 === s2 && (d2++, _2 = 0), f2 += a3, f2 === e4 && (u2++, f2 = 0), 0 === _2 && 0 !== d2 && 2 === l2[d2 - 1].getWidth(s2 - 1) && (l2[d2].copyCellsFrom(l2[d2 - 1], s2 - 1, _2++, 1, false), l2[d2 - 1].setCell(s2 - 1, n));
             }
-            l2[d2].replaceCells(_, s2, n);
-            let v2 = 0;
+            l2[d2].replaceCells(_2, s2, n);
+            let v3 = 0;
             for (let e4 = l2.length - 1; e4 > 0 && (e4 > d2 || 0 === l2[e4].getTrimmedLength()); e4--)
-              v2++;
-            v2 > 0 && (o.push(a2 + l2.length - v2), o.push(v2)), a2 += l2.length - 1;
+              v3++;
+            v3 > 0 && (o.push(a2 + l2.length - v3), o.push(v3)), a2 += l2.length - 1;
           }
           return o;
         }, t2.reflowLargerCreateNewLayout = function(e3, t3) {
@@ -26080,19 +26080,19 @@ WARNING: This link could potentially be dangerous`)) {
           e3.length = t3.length;
         }, t2.reflowSmallerGetNewLineLengths = function(e3, t3, s2) {
           const r = [], n = e3.map((s3, r2) => i2(e3, r2, t3)).reduce((e4, t4) => e4 + t4);
-          let o = 0, a2 = 0, h = 0;
-          for (; h < n; ) {
-            if (n - h < s2) {
-              r.push(n - h);
+          let o = 0, a2 = 0, h2 = 0;
+          for (; h2 < n; ) {
+            if (n - h2 < s2) {
+              r.push(n - h2);
               break;
             }
             o += s2;
-            const c = i2(e3, a2, t3);
-            o > c && (o -= c, a2++);
+            const c2 = i2(e3, a2, t3);
+            o > c2 && (o -= c2, a2++);
             const l2 = 2 === e3[a2].getWidth(o - 1);
             l2 && o--;
             const d2 = l2 ? s2 - 1 : s2;
-            r.push(d2), h += d2;
+            r.push(d2), h2 += d2;
           }
           return r;
         }, t2.getWrappedLineTrimmedLength = i2;
@@ -26380,27 +26380,27 @@ WARNING: This link could potentially be dangerous`)) {
             const i2 = e3.length;
             if (!i2)
               return 0;
-            let s2, r, n, o, a2 = 0, h = 0, c = 0;
+            let s2, r, n, o, a2 = 0, h2 = 0, c2 = 0;
             if (this.interim[0]) {
               let s3 = false, r2 = this.interim[0];
               r2 &= 192 == (224 & r2) ? 31 : 224 == (240 & r2) ? 15 : 7;
               let n2, o2 = 0;
               for (; (n2 = 63 & this.interim[++o2]) && o2 < 4; )
                 r2 <<= 6, r2 |= n2;
-              const h2 = 192 == (224 & this.interim[0]) ? 2 : 224 == (240 & this.interim[0]) ? 3 : 4, l3 = h2 - o2;
-              for (; c < l3; ) {
-                if (c >= i2)
+              const h3 = 192 == (224 & this.interim[0]) ? 2 : 224 == (240 & this.interim[0]) ? 3 : 4, l3 = h3 - o2;
+              for (; c2 < l3; ) {
+                if (c2 >= i2)
                   return 0;
-                if (n2 = e3[c++], 128 != (192 & n2)) {
-                  c--, s3 = true;
+                if (n2 = e3[c2++], 128 != (192 & n2)) {
+                  c2--, s3 = true;
                   break;
                 }
                 this.interim[o2++] = n2, r2 <<= 6, r2 |= 63 & n2;
               }
-              s3 || (2 === h2 ? r2 < 128 ? c-- : t3[a2++] = r2 : 3 === h2 ? r2 < 2048 || r2 >= 55296 && r2 <= 57343 || 65279 === r2 || (t3[a2++] = r2) : r2 < 65536 || r2 > 1114111 || (t3[a2++] = r2)), this.interim.fill(0);
+              s3 || (2 === h3 ? r2 < 128 ? c2-- : t3[a2++] = r2 : 3 === h3 ? r2 < 2048 || r2 >= 55296 && r2 <= 57343 || 65279 === r2 || (t3[a2++] = r2) : r2 < 65536 || r2 > 1114111 || (t3[a2++] = r2)), this.interim.fill(0);
             }
             const l2 = i2 - 4;
-            let d2 = c;
+            let d2 = c2;
             for (; d2 < i2; ) {
               for (; !(!(d2 < l2) || 128 & (s2 = e3[d2]) || 128 & (r = e3[d2 + 1]) || 128 & (n = e3[d2 + 2]) || 128 & (o = e3[d2 + 3])); )
                 t3[a2++] = s2, t3[a2++] = r, t3[a2++] = n, t3[a2++] = o, d2 += 4;
@@ -26413,11 +26413,11 @@ WARNING: This link could potentially be dangerous`)) {
                   d2--;
                   continue;
                 }
-                if (h = (31 & s2) << 6 | 63 & r, h < 128) {
+                if (h2 = (31 & s2) << 6 | 63 & r, h2 < 128) {
                   d2--;
                   continue;
                 }
-                t3[a2++] = h;
+                t3[a2++] = h2;
               } else if (224 == (240 & s2)) {
                 if (d2 >= i2)
                   return this.interim[0] = s2, a2;
@@ -26431,9 +26431,9 @@ WARNING: This link could potentially be dangerous`)) {
                   d2--;
                   continue;
                 }
-                if (h = (15 & s2) << 12 | (63 & r) << 6 | 63 & n, h < 2048 || h >= 55296 && h <= 57343 || 65279 === h)
+                if (h2 = (15 & s2) << 12 | (63 & r) << 6 | 63 & n, h2 < 2048 || h2 >= 55296 && h2 <= 57343 || 65279 === h2)
                   continue;
-                t3[a2++] = h;
+                t3[a2++] = h2;
               } else if (240 == (248 & s2)) {
                 if (d2 >= i2)
                   return this.interim[0] = s2, a2;
@@ -26453,9 +26453,9 @@ WARNING: This link could potentially be dangerous`)) {
                   d2--;
                   continue;
                 }
-                if (h = (7 & s2) << 18 | (63 & r) << 12 | (63 & n) << 6 | 63 & o, h < 65536 || h > 1114111)
+                if (h2 = (7 & s2) << 18 | (63 & r) << 12 | (63 & n) << 6 | 63 & o, h2 < 65536 || h2 > 1114111)
                   continue;
-                t3[a2++] = h;
+                t3[a2++] = h2;
               }
             }
             return a2;
@@ -26684,7 +26684,7 @@ WARNING: This link could potentially be dangerous`)) {
           }
         }
         t2.TransitionTable = a2;
-        const h = 160;
+        const h2 = 160;
         t2.VT500_TRANSITION_TABLE = function() {
           const e3 = new a2(4095), t3 = Array.apply(null, Array(256)).map((e4, t4) => t4), i3 = (e4, i4) => t3.slice(e4, i4), s3 = i3(32, 127), r2 = i3(0, 24);
           r2.push(25), r2.push.apply(r2, i3(28, 32));
@@ -26692,9 +26692,9 @@ WARNING: This link could potentially be dangerous`)) {
           let o2;
           for (o2 in e3.setDefault(1, 0), e3.addMany(s3, 0, 2, 0), n2)
             e3.addMany([24, 26, 153, 154], o2, 3, 0), e3.addMany(i3(128, 144), o2, 3, 0), e3.addMany(i3(144, 152), o2, 3, 0), e3.add(156, o2, 0, 0), e3.add(27, o2, 11, 1), e3.add(157, o2, 4, 8), e3.addMany([152, 158, 159], o2, 0, 7), e3.add(155, o2, 11, 3), e3.add(144, o2, 11, 9);
-          return e3.addMany(r2, 0, 3, 0), e3.addMany(r2, 1, 3, 1), e3.add(127, 1, 0, 1), e3.addMany(r2, 8, 0, 8), e3.addMany(r2, 3, 3, 3), e3.add(127, 3, 0, 3), e3.addMany(r2, 4, 3, 4), e3.add(127, 4, 0, 4), e3.addMany(r2, 6, 3, 6), e3.addMany(r2, 5, 3, 5), e3.add(127, 5, 0, 5), e3.addMany(r2, 2, 3, 2), e3.add(127, 2, 0, 2), e3.add(93, 1, 4, 8), e3.addMany(s3, 8, 5, 8), e3.add(127, 8, 5, 8), e3.addMany([156, 27, 24, 26, 7], 8, 6, 0), e3.addMany(i3(28, 32), 8, 0, 8), e3.addMany([88, 94, 95], 1, 0, 7), e3.addMany(s3, 7, 0, 7), e3.addMany(r2, 7, 0, 7), e3.add(156, 7, 0, 0), e3.add(127, 7, 0, 7), e3.add(91, 1, 11, 3), e3.addMany(i3(64, 127), 3, 7, 0), e3.addMany(i3(48, 60), 3, 8, 4), e3.addMany([60, 61, 62, 63], 3, 9, 4), e3.addMany(i3(48, 60), 4, 8, 4), e3.addMany(i3(64, 127), 4, 7, 0), e3.addMany([60, 61, 62, 63], 4, 0, 6), e3.addMany(i3(32, 64), 6, 0, 6), e3.add(127, 6, 0, 6), e3.addMany(i3(64, 127), 6, 0, 0), e3.addMany(i3(32, 48), 3, 9, 5), e3.addMany(i3(32, 48), 5, 9, 5), e3.addMany(i3(48, 64), 5, 0, 6), e3.addMany(i3(64, 127), 5, 7, 0), e3.addMany(i3(32, 48), 4, 9, 5), e3.addMany(i3(32, 48), 1, 9, 2), e3.addMany(i3(32, 48), 2, 9, 2), e3.addMany(i3(48, 127), 2, 10, 0), e3.addMany(i3(48, 80), 1, 10, 0), e3.addMany(i3(81, 88), 1, 10, 0), e3.addMany([89, 90, 92], 1, 10, 0), e3.addMany(i3(96, 127), 1, 10, 0), e3.add(80, 1, 11, 9), e3.addMany(r2, 9, 0, 9), e3.add(127, 9, 0, 9), e3.addMany(i3(28, 32), 9, 0, 9), e3.addMany(i3(32, 48), 9, 9, 12), e3.addMany(i3(48, 60), 9, 8, 10), e3.addMany([60, 61, 62, 63], 9, 9, 10), e3.addMany(r2, 11, 0, 11), e3.addMany(i3(32, 128), 11, 0, 11), e3.addMany(i3(28, 32), 11, 0, 11), e3.addMany(r2, 10, 0, 10), e3.add(127, 10, 0, 10), e3.addMany(i3(28, 32), 10, 0, 10), e3.addMany(i3(48, 60), 10, 8, 10), e3.addMany([60, 61, 62, 63], 10, 0, 11), e3.addMany(i3(32, 48), 10, 9, 12), e3.addMany(r2, 12, 0, 12), e3.add(127, 12, 0, 12), e3.addMany(i3(28, 32), 12, 0, 12), e3.addMany(i3(32, 48), 12, 9, 12), e3.addMany(i3(48, 64), 12, 0, 11), e3.addMany(i3(64, 127), 12, 12, 13), e3.addMany(i3(64, 127), 10, 12, 13), e3.addMany(i3(64, 127), 9, 12, 13), e3.addMany(r2, 13, 13, 13), e3.addMany(s3, 13, 13, 13), e3.add(127, 13, 0, 13), e3.addMany([27, 156, 24, 26], 13, 14, 0), e3.add(h, 0, 2, 0), e3.add(h, 8, 5, 8), e3.add(h, 6, 0, 6), e3.add(h, 11, 0, 11), e3.add(h, 13, 13, 13), e3;
+          return e3.addMany(r2, 0, 3, 0), e3.addMany(r2, 1, 3, 1), e3.add(127, 1, 0, 1), e3.addMany(r2, 8, 0, 8), e3.addMany(r2, 3, 3, 3), e3.add(127, 3, 0, 3), e3.addMany(r2, 4, 3, 4), e3.add(127, 4, 0, 4), e3.addMany(r2, 6, 3, 6), e3.addMany(r2, 5, 3, 5), e3.add(127, 5, 0, 5), e3.addMany(r2, 2, 3, 2), e3.add(127, 2, 0, 2), e3.add(93, 1, 4, 8), e3.addMany(s3, 8, 5, 8), e3.add(127, 8, 5, 8), e3.addMany([156, 27, 24, 26, 7], 8, 6, 0), e3.addMany(i3(28, 32), 8, 0, 8), e3.addMany([88, 94, 95], 1, 0, 7), e3.addMany(s3, 7, 0, 7), e3.addMany(r2, 7, 0, 7), e3.add(156, 7, 0, 0), e3.add(127, 7, 0, 7), e3.add(91, 1, 11, 3), e3.addMany(i3(64, 127), 3, 7, 0), e3.addMany(i3(48, 60), 3, 8, 4), e3.addMany([60, 61, 62, 63], 3, 9, 4), e3.addMany(i3(48, 60), 4, 8, 4), e3.addMany(i3(64, 127), 4, 7, 0), e3.addMany([60, 61, 62, 63], 4, 0, 6), e3.addMany(i3(32, 64), 6, 0, 6), e3.add(127, 6, 0, 6), e3.addMany(i3(64, 127), 6, 0, 0), e3.addMany(i3(32, 48), 3, 9, 5), e3.addMany(i3(32, 48), 5, 9, 5), e3.addMany(i3(48, 64), 5, 0, 6), e3.addMany(i3(64, 127), 5, 7, 0), e3.addMany(i3(32, 48), 4, 9, 5), e3.addMany(i3(32, 48), 1, 9, 2), e3.addMany(i3(32, 48), 2, 9, 2), e3.addMany(i3(48, 127), 2, 10, 0), e3.addMany(i3(48, 80), 1, 10, 0), e3.addMany(i3(81, 88), 1, 10, 0), e3.addMany([89, 90, 92], 1, 10, 0), e3.addMany(i3(96, 127), 1, 10, 0), e3.add(80, 1, 11, 9), e3.addMany(r2, 9, 0, 9), e3.add(127, 9, 0, 9), e3.addMany(i3(28, 32), 9, 0, 9), e3.addMany(i3(32, 48), 9, 9, 12), e3.addMany(i3(48, 60), 9, 8, 10), e3.addMany([60, 61, 62, 63], 9, 9, 10), e3.addMany(r2, 11, 0, 11), e3.addMany(i3(32, 128), 11, 0, 11), e3.addMany(i3(28, 32), 11, 0, 11), e3.addMany(r2, 10, 0, 10), e3.add(127, 10, 0, 10), e3.addMany(i3(28, 32), 10, 0, 10), e3.addMany(i3(48, 60), 10, 8, 10), e3.addMany([60, 61, 62, 63], 10, 0, 11), e3.addMany(i3(32, 48), 10, 9, 12), e3.addMany(r2, 12, 0, 12), e3.add(127, 12, 0, 12), e3.addMany(i3(28, 32), 12, 0, 12), e3.addMany(i3(32, 48), 12, 9, 12), e3.addMany(i3(48, 64), 12, 0, 11), e3.addMany(i3(64, 127), 12, 12, 13), e3.addMany(i3(64, 127), 10, 12, 13), e3.addMany(i3(64, 127), 9, 12, 13), e3.addMany(r2, 13, 13, 13), e3.addMany(s3, 13, 13, 13), e3.add(127, 13, 0, 13), e3.addMany([27, 156, 24, 26], 13, 14, 0), e3.add(h2, 0, 2, 0), e3.add(h2, 8, 5, 8), e3.add(h2, 6, 0, 6), e3.add(h2, 11, 0, 11), e3.add(h2, 13, 13, 13), e3;
         }();
-        class c extends s2.Disposable {
+        class c2 extends s2.Disposable {
           constructor(e3 = t2.VT500_TRANSITION_TABLE) {
             super(), this._transitions = e3, this._parseStack = { state: 0, handlers: [], handlerPos: 0, transition: 0, chunkPos: 0 }, this.initialState = 0, this.currentState = this.initialState, this._params = new r.Params(), this._params.addParam(0), this._collect = 0, this.precedingCodepoint = 0, this._printHandlerFb = (e4, t3, i3) => {
             }, this._executeHandlerFb = (e4) => {
@@ -26850,22 +26850,22 @@ WARNING: This link could potentially be dangerous`)) {
                 this._parseStack.state = 0, o2 = this._parseStack.chunkPos + 1, this.precedingCodepoint = 0, this.currentState = 15 & this._parseStack.transition;
               }
             for (let i4 = o2; i4 < t3; ++i4) {
-              switch (r2 = e3[i4], n2 = this._transitions.table[this.currentState << 8 | (r2 < 160 ? r2 : h)], n2 >> 4) {
+              switch (r2 = e3[i4], n2 = this._transitions.table[this.currentState << 8 | (r2 < 160 ? r2 : h2)], n2 >> 4) {
                 case 2:
                   for (let s4 = i4 + 1; ; ++s4) {
-                    if (s4 >= t3 || (r2 = e3[s4]) < 32 || r2 > 126 && r2 < h) {
+                    if (s4 >= t3 || (r2 = e3[s4]) < 32 || r2 > 126 && r2 < h2) {
                       this._printHandler(e3, i4, s4), i4 = s4 - 1;
                       break;
                     }
-                    if (++s4 >= t3 || (r2 = e3[s4]) < 32 || r2 > 126 && r2 < h) {
+                    if (++s4 >= t3 || (r2 = e3[s4]) < 32 || r2 > 126 && r2 < h2) {
                       this._printHandler(e3, i4, s4), i4 = s4 - 1;
                       break;
                     }
-                    if (++s4 >= t3 || (r2 = e3[s4]) < 32 || r2 > 126 && r2 < h) {
+                    if (++s4 >= t3 || (r2 = e3[s4]) < 32 || r2 > 126 && r2 < h2) {
                       this._printHandler(e3, i4, s4), i4 = s4 - 1;
                       break;
                     }
-                    if (++s4 >= t3 || (r2 = e3[s4]) < 32 || r2 > 126 && r2 < h) {
+                    if (++s4 >= t3 || (r2 = e3[s4]) < 32 || r2 > 126 && r2 < h2) {
                       this._printHandler(e3, i4, s4), i4 = s4 - 1;
                       break;
                     }
@@ -26907,11 +26907,11 @@ WARNING: This link could potentially be dangerous`)) {
                   this._collect <<= 8, this._collect |= r2;
                   break;
                 case 10:
-                  const c2 = this._escHandlers[this._collect << 8 | r2];
-                  let l2 = c2 ? c2.length - 1 : -1;
-                  for (; l2 >= 0 && (s3 = c2[l2](), true !== s3); l2--)
+                  const c3 = this._escHandlers[this._collect << 8 | r2];
+                  let l2 = c3 ? c3.length - 1 : -1;
+                  for (; l2 >= 0 && (s3 = c3[l2](), true !== s3); l2--)
                     if (s3 instanceof Promise)
-                      return this._preserveStack(4, c2, l2, n2, i4), s3;
+                      return this._preserveStack(4, c3, l2, n2, i4), s3;
                   l2 < 0 && this._escHandlerFb(this._collect << 8 | r2), this.precedingCodepoint = 0;
                   break;
                 case 11:
@@ -26922,7 +26922,7 @@ WARNING: This link could potentially be dangerous`)) {
                   break;
                 case 13:
                   for (let s4 = i4 + 1; ; ++s4)
-                    if (s4 >= t3 || 24 === (r2 = e3[s4]) || 26 === r2 || 27 === r2 || r2 > 127 && r2 < h) {
+                    if (s4 >= t3 || 24 === (r2 = e3[s4]) || 26 === r2 || 27 === r2 || r2 > 127 && r2 < h2) {
                       this._dcsParser.put(e3, i4, s4), i4 = s4 - 1;
                       break;
                     }
@@ -26937,7 +26937,7 @@ WARNING: This link could potentially be dangerous`)) {
                   break;
                 case 5:
                   for (let s4 = i4 + 1; ; s4++)
-                    if (s4 >= t3 || (r2 = e3[s4]) < 32 || r2 > 127 && r2 < h) {
+                    if (s4 >= t3 || (r2 = e3[s4]) < 32 || r2 > 127 && r2 < h2) {
                       this._oscParser.put(e3, i4, s4), i4 = s4 - 1;
                       break;
                     }
@@ -26951,7 +26951,7 @@ WARNING: This link could potentially be dangerous`)) {
             }
           }
         }
-        t2.EscapeSequenceParser = c;
+        t2.EscapeSequenceParser = c2;
       }, 6242: (e2, t2, i2) => {
         Object.defineProperty(t2, "__esModule", { value: true }), t2.OscHandler = t2.OscParser = void 0;
         const s2 = i2(5770), r = i2(482), n = [];
@@ -27304,9 +27304,9 @@ WARNING: This link could potentially be dangerous`)) {
           };
         };
         Object.defineProperty(t2, "__esModule", { value: true }), t2.BufferService = t2.MINIMUM_ROWS = t2.MINIMUM_COLS = void 0;
-        const n = i2(8460), o = i2(844), a2 = i2(5295), h = i2(2585);
+        const n = i2(8460), o = i2(844), a2 = i2(5295), h2 = i2(2585);
         t2.MINIMUM_COLS = 2, t2.MINIMUM_ROWS = 1;
-        let c = t2.BufferService = class extends o.Disposable {
+        let c2 = t2.BufferService = class extends o.Disposable {
           get buffer() {
             return this.buffers.active;
           }
@@ -27345,7 +27345,7 @@ WARNING: This link could potentially be dangerous`)) {
             s3.ydisp = Math.max(Math.min(s3.ydisp + e3, s3.ybase), 0), r2 !== s3.ydisp && (t3 || this._onScroll.fire(s3.ydisp));
           }
         };
-        t2.BufferService = c = s2([r(0, h.IOptionsService)], c);
+        t2.BufferService = c2 = s2([r(0, h2.IOptionsService)], c2);
       }, 7994: (e2, t2) => {
         Object.defineProperty(t2, "__esModule", { value: true }), t2.CharsetService = void 0, t2.CharsetService = class {
           constructor() {
@@ -27376,26 +27376,26 @@ WARNING: This link could potentially be dangerous`)) {
           };
         };
         Object.defineProperty(t2, "__esModule", { value: true }), t2.CoreMouseService = void 0;
-        const n = i2(2585), o = i2(8460), a2 = i2(844), h = { NONE: { events: 0, restrict: () => false }, X10: { events: 1, restrict: (e3) => 4 !== e3.button && 1 === e3.action && (e3.ctrl = false, e3.alt = false, e3.shift = false, true) }, VT200: { events: 19, restrict: (e3) => 32 !== e3.action }, DRAG: { events: 23, restrict: (e3) => 32 !== e3.action || 3 !== e3.button }, ANY: { events: 31, restrict: (e3) => true } };
-        function c(e3, t3) {
+        const n = i2(2585), o = i2(8460), a2 = i2(844), h2 = { NONE: { events: 0, restrict: () => false }, X10: { events: 1, restrict: (e3) => 4 !== e3.button && 1 === e3.action && (e3.ctrl = false, e3.alt = false, e3.shift = false, true) }, VT200: { events: 19, restrict: (e3) => 32 !== e3.action }, DRAG: { events: 23, restrict: (e3) => 32 !== e3.action || 3 !== e3.button }, ANY: { events: 31, restrict: (e3) => true } };
+        function c2(e3, t3) {
           let i3 = (e3.ctrl ? 16 : 0) | (e3.shift ? 4 : 0) | (e3.alt ? 8 : 0);
           return 4 === e3.button ? (i3 |= 64, i3 |= e3.action) : (i3 |= 3 & e3.button, 4 & e3.button && (i3 |= 64), 8 & e3.button && (i3 |= 128), 32 === e3.action ? i3 |= 32 : 0 !== e3.action || t3 || (i3 |= 3)), i3;
         }
         const l2 = String.fromCharCode, d2 = { DEFAULT: (e3) => {
-          const t3 = [c(e3, false) + 32, e3.col + 32, e3.row + 32];
+          const t3 = [c2(e3, false) + 32, e3.col + 32, e3.row + 32];
           return t3[0] > 255 || t3[1] > 255 || t3[2] > 255 ? "" : `\x1B[M${l2(t3[0])}${l2(t3[1])}${l2(t3[2])}`;
         }, SGR: (e3) => {
           const t3 = 0 === e3.action && 4 !== e3.button ? "m" : "M";
-          return `\x1B[<${c(e3, true)};${e3.col};${e3.row}${t3}`;
+          return `\x1B[<${c2(e3, true)};${e3.col};${e3.row}${t3}`;
         }, SGR_PIXELS: (e3) => {
           const t3 = 0 === e3.action && 4 !== e3.button ? "m" : "M";
-          return `\x1B[<${c(e3, true)};${e3.x};${e3.y}${t3}`;
+          return `\x1B[<${c2(e3, true)};${e3.x};${e3.y}${t3}`;
         } };
-        let _ = t2.CoreMouseService = class extends a2.Disposable {
+        let _2 = t2.CoreMouseService = class extends a2.Disposable {
           constructor(e3, t3) {
             super(), this._bufferService = e3, this._coreService = t3, this._protocols = {}, this._encodings = {}, this._activeProtocol = "", this._activeEncoding = "", this._lastEvent = null, this._onProtocolChange = this.register(new o.EventEmitter()), this.onProtocolChange = this._onProtocolChange.event;
-            for (const e4 of Object.keys(h))
-              this.addProtocol(e4, h[e4]);
+            for (const e4 of Object.keys(h2))
+              this.addProtocol(e4, h2[e4]);
             for (const e4 of Object.keys(d2))
               this.addEncoding(e4, d2[e4]);
             this.reset();
@@ -27462,7 +27462,7 @@ WARNING: This link could potentially be dangerous`)) {
             return e3.button === t3.button && e3.action === t3.action && e3.ctrl === t3.ctrl && e3.alt === t3.alt && e3.shift === t3.shift;
           }
         };
-        t2.CoreMouseService = _ = s2([r(0, n.IBufferService), r(1, n.ICoreService)], _);
+        t2.CoreMouseService = _2 = s2([r(0, n.IBufferService), r(1, n.ICoreService)], _2);
       }, 6975: function(e2, t2, i2) {
         var s2 = this && this.__decorate || function(e3, t3, i3, s3) {
           var r2, n2 = arguments.length, o2 = n2 < 3 ? t3 : null === s3 ? s3 = Object.getOwnPropertyDescriptor(t3, i3) : s3;
@@ -27478,13 +27478,13 @@ WARNING: This link could potentially be dangerous`)) {
           };
         };
         Object.defineProperty(t2, "__esModule", { value: true }), t2.CoreService = void 0;
-        const n = i2(1439), o = i2(8460), a2 = i2(844), h = i2(2585), c = Object.freeze({ insertMode: false }), l2 = Object.freeze({ applicationCursorKeys: false, applicationKeypad: false, bracketedPasteMode: false, origin: false, reverseWraparound: false, sendFocus: false, wraparound: true });
+        const n = i2(1439), o = i2(8460), a2 = i2(844), h2 = i2(2585), c2 = Object.freeze({ insertMode: false }), l2 = Object.freeze({ applicationCursorKeys: false, applicationKeypad: false, bracketedPasteMode: false, origin: false, reverseWraparound: false, sendFocus: false, wraparound: true });
         let d2 = t2.CoreService = class extends a2.Disposable {
           constructor(e3, t3, i3) {
-            super(), this._bufferService = e3, this._logService = t3, this._optionsService = i3, this.isCursorInitialized = false, this.isCursorHidden = false, this._onData = this.register(new o.EventEmitter()), this.onData = this._onData.event, this._onUserInput = this.register(new o.EventEmitter()), this.onUserInput = this._onUserInput.event, this._onBinary = this.register(new o.EventEmitter()), this.onBinary = this._onBinary.event, this._onRequestScrollToBottom = this.register(new o.EventEmitter()), this.onRequestScrollToBottom = this._onRequestScrollToBottom.event, this.modes = (0, n.clone)(c), this.decPrivateModes = (0, n.clone)(l2);
+            super(), this._bufferService = e3, this._logService = t3, this._optionsService = i3, this.isCursorInitialized = false, this.isCursorHidden = false, this._onData = this.register(new o.EventEmitter()), this.onData = this._onData.event, this._onUserInput = this.register(new o.EventEmitter()), this.onUserInput = this._onUserInput.event, this._onBinary = this.register(new o.EventEmitter()), this.onBinary = this._onBinary.event, this._onRequestScrollToBottom = this.register(new o.EventEmitter()), this.onRequestScrollToBottom = this._onRequestScrollToBottom.event, this.modes = (0, n.clone)(c2), this.decPrivateModes = (0, n.clone)(l2);
           }
           reset() {
-            this.modes = (0, n.clone)(c), this.decPrivateModes = (0, n.clone)(l2);
+            this.modes = (0, n.clone)(c2), this.decPrivateModes = (0, n.clone)(l2);
           }
           triggerDataEvent(e3, t3 = false) {
             if (this._optionsService.rawOptions.disableStdin)
@@ -27496,12 +27496,12 @@ WARNING: This link could potentially be dangerous`)) {
             this._optionsService.rawOptions.disableStdin || (this._logService.debug(`sending binary "${e3}"`, () => e3.split("").map((e4) => e4.charCodeAt(0))), this._onBinary.fire(e3));
           }
         };
-        t2.CoreService = d2 = s2([r(0, h.IBufferService), r(1, h.ILogService), r(2, h.IOptionsService)], d2);
+        t2.CoreService = d2 = s2([r(0, h2.IBufferService), r(1, h2.ILogService), r(2, h2.IOptionsService)], d2);
       }, 9074: (e2, t2, i2) => {
         Object.defineProperty(t2, "__esModule", { value: true }), t2.DecorationService = void 0;
         const s2 = i2(8055), r = i2(8460), n = i2(844), o = i2(6106);
-        let a2 = 0, h = 0;
-        class c extends n.Disposable {
+        let a2 = 0, h2 = 0;
+        class c2 extends n.Disposable {
           get decorations() {
             return this._decorations.values();
           }
@@ -27528,17 +27528,17 @@ WARNING: This link could potentially be dangerous`)) {
           *getDecorationsAtCell(e3, t3, i3) {
             var s3, r2, n2;
             let o2 = 0, a3 = 0;
-            for (const h2 of this._decorations.getKeyIterator(t3))
-              o2 = null !== (s3 = h2.options.x) && void 0 !== s3 ? s3 : 0, a3 = o2 + (null !== (r2 = h2.options.width) && void 0 !== r2 ? r2 : 1), e3 >= o2 && e3 < a3 && (!i3 || (null !== (n2 = h2.options.layer) && void 0 !== n2 ? n2 : "bottom") === i3) && (yield h2);
+            for (const h3 of this._decorations.getKeyIterator(t3))
+              o2 = null !== (s3 = h3.options.x) && void 0 !== s3 ? s3 : 0, a3 = o2 + (null !== (r2 = h3.options.width) && void 0 !== r2 ? r2 : 1), e3 >= o2 && e3 < a3 && (!i3 || (null !== (n2 = h3.options.layer) && void 0 !== n2 ? n2 : "bottom") === i3) && (yield h3);
           }
           forEachDecorationAtCell(e3, t3, i3, s3) {
             this._decorations.forEachByKey(t3, (t4) => {
               var r2, n2, o2;
-              a2 = null !== (r2 = t4.options.x) && void 0 !== r2 ? r2 : 0, h = a2 + (null !== (n2 = t4.options.width) && void 0 !== n2 ? n2 : 1), e3 >= a2 && e3 < h && (!i3 || (null !== (o2 = t4.options.layer) && void 0 !== o2 ? o2 : "bottom") === i3) && s3(t4);
+              a2 = null !== (r2 = t4.options.x) && void 0 !== r2 ? r2 : 0, h2 = a2 + (null !== (n2 = t4.options.width) && void 0 !== n2 ? n2 : 1), e3 >= a2 && e3 < h2 && (!i3 || (null !== (o2 = t4.options.layer) && void 0 !== o2 ? o2 : "bottom") === i3) && s3(t4);
             });
           }
         }
-        t2.DecorationService = c;
+        t2.DecorationService = c2;
         class l2 extends n.Disposable {
           get isDisposed() {
             return this._isDisposed;
@@ -27620,12 +27620,12 @@ WARNING: This link could potentially be dangerous`)) {
         };
         Object.defineProperty(t2, "__esModule", { value: true }), t2.traceCall = t2.setTraceLogger = t2.LogService = void 0;
         const n = i2(844), o = i2(2585), a2 = { trace: o.LogLevelEnum.TRACE, debug: o.LogLevelEnum.DEBUG, info: o.LogLevelEnum.INFO, warn: o.LogLevelEnum.WARN, error: o.LogLevelEnum.ERROR, off: o.LogLevelEnum.OFF };
-        let h, c = t2.LogService = class extends n.Disposable {
+        let h2, c2 = t2.LogService = class extends n.Disposable {
           get logLevel() {
             return this._logLevel;
           }
           constructor(e3) {
-            super(), this._optionsService = e3, this._logLevel = o.LogLevelEnum.OFF, this._updateLogLevel(), this.register(this._optionsService.onSpecificOptionChange("logLevel", () => this._updateLogLevel())), h = this;
+            super(), this._optionsService = e3, this._logLevel = o.LogLevelEnum.OFF, this._updateLogLevel(), this.register(this._optionsService.onSpecificOptionChange("logLevel", () => this._updateLogLevel())), h2 = this;
           }
           _updateLogLevel() {
             this._logLevel = a2[this._optionsService.rawOptions.logLevel];
@@ -27658,18 +27658,18 @@ WARNING: This link could potentially be dangerous`)) {
             this._logLevel <= o.LogLevelEnum.ERROR && this._log(null !== (s3 = null === (i3 = this._optionsService.options.logger) || void 0 === i3 ? void 0 : i3.error.bind(this._optionsService.options.logger)) && void 0 !== s3 ? s3 : console.error, e3, t3);
           }
         };
-        t2.LogService = c = s2([r(0, o.IOptionsService)], c), t2.setTraceLogger = function(e3) {
-          h = e3;
+        t2.LogService = c2 = s2([r(0, o.IOptionsService)], c2), t2.setTraceLogger = function(e3) {
+          h2 = e3;
         }, t2.traceCall = function(e3, t3, i3) {
           if ("function" != typeof i3.value)
             throw new Error("not supported");
           const s3 = i3.value;
           i3.value = function(...e4) {
-            if (h.logLevel !== o.LogLevelEnum.TRACE)
+            if (h2.logLevel !== o.LogLevelEnum.TRACE)
               return s3.apply(this, e4);
-            h.trace(`GlyphRenderer#${s3.name}(${e4.map((e5) => JSON.stringify(e5)).join(", ")})`);
+            h2.trace(`GlyphRenderer#${s3.name}(${e4.map((e5) => JSON.stringify(e5)).join(", ")})`);
             const t4 = s3.apply(this, e4);
-            return h.trace(`GlyphRenderer#${s3.name} return`, t4), t4;
+            return h2.trace(`GlyphRenderer#${s3.name} return`, t4), t4;
           };
         };
       }, 7302: (e2, t2, i2) => {
@@ -27897,7 +27897,7 @@ WARNING: This link could potentially be dangerous`)) {
       return (() => {
         var e2 = s;
         Object.defineProperty(e2, "__esModule", { value: true }), e2.Terminal = void 0;
-        const t2 = i(9042), r = i(3236), n = i(844), o = i(5741), a2 = i(8285), h = i(7975), c = i(7090), l2 = ["cols", "rows"];
+        const t2 = i(9042), r = i(3236), n = i(844), o = i(5741), a2 = i(8285), h2 = i(7975), c2 = i(7090), l2 = ["cols", "rows"];
         class d2 extends n.Disposable {
           constructor(e3) {
             super(), this._core = this.register(new r.Terminal(e3)), this._addonManager = this.register(new o.AddonManager()), this._publicOptions = Object.assign({}, this._core.options);
@@ -27957,10 +27957,10 @@ WARNING: This link could potentially be dangerous`)) {
             return this._core.element;
           }
           get parser() {
-            return this._parser || (this._parser = new h.ParserApi(this._core)), this._parser;
+            return this._parser || (this._parser = new h2.ParserApi(this._core)), this._parser;
           }
           get unicode() {
-            return this._checkProposedApi(), new c.UnicodeApi(this._core);
+            return this._checkProposedApi(), new c2.UnicodeApi(this._core);
           }
           get textarea() {
             return this._core.textarea;
@@ -28200,12 +28200,12 @@ var require_keymap = __commonJS({
       let text = [];
       const it2 = data[Symbol.iterator]();
       for (let next = it2.next(); !next.done; next = it2.next()) {
-        const c = next.value;
-        if (c.length > 1) {
-          text.push(c);
+        const c2 = next.value;
+        if (c2.length > 1) {
+          text.push(c2);
           continue;
         }
-        const val = c.charCodeAt(0);
+        const val = c2.charCodeAt(0);
         if (text.length > 0 && (val < 32 || val === 127)) {
           yield {
             inputType: InputType.Text,
@@ -28326,11 +28326,11 @@ var require_keymap = __commonJS({
           }
           yield {
             inputType,
-            data: [c]
+            data: [c2]
           };
           continue;
         }
-        text.push(c);
+        text.push(c2);
       }
       if (text.length > 0) {
         yield {
@@ -28461,7 +28461,7 @@ var require_line = __commonJS({
         const slice = [...this.buf.slice(destStart, destEnd)].slice(0, column);
         let gIdx = off;
         if (slice.length > 0) {
-          gIdx = slice.map((c) => c.length).reduce((acc, m2) => acc + m2, 0);
+          gIdx = slice.map((c2) => c2.length).reduce((acc, m2) => acc + m2, 0);
           gIdx = destStart + gIdx;
         }
         this.pos = gIdx;
@@ -28500,7 +28500,7 @@ var require_line = __commonJS({
         }
         const slice = [...this.buf.slice(destStart, destEnd)];
         if (column < slice.length) {
-          this.pos = slice.slice(0, column).map((c) => c.length).reduce((acc, m2) => acc + m2, 0) + destStart;
+          this.pos = slice.slice(0, column).map((c2) => c2.length).reduce((acc, m2) => acc + m2, 0) + destStart;
         } else {
           this.pos = destEnd;
         }
@@ -28517,7 +28517,7 @@ var require_line = __commonJS({
           return void 0;
         }
         const buf = this.buf.slice(0, this.pos);
-        return this.pos - [...buf].slice(-n).map((c) => c.length).reduce((acc, m2) => acc + m2, 0);
+        return this.pos - [...buf].slice(-n).map((c2) => c2.length).reduce((acc, m2) => acc + m2, 0);
       }
       // Return the position of the character following the
       // current pos
@@ -28526,7 +28526,7 @@ var require_line = __commonJS({
           return void 0;
         }
         const buf = this.buf.slice(this.pos);
-        return this.pos + [...buf].slice(0, n).map((c) => c.length).reduce((acc, m2) => acc + m2, 0);
+        return this.pos + [...buf].slice(0, n).map((c2) => c2.length).reduce((acc, m2) => acc + m2, 0);
       }
       backspace(n) {
         const newPos = this.prevPos(n);
@@ -28962,18 +28962,18 @@ var require_tty = __commonJS({
       calculatePosition(text, orig) {
         const pos = Object.assign({}, orig);
         let escSeq = 0;
-        [...text].forEach((c) => {
-          if (c === "\n") {
+        [...text].forEach((c2) => {
+          if (c2 === "\n") {
             pos.row += 1;
             pos.col = 0;
             return;
           }
           let cw = 0;
-          if (c === "	") {
+          if (c2 === "	") {
             cw = this.tabWidth - pos.col % this.tabWidth;
           } else {
             let size;
-            [size, escSeq] = width(c, escSeq);
+            [size, escSeq] = width(c2, escSeq);
             cw = size;
           }
           pos.col += cw;
@@ -29424,7 +29424,7 @@ var require_readline = __commonJS({
 
 // src/Components/App.tsx
 var import_lz_string = __toESM(require_lz_string());
-var React9 = __toESM(require_react());
+var React10 = __toESM(require_react());
 var import_client = __toESM(require_client());
 
 // src/examples.ts
@@ -29510,80 +29510,80 @@ var AwaitableQueue = class {
 };
 
 // node_modules/webr/dist/webr.mjs
-var tn = Object.create;
-var Qr = Object.defineProperty;
-var rn = Object.getOwnPropertyDescriptor;
-var sn = Object.getOwnPropertyNames;
-var nn = Object.getPrototypeOf;
-var on = Object.prototype.hasOwnProperty;
-var N = ((r) => typeof __require < "u" ? __require : typeof Proxy < "u" ? new Proxy(r, { get: (e, t) => (typeof __require < "u" ? __require : e)[t] }) : r)(function(r) {
+var rn = Object.create;
+var Zr = Object.defineProperty;
+var sn = Object.getOwnPropertyDescriptor;
+var nn = Object.getOwnPropertyNames;
+var on = Object.getPrototypeOf;
+var an = Object.prototype.hasOwnProperty;
+var B = ((s) => typeof __require < "u" ? __require : typeof Proxy < "u" ? new Proxy(s, { get: (e, t) => (typeof __require < "u" ? __require : e)[t] }) : s)(function(s) {
   if (typeof __require < "u")
     return __require.apply(this, arguments);
-  throw new Error('Dynamic require of "' + r + '" is not supported');
+  throw new Error('Dynamic require of "' + s + '" is not supported');
 });
-var S = (r, e) => () => (e || r((e = { exports: {} }).exports, e), e.exports);
-var an = (r, e, t, s) => {
+var S = (s, e) => () => (e || s((e = { exports: {} }).exports, e), e.exports);
+var ln = (s, e, t, r) => {
   if (e && typeof e == "object" || typeof e == "function")
-    for (let n of sn(e))
-      !on.call(r, n) && n !== t && Qr(r, n, { get: () => e[n], enumerable: !(s = rn(e, n)) || s.enumerable });
-  return r;
+    for (let n of nn(e))
+      !an.call(s, n) && n !== t && Zr(s, n, { get: () => e[n], enumerable: !(r = sn(e, n)) || r.enumerable });
+  return s;
 };
-var ne = (r, e, t) => (t = r != null ? tn(nn(r)) : {}, an(e || !r || !r.__esModule ? Qr(t, "default", { value: r, enumerable: true }) : t, r));
-var yr = (r, e, t) => {
-  if (!e.has(r))
+var oe = (s, e, t) => (t = s != null ? rn(on(s)) : {}, ln(e || !s || !s.__esModule ? Zr(t, "default", { value: s, enumerable: true }) : t, s));
+var fr = (s, e, t) => {
+  if (!e.has(s))
     throw TypeError("Cannot " + t);
 };
-var a = (r, e, t) => (yr(r, e, "read from private field"), t ? t.call(r) : e.get(r));
-var u = (r, e, t) => {
-  if (e.has(r))
+var a = (s, e, t) => (fr(s, e, "read from private field"), t ? t.call(s) : e.get(s));
+var u = (s, e, t) => {
+  if (e.has(s))
     throw TypeError("Cannot add the same private member more than once");
-  e instanceof WeakSet ? e.add(r) : e.set(r, t);
+  e instanceof WeakSet ? e.add(s) : e.set(s, t);
 };
-var d = (r, e, t, s) => (yr(r, e, "write to private field"), s ? s.call(r, t) : e.set(r, t), t);
-var E = (r, e, t) => (yr(r, e, "access private method"), t);
-var Ve = S((U) => {
+var d = (s, e, t, r) => (fr(s, e, "write to private field"), r ? r.call(s, t) : e.set(s, t), t);
+var E = (s, e, t) => (fr(s, e, "access private method"), t);
+var Je = S((C2) => {
   "use strict";
-  Object.defineProperty(U, "__esModule", { value: true });
-  U.getUint64 = U.getInt64 = U.setInt64 = U.setUint64 = U.UINT32_MAX = void 0;
-  U.UINT32_MAX = 4294967295;
-  function yn(r, e, t) {
-    let s = t / 4294967296, n = t;
-    r.setUint32(e, s), r.setUint32(e + 4, n);
+  Object.defineProperty(C2, "__esModule", { value: true });
+  C2.getUint64 = C2.getInt64 = C2.setInt64 = C2.setUint64 = C2.UINT32_MAX = void 0;
+  C2.UINT32_MAX = 4294967295;
+  function fn(s, e, t) {
+    let r = t / 4294967296, n = t;
+    s.setUint32(e, r), s.setUint32(e + 4, n);
   }
-  U.setUint64 = yn;
-  function fn(r, e, t) {
-    let s = Math.floor(t / 4294967296), n = t;
-    r.setUint32(e, s), r.setUint32(e + 4, n);
+  C2.setUint64 = fn;
+  function Rn(s, e, t) {
+    let r = Math.floor(t / 4294967296), n = t;
+    s.setUint32(e, r), s.setUint32(e + 4, n);
   }
-  U.setInt64 = fn;
-  function Rn(r, e) {
-    let t = r.getInt32(e), s = r.getUint32(e + 4);
-    return t * 4294967296 + s;
+  C2.setInt64 = Rn;
+  function mn(s, e) {
+    let t = s.getInt32(e), r = s.getUint32(e + 4);
+    return t * 4294967296 + r;
   }
-  U.getInt64 = Rn;
-  function mn(r, e) {
-    let t = r.getUint32(e), s = r.getUint32(e + 4);
-    return t * 4294967296 + s;
+  C2.getInt64 = mn;
+  function gn(s, e) {
+    let t = s.getUint32(e), r = s.getUint32(e + 4);
+    return t * 4294967296 + r;
   }
-  U.getUint64 = mn;
+  C2.getUint64 = gn;
 });
-var Wt = S((D2) => {
+var At = S((M2) => {
   "use strict";
-  var Pr, _r, Sr;
-  Object.defineProperty(D2, "__esModule", { value: true });
-  D2.utf8DecodeTD = D2.TEXT_DECODER_THRESHOLD = D2.utf8DecodeJs = D2.utf8EncodeTE = D2.TEXT_ENCODER_THRESHOLD = D2.utf8EncodeJs = D2.utf8Count = void 0;
-  var cs = Ve(), Ot = (typeof process > "u" || ((Pr = process == null ? void 0 : process.env) === null || Pr === void 0 ? void 0 : Pr.TEXT_ENCODING) !== "never") && typeof TextEncoder < "u" && typeof TextDecoder < "u";
-  function gn(r) {
-    let e = r.length, t = 0, s = 0;
-    for (; s < e; ) {
-      let n = r.charCodeAt(s++);
+  var _r, Sr, kr;
+  Object.defineProperty(M2, "__esModule", { value: true });
+  M2.utf8DecodeTD = M2.TEXT_DECODER_THRESHOLD = M2.utf8DecodeJs = M2.utf8EncodeTE = M2.TEXT_ENCODER_THRESHOLD = M2.utf8EncodeJs = M2.utf8Count = void 0;
+  var us = Je(), Ot = (typeof process > "u" || ((_r = process == null ? void 0 : process.env) === null || _r === void 0 ? void 0 : _r.TEXT_ENCODING) !== "never") && typeof TextEncoder < "u" && typeof TextDecoder < "u";
+  function bn(s) {
+    let e = s.length, t = 0, r = 0;
+    for (; r < e; ) {
+      let n = s.charCodeAt(r++);
       if (n & 4294967168)
         if (!(n & 4294965248))
           t += 2;
         else {
-          if (n >= 55296 && n <= 56319 && s < e) {
-            let o = r.charCodeAt(s);
-            (o & 64512) === 56320 && (++s, n = ((n & 1023) << 10) + (o & 1023) + 65536);
+          if (n >= 55296 && n <= 56319 && r < e) {
+            let o = s.charCodeAt(r);
+            (o & 64512) === 56320 && (++r, n = ((n & 1023) << 10) + (o & 1023) + 65536);
           }
           n & 4294901760 ? t += 4 : t += 3;
         }
@@ -29594,18 +29594,18 @@ var Wt = S((D2) => {
     }
     return t;
   }
-  D2.utf8Count = gn;
-  function bn(r, e, t) {
-    let s = r.length, n = t, o = 0;
-    for (; o < s; ) {
-      let i = r.charCodeAt(o++);
+  M2.utf8Count = bn;
+  function wn(s, e, t) {
+    let r = s.length, n = t, o = 0;
+    for (; o < r; ) {
+      let i = s.charCodeAt(o++);
       if (i & 4294967168)
         if (!(i & 4294965248))
           e[n++] = i >> 6 & 31 | 192;
         else {
-          if (i >= 55296 && i <= 56319 && o < s) {
-            let c = r.charCodeAt(o);
-            (c & 64512) === 56320 && (++o, i = ((i & 1023) << 10) + (c & 1023) + 65536);
+          if (i >= 55296 && i <= 56319 && o < r) {
+            let c2 = s.charCodeAt(o);
+            (c2 & 64512) === 56320 && (++o, i = ((i & 1023) << 10) + (c2 & 1023) + 65536);
           }
           i & 4294901760 ? (e[n++] = i >> 18 & 7 | 240, e[n++] = i >> 12 & 63 | 128, e[n++] = i >> 6 & 63 | 128) : (e[n++] = i >> 12 & 15 | 224, e[n++] = i >> 6 & 63 | 128);
         }
@@ -29616,204 +29616,204 @@ var Wt = S((D2) => {
       e[n++] = i & 63 | 128;
     }
   }
-  D2.utf8EncodeJs = bn;
-  var Je = Ot ? new TextEncoder() : void 0;
-  D2.TEXT_ENCODER_THRESHOLD = Ot ? typeof process < "u" && ((_r = process == null ? void 0 : process.env) === null || _r === void 0 ? void 0 : _r.TEXT_ENCODING) !== "force" ? 200 : 0 : cs.UINT32_MAX;
-  function wn(r, e, t) {
-    e.set(Je.encode(r), t);
+  M2.utf8EncodeJs = wn;
+  var He = Ot ? new TextEncoder() : void 0;
+  M2.TEXT_ENCODER_THRESHOLD = Ot ? typeof process < "u" && ((Sr = process == null ? void 0 : process.env) === null || Sr === void 0 ? void 0 : Sr.TEXT_ENCODING) !== "force" ? 200 : 0 : us.UINT32_MAX;
+  function xn(s, e, t) {
+    e.set(He.encode(s), t);
   }
-  function xn(r, e, t) {
-    Je.encodeInto(r, e.subarray(t));
+  function vn(s, e, t) {
+    He.encodeInto(s, e.subarray(t));
   }
-  D2.utf8EncodeTE = Je != null && Je.encodeInto ? xn : wn;
-  var vn = 4096;
-  function En(r, e, t) {
-    let s = e, n = s + t, o = [], i = "";
-    for (; s < n; ) {
-      let c = r[s++];
-      if (!(c & 128))
-        o.push(c);
-      else if ((c & 224) === 192) {
-        let p = r[s++] & 63;
-        o.push((c & 31) << 6 | p);
-      } else if ((c & 240) === 224) {
-        let p = r[s++] & 63, k2 = r[s++] & 63;
-        o.push((c & 31) << 12 | p << 6 | k2);
-      } else if ((c & 248) === 240) {
-        let p = r[s++] & 63, k2 = r[s++] & 63, b2 = r[s++] & 63, C2 = (c & 7) << 18 | p << 12 | k2 << 6 | b2;
-        C2 > 65535 && (C2 -= 65536, o.push(C2 >>> 10 & 1023 | 55296), C2 = 56320 | C2 & 1023), o.push(C2);
+  M2.utf8EncodeTE = He != null && He.encodeInto ? vn : xn;
+  var En = 4096;
+  function Tn(s, e, t) {
+    let r = e, n = r + t, o = [], i = "";
+    for (; r < n; ) {
+      let c2 = s[r++];
+      if (!(c2 & 128))
+        o.push(c2);
+      else if ((c2 & 224) === 192) {
+        let p2 = s[r++] & 63;
+        o.push((c2 & 31) << 6 | p2);
+      } else if ((c2 & 240) === 224) {
+        let p2 = s[r++] & 63, D2 = s[r++] & 63;
+        o.push((c2 & 31) << 12 | p2 << 6 | D2);
+      } else if ((c2 & 248) === 240) {
+        let p2 = s[r++] & 63, D2 = s[r++] & 63, b2 = s[r++] & 63, j2 = (c2 & 7) << 18 | p2 << 12 | D2 << 6 | b2;
+        j2 > 65535 && (j2 -= 65536, o.push(j2 >>> 10 & 1023 | 55296), j2 = 56320 | j2 & 1023), o.push(j2);
       } else
-        o.push(c);
-      o.length >= vn && (i += String.fromCharCode(...o), o.length = 0);
+        o.push(c2);
+      o.length >= En && (i += String.fromCharCode(...o), o.length = 0);
     }
     return o.length > 0 && (i += String.fromCharCode(...o)), i;
   }
-  D2.utf8DecodeJs = En;
-  var Tn = Ot ? new TextDecoder() : null;
-  D2.TEXT_DECODER_THRESHOLD = Ot ? typeof process < "u" && ((Sr = process == null ? void 0 : process.env) === null || Sr === void 0 ? void 0 : Sr.TEXT_DECODER) !== "force" ? 200 : 0 : cs.UINT32_MAX;
-  function Pn(r, e, t) {
-    let s = r.subarray(e, e + t);
-    return Tn.decode(s);
+  M2.utf8DecodeJs = Tn;
+  var Pn = Ot ? new TextDecoder() : null;
+  M2.TEXT_DECODER_THRESHOLD = Ot ? typeof process < "u" && ((kr = process == null ? void 0 : process.env) === null || kr === void 0 ? void 0 : kr.TEXT_DECODER) !== "force" ? 200 : 0 : us.UINT32_MAX;
+  function _n(s, e, t) {
+    let r = s.subarray(e, e + t);
+    return Pn.decode(r);
   }
-  D2.utf8DecodeTD = Pn;
+  M2.utf8DecodeTD = _n;
 });
-var Dr = S((At) => {
+var Dr = S((It) => {
   "use strict";
-  Object.defineProperty(At, "__esModule", { value: true });
-  At.ExtData = void 0;
+  Object.defineProperty(It, "__esModule", { value: true });
+  It.ExtData = void 0;
   var Mr = class {
     constructor(e, t) {
       this.type = e, this.data = t;
     }
   };
-  At.ExtData = Mr;
+  It.ExtData = Mr;
 });
-var Ut = S((It) => {
+var Ct = S((Ut) => {
   "use strict";
-  Object.defineProperty(It, "__esModule", { value: true });
-  It.DecodeError = void 0;
-  var be2 = class extends Error {
+  Object.defineProperty(Ut, "__esModule", { value: true });
+  Ut.DecodeError = void 0;
+  var we = class extends Error {
     constructor(e) {
       super(e);
-      let t = Object.create(be2.prototype);
-      Object.setPrototypeOf(this, t), Object.defineProperty(this, "name", { configurable: true, enumerable: false, value: be2.name });
+      let t = Object.create(we.prototype);
+      Object.setPrototypeOf(this, t), Object.defineProperty(this, "name", { configurable: true, enumerable: false, value: we.name });
     }
   };
-  It.DecodeError = be2;
+  Ut.DecodeError = we;
 });
-var kr = S((_) => {
+var Wr = S((_2) => {
   "use strict";
-  Object.defineProperty(_, "__esModule", { value: true });
-  _.timestampExtension = _.decodeTimestampExtension = _.decodeTimestampToTimeSpec = _.encodeTimestampExtension = _.encodeDateToTimeSpec = _.encodeTimeSpecToTimestamp = _.EXT_TIMESTAMP = void 0;
-  var _n = Ut(), us = Ve();
-  _.EXT_TIMESTAMP = -1;
-  var Sn = 4294967296 - 1, Mn = 17179869184 - 1;
-  function ps({ sec: r, nsec: e }) {
-    if (r >= 0 && e >= 0 && r <= Mn)
-      if (e === 0 && r <= Sn) {
+  Object.defineProperty(_2, "__esModule", { value: true });
+  _2.timestampExtension = _2.decodeTimestampExtension = _2.decodeTimestampToTimeSpec = _2.encodeTimestampExtension = _2.encodeDateToTimeSpec = _2.encodeTimeSpecToTimestamp = _2.EXT_TIMESTAMP = void 0;
+  var Sn = Ct(), ps = Je();
+  _2.EXT_TIMESTAMP = -1;
+  var kn = 4294967296 - 1, Mn = 17179869184 - 1;
+  function ds({ sec: s, nsec: e }) {
+    if (s >= 0 && e >= 0 && s <= Mn)
+      if (e === 0 && s <= kn) {
         let t = new Uint8Array(4);
-        return new DataView(t.buffer).setUint32(0, r), t;
+        return new DataView(t.buffer).setUint32(0, s), t;
       } else {
-        let t = r / 4294967296, s = r & 4294967295, n = new Uint8Array(8), o = new DataView(n.buffer);
-        return o.setUint32(0, e << 2 | t & 3), o.setUint32(4, s), n;
+        let t = s / 4294967296, r = s & 4294967295, n = new Uint8Array(8), o = new DataView(n.buffer);
+        return o.setUint32(0, e << 2 | t & 3), o.setUint32(4, r), n;
       }
     else {
-      let t = new Uint8Array(12), s = new DataView(t.buffer);
-      return s.setUint32(0, e), (0, us.setInt64)(s, 4, r), t;
+      let t = new Uint8Array(12), r = new DataView(t.buffer);
+      return r.setUint32(0, e), (0, ps.setInt64)(r, 4, s), t;
     }
   }
-  _.encodeTimeSpecToTimestamp = ps;
-  function ds(r) {
-    let e = r.getTime(), t = Math.floor(e / 1e3), s = (e - t * 1e3) * 1e6, n = Math.floor(s / 1e9);
-    return { sec: t + n, nsec: s - n * 1e9 };
+  _2.encodeTimeSpecToTimestamp = ds;
+  function hs(s) {
+    let e = s.getTime(), t = Math.floor(e / 1e3), r = (e - t * 1e3) * 1e6, n = Math.floor(r / 1e9);
+    return { sec: t + n, nsec: r - n * 1e9 };
   }
-  _.encodeDateToTimeSpec = ds;
-  function hs(r) {
-    if (r instanceof Date) {
-      let e = ds(r);
-      return ps(e);
+  _2.encodeDateToTimeSpec = hs;
+  function ys(s) {
+    if (s instanceof Date) {
+      let e = hs(s);
+      return ds(e);
     } else
       return null;
   }
-  _.encodeTimestampExtension = hs;
-  function ys(r) {
-    let e = new DataView(r.buffer, r.byteOffset, r.byteLength);
-    switch (r.byteLength) {
+  _2.encodeTimestampExtension = ys;
+  function fs(s) {
+    let e = new DataView(s.buffer, s.byteOffset, s.byteLength);
+    switch (s.byteLength) {
       case 4:
         return { sec: e.getUint32(0), nsec: 0 };
       case 8: {
-        let t = e.getUint32(0), s = e.getUint32(4), n = (t & 3) * 4294967296 + s, o = t >>> 2;
+        let t = e.getUint32(0), r = e.getUint32(4), n = (t & 3) * 4294967296 + r, o = t >>> 2;
         return { sec: n, nsec: o };
       }
       case 12: {
-        let t = (0, us.getInt64)(e, 4), s = e.getUint32(0);
-        return { sec: t, nsec: s };
+        let t = (0, ps.getInt64)(e, 4), r = e.getUint32(0);
+        return { sec: t, nsec: r };
       }
       default:
-        throw new _n.DecodeError(`Unrecognized data size for timestamp (expected 4, 8, or 12): ${r.length}`);
+        throw new Sn.DecodeError(`Unrecognized data size for timestamp (expected 4, 8, or 12): ${s.length}`);
     }
   }
-  _.decodeTimestampToTimeSpec = ys;
-  function fs(r) {
-    let e = ys(r);
+  _2.decodeTimestampToTimeSpec = fs;
+  function Rs(s) {
+    let e = fs(s);
     return new Date(e.sec * 1e3 + e.nsec / 1e6);
   }
-  _.decodeTimestampExtension = fs;
-  _.timestampExtension = { type: _.EXT_TIMESTAMP, encode: hs, decode: fs };
+  _2.decodeTimestampExtension = Rs;
+  _2.timestampExtension = { type: _2.EXT_TIMESTAMP, encode: ys, decode: Rs };
 });
-var Nt = S((jt) => {
+var Bt = S((Nt) => {
   "use strict";
-  Object.defineProperty(jt, "__esModule", { value: true });
-  jt.ExtensionCodec = void 0;
-  var Ct = Dr(), Dn = kr(), He = class {
+  Object.defineProperty(Nt, "__esModule", { value: true });
+  Nt.ExtensionCodec = void 0;
+  var jt = Dr(), Dn = Wr(), ze = class {
     constructor() {
       this.builtInEncoders = [], this.builtInDecoders = [], this.encoders = [], this.decoders = [], this.register(Dn.timestampExtension);
     }
-    register({ type: e, encode: t, decode: s }) {
+    register({ type: e, encode: t, decode: r }) {
       if (e >= 0)
-        this.encoders[e] = t, this.decoders[e] = s;
+        this.encoders[e] = t, this.decoders[e] = r;
       else {
         let n = 1 + e;
-        this.builtInEncoders[n] = t, this.builtInDecoders[n] = s;
+        this.builtInEncoders[n] = t, this.builtInDecoders[n] = r;
       }
     }
     tryToEncode(e, t) {
-      for (let s = 0; s < this.builtInEncoders.length; s++) {
-        let n = this.builtInEncoders[s];
+      for (let r = 0; r < this.builtInEncoders.length; r++) {
+        let n = this.builtInEncoders[r];
         if (n != null) {
           let o = n(e, t);
           if (o != null) {
-            let i = -1 - s;
-            return new Ct.ExtData(i, o);
+            let i = -1 - r;
+            return new jt.ExtData(i, o);
           }
         }
       }
-      for (let s = 0; s < this.encoders.length; s++) {
-        let n = this.encoders[s];
+      for (let r = 0; r < this.encoders.length; r++) {
+        let n = this.encoders[r];
         if (n != null) {
           let o = n(e, t);
           if (o != null) {
-            let i = s;
-            return new Ct.ExtData(i, o);
+            let i = r;
+            return new jt.ExtData(i, o);
           }
         }
       }
-      return e instanceof Ct.ExtData ? e : null;
+      return e instanceof jt.ExtData ? e : null;
     }
-    decode(e, t, s) {
+    decode(e, t, r) {
       let n = t < 0 ? this.builtInDecoders[-1 - t] : this.decoders[t];
-      return n ? n(e, t, s) : new Ct.ExtData(t, e);
+      return n ? n(e, t, r) : new jt.ExtData(t, e);
     }
   };
-  jt.ExtensionCodec = He;
-  He.defaultCodec = new He();
+  Nt.ExtensionCodec = ze;
+  ze.defaultCodec = new ze();
 });
-var Or = S((we2) => {
+var Or = S((xe) => {
   "use strict";
-  Object.defineProperty(we2, "__esModule", { value: true });
-  we2.createDataView = we2.ensureUint8Array = void 0;
-  function Rs(r) {
-    return r instanceof Uint8Array ? r : ArrayBuffer.isView(r) ? new Uint8Array(r.buffer, r.byteOffset, r.byteLength) : r instanceof ArrayBuffer ? new Uint8Array(r) : Uint8Array.from(r);
+  Object.defineProperty(xe, "__esModule", { value: true });
+  xe.createDataView = xe.ensureUint8Array = void 0;
+  function ms(s) {
+    return s instanceof Uint8Array ? s : ArrayBuffer.isView(s) ? new Uint8Array(s.buffer, s.byteOffset, s.byteLength) : s instanceof ArrayBuffer ? new Uint8Array(s) : Uint8Array.from(s);
   }
-  we2.ensureUint8Array = Rs;
-  function kn(r) {
-    if (r instanceof ArrayBuffer)
-      return new DataView(r);
-    let e = Rs(r);
+  xe.ensureUint8Array = ms;
+  function Wn(s) {
+    if (s instanceof ArrayBuffer)
+      return new DataView(s);
+    let e = ms(s);
     return new DataView(e.buffer, e.byteOffset, e.byteLength);
   }
-  we2.createDataView = kn;
+  xe.createDataView = Wn;
 });
-var Ar = S((V2) => {
+var Ir = S((J2) => {
   "use strict";
-  Object.defineProperty(V2, "__esModule", { value: true });
-  V2.Encoder = V2.DEFAULT_INITIAL_BUFFER_SIZE = V2.DEFAULT_MAX_DEPTH = void 0;
-  var ze = Wt(), On = Nt(), ms = Ve(), Wn = Or();
-  V2.DEFAULT_MAX_DEPTH = 100;
-  V2.DEFAULT_INITIAL_BUFFER_SIZE = 2048;
-  var Wr = class {
-    constructor(e = On.ExtensionCodec.defaultCodec, t = void 0, s = V2.DEFAULT_MAX_DEPTH, n = V2.DEFAULT_INITIAL_BUFFER_SIZE, o = false, i = false, c = false, p = false) {
-      this.extensionCodec = e, this.context = t, this.maxDepth = s, this.initialBufferSize = n, this.sortKeys = o, this.forceFloat32 = i, this.ignoreUndefined = c, this.forceIntegerToFloat = p, this.pos = 0, this.view = new DataView(new ArrayBuffer(this.initialBufferSize)), this.bytes = new Uint8Array(this.view.buffer);
+  Object.defineProperty(J2, "__esModule", { value: true });
+  J2.Encoder = J2.DEFAULT_INITIAL_BUFFER_SIZE = J2.DEFAULT_MAX_DEPTH = void 0;
+  var Xe = At(), On = Bt(), gs = Je(), An = Or();
+  J2.DEFAULT_MAX_DEPTH = 100;
+  J2.DEFAULT_INITIAL_BUFFER_SIZE = 2048;
+  var Ar = class {
+    constructor(e = On.ExtensionCodec.defaultCodec, t = void 0, r = J2.DEFAULT_MAX_DEPTH, n = J2.DEFAULT_INITIAL_BUFFER_SIZE, o = false, i = false, c2 = false, p2 = false) {
+      this.extensionCodec = e, this.context = t, this.maxDepth = r, this.initialBufferSize = n, this.sortKeys = o, this.forceFloat32 = i, this.ignoreUndefined = c2, this.forceIntegerToFloat = p2, this.pos = 0, this.view = new DataView(new ArrayBuffer(this.initialBufferSize)), this.bytes = new Uint8Array(this.view.buffer);
     }
     reinitializeState() {
       this.pos = 0;
@@ -29834,8 +29834,8 @@ var Ar = S((V2) => {
       this.view.byteLength < t && this.resizeBuffer(t * 2);
     }
     resizeBuffer(e) {
-      let t = new ArrayBuffer(e), s = new Uint8Array(t), n = new DataView(t);
-      s.set(this.bytes), this.view = n, this.bytes = s;
+      let t = new ArrayBuffer(e), r = new Uint8Array(t), n = new DataView(t);
+      r.set(this.bytes), this.view = n, this.bytes = r;
     }
     encodeNil() {
       this.writeU8(192);
@@ -29859,18 +29859,18 @@ var Ar = S((V2) => {
         throw new Error(`Too long string: ${e} bytes in UTF-8`);
     }
     encodeString(e) {
-      if (e.length > ze.TEXT_ENCODER_THRESHOLD) {
-        let n = (0, ze.utf8Count)(e);
-        this.ensureBufferSizeToWrite(5 + n), this.writeStringHeader(n), (0, ze.utf8EncodeTE)(e, this.bytes, this.pos), this.pos += n;
+      if (e.length > Xe.TEXT_ENCODER_THRESHOLD) {
+        let n = (0, Xe.utf8Count)(e);
+        this.ensureBufferSizeToWrite(5 + n), this.writeStringHeader(n), (0, Xe.utf8EncodeTE)(e, this.bytes, this.pos), this.pos += n;
       } else {
-        let n = (0, ze.utf8Count)(e);
-        this.ensureBufferSizeToWrite(5 + n), this.writeStringHeader(n), (0, ze.utf8EncodeJs)(e, this.bytes, this.pos), this.pos += n;
+        let n = (0, Xe.utf8Count)(e);
+        this.ensureBufferSizeToWrite(5 + n), this.writeStringHeader(n), (0, Xe.utf8EncodeJs)(e, this.bytes, this.pos), this.pos += n;
       }
     }
     encodeObject(e, t) {
-      let s = this.extensionCodec.tryToEncode(e, this.context);
-      if (s != null)
-        this.encodeExtension(s);
+      let r = this.extensionCodec.tryToEncode(e, this.context);
+      if (r != null)
+        this.encodeExtension(r);
       else if (Array.isArray(e))
         this.encodeArray(e, t);
       else if (ArrayBuffer.isView(e))
@@ -29890,32 +29890,32 @@ var Ar = S((V2) => {
         this.writeU8(198), this.writeU32(t);
       else
         throw new Error(`Too large binary: ${t}`);
-      let s = (0, Wn.ensureUint8Array)(e);
-      this.writeU8a(s);
+      let r = (0, An.ensureUint8Array)(e);
+      this.writeU8a(r);
     }
     encodeArray(e, t) {
-      let s = e.length;
-      if (s < 16)
-        this.writeU8(144 + s);
-      else if (s < 65536)
-        this.writeU8(220), this.writeU16(s);
-      else if (s < 4294967296)
-        this.writeU8(221), this.writeU32(s);
+      let r = e.length;
+      if (r < 16)
+        this.writeU8(144 + r);
+      else if (r < 65536)
+        this.writeU8(220), this.writeU16(r);
+      else if (r < 4294967296)
+        this.writeU8(221), this.writeU32(r);
       else
-        throw new Error(`Too large array: ${s}`);
+        throw new Error(`Too large array: ${r}`);
       for (let n of e)
         this.doEncode(n, t + 1);
     }
     countWithoutUndefined(e, t) {
-      let s = 0;
+      let r = 0;
       for (let n of t)
-        e[n] !== void 0 && s++;
-      return s;
+        e[n] !== void 0 && r++;
+      return r;
     }
     encodeMap(e, t) {
-      let s = Object.keys(e);
-      this.sortKeys && s.sort();
-      let n = this.ignoreUndefined ? this.countWithoutUndefined(e, s) : s.length;
+      let r = Object.keys(e);
+      this.sortKeys && r.sort();
+      let n = this.ignoreUndefined ? this.countWithoutUndefined(e, r) : r.length;
       if (n < 16)
         this.writeU8(128 + n);
       else if (n < 65536)
@@ -29924,7 +29924,7 @@ var Ar = S((V2) => {
         this.writeU8(223), this.writeU32(n);
       else
         throw new Error(`Too large map object: ${n}`);
-      for (let o of s) {
+      for (let o of r) {
         let i = e[o];
         this.ignoreUndefined && i === void 0 || (this.encodeString(o), this.doEncode(i, t + 1));
       }
@@ -29980,113 +29980,113 @@ var Ar = S((V2) => {
       this.ensureBufferSizeToWrite(8), this.view.setFloat64(this.pos, e), this.pos += 8;
     }
     writeU64(e) {
-      this.ensureBufferSizeToWrite(8), (0, ms.setUint64)(this.view, this.pos, e), this.pos += 8;
+      this.ensureBufferSizeToWrite(8), (0, gs.setUint64)(this.view, this.pos, e), this.pos += 8;
     }
     writeI64(e) {
-      this.ensureBufferSizeToWrite(8), (0, ms.setInt64)(this.view, this.pos, e), this.pos += 8;
+      this.ensureBufferSizeToWrite(8), (0, gs.setInt64)(this.view, this.pos, e), this.pos += 8;
     }
   };
-  V2.Encoder = Wr;
-});
-var gs = S((Bt) => {
-  "use strict";
-  Object.defineProperty(Bt, "__esModule", { value: true });
-  Bt.encode = void 0;
-  var An = Ar(), In = {};
-  function Un(r, e = In) {
-    return new An.Encoder(e.extensionCodec, e.context, e.maxDepth, e.initialBufferSize, e.sortKeys, e.forceFloat32, e.ignoreUndefined, e.forceIntegerToFloat).encodeSharedRef(r);
-  }
-  Bt.encode = Un;
+  J2.Encoder = Ar;
 });
 var bs = S((Lt) => {
   "use strict";
   Object.defineProperty(Lt, "__esModule", { value: true });
-  Lt.prettyByte = void 0;
-  function Cn(r) {
-    return `${r < 0 ? "-" : ""}0x${Math.abs(r).toString(16).padStart(2, "0")}`;
+  Lt.encode = void 0;
+  var In = Ir(), Un = {};
+  function Cn(s, e = Un) {
+    return new In.Encoder(e.extensionCodec, e.context, e.maxDepth, e.initialBufferSize, e.sortKeys, e.forceFloat32, e.ignoreUndefined, e.forceIntegerToFloat).encodeSharedRef(s);
   }
-  Lt.prettyByte = Cn;
+  Lt.encode = Cn;
 });
 var ws = S((Ft) => {
   "use strict";
   Object.defineProperty(Ft, "__esModule", { value: true });
-  Ft.CachedKeyDecoder = void 0;
-  var jn = Wt(), Nn = 16, Bn = 16, Ir = class {
-    constructor(e = Nn, t = Bn) {
+  Ft.prettyByte = void 0;
+  function jn(s) {
+    return `${s < 0 ? "-" : ""}0x${Math.abs(s).toString(16).padStart(2, "0")}`;
+  }
+  Ft.prettyByte = jn;
+});
+var xs = S((qt) => {
+  "use strict";
+  Object.defineProperty(qt, "__esModule", { value: true });
+  qt.CachedKeyDecoder = void 0;
+  var Nn = At(), Bn = 16, Ln = 16, Ur = class {
+    constructor(e = Bn, t = Ln) {
       this.maxKeyLength = e, this.maxLengthPerKey = t, this.hit = 0, this.miss = 0, this.caches = [];
-      for (let s = 0; s < this.maxKeyLength; s++)
+      for (let r = 0; r < this.maxKeyLength; r++)
         this.caches.push([]);
     }
     canBeCached(e) {
       return e > 0 && e <= this.maxKeyLength;
     }
-    find(e, t, s) {
-      let n = this.caches[s - 1];
+    find(e, t, r) {
+      let n = this.caches[r - 1];
       e:
         for (let o of n) {
           let i = o.bytes;
-          for (let c = 0; c < s; c++)
-            if (i[c] !== e[t + c])
+          for (let c2 = 0; c2 < r; c2++)
+            if (i[c2] !== e[t + c2])
               continue e;
           return o.str;
         }
       return null;
     }
     store(e, t) {
-      let s = this.caches[e.length - 1], n = { bytes: e, str: t };
-      s.length >= this.maxLengthPerKey ? s[Math.random() * s.length | 0] = n : s.push(n);
+      let r = this.caches[e.length - 1], n = { bytes: e, str: t };
+      r.length >= this.maxLengthPerKey ? r[Math.random() * r.length | 0] = n : r.push(n);
     }
-    decode(e, t, s) {
-      let n = this.find(e, t, s);
+    decode(e, t, r) {
+      let n = this.find(e, t, r);
       if (n != null)
         return this.hit++, n;
       this.miss++;
-      let o = (0, jn.utf8DecodeJs)(e, t, s), i = Uint8Array.prototype.slice.call(e, t, t + s);
+      let o = (0, Nn.utf8DecodeJs)(e, t, r), i = Uint8Array.prototype.slice.call(e, t, t + r);
       return this.store(i, o), o;
     }
   };
-  Ft.CachedKeyDecoder = Ir;
+  qt.CachedKeyDecoder = Ur;
 });
-var qt = S((K2) => {
+var Vt = S((Q2) => {
   "use strict";
-  Object.defineProperty(K2, "__esModule", { value: true });
-  K2.Decoder = K2.DataViewIndexOutOfBoundsError = void 0;
-  var Ur = bs(), Ln = Nt(), le2 = Ve(), Cr = Wt(), jr = Or(), Fn = ws(), $2 = Ut(), qn = (r) => {
-    let e = typeof r;
+  Object.defineProperty(Q2, "__esModule", { value: true });
+  Q2.Decoder = Q2.DataViewIndexOutOfBoundsError = void 0;
+  var Cr = ws(), Fn = Bt(), ce2 = Je(), jr = At(), Nr = Or(), qn = xs(), K2 = Ct(), Vn = (s) => {
+    let e = typeof s;
     return e === "string" || e === "number";
-  }, Xe = -1, Br = new DataView(new ArrayBuffer(0)), Vn = new Uint8Array(Br.buffer);
-  K2.DataViewIndexOutOfBoundsError = (() => {
+  }, Ge = -1, Lr = new DataView(new ArrayBuffer(0)), Jn = new Uint8Array(Lr.buffer);
+  Q2.DataViewIndexOutOfBoundsError = (() => {
     try {
-      Br.getInt8(0);
-    } catch (r) {
-      return r.constructor;
+      Lr.getInt8(0);
+    } catch (s) {
+      return s.constructor;
     }
     throw new Error("never reached");
   })();
-  var xs = new K2.DataViewIndexOutOfBoundsError("Insufficient data"), Jn = new Fn.CachedKeyDecoder(), Nr = class {
-    constructor(e = Ln.ExtensionCodec.defaultCodec, t = void 0, s = le2.UINT32_MAX, n = le2.UINT32_MAX, o = le2.UINT32_MAX, i = le2.UINT32_MAX, c = le2.UINT32_MAX, p = Jn) {
-      this.extensionCodec = e, this.context = t, this.maxStrLength = s, this.maxBinLength = n, this.maxArrayLength = o, this.maxMapLength = i, this.maxExtLength = c, this.keyDecoder = p, this.totalPos = 0, this.pos = 0, this.view = Br, this.bytes = Vn, this.headByte = Xe, this.stack = [];
+  var vs = new Q2.DataViewIndexOutOfBoundsError("Insufficient data"), Hn = new qn.CachedKeyDecoder(), Br = class {
+    constructor(e = Fn.ExtensionCodec.defaultCodec, t = void 0, r = ce2.UINT32_MAX, n = ce2.UINT32_MAX, o = ce2.UINT32_MAX, i = ce2.UINT32_MAX, c2 = ce2.UINT32_MAX, p2 = Hn) {
+      this.extensionCodec = e, this.context = t, this.maxStrLength = r, this.maxBinLength = n, this.maxArrayLength = o, this.maxMapLength = i, this.maxExtLength = c2, this.keyDecoder = p2, this.totalPos = 0, this.pos = 0, this.view = Lr, this.bytes = Jn, this.headByte = Ge, this.stack = [];
     }
     reinitializeState() {
-      this.totalPos = 0, this.headByte = Xe, this.stack.length = 0;
+      this.totalPos = 0, this.headByte = Ge, this.stack.length = 0;
     }
     setBuffer(e) {
-      this.bytes = (0, jr.ensureUint8Array)(e), this.view = (0, jr.createDataView)(this.bytes), this.pos = 0;
+      this.bytes = (0, Nr.ensureUint8Array)(e), this.view = (0, Nr.createDataView)(this.bytes), this.pos = 0;
     }
     appendBuffer(e) {
-      if (this.headByte === Xe && !this.hasRemaining(1))
+      if (this.headByte === Ge && !this.hasRemaining(1))
         this.setBuffer(e);
       else {
-        let t = this.bytes.subarray(this.pos), s = (0, jr.ensureUint8Array)(e), n = new Uint8Array(t.length + s.length);
-        n.set(t), n.set(s, t.length), this.setBuffer(n);
+        let t = this.bytes.subarray(this.pos), r = (0, Nr.ensureUint8Array)(e), n = new Uint8Array(t.length + r.length);
+        n.set(t), n.set(r, t.length), this.setBuffer(n);
       }
     }
     hasRemaining(e) {
       return this.view.byteLength - this.pos >= e;
     }
     createExtraByteError(e) {
-      let { view: t, pos: s } = this;
-      return new RangeError(`Extra ${t.byteLength - s} of ${t.byteLength} byte(s) found at buffer[${e}]`);
+      let { view: t, pos: r } = this;
+      return new RangeError(`Extra ${t.byteLength - r} of ${t.byteLength} byte(s) found at buffer[${e}]`);
     }
     decode(e) {
       this.reinitializeState(), this.setBuffer(e);
@@ -30100,26 +30100,26 @@ var qt = S((K2) => {
         yield this.doDecodeSync();
     }
     async decodeAsync(e) {
-      let t = false, s;
-      for await (let c of e) {
+      let t = false, r;
+      for await (let c2 of e) {
         if (t)
           throw this.createExtraByteError(this.totalPos);
-        this.appendBuffer(c);
+        this.appendBuffer(c2);
         try {
-          s = this.doDecodeSync(), t = true;
-        } catch (p) {
-          if (!(p instanceof K2.DataViewIndexOutOfBoundsError))
-            throw p;
+          r = this.doDecodeSync(), t = true;
+        } catch (p2) {
+          if (!(p2 instanceof Q2.DataViewIndexOutOfBoundsError))
+            throw p2;
         }
         this.totalPos += this.pos;
       }
       if (t) {
         if (this.hasRemaining(1))
           throw this.createExtraByteError(this.totalPos);
-        return s;
+        return r;
       }
       let { headByte: n, pos: o, totalPos: i } = this;
-      throw new RangeError(`Insufficient data in parsing ${(0, Ur.prettyByte)(n)} at ${i} (${o} in the current buffer)`);
+      throw new RangeError(`Insufficient data in parsing ${(0, Cr.prettyByte)(n)} at ${i} (${o} in the current buffer)`);
     }
     decodeArrayStream(e) {
       return this.decodeMultiAsync(e, true);
@@ -30128,16 +30128,16 @@ var qt = S((K2) => {
       return this.decodeMultiAsync(e, false);
     }
     async *decodeMultiAsync(e, t) {
-      let s = t, n = -1;
+      let r = t, n = -1;
       for await (let o of e) {
         if (t && n === 0)
           throw this.createExtraByteError(this.totalPos);
-        this.appendBuffer(o), s && (n = this.readArraySize(), s = false, this.complete());
+        this.appendBuffer(o), r && (n = this.readArraySize(), r = false, this.complete());
         try {
           for (; yield this.doDecodeSync(), --n !== 0; )
             ;
         } catch (i) {
-          if (!(i instanceof K2.DataViewIndexOutOfBoundsError))
+          if (!(i instanceof Q2.DataViewIndexOutOfBoundsError))
             throw i;
         }
         this.totalPos += this.pos;
@@ -30262,25 +30262,25 @@ var qt = S((K2) => {
             let n = this.lookU32();
             t = this.decodeExtension(n, 4);
           } else
-            throw new $2.DecodeError(`Unrecognized type byte: ${(0, Ur.prettyByte)(e)}`);
+            throw new K2.DecodeError(`Unrecognized type byte: ${(0, Cr.prettyByte)(e)}`);
           this.complete();
-          let s = this.stack;
-          for (; s.length > 0; ) {
-            let n = s[s.length - 1];
+          let r = this.stack;
+          for (; r.length > 0; ) {
+            let n = r[r.length - 1];
             if (n.type === 0)
               if (n.array[n.position] = t, n.position++, n.position === n.size)
-                s.pop(), t = n.array;
+                r.pop(), t = n.array;
               else
                 continue e;
             else if (n.type === 1) {
-              if (!qn(t))
-                throw new $2.DecodeError("The type of key must be string or number but " + typeof t);
+              if (!Vn(t))
+                throw new K2.DecodeError("The type of key must be string or number but " + typeof t);
               if (t === "__proto__")
-                throw new $2.DecodeError("The key __proto__ is not allowed");
+                throw new K2.DecodeError("The key __proto__ is not allowed");
               n.key = t, n.type = 2;
               continue e;
             } else if (n.map[n.key] = t, n.readCount++, n.readCount === n.size)
-              s.pop(), t = n.map;
+              r.pop(), t = n.map;
             else {
               n.key = null, n.type = 1;
               continue e;
@@ -30290,10 +30290,10 @@ var qt = S((K2) => {
         }
     }
     readHeadByte() {
-      return this.headByte === Xe && (this.headByte = this.readU8()), this.headByte;
+      return this.headByte === Ge && (this.headByte = this.readU8()), this.headByte;
     }
     complete() {
-      this.headByte = Xe;
+      this.headByte = Ge;
     }
     readArraySize() {
       let e = this.readHeadByte();
@@ -30305,45 +30305,45 @@ var qt = S((K2) => {
         default: {
           if (e < 160)
             return e - 144;
-          throw new $2.DecodeError(`Unrecognized array type byte: ${(0, Ur.prettyByte)(e)}`);
+          throw new K2.DecodeError(`Unrecognized array type byte: ${(0, Cr.prettyByte)(e)}`);
         }
       }
     }
     pushMapState(e) {
       if (e > this.maxMapLength)
-        throw new $2.DecodeError(`Max length exceeded: map length (${e}) > maxMapLengthLength (${this.maxMapLength})`);
+        throw new K2.DecodeError(`Max length exceeded: map length (${e}) > maxMapLengthLength (${this.maxMapLength})`);
       this.stack.push({ type: 1, size: e, key: null, readCount: 0, map: {} });
     }
     pushArrayState(e) {
       if (e > this.maxArrayLength)
-        throw new $2.DecodeError(`Max length exceeded: array length (${e}) > maxArrayLength (${this.maxArrayLength})`);
+        throw new K2.DecodeError(`Max length exceeded: array length (${e}) > maxArrayLength (${this.maxArrayLength})`);
       this.stack.push({ type: 0, size: e, array: new Array(e), position: 0 });
     }
     decodeUtf8String(e, t) {
-      var s;
+      var r;
       if (e > this.maxStrLength)
-        throw new $2.DecodeError(`Max length exceeded: UTF-8 byte length (${e}) > maxStrLength (${this.maxStrLength})`);
+        throw new K2.DecodeError(`Max length exceeded: UTF-8 byte length (${e}) > maxStrLength (${this.maxStrLength})`);
       if (this.bytes.byteLength < this.pos + t + e)
-        throw xs;
+        throw vs;
       let n = this.pos + t, o;
-      return this.stateIsMapKey() && (!((s = this.keyDecoder) === null || s === void 0) && s.canBeCached(e)) ? o = this.keyDecoder.decode(this.bytes, n, e) : e > Cr.TEXT_DECODER_THRESHOLD ? o = (0, Cr.utf8DecodeTD)(this.bytes, n, e) : o = (0, Cr.utf8DecodeJs)(this.bytes, n, e), this.pos += t + e, o;
+      return this.stateIsMapKey() && (!((r = this.keyDecoder) === null || r === void 0) && r.canBeCached(e)) ? o = this.keyDecoder.decode(this.bytes, n, e) : e > jr.TEXT_DECODER_THRESHOLD ? o = (0, jr.utf8DecodeTD)(this.bytes, n, e) : o = (0, jr.utf8DecodeJs)(this.bytes, n, e), this.pos += t + e, o;
     }
     stateIsMapKey() {
       return this.stack.length > 0 ? this.stack[this.stack.length - 1].type === 1 : false;
     }
     decodeBinary(e, t) {
       if (e > this.maxBinLength)
-        throw new $2.DecodeError(`Max length exceeded: bin length (${e}) > maxBinLength (${this.maxBinLength})`);
+        throw new K2.DecodeError(`Max length exceeded: bin length (${e}) > maxBinLength (${this.maxBinLength})`);
       if (!this.hasRemaining(e + t))
-        throw xs;
-      let s = this.pos + t, n = this.bytes.subarray(s, s + e);
+        throw vs;
+      let r = this.pos + t, n = this.bytes.subarray(r, r + e);
       return this.pos += t + e, n;
     }
     decodeExtension(e, t) {
       if (e > this.maxExtLength)
-        throw new $2.DecodeError(`Max length exceeded: ext length (${e}) > maxExtLength (${this.maxExtLength})`);
-      let s = this.view.getInt8(this.pos + t), n = this.decodeBinary(e, t + 1);
-      return this.extensionCodec.decode(n, s, this.context);
+        throw new K2.DecodeError(`Max length exceeded: ext length (${e}) > maxExtLength (${this.maxExtLength})`);
+      let r = this.view.getInt8(this.pos + t), n = this.decodeBinary(e, t + 1);
+      return this.extensionCodec.decode(n, r, this.context);
     }
     lookU8() {
       return this.view.getUint8(this.pos);
@@ -30379,11 +30379,11 @@ var qt = S((K2) => {
       return this.pos += 4, e;
     }
     readU64() {
-      let e = (0, le2.getUint64)(this.view, this.pos);
+      let e = (0, ce2.getUint64)(this.view, this.pos);
       return this.pos += 8, e;
     }
     readI64() {
-      let e = (0, le2.getInt64)(this.view, this.pos);
+      let e = (0, ce2.getInt64)(this.view, this.pos);
       return this.pos += 8, e;
     }
     readF32() {
@@ -30395,296 +30395,296 @@ var qt = S((K2) => {
       return this.pos += 8, e;
     }
   };
-  K2.Decoder = Nr;
+  Q2.Decoder = Br;
 });
-var Lr = S((J2) => {
+var Fr = S((H2) => {
   "use strict";
-  Object.defineProperty(J2, "__esModule", { value: true });
-  J2.decodeMulti = J2.decode = J2.defaultDecodeOptions = void 0;
-  var vs = qt();
-  J2.defaultDecodeOptions = {};
-  function Hn(r, e = J2.defaultDecodeOptions) {
-    return new vs.Decoder(e.extensionCodec, e.context, e.maxStrLength, e.maxBinLength, e.maxArrayLength, e.maxMapLength, e.maxExtLength).decode(r);
+  Object.defineProperty(H2, "__esModule", { value: true });
+  H2.decodeMulti = H2.decode = H2.defaultDecodeOptions = void 0;
+  var Es = Vt();
+  H2.defaultDecodeOptions = {};
+  function zn(s, e = H2.defaultDecodeOptions) {
+    return new Es.Decoder(e.extensionCodec, e.context, e.maxStrLength, e.maxBinLength, e.maxArrayLength, e.maxMapLength, e.maxExtLength).decode(s);
   }
-  J2.decode = Hn;
-  function zn(r, e = J2.defaultDecodeOptions) {
-    return new vs.Decoder(e.extensionCodec, e.context, e.maxStrLength, e.maxBinLength, e.maxArrayLength, e.maxMapLength, e.maxExtLength).decodeMulti(r);
+  H2.decode = zn;
+  function Xn(s, e = H2.defaultDecodeOptions) {
+    return new Es.Decoder(e.extensionCodec, e.context, e.maxStrLength, e.maxBinLength, e.maxArrayLength, e.maxMapLength, e.maxExtLength).decodeMulti(s);
   }
-  J2.decodeMulti = zn;
+  H2.decodeMulti = Xn;
 });
-var Ps = S((te) => {
+var _s = S((re2) => {
   "use strict";
-  Object.defineProperty(te, "__esModule", { value: true });
-  te.ensureAsyncIterable = te.asyncIterableFromStream = te.isAsyncIterable = void 0;
-  function Es(r) {
-    return r[Symbol.asyncIterator] != null;
+  Object.defineProperty(re2, "__esModule", { value: true });
+  re2.ensureAsyncIterable = re2.asyncIterableFromStream = re2.isAsyncIterable = void 0;
+  function Ts(s) {
+    return s[Symbol.asyncIterator] != null;
   }
-  te.isAsyncIterable = Es;
-  function Xn(r) {
-    if (r == null)
+  re2.isAsyncIterable = Ts;
+  function Gn(s) {
+    if (s == null)
       throw new Error("Assertion Failure: value must not be null nor undefined");
   }
-  async function* Ts(r) {
-    let e = r.getReader();
+  async function* Ps(s) {
+    let e = s.getReader();
     try {
       for (; ; ) {
-        let { done: t, value: s } = await e.read();
+        let { done: t, value: r } = await e.read();
         if (t)
           return;
-        Xn(s), yield s;
+        Gn(r), yield r;
       }
     } finally {
       e.releaseLock();
     }
   }
-  te.asyncIterableFromStream = Ts;
-  function Gn(r) {
-    return Es(r) ? r : Ts(r);
+  re2.asyncIterableFromStream = Ps;
+  function $n(s) {
+    return Ts(s) ? s : Ps(s);
   }
-  te.ensureAsyncIterable = Gn;
+  re2.ensureAsyncIterable = $n;
 });
-var Ss = S((H2) => {
+var ks = S((z2) => {
   "use strict";
-  Object.defineProperty(H2, "__esModule", { value: true });
-  H2.decodeStream = H2.decodeMultiStream = H2.decodeArrayStream = H2.decodeAsync = void 0;
-  var Fr = qt(), qr = Ps(), Vt = Lr();
-  async function $n(r, e = Vt.defaultDecodeOptions) {
-    let t = (0, qr.ensureAsyncIterable)(r);
-    return new Fr.Decoder(e.extensionCodec, e.context, e.maxStrLength, e.maxBinLength, e.maxArrayLength, e.maxMapLength, e.maxExtLength).decodeAsync(t);
+  Object.defineProperty(z2, "__esModule", { value: true });
+  z2.decodeStream = z2.decodeMultiStream = z2.decodeArrayStream = z2.decodeAsync = void 0;
+  var qr = Vt(), Vr = _s(), Jt = Fr();
+  async function Kn(s, e = Jt.defaultDecodeOptions) {
+    let t = (0, Vr.ensureAsyncIterable)(s);
+    return new qr.Decoder(e.extensionCodec, e.context, e.maxStrLength, e.maxBinLength, e.maxArrayLength, e.maxMapLength, e.maxExtLength).decodeAsync(t);
   }
-  H2.decodeAsync = $n;
-  function Kn(r, e = Vt.defaultDecodeOptions) {
-    let t = (0, qr.ensureAsyncIterable)(r);
-    return new Fr.Decoder(e.extensionCodec, e.context, e.maxStrLength, e.maxBinLength, e.maxArrayLength, e.maxMapLength, e.maxExtLength).decodeArrayStream(t);
+  z2.decodeAsync = Kn;
+  function Qn(s, e = Jt.defaultDecodeOptions) {
+    let t = (0, Vr.ensureAsyncIterable)(s);
+    return new qr.Decoder(e.extensionCodec, e.context, e.maxStrLength, e.maxBinLength, e.maxArrayLength, e.maxMapLength, e.maxExtLength).decodeArrayStream(t);
   }
-  H2.decodeArrayStream = Kn;
-  function _s(r, e = Vt.defaultDecodeOptions) {
-    let t = (0, qr.ensureAsyncIterable)(r);
-    return new Fr.Decoder(e.extensionCodec, e.context, e.maxStrLength, e.maxBinLength, e.maxArrayLength, e.maxMapLength, e.maxExtLength).decodeStream(t);
+  z2.decodeArrayStream = Qn;
+  function Ss(s, e = Jt.defaultDecodeOptions) {
+    let t = (0, Vr.ensureAsyncIterable)(s);
+    return new qr.Decoder(e.extensionCodec, e.context, e.maxStrLength, e.maxBinLength, e.maxArrayLength, e.maxMapLength, e.maxExtLength).decodeStream(t);
   }
-  H2.decodeMultiStream = _s;
-  function Qn(r, e = Vt.defaultDecodeOptions) {
-    return _s(r, e);
+  z2.decodeMultiStream = Ss;
+  function Zn(s, e = Jt.defaultDecodeOptions) {
+    return Ss(s, e);
   }
-  H2.decodeStream = Qn;
+  z2.decodeStream = Zn;
 });
-var Ht = S((h) => {
+var zt = S((h2) => {
   "use strict";
-  Object.defineProperty(h, "__esModule", { value: true });
-  h.decodeTimestampExtension = h.encodeTimestampExtension = h.decodeTimestampToTimeSpec = h.encodeTimeSpecToTimestamp = h.encodeDateToTimeSpec = h.EXT_TIMESTAMP = h.ExtData = h.ExtensionCodec = h.Encoder = h.DataViewIndexOutOfBoundsError = h.DecodeError = h.Decoder = h.decodeStream = h.decodeMultiStream = h.decodeArrayStream = h.decodeAsync = h.decodeMulti = h.decode = h.encode = void 0;
-  var Zn = gs();
-  Object.defineProperty(h, "encode", { enumerable: true, get: function() {
-    return Zn.encode;
+  Object.defineProperty(h2, "__esModule", { value: true });
+  h2.decodeTimestampExtension = h2.encodeTimestampExtension = h2.decodeTimestampToTimeSpec = h2.encodeTimeSpecToTimestamp = h2.encodeDateToTimeSpec = h2.EXT_TIMESTAMP = h2.ExtData = h2.ExtensionCodec = h2.Encoder = h2.DataViewIndexOutOfBoundsError = h2.DecodeError = h2.Decoder = h2.decodeStream = h2.decodeMultiStream = h2.decodeArrayStream = h2.decodeAsync = h2.decodeMulti = h2.decode = h2.encode = void 0;
+  var Yn = bs();
+  Object.defineProperty(h2, "encode", { enumerable: true, get: function() {
+    return Yn.encode;
   } });
-  var Ms = Lr();
-  Object.defineProperty(h, "decode", { enumerable: true, get: function() {
+  var Ms = Fr();
+  Object.defineProperty(h2, "decode", { enumerable: true, get: function() {
     return Ms.decode;
   } });
-  Object.defineProperty(h, "decodeMulti", { enumerable: true, get: function() {
+  Object.defineProperty(h2, "decodeMulti", { enumerable: true, get: function() {
     return Ms.decodeMulti;
   } });
-  var Jt = Ss();
-  Object.defineProperty(h, "decodeAsync", { enumerable: true, get: function() {
-    return Jt.decodeAsync;
+  var Ht = ks();
+  Object.defineProperty(h2, "decodeAsync", { enumerable: true, get: function() {
+    return Ht.decodeAsync;
   } });
-  Object.defineProperty(h, "decodeArrayStream", { enumerable: true, get: function() {
-    return Jt.decodeArrayStream;
+  Object.defineProperty(h2, "decodeArrayStream", { enumerable: true, get: function() {
+    return Ht.decodeArrayStream;
   } });
-  Object.defineProperty(h, "decodeMultiStream", { enumerable: true, get: function() {
-    return Jt.decodeMultiStream;
+  Object.defineProperty(h2, "decodeMultiStream", { enumerable: true, get: function() {
+    return Ht.decodeMultiStream;
   } });
-  Object.defineProperty(h, "decodeStream", { enumerable: true, get: function() {
-    return Jt.decodeStream;
+  Object.defineProperty(h2, "decodeStream", { enumerable: true, get: function() {
+    return Ht.decodeStream;
   } });
-  var Ds = qt();
-  Object.defineProperty(h, "Decoder", { enumerable: true, get: function() {
+  var Ds = Vt();
+  Object.defineProperty(h2, "Decoder", { enumerable: true, get: function() {
     return Ds.Decoder;
   } });
-  Object.defineProperty(h, "DataViewIndexOutOfBoundsError", { enumerable: true, get: function() {
+  Object.defineProperty(h2, "DataViewIndexOutOfBoundsError", { enumerable: true, get: function() {
     return Ds.DataViewIndexOutOfBoundsError;
   } });
-  var Yn = Ut();
-  Object.defineProperty(h, "DecodeError", { enumerable: true, get: function() {
-    return Yn.DecodeError;
+  var eo = Ct();
+  Object.defineProperty(h2, "DecodeError", { enumerable: true, get: function() {
+    return eo.DecodeError;
   } });
-  var eo = Ar();
-  Object.defineProperty(h, "Encoder", { enumerable: true, get: function() {
-    return eo.Encoder;
+  var to = Ir();
+  Object.defineProperty(h2, "Encoder", { enumerable: true, get: function() {
+    return to.Encoder;
   } });
-  var to = Nt();
-  Object.defineProperty(h, "ExtensionCodec", { enumerable: true, get: function() {
-    return to.ExtensionCodec;
+  var ro = Bt();
+  Object.defineProperty(h2, "ExtensionCodec", { enumerable: true, get: function() {
+    return ro.ExtensionCodec;
   } });
-  var ro = Dr();
-  Object.defineProperty(h, "ExtData", { enumerable: true, get: function() {
-    return ro.ExtData;
+  var so = Dr();
+  Object.defineProperty(h2, "ExtData", { enumerable: true, get: function() {
+    return so.ExtData;
   } });
-  var xe = kr();
-  Object.defineProperty(h, "EXT_TIMESTAMP", { enumerable: true, get: function() {
-    return xe.EXT_TIMESTAMP;
+  var ve = Wr();
+  Object.defineProperty(h2, "EXT_TIMESTAMP", { enumerable: true, get: function() {
+    return ve.EXT_TIMESTAMP;
   } });
-  Object.defineProperty(h, "encodeDateToTimeSpec", { enumerable: true, get: function() {
-    return xe.encodeDateToTimeSpec;
+  Object.defineProperty(h2, "encodeDateToTimeSpec", { enumerable: true, get: function() {
+    return ve.encodeDateToTimeSpec;
   } });
-  Object.defineProperty(h, "encodeTimeSpecToTimestamp", { enumerable: true, get: function() {
-    return xe.encodeTimeSpecToTimestamp;
+  Object.defineProperty(h2, "encodeTimeSpecToTimestamp", { enumerable: true, get: function() {
+    return ve.encodeTimeSpecToTimestamp;
   } });
-  Object.defineProperty(h, "decodeTimestampToTimeSpec", { enumerable: true, get: function() {
-    return xe.decodeTimestampToTimeSpec;
+  Object.defineProperty(h2, "decodeTimestampToTimeSpec", { enumerable: true, get: function() {
+    return ve.decodeTimestampToTimeSpec;
   } });
-  Object.defineProperty(h, "encodeTimestampExtension", { enumerable: true, get: function() {
-    return xe.encodeTimestampExtension;
+  Object.defineProperty(h2, "encodeTimestampExtension", { enumerable: true, get: function() {
+    return ve.encodeTimestampExtension;
   } });
-  Object.defineProperty(h, "decodeTimestampExtension", { enumerable: true, get: function() {
-    return xe.decodeTimestampExtension;
+  Object.defineProperty(h2, "decodeTimestampExtension", { enumerable: true, get: function() {
+    return ve.decodeTimestampExtension;
   } });
 });
-var A = class extends Error {
+var I = class extends Error {
   constructor(e) {
     super(e), this.name = this.constructor.name, Object.setPrototypeOf(this, new.target.prototype);
   }
 };
-var gt = class extends A {
+var O = class extends I {
 };
-var P = class extends A {
+var T = class extends I {
 };
-var Q = class extends A {
+var Z = class extends I {
 };
 var m = typeof process < "u" && process.release && process.release.name === "node";
-var fr;
+var Rr;
 if (globalThis.document)
-  fr = (r) => new Promise((e, t) => {
-    let s = document.createElement("script");
-    s.src = r, s.onload = () => e(), s.onerror = t, document.head.appendChild(s);
+  Rr = (s) => new Promise((e, t) => {
+    let r = document.createElement("script");
+    r.src = s, r.onload = () => e(), r.onerror = t, document.head.appendChild(r);
   });
 else if (globalThis.importScripts)
-  fr = async (r) => {
+  Rr = async (s) => {
     try {
-      globalThis.importScripts(r);
+      globalThis.importScripts(s);
     } catch (e) {
       if (e instanceof TypeError)
-        await Promise.resolve().then(() => ne(N(r)));
+        await Promise.resolve().then(() => oe(B(s)));
       else
         throw e;
     }
   };
 else if (m)
-  fr = async (r) => {
-    let e = (await Promise.resolve().then(() => ne(N("path")))).default;
-    await Promise.resolve().then(() => ne(N(e.resolve(r))));
+  Rr = async (s) => {
+    let e = (await Promise.resolve().then(() => oe(B("path")))).default;
+    await Promise.resolve().then(() => oe(B(e.resolve(s))));
   };
 else
-  throw new A("Cannot determine runtime environment");
+  throw new I("Cannot determine runtime environment");
 var l = {};
-function Yr(r) {
-  Object.keys(r).forEach((e) => l._free(r[e]));
+function es(s) {
+  Object.keys(s).forEach((e) => l._free(s[e]));
 }
-var j = { null: 0, symbol: 1, pairlist: 2, closure: 3, environment: 4, promise: 5, call: 6, special: 7, builtin: 8, string: 9, logical: 10, integer: 13, double: 14, complex: 15, character: 16, dots: 17, any: 18, list: 19, expression: 20, bytecode: 21, pointer: 22, weakref: 23, raw: 24, s4: 25, new: 30, free: 31, function: 99 };
-function Rr(r) {
-  return !!r && typeof r == "object" && Object.keys(j).includes(r.type);
+var N = { null: 0, symbol: 1, pairlist: 2, closure: 3, environment: 4, promise: 5, call: 6, special: 7, builtin: 8, string: 9, logical: 10, integer: 13, double: 14, complex: 15, character: 16, dots: 17, any: 18, list: 19, expression: 20, bytecode: 21, pointer: 22, weakref: 23, raw: 24, s4: 25, new: 30, free: 31, function: 99 };
+function mr(s) {
+  return !!s && typeof s == "object" && Object.keys(N).includes(s.type);
 }
-function Ue(r) {
-  return !!r && typeof r == "object" && "re" in r && "im" in r;
+function Ce(s) {
+  return !!s && typeof s == "object" && "re" in s && "im" in s;
 }
-function Ce(r) {
-  return l._Rf_protect(B(r)), r;
+function je(s) {
+  return l._Rf_protect(L(s)), s;
 }
-function w(r, e) {
-  return l._Rf_protect(B(r)), ++e.n, r;
+function w(s, e) {
+  return l._Rf_protect(L(s)), ++e.n, s;
 }
-function es(r) {
+function ts(s) {
   let e = l._malloc(4);
-  return l._R_ProtectWithIndex(B(r), e), { loc: l.getValue(e, "i32"), ptr: e };
+  return l._R_ProtectWithIndex(L(s), e), { loc: l.getValue(e, "i32"), ptr: e };
 }
-function ts(r) {
-  l._Rf_unprotect(1), l._free(r.ptr);
+function rs(s) {
+  l._Rf_unprotect(1), l._free(s.ptr);
 }
-function rs(r, e) {
-  return l._R_Reprotect(B(r), e.loc), r;
+function ss(s, e) {
+  return l._R_Reprotect(L(s), e.loc), s;
 }
-function T(r) {
-  l._Rf_unprotect(r);
+function P(s) {
+  l._Rf_unprotect(s);
 }
-function mr(r, e, t) {
-  l._Rf_defineVar(B(e), B(t), B(r));
+function gr(s, e, t) {
+  l._Rf_defineVar(L(e), L(t), L(s));
 }
-function gr(r, e) {
-  let t = {}, s = { n: 0 };
+function br(s, e) {
+  let t = {}, r = { n: 0 };
   try {
-    let n = new Ne(e);
-    w(n, s), t.code = l.allocateUTF8(r);
+    let n = new Be(e);
+    w(n, r), t.code = l.allocateUTF8(s);
     let o = l._R_ParseEvalString(t.code, n.ptr);
     return y.wrap(o);
   } finally {
-    Yr(t), T(s.n);
+    es(t), P(r.n);
   }
 }
-function je(r, e) {
-  return l.getWasmTableEntry(l.GOT.ffi_safe_eval.value)(B(r), B(e));
+function Ne(s, e) {
+  return l.getWasmTableEntry(l.GOT.ffi_safe_eval.value)(L(s), L(e));
 }
-var ln = /* @__PURE__ */ new WeakMap();
-function ss(r, e) {
-  return ln.set(r, e), r;
+var cn = /* @__PURE__ */ new WeakMap();
+function ns(s, e) {
+  return cn.set(s, e), s;
 }
-var bt = 63;
-function wt() {
-  let r = Array.from({ length: 4 }, cn).join("-");
-  if (r.length !== bt)
+var wt = 63;
+function xt() {
+  let s = Array.from({ length: 4 }, un).join("-");
+  if (s.length !== wt)
     throw new Error("comlink internal error: UUID has the wrong length");
-  return r;
+  return s;
 }
-function cn() {
-  let r = Math.floor(Math.random() * Number.MAX_SAFE_INTEGER).toString(16), e = 15 - r.length;
-  return e > 0 && (r = Array.from({ length: e }, () => 0).join("") + r), r;
+function un() {
+  let s = Math.floor(Math.random() * Number.MAX_SAFE_INTEGER).toString(16), e = 15 - s.length;
+  return e > 0 && (s = Array.from({ length: e }, () => 0).join("") + s), s;
 }
-function B(r) {
-  return Tt(r) ? r.ptr : r;
+function L(s) {
+  return Pt(s) ? s.ptr : s;
 }
-function ie(r, e) {
-  if (l._TYPEOF(r.ptr) !== j[e])
-    throw new Error(`Unexpected object type "${r.type()}" when expecting type "${e}"`);
+function le(s, e) {
+  if (l._TYPEOF(s.ptr) !== N[e])
+    throw new Error(`Unexpected object type "${s.type()}" when expecting type "${e}"`);
 }
-function ns(r) {
-  if (Rr(r))
-    return new (os(r.type))(r);
-  if (r && typeof r == "object" && "type" in r && r.type === "null")
-    return new Et();
-  if (r === null)
-    return new Z({ type: "logical", names: null, values: [null] });
-  if (typeof r == "boolean")
-    return new Z(r);
-  if (typeof r == "number")
-    return new ye(r);
-  if (typeof r == "string")
-    return new L(r);
-  if (Ue(r))
-    return new Be(r);
-  if (ArrayBuffer.isView(r) || r instanceof ArrayBuffer)
-    return new Le(r);
-  if (Array.isArray(r))
-    return pn(r);
-  if (typeof r == "object")
-    return Y.fromObject(r);
+function os(s) {
+  if (mr(s))
+    return new (as(s.type))(s);
+  if (s && typeof s == "object" && "type" in s && s.type === "null")
+    return new Tt();
+  if (s === null)
+    return new Y({ type: "logical", names: null, values: [null] });
+  if (typeof s == "boolean")
+    return new Y(s);
+  if (typeof s == "number")
+    return new fe(s);
+  if (typeof s == "string")
+    return new F(s);
+  if (Ce(s))
+    return new Le(s);
+  if (ArrayBuffer.isView(s) || s instanceof ArrayBuffer)
+    return new Fe(s);
+  if (Array.isArray(s))
+    return dn(s);
+  if (typeof s == "object")
+    return ee.fromObject(s);
   throw new Error("Robj construction for this JS object is not yet supported");
 }
-function pn(r) {
+function dn(s) {
   let e = { n: 0 };
-  if (r.every((s) => s && typeof s == "object" && !Tt(s) && !Ue(s))) {
-    let s = r, n = s.every((i) => Object.keys(i).filter((c) => !Object.keys(s[0]).includes(c)).length === 0 && Object.keys(s[0]).filter((c) => !Object.keys(i).includes(c)).length === 0), o = s.every((i) => Object.values(i).every((c) => is(c) || as(c)));
+  if (s.every((r) => r && typeof r == "object" && !Pt(r) && !Ce(r))) {
+    let r = s, n = r.every((i) => Object.keys(i).filter((c2) => !Object.keys(r[0]).includes(c2)).length === 0 && Object.keys(r[0]).filter((c2) => !Object.keys(i).includes(c2)).length === 0), o = r.every((i) => Object.values(i).every((c2) => ls(c2) || is(c2)));
     if (n && o)
-      return Y.fromD3(s);
+      return ee.fromD3(r);
   }
-  if (r.every((s) => typeof s == "boolean" || s === null))
-    return new Z(r);
-  if (r.every((s) => typeof s == "number" || s === null))
-    return new ye(r);
-  if (r.every((s) => typeof s == "string" || s === null))
-    return new L(r);
+  if (s.every((r) => typeof r == "boolean" || r === null))
+    return new Y(s);
+  if (s.every((r) => typeof r == "number" || r === null))
+    return new fe(s);
+  if (s.every((r) => typeof r == "string" || r === null))
+    return new F(s);
   try {
-    let s = new F([new I("c"), ...r]);
-    return w(s, e), s.eval();
+    let r = new q([new U("c"), ...s]);
+    return w(r, e), r.eval();
   } finally {
-    T(e.n);
+    P(e.n);
   }
 }
 var x = class {
@@ -30693,136 +30693,136 @@ var x = class {
   }
   type() {
     let e = l._TYPEOF(this.ptr);
-    return Object.keys(j).find((s) => j[s] === e);
+    return Object.keys(N).find((r) => N[r] === e);
   }
 };
-var fe;
-var xt;
-var oe = class extends x {
+var Re;
+var vt;
+var ae = class extends x {
   constructor(t) {
     if (!(t instanceof x))
-      return ns(t);
+      return os(t);
     super(t.ptr);
-    u(this, fe);
+    u(this, Re);
   }
   static wrap(t) {
-    let s = l._TYPEOF(t), n = Object.keys(j)[Object.values(j).indexOf(s)];
-    return new (os(n))(new x(t));
+    let r = l._TYPEOF(t), n = Object.keys(N)[Object.values(N).indexOf(r)];
+    return new (as(n))(new x(t));
   }
   get [Symbol.toStringTag]() {
     return `RObject:${this.type()}`;
   }
   static getPersistentObject(t) {
-    return M[t];
+    return k[t];
   }
   getPropertyValue(t) {
     return this[t];
   }
   inspect() {
-    gr(".Internal(inspect(x))", { x: this });
+    br(".Internal(inspect(x))", { x: this });
   }
   isNull() {
-    return l._TYPEOF(this.ptr) === j.null;
+    return l._TYPEOF(this.ptr) === N.null;
   }
   isNa() {
     try {
-      let t = gr("is.na(x)", { x: this });
-      return Ce(t), t.toBoolean();
+      let t = br("is.na(x)", { x: this });
+      return je(t), t.toBoolean();
     } finally {
-      T(1);
+      P(1);
     }
   }
   isUnbound() {
-    return this.ptr === M.unboundValue.ptr;
+    return this.ptr === k.unboundValue.ptr;
   }
   attrs() {
-    return ae.wrap(l._ATTRIB(this.ptr));
+    return ie.wrap(l._ATTRIB(this.ptr));
   }
   class() {
-    let t = { n: 0 }, s = new F([new I("class"), this]);
-    w(s, t);
+    let t = { n: 0 }, r = new q([new U("class"), this]);
+    w(r, t);
     try {
-      return s.eval();
+      return r.eval();
     } finally {
-      T(t.n);
+      P(t.n);
     }
   }
   setNames(t) {
-    let s;
+    let r;
     if (t === null)
-      s = M.null;
+      r = k.null;
     else if (Array.isArray(t) && t.every((n) => typeof n == "string" || n === null))
-      s = new L(t);
+      r = new F(t);
     else
       throw new Error("Argument to setNames must be null or an Array of strings or null");
-    return l._Rf_setAttrib(this.ptr, M.namesSymbol.ptr, s.ptr), this;
+    return l._Rf_setAttrib(this.ptr, k.namesSymbol.ptr, r.ptr), this;
   }
   names() {
-    let t = L.wrap(l._Rf_getAttrib(this.ptr, M.namesSymbol.ptr));
+    let t = F.wrap(l._Rf_getAttrib(this.ptr, k.namesSymbol.ptr));
     return t.isNull() ? null : t.toArray();
   }
   includes(t) {
-    let s = this.names();
-    return s && s.includes(t);
+    let r = this.names();
+    return r && r.includes(t);
   }
-  toJs(t = { depth: 0 }, s = 1) {
+  toJs(t = { depth: 0 }, r = 1) {
     throw new Error("This R object cannot be converted to JS");
   }
   subset(t) {
-    return E(this, fe, xt).call(this, t, M.bracketSymbol.ptr);
+    return E(this, Re, vt).call(this, t, k.bracketSymbol.ptr);
   }
   get(t) {
-    return E(this, fe, xt).call(this, t, M.bracket2Symbol.ptr);
+    return E(this, Re, vt).call(this, t, k.bracket2Symbol.ptr);
   }
   getDollar(t) {
-    return E(this, fe, xt).call(this, t, M.dollarSymbol.ptr);
+    return E(this, Re, vt).call(this, t, k.dollarSymbol.ptr);
   }
   pluck(...t) {
-    let s = es(M.null);
+    let r = ts(k.null);
     try {
-      let n = (i, c) => {
-        let p = i.get(c);
-        return rs(p, s);
+      let n = (i, c2) => {
+        let p2 = i.get(c2);
+        return ss(p2, r);
       }, o = t.reduce(n, this);
       return o.isNull() ? void 0 : o;
     } finally {
-      ts(s);
+      rs(r);
     }
   }
-  set(t, s) {
+  set(t, r) {
     let n = { n: 0 };
     try {
-      let o = new oe(t);
+      let o = new ae(t);
       w(o, n);
-      let i = new oe(s);
+      let i = new ae(r);
       w(i, n);
-      let c = new I("[[<-"), p = l._Rf_lang4(c.ptr, this.ptr, o.ptr, i.ptr);
-      return w(p, n), oe.wrap(je(p, M.baseEnv));
+      let c2 = new U("[[<-"), p2 = l._Rf_lang4(c2.ptr, this.ptr, o.ptr, i.ptr);
+      return w(p2, n), ae.wrap(Ne(p2, k.baseEnv));
     } finally {
-      T(n.n);
+      P(n.n);
     }
   }
   static getMethods(t) {
-    let s = /* @__PURE__ */ new Set(), n = t;
+    let r = /* @__PURE__ */ new Set(), n = t;
     do
-      Object.getOwnPropertyNames(n).map((o) => s.add(o));
+      Object.getOwnPropertyNames(n).map((o) => r.add(o));
     while (n = Object.getPrototypeOf(n));
-    return [...s.keys()].filter((o) => typeof t[o] == "function");
+    return [...r.keys()].filter((o) => typeof t[o] == "function");
   }
 };
-var y = oe;
-fe = /* @__PURE__ */ new WeakSet(), xt = function(t, s) {
+var y = ae;
+Re = /* @__PURE__ */ new WeakSet(), vt = function(t, r) {
   let n = { n: 0 };
   try {
-    let o = new oe(t);
+    let o = new ae(t);
     w(o, n);
-    let i = l._Rf_lang3(s, this.ptr, o.ptr);
-    return w(i, n), oe.wrap(je(i, M.baseEnv));
+    let i = l._Rf_lang3(r, this.ptr, o.ptr);
+    return w(i, n), ae.wrap(Ne(i, k.baseEnv));
   } finally {
-    T(n.n);
+    P(n.n);
   }
 };
-var Et = class extends y {
+var Tt = class extends y {
   constructor() {
     return super(new x(l.getValue(l._R_NilValue, "*"))), this;
   }
@@ -30830,10 +30830,10 @@ var Et = class extends y {
     return { type: "null" };
   }
 };
-var I = class extends y {
+var U = class extends y {
   constructor(e) {
     if (e instanceof x) {
-      ie(e, "symbol"), super(e);
+      le(e, "symbol"), super(e);
       return;
     }
     let t = l.allocateUTF8(e);
@@ -30854,7 +30854,7 @@ var I = class extends y {
     return this.printname().toString();
   }
   printname() {
-    return qe.wrap(l._PRINTNAME(this.ptr));
+    return Ve.wrap(l._PRINTNAME(this.ptr));
   }
   symvalue() {
     return y.wrap(l._SYMVALUE(this.ptr));
@@ -30863,19 +30863,19 @@ var I = class extends y {
     return y.wrap(l._INTERNAL(this.ptr));
   }
 };
-var ae = class extends y {
+var ie = class extends y {
   constructor(e) {
     if (e instanceof x)
-      return ie(e, "pairlist"), super(e), this;
+      return le(e, "pairlist"), super(e), this;
     let t = { n: 0 };
     try {
-      let { names: s, values: n } = Re(e), o = ae.wrap(l._Rf_allocList(n.length));
+      let { names: r, values: n } = me(e), o = ie.wrap(l._Rf_allocList(n.length));
       w(o, t);
-      for (let [i, c] = [0, o]; !c.isNull(); [i, c] = [i + 1, c.cdr()])
-        c.setcar(new y(n[i]));
-      o.setNames(s), super(o);
+      for (let [i, c2] = [0, o]; !c2.isNull(); [i, c2] = [i + 1, c2.cdr()])
+        c2.setcar(new y(n[i]));
+      o.setNames(r), super(o);
     } finally {
-      T(t.n);
+      P(t.n);
     }
   }
   get length() {
@@ -30884,25 +30884,25 @@ var ae = class extends y {
   toArray(e = { depth: 1 }) {
     return this.toJs(e).values;
   }
-  toObject({ allowDuplicateKey: e = true, allowEmptyKey: t = false, depth: s = -1 } = {}) {
-    let n = this.entries({ depth: s }), o = n.map(([i]) => i);
+  toObject({ allowDuplicateKey: e = true, allowEmptyKey: t = false, depth: r = -1 } = {}) {
+    let n = this.entries({ depth: r }), o = n.map(([i]) => i);
     if (!e && new Set(o).size !== o.length)
       throw new Error("Duplicate key when converting pairlist without allowDuplicateKey enabled");
     if (!t && o.some((i) => !i))
       throw new Error("Empty or null key when converting pairlist without allowEmptyKey enabled");
-    return Object.fromEntries(n.filter((i, c) => n.findIndex((p) => p[0] === i[0]) === c));
+    return Object.fromEntries(n.filter((i, c2) => n.findIndex((p2) => p2[0] === i[0]) === c2));
   }
   entries(e = { depth: 1 }) {
     let t = this.toJs(e);
-    return t.values.map((s, n) => [t.names ? t.names[n] : null, s]);
+    return t.values.map((r, n) => [t.names ? t.names[n] : null, r]);
   }
   toJs(e = { depth: 0 }, t = 1) {
-    let s = [], n = false, o = [];
-    for (let c = this; !c.isNull(); c = c.cdr()) {
-      let p = c.tag();
-      p.isNull() ? s.push("") : (n = true, s.push(p.toString())), e.depth && t >= e.depth ? o.push(c.car()) : o.push(c.car().toJs(e, t + 1));
+    let r = [], n = false, o = [];
+    for (let c2 = this; !c2.isNull(); c2 = c2.cdr()) {
+      let p2 = c2.tag();
+      p2.isNull() ? r.push("") : (n = true, r.push(p2.toString())), e.depth && t >= e.depth ? o.push(c2.car()) : o.push(c2.car().toJs(e, t + 1));
     }
-    return { type: "pairlist", names: n ? s : null, values: o };
+    return { type: "pairlist", names: n ? r : null, values: o };
   }
   includes(e) {
     return e in this.toObject();
@@ -30920,19 +30920,19 @@ var ae = class extends y {
     return y.wrap(l._TAG(this.ptr));
   }
 };
-var F = class extends y {
+var q = class extends y {
   constructor(e) {
     if (e instanceof x)
-      return ie(e, "call"), super(e), this;
+      return le(e, "call"), super(e), this;
     let t = { n: 0 };
     try {
-      let { values: s } = Re(e), n = s.map((i) => w(new y(i), t)), o = F.wrap(l._Rf_allocVector(j.call, s.length));
+      let { values: r } = me(e), n = r.map((i) => w(new y(i), t)), o = q.wrap(l._Rf_allocVector(N.call, r.length));
       w(o, t);
-      for (let [i, c] = [0, o]; !c.isNull(); [i, c] = [i + 1, c.cdr()])
-        c.setcar(n[i]);
+      for (let [i, c2] = [0, o]; !c2.isNull(); [i, c2] = [i + 1, c2.cdr()])
+        c2.setcar(n[i]);
       super(o);
     } finally {
-      T(t.n);
+      P(t.n);
     }
   }
   setcar(e) {
@@ -30945,7 +30945,7 @@ var F = class extends y {
     return y.wrap(l._CDR(this.ptr));
   }
   eval() {
-    return l.webr.evalR(this, { env: M.baseEnv });
+    return l.webr.evalR(this, { env: k.baseEnv });
   }
   capture(e = {}) {
     return l.webr.captureR(this, e);
@@ -30953,125 +30953,125 @@ var F = class extends y {
   deparse() {
     let e = { n: 0 };
     try {
-      let t = l._Rf_lang2(new I("deparse1").ptr, l._Rf_lang2(new I("quote").ptr, this.ptr));
+      let t = l._Rf_lang2(new U("deparse1").ptr, l._Rf_lang2(new U("quote").ptr, this.ptr));
       w(t, e);
-      let s = L.wrap(je(t, M.baseEnv));
-      return w(s, e), s.toString();
+      let r = F.wrap(Ne(t, k.baseEnv));
+      return w(r, e), r.toString();
     } finally {
-      T(e.n);
+      P(e.n);
     }
   }
 };
-var Fe = class extends y {
+var qe = class extends y {
   constructor(e, t = null) {
     if (e instanceof x) {
-      if (ie(e, "list"), super(e), t) {
+      if (le(e, "list"), super(e), t) {
         if (t.length !== this.length)
           throw new Error("Can't construct named `RList`. Supplied `names` must be the same length as the list.");
         this.setNames(t);
       }
       return this;
     }
-    let s = { n: 0 };
+    let r = { n: 0 };
     try {
-      let n = Re(e), o = l._Rf_allocVector(j.list, n.values.length);
-      w(o, s), n.values.forEach((c, p) => {
-        l._SET_VECTOR_ELT(o, p, new y(c).ptr);
+      let n = me(e), o = l._Rf_allocVector(N.list, n.values.length);
+      w(o, r), n.values.forEach((c2, p2) => {
+        l._SET_VECTOR_ELT(o, p2, new y(c2).ptr);
       });
       let i = t || n.names;
       if (i && i.length !== n.values.length)
         throw new Error("Can't construct named `RList`. Supplied `names` must be the same length as the list.");
       y.wrap(o).setNames(i), super(new x(o));
     } finally {
-      T(s.n);
+      P(r.n);
     }
   }
   get length() {
     return l._LENGTH(this.ptr);
   }
   isDataFrame() {
-    let e = ae.wrap(l._ATTRIB(this.ptr)).get("class");
+    let e = ie.wrap(l._ATTRIB(this.ptr)).get("class");
     return !e.isNull() && e.toArray().includes("data.frame");
   }
   toArray(e = { depth: 1 }) {
     return this.toJs(e).values;
   }
-  toObject({ allowDuplicateKey: e = true, allowEmptyKey: t = false, depth: s = -1 } = {}) {
-    let n = this.entries({ depth: s }), o = n.map(([i]) => i);
+  toObject({ allowDuplicateKey: e = true, allowEmptyKey: t = false, depth: r = -1 } = {}) {
+    let n = this.entries({ depth: r }), o = n.map(([i]) => i);
     if (!e && new Set(o).size !== o.length)
       throw new Error("Duplicate key when converting list without allowDuplicateKey enabled");
     if (!t && o.some((i) => !i))
       throw new Error("Empty or null key when converting list without allowEmptyKey enabled");
-    return Object.fromEntries(n.filter((i, c) => n.findIndex((p) => p[0] === i[0]) === c));
+    return Object.fromEntries(n.filter((i, c2) => n.findIndex((p2) => p2[0] === i[0]) === c2));
   }
   toD3() {
     if (!this.isDataFrame())
       throw new Error("Can't convert R list object to D3 format. Object must be of class 'data.frame'.");
-    return this.entries().reduce((t, s) => (s[1].forEach((n, o) => t[o] = Object.assign(t[o] || {}, { [s[0]]: n })), t), []);
+    return this.entries().reduce((t, r) => (r[1].forEach((n, o) => t[o] = Object.assign(t[o] || {}, { [r[0]]: n })), t), []);
   }
   entries(e = { depth: -1 }) {
     let t = this.toJs(e);
-    return this.isDataFrame() && e.depth < 0 && (t.values = t.values.map((s) => s.toArray())), t.values.map((s, n) => [t.names ? t.names[n] : null, s]);
+    return this.isDataFrame() && e.depth < 0 && (t.values = t.values.map((r) => r.toArray())), t.values.map((r, n) => [t.names ? t.names[n] : null, r]);
   }
   toJs(e = { depth: 0 }, t = 1) {
-    return { type: "list", names: this.names(), values: [...Array(this.length).keys()].map((s) => e.depth && t >= e.depth ? this.get(s + 1) : this.get(s + 1).toJs(e, t + 1)) };
+    return { type: "list", names: this.names(), values: [...Array(this.length).keys()].map((r) => e.depth && t >= e.depth ? this.get(r + 1) : this.get(r + 1).toJs(e, t + 1)) };
   }
 };
-var Y = class extends Fe {
+var ee = class extends qe {
   constructor(e) {
     if (e instanceof x) {
       if (super(e), !this.isDataFrame())
         throw new Error("Can't construct `RDataFrame`. Supplied R object is not a `data.frame`.");
       return this;
     }
-    return Y.fromObject(e);
+    return ee.fromObject(e);
   }
   static fromObject(e) {
-    let { names: t, values: s } = Re(e), n = { n: 0 };
+    let { names: t, values: r } = me(e), n = { n: 0 };
     try {
-      let o = !!t && t.length > 0 && t.every((c) => c), i = s.length > 0 && s.every((c) => Array.isArray(c) || ArrayBuffer.isView(c) || c instanceof ArrayBuffer);
+      let o = !!t && t.length > 0 && t.every((c2) => c2), i = r.length > 0 && r.every((c2) => Array.isArray(c2) || ArrayBuffer.isView(c2) || c2 instanceof ArrayBuffer);
       if (o && i) {
-        let c = s, p = c.every((b2) => b2.length === c[0].length), k2 = c.every((b2) => is(b2[0]) || as(b2[0]));
-        if (p && k2) {
-          let b2 = new Fe({ type: "list", names: t, values: c.map((en) => ns(en)) });
+        let c2 = r, p2 = c2.every((b2) => b2.length === c2[0].length), D2 = c2.every((b2) => ls(b2[0]) || is(b2[0]));
+        if (p2 && D2) {
+          let b2 = new qe({ type: "list", names: t, values: c2.map((tn) => os(tn)) });
           w(b2, n);
-          let C2 = new F([new I("as.data.frame"), b2]);
-          return w(C2, n), new Y(C2.eval());
+          let j2 = new q([new U("as.data.frame"), b2]);
+          return w(j2, n), new ee(j2.eval());
         }
       }
     } finally {
-      T(n.n);
+      P(n.n);
     }
     throw new Error("Can't construct `data.frame`. Source object is not eligible.");
   }
   static fromD3(e) {
-    return this.fromObject(Object.fromEntries(Object.keys(e[0]).map((t) => [t, e.map((s) => s[t])])));
+    return this.fromObject(Object.fromEntries(Object.keys(e[0]).map((t) => [t, e.map((r) => r[t])])));
   }
 };
-var he = class extends y {
+var ye = class extends y {
   exec(...e) {
     let t = { n: 0 };
     try {
-      let s = new F([this, ...e]);
-      return w(s, t), s.eval();
+      let r = new q([this, ...e]);
+      return w(r, t), r.eval();
     } finally {
-      T(t.n);
+      P(t.n);
     }
   }
   capture(e = {}, ...t) {
-    let s = { n: 0 };
+    let r = { n: 0 };
     try {
-      let n = new F([this, ...t]);
-      return w(n, s), n.capture(e);
+      let n = new q([this, ...t]);
+      return w(n, r), n.capture(e);
     } finally {
-      T(s.n);
+      P(r.n);
     }
   }
 };
-var qe = class extends y {
+var Ve = class extends y {
   constructor(e) {
     if (e instanceof x) {
-      ie(e, "string"), super(e);
+      le(e, "string"), super(e);
       return;
     }
     let t = l.allocateUTF8(e);
@@ -31088,37 +31088,37 @@ var qe = class extends y {
     return { type: "string", value: this.toString() };
   }
 };
-var Ne = class extends y {
+var Be = class extends y {
   constructor(e = {}) {
     if (e instanceof x)
-      return ie(e, "environment"), super(e), this;
+      return le(e, "environment"), super(e), this;
     let t = 0;
     try {
-      let { names: s, values: n } = Re(e), o = Ce(l._R_NewEnv(M.globalEnv.ptr, 0, 0));
-      ++t, n.forEach((i, c) => {
-        let p = s ? s[c] : null;
-        if (!p)
+      let { names: r, values: n } = me(e), o = je(l._R_NewEnv(k.globalEnv.ptr, 0, 0));
+      ++t, n.forEach((i, c2) => {
+        let p2 = r ? r[c2] : null;
+        if (!p2)
           throw new Error("Can't create object in new environment with empty symbol name");
-        let k2 = new I(p), b2 = Ce(new y(i));
+        let D2 = new U(p2), b2 = je(new y(i));
         try {
-          mr(o, k2, b2);
+          gr(o, D2, b2);
         } finally {
-          T(1);
+          P(1);
         }
       }), super(new x(o));
     } finally {
-      T(t);
+      P(t);
     }
   }
   ls(e = false, t = true) {
-    return L.wrap(l._R_lsInternal3(this.ptr, Number(e), Number(t))).toArray();
+    return F.wrap(l._R_lsInternal3(this.ptr, Number(e), Number(t))).toArray();
   }
   bind(e, t) {
-    let s = new I(e), n = Ce(new y(t));
+    let r = new U(e), n = je(new y(t));
     try {
-      mr(this, s, n);
+      gr(this, r, n);
     } finally {
-      T(1);
+      P(1);
     }
   }
   names() {
@@ -31134,26 +31134,26 @@ var Ne = class extends y {
   }
   toObject({ depth: e = -1 } = {}) {
     let t = this.names();
-    return Object.fromEntries([...Array(t.length).keys()].map((s) => {
-      let n = this.getDollar(t[s]);
-      return [t[s], e < 0 ? n : n.toJs({ depth: e })];
+    return Object.fromEntries([...Array(t.length).keys()].map((r) => {
+      let n = this.getDollar(t[r]);
+      return [t[r], e < 0 ? n : n.toJs({ depth: e })];
     }));
   }
   toJs(e = { depth: 0 }, t = 1) {
-    let s = this.names(), n = [...Array(s.length).keys()].map((o) => e.depth && t >= e.depth ? this.getDollar(s[o]) : this.getDollar(s[o]).toJs(e, t + 1));
-    return { type: "environment", names: s, values: n };
+    let r = this.names(), n = [...Array(r.length).keys()].map((o) => e.depth && t >= e.depth ? this.getDollar(r[o]) : this.getDollar(r[o]).toJs(e, t + 1));
+    return { type: "environment", names: r, values: n };
   }
 };
-var ee = class extends y {
-  constructor(e, t, s) {
+var te = class extends y {
+  constructor(e, t, r) {
     if (e instanceof x)
-      return ie(e, t), super(e), this;
+      return le(e, t), super(e), this;
     let n = { n: 0 };
     try {
-      let { names: o, values: i } = Re(e), c = l._Rf_allocVector(j[t], i.length);
-      w(c, n), i.forEach(s(c)), y.wrap(c).setNames(o), super(new x(c));
+      let { names: o, values: i } = me(e), c2 = l._Rf_allocVector(N[t], i.length);
+      w(c2, n), i.forEach(r(c2)), y.wrap(c2).setNames(o), super(new x(c2));
     } finally {
-      T(n.n);
+      P(n.n);
     }
   }
   get length() {
@@ -31171,40 +31171,40 @@ var ee = class extends y {
   detectMissing() {
     let e = { n: 0 };
     try {
-      let t = l._Rf_lang2(new I("is.na").ptr, this.ptr);
+      let t = l._Rf_lang2(new U("is.na").ptr, this.ptr);
       w(t, e);
-      let s = Z.wrap(je(t, M.baseEnv));
-      w(s, e);
-      let n = s.toTypedArray();
+      let r = Y.wrap(Ne(t, k.baseEnv));
+      w(r, e);
+      let n = r.toTypedArray();
       return Array.from(n).map((o) => !!o);
     } finally {
-      T(e.n);
+      P(e.n);
     }
   }
   toArray() {
     let e = this.toTypedArray();
-    return this.detectMissing().map((t, s) => t ? null : e[s]);
+    return this.detectMissing().map((t, r) => t ? null : e[r]);
   }
   toObject({ allowDuplicateKey: e = true, allowEmptyKey: t = false } = {}) {
-    let s = this.entries(), n = s.map(([o]) => o);
+    let r = this.entries(), n = r.map(([o]) => o);
     if (!e && new Set(n).size !== n.length)
       throw new Error("Duplicate key when converting atomic vector without allowDuplicateKey enabled");
     if (!t && n.some((o) => !o))
       throw new Error("Empty or null key when converting atomic vector without allowEmptyKey enabled");
-    return Object.fromEntries(s.filter((o, i) => s.findIndex((c) => c[0] === o[0]) === i));
+    return Object.fromEntries(r.filter((o, i) => r.findIndex((c2) => c2[0] === o[0]) === i));
   }
   entries() {
     let e = this.toArray(), t = this.names();
-    return e.map((s, n) => [t ? t[n] : null, s]);
+    return e.map((r, n) => [t ? t[n] : null, r]);
   }
   toJs() {
     return { type: this.type(), names: this.names(), values: this.toArray() };
   }
 };
-var Pt;
-var br = class extends ee {
+var _t;
+var wr = class extends te {
   constructor(e) {
-    super(e, "logical", a(br, Pt));
+    super(e, "logical", a(wr, _t));
   }
   getBoolean(e) {
     return this.get(e).toArray()[0];
@@ -31222,20 +31222,20 @@ var br = class extends ee {
   }
   toArray() {
     let e = this.toTypedArray();
-    return this.detectMissing().map((t, s) => t ? null : !!e[s]);
+    return this.detectMissing().map((t, r) => t ? null : !!e[r]);
   }
 };
-var Z = br;
-Pt = /* @__PURE__ */ new WeakMap(), u(Z, Pt, (e) => {
-  let t = l._LOGICAL(e), s = l.getValue(l._R_NaInt, "i32");
+var Y = wr;
+_t = /* @__PURE__ */ new WeakMap(), u(Y, _t, (e) => {
+  let t = l._LOGICAL(e), r = l.getValue(l._R_NaInt, "i32");
   return (n, o) => {
-    l.setValue(t + 4 * o, n === null ? s : !!n, "i32");
+    l.setValue(t + 4 * o, n === null ? r : !!n, "i32");
   };
 });
-var _t;
-var wr = class extends ee {
+var St;
+var xr = class extends te {
   constructor(e) {
-    super(e, "integer", a(wr, _t));
+    super(e, "integer", a(xr, St));
   }
   getNumber(e) {
     return this.get(e).toArray()[0];
@@ -31252,17 +31252,17 @@ var wr = class extends ee {
     return new Int32Array(l.HEAP32.subarray(l._INTEGER(this.ptr) / 4, l._INTEGER(this.ptr) / 4 + this.length));
   }
 };
-var vt = wr;
-_t = /* @__PURE__ */ new WeakMap(), u(vt, _t, (e) => {
-  let t = l._INTEGER(e), s = l.getValue(l._R_NaInt, "i32");
+var Et = xr;
+St = /* @__PURE__ */ new WeakMap(), u(Et, St, (e) => {
+  let t = l._INTEGER(e), r = l.getValue(l._R_NaInt, "i32");
   return (n, o) => {
-    l.setValue(t + 4 * o, n === null ? s : Math.round(Number(n)), "i32");
+    l.setValue(t + 4 * o, n === null ? r : Math.round(Number(n)), "i32");
   };
 });
-var St;
-var xr = class extends ee {
+var kt;
+var vr = class extends te {
   constructor(e) {
-    super(e, "double", a(xr, St));
+    super(e, "double", a(vr, kt));
   }
   getNumber(e) {
     return this.get(e).toArray()[0];
@@ -31279,17 +31279,17 @@ var xr = class extends ee {
     return new Float64Array(l.HEAPF64.subarray(l._REAL(this.ptr) / 8, l._REAL(this.ptr) / 8 + this.length));
   }
 };
-var ye = xr;
-St = /* @__PURE__ */ new WeakMap(), u(ye, St, (e) => {
-  let t = l._REAL(e), s = l.getValue(l._R_NaReal, "double");
+var fe = vr;
+kt = /* @__PURE__ */ new WeakMap(), u(fe, kt, (e) => {
+  let t = l._REAL(e), r = l.getValue(l._R_NaReal, "double");
   return (n, o) => {
-    l.setValue(t + 8 * o, n === null ? s : n, "double");
+    l.setValue(t + 8 * o, n === null ? r : n, "double");
   };
 });
 var Mt;
-var vr = class extends ee {
+var Er = class extends te {
   constructor(e) {
-    super(e, "complex", a(vr, Mt));
+    super(e, "complex", a(Er, Mt));
   }
   getComplex(e) {
     return this.get(e).toArray()[0];
@@ -31307,20 +31307,20 @@ var vr = class extends ee {
   }
   toArray() {
     let e = this.toTypedArray();
-    return this.detectMissing().map((t, s) => t ? null : { re: e[2 * s], im: e[2 * s + 1] });
+    return this.detectMissing().map((t, r) => t ? null : { re: e[2 * r], im: e[2 * r + 1] });
   }
 };
-var Be = vr;
-Mt = /* @__PURE__ */ new WeakMap(), u(Be, Mt, (e) => {
-  let t = l._COMPLEX(e), s = l.getValue(l._R_NaReal, "double");
+var Le = Er;
+Mt = /* @__PURE__ */ new WeakMap(), u(Le, Mt, (e) => {
+  let t = l._COMPLEX(e), r = l.getValue(l._R_NaReal, "double");
   return (n, o) => {
-    l.setValue(t + 8 * (2 * o), n === null ? s : n.re, "double"), l.setValue(t + 8 * (2 * o + 1), n === null ? s : n.im, "double");
+    l.setValue(t + 8 * (2 * o), n === null ? r : n.re, "double"), l.setValue(t + 8 * (2 * o + 1), n === null ? r : n.im, "double");
   };
 });
 var Dt;
-var Er = class extends ee {
+var Tr = class extends te {
   constructor(e) {
-    super(e, "character", a(Er, Dt));
+    super(e, "character", a(Tr, Dt));
   }
   getString(e) {
     return this.get(e).toArray()[0];
@@ -31340,14 +31340,14 @@ var Er = class extends ee {
     return this.detectMissing().map((e, t) => e ? null : l.UTF8ToString(l._R_CHAR(l._STRING_ELT(this.ptr, t))));
   }
 };
-var L = Er;
-Dt = /* @__PURE__ */ new WeakMap(), u(L, Dt, (e) => (t, s) => {
-  t === null ? l._SET_STRING_ELT(e, s, M.naString.ptr) : l._SET_STRING_ELT(e, s, new qe(t).ptr);
+var F = Tr;
+Dt = /* @__PURE__ */ new WeakMap(), u(F, Dt, (e) => (t, r) => {
+  t === null ? l._SET_STRING_ELT(e, r, k.naString.ptr) : l._SET_STRING_ELT(e, r, new Ve(t).ptr);
 });
-var kt;
-var Tr = class extends ee {
+var Wt;
+var Pr = class extends te {
   constructor(e) {
-    e instanceof ArrayBuffer && (e = new Uint8Array(e)), super(e, "raw", a(Tr, kt));
+    e instanceof ArrayBuffer && (e = new Uint8Array(e)), super(e, "raw", a(Pr, Wt));
   }
   getNumber(e) {
     return this.get(e).toArray()[0];
@@ -31364,152 +31364,154 @@ var Tr = class extends ee {
     return new Uint8Array(l.HEAPU8.subarray(l._RAW(this.ptr), l._RAW(this.ptr) + this.length));
   }
 };
-var Le = Tr;
-kt = /* @__PURE__ */ new WeakMap(), u(Le, kt, (e) => {
+var Fe = Pr;
+Wt = /* @__PURE__ */ new WeakMap(), u(Fe, Wt, (e) => {
   let t = l._RAW(e);
-  return (s, n) => {
-    l.setValue(t + n, Number(s), "i8");
+  return (r, n) => {
+    l.setValue(t + n, Number(r), "i8");
   };
 });
-function Re(r) {
-  return Rr(r) ? r : Array.isArray(r) || ArrayBuffer.isView(r) ? { names: null, values: r } : r && typeof r == "object" && !Ue(r) ? { names: Object.keys(r), values: Object.values(r) } : { names: null, values: [r] };
+function me(s) {
+  return mr(s) ? s : Array.isArray(s) || ArrayBuffer.isView(s) ? { names: null, values: s } : s && typeof s == "object" && !Ce(s) ? { names: Object.keys(s), values: Object.values(s) } : { names: null, values: [s] };
 }
-function os(r) {
-  let e = { object: y, null: Et, symbol: I, pairlist: ae, closure: he, environment: Ne, call: F, special: he, builtin: he, string: qe, logical: Z, integer: vt, double: ye, complex: Be, character: L, list: Fe, raw: Le, function: he, dataframe: Y };
-  return r in e ? e[r] : y;
+function as(s) {
+  let e = { object: y, null: Tt, symbol: U, pairlist: ie, closure: ye, environment: Be, call: q, special: ye, builtin: ye, string: Ve, logical: Y, integer: Et, double: fe, complex: Le, character: F, list: qe, raw: Fe, function: ye, dataframe: ee };
+  return s in e ? e[s] : y;
 }
-function Tt(r) {
-  return r instanceof y;
+function Pt(s) {
+  return s instanceof y;
 }
-function as(r) {
+function is(s) {
   let e = ["logical", "integer", "double", "complex", "character"];
-  return Tt(r) && e.includes(r.type()) || Tt(r) && r.isNa();
+  return Pt(s) && e.includes(s.type()) || Pt(s) && s.isNa();
 }
-function is(r) {
-  return r === null || typeof r == "number" || typeof r == "boolean" || typeof r == "string" || Ue(r);
+function ls(s) {
+  return s === null || typeof s == "number" || typeof s == "boolean" || typeof s == "string" || Ce(s);
 }
-var M;
-function G() {
-  let r = { resolve: () => {
+var k;
+function $() {
+  let s = { resolve: () => {
   }, reject: () => {
-  }, promise: Promise.resolve() }, e = new Promise((t, s) => {
-    r.resolve = t, r.reject = s;
+  }, promise: Promise.resolve() }, e = new Promise((t, r) => {
+    s.resolve = t, s.reject = r;
   });
-  return r.promise = e, r;
+  return s.promise = e, s;
 }
-function ls(r) {
-  return new Promise((e) => setTimeout(e, r));
+function cs(s) {
+  return new Promise((e) => setTimeout(e, s));
 }
-function q(r, e, t, ...s) {
-  return r == null || hn(r) ? r : r instanceof ArrayBuffer ? new Uint8Array(r) : e(r) ? t(r, ...s) : Array.isArray(r) || ArrayBuffer.isView(r) ? r.map((n) => q(n, e, t, ...s)) : r instanceof x ? r : typeof r == "object" ? Object.fromEntries(Object.entries(r).map(([n, o]) => [n, q(o, e, t, ...s)])) : r;
+function V(s, e, t, ...r) {
+  return s == null || yn(s) ? s : s instanceof ArrayBuffer ? new Uint8Array(s) : e(s) ? t(s, ...r) : Array.isArray(s) || ArrayBuffer.isView(s) ? s.map((n) => V(n, e, t, ...r)) : s instanceof x ? s : typeof s == "object" ? Object.fromEntries(Object.entries(s).map(([n, o]) => [n, V(o, e, t, ...r)])) : s;
 }
-function me(r, e) {
+function ge(s, e) {
   let t = new XMLHttpRequest();
-  t.open("get", r, true), t.onload = () => {
-    let s = new Worker(URL.createObjectURL(new Blob([t.responseText])));
-    e(s);
+  t.open("get", s, true), t.onload = () => {
+    let r = new Worker(URL.createObjectURL(new Blob([t.responseText])));
+    e(r);
   }, t.send();
 }
-function ge(r) {
+function be(s) {
   if (m)
     return false;
-  let e = new URL(location.href), t = new URL(r, location.origin);
+  let e = new URL(location.href), t = new URL(s, location.origin);
   return !(e.host === t.host && e.port === t.port && e.protocol === t.protocol);
 }
-function hn(r) {
-  return typeof ImageBitmap < "u" && r instanceof ImageBitmap;
+function yn(s) {
+  return typeof ImageBitmap < "u" && s instanceof ImageBitmap;
 }
-var Os = ne(Ht());
-var so = new TextEncoder();
-async function Ws(r, e, t) {
+var Os = oe(zt());
+var no = new TextEncoder();
+async function As(s, e, t) {
   try {
-    let { taskId: s, sizeBuffer: n, dataBuffer: o, signalBuffer: i } = e, c = (0, Os.encode)(t), p = c.length <= o.length;
-    if (Atomics.store(n, 0, c.length), Atomics.store(n, 1, +p), !p) {
-      let [k2, b2] = no(r);
-      o.set(so.encode(k2)), await ks(i, s), o = (await b2).dataBuffer;
+    let { taskId: r, sizeBuffer: n, dataBuffer: o, signalBuffer: i } = e, c2 = (0, Os.encode)(t), p2 = c2.length <= o.length;
+    if (Atomics.store(n, 0, c2.length), Atomics.store(n, 1, +p2), !p2) {
+      let [D2, b2] = oo(s);
+      o.set(no.encode(D2)), await Ws(i, r), o = (await b2).dataBuffer;
     }
-    o.set(c), Atomics.store(n, 1, 1), await ks(i, s);
-  } catch (s) {
-    console.warn(s);
+    o.set(c2), Atomics.store(n, 1, 1), await Ws(i, r);
+  } catch (r) {
+    console.warn(r);
   }
 }
-function no(r) {
-  let e = wt();
+function oo(s) {
+  let e = xt();
   return [e, new Promise((t) => {
-    m ? r.once("message", (s) => {
-      !s.id || s.id !== e || t(s);
-    }) : r.addEventListener("message", function s(n) {
-      !n.data || !n.data.id || n.data.id !== e || (r.removeEventListener("message", s), t(n.data));
-    }), r.start && r.start();
+    m ? s.once("message", (r) => {
+      !r.id || r.id !== e || t(r);
+    }) : s.addEventListener("message", function r(n) {
+      !n.data || !n.data.id || n.data.id !== e || (s.removeEventListener("message", r), t(n.data));
+    }), s.start && s.start();
   })];
 }
-async function ks(r, e) {
-  let t = (e >> 1) % 32, s = 1;
-  for (; Atomics.compareExchange(r, t + 1, 0, e) !== 0; )
-    await ls(s), s < 32 && (s *= 2);
-  Atomics.or(r, 0, 1 << t), Atomics.notify(r, 0);
+async function Ws(s, e) {
+  let t = (e >> 1) % 32, r = 1;
+  for (; Atomics.compareExchange(s, t + 1, 0, e) !== 0; )
+    await cs(r), r < 32 && (r *= 2);
+  Atomics.or(s, 0, 1 << t), Atomics.notify(s, 0);
 }
-var z;
 var X;
-var Ge;
-var Vr;
-var ve = class {
+var G;
+var $e;
+var Jr;
+var Ee = class {
   constructor() {
-    u(this, Ge);
-    u(this, z, void 0);
+    u(this, $e);
     u(this, X, void 0);
-    d(this, X, []), d(this, z, []);
+    u(this, G, void 0);
+    d(this, G, []), d(this, X, []);
   }
   reset() {
-    d(this, X, []), d(this, z, []);
+    d(this, G, []), d(this, X, []);
   }
   put(e) {
-    a(this, X).length || E(this, Ge, Vr).call(this), a(this, X).shift()(e);
+    a(this, G).length || E(this, $e, Jr).call(this), a(this, G).shift()(e);
   }
   async get() {
-    return a(this, z).length || E(this, Ge, Vr).call(this), a(this, z).shift();
+    return a(this, X).length || E(this, $e, Jr).call(this), a(this, X).shift();
   }
   isEmpty() {
-    return !a(this, z).length;
+    return !a(this, X).length;
   }
   isBlocked() {
-    return !!a(this, X).length;
+    return !!a(this, G).length;
   }
   get length() {
-    return a(this, z).length - a(this, X).length;
+    return a(this, X).length - a(this, G).length;
   }
 };
-z = /* @__PURE__ */ new WeakMap(), X = /* @__PURE__ */ new WeakMap(), Ge = /* @__PURE__ */ new WeakSet(), Vr = function() {
-  a(this, z).push(new Promise((e) => {
-    a(this, X).push(e);
+X = /* @__PURE__ */ new WeakMap(), G = /* @__PURE__ */ new WeakMap(), $e = /* @__PURE__ */ new WeakSet(), Jr = function() {
+  a(this, X).push(new Promise((e) => {
+    a(this, G).push(e);
   }));
 };
-function Ee(r, e) {
-  return As({ type: "request", data: { uuid: wt(), msg: r } }, e);
+function Te(s, e) {
+  return Is({ type: "request", data: { uuid: xt(), msg: s } }, e);
 }
-function $e(r, e, t) {
-  return As({ type: "response", data: { uuid: r, resp: e } }, t);
+function Ke(s, e, t) {
+  return Is({ type: "response", data: { uuid: s, resp: e } }, t);
 }
-function As(r, e) {
-  return e && ss(r, e), r;
+function Is(s, e) {
+  return e && ns(s, e), s;
 }
-function Us(r) {
-  let e = new gt(r.obj.message);
-  return r.obj.name !== "Error" && (e.name = r.obj.name), e.stack = r.obj.stack, e;
+function Cs(s) {
+  let e = new O(s.obj.message);
+  return s.obj.name !== "Error" && (e.name = s.obj.name), e.stack = s.obj.stack, e;
 }
-function oo(r) {
-  return !!r && typeof r == "object" && "payloadType" in r && "obj" in r;
+function ao(s) {
+  return !!s && typeof s == "object" && "payloadType" in s && "obj" in s;
 }
-function Gt(r) {
-  return oo(r) && r.payloadType === "ptr";
+function $t(s) {
+  return ao(s) && s.payloadType === "ptr";
 }
-var Te;
-var re = class {
+var Pe;
+var Qe;
+var se = class {
   constructor() {
-    this.inputQueue = new ve();
-    this.outputQueue = new ve();
-    this.systemQueue = new ve();
-    u(this, Te, /* @__PURE__ */ new Map());
+    this.inputQueue = new Ee();
+    this.outputQueue = new Ee();
+    this.systemQueue = new Ee();
+    u(this, Pe, /* @__PURE__ */ new Map());
+    u(this, Qe, false);
   }
   async read() {
     return await this.outputQueue.get();
@@ -31524,408 +31526,423 @@ var re = class {
     return await this.systemQueue.get();
   }
   write(e) {
+    if (a(this, Qe))
+      throw new T("The webR communication channel has been closed.");
     this.inputQueue.put(e);
   }
   async request(e, t) {
-    let s = Ee(e, t), { resolve: n, reject: o, promise: i } = G();
-    return a(this, Te).set(s.data.uuid, { resolve: n, reject: o }), this.write(s), i;
+    let r = Te(e, t), { resolve: n, reject: o, promise: i } = $();
+    return a(this, Pe).set(r.data.uuid, { resolve: n, reject: o }), this.write(r), i;
   }
   putClosedMessage() {
-    this.outputQueue.put({ type: "closed" });
+    d(this, Qe, true), this.outputQueue.put({ type: "closed" });
   }
   resolveResponse(e) {
-    let t = e.data.uuid, s = a(this, Te).get(t);
-    if (s) {
+    let t = e.data.uuid, r = a(this, Pe).get(t);
+    if (r) {
       let n = e.data.resp;
-      a(this, Te).delete(t), n.payloadType === "err" ? s.reject(Us(n)) : s.resolve(n);
+      a(this, Pe).delete(t), n.payloadType === "err" ? r.reject(Cs(n)) : r.resolve(n);
     } else
       console.warn("Can't find request.");
   }
 };
-Te = /* @__PURE__ */ new WeakMap();
-var js = ne(Ht());
-var io = new TextDecoder("utf-8");
-var Pe;
+Pe = /* @__PURE__ */ new WeakMap(), Qe = /* @__PURE__ */ new WeakMap();
+var Ns = oe(zt());
+var lo = new TextDecoder("utf-8");
 var _e;
-var Ke;
-var Qe;
 var Se;
-Pe = /* @__PURE__ */ new WeakMap(), _e = /* @__PURE__ */ new WeakMap(), Ke = /* @__PURE__ */ new WeakMap(), Qe = /* @__PURE__ */ new WeakMap(), Se = /* @__PURE__ */ new WeakMap();
-var Hr = new Int32Array(new ArrayBuffer(4));
-m && (globalThis.Worker = N("worker_threads").Worker);
-var Me;
-var Qt;
-var Fs;
+var Ze;
 var Ye;
-var Ze = class extends re {
+var ke;
+_e = /* @__PURE__ */ new WeakMap(), Se = /* @__PURE__ */ new WeakMap(), Ze = /* @__PURE__ */ new WeakMap(), Ye = /* @__PURE__ */ new WeakMap(), ke = /* @__PURE__ */ new WeakMap();
+var zr = new Int32Array(new ArrayBuffer(4));
+m && (globalThis.Worker = B("worker_threads").Worker);
+var Me;
+var Zt;
+var qs;
+var tt;
+var et = class extends se {
   constructor(t) {
     super();
-    u(this, Qt);
+    u(this, Zt);
     u(this, Me, void 0);
     this.close = () => {
     };
-    u(this, Ye, async (t2, s2) => {
-      if (!(!s2 || !s2.type))
-        switch (s2.type) {
+    u(this, tt, async (t2, r2) => {
+      if (!(!r2 || !r2.type))
+        switch (r2.type) {
           case "resolve":
-            d(this, Me, new Int32Array(s2.data)), this.resolve();
+            d(this, Me, new Int32Array(r2.data)), this.resolve();
             return;
           case "response":
-            this.resolveResponse(s2);
+            this.resolveResponse(r2);
             return;
           case "system":
-            this.systemQueue.put(s2.data);
+            this.systemQueue.put(r2.data);
             return;
           default:
-            this.outputQueue.put(s2);
+            this.outputQueue.put(r2);
             return;
           case "sync-request": {
-            let n = s2, o = n.data.msg, i = n.data.reqData;
+            let n = r2, o = n.data.msg, i = n.data.reqData;
             switch (o.type) {
               case "read": {
-                let c = await this.inputQueue.get();
-                await Ws(t2, i, c);
+                let c2 = await this.inputQueue.get();
+                await As(t2, i, c2);
                 break;
               }
               default:
-                throw new P(`Unsupported request type '${o.type}'.`);
+                throw new T(`Unsupported request type '${o.type}'.`);
             }
             return;
           }
           case "request":
-            throw new P("Can't send messages of type 'request' from a worker. Please Use 'sync-request' instead.");
+            throw new T("Can't send messages of type 'request' from a worker. Please Use 'sync-request' instead.");
         }
     });
-    let s = (n) => {
-      E(this, Qt, Fs).call(this, n), this.close = () => {
+    ({ resolve: this.resolve, reject: this.reject, promise: this.initialised } = $());
+    let r = (n) => {
+      E(this, Zt, qs).call(this, n), this.close = () => {
         n.terminate(), this.putClosedMessage();
       };
-      let o = { type: "init", data: { config: t, channelType: W.SharedArrayBuffer } };
+      let o = { type: "init", data: { config: t, channelType: A.SharedArrayBuffer } };
       n.postMessage(o);
     };
-    if (ge(t.baseUrl))
-      me(`${t.baseUrl}webr-worker.js`, (n) => s(n));
+    if (be(t.baseUrl))
+      ge(`${t.baseUrl}webr-worker.js`, (n) => r(n));
     else {
       let n = new Worker(`${t.baseUrl}webr-worker.js`);
-      s(n);
+      r(n);
     }
-    ({ resolve: this.resolve, promise: this.initialised } = G());
   }
   interrupt() {
     if (!a(this, Me))
-      throw new P("Failed attempt to interrupt before initialising interruptBuffer");
+      throw new T("Failed attempt to interrupt before initialising interruptBuffer");
     this.inputQueue.reset(), a(this, Me)[0] = 1;
   }
 };
-Me = /* @__PURE__ */ new WeakMap(), Qt = /* @__PURE__ */ new WeakSet(), Fs = function(t) {
-  m ? t.on("message", (s) => {
-    a(this, Ye).call(this, t, s);
-  }) : t.onmessage = (s) => a(this, Ye).call(this, t, s.data);
-}, Ye = /* @__PURE__ */ new WeakMap();
-var ce;
-var et;
+Me = /* @__PURE__ */ new WeakMap(), Zt = /* @__PURE__ */ new WeakSet(), qs = function(t) {
+  m ? (t.on("message", (r) => {
+    a(this, tt).call(this, t, r);
+  }), t.on("error", (r) => {
+    console.error(r), this.reject(new O("An error occurred initialising the webR SharedBufferChannel worker."));
+  })) : (t.onmessage = (r) => a(this, tt).call(this, t, r.data), t.onerror = (r) => {
+    console.error(r), this.reject(new O("An error occurred initialising the webR SharedBufferChannel worker."));
+  });
+}, tt = /* @__PURE__ */ new WeakMap();
 var ue;
-var tt;
-ce = /* @__PURE__ */ new WeakMap(), et = /* @__PURE__ */ new WeakMap(), ue = /* @__PURE__ */ new WeakMap(), tt = /* @__PURE__ */ new WeakMap();
-var rr = ne(Ht());
-m && (globalThis.Worker = N("worker_threads").Worker);
-var De;
+var rt;
 var pe;
-var ke;
-var Yt;
-var qs;
+var st;
+ue = /* @__PURE__ */ new WeakMap(), rt = /* @__PURE__ */ new WeakMap(), pe = /* @__PURE__ */ new WeakMap(), st = /* @__PURE__ */ new WeakMap();
+var sr = oe(zt());
+m && (globalThis.Worker = B("worker_threads").Worker);
+var De;
+var de;
+var We;
 var er;
 var Vs;
 var tr;
 var Js;
-var rt;
-var Zt = class extends re {
+var rr;
+var Hs;
+var nt;
+var Yt = class extends se {
   constructor(t) {
     super();
-    u(this, Yt);
     u(this, er);
     u(this, tr);
+    u(this, rr);
     this.close = () => {
     };
     u(this, De, /* @__PURE__ */ new Map());
-    u(this, pe, void 0);
-    u(this, ke, false);
-    u(this, rt, (t2, s2) => {
-      if (!(!s2 || !s2.type))
-        switch (s2.type) {
+    u(this, de, void 0);
+    u(this, We, false);
+    u(this, nt, (t2, r2) => {
+      if (!(!r2 || !r2.type))
+        switch (r2.type) {
           case "resolve":
             this.resolve();
             return;
           case "response":
-            this.resolveResponse(s2);
+            this.resolveResponse(r2);
             return;
           case "system":
-            this.systemQueue.put(s2.data);
+            this.systemQueue.put(r2.data);
             return;
           default:
-            this.outputQueue.put(s2);
+            this.outputQueue.put(r2);
             return;
           case "sync-request": {
-            let n = s2.data;
+            let n = r2.data;
             a(this, De).set(n.data.uuid, n.data.msg);
             return;
           }
           case "request":
-            throw new P("Can't send messages of type 'request' from a worker.Use service worker fetch request instead.");
+            throw new T("Can't send messages of type 'request' from a worker.Use service worker fetch request instead.");
         }
     });
-    console.warn("The ServiceWorker communication channel is deprecated and will be removed in a future version of webR. Consider using the PostMessage channel instead. If blocking input is required (for example, `browser()`) the SharedArrayBuffer channel should be used. See https://docs.r-wasm.org/webr/latest/serving.html for further information.");
-    let s = (n) => {
-      E(this, tr, Js).call(this, n), this.close = () => {
+    ({ resolve: this.resolve, reject: this.reject, promise: this.initialised } = $()), console.warn("The ServiceWorker communication channel is deprecated and will be removed in a future version of webR. Consider using the PostMessage channel instead. If blocking input is required (for example, `browser()`) the SharedArrayBuffer channel should be used. See https://docs.r-wasm.org/webr/latest/serving.html for further information.");
+    let r = (n) => {
+      E(this, rr, Hs).call(this, n), this.close = () => {
         n.terminate(), this.putClosedMessage();
-      }, E(this, Yt, qs).call(this, `${t.serviceWorkerUrl}webr-serviceworker.js`).then((o) => {
-        let i = { type: "init", data: { config: t, channelType: W.ServiceWorker, clientId: o, location: window.location.href } };
+      }, E(this, er, Vs).call(this, `${t.serviceWorkerUrl}webr-serviceworker.js`).then((o) => {
+        let i = { type: "init", data: { config: t, channelType: A.ServiceWorker, clientId: o, location: window.location.href } };
         n.postMessage(i);
       });
     };
-    if (ge(t.serviceWorkerUrl))
-      me(`${t.serviceWorkerUrl}webr-worker.js`, (n) => s(n));
+    if (be(t.serviceWorkerUrl))
+      ge(`${t.serviceWorkerUrl}webr-worker.js`, (n) => r(n));
     else {
       let n = new Worker(`${t.serviceWorkerUrl}webr-worker.js`);
-      s(n);
+      r(n);
     }
-    ({ resolve: this.resolve, promise: this.initialised } = G());
   }
   activeRegistration() {
     var t;
-    if (!((t = a(this, pe)) != null && t.active))
-      throw new P("Attempted to obtain a non-existent active registration.");
-    return a(this, pe).active;
+    if (!((t = a(this, de)) != null && t.active))
+      throw new T("Attempted to obtain a non-existent active registration.");
+    return a(this, de).active;
   }
   interrupt() {
-    d(this, ke, true);
+    d(this, We, true);
   }
 };
-De = /* @__PURE__ */ new WeakMap(), pe = /* @__PURE__ */ new WeakMap(), ke = /* @__PURE__ */ new WeakMap(), Yt = /* @__PURE__ */ new WeakSet(), qs = async function(t) {
-  d(this, pe, await navigator.serviceWorker.register(t)), await navigator.serviceWorker.ready, window.addEventListener("beforeunload", () => {
+De = /* @__PURE__ */ new WeakMap(), de = /* @__PURE__ */ new WeakMap(), We = /* @__PURE__ */ new WeakMap(), er = /* @__PURE__ */ new WeakSet(), Vs = async function(t) {
+  d(this, de, await navigator.serviceWorker.register(t)), await navigator.serviceWorker.ready, window.addEventListener("beforeunload", () => {
     var n;
-    (n = a(this, pe)) == null || n.unregister();
+    (n = a(this, de)) == null || n.unregister();
   });
-  let s = await new Promise((n) => {
+  let r = await new Promise((n) => {
     navigator.serviceWorker.addEventListener("message", function o(i) {
       i.data.type === "registration-successful" && (navigator.serviceWorker.removeEventListener("message", o), n(i.data.clientId));
     }), this.activeRegistration().postMessage({ type: "register-client-main" });
   });
   return navigator.serviceWorker.addEventListener("message", (n) => {
-    E(this, er, Vs).call(this, n);
-  }), s;
-}, er = /* @__PURE__ */ new WeakSet(), Vs = async function(t) {
+    E(this, tr, Js).call(this, n);
+  }), r;
+}, tr = /* @__PURE__ */ new WeakSet(), Js = async function(t) {
   if (t.data.type === "request") {
-    let s = t.data.data, n = a(this, De).get(s);
+    let r = t.data.data, n = a(this, De).get(r);
     if (!n)
-      throw new P("Request not found during service worker XHR request");
-    switch (a(this, De).delete(s), n.type) {
+      throw new T("Request not found during service worker XHR request");
+    switch (a(this, De).delete(r), n.type) {
       case "read": {
         let o = await this.inputQueue.get();
-        this.activeRegistration().postMessage({ type: "wasm-webr-fetch-response", uuid: s, response: $e(s, o) });
+        this.activeRegistration().postMessage({ type: "wasm-webr-fetch-response", uuid: r, response: Ke(r, o) });
         break;
       }
       case "interrupt": {
-        let o = a(this, ke);
-        this.activeRegistration().postMessage({ type: "wasm-webr-fetch-response", uuid: s, response: $e(s, o) }), this.inputQueue.reset(), d(this, ke, false);
+        let o = a(this, We);
+        this.activeRegistration().postMessage({ type: "wasm-webr-fetch-response", uuid: r, response: Ke(r, o) }), this.inputQueue.reset(), d(this, We, false);
         break;
       }
       default:
-        throw new P(`Unsupported request type '${n.type}'.`);
+        throw new T(`Unsupported request type '${n.type}'.`);
     }
     return;
   }
-}, tr = /* @__PURE__ */ new WeakSet(), Js = function(t) {
-  m ? t.on("message", (s) => {
-    a(this, rt).call(this, t, s);
-  }) : t.onmessage = (s) => a(this, rt).call(this, t, s.data);
-}, rt = /* @__PURE__ */ new WeakMap();
+}, rr = /* @__PURE__ */ new WeakSet(), Hs = function(t) {
+  m ? (t.on("message", (r) => {
+    a(this, nt).call(this, t, r);
+  }), t.on("error", (r) => {
+    console.error(r), this.reject(new O("An error occurred initialising the webR ServiceWorkerChannel worker."));
+  })) : (t.onmessage = (r) => a(this, nt).call(this, t, r.data), t.onerror = (r) => {
+    console.error(r), this.reject(new O("An error occurred initialising the webR ServiceWorkerChannel worker."));
+  });
+}, nt = /* @__PURE__ */ new WeakMap();
 var Oe;
-var st;
-var nt;
 var ot;
 var at;
 var it;
-Oe = /* @__PURE__ */ new WeakMap(), st = /* @__PURE__ */ new WeakMap(), nt = /* @__PURE__ */ new WeakMap(), ot = /* @__PURE__ */ new WeakMap(), at = /* @__PURE__ */ new WeakMap(), it = /* @__PURE__ */ new WeakMap();
-m && (globalThis.Worker = N("worker_threads").Worker);
-var We;
-var sr;
-var Hs;
+var lt;
 var ct;
-var lt = class extends re {
+Oe = /* @__PURE__ */ new WeakMap(), ot = /* @__PURE__ */ new WeakMap(), at = /* @__PURE__ */ new WeakMap(), it = /* @__PURE__ */ new WeakMap(), lt = /* @__PURE__ */ new WeakMap(), ct = /* @__PURE__ */ new WeakMap();
+m && (globalThis.Worker = B("worker_threads").Worker);
+var Ae;
+var nr;
+var zs;
+var pt;
+var ut = class extends se {
   constructor(t) {
     super();
-    u(this, sr);
+    u(this, nr);
     this.close = () => {
     };
-    u(this, We, void 0);
-    u(this, ct, async (t2, s2) => {
-      if (!(!s2 || !s2.type))
-        switch (s2.type) {
+    u(this, Ae, void 0);
+    u(this, pt, async (t2, r2) => {
+      if (!(!r2 || !r2.type))
+        switch (r2.type) {
           case "resolve":
             this.resolve();
             return;
           case "response":
-            this.resolveResponse(s2);
+            this.resolveResponse(r2);
             return;
           case "system":
-            this.systemQueue.put(s2.data);
+            this.systemQueue.put(r2.data);
             return;
           default:
-            this.outputQueue.put(s2);
+            this.outputQueue.put(r2);
             return;
           case "request": {
-            let n = s2, o = n.data.msg;
+            let n = r2, o = n.data.msg;
             switch (o.type) {
               case "read": {
                 let i = await this.inputQueue.get();
-                if (a(this, We)) {
-                  let c = $e(n.data.uuid, i);
-                  a(this, We).postMessage(c);
+                if (a(this, Ae)) {
+                  let c2 = Ke(n.data.uuid, i);
+                  a(this, Ae).postMessage(c2);
                 }
                 break;
               }
               default:
-                throw new P(`Unsupported request type '${o.type}'.`);
+                throw new T(`Unsupported request type '${o.type}'.`);
             }
             return;
           }
           case "sync-request":
-            throw new P("Can't send messages of type 'sync-request' in PostMessage mode. Use 'request' instead.");
+            throw new T("Can't send messages of type 'sync-request' in PostMessage mode. Use 'request' instead.");
         }
     });
-    let s = (n) => {
-      d(this, We, n), E(this, sr, Hs).call(this, n), this.close = () => n.terminate();
-      let o = { type: "init", data: { config: t, channelType: W.PostMessage } };
+    ({ resolve: this.resolve, reject: this.reject, promise: this.initialised } = $());
+    let r = (n) => {
+      d(this, Ae, n), E(this, nr, zs).call(this, n), this.close = () => {
+        n.terminate(), this.putClosedMessage();
+      };
+      let o = { type: "init", data: { config: t, channelType: A.PostMessage } };
       n.postMessage(o);
     };
-    if (ge(t.baseUrl))
-      me(`${t.baseUrl}webr-worker.js`, (n) => s(n));
+    if (be(t.baseUrl))
+      ge(`${t.baseUrl}webr-worker.js`, (n) => r(n));
     else {
       let n = new Worker(`${t.baseUrl}webr-worker.js`);
-      s(n);
+      r(n);
     }
-    ({ resolve: this.resolve, promise: this.initialised } = G());
   }
   interrupt() {
     console.error("Interrupting R execution is not available when using the PostMessage channel");
   }
 };
-We = /* @__PURE__ */ new WeakMap(), sr = /* @__PURE__ */ new WeakSet(), Hs = function(t) {
-  m ? t.on("message", (s) => {
-    a(this, ct).call(this, t, s);
-  }) : t.onmessage = (s) => a(this, ct).call(this, t, s.data);
-}, ct = /* @__PURE__ */ new WeakMap();
-var Ae;
+Ae = /* @__PURE__ */ new WeakMap(), nr = /* @__PURE__ */ new WeakSet(), zs = function(t) {
+  m ? (t.on("message", (r) => {
+    a(this, pt).call(this, t, r);
+  }), t.on("error", (r) => {
+    console.error(r), this.reject(new O("An error occurred initialising the webR PostMessageChannel worker."));
+  })) : (t.onmessage = (r) => a(this, pt).call(this, t, r.data), t.onerror = (r) => {
+    console.error(r), this.reject(new O("An error occurred initialising the webR PostMessageChannel worker."));
+  });
+}, pt = /* @__PURE__ */ new WeakMap();
 var Ie;
-var ut;
-var de;
-var nr;
-Ae = /* @__PURE__ */ new WeakMap(), Ie = /* @__PURE__ */ new WeakMap(), ut = /* @__PURE__ */ new WeakMap(), de = /* @__PURE__ */ new WeakMap(), nr = /* @__PURE__ */ new WeakMap();
-var W = { Automatic: 0, SharedArrayBuffer: 1, ServiceWorker: 2, PostMessage: 3 };
-function zs(r) {
-  switch (r.channelType) {
-    case W.SharedArrayBuffer:
-      return new Ze(r);
-    case W.ServiceWorker:
-      return new Zt(r);
-    case W.PostMessage:
-      return new lt(r);
-    case W.Automatic:
+var Ue;
+var dt;
+var he;
+var or;
+Ie = /* @__PURE__ */ new WeakMap(), Ue = /* @__PURE__ */ new WeakMap(), dt = /* @__PURE__ */ new WeakMap(), he = /* @__PURE__ */ new WeakMap(), or = /* @__PURE__ */ new WeakMap();
+var A = { Automatic: 0, SharedArrayBuffer: 1, ServiceWorker: 2, PostMessage: 3 };
+function Xs(s) {
+  switch (s.channelType) {
+    case A.SharedArrayBuffer:
+      return new et(s);
+    case A.ServiceWorker:
+      return new Yt(s);
+    case A.PostMessage:
+      return new ut(s);
+    case A.Automatic:
     default:
-      return typeof SharedArrayBuffer < "u" ? new Ze(r) : new lt(r);
+      return typeof SharedArrayBuffer < "u" ? new et(s) : new ut(s);
   }
 }
-var Xs = m ? __dirname + "/" : "https://webr.r-wasm.org/v0.4.0/";
-var Gs = "https://repo.r-wasm.org";
-var $r = "0.4.0";
-function v(r) {
-  return !!r && (typeof r == "object" || typeof r == "function") && "payloadType" in r && Gt(r._payload);
+var Gs = m ? __dirname + "/" : "https://webr.r-wasm.org/v0.4.1/";
+var $s = "https://repo.r-wasm.org";
+var Kr = "0.4.1";
+function v(s) {
+  return !!s && (typeof s == "object" || typeof s == "function") && "payloadType" in s && $t(s._payload);
 }
-function Ki(r) {
-  return v(r) && r._payload.obj.type === "list";
+function Zi(s) {
+  return v(s) && s._payload.obj.type === "list";
 }
-function $s(r) {
+function Ks(s) {
   var e;
-  return !!(v(r) && ((e = r._payload.obj.methods) != null && e.includes("exec")));
+  return !!(v(s) && ((e = s._payload.obj.methods) != null && e.includes("exec")));
 }
-function co() {
+function uo() {
 }
-function uo(r, e) {
+function po(s, e) {
   return async function* () {
-    let t = { type: "callRObjectMethod", data: { payload: e._payload, prop: "getPropertyValue", args: [{ payloadType: "raw", obj: "length" }], shelter: void 0 } }, s = await r.request(t);
-    if (typeof s.obj != "number")
-      throw new A("Cannot iterate over object, unexpected type for length property.");
-    for (let n = 1; n <= s.obj; n++)
+    let t = { type: "callRObjectMethod", data: { payload: e._payload, prop: "getPropertyValue", args: [{ payloadType: "raw", obj: "length" }], shelter: void 0 } }, r = await s.request(t);
+    if (typeof r.obj != "number")
+      throw new I("Cannot iterate over object, unexpected type for length property.");
+    for (let n = 1; n <= r.obj; n++)
       yield e.get(n);
   };
 }
-function Ks(r, e, t) {
-  return async (...s) => {
-    let n = s.map((c) => v(c) ? c._payload : { obj: q(c, v, (p) => p._payload), payloadType: "raw" }), o = { type: "callRObjectMethod", data: { payload: t, prop: e, args: n } }, i = await r.request(o);
+function Qs(s, e, t) {
+  return async (...r) => {
+    let n = r.map((c2) => v(c2) ? c2._payload : { obj: V(c2, v, (p2) => p2._payload), payloadType: "raw" }), o = { type: "callRObjectMethod", data: { payload: t, prop: e, args: n } }, i = await s.request(o);
     switch (i.payloadType) {
       case "ptr":
-        return se(r, i);
+        return ne(s, i);
       case "raw":
-        return q(i, Gt, (p, k2) => se(k2, p), r).obj;
+        return V(i, $t, (p2, D2) => ne(D2, p2), s).obj;
     }
   };
 }
-async function po(r, e, t, ...s) {
-  let n = { type: "newRObject", data: { objType: e, args: q(s, v, (i) => i._payload), shelter: t } }, o = await r.request(n);
+async function ho(s, e, t, ...r) {
+  let n = { type: "newRObject", data: { objType: e, args: V(r, v, (i) => i._payload), shelter: t } }, o = await s.request(n);
   switch (o.payloadType) {
     case "raw":
-      throw new Q("Unexpected raw payload type returned from newRObject");
+      throw new Z("Unexpected raw payload type returned from newRObject");
     case "ptr":
-      return se(r, o);
+      return ne(s, o);
   }
 }
-function se(r, e) {
-  var s;
-  let t = new Proxy((s = e.obj.methods) != null && s.includes("exec") ? Object.assign(co, { ...e }) : e, { get: (n, o) => {
+function ne(s, e) {
+  var r;
+  let t = new Proxy((r = e.obj.methods) != null && r.includes("exec") ? Object.assign(uo, { ...e }) : e, { get: (n, o) => {
     var i;
     if (o === "_payload")
       return e;
     if (o === Symbol.asyncIterator)
-      return uo(r, t);
+      return po(s, t);
     if ((i = e.obj.methods) != null && i.includes(o.toString()))
-      return Ks(r, o.toString(), e);
+      return Qs(s, o.toString(), e);
   }, apply: async (n, o, i) => {
-    let c = await se(r, e).exec(...i);
-    return $s(c) ? c : c.toJs();
+    let c2 = await ne(s, e).exec(...i);
+    return Ks(c2) ? c2 : c2.toJs();
   } });
   return t;
 }
-function O(r, e, t) {
-  return new Proxy(y, { construct: (s, n) => po(r, t, e, ...n), get: (s, n) => Ks(r, n.toString()) });
+function W(s, e, t) {
+  return new Proxy(y, { construct: (r, n) => ho(s, t, e, ...n), get: (r, n) => Qs(s, n.toString()) });
 }
-var pt;
-var dt;
 var ht;
 var yt;
 var ft;
-var or;
+var Rt;
+var mt;
 var ar;
 var ir;
 var lr;
 var cr;
 var ur;
-var Qs;
-pt = /* @__PURE__ */ new WeakMap(), dt = /* @__PURE__ */ new WeakMap(), ht = /* @__PURE__ */ new WeakMap(), yt = /* @__PURE__ */ new WeakMap(), ft = /* @__PURE__ */ new WeakMap(), or = /* @__PURE__ */ new WeakMap(), ar = /* @__PURE__ */ new WeakMap(), ir = /* @__PURE__ */ new WeakMap(), lr = /* @__PURE__ */ new WeakMap(), cr = /* @__PURE__ */ new WeakMap(), ur = /* @__PURE__ */ new WeakSet(), Qs = async function() {
+var pr;
+var Zs;
+ht = /* @__PURE__ */ new WeakMap(), yt = /* @__PURE__ */ new WeakMap(), ft = /* @__PURE__ */ new WeakMap(), Rt = /* @__PURE__ */ new WeakMap(), mt = /* @__PURE__ */ new WeakMap(), ar = /* @__PURE__ */ new WeakMap(), ir = /* @__PURE__ */ new WeakMap(), lr = /* @__PURE__ */ new WeakMap(), cr = /* @__PURE__ */ new WeakMap(), ur = /* @__PURE__ */ new WeakMap(), pr = /* @__PURE__ */ new WeakSet(), Zs = async function() {
   for (; ; ) {
     let e = await this.webR.read();
     switch (e.type) {
       case "stdout":
-        a(this, pt).call(this, e.data);
-        break;
-      case "stderr":
-        a(this, dt).call(this, e.data);
-        break;
-      case "prompt":
         a(this, ht).call(this, e.data);
         break;
+      case "stderr":
+        a(this, yt).call(this, e.data);
+        break;
+      case "prompt":
+        a(this, ft).call(this, e.data);
+        break;
       case "canvas":
-        e.data.event === "canvasImage" ? a(this, yt).call(this, e.data.image) : e.data.event === "canvasNewPage" && a(this, ft).call(this);
+        e.data.event === "canvasImage" ? a(this, Rt).call(this, e.data.image) : e.data.event === "canvasNewPage" && a(this, mt).call(this);
         break;
       case "closed":
         return;
@@ -31934,38 +31951,38 @@ pt = /* @__PURE__ */ new WeakMap(), dt = /* @__PURE__ */ new WeakMap(), ht = /* 
     }
   }
 };
-var ho = { FONTCONFIG_PATH: "/etc/fonts", R_HOME: "/usr/lib/R", R_ENABLE_JIT: "0", WEBR: "1", WEBR_VERSION: $r };
-var Zs = { RArgs: [], REnv: ho, baseUrl: Xs, serviceWorkerUrl: "", repoUrl: Gs, homedir: "/home/web_user", interactive: true, channelType: W.Automatic, createLazyFilesystem: true };
+var yo = { FONTCONFIG_PATH: "/etc/fonts", R_HOME: "/usr/lib/R", R_ENABLE_JIT: "0", WEBR: "1", WEBR_VERSION: Kr };
+var Ys = { RArgs: [], REnv: yo, baseUrl: Gs, serviceWorkerUrl: "", repoUrl: $s, homedir: "/home/web_user", interactive: true, channelType: A.Automatic, createLazyFilesystem: true };
 var R;
-var Rt;
-var hr;
-var Ys;
-var pr = class {
+var gt;
+var yr;
+var en;
+var dr = class {
   constructor(e = {}) {
-    u(this, hr);
+    u(this, yr);
     u(this, R, void 0);
-    u(this, Rt, void 0);
-    this.version = $r;
+    u(this, gt, void 0);
+    this.version = Kr;
     this.FS = { lookupPath: async (e2) => {
       let t2 = { type: "lookupPath", data: { path: e2 } };
       return (await a(this, R).request(t2)).obj;
     }, mkdir: async (e2) => {
       let t2 = { type: "mkdir", data: { path: e2 } };
       return (await a(this, R).request(t2)).obj;
-    }, mount: async (e2, t2, s) => {
-      let n = { type: "mount", data: { type: e2, options: t2, mountpoint: s } };
+    }, mount: async (e2, t2, r) => {
+      let n = { type: "mount", data: { type: e2, options: t2, mountpoint: r } };
       await a(this, R).request(n);
     }, syncfs: async (e2) => {
       let t2 = { type: "syncfs", data: { populate: e2 } };
       await a(this, R).request(t2);
     }, readFile: async (e2, t2) => {
-      let s = { type: "readFile", data: { path: e2, flags: t2 } };
-      return (await a(this, R).request(s)).obj;
+      let r = { type: "readFile", data: { path: e2, flags: t2 } };
+      return (await a(this, R).request(r)).obj;
     }, rmdir: async (e2) => {
       let t2 = { type: "rmdir", data: { path: e2 } };
       await a(this, R).request(t2);
-    }, writeFile: async (e2, t2, s) => {
-      let n = { type: "writeFile", data: { path: e2, data: t2, flags: s } };
+    }, writeFile: async (e2, t2, r) => {
+      let n = { type: "writeFile", data: { path: e2, data: t2, flags: r } };
       await a(this, R).request(n);
     }, unlink: async (e2) => {
       let t2 = { type: "unlink", data: { path: e2 } };
@@ -31974,13 +31991,13 @@ var pr = class {
       let t2 = { type: "unmount", data: { path: e2 } };
       await a(this, R).request(t2);
     } };
-    let t = { ...Zs, ...e, REnv: { ...Zs.REnv, ...e.REnv } };
-    d(this, R, zs(t)), this.objs = {}, this.Shelter = yo(a(this, R)), d(this, Rt, a(this, R).initialised.then(async () => {
-      this.globalShelter = await new this.Shelter(), this.RObject = this.globalShelter.RObject, this.RLogical = this.globalShelter.RLogical, this.RInteger = this.globalShelter.RInteger, this.RDouble = this.globalShelter.RDouble, this.RComplex = this.globalShelter.RComplex, this.RCharacter = this.globalShelter.RCharacter, this.RRaw = this.globalShelter.RRaw, this.RList = this.globalShelter.RList, this.RDataFrame = this.globalShelter.RDataFrame, this.RPairlist = this.globalShelter.RPairlist, this.REnvironment = this.globalShelter.REnvironment, this.RSymbol = this.globalShelter.RSymbol, this.RString = this.globalShelter.RString, this.RCall = this.globalShelter.RCall, this.objs = { baseEnv: await this.RObject.getPersistentObject("baseEnv"), globalEnv: await this.RObject.getPersistentObject("globalEnv"), null: await this.RObject.getPersistentObject("null"), true: await this.RObject.getPersistentObject("true"), false: await this.RObject.getPersistentObject("false"), na: await this.RObject.getPersistentObject("na") }, E(this, hr, Ys).call(this);
+    let t = { ...Ys, ...e, REnv: { ...Ys.REnv, ...e.REnv } };
+    d(this, R, Xs(t)), this.objs = {}, this.Shelter = fo(a(this, R)), d(this, gt, a(this, R).initialised.then(async () => {
+      this.globalShelter = await new this.Shelter(), this.RObject = this.globalShelter.RObject, this.RLogical = this.globalShelter.RLogical, this.RInteger = this.globalShelter.RInteger, this.RDouble = this.globalShelter.RDouble, this.RComplex = this.globalShelter.RComplex, this.RCharacter = this.globalShelter.RCharacter, this.RRaw = this.globalShelter.RRaw, this.RList = this.globalShelter.RList, this.RDataFrame = this.globalShelter.RDataFrame, this.RPairlist = this.globalShelter.RPairlist, this.REnvironment = this.globalShelter.REnvironment, this.RSymbol = this.globalShelter.RSymbol, this.RString = this.globalShelter.RString, this.RCall = this.globalShelter.RCall, this.objs = { baseEnv: await this.RObject.getPersistentObject("baseEnv"), globalEnv: await this.RObject.getPersistentObject("globalEnv"), null: await this.RObject.getPersistentObject("null"), true: await this.RObject.getPersistentObject("true"), false: await this.RObject.getPersistentObject("false"), na: await this.RObject.getPersistentObject("na") }, E(this, yr, en).call(this);
     }));
   }
   async init() {
-    return a(this, Rt);
+    return a(this, gt);
   }
   close() {
     a(this, R).close();
@@ -32002,7 +32019,7 @@ var pr = class {
     a(this, R).interrupt();
   }
   async installPackages(e, t) {
-    let s = Object.assign({ quiet: false, mount: true }, t), n = { type: "installPackages", data: { name: e, options: s } };
+    let r = Object.assign({ quiet: false, mount: true }, t), n = { type: "installPackages", data: { name: e, options: r } };
     await a(this, R).request(n);
   }
   async destroy(e) {
@@ -32023,27 +32040,27 @@ var pr = class {
   async evalRString(e, t) {
     return this.evalRRaw(e, "string", t);
   }
-  async evalRRaw(e, t, s = {}) {
-    let n = q(s, v, (c) => c._payload), o = { type: "evalRRaw", data: { code: e, options: n, outputType: t } }, i = await a(this, R).request(o);
+  async evalRRaw(e, t, r = {}) {
+    let n = V(r, v, (c2) => c2._payload), o = { type: "evalRRaw", data: { code: e, options: n, outputType: t } }, i = await a(this, R).request(o);
     switch (i.payloadType) {
       case "raw":
         return i.obj;
       case "ptr":
-        throw new Q("Unexpected ptr payload type returned from evalRVoid");
+        throw new Z("Unexpected ptr payload type returned from evalRVoid");
     }
   }
   async invokeWasmFunction(e, ...t) {
-    let s = { type: "invokeWasmFunction", data: { ptr: e, args: t } };
-    return (await a(this, R).request(s)).obj;
+    let r = { type: "invokeWasmFunction", data: { ptr: e, args: t } };
+    return (await a(this, R).request(r)).obj;
   }
 };
-R = /* @__PURE__ */ new WeakMap(), Rt = /* @__PURE__ */ new WeakMap(), hr = /* @__PURE__ */ new WeakSet(), Ys = async function() {
+R = /* @__PURE__ */ new WeakMap(), gt = /* @__PURE__ */ new WeakMap(), yr = /* @__PURE__ */ new WeakSet(), en = async function() {
   for (; ; ) {
     let e = await a(this, R).readSystem();
     switch (e.type) {
       case "setTimeoutWasm":
-        setTimeout((t, s) => {
-          this.invokeWasmFunction(t, ...s);
+        setTimeout((t, r) => {
+          this.invokeWasmFunction(t, ...r);
         }, e.data.delay, e.data.ptr, e.data.args);
         break;
       case "console.log":
@@ -32055,26 +32072,29 @@ R = /* @__PURE__ */ new WeakMap(), Rt = /* @__PURE__ */ new WeakMap(), hr = /* @
       case "console.error":
         console.error(e.data);
         break;
+      case "close":
+        a(this, R).close();
+        break;
       default:
-        throw new A("Unknown system message type `" + e.type + "`");
+        throw new I("Unknown system message type `" + e.type + "`");
     }
   }
 };
 var g;
 var f;
-var mt;
-var dr = class {
+var bt;
+var hr = class {
   constructor(e) {
     u(this, g, "");
     u(this, f, void 0);
-    u(this, mt, false);
+    u(this, bt, false);
     d(this, f, e);
   }
   async init() {
-    if (a(this, mt))
+    if (a(this, bt))
       return;
     let e = { type: "newShelter" }, t = await a(this, f).request(e);
-    d(this, g, t.obj), this.RObject = O(a(this, f), a(this, g), "object"), this.RLogical = O(a(this, f), a(this, g), "logical"), this.RInteger = O(a(this, f), a(this, g), "integer"), this.RDouble = O(a(this, f), a(this, g), "double"), this.RComplex = O(a(this, f), a(this, g), "complex"), this.RCharacter = O(a(this, f), a(this, g), "character"), this.RRaw = O(a(this, f), a(this, g), "raw"), this.RList = O(a(this, f), a(this, g), "list"), this.RDataFrame = O(a(this, f), a(this, g), "dataframe"), this.RPairlist = O(a(this, f), a(this, g), "pairlist"), this.REnvironment = O(a(this, f), a(this, g), "environment"), this.RSymbol = O(a(this, f), a(this, g), "symbol"), this.RString = O(a(this, f), a(this, g), "string"), this.RCall = O(a(this, f), a(this, g), "call"), d(this, mt, true);
+    d(this, g, t.obj), this.RObject = W(a(this, f), a(this, g), "object"), this.RLogical = W(a(this, f), a(this, g), "logical"), this.RInteger = W(a(this, f), a(this, g), "integer"), this.RDouble = W(a(this, f), a(this, g), "double"), this.RComplex = W(a(this, f), a(this, g), "complex"), this.RCharacter = W(a(this, f), a(this, g), "character"), this.RRaw = W(a(this, f), a(this, g), "raw"), this.RList = W(a(this, f), a(this, g), "list"), this.RDataFrame = W(a(this, f), a(this, g), "dataframe"), this.RPairlist = W(a(this, f), a(this, g), "pairlist"), this.REnvironment = W(a(this, f), a(this, g), "environment"), this.RSymbol = W(a(this, f), a(this, g), "symbol"), this.RString = W(a(this, f), a(this, g), "string"), this.RCall = W(a(this, f), a(this, g), "call"), d(this, bt, true);
   }
   async purge() {
     let e = { type: "shelterPurge", data: a(this, g) };
@@ -32089,32 +32109,32 @@ var dr = class {
     return (await a(this, f).request(e)).obj;
   }
   async evalR(e, t = {}) {
-    let s = q(t, v, (i) => i._payload), n = { type: "evalR", data: { code: e, options: s, shelter: a(this, g) } }, o = await a(this, f).request(n);
+    let r = V(t, v, (i) => i._payload), n = { type: "evalR", data: { code: e, options: r, shelter: a(this, g) } }, o = await a(this, f).request(n);
     switch (o.payloadType) {
       case "raw":
-        throw new Q("Unexpected payload type returned from evalR");
+        throw new Z("Unexpected payload type returned from evalR");
       default:
-        return se(a(this, f), o);
+        return ne(a(this, f), o);
     }
   }
   async captureR(e, t = {}) {
-    let s = q(t, v, (i) => i._payload), n = { type: "captureR", data: { code: e, options: s, shelter: a(this, g) } }, o = await a(this, f).request(n);
+    let r = V(t, v, (i) => i._payload), n = { type: "captureR", data: { code: e, options: r, shelter: a(this, g) } }, o = await a(this, f).request(n);
     switch (o.payloadType) {
       case "ptr":
-        throw new Q("Unexpected payload type returned from evalR");
+        throw new Z("Unexpected payload type returned from evalR");
       case "raw": {
-        let i = o.obj, c = se(a(this, f), i.result), p = i.output, k2 = i.images;
-        for (let b2 = 0; b2 < p.length; ++b2)
-          p[b2].type !== "stdout" && p[b2].type !== "stderr" && (p[b2].data = se(a(this, f), p[b2].data));
-        return { result: c, output: p, images: k2 };
+        let i = o.obj, c2 = ne(a(this, f), i.result), p2 = i.output, D2 = i.images;
+        for (let b2 = 0; b2 < p2.length; ++b2)
+          p2[b2].type !== "stdout" && p2[b2].type !== "stderr" && (p2[b2].data = ne(a(this, f), p2[b2].data));
+        return { result: c2, output: p2, images: D2 };
       }
     }
   }
 };
-g = /* @__PURE__ */ new WeakMap(), f = /* @__PURE__ */ new WeakMap(), mt = /* @__PURE__ */ new WeakMap();
-function yo(r) {
-  return new Proxy(dr, { construct: async () => {
-    let e = new dr(r);
+g = /* @__PURE__ */ new WeakMap(), f = /* @__PURE__ */ new WeakMap(), bt = /* @__PURE__ */ new WeakMap();
+function fo(s) {
+  return new Proxy(hr, { construct: async () => {
+    let e = new hr(s);
     return await e.init(), e;
   } });
 }
@@ -32253,7 +32273,7 @@ async function handleHttpuvRequests(scope, appName, webRProxy, fromClient, toCli
         `,
           { env, captureConditions: false, captureStreams: false }
         );
-        if (!Ki(httpuvResp)) {
+        if (!Zi(httpuvResp)) {
           const type = await httpuvResp.type();
           throw new Error(
             `Unexpected response type: "${type}", expected "list".`
@@ -32422,8 +32442,8 @@ async function connect2(path, conn, asgiFunc) {
     fromClientQueue.enqueue(event);
   });
   conn.addEventListener("close", (e) => {
-    const ce3 = e;
-    fromClientQueue.enqueue({ type: "websocket.disconnect", code: ce3.code });
+    const ce2 = e;
+    fromClientQueue.enqueue({ type: "websocket.disconnect", code: ce2.code });
   });
   conn.addEventListener("error", (e) => {
     console.error(e);
@@ -32462,8 +32482,8 @@ async function openChannelHttpuv(path, appName, clientPort, webRProxy) {
     fromClientQueue.enqueue(event);
   });
   conn.addEventListener("close", (e) => {
-    const ce3 = e;
-    fromClientQueue.enqueue({ type: "websocket.disconnect", code: ce3.code });
+    const ce2 = e;
+    fromClientQueue.enqueue({ type: "websocket.disconnect", code: ce2.code });
   });
   conn.addEventListener("error", (e) => {
     console.error(e);
@@ -32538,497 +32558,452 @@ function postableErrorObjectToError(errObj) {
 }
 
 // src/pyodide/pyodide.js
-var ne2 = Object.create;
-var O2 = Object.defineProperty;
-var ie2 = Object.getOwnPropertyDescriptor;
-var oe2 = Object.getOwnPropertyNames;
-var se2 = Object.getPrototypeOf;
-var ae2 = Object.prototype.hasOwnProperty;
-var f2 = (t, e) => O2(t, "name", { value: e, configurable: true });
-var w2 = ((t) => typeof __require < "u" ? __require : typeof Proxy < "u" ? new Proxy(t, { get: (e, o) => (typeof __require < "u" ? __require : e)[o] }) : t)(function(t) {
+var Q = Object.defineProperty;
+var c = (e, t) => Q(e, "name", { value: t, configurable: true });
+var O2 = ((e) => typeof __require < "u" ? __require : typeof Proxy < "u" ? new Proxy(e, { get: (t, i) => (typeof __require < "u" ? __require : t)[i] }) : e)(function(e) {
   if (typeof __require < "u")
     return __require.apply(this, arguments);
-  throw new Error('Dynamic require of "' + t + '" is not supported');
+  throw new Error('Dynamic require of "' + e + '" is not supported');
 });
-var D = (t, e) => () => (e || t((e = { exports: {} }).exports, e), e.exports);
-var ce2 = (t, e, o, s) => {
-  if (e && typeof e == "object" || typeof e == "function")
-    for (let l2 of oe2(e))
-      !ae2.call(t, l2) && l2 !== o && O2(t, l2, { get: () => e[l2], enumerable: !(s = ie2(e, l2)) || s.enumerable });
-  return t;
-};
-var le = (t, e, o) => (o = t != null ? ne2(se2(t)) : {}, ce2(e || !t || !t.__esModule ? O2(o, "default", { value: t, enumerable: true }) : o, t));
-var M2 = D((R2, T2) => {
-  (function(t, e) {
-    "use strict";
-    typeof define == "function" && define.amd ? define("stackframe", [], e) : typeof R2 == "object" ? T2.exports = e() : t.StackFrame = e();
-  })(R2, function() {
-    "use strict";
-    function t(d2) {
-      return !isNaN(parseFloat(d2)) && isFinite(d2);
-    }
-    f2(t, "_isNumber");
-    function e(d2) {
-      return d2.charAt(0).toUpperCase() + d2.substring(1);
-    }
-    f2(e, "_capitalize");
-    function o(d2) {
-      return function() {
-        return this[d2];
-      };
-    }
-    f2(o, "_getter");
-    var s = ["isConstructor", "isEval", "isNative", "isToplevel"], l2 = ["columnNumber", "lineNumber"], r = ["fileName", "functionName", "source"], n = ["args"], u2 = ["evalOrigin"], i = s.concat(l2, r, n, u2);
-    function c(d2) {
-      if (d2)
-        for (var y2 = 0; y2 < i.length; y2++)
-          d2[i[y2]] !== void 0 && this["set" + e(i[y2])](d2[i[y2]]);
-    }
-    f2(c, "StackFrame"), c.prototype = { getArgs: function() {
-      return this.args;
-    }, setArgs: function(d2) {
-      if (Object.prototype.toString.call(d2) !== "[object Array]")
-        throw new TypeError("Args must be an Array");
-      this.args = d2;
-    }, getEvalOrigin: function() {
-      return this.evalOrigin;
-    }, setEvalOrigin: function(d2) {
-      if (d2 instanceof c)
-        this.evalOrigin = d2;
-      else if (d2 instanceof Object)
-        this.evalOrigin = new c(d2);
-      else
-        throw new TypeError("Eval Origin must be an Object or StackFrame");
-    }, toString: function() {
-      var d2 = this.getFileName() || "", y2 = this.getLineNumber() || "", h = this.getColumnNumber() || "", v2 = this.getFunctionName() || "";
-      return this.getIsEval() ? d2 ? "[eval] (" + d2 + ":" + y2 + ":" + h + ")" : "[eval]:" + y2 + ":" + h : v2 ? v2 + " (" + d2 + ":" + y2 + ":" + h + ")" : d2 + ":" + y2 + ":" + h;
-    } }, c.fromString = f2(function(y2) {
-      var h = y2.indexOf("("), v2 = y2.lastIndexOf(")"), Q2 = y2.substring(0, h), Z2 = y2.substring(h + 1, v2).split(","), L2 = y2.substring(v2 + 1);
-      if (L2.indexOf("@") === 0)
-        var _ = /@(.+?)(?::(\d+))?(?::(\d+))?$/.exec(L2, ""), ee2 = _[1], te = _[2], re2 = _[3];
-      return new c({ functionName: Q2, args: Z2 || void 0, fileName: ee2, lineNumber: te || void 0, columnNumber: re2 || void 0 });
-    }, "StackFrame$$fromString");
-    for (var a2 = 0; a2 < s.length; a2++)
-      c.prototype["get" + e(s[a2])] = o(s[a2]), c.prototype["set" + e(s[a2])] = function(d2) {
-        return function(y2) {
-          this[d2] = !!y2;
-        };
-      }(s[a2]);
-    for (var m2 = 0; m2 < l2.length; m2++)
-      c.prototype["get" + e(l2[m2])] = o(l2[m2]), c.prototype["set" + e(l2[m2])] = function(d2) {
-        return function(y2) {
-          if (!t(y2))
-            throw new TypeError(d2 + " must be a Number");
-          this[d2] = Number(y2);
-        };
-      }(l2[m2]);
-    for (var p = 0; p < r.length; p++)
-      c.prototype["get" + e(r[p])] = o(r[p]), c.prototype["set" + e(r[p])] = function(d2) {
-        return function(y2) {
-          this[d2] = String(y2);
-        };
-      }(r[p]);
-    return c;
-  });
-});
-var $ = D((N2, U) => {
-  (function(t, e) {
-    "use strict";
-    typeof define == "function" && define.amd ? define("error-stack-parser", ["stackframe"], e) : typeof N2 == "object" ? U.exports = e(M2()) : t.ErrorStackParser = e(t.StackFrame);
-  })(N2, f2(function(e) {
-    "use strict";
-    var o = /(^|@)\S+:\d+/, s = /^\s*at .*(\S+:\d+|\(native\))/m, l2 = /^(eval@)?(\[native code])?$/;
-    return { parse: f2(function(n) {
-      if (typeof n.stacktrace < "u" || typeof n["opera#sourceloc"] < "u")
-        return this.parseOpera(n);
-      if (n.stack && n.stack.match(s))
-        return this.parseV8OrIE(n);
-      if (n.stack)
-        return this.parseFFOrSafari(n);
-      throw new Error("Cannot parse given Error object");
-    }, "ErrorStackParser$$parse"), extractLocation: f2(function(n) {
-      if (n.indexOf(":") === -1)
-        return [n];
-      var u2 = /(.+?)(?::(\d+))?(?::(\d+))?$/, i = u2.exec(n.replace(/[()]/g, ""));
-      return [i[1], i[2] || void 0, i[3] || void 0];
-    }, "ErrorStackParser$$extractLocation"), parseV8OrIE: f2(function(n) {
-      var u2 = n.stack.split(`
-`).filter(function(i) {
-        return !!i.match(s);
-      }, this);
-      return u2.map(function(i) {
-        i.indexOf("(eval ") > -1 && (i = i.replace(/eval code/g, "eval").replace(/(\(eval at [^()]*)|(,.*$)/g, ""));
-        var c = i.replace(/^\s+/, "").replace(/\(eval code/g, "(").replace(/^.*?\s+/, ""), a2 = c.match(/ (\(.+\)$)/);
-        c = a2 ? c.replace(a2[0], "") : c;
-        var m2 = this.extractLocation(a2 ? a2[1] : c), p = a2 && c || void 0, d2 = ["eval", "<anonymous>"].indexOf(m2[0]) > -1 ? void 0 : m2[0];
-        return new e({ functionName: p, fileName: d2, lineNumber: m2[1], columnNumber: m2[2], source: i });
-      }, this);
-    }, "ErrorStackParser$$parseV8OrIE"), parseFFOrSafari: f2(function(n) {
-      var u2 = n.stack.split(`
-`).filter(function(i) {
-        return !i.match(l2);
-      }, this);
-      return u2.map(function(i) {
-        if (i.indexOf(" > eval") > -1 && (i = i.replace(/ line (\d+)(?: > eval line \d+)* > eval:\d+:\d+/g, ":$1")), i.indexOf("@") === -1 && i.indexOf(":") === -1)
-          return new e({ functionName: i });
-        var c = /((.*".+"[^@]*)?[^@]*)(?:@)/, a2 = i.match(c), m2 = a2 && a2[1] ? a2[1] : void 0, p = this.extractLocation(i.replace(c, ""));
-        return new e({ functionName: m2, fileName: p[0], lineNumber: p[1], columnNumber: p[2], source: i });
-      }, this);
-    }, "ErrorStackParser$$parseFFOrSafari"), parseOpera: f2(function(n) {
-      return !n.stacktrace || n.message.indexOf(`
-`) > -1 && n.message.split(`
-`).length > n.stacktrace.split(`
-`).length ? this.parseOpera9(n) : n.stack ? this.parseOpera11(n) : this.parseOpera10(n);
-    }, "ErrorStackParser$$parseOpera"), parseOpera9: f2(function(n) {
-      for (var u2 = /Line (\d+).*script (?:in )?(\S+)/i, i = n.message.split(`
-`), c = [], a2 = 2, m2 = i.length; a2 < m2; a2 += 2) {
-        var p = u2.exec(i[a2]);
-        p && c.push(new e({ fileName: p[2], lineNumber: p[1], source: i[a2] }));
-      }
-      return c;
-    }, "ErrorStackParser$$parseOpera9"), parseOpera10: f2(function(n) {
-      for (var u2 = /Line (\d+).*script (?:in )?(\S+)(?:: In function (\S+))?$/i, i = n.stacktrace.split(`
-`), c = [], a2 = 0, m2 = i.length; a2 < m2; a2 += 2) {
-        var p = u2.exec(i[a2]);
-        p && c.push(new e({ functionName: p[3] || void 0, fileName: p[2], lineNumber: p[1], source: i[a2] }));
-      }
-      return c;
-    }, "ErrorStackParser$$parseOpera10"), parseOpera11: f2(function(n) {
-      var u2 = n.stack.split(`
-`).filter(function(i) {
-        return !!i.match(o) && !i.match(/^Error created at/);
-      }, this);
-      return u2.map(function(i) {
-        var c = i.split("@"), a2 = this.extractLocation(c.pop()), m2 = c.shift() || "", p = m2.replace(/<anonymous function(: (\w+))?>/, "$2").replace(/\([^)]*\)/g, "") || void 0, d2;
-        m2.match(/\(([^)]*)\)/) && (d2 = m2.replace(/^[^(]+\(([^)]*)\)$/, "$1"));
-        var y2 = d2 === void 0 || d2 === "[arguments not available]" ? void 0 : d2.split(",");
-        return new e({ functionName: p, args: y2, fileName: a2[0], lineNumber: a2[1], columnNumber: a2[2], source: i });
-      }, this);
-    }, "ErrorStackParser$$parseOpera11") };
-  }, "ErrorStackParser"));
-});
-var z2 = le($());
-var g2 = typeof process == "object" && typeof process.versions == "object" && typeof process.versions.node == "string" && typeof process.browser > "u";
-var F2 = g2 && typeof module < "u" && typeof module.exports < "u" && typeof w2 < "u" && typeof __dirname < "u";
-var C = g2 && !F2;
-var de2 = typeof Deno < "u";
-var W2 = !g2 && !de2;
-var j2 = W2 && typeof window == "object" && typeof document == "object" && typeof document.createElement == "function" && typeof sessionStorage == "object" && typeof importScripts != "function";
-var B2 = W2 && typeof importScripts == "function" && typeof self == "object";
-var Ne2 = typeof navigator == "object" && typeof navigator.userAgent == "string" && navigator.userAgent.indexOf("Chrome") == -1 && navigator.userAgent.indexOf("Safari") > -1;
-var q2;
-var P2;
-var V;
-var H;
-var x2;
-async function I2() {
-  if (!g2 || (q2 = (await import("node:url")).default, H = await import("node:fs"), x2 = await import("node:fs/promises"), V = (await import("node:vm")).default, P2 = await import("node:path"), k = P2.sep, typeof w2 < "u"))
-    return;
-  let t = H, e = await import("node:crypto"), o = await import("./browser-MVPLTHEE.js"), s = await import("node:child_process"), l2 = { fs: t, crypto: e, ws: o, child_process: s };
-  globalThis.require = function(r) {
-    return l2[r];
+function Z2(e) {
+  return !isNaN(parseFloat(e)) && isFinite(e);
+}
+c(Z2, "_isNumber");
+function E2(e) {
+  return e.charAt(0).toUpperCase() + e.substring(1);
+}
+c(E2, "_capitalize");
+function P2(e) {
+  return function() {
+    return this[e];
   };
 }
-f2(I2, "initNodeModules");
-function fe2(t, e) {
-  return P2.resolve(e || ".", t);
+c(P2, "_getter");
+var w2 = ["isConstructor", "isEval", "isNative", "isToplevel"];
+var N2 = ["columnNumber", "lineNumber"];
+var _ = ["fileName", "functionName", "source"];
+var ee2 = ["args"];
+var te2 = ["evalOrigin"];
+var I2 = w2.concat(N2, _, ee2, te2);
+function p(e) {
+  if (e)
+    for (var t = 0; t < I2.length; t++)
+      e[I2[t]] !== void 0 && this["set" + E2(I2[t])](e[I2[t]]);
 }
-f2(fe2, "node_resolvePath");
-function ue2(t, e) {
-  return e === void 0 && (e = location), new URL(t, e).toString();
-}
-f2(ue2, "browser_resolvePath");
-var S2;
-g2 ? S2 = fe2 : S2 = ue2;
-var k;
-g2 || (k = "/");
-function pe2(t, e) {
-  return t.startsWith("file://") && (t = t.slice(7)), t.includes("://") ? { response: fetch(t) } : { binary: x2.readFile(t).then((o) => new Uint8Array(o.buffer, o.byteOffset, o.byteLength)) };
-}
-f2(pe2, "node_getBinaryResponse");
-function me2(t, e) {
-  let o = new URL(t, location);
-  return { response: fetch(o, e ? { integrity: e } : {}) };
-}
-f2(me2, "browser_getBinaryResponse");
+c(p, "StackFrame");
+p.prototype = { getArgs: function() {
+  return this.args;
+}, setArgs: function(e) {
+  if (Object.prototype.toString.call(e) !== "[object Array]")
+    throw new TypeError("Args must be an Array");
+  this.args = e;
+}, getEvalOrigin: function() {
+  return this.evalOrigin;
+}, setEvalOrigin: function(e) {
+  if (e instanceof p)
+    this.evalOrigin = e;
+  else if (e instanceof Object)
+    this.evalOrigin = new p(e);
+  else
+    throw new TypeError("Eval Origin must be an Object or StackFrame");
+}, toString: function() {
+  var e = this.getFileName() || "", t = this.getLineNumber() || "", i = this.getColumnNumber() || "", r = this.getFunctionName() || "";
+  return this.getIsEval() ? e ? "[eval] (" + e + ":" + t + ":" + i + ")" : "[eval]:" + t + ":" + i : r ? r + " (" + e + ":" + t + ":" + i + ")" : e + ":" + t + ":" + i;
+} };
+p.fromString = c(function(t) {
+  var i = t.indexOf("("), r = t.lastIndexOf(")"), a2 = t.substring(0, i), n = t.substring(i + 1, r).split(","), o = t.substring(r + 1);
+  if (o.indexOf("@") === 0)
+    var s = /@(.+?)(?::(\d+))?(?::(\d+))?$/.exec(o, ""), l2 = s[1], d2 = s[2], u2 = s[3];
+  return new p({ functionName: a2, args: n || void 0, fileName: l2, lineNumber: d2 || void 0, columnNumber: u2 || void 0 });
+}, "StackFrame$$fromString");
+for (b = 0; b < w2.length; b++)
+  p.prototype["get" + E2(w2[b])] = P2(w2[b]), p.prototype["set" + E2(w2[b])] = function(e) {
+    return function(t) {
+      this[e] = !!t;
+    };
+  }(w2[b]);
 var b;
-g2 ? b = pe2 : b = me2;
-async function K(t, e) {
-  let { response: o, binary: s } = b(t, e);
-  if (s)
-    return s;
-  let l2 = await o;
-  if (!l2.ok)
-    throw new Error(`Failed to load '${t}': request failed.`);
-  return new Uint8Array(await l2.arrayBuffer());
+for (v2 = 0; v2 < N2.length; v2++)
+  p.prototype["get" + E2(N2[v2])] = P2(N2[v2]), p.prototype["set" + E2(N2[v2])] = function(e) {
+    return function(t) {
+      if (!Z2(t))
+        throw new TypeError(e + " must be a Number");
+      this[e] = Number(t);
+    };
+  }(N2[v2]);
+var v2;
+for (h = 0; h < _.length; h++)
+  p.prototype["get" + E2(_[h])] = P2(_[h]), p.prototype["set" + E2(_[h])] = function(e) {
+    return function(t) {
+      this[e] = String(t);
+    };
+  }(_[h]);
+var h;
+var x2 = p;
+function ne2() {
+  var e = /^\s*at .*(\S+:\d+|\(native\))/m, t = /^(eval@)?(\[native code])?$/;
+  return { parse: c(function(r) {
+    if (r.stack && r.stack.match(e))
+      return this.parseV8OrIE(r);
+    if (r.stack)
+      return this.parseFFOrSafari(r);
+    throw new Error("Cannot parse given Error object");
+  }, "ErrorStackParser$$parse"), extractLocation: c(function(r) {
+    if (r.indexOf(":") === -1)
+      return [r];
+    var a2 = /(.+?)(?::(\d+))?(?::(\d+))?$/, n = a2.exec(r.replace(/[()]/g, ""));
+    return [n[1], n[2] || void 0, n[3] || void 0];
+  }, "ErrorStackParser$$extractLocation"), parseV8OrIE: c(function(r) {
+    var a2 = r.stack.split(`
+`).filter(function(n) {
+      return !!n.match(e);
+    }, this);
+    return a2.map(function(n) {
+      n.indexOf("(eval ") > -1 && (n = n.replace(/eval code/g, "eval").replace(/(\(eval at [^()]*)|(,.*$)/g, ""));
+      var o = n.replace(/^\s+/, "").replace(/\(eval code/g, "(").replace(/^.*?\s+/, ""), s = o.match(/ (\(.+\)$)/);
+      o = s ? o.replace(s[0], "") : o;
+      var l2 = this.extractLocation(s ? s[1] : o), d2 = s && o || void 0, u2 = ["eval", "<anonymous>"].indexOf(l2[0]) > -1 ? void 0 : l2[0];
+      return new x2({ functionName: d2, fileName: u2, lineNumber: l2[1], columnNumber: l2[2], source: n });
+    }, this);
+  }, "ErrorStackParser$$parseV8OrIE"), parseFFOrSafari: c(function(r) {
+    var a2 = r.stack.split(`
+`).filter(function(n) {
+      return !n.match(t);
+    }, this);
+    return a2.map(function(n) {
+      if (n.indexOf(" > eval") > -1 && (n = n.replace(/ line (\d+)(?: > eval line \d+)* > eval:\d+:\d+/g, ":$1")), n.indexOf("@") === -1 && n.indexOf(":") === -1)
+        return new x2({ functionName: n });
+      var o = /((.*".+"[^@]*)?[^@]*)(?:@)/, s = n.match(o), l2 = s && s[1] ? s[1] : void 0, d2 = this.extractLocation(n.replace(o, ""));
+      return new x2({ functionName: l2, fileName: d2[0], lineNumber: d2[1], columnNumber: d2[2], source: n });
+    }, this);
+  }, "ErrorStackParser$$parseFFOrSafari") };
 }
-f2(K, "loadBinaryFile");
-var E2;
-if (j2)
-  E2 = f2(async (t) => await import(t), "loadScript");
-else if (B2)
-  E2 = f2(async (t) => {
+c(ne2, "ErrorStackParser");
+var re = new ne2();
+var M = re;
+var g2 = typeof process == "object" && typeof process.versions == "object" && typeof process.versions.node == "string" && !process.browser;
+var A2 = g2 && typeof module < "u" && typeof module.exports < "u" && typeof O2 < "u" && typeof __dirname < "u";
+var W2 = g2 && !A2;
+var Ne2 = typeof globalThis.Bun < "u";
+var oe2 = typeof Deno < "u";
+var B2 = !g2 && !oe2;
+var $2 = B2 && typeof window == "object" && typeof document == "object" && typeof document.createElement == "function" && typeof sessionStorage == "object" && typeof importScripts != "function";
+var j = B2 && typeof importScripts == "function" && typeof self == "object";
+var _e2 = typeof navigator == "object" && typeof navigator.userAgent == "string" && navigator.userAgent.indexOf("Chrome") == -1 && navigator.userAgent.indexOf("Safari") > -1;
+var V2;
+var L2;
+var z;
+var H;
+var D;
+async function T2() {
+  if (!g2 || (V2 = (await import("node:url")).default, H = await import("node:fs"), D = await import("node:fs/promises"), z = (await import("node:vm")).default, L2 = await import("node:path"), U2 = L2.sep, typeof O2 < "u"))
+    return;
+  let e = H, t = await import("node:crypto"), i = await import("./browser-PEHGED23.js"), r = await import("node:child_process"), a2 = { fs: e, crypto: t, ws: i, child_process: r };
+  globalThis.require = function(n) {
+    return a2[n];
+  };
+}
+c(T2, "initNodeModules");
+function ie2(e, t) {
+  return L2.resolve(t || ".", e);
+}
+c(ie2, "node_resolvePath");
+function ae2(e, t) {
+  return t === void 0 && (t = location), new URL(e, t).toString();
+}
+c(ae2, "browser_resolvePath");
+var k2;
+g2 ? k2 = ie2 : k2 = ae2;
+var U2;
+g2 || (U2 = "/");
+function se2(e, t) {
+  return e.startsWith("file://") && (e = e.slice(7)), e.includes("://") ? { response: fetch(e) } : { binary: D.readFile(e).then((i) => new Uint8Array(i.buffer, i.byteOffset, i.byteLength)) };
+}
+c(se2, "node_getBinaryResponse");
+function ce(e, t) {
+  let i = new URL(e, location);
+  return { response: fetch(i, t ? { integrity: t } : {}) };
+}
+c(ce, "browser_getBinaryResponse");
+var R2;
+g2 ? R2 = se2 : R2 = ce;
+async function q2(e, t) {
+  let { response: i, binary: r } = R2(e, t);
+  if (r)
+    return r;
+  let a2 = await i;
+  if (!a2.ok)
+    throw new Error(`Failed to load '${e}': request failed.`);
+  return new Uint8Array(await a2.arrayBuffer());
+}
+c(q2, "loadBinaryFile");
+var F2;
+if ($2)
+  F2 = c(async (e) => await import(e), "loadScript");
+else if (j)
+  F2 = c(async (e) => {
     try {
-      globalThis.importScripts(t);
-    } catch (e) {
-      if (e instanceof TypeError)
-        await import(t);
+      globalThis.importScripts(e);
+    } catch (t) {
+      if (t instanceof TypeError)
+        await import(e);
       else
-        throw e;
+        throw t;
     }
   }, "loadScript");
 else if (g2)
-  E2 = ye2;
+  F2 = le2;
 else
   throw new Error("Cannot determine runtime environment");
-async function ye2(t) {
-  t.startsWith("file://") && (t = t.slice(7)), t.includes("://") ? V.runInThisContext(await (await fetch(t)).text()) : await import(q2.pathToFileURL(t).href);
+async function le2(e) {
+  e.startsWith("file://") && (e = e.slice(7)), e.includes("://") ? z.runInThisContext(await (await fetch(e)).text()) : await import(V2.pathToFileURL(e).href);
 }
-f2(ye2, "nodeLoadScript");
-async function J(t) {
+c(le2, "nodeLoadScript");
+async function J(e) {
   if (g2) {
-    await I2();
-    let e = await x2.readFile(t, { encoding: "utf8" });
-    return JSON.parse(e);
+    await T2();
+    let t = await D.readFile(e, { encoding: "utf8" });
+    return JSON.parse(t);
   } else
-    return await (await fetch(t)).json();
+    return await (await fetch(e)).json();
 }
-f2(J, "loadLockFile");
-async function X2() {
-  if (F2)
+c(J, "loadLockFile");
+async function K() {
+  if (A2)
     return __dirname;
-  let t;
+  let e;
   try {
     throw new Error();
-  } catch (s) {
-    t = s;
+  } catch (r) {
+    e = r;
   }
-  let e = z2.default.parse(t)[0].fileName;
-  if (C) {
-    let s = await import("node:path");
-    return (await import("node:url")).fileURLToPath(s.dirname(e));
+  let t = M.parse(e)[0].fileName;
+  if (g2 && !t.startsWith("file://") && (t = `file://${t}`), W2) {
+    let r = await import("node:path");
+    return (await import("node:url")).fileURLToPath(r.dirname(t));
   }
-  let o = e.lastIndexOf(k);
-  if (o === -1)
+  let i = t.lastIndexOf(U2);
+  if (i === -1)
     throw new Error("Could not extract indexURL path from pyodide module location");
-  return e.slice(0, o);
+  return t.slice(0, i);
 }
-f2(X2, "calculateDirname");
-function G2(t) {
-  let e = t.FS, o = t.FS.filesystems.MEMFS, s = t.PATH, l2 = { DIR_MODE: 16895, FILE_MODE: 33279, mount: function(r) {
-    if (!r.opts.fileSystemHandle)
+c(K, "calculateDirname");
+function Y2(e) {
+  let t = e.FS, i = e.FS.filesystems.MEMFS, r = e.PATH, a2 = { DIR_MODE: 16895, FILE_MODE: 33279, mount: function(n) {
+    if (!n.opts.fileSystemHandle)
       throw new Error("opts.fileSystemHandle is required");
-    return o.mount.apply(null, arguments);
-  }, syncfs: async (r, n, u2) => {
+    return i.mount.apply(null, arguments);
+  }, syncfs: async (n, o, s) => {
     try {
-      let i = l2.getLocalSet(r), c = await l2.getRemoteSet(r), a2 = n ? c : i, m2 = n ? i : c;
-      await l2.reconcile(r, a2, m2), u2(null);
-    } catch (i) {
-      u2(i);
+      let l2 = a2.getLocalSet(n), d2 = await a2.getRemoteSet(n), u2 = o ? d2 : l2, m2 = o ? l2 : d2;
+      await a2.reconcile(n, u2, m2), s(null);
+    } catch (l2) {
+      s(l2);
     }
-  }, getLocalSet: (r) => {
-    let n = /* @__PURE__ */ Object.create(null);
-    function u2(a2) {
-      return a2 !== "." && a2 !== "..";
+  }, getLocalSet: (n) => {
+    let o = /* @__PURE__ */ Object.create(null);
+    function s(u2) {
+      return u2 !== "." && u2 !== "..";
     }
-    f2(u2, "isRealDir");
-    function i(a2) {
-      return (m2) => s.join2(a2, m2);
+    c(s, "isRealDir");
+    function l2(u2) {
+      return (m2) => r.join2(u2, m2);
     }
-    f2(i, "toAbsolute");
-    let c = e.readdir(r.mountpoint).filter(u2).map(i(r.mountpoint));
-    for (; c.length; ) {
-      let a2 = c.pop(), m2 = e.stat(a2);
-      e.isDir(m2.mode) && c.push.apply(c, e.readdir(a2).filter(u2).map(i(a2))), n[a2] = { timestamp: m2.mtime, mode: m2.mode };
+    c(l2, "toAbsolute");
+    let d2 = t.readdir(n.mountpoint).filter(s).map(l2(n.mountpoint));
+    for (; d2.length; ) {
+      let u2 = d2.pop(), m2 = t.stat(u2);
+      t.isDir(m2.mode) && d2.push.apply(d2, t.readdir(u2).filter(s).map(l2(u2))), o[u2] = { timestamp: m2.mtime, mode: m2.mode };
     }
-    return { type: "local", entries: n };
-  }, getRemoteSet: async (r) => {
-    let n = /* @__PURE__ */ Object.create(null), u2 = await ge2(r.opts.fileSystemHandle);
-    for (let [i, c] of u2)
-      i !== "." && (n[s.join2(r.mountpoint, i)] = { timestamp: c.kind === "file" ? (await c.getFile()).lastModifiedDate : /* @__PURE__ */ new Date(), mode: c.kind === "file" ? l2.FILE_MODE : l2.DIR_MODE });
-    return { type: "remote", entries: n, handles: u2 };
-  }, loadLocalEntry: (r) => {
-    let u2 = e.lookupPath(r).node, i = e.stat(r);
-    if (e.isDir(i.mode))
-      return { timestamp: i.mtime, mode: i.mode };
-    if (e.isFile(i.mode))
-      return u2.contents = o.getFileDataAsTypedArray(u2), { timestamp: i.mtime, mode: i.mode, contents: u2.contents };
+    return { type: "local", entries: o };
+  }, getRemoteSet: async (n) => {
+    let o = /* @__PURE__ */ Object.create(null), s = await de2(n.opts.fileSystemHandle);
+    for (let [l2, d2] of s)
+      l2 !== "." && (o[r.join2(n.mountpoint, l2)] = { timestamp: d2.kind === "file" ? (await d2.getFile()).lastModifiedDate : /* @__PURE__ */ new Date(), mode: d2.kind === "file" ? a2.FILE_MODE : a2.DIR_MODE });
+    return { type: "remote", entries: o, handles: s };
+  }, loadLocalEntry: (n) => {
+    let s = t.lookupPath(n).node, l2 = t.stat(n);
+    if (t.isDir(l2.mode))
+      return { timestamp: l2.mtime, mode: l2.mode };
+    if (t.isFile(l2.mode))
+      return s.contents = i.getFileDataAsTypedArray(s), { timestamp: l2.mtime, mode: l2.mode, contents: s.contents };
     throw new Error("node type not supported");
-  }, storeLocalEntry: (r, n) => {
-    if (e.isDir(n.mode))
-      e.mkdirTree(r, n.mode);
-    else if (e.isFile(n.mode))
-      e.writeFile(r, n.contents, { canOwn: true });
+  }, storeLocalEntry: (n, o) => {
+    if (t.isDir(o.mode))
+      t.mkdirTree(n, o.mode);
+    else if (t.isFile(o.mode))
+      t.writeFile(n, o.contents, { canOwn: true });
     else
       throw new Error("node type not supported");
-    e.chmod(r, n.mode), e.utime(r, n.timestamp, n.timestamp);
-  }, removeLocalEntry: (r) => {
-    var n = e.stat(r);
-    e.isDir(n.mode) ? e.rmdir(r) : e.isFile(n.mode) && e.unlink(r);
-  }, loadRemoteEntry: async (r) => {
-    if (r.kind === "file") {
-      let n = await r.getFile();
-      return { contents: new Uint8Array(await n.arrayBuffer()), mode: l2.FILE_MODE, timestamp: n.lastModifiedDate };
+    t.chmod(n, o.mode), t.utime(n, o.timestamp, o.timestamp);
+  }, removeLocalEntry: (n) => {
+    var o = t.stat(n);
+    t.isDir(o.mode) ? t.rmdir(n) : t.isFile(o.mode) && t.unlink(n);
+  }, loadRemoteEntry: async (n) => {
+    if (n.kind === "file") {
+      let o = await n.getFile();
+      return { contents: new Uint8Array(await o.arrayBuffer()), mode: a2.FILE_MODE, timestamp: o.lastModifiedDate };
     } else {
-      if (r.kind === "directory")
-        return { mode: l2.DIR_MODE, timestamp: /* @__PURE__ */ new Date() };
-      throw new Error("unknown kind: " + r.kind);
+      if (n.kind === "directory")
+        return { mode: a2.DIR_MODE, timestamp: /* @__PURE__ */ new Date() };
+      throw new Error("unknown kind: " + n.kind);
     }
-  }, storeRemoteEntry: async (r, n, u2) => {
-    let i = r.get(s.dirname(n)), c = e.isFile(u2.mode) ? await i.getFileHandle(s.basename(n), { create: true }) : await i.getDirectoryHandle(s.basename(n), { create: true });
-    if (c.kind === "file") {
-      let a2 = await c.createWritable();
-      await a2.write(u2.contents), await a2.close();
+  }, storeRemoteEntry: async (n, o, s) => {
+    let l2 = n.get(r.dirname(o)), d2 = t.isFile(s.mode) ? await l2.getFileHandle(r.basename(o), { create: true }) : await l2.getDirectoryHandle(r.basename(o), { create: true });
+    if (d2.kind === "file") {
+      let u2 = await d2.createWritable();
+      await u2.write(s.contents), await u2.close();
     }
-    r.set(n, c);
-  }, removeRemoteEntry: async (r, n) => {
-    await r.get(s.dirname(n)).removeEntry(s.basename(n)), r.delete(n);
-  }, reconcile: async (r, n, u2) => {
-    let i = 0, c = [];
-    Object.keys(n.entries).forEach(function(p) {
-      let d2 = n.entries[p], y2 = u2.entries[p];
-      (!y2 || e.isFile(d2.mode) && d2.timestamp.getTime() > y2.timestamp.getTime()) && (c.push(p), i++);
-    }), c.sort();
-    let a2 = [];
-    if (Object.keys(u2.entries).forEach(function(p) {
-      n.entries[p] || (a2.push(p), i++);
-    }), a2.sort().reverse(), !i)
+    n.set(o, d2);
+  }, removeRemoteEntry: async (n, o) => {
+    await n.get(r.dirname(o)).removeEntry(r.basename(o)), n.delete(o);
+  }, reconcile: async (n, o, s) => {
+    let l2 = 0, d2 = [];
+    Object.keys(o.entries).forEach(function(f2) {
+      let y2 = o.entries[f2], S2 = s.entries[f2];
+      (!S2 || t.isFile(y2.mode) && y2.timestamp.getTime() > S2.timestamp.getTime()) && (d2.push(f2), l2++);
+    }), d2.sort();
+    let u2 = [];
+    if (Object.keys(s.entries).forEach(function(f2) {
+      o.entries[f2] || (u2.push(f2), l2++);
+    }), u2.sort().reverse(), !l2)
       return;
-    let m2 = n.type === "remote" ? n.handles : u2.handles;
-    for (let p of c) {
-      let d2 = s.normalize(p.replace(r.mountpoint, "/")).substring(1);
-      if (u2.type === "local") {
-        let y2 = m2.get(d2), h = await l2.loadRemoteEntry(y2);
-        l2.storeLocalEntry(p, h);
+    let m2 = o.type === "remote" ? o.handles : s.handles;
+    for (let f2 of d2) {
+      let y2 = r.normalize(f2.replace(n.mountpoint, "/")).substring(1);
+      if (s.type === "local") {
+        let S2 = m2.get(y2), X2 = await a2.loadRemoteEntry(S2);
+        a2.storeLocalEntry(f2, X2);
       } else {
-        let y2 = l2.loadLocalEntry(p);
-        await l2.storeRemoteEntry(m2, d2, y2);
+        let S2 = a2.loadLocalEntry(f2);
+        await a2.storeRemoteEntry(m2, y2, S2);
       }
     }
-    for (let p of a2)
-      if (u2.type === "local")
-        l2.removeLocalEntry(p);
+    for (let f2 of u2)
+      if (s.type === "local")
+        a2.removeLocalEntry(f2);
       else {
-        let d2 = s.normalize(p.replace(r.mountpoint, "/")).substring(1);
-        await l2.removeRemoteEntry(m2, d2);
+        let y2 = r.normalize(f2.replace(n.mountpoint, "/")).substring(1);
+        await a2.removeRemoteEntry(m2, y2);
       }
   } };
-  t.FS.filesystems.NATIVEFS_ASYNC = l2;
+  e.FS.filesystems.NATIVEFS_ASYNC = a2;
 }
-f2(G2, "initializeNativeFS");
-var ge2 = f2(async (t) => {
-  let e = [];
-  async function o(l2) {
-    for await (let r of l2.values())
-      e.push(r), r.kind === "directory" && await o(r);
+c(Y2, "initializeNativeFS");
+var de2 = c(async (e) => {
+  let t = [];
+  async function i(a2) {
+    for await (let n of a2.values())
+      t.push(n), n.kind === "directory" && await i(n);
   }
-  f2(o, "collect"), await o(t);
-  let s = /* @__PURE__ */ new Map();
-  s.set(".", t);
-  for (let l2 of e) {
-    let r = (await t.resolve(l2)).join("/");
-    s.set(r, l2);
+  c(i, "collect"), await i(e);
+  let r = /* @__PURE__ */ new Map();
+  r.set(".", e);
+  for (let a2 of t) {
+    let n = (await e.resolve(a2)).join("/");
+    r.set(n, a2);
   }
-  return s;
+  return r;
 }, "getFsHandles");
-function Y2(t) {
-  let e = { noImageDecoding: true, noAudioDecoding: true, noWasmDecoding: false, preRun: we(t), quit(o, s) {
-    throw e.exited = { status: o, toThrow: s }, s;
-  }, print: t.stdout, printErr: t.stderr, arguments: t.args, API: { config: t }, locateFile: (o) => t.indexURL + o, instantiateWasm: Se2(t.indexURL) };
-  return e;
+function G2(e) {
+  let t = { noImageDecoding: true, noAudioDecoding: true, noWasmDecoding: false, preRun: ge2(e), quit(i, r) {
+    throw t.exited = { status: i, toThrow: r }, r;
+  }, print: e.stdout, printErr: e.stderr, arguments: e.args, API: { config: e }, locateFile: (i) => e.indexURL + i, instantiateWasm: ye2(e.indexURL) };
+  return t;
 }
-f2(Y2, "createSettings");
-function he2(t) {
-  return function(e) {
-    let o = "/";
+c(G2, "createSettings");
+function ue2(e) {
+  return function(t) {
+    let i = "/";
     try {
-      e.FS.mkdirTree(t);
-    } catch (s) {
-      console.error(`Error occurred while making a home directory '${t}':`), console.error(s), console.error(`Using '${o}' for a home directory instead`), t = o;
+      t.FS.mkdirTree(e);
+    } catch (r) {
+      console.error(`Error occurred while making a home directory '${e}':`), console.error(r), console.error(`Using '${i}' for a home directory instead`), e = i;
     }
-    e.FS.chdir(t);
+    t.FS.chdir(e);
   };
 }
-f2(he2, "createHomeDirectory");
-function ve2(t) {
-  return function(e) {
-    Object.assign(e.ENV, t);
+c(ue2, "createHomeDirectory");
+function fe2(e) {
+  return function(t) {
+    Object.assign(t.ENV, e);
   };
 }
-f2(ve2, "setEnvironment");
-function Ee2(t) {
-  return (e) => {
-    for (let o of t)
-      e.FS.mkdirTree(o), e.FS.mount(e.FS.filesystems.NODEFS, { root: o }, o);
+c(fe2, "setEnvironment");
+function me2(e) {
+  return (t) => {
+    for (let i of e)
+      t.FS.mkdirTree(i), t.FS.mount(t.FS.filesystems.NODEFS, { root: i }, i);
   };
 }
-f2(Ee2, "mountLocalDirectories");
-function be(t) {
-  let e = K(t);
-  return (o) => {
-    let s = o._py_version_major(), l2 = o._py_version_minor();
-    o.FS.mkdirTree("/lib"), o.FS.mkdirTree(`/lib/python${s}.${l2}/site-packages`), o.addRunDependency("install-stdlib"), e.then((r) => {
-      o.FS.writeFile(`/lib/python${s}${l2}.zip`, r);
-    }).catch((r) => {
-      console.error("Error occurred while installing the standard library:"), console.error(r);
+c(me2, "mountLocalDirectories");
+function pe2(e) {
+  let t = q2(e);
+  return (i) => {
+    let r = i._py_version_major(), a2 = i._py_version_minor();
+    i.FS.mkdirTree("/lib"), i.FS.mkdirTree(`/lib/python${r}.${a2}/site-packages`), i.addRunDependency("install-stdlib"), t.then((n) => {
+      i.FS.writeFile(`/lib/python${r}${a2}.zip`, n);
+    }).catch((n) => {
+      console.error("Error occurred while installing the standard library:"), console.error(n);
     }).finally(() => {
-      o.removeRunDependency("install-stdlib");
+      i.removeRunDependency("install-stdlib");
     });
   };
 }
-f2(be, "installStdlib");
-function we(t) {
-  let e;
-  return t.stdLibURL != null ? e = t.stdLibURL : e = t.indexURL + "python_stdlib.zip", [be(e), he2(t.env.HOME), ve2(t.env), Ee2(t._node_mounts), G2];
+c(pe2, "installStdlib");
+function ge2(e) {
+  let t;
+  return e.stdLibURL != null ? t = e.stdLibURL : t = e.indexURL + "python_stdlib.zip", [pe2(t), ue2(e.env.HOME), fe2(e.env), me2(e._node_mounts), Y2];
 }
-f2(we, "getFileSystemInitializationFuncs");
-function Se2(t) {
-  let { binary: e, response: o } = b(t + "pyodide.asm.wasm");
-  return function(s, l2) {
+c(ge2, "getFileSystemInitializationFuncs");
+function ye2(e) {
+  let { binary: t, response: i } = R2(e + "pyodide.asm.wasm");
+  return function(r, a2) {
     return async function() {
       try {
-        let r;
-        o ? r = await WebAssembly.instantiateStreaming(o, s) : r = await WebAssembly.instantiate(await e, s);
-        let { instance: n, module: u2 } = r;
-        typeof WasmOffsetConverter < "u" && (wasmOffsetConverter = new WasmOffsetConverter(wasmBinary, u2)), l2(n, u2);
-      } catch (r) {
-        console.warn("wasm instantiation failed!"), console.warn(r);
+        let n;
+        i ? n = await WebAssembly.instantiateStreaming(i, r) : n = await WebAssembly.instantiate(await t, r);
+        let { instance: o, module: s } = n;
+        typeof WasmOffsetConverter < "u" && (wasmOffsetConverter = new WasmOffsetConverter(wasmBinary, s)), a2(o, s);
+      } catch (n) {
+        console.warn("wasm instantiation failed!"), console.warn(n);
       }
     }(), {};
   };
 }
-f2(Se2, "getInstantiateWasmFunc");
-var A2 = "0.26.0";
-async function Be2(t = {}) {
-  await I2();
-  let e = t.indexURL || await X2();
-  e = S2(e), e.endsWith("/") || (e += "/"), t.indexURL = e;
-  let o = { fullStdLib: false, jsglobals: globalThis, stdin: globalThis.prompt ? globalThis.prompt : void 0, lockFileURL: e + "pyodide-lock.json", args: [], _node_mounts: [], env: {}, packageCacheDir: e, packages: [] }, s = Object.assign(o, t);
-  s.env.HOME || (s.env.HOME = "/home/pyodide");
-  let l2 = Y2(s), r = l2.API;
-  if (r.lockFilePromise = J(s.lockFileURL), typeof _createPyodideModule != "function") {
-    let a2 = `${s.indexURL}pyodide.asm.js`;
-    await E2(a2);
+c(ye2, "getInstantiateWasmFunc");
+var C = "0.26.2";
+async function $e2(e = {}) {
+  var u2, m2;
+  await T2();
+  let t = e.indexURL || await K();
+  t = k2(t), t.endsWith("/") || (t += "/"), e.indexURL = t;
+  let i = { fullStdLib: false, jsglobals: globalThis, stdin: globalThis.prompt ? globalThis.prompt : void 0, lockFileURL: t + "pyodide-lock.json", args: [], _node_mounts: [], env: {}, packageCacheDir: t, packages: [], enableRunUntilComplete: false, checkAPIVersion: true }, r = Object.assign(i, e);
+  (u2 = r.env).HOME ?? (u2.HOME = "/home/pyodide"), (m2 = r.env).PYTHONINSPECT ?? (m2.PYTHONINSPECT = "1");
+  let a2 = G2(r), n = a2.API;
+  if (n.lockFilePromise = J(r.lockFileURL), typeof _createPyodideModule != "function") {
+    let f2 = `${r.indexURL}pyodide.asm.js`;
+    await F2(f2);
   }
-  let n;
-  if (t._loadSnapshot) {
-    let a2 = await t._loadSnapshot;
-    ArrayBuffer.isView(a2) ? n = a2 : n = new Uint8Array(a2), l2.noInitialRun = true, l2.INITIAL_MEMORY = n.length;
+  let o;
+  if (e._loadSnapshot) {
+    let f2 = await e._loadSnapshot;
+    ArrayBuffer.isView(f2) ? o = f2 : o = new Uint8Array(f2), a2.noInitialRun = true, a2.INITIAL_MEMORY = o.length;
   }
-  let u2 = await _createPyodideModule(l2);
-  if (l2.exited)
-    throw l2.exited.toThrow;
-  if (t.pyproxyToStringRepr && r.setPyProxyToStringMethod(true), r.version !== A2)
-    throw new Error(`Pyodide version does not match: '${A2}' <==> '${r.version}'. If you updated the Pyodide version, make sure you also updated the 'indexURL' parameter passed to loadPyodide.`);
-  u2.locateFile = (a2) => {
+  let s = await _createPyodideModule(a2);
+  if (a2.exited)
+    throw a2.exited.toThrow;
+  if (e.pyproxyToStringRepr && n.setPyProxyToStringMethod(true), n.version !== C && r.checkAPIVersion)
+    throw new Error(`Pyodide version does not match: '${C}' <==> '${n.version}'. If you updated the Pyodide version, make sure you also updated the 'indexURL' parameter passed to loadPyodide.`);
+  s.locateFile = (f2) => {
     throw new Error("Didn't expect to load any more file_packager files!");
   };
-  let i;
-  n && (i = r.restoreSnapshot(n));
-  let c = r.finalizeBootstrap(i);
-  return r.sys.path.insert(0, r.config.env.HOME), c.version.includes("dev") || r.setCdnUrl(`https://cdn.jsdelivr.net/pyodide/v${c.version}/full/`), r._pyodide.set_excepthook(), await r.packageIndexReady, r.initializeStreams(s.stdin, s.stdout, s.stderr), c;
+  let l2;
+  o && (l2 = n.restoreSnapshot(o));
+  let d2 = n.finalizeBootstrap(l2);
+  return n.sys.path.insert(0, n.config.env.HOME), d2.version.includes("dev") || n.setCdnUrl(`https://cdn.jsdelivr.net/pyodide/v${d2.version}/full/`), n._pyodide.set_excepthook(), await n.packageIndexReady, n.initializeStreams(r.stdin, r.stdout, r.stderr), d2;
 }
-f2(Be2, "loadPyodide");
+c($e2, "loadPyodide");
 
 // src/pyodide-proxy.ts
 async function setupPythonEnv(pyodide, callJS) {
@@ -33073,7 +33048,7 @@ var NormalPyodideProxy = class _NormalPyodideProxy {
     this.stderrCallback = stderrCallback;
   }
   async init(config) {
-    this.pyodide = await Be2(config);
+    this.pyodide = await $e2(config);
     this.pyUtils = await setupPythonEnv(this.pyodide, this.callJS);
   }
   loadPackagesFromImports(code) {
@@ -33476,40 +33451,6 @@ def _mock_ipykernel():
     mods["ipykernel.comm"] = m
 
 
-def _mock_ipython():
-    import sys
-    import types
-    mods = sys.modules
-
-    def get_ipython():
-        import ipykernel
-        return ipykernel.kernel
-
-    m = types.ModuleType("IPython")
-    m.get_ipython = get_ipython
-    mods["IPython"] = m
-
-    mods["IPython.core"] = types.ModuleType("IPython.core")
-
-    m = types.ModuleType("IPython.core.getipython")
-    m.get_ipython = get_ipython
-    mods["IPython.core.getipython"] = m
-
-    m = types.ModuleType("IPython.core.interactiveshell")
-    m.InteractiveShell = "Mock"
-    mods["IPython.core.interactiveshell"] = m
-
-    m = types.ModuleType("IPython.display")
-    m.display = "Mock"
-    m.clear_output = "Mock"
-    mods["IPython.display"] = m
-
-    # Needed for matplotlib - if IPython is present, it'll look for this.
-    m = types.ModuleType("IPython.core.pylabtools")
-    m.backend2gui = {}
-    mods["IPython.core.pylabtools"] = m
-
-
 # A shim for the seaborn.load_dataset() function to work in Pyodide. Normally
 # that function won't work in Pyodide because it uses the urllib module, which
 # doesn't work in Pyodide. This shim replaces the uses of urllib with a wrapper
@@ -33671,7 +33612,6 @@ def _shim_seaborn_load_dataset():
 
 _mock_multiprocessing()
 _mock_ipykernel()
-_mock_ipython()
 _shim_seaborn_load_dataset()
 
 def _pyodide_env_init():
@@ -33885,8 +33825,20 @@ function ensureOpenChannelListener(pyodideProxy) {
   channelListenerRegistered = true;
 }
 
-// src/hooks/useWebR.tsx
+// src/hooks/useRunOnceOnMount.tsx
 var import_react2 = __toESM(require_react());
+function useRunOnceOnMount(callback) {
+  const hasRun = import_react2.default.useRef(false);
+  import_react2.default.useEffect(() => {
+    if (!hasRun.current) {
+      callback();
+      hasRun.current = true;
+    }
+  }, []);
+}
+
+// src/hooks/useWebR.tsx
+var import_react3 = __toESM(require_react());
 
 // src/webr-proxy.ts
 var _run, run_fn;
@@ -33896,7 +33848,7 @@ var WebRWorkerProxy = class {
     this.stderrCallback = stderrCallback;
     __privateAdd(this, _run);
     this.toClientCache = {};
-    this.webR = new pr(config);
+    this.webR = new dr(config);
   }
   async runCode(code) {
     const waitForPrompt = new Promise((resolve, reject) => {
@@ -33984,7 +33936,7 @@ async function initWebR({
     stdout = (x3) => console.log("webR echo:" + x3);
   if (!stderr)
     stderr = (x3) => console.error("webR error:" + x3);
-  const channelType = crossOriginIsolated ? W.Automatic : W.PostMessage;
+  const channelType = crossOriginIsolated ? A.Automatic : A.PostMessage;
   const baseUrl = currentScriptDir() + "/webr/";
   const webRProxy = await loadWebRProxy(
     {
@@ -34042,14 +33994,14 @@ async function initRShiny({
 function useWebR({
   webRProxyHandlePromise: webRProxyHandlePromise2
 }) {
-  const [webRProxyHandle, setwebRProxyHandle] = import_react2.default.useState(
+  const [webRProxyHandle, setwebRProxyHandle] = import_react3.default.useState(
     {
       ready: false,
       shinyReady: false,
       initError: false
     }
   );
-  (0, import_react2.useEffect)(() => {
+  (0, import_react3.useEffect)(() => {
     (async () => {
       const webRProxyHandle2 = await webRProxyHandlePromise2;
       setwebRProxyHandle(webRProxyHandle2);
@@ -34207,20 +34159,22 @@ webr::shim_install()
     lapply(metadata, function(data) {
       name <- data$name
       path <- data$path
-      available <- data$cached
+      available <- data$cached && length(data$assets) > 0
       mountpoint <- glue::glue("/shinylive/webr/packages/{name}")
 
-      # Mount the virtual filesystem image, unless we already have done so
-      if (available && !file.exists(mountpoint)) {
-        webr::mount(mountpoint, glue::glue("{.base_url}{path}"))
-      }
+      try({
+        # Mount the virtual filesystem image, unless we already have done so
+        if (available && !file.exists(mountpoint)) {
+          webr::mount(mountpoint, glue::glue("{.base_url}{path}"))
+        }
 
-      # If this is a full library, add it to .libPaths()
-      if(data$type == "library") {
-        paths <- .libPaths()
-        paths <- append(paths, mountpoint , after = length(paths) - 1)
-        .libPaths(paths)
-      }
+        # If this is a full library, add it to .libPaths()
+        if(data$type == "library") {
+          paths <- .libPaths()
+          paths <- append(paths, mountpoint , after = length(paths) - 1)
+          .libPaths(paths)
+        }
+      })
     })
   }
 
@@ -34259,7 +34213,7 @@ invisible(0)
 `;
 
 // src/Components/ExampleSelector.tsx
-var React3 = __toESM(require_react());
+var React4 = __toESM(require_react());
 var import_jsx_runtime = __toESM(require_jsx_runtime());
 function ExampleSelector({
   setCurrentFiles,
@@ -34267,14 +34221,14 @@ function ExampleSelector({
   startWithSelectedExample,
   appEngine
 }) {
-  const [currentSelection, setCurrentSelection] = React3.useState(null);
-  const [exampleCategories2, setExampleCategories] = React3.useState(null);
-  React3.useEffect(() => {
+  const [currentSelection, setCurrentSelection] = React4.useState(null);
+  const [exampleCategories2, setExampleCategories] = React4.useState(null);
+  React4.useEffect(() => {
     (async () => {
       setExampleCategories(await getExampleCategories(appEngine));
     })();
   }, [appEngine]);
-  React3.useEffect(() => {
+  React4.useEffect(() => {
     if (!startWithSelectedExample)
       return;
     if (!exampleCategories2)
@@ -34288,7 +34242,7 @@ function ExampleSelector({
     }
     setCurrentSelection(position);
   }, [startWithSelectedExample, exampleCategories2]);
-  const setFilesForApp = React3.useCallback(
+  const setFilesForApp = React4.useCallback(
     ({ categoryIndex, index }) => {
       if (!exampleCategories2)
         return;
@@ -34296,7 +34250,7 @@ function ExampleSelector({
     },
     [exampleCategories2, setCurrentFiles]
   );
-  const chooseExample = React3.useCallback(
+  const chooseExample = React4.useCallback(
     ({ categoryIndex, index }) => {
       if (!exampleCategories2)
         return;
@@ -34310,7 +34264,7 @@ function ExampleSelector({
     },
     [filesHaveChanged, exampleCategories2, setCurrentSelection]
   );
-  React3.useEffect(() => {
+  React4.useEffect(() => {
     if (!currentSelection)
       return;
     setFilesForApp(currentSelection);
@@ -34326,7 +34280,7 @@ function ExampleSelector({
     } else {
       isSelected = currentSelection.categoryIndex === categoryIndex && currentSelection.index === index;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(React3.Fragment, { children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(React4.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "example" + (isSelected ? " selected" : ""), children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(
         "a",
         {
@@ -34473,31 +34427,35 @@ function HeaderBar({
     r: "https://shiny.posit.co/"
   };
   const shinyLogo = engineSwitch(appEngine, shiny_logo_default, shiny_for_python_default);
-  return /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "HeaderBar", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("a", { className: "page-title", href: mainUrl[appEngine], children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("img", { className: "shiny-logo", src: shinyLogo, alt: "Shiny" }) }),
-    /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { children: [
-      loadButton,
-      saveButton,
-      downloadButton,
-      openEditorButton,
-      openEditorFromViewerButton,
-      shareButton
-    ] })
-  ] });
+  return /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", {
+    className: "HeaderBar",
+    // eslint-disable-next-line react/jsx-no-target-blank
+    children: [
+      /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("a", { className: "page-title", href: mainUrl[appEngine], target: "_blank", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("img", { className: "shiny-logo", src: shinyLogo, alt: "Shiny" }) }),
+      /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { children: [
+        loadButton,
+        saveButton,
+        downloadButton,
+        openEditorButton,
+        openEditorFromViewerButton,
+        shareButton
+      ] })
+    ]
+  });
 }
 
 // src/Components/OutputCell.tsx
-var React4 = __toESM(require_react());
+var React5 = __toESM(require_react());
 var import_jsx_runtime3 = __toESM(require_jsx_runtime());
 function OutputCell({
   proxyHandle,
   setTerminalMethods
 }) {
-  const [content, setContent] = React4.useState({
+  const [content, setContent] = React5.useState({
     type: "text",
     value: ""
   });
-  React4.useEffect(() => {
+  React5.useEffect(() => {
     if (!proxyHandle.ready)
       return;
     if (proxyHandle.engine !== "pyodide")
@@ -34518,7 +34476,7 @@ function OutputCell({
       runCodeInTerminal
     });
   }, [setTerminalMethods, proxyHandle]);
-  React4.useEffect(() => {
+  React5.useEffect(() => {
     if (!proxyHandle.ready)
       return;
     if (proxyHandle.engine !== "webr")
@@ -34557,7 +34515,7 @@ function OutputCell({
 }
 
 // src/Components/ResizableGrid/ResizableGrid.tsx
-var React6 = __toESM(require_react());
+var React7 = __toESM(require_react());
 
 // src/Components/ResizableGrid/DragToResizeHelpers.ts
 function getDragInfo(beforeUnit, afterUnit) {
@@ -34761,13 +34719,13 @@ function getHasAutoUnits(tractSizes) {
 }
 
 // src/Components/ResizableGrid/useDragToResizeGrid.tsx
-var import_react3 = __toESM(require_react());
+var import_react4 = __toESM(require_react());
 function useDragToResizeGrid({
   containerRef,
   onDragEnd
 }) {
-  const dragStateRef = import_react3.default.useRef(null);
-  const startDrag = import_react3.default.useCallback(
+  const dragStateRef = import_react4.default.useRef(null);
+  const startDrag = import_react4.default.useCallback(
     ({
       e,
       dir,
@@ -34793,7 +34751,7 @@ function useDragToResizeGrid({
     },
     [containerRef]
   );
-  const onMouseMove = import_react3.default.useCallback(
+  const onMouseMove = import_react4.default.useCallback(
     (e) => {
       const container = containerRef.current;
       if (!container) {
@@ -34814,7 +34772,7 @@ function useDragToResizeGrid({
     },
     [containerRef, dragStateRef]
   );
-  const finishDrag = import_react3.default.useCallback(() => {
+  const finishDrag = import_react4.default.useCallback(() => {
     if (!dragStateRef.current) {
       console.error("Mouse up detected without any current drag state.");
       return;
@@ -34832,8 +34790,8 @@ function useDragToResizeGrid({
     }
     dragStateRef.current = null;
   }, []);
-  const dragWatcherDivRef = import_react3.default.useRef(null);
-  const startListeningForMouseMove = import_react3.default.useCallback(() => {
+  const dragWatcherDivRef = import_react4.default.useRef(null);
+  const startListeningForMouseMove = import_react4.default.useCallback(() => {
     const container = containerRef.current;
     if (!container) {
       console.error("How are you dragging on an element without a container?");
@@ -34851,7 +34809,7 @@ function useDragToResizeGrid({
     dragWatcherDiv.addEventListener("mouseup", finishDrag);
     dragWatcherDiv.addEventListener("mouseleave", finishDrag);
   }, [onMouseMove]);
-  const stopListeningForMouseMove = import_react3.default.useCallback(() => {
+  const stopListeningForMouseMove = import_react4.default.useCallback(() => {
     const container = containerRef.current;
     if (!container) {
       console.error("How are you dragging on an element without a container?");
@@ -34882,7 +34840,7 @@ function ResizableGrid({
   colSizes,
   style = {}
 }) {
-  const containerRef = React6.useRef(null);
+  const containerRef = React7.useRef(null);
   const styleGrid = {
     gridTemplateAreas: areas.map((x3) => `"${x3.join(" ")}"`).join(" \n "),
     gridTemplateRows: rowSizes.join(" "),
@@ -34934,11 +34892,11 @@ function ResizableGrid({
 function buildRange(from, to) {
   const numEls = Math.abs(to - from) + 1;
   const step = from < to ? 1 : -1;
-  return Array.from({ length: numEls }, (_, i) => from + i * step);
+  return Array.from({ length: numEls }, (_2, i) => from + i * step);
 }
 
 // src/Components/Terminal.tsx
-var React7 = __toESM(require_react());
+var React8 = __toESM(require_react());
 var import_xterm = __toESM(require_xterm());
 var import_xterm_addon_fit = __toESM(require_xterm_addon_fit());
 var import_xterm_readline = __toESM(require_readline());
@@ -34948,32 +34906,32 @@ function Terminal({
   setTerminalMethods,
   terminalInterface: terminalInterface2
 }) {
-  const containerRef = React7.useRef(null);
-  const xTermRef = React7.useRef(null);
-  const [xTermReadline, setXTermReadline] = React7.useState();
-  const runCodeRef = React7.useRef(
+  const containerRef = React8.useRef(null);
+  const xTermRef = React8.useRef(null);
+  const [xTermReadline, setXTermReadline] = React8.useState();
+  const runCodeRef = React8.useRef(
     async (command) => ""
   );
-  React7.useEffect(() => {
+  React8.useEffect(() => {
     runCodeRef.current = async (command) => {
       if (!proxyHandle.ready)
         return "";
       return await proxyHandle.runCode(command) ?? ">>> ";
     };
   }, [proxyHandle]);
-  const tabCompleteRef = React7.useRef(
+  const tabCompleteRef = React8.useRef(
     async (command) => {
       return [];
     }
   );
-  React7.useEffect(() => {
+  React8.useEffect(() => {
     tabCompleteRef.current = async (command) => {
       if (!proxyHandle.ready)
         return [];
       return await proxyHandle.tabComplete(command);
     };
   }, [proxyHandle]);
-  React7.useEffect(() => {
+  React8.useEffect(() => {
     if (!containerRef.current)
       return;
     if (xTermRef.current)
@@ -35002,7 +34960,7 @@ function Terminal({
     xTermRef.current = term;
     containerRef.current.xterm = term;
   }, []);
-  React7.useEffect(() => {
+  React8.useEffect(() => {
     const xTermRefCurrent = xTermRef.current;
     if (!xTermRefCurrent)
       return;
@@ -35029,7 +34987,7 @@ function Terminal({
       runCodeInTerminal
     });
   }, [xTermReadline, terminalInterface2, setTerminalMethods]);
-  React7.useEffect(() => {
+  React8.useEffect(() => {
     if (!proxyHandle.ready)
       return;
     if (!xTermRef.current)
@@ -35066,7 +35024,7 @@ function Terminal({
 }
 
 // src/Components/Viewer.tsx
-var React8 = __toESM(require_react());
+var React9 = __toESM(require_react());
 
 // src/Components/LoadingAnimation.tsx
 var import_jsx_runtime6 = __toESM(require_jsx_runtime());
@@ -35158,13 +35116,13 @@ function Viewer({
   setViewerMethods,
   devMode = false
 }) {
-  const viewerFrameRef = React8.useRef(null);
-  const [appRunningState, setAppRunningState] = React8.useState("loading");
-  const shinyIntervalRef = React8.useRef(0);
-  const [lastErrorMessage, setLastErrorMessage] = React8.useState(
+  const viewerFrameRef = React9.useRef(null);
+  const [appRunningState, setAppRunningState] = React9.useState("loading");
+  const shinyIntervalRef = React9.useRef(0);
+  const [lastErrorMessage, setLastErrorMessage] = React9.useState(
     null
   );
-  React8.useEffect(() => {
+  React9.useEffect(() => {
     if (!proxyHandle.shinyReady)
       return;
     if (proxyHandle.engine !== "webr")
@@ -35191,11 +35149,11 @@ function Viewer({
         const files = await new shelter.RList(
           Object.fromEntries(
             await Promise.all(
-              appCode.map(async (f3) => {
-                if (f3.type === "text") {
-                  return [f3.name, await new shelter.RCharacter(f3.content)];
+              appCode.map(async (f2) => {
+                if (f2.type === "text") {
+                  return [f2.name, await new shelter.RCharacter(f2.content)];
                 }
-                return [f3.name, await new shelter.RRaw(Array.from(f3.content))];
+                return [f2.name, await new shelter.RRaw(Array.from(f2.content))];
               })
             )
           )
@@ -35244,7 +35202,7 @@ function Viewer({
       stopApp
     });
   }, [proxyHandle.shinyReady]);
-  React8.useEffect(() => {
+  React9.useEffect(() => {
     if (!proxyHandle.shinyReady)
       return;
     if (proxyHandle.engine !== "pyodide")
@@ -35396,7 +35354,7 @@ function minCssLengthUnit(x3, y2, ignoreAuto = true) {
 
 // src/Components/App.tsx
 var import_jsx_runtime8 = __toESM(require_jsx_runtime());
-var Editor = React9.lazy(() => import("./Editor.js"));
+var Editor = React10.lazy(() => import("./Editor.js"));
 var terminalInterface = (() => {
   let _exec = async (x3) => console.log("preload exec:" + x3);
   let _echo = async (x3) => console.log("preload echo:" + x3);
@@ -35532,23 +35490,26 @@ function App({
       throw new Error(`Unrecognised Wasm engine: "${appEngine}".`);
   }
   const proxyHandle = useWasmEngine();
-  const [viewerMethods, setViewerMethods] = React9.useState({
+  const [editorMethods, setEditorMethods] = React10.useState({
+    getActiveFileContents: null
+  });
+  const [viewerMethods, setViewerMethods] = React10.useState({
     ready: false
   });
-  const [terminalMethods, setTerminalMethods] = React9.useState(
+  const [terminalMethods, setTerminalMethods] = React10.useState(
     {
       ready: false
     }
   );
-  const [currentFiles, setCurrentFiles] = React9.useState(startFiles);
-  const [filesHaveChanged, setFilesHaveChanged] = React9.useState(false);
-  const [headerBarCallbacks, setHeaderBarCallbacks] = React9.useState({});
-  React9.useEffect(() => {
+  const [currentFiles, setCurrentFiles] = React10.useState(startFiles);
+  const [filesHaveChanged, setFilesHaveChanged] = React10.useState(false);
+  const [headerBarCallbacks, setHeaderBarCallbacks] = React10.useState({});
+  React10.useEffect(() => {
     if (appMode === "viewer" && viewerMethods.ready) {
       viewerMethods.runApp(currentFiles);
     }
   }, [appMode, currentFiles, viewerMethods]);
-  React9.useEffect(() => {
+  React10.useEffect(() => {
     (async () => {
       if (!proxyHandle.ready)
         return;
@@ -35566,27 +35527,37 @@ function App({
       });
     })();
   }, [proxyHandle.ready, currentFiles]);
-  const fileMessageListenerInitialized = React9.useRef(false);
-  React9.useEffect(() => {
-    if (fileMessageListenerInitialized.current) {
-      return;
-    }
-    fileMessageListenerInitialized.current = true;
-    window.addEventListener("message", (event) => {
+  React10.useEffect(() => {
+    const listener = (event) => {
       if (event.source !== window.parent) {
         return;
       }
-      if (event.data.files) {
+      if (event.data.type === "setFiles" && event.data.files) {
         setCurrentFiles(event.data.files);
+      } else if (event.data.type === "getFiles") {
+        let files = [];
+        if (editorMethods.getActiveFileContents) {
+          files = editorMethods.getActiveFileContents();
+        }
+        event.ports[0].postMessage({ files });
       }
-    });
-  }, []);
-  const [utilityMethods, setUtilityMethods] = React9.useState({
+    };
+    window.addEventListener("message", listener);
+    return () => {
+      window.removeEventListener("message", listener);
+    };
+  }, [setCurrentFiles, editorMethods]);
+  useRunOnceOnMount(() => {
+    if (window.parent === window)
+      return;
+    window.parent.postMessage({ type: "shinyliveReady" }, "*");
+  });
+  const [utilityMethods, setUtilityMethods] = React10.useState({
     formatCode: async (code) => {
       return code;
     }
   });
-  React9.useEffect(() => {
+  React10.useEffect(() => {
     if (!proxyHandle.ready)
       return;
     if (proxyHandle.engine !== "pyodide")
@@ -35604,7 +35575,7 @@ function App({
     if (currentFiles.some((file) => file.name === "app.py"))
       return;
   }, [proxyHandle.ready, currentFiles]);
-  React9.useEffect(() => {
+  React10.useEffect(() => {
     if (appMode !== "viewer")
       return;
     setHeaderBarCallbacks({
@@ -35645,19 +35616,18 @@ function App({
                 appEngine
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(React9.Suspense, { fallback: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { children: "Loading..." }), children: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(React10.Suspense, { fallback: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { children: "Loading..." }), children: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
               Editor,
               {
                 currentFilesFromApp: currentFiles,
                 setCurrentFiles,
                 setFilesHaveChanged,
                 setHeaderBarCallbacks,
+                setEditorMethods,
                 terminalMethods,
                 viewerMethods,
                 utilityMethods,
-                runOnLoad: currentFiles.some(
-                  (file) => file.name === "app.py" || file.name === "app.R" || file.name === "server.R"
-                ),
+                runOnLoad: isRunnableApp(currentFiles),
                 updateUrlHashOnRerun: appOptions.updateUrlHashOnRerun,
                 appEngine
               }
@@ -35708,19 +35678,18 @@ function App({
           rowSizes: ["2fr", "1fr"],
           colSizes: ["1.5fr", "1fr"],
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(React9.Suspense, { fallback: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { children: "Loading..." }), children: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(React10.Suspense, { fallback: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { children: "Loading..." }), children: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
               Editor,
               {
                 currentFilesFromApp: currentFiles,
                 setCurrentFiles,
                 setFilesHaveChanged,
                 setHeaderBarCallbacks,
+                setEditorMethods,
                 terminalMethods,
                 viewerMethods,
                 utilityMethods,
-                runOnLoad: currentFiles.some(
-                  (file) => file.name === "app.py" || file.name === "app.R" || file.name === "server.R"
-                ),
+                runOnLoad: isRunnableApp(currentFiles),
                 updateUrlHashOnRerun: appOptions.updateUrlHashOnRerun,
                 appEngine
               }
@@ -35754,13 +35723,14 @@ function App({
         rowSizes: [asCssLengthUnit(appOptions.editorHeight) || "1fr"],
         colSizes: ["1fr", "1fr"],
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(React9.Suspense, { fallback: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { children: "Loading..." }), children: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(React10.Suspense, { fallback: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { children: "Loading..." }), children: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
             Editor,
             {
               currentFilesFromApp: currentFiles,
               setCurrentFiles,
               setFilesHaveChanged,
               setHeaderBarCallbacks,
+              setEditorMethods,
               terminalMethods,
               utilityMethods,
               runOnLoad: false,
@@ -35781,13 +35751,14 @@ function App({
     );
   } else if (appMode === "editor-cell") {
     return /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "shinylive-container editor-cell", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(React9.Suspense, { fallback: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { children: "Loading..." }), children: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(React10.Suspense, { fallback: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { children: "Loading..." }), children: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
         Editor,
         {
           currentFilesFromApp: currentFiles,
           setCurrentFiles,
           setFilesHaveChanged,
           setHeaderBarCallbacks,
+          setEditorMethods,
           terminalMethods,
           utilityMethods,
           showFileTabs: false,
@@ -35831,13 +35802,14 @@ function App({
         className: `shinylive-container editor-viewer layout-${layout}`,
         ...gridDef,
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(React9.Suspense, { fallback: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { children: "Loading..." }), children: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(React10.Suspense, { fallback: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { children: "Loading..." }), children: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
             Editor,
             {
               currentFilesFromApp: currentFiles,
               setCurrentFiles,
               setFilesHaveChanged,
               setHeaderBarCallbacks,
+              setEditorMethods,
               terminalMethods,
               utilityMethods,
               viewerMethods,
@@ -35980,7 +35952,7 @@ function runApp(domTarget, mode, opts = {}, appEngine) {
     }
     const root = (0, import_client.createRoot)(domTarget);
     root.render(
-      /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(React9.StrictMode, { children: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(React10.StrictMode, { children: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
         App,
         {
           appMode: mode,
@@ -35995,6 +35967,11 @@ function runApp(domTarget, mode, opts = {}, appEngine) {
 var propertyOfAppOptions = function(name) {
   return name;
 };
+function isRunnableApp(files) {
+  return files.some(
+    (file) => (file.name === "app.py" || file.name === "app.R" || file.name === "server.R") && file.content !== ""
+  );
+}
 var shinyAppTemplate = `# Basic Shiny app template
 from shiny import App, render, ui
 

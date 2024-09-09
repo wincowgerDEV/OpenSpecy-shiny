@@ -1,4 +1,4 @@
-// Shinylive 0.5.0
+// Shinylive 0.6.0
 // Copyright 2024 Posit, PBC
 var __create = Object.create;
 var __defProp = Object.defineProperty;
@@ -84,80 +84,80 @@ function uint8ArrayToString(buf) {
 }
 
 // node_modules/webr/dist/webr.mjs
-var tn = Object.create;
-var Qr = Object.defineProperty;
-var rn = Object.getOwnPropertyDescriptor;
-var sn = Object.getOwnPropertyNames;
-var nn = Object.getPrototypeOf;
-var on = Object.prototype.hasOwnProperty;
-var N = ((r) => typeof __require < "u" ? __require : typeof Proxy < "u" ? new Proxy(r, { get: (e, t) => (typeof __require < "u" ? __require : e)[t] }) : r)(function(r) {
+var rn = Object.create;
+var Zr = Object.defineProperty;
+var sn = Object.getOwnPropertyDescriptor;
+var nn = Object.getOwnPropertyNames;
+var on = Object.getPrototypeOf;
+var an = Object.prototype.hasOwnProperty;
+var B = ((s) => typeof __require < "u" ? __require : typeof Proxy < "u" ? new Proxy(s, { get: (e, t) => (typeof __require < "u" ? __require : e)[t] }) : s)(function(s) {
   if (typeof __require < "u")
     return __require.apply(this, arguments);
-  throw new Error('Dynamic require of "' + r + '" is not supported');
+  throw new Error('Dynamic require of "' + s + '" is not supported');
 });
-var S = (r, e) => () => (e || r((e = { exports: {} }).exports, e), e.exports);
-var an = (r, e, t, s) => {
+var S = (s, e) => () => (e || s((e = { exports: {} }).exports, e), e.exports);
+var ln = (s, e, t, r) => {
   if (e && typeof e == "object" || typeof e == "function")
-    for (let n of sn(e))
-      !on.call(r, n) && n !== t && Qr(r, n, { get: () => e[n], enumerable: !(s = rn(e, n)) || s.enumerable });
-  return r;
+    for (let n of nn(e))
+      !an.call(s, n) && n !== t && Zr(s, n, { get: () => e[n], enumerable: !(r = sn(e, n)) || r.enumerable });
+  return s;
 };
-var ne = (r, e, t) => (t = r != null ? tn(nn(r)) : {}, an(e || !r || !r.__esModule ? Qr(t, "default", { value: r, enumerable: true }) : t, r));
-var yr = (r, e, t) => {
-  if (!e.has(r))
+var oe = (s, e, t) => (t = s != null ? rn(on(s)) : {}, ln(e || !s || !s.__esModule ? Zr(t, "default", { value: s, enumerable: true }) : t, s));
+var fr = (s, e, t) => {
+  if (!e.has(s))
     throw TypeError("Cannot " + t);
 };
-var a = (r, e, t) => (yr(r, e, "read from private field"), t ? t.call(r) : e.get(r));
-var u = (r, e, t) => {
-  if (e.has(r))
+var a = (s, e, t) => (fr(s, e, "read from private field"), t ? t.call(s) : e.get(s));
+var u = (s, e, t) => {
+  if (e.has(s))
     throw TypeError("Cannot add the same private member more than once");
-  e instanceof WeakSet ? e.add(r) : e.set(r, t);
+  e instanceof WeakSet ? e.add(s) : e.set(s, t);
 };
-var d = (r, e, t, s) => (yr(r, e, "write to private field"), s ? s.call(r, t) : e.set(r, t), t);
-var E = (r, e, t) => (yr(r, e, "access private method"), t);
-var Ve = S((U) => {
+var d = (s, e, t, r) => (fr(s, e, "write to private field"), r ? r.call(s, t) : e.set(s, t), t);
+var E = (s, e, t) => (fr(s, e, "access private method"), t);
+var Je = S((C2) => {
   "use strict";
-  Object.defineProperty(U, "__esModule", { value: true });
-  U.getUint64 = U.getInt64 = U.setInt64 = U.setUint64 = U.UINT32_MAX = void 0;
-  U.UINT32_MAX = 4294967295;
-  function yn(r, e, t) {
-    let s = t / 4294967296, n = t;
-    r.setUint32(e, s), r.setUint32(e + 4, n);
+  Object.defineProperty(C2, "__esModule", { value: true });
+  C2.getUint64 = C2.getInt64 = C2.setInt64 = C2.setUint64 = C2.UINT32_MAX = void 0;
+  C2.UINT32_MAX = 4294967295;
+  function fn(s, e, t) {
+    let r = t / 4294967296, n = t;
+    s.setUint32(e, r), s.setUint32(e + 4, n);
   }
-  U.setUint64 = yn;
-  function fn(r, e, t) {
-    let s = Math.floor(t / 4294967296), n = t;
-    r.setUint32(e, s), r.setUint32(e + 4, n);
+  C2.setUint64 = fn;
+  function Rn(s, e, t) {
+    let r = Math.floor(t / 4294967296), n = t;
+    s.setUint32(e, r), s.setUint32(e + 4, n);
   }
-  U.setInt64 = fn;
-  function Rn(r, e) {
-    let t = r.getInt32(e), s = r.getUint32(e + 4);
-    return t * 4294967296 + s;
+  C2.setInt64 = Rn;
+  function mn(s, e) {
+    let t = s.getInt32(e), r = s.getUint32(e + 4);
+    return t * 4294967296 + r;
   }
-  U.getInt64 = Rn;
-  function mn(r, e) {
-    let t = r.getUint32(e), s = r.getUint32(e + 4);
-    return t * 4294967296 + s;
+  C2.getInt64 = mn;
+  function gn(s, e) {
+    let t = s.getUint32(e), r = s.getUint32(e + 4);
+    return t * 4294967296 + r;
   }
-  U.getUint64 = mn;
+  C2.getUint64 = gn;
 });
-var Wt = S((D2) => {
+var At = S((M2) => {
   "use strict";
-  var Pr, _r, Sr;
-  Object.defineProperty(D2, "__esModule", { value: true });
-  D2.utf8DecodeTD = D2.TEXT_DECODER_THRESHOLD = D2.utf8DecodeJs = D2.utf8EncodeTE = D2.TEXT_ENCODER_THRESHOLD = D2.utf8EncodeJs = D2.utf8Count = void 0;
-  var cs = Ve(), Ot = (typeof process > "u" || ((Pr = process == null ? void 0 : process.env) === null || Pr === void 0 ? void 0 : Pr.TEXT_ENCODING) !== "never") && typeof TextEncoder < "u" && typeof TextDecoder < "u";
-  function gn(r) {
-    let e = r.length, t = 0, s = 0;
-    for (; s < e; ) {
-      let n = r.charCodeAt(s++);
+  var _r, Sr, kr;
+  Object.defineProperty(M2, "__esModule", { value: true });
+  M2.utf8DecodeTD = M2.TEXT_DECODER_THRESHOLD = M2.utf8DecodeJs = M2.utf8EncodeTE = M2.TEXT_ENCODER_THRESHOLD = M2.utf8EncodeJs = M2.utf8Count = void 0;
+  var us = Je(), Ot = (typeof process > "u" || ((_r = process == null ? void 0 : process.env) === null || _r === void 0 ? void 0 : _r.TEXT_ENCODING) !== "never") && typeof TextEncoder < "u" && typeof TextDecoder < "u";
+  function bn(s) {
+    let e = s.length, t = 0, r = 0;
+    for (; r < e; ) {
+      let n = s.charCodeAt(r++);
       if (n & 4294967168)
         if (!(n & 4294965248))
           t += 2;
         else {
-          if (n >= 55296 && n <= 56319 && s < e) {
-            let o = r.charCodeAt(s);
-            (o & 64512) === 56320 && (++s, n = ((n & 1023) << 10) + (o & 1023) + 65536);
+          if (n >= 55296 && n <= 56319 && r < e) {
+            let o = s.charCodeAt(r);
+            (o & 64512) === 56320 && (++r, n = ((n & 1023) << 10) + (o & 1023) + 65536);
           }
           n & 4294901760 ? t += 4 : t += 3;
         }
@@ -168,18 +168,18 @@ var Wt = S((D2) => {
     }
     return t;
   }
-  D2.utf8Count = gn;
-  function bn(r, e, t) {
-    let s = r.length, n = t, o = 0;
-    for (; o < s; ) {
-      let i = r.charCodeAt(o++);
+  M2.utf8Count = bn;
+  function wn(s, e, t) {
+    let r = s.length, n = t, o = 0;
+    for (; o < r; ) {
+      let i = s.charCodeAt(o++);
       if (i & 4294967168)
         if (!(i & 4294965248))
           e[n++] = i >> 6 & 31 | 192;
         else {
-          if (i >= 55296 && i <= 56319 && o < s) {
-            let c = r.charCodeAt(o);
-            (c & 64512) === 56320 && (++o, i = ((i & 1023) << 10) + (c & 1023) + 65536);
+          if (i >= 55296 && i <= 56319 && o < r) {
+            let c2 = s.charCodeAt(o);
+            (c2 & 64512) === 56320 && (++o, i = ((i & 1023) << 10) + (c2 & 1023) + 65536);
           }
           i & 4294901760 ? (e[n++] = i >> 18 & 7 | 240, e[n++] = i >> 12 & 63 | 128, e[n++] = i >> 6 & 63 | 128) : (e[n++] = i >> 12 & 15 | 224, e[n++] = i >> 6 & 63 | 128);
         }
@@ -190,204 +190,204 @@ var Wt = S((D2) => {
       e[n++] = i & 63 | 128;
     }
   }
-  D2.utf8EncodeJs = bn;
-  var Je = Ot ? new TextEncoder() : void 0;
-  D2.TEXT_ENCODER_THRESHOLD = Ot ? typeof process < "u" && ((_r = process == null ? void 0 : process.env) === null || _r === void 0 ? void 0 : _r.TEXT_ENCODING) !== "force" ? 200 : 0 : cs.UINT32_MAX;
-  function wn(r, e, t) {
-    e.set(Je.encode(r), t);
+  M2.utf8EncodeJs = wn;
+  var He = Ot ? new TextEncoder() : void 0;
+  M2.TEXT_ENCODER_THRESHOLD = Ot ? typeof process < "u" && ((Sr = process == null ? void 0 : process.env) === null || Sr === void 0 ? void 0 : Sr.TEXT_ENCODING) !== "force" ? 200 : 0 : us.UINT32_MAX;
+  function xn(s, e, t) {
+    e.set(He.encode(s), t);
   }
-  function xn(r, e, t) {
-    Je.encodeInto(r, e.subarray(t));
+  function vn(s, e, t) {
+    He.encodeInto(s, e.subarray(t));
   }
-  D2.utf8EncodeTE = Je != null && Je.encodeInto ? xn : wn;
-  var vn = 4096;
-  function En(r, e, t) {
-    let s = e, n = s + t, o = [], i = "";
-    for (; s < n; ) {
-      let c = r[s++];
-      if (!(c & 128))
-        o.push(c);
-      else if ((c & 224) === 192) {
-        let p = r[s++] & 63;
-        o.push((c & 31) << 6 | p);
-      } else if ((c & 240) === 224) {
-        let p = r[s++] & 63, k2 = r[s++] & 63;
-        o.push((c & 31) << 12 | p << 6 | k2);
-      } else if ((c & 248) === 240) {
-        let p = r[s++] & 63, k2 = r[s++] & 63, b2 = r[s++] & 63, C2 = (c & 7) << 18 | p << 12 | k2 << 6 | b2;
-        C2 > 65535 && (C2 -= 65536, o.push(C2 >>> 10 & 1023 | 55296), C2 = 56320 | C2 & 1023), o.push(C2);
+  M2.utf8EncodeTE = He != null && He.encodeInto ? vn : xn;
+  var En = 4096;
+  function Tn(s, e, t) {
+    let r = e, n = r + t, o = [], i = "";
+    for (; r < n; ) {
+      let c2 = s[r++];
+      if (!(c2 & 128))
+        o.push(c2);
+      else if ((c2 & 224) === 192) {
+        let p2 = s[r++] & 63;
+        o.push((c2 & 31) << 6 | p2);
+      } else if ((c2 & 240) === 224) {
+        let p2 = s[r++] & 63, D2 = s[r++] & 63;
+        o.push((c2 & 31) << 12 | p2 << 6 | D2);
+      } else if ((c2 & 248) === 240) {
+        let p2 = s[r++] & 63, D2 = s[r++] & 63, b2 = s[r++] & 63, j2 = (c2 & 7) << 18 | p2 << 12 | D2 << 6 | b2;
+        j2 > 65535 && (j2 -= 65536, o.push(j2 >>> 10 & 1023 | 55296), j2 = 56320 | j2 & 1023), o.push(j2);
       } else
-        o.push(c);
-      o.length >= vn && (i += String.fromCharCode(...o), o.length = 0);
+        o.push(c2);
+      o.length >= En && (i += String.fromCharCode(...o), o.length = 0);
     }
     return o.length > 0 && (i += String.fromCharCode(...o)), i;
   }
-  D2.utf8DecodeJs = En;
-  var Tn = Ot ? new TextDecoder() : null;
-  D2.TEXT_DECODER_THRESHOLD = Ot ? typeof process < "u" && ((Sr = process == null ? void 0 : process.env) === null || Sr === void 0 ? void 0 : Sr.TEXT_DECODER) !== "force" ? 200 : 0 : cs.UINT32_MAX;
-  function Pn(r, e, t) {
-    let s = r.subarray(e, e + t);
-    return Tn.decode(s);
+  M2.utf8DecodeJs = Tn;
+  var Pn = Ot ? new TextDecoder() : null;
+  M2.TEXT_DECODER_THRESHOLD = Ot ? typeof process < "u" && ((kr = process == null ? void 0 : process.env) === null || kr === void 0 ? void 0 : kr.TEXT_DECODER) !== "force" ? 200 : 0 : us.UINT32_MAX;
+  function _n(s, e, t) {
+    let r = s.subarray(e, e + t);
+    return Pn.decode(r);
   }
-  D2.utf8DecodeTD = Pn;
+  M2.utf8DecodeTD = _n;
 });
-var Dr = S((At) => {
+var Dr = S((It) => {
   "use strict";
-  Object.defineProperty(At, "__esModule", { value: true });
-  At.ExtData = void 0;
+  Object.defineProperty(It, "__esModule", { value: true });
+  It.ExtData = void 0;
   var Mr = class {
     constructor(e, t) {
       this.type = e, this.data = t;
     }
   };
-  At.ExtData = Mr;
+  It.ExtData = Mr;
 });
-var Ut = S((It) => {
+var Ct = S((Ut) => {
   "use strict";
-  Object.defineProperty(It, "__esModule", { value: true });
-  It.DecodeError = void 0;
-  var be2 = class extends Error {
+  Object.defineProperty(Ut, "__esModule", { value: true });
+  Ut.DecodeError = void 0;
+  var we = class extends Error {
     constructor(e) {
       super(e);
-      let t = Object.create(be2.prototype);
-      Object.setPrototypeOf(this, t), Object.defineProperty(this, "name", { configurable: true, enumerable: false, value: be2.name });
+      let t = Object.create(we.prototype);
+      Object.setPrototypeOf(this, t), Object.defineProperty(this, "name", { configurable: true, enumerable: false, value: we.name });
     }
   };
-  It.DecodeError = be2;
+  Ut.DecodeError = we;
 });
-var kr = S((_) => {
+var Wr = S((_2) => {
   "use strict";
-  Object.defineProperty(_, "__esModule", { value: true });
-  _.timestampExtension = _.decodeTimestampExtension = _.decodeTimestampToTimeSpec = _.encodeTimestampExtension = _.encodeDateToTimeSpec = _.encodeTimeSpecToTimestamp = _.EXT_TIMESTAMP = void 0;
-  var _n = Ut(), us = Ve();
-  _.EXT_TIMESTAMP = -1;
-  var Sn = 4294967296 - 1, Mn = 17179869184 - 1;
-  function ps({ sec: r, nsec: e }) {
-    if (r >= 0 && e >= 0 && r <= Mn)
-      if (e === 0 && r <= Sn) {
+  Object.defineProperty(_2, "__esModule", { value: true });
+  _2.timestampExtension = _2.decodeTimestampExtension = _2.decodeTimestampToTimeSpec = _2.encodeTimestampExtension = _2.encodeDateToTimeSpec = _2.encodeTimeSpecToTimestamp = _2.EXT_TIMESTAMP = void 0;
+  var Sn = Ct(), ps = Je();
+  _2.EXT_TIMESTAMP = -1;
+  var kn = 4294967296 - 1, Mn = 17179869184 - 1;
+  function ds({ sec: s, nsec: e }) {
+    if (s >= 0 && e >= 0 && s <= Mn)
+      if (e === 0 && s <= kn) {
         let t = new Uint8Array(4);
-        return new DataView(t.buffer).setUint32(0, r), t;
+        return new DataView(t.buffer).setUint32(0, s), t;
       } else {
-        let t = r / 4294967296, s = r & 4294967295, n = new Uint8Array(8), o = new DataView(n.buffer);
-        return o.setUint32(0, e << 2 | t & 3), o.setUint32(4, s), n;
+        let t = s / 4294967296, r = s & 4294967295, n = new Uint8Array(8), o = new DataView(n.buffer);
+        return o.setUint32(0, e << 2 | t & 3), o.setUint32(4, r), n;
       }
     else {
-      let t = new Uint8Array(12), s = new DataView(t.buffer);
-      return s.setUint32(0, e), (0, us.setInt64)(s, 4, r), t;
+      let t = new Uint8Array(12), r = new DataView(t.buffer);
+      return r.setUint32(0, e), (0, ps.setInt64)(r, 4, s), t;
     }
   }
-  _.encodeTimeSpecToTimestamp = ps;
-  function ds(r) {
-    let e = r.getTime(), t = Math.floor(e / 1e3), s = (e - t * 1e3) * 1e6, n = Math.floor(s / 1e9);
-    return { sec: t + n, nsec: s - n * 1e9 };
+  _2.encodeTimeSpecToTimestamp = ds;
+  function hs(s) {
+    let e = s.getTime(), t = Math.floor(e / 1e3), r = (e - t * 1e3) * 1e6, n = Math.floor(r / 1e9);
+    return { sec: t + n, nsec: r - n * 1e9 };
   }
-  _.encodeDateToTimeSpec = ds;
-  function hs(r) {
-    if (r instanceof Date) {
-      let e = ds(r);
-      return ps(e);
+  _2.encodeDateToTimeSpec = hs;
+  function ys(s) {
+    if (s instanceof Date) {
+      let e = hs(s);
+      return ds(e);
     } else
       return null;
   }
-  _.encodeTimestampExtension = hs;
-  function ys(r) {
-    let e = new DataView(r.buffer, r.byteOffset, r.byteLength);
-    switch (r.byteLength) {
+  _2.encodeTimestampExtension = ys;
+  function fs(s) {
+    let e = new DataView(s.buffer, s.byteOffset, s.byteLength);
+    switch (s.byteLength) {
       case 4:
         return { sec: e.getUint32(0), nsec: 0 };
       case 8: {
-        let t = e.getUint32(0), s = e.getUint32(4), n = (t & 3) * 4294967296 + s, o = t >>> 2;
+        let t = e.getUint32(0), r = e.getUint32(4), n = (t & 3) * 4294967296 + r, o = t >>> 2;
         return { sec: n, nsec: o };
       }
       case 12: {
-        let t = (0, us.getInt64)(e, 4), s = e.getUint32(0);
-        return { sec: t, nsec: s };
+        let t = (0, ps.getInt64)(e, 4), r = e.getUint32(0);
+        return { sec: t, nsec: r };
       }
       default:
-        throw new _n.DecodeError(`Unrecognized data size for timestamp (expected 4, 8, or 12): ${r.length}`);
+        throw new Sn.DecodeError(`Unrecognized data size for timestamp (expected 4, 8, or 12): ${s.length}`);
     }
   }
-  _.decodeTimestampToTimeSpec = ys;
-  function fs(r) {
-    let e = ys(r);
+  _2.decodeTimestampToTimeSpec = fs;
+  function Rs(s) {
+    let e = fs(s);
     return new Date(e.sec * 1e3 + e.nsec / 1e6);
   }
-  _.decodeTimestampExtension = fs;
-  _.timestampExtension = { type: _.EXT_TIMESTAMP, encode: hs, decode: fs };
+  _2.decodeTimestampExtension = Rs;
+  _2.timestampExtension = { type: _2.EXT_TIMESTAMP, encode: ys, decode: Rs };
 });
-var Nt = S((jt) => {
+var Bt = S((Nt) => {
   "use strict";
-  Object.defineProperty(jt, "__esModule", { value: true });
-  jt.ExtensionCodec = void 0;
-  var Ct = Dr(), Dn = kr(), He = class {
+  Object.defineProperty(Nt, "__esModule", { value: true });
+  Nt.ExtensionCodec = void 0;
+  var jt = Dr(), Dn = Wr(), ze = class {
     constructor() {
       this.builtInEncoders = [], this.builtInDecoders = [], this.encoders = [], this.decoders = [], this.register(Dn.timestampExtension);
     }
-    register({ type: e, encode: t, decode: s }) {
+    register({ type: e, encode: t, decode: r }) {
       if (e >= 0)
-        this.encoders[e] = t, this.decoders[e] = s;
+        this.encoders[e] = t, this.decoders[e] = r;
       else {
         let n = 1 + e;
-        this.builtInEncoders[n] = t, this.builtInDecoders[n] = s;
+        this.builtInEncoders[n] = t, this.builtInDecoders[n] = r;
       }
     }
     tryToEncode(e, t) {
-      for (let s = 0; s < this.builtInEncoders.length; s++) {
-        let n = this.builtInEncoders[s];
+      for (let r = 0; r < this.builtInEncoders.length; r++) {
+        let n = this.builtInEncoders[r];
         if (n != null) {
           let o = n(e, t);
           if (o != null) {
-            let i = -1 - s;
-            return new Ct.ExtData(i, o);
+            let i = -1 - r;
+            return new jt.ExtData(i, o);
           }
         }
       }
-      for (let s = 0; s < this.encoders.length; s++) {
-        let n = this.encoders[s];
+      for (let r = 0; r < this.encoders.length; r++) {
+        let n = this.encoders[r];
         if (n != null) {
           let o = n(e, t);
           if (o != null) {
-            let i = s;
-            return new Ct.ExtData(i, o);
+            let i = r;
+            return new jt.ExtData(i, o);
           }
         }
       }
-      return e instanceof Ct.ExtData ? e : null;
+      return e instanceof jt.ExtData ? e : null;
     }
-    decode(e, t, s) {
+    decode(e, t, r) {
       let n = t < 0 ? this.builtInDecoders[-1 - t] : this.decoders[t];
-      return n ? n(e, t, s) : new Ct.ExtData(t, e);
+      return n ? n(e, t, r) : new jt.ExtData(t, e);
     }
   };
-  jt.ExtensionCodec = He;
-  He.defaultCodec = new He();
+  Nt.ExtensionCodec = ze;
+  ze.defaultCodec = new ze();
 });
-var Or = S((we2) => {
+var Or = S((xe) => {
   "use strict";
-  Object.defineProperty(we2, "__esModule", { value: true });
-  we2.createDataView = we2.ensureUint8Array = void 0;
-  function Rs(r) {
-    return r instanceof Uint8Array ? r : ArrayBuffer.isView(r) ? new Uint8Array(r.buffer, r.byteOffset, r.byteLength) : r instanceof ArrayBuffer ? new Uint8Array(r) : Uint8Array.from(r);
+  Object.defineProperty(xe, "__esModule", { value: true });
+  xe.createDataView = xe.ensureUint8Array = void 0;
+  function ms(s) {
+    return s instanceof Uint8Array ? s : ArrayBuffer.isView(s) ? new Uint8Array(s.buffer, s.byteOffset, s.byteLength) : s instanceof ArrayBuffer ? new Uint8Array(s) : Uint8Array.from(s);
   }
-  we2.ensureUint8Array = Rs;
-  function kn(r) {
-    if (r instanceof ArrayBuffer)
-      return new DataView(r);
-    let e = Rs(r);
+  xe.ensureUint8Array = ms;
+  function Wn(s) {
+    if (s instanceof ArrayBuffer)
+      return new DataView(s);
+    let e = ms(s);
     return new DataView(e.buffer, e.byteOffset, e.byteLength);
   }
-  we2.createDataView = kn;
+  xe.createDataView = Wn;
 });
-var Ar = S((V2) => {
+var Ir = S((J2) => {
   "use strict";
-  Object.defineProperty(V2, "__esModule", { value: true });
-  V2.Encoder = V2.DEFAULT_INITIAL_BUFFER_SIZE = V2.DEFAULT_MAX_DEPTH = void 0;
-  var ze = Wt(), On = Nt(), ms = Ve(), Wn = Or();
-  V2.DEFAULT_MAX_DEPTH = 100;
-  V2.DEFAULT_INITIAL_BUFFER_SIZE = 2048;
-  var Wr = class {
-    constructor(e = On.ExtensionCodec.defaultCodec, t = void 0, s = V2.DEFAULT_MAX_DEPTH, n = V2.DEFAULT_INITIAL_BUFFER_SIZE, o = false, i = false, c = false, p = false) {
-      this.extensionCodec = e, this.context = t, this.maxDepth = s, this.initialBufferSize = n, this.sortKeys = o, this.forceFloat32 = i, this.ignoreUndefined = c, this.forceIntegerToFloat = p, this.pos = 0, this.view = new DataView(new ArrayBuffer(this.initialBufferSize)), this.bytes = new Uint8Array(this.view.buffer);
+  Object.defineProperty(J2, "__esModule", { value: true });
+  J2.Encoder = J2.DEFAULT_INITIAL_BUFFER_SIZE = J2.DEFAULT_MAX_DEPTH = void 0;
+  var Xe = At(), On = Bt(), gs = Je(), An = Or();
+  J2.DEFAULT_MAX_DEPTH = 100;
+  J2.DEFAULT_INITIAL_BUFFER_SIZE = 2048;
+  var Ar = class {
+    constructor(e = On.ExtensionCodec.defaultCodec, t = void 0, r = J2.DEFAULT_MAX_DEPTH, n = J2.DEFAULT_INITIAL_BUFFER_SIZE, o = false, i = false, c2 = false, p2 = false) {
+      this.extensionCodec = e, this.context = t, this.maxDepth = r, this.initialBufferSize = n, this.sortKeys = o, this.forceFloat32 = i, this.ignoreUndefined = c2, this.forceIntegerToFloat = p2, this.pos = 0, this.view = new DataView(new ArrayBuffer(this.initialBufferSize)), this.bytes = new Uint8Array(this.view.buffer);
     }
     reinitializeState() {
       this.pos = 0;
@@ -408,8 +408,8 @@ var Ar = S((V2) => {
       this.view.byteLength < t && this.resizeBuffer(t * 2);
     }
     resizeBuffer(e) {
-      let t = new ArrayBuffer(e), s = new Uint8Array(t), n = new DataView(t);
-      s.set(this.bytes), this.view = n, this.bytes = s;
+      let t = new ArrayBuffer(e), r = new Uint8Array(t), n = new DataView(t);
+      r.set(this.bytes), this.view = n, this.bytes = r;
     }
     encodeNil() {
       this.writeU8(192);
@@ -433,18 +433,18 @@ var Ar = S((V2) => {
         throw new Error(`Too long string: ${e} bytes in UTF-8`);
     }
     encodeString(e) {
-      if (e.length > ze.TEXT_ENCODER_THRESHOLD) {
-        let n = (0, ze.utf8Count)(e);
-        this.ensureBufferSizeToWrite(5 + n), this.writeStringHeader(n), (0, ze.utf8EncodeTE)(e, this.bytes, this.pos), this.pos += n;
+      if (e.length > Xe.TEXT_ENCODER_THRESHOLD) {
+        let n = (0, Xe.utf8Count)(e);
+        this.ensureBufferSizeToWrite(5 + n), this.writeStringHeader(n), (0, Xe.utf8EncodeTE)(e, this.bytes, this.pos), this.pos += n;
       } else {
-        let n = (0, ze.utf8Count)(e);
-        this.ensureBufferSizeToWrite(5 + n), this.writeStringHeader(n), (0, ze.utf8EncodeJs)(e, this.bytes, this.pos), this.pos += n;
+        let n = (0, Xe.utf8Count)(e);
+        this.ensureBufferSizeToWrite(5 + n), this.writeStringHeader(n), (0, Xe.utf8EncodeJs)(e, this.bytes, this.pos), this.pos += n;
       }
     }
     encodeObject(e, t) {
-      let s = this.extensionCodec.tryToEncode(e, this.context);
-      if (s != null)
-        this.encodeExtension(s);
+      let r = this.extensionCodec.tryToEncode(e, this.context);
+      if (r != null)
+        this.encodeExtension(r);
       else if (Array.isArray(e))
         this.encodeArray(e, t);
       else if (ArrayBuffer.isView(e))
@@ -464,32 +464,32 @@ var Ar = S((V2) => {
         this.writeU8(198), this.writeU32(t);
       else
         throw new Error(`Too large binary: ${t}`);
-      let s = (0, Wn.ensureUint8Array)(e);
-      this.writeU8a(s);
+      let r = (0, An.ensureUint8Array)(e);
+      this.writeU8a(r);
     }
     encodeArray(e, t) {
-      let s = e.length;
-      if (s < 16)
-        this.writeU8(144 + s);
-      else if (s < 65536)
-        this.writeU8(220), this.writeU16(s);
-      else if (s < 4294967296)
-        this.writeU8(221), this.writeU32(s);
+      let r = e.length;
+      if (r < 16)
+        this.writeU8(144 + r);
+      else if (r < 65536)
+        this.writeU8(220), this.writeU16(r);
+      else if (r < 4294967296)
+        this.writeU8(221), this.writeU32(r);
       else
-        throw new Error(`Too large array: ${s}`);
+        throw new Error(`Too large array: ${r}`);
       for (let n of e)
         this.doEncode(n, t + 1);
     }
     countWithoutUndefined(e, t) {
-      let s = 0;
+      let r = 0;
       for (let n of t)
-        e[n] !== void 0 && s++;
-      return s;
+        e[n] !== void 0 && r++;
+      return r;
     }
     encodeMap(e, t) {
-      let s = Object.keys(e);
-      this.sortKeys && s.sort();
-      let n = this.ignoreUndefined ? this.countWithoutUndefined(e, s) : s.length;
+      let r = Object.keys(e);
+      this.sortKeys && r.sort();
+      let n = this.ignoreUndefined ? this.countWithoutUndefined(e, r) : r.length;
       if (n < 16)
         this.writeU8(128 + n);
       else if (n < 65536)
@@ -498,7 +498,7 @@ var Ar = S((V2) => {
         this.writeU8(223), this.writeU32(n);
       else
         throw new Error(`Too large map object: ${n}`);
-      for (let o of s) {
+      for (let o of r) {
         let i = e[o];
         this.ignoreUndefined && i === void 0 || (this.encodeString(o), this.doEncode(i, t + 1));
       }
@@ -554,113 +554,113 @@ var Ar = S((V2) => {
       this.ensureBufferSizeToWrite(8), this.view.setFloat64(this.pos, e), this.pos += 8;
     }
     writeU64(e) {
-      this.ensureBufferSizeToWrite(8), (0, ms.setUint64)(this.view, this.pos, e), this.pos += 8;
+      this.ensureBufferSizeToWrite(8), (0, gs.setUint64)(this.view, this.pos, e), this.pos += 8;
     }
     writeI64(e) {
-      this.ensureBufferSizeToWrite(8), (0, ms.setInt64)(this.view, this.pos, e), this.pos += 8;
+      this.ensureBufferSizeToWrite(8), (0, gs.setInt64)(this.view, this.pos, e), this.pos += 8;
     }
   };
-  V2.Encoder = Wr;
-});
-var gs = S((Bt) => {
-  "use strict";
-  Object.defineProperty(Bt, "__esModule", { value: true });
-  Bt.encode = void 0;
-  var An = Ar(), In = {};
-  function Un(r, e = In) {
-    return new An.Encoder(e.extensionCodec, e.context, e.maxDepth, e.initialBufferSize, e.sortKeys, e.forceFloat32, e.ignoreUndefined, e.forceIntegerToFloat).encodeSharedRef(r);
-  }
-  Bt.encode = Un;
+  J2.Encoder = Ar;
 });
 var bs = S((Lt) => {
   "use strict";
   Object.defineProperty(Lt, "__esModule", { value: true });
-  Lt.prettyByte = void 0;
-  function Cn(r) {
-    return `${r < 0 ? "-" : ""}0x${Math.abs(r).toString(16).padStart(2, "0")}`;
+  Lt.encode = void 0;
+  var In = Ir(), Un = {};
+  function Cn(s, e = Un) {
+    return new In.Encoder(e.extensionCodec, e.context, e.maxDepth, e.initialBufferSize, e.sortKeys, e.forceFloat32, e.ignoreUndefined, e.forceIntegerToFloat).encodeSharedRef(s);
   }
-  Lt.prettyByte = Cn;
+  Lt.encode = Cn;
 });
 var ws = S((Ft) => {
   "use strict";
   Object.defineProperty(Ft, "__esModule", { value: true });
-  Ft.CachedKeyDecoder = void 0;
-  var jn = Wt(), Nn = 16, Bn = 16, Ir = class {
-    constructor(e = Nn, t = Bn) {
+  Ft.prettyByte = void 0;
+  function jn(s) {
+    return `${s < 0 ? "-" : ""}0x${Math.abs(s).toString(16).padStart(2, "0")}`;
+  }
+  Ft.prettyByte = jn;
+});
+var xs = S((qt) => {
+  "use strict";
+  Object.defineProperty(qt, "__esModule", { value: true });
+  qt.CachedKeyDecoder = void 0;
+  var Nn = At(), Bn = 16, Ln = 16, Ur = class {
+    constructor(e = Bn, t = Ln) {
       this.maxKeyLength = e, this.maxLengthPerKey = t, this.hit = 0, this.miss = 0, this.caches = [];
-      for (let s = 0; s < this.maxKeyLength; s++)
+      for (let r = 0; r < this.maxKeyLength; r++)
         this.caches.push([]);
     }
     canBeCached(e) {
       return e > 0 && e <= this.maxKeyLength;
     }
-    find(e, t, s) {
-      let n = this.caches[s - 1];
+    find(e, t, r) {
+      let n = this.caches[r - 1];
       e:
         for (let o of n) {
           let i = o.bytes;
-          for (let c = 0; c < s; c++)
-            if (i[c] !== e[t + c])
+          for (let c2 = 0; c2 < r; c2++)
+            if (i[c2] !== e[t + c2])
               continue e;
           return o.str;
         }
       return null;
     }
     store(e, t) {
-      let s = this.caches[e.length - 1], n = { bytes: e, str: t };
-      s.length >= this.maxLengthPerKey ? s[Math.random() * s.length | 0] = n : s.push(n);
+      let r = this.caches[e.length - 1], n = { bytes: e, str: t };
+      r.length >= this.maxLengthPerKey ? r[Math.random() * r.length | 0] = n : r.push(n);
     }
-    decode(e, t, s) {
-      let n = this.find(e, t, s);
+    decode(e, t, r) {
+      let n = this.find(e, t, r);
       if (n != null)
         return this.hit++, n;
       this.miss++;
-      let o = (0, jn.utf8DecodeJs)(e, t, s), i = Uint8Array.prototype.slice.call(e, t, t + s);
+      let o = (0, Nn.utf8DecodeJs)(e, t, r), i = Uint8Array.prototype.slice.call(e, t, t + r);
       return this.store(i, o), o;
     }
   };
-  Ft.CachedKeyDecoder = Ir;
+  qt.CachedKeyDecoder = Ur;
 });
-var qt = S((K2) => {
+var Vt = S((Q2) => {
   "use strict";
-  Object.defineProperty(K2, "__esModule", { value: true });
-  K2.Decoder = K2.DataViewIndexOutOfBoundsError = void 0;
-  var Ur = bs(), Ln = Nt(), le2 = Ve(), Cr = Wt(), jr = Or(), Fn = ws(), $2 = Ut(), qn = (r) => {
-    let e = typeof r;
+  Object.defineProperty(Q2, "__esModule", { value: true });
+  Q2.Decoder = Q2.DataViewIndexOutOfBoundsError = void 0;
+  var Cr = ws(), Fn = Bt(), ce2 = Je(), jr = At(), Nr = Or(), qn = xs(), K2 = Ct(), Vn = (s) => {
+    let e = typeof s;
     return e === "string" || e === "number";
-  }, Xe = -1, Br = new DataView(new ArrayBuffer(0)), Vn = new Uint8Array(Br.buffer);
-  K2.DataViewIndexOutOfBoundsError = (() => {
+  }, Ge = -1, Lr = new DataView(new ArrayBuffer(0)), Jn = new Uint8Array(Lr.buffer);
+  Q2.DataViewIndexOutOfBoundsError = (() => {
     try {
-      Br.getInt8(0);
-    } catch (r) {
-      return r.constructor;
+      Lr.getInt8(0);
+    } catch (s) {
+      return s.constructor;
     }
     throw new Error("never reached");
   })();
-  var xs = new K2.DataViewIndexOutOfBoundsError("Insufficient data"), Jn = new Fn.CachedKeyDecoder(), Nr = class {
-    constructor(e = Ln.ExtensionCodec.defaultCodec, t = void 0, s = le2.UINT32_MAX, n = le2.UINT32_MAX, o = le2.UINT32_MAX, i = le2.UINT32_MAX, c = le2.UINT32_MAX, p = Jn) {
-      this.extensionCodec = e, this.context = t, this.maxStrLength = s, this.maxBinLength = n, this.maxArrayLength = o, this.maxMapLength = i, this.maxExtLength = c, this.keyDecoder = p, this.totalPos = 0, this.pos = 0, this.view = Br, this.bytes = Vn, this.headByte = Xe, this.stack = [];
+  var vs = new Q2.DataViewIndexOutOfBoundsError("Insufficient data"), Hn = new qn.CachedKeyDecoder(), Br = class {
+    constructor(e = Fn.ExtensionCodec.defaultCodec, t = void 0, r = ce2.UINT32_MAX, n = ce2.UINT32_MAX, o = ce2.UINT32_MAX, i = ce2.UINT32_MAX, c2 = ce2.UINT32_MAX, p2 = Hn) {
+      this.extensionCodec = e, this.context = t, this.maxStrLength = r, this.maxBinLength = n, this.maxArrayLength = o, this.maxMapLength = i, this.maxExtLength = c2, this.keyDecoder = p2, this.totalPos = 0, this.pos = 0, this.view = Lr, this.bytes = Jn, this.headByte = Ge, this.stack = [];
     }
     reinitializeState() {
-      this.totalPos = 0, this.headByte = Xe, this.stack.length = 0;
+      this.totalPos = 0, this.headByte = Ge, this.stack.length = 0;
     }
     setBuffer(e) {
-      this.bytes = (0, jr.ensureUint8Array)(e), this.view = (0, jr.createDataView)(this.bytes), this.pos = 0;
+      this.bytes = (0, Nr.ensureUint8Array)(e), this.view = (0, Nr.createDataView)(this.bytes), this.pos = 0;
     }
     appendBuffer(e) {
-      if (this.headByte === Xe && !this.hasRemaining(1))
+      if (this.headByte === Ge && !this.hasRemaining(1))
         this.setBuffer(e);
       else {
-        let t = this.bytes.subarray(this.pos), s = (0, jr.ensureUint8Array)(e), n = new Uint8Array(t.length + s.length);
-        n.set(t), n.set(s, t.length), this.setBuffer(n);
+        let t = this.bytes.subarray(this.pos), r = (0, Nr.ensureUint8Array)(e), n = new Uint8Array(t.length + r.length);
+        n.set(t), n.set(r, t.length), this.setBuffer(n);
       }
     }
     hasRemaining(e) {
       return this.view.byteLength - this.pos >= e;
     }
     createExtraByteError(e) {
-      let { view: t, pos: s } = this;
-      return new RangeError(`Extra ${t.byteLength - s} of ${t.byteLength} byte(s) found at buffer[${e}]`);
+      let { view: t, pos: r } = this;
+      return new RangeError(`Extra ${t.byteLength - r} of ${t.byteLength} byte(s) found at buffer[${e}]`);
     }
     decode(e) {
       this.reinitializeState(), this.setBuffer(e);
@@ -674,26 +674,26 @@ var qt = S((K2) => {
         yield this.doDecodeSync();
     }
     async decodeAsync(e) {
-      let t = false, s;
-      for await (let c of e) {
+      let t = false, r;
+      for await (let c2 of e) {
         if (t)
           throw this.createExtraByteError(this.totalPos);
-        this.appendBuffer(c);
+        this.appendBuffer(c2);
         try {
-          s = this.doDecodeSync(), t = true;
-        } catch (p) {
-          if (!(p instanceof K2.DataViewIndexOutOfBoundsError))
-            throw p;
+          r = this.doDecodeSync(), t = true;
+        } catch (p2) {
+          if (!(p2 instanceof Q2.DataViewIndexOutOfBoundsError))
+            throw p2;
         }
         this.totalPos += this.pos;
       }
       if (t) {
         if (this.hasRemaining(1))
           throw this.createExtraByteError(this.totalPos);
-        return s;
+        return r;
       }
       let { headByte: n, pos: o, totalPos: i } = this;
-      throw new RangeError(`Insufficient data in parsing ${(0, Ur.prettyByte)(n)} at ${i} (${o} in the current buffer)`);
+      throw new RangeError(`Insufficient data in parsing ${(0, Cr.prettyByte)(n)} at ${i} (${o} in the current buffer)`);
     }
     decodeArrayStream(e) {
       return this.decodeMultiAsync(e, true);
@@ -702,16 +702,16 @@ var qt = S((K2) => {
       return this.decodeMultiAsync(e, false);
     }
     async *decodeMultiAsync(e, t) {
-      let s = t, n = -1;
+      let r = t, n = -1;
       for await (let o of e) {
         if (t && n === 0)
           throw this.createExtraByteError(this.totalPos);
-        this.appendBuffer(o), s && (n = this.readArraySize(), s = false, this.complete());
+        this.appendBuffer(o), r && (n = this.readArraySize(), r = false, this.complete());
         try {
           for (; yield this.doDecodeSync(), --n !== 0; )
             ;
         } catch (i) {
-          if (!(i instanceof K2.DataViewIndexOutOfBoundsError))
+          if (!(i instanceof Q2.DataViewIndexOutOfBoundsError))
             throw i;
         }
         this.totalPos += this.pos;
@@ -836,25 +836,25 @@ var qt = S((K2) => {
             let n = this.lookU32();
             t = this.decodeExtension(n, 4);
           } else
-            throw new $2.DecodeError(`Unrecognized type byte: ${(0, Ur.prettyByte)(e)}`);
+            throw new K2.DecodeError(`Unrecognized type byte: ${(0, Cr.prettyByte)(e)}`);
           this.complete();
-          let s = this.stack;
-          for (; s.length > 0; ) {
-            let n = s[s.length - 1];
+          let r = this.stack;
+          for (; r.length > 0; ) {
+            let n = r[r.length - 1];
             if (n.type === 0)
               if (n.array[n.position] = t, n.position++, n.position === n.size)
-                s.pop(), t = n.array;
+                r.pop(), t = n.array;
               else
                 continue e;
             else if (n.type === 1) {
-              if (!qn(t))
-                throw new $2.DecodeError("The type of key must be string or number but " + typeof t);
+              if (!Vn(t))
+                throw new K2.DecodeError("The type of key must be string or number but " + typeof t);
               if (t === "__proto__")
-                throw new $2.DecodeError("The key __proto__ is not allowed");
+                throw new K2.DecodeError("The key __proto__ is not allowed");
               n.key = t, n.type = 2;
               continue e;
             } else if (n.map[n.key] = t, n.readCount++, n.readCount === n.size)
-              s.pop(), t = n.map;
+              r.pop(), t = n.map;
             else {
               n.key = null, n.type = 1;
               continue e;
@@ -864,10 +864,10 @@ var qt = S((K2) => {
         }
     }
     readHeadByte() {
-      return this.headByte === Xe && (this.headByte = this.readU8()), this.headByte;
+      return this.headByte === Ge && (this.headByte = this.readU8()), this.headByte;
     }
     complete() {
-      this.headByte = Xe;
+      this.headByte = Ge;
     }
     readArraySize() {
       let e = this.readHeadByte();
@@ -879,45 +879,45 @@ var qt = S((K2) => {
         default: {
           if (e < 160)
             return e - 144;
-          throw new $2.DecodeError(`Unrecognized array type byte: ${(0, Ur.prettyByte)(e)}`);
+          throw new K2.DecodeError(`Unrecognized array type byte: ${(0, Cr.prettyByte)(e)}`);
         }
       }
     }
     pushMapState(e) {
       if (e > this.maxMapLength)
-        throw new $2.DecodeError(`Max length exceeded: map length (${e}) > maxMapLengthLength (${this.maxMapLength})`);
+        throw new K2.DecodeError(`Max length exceeded: map length (${e}) > maxMapLengthLength (${this.maxMapLength})`);
       this.stack.push({ type: 1, size: e, key: null, readCount: 0, map: {} });
     }
     pushArrayState(e) {
       if (e > this.maxArrayLength)
-        throw new $2.DecodeError(`Max length exceeded: array length (${e}) > maxArrayLength (${this.maxArrayLength})`);
+        throw new K2.DecodeError(`Max length exceeded: array length (${e}) > maxArrayLength (${this.maxArrayLength})`);
       this.stack.push({ type: 0, size: e, array: new Array(e), position: 0 });
     }
     decodeUtf8String(e, t) {
-      var s;
+      var r;
       if (e > this.maxStrLength)
-        throw new $2.DecodeError(`Max length exceeded: UTF-8 byte length (${e}) > maxStrLength (${this.maxStrLength})`);
+        throw new K2.DecodeError(`Max length exceeded: UTF-8 byte length (${e}) > maxStrLength (${this.maxStrLength})`);
       if (this.bytes.byteLength < this.pos + t + e)
-        throw xs;
+        throw vs;
       let n = this.pos + t, o;
-      return this.stateIsMapKey() && (!((s = this.keyDecoder) === null || s === void 0) && s.canBeCached(e)) ? o = this.keyDecoder.decode(this.bytes, n, e) : e > Cr.TEXT_DECODER_THRESHOLD ? o = (0, Cr.utf8DecodeTD)(this.bytes, n, e) : o = (0, Cr.utf8DecodeJs)(this.bytes, n, e), this.pos += t + e, o;
+      return this.stateIsMapKey() && (!((r = this.keyDecoder) === null || r === void 0) && r.canBeCached(e)) ? o = this.keyDecoder.decode(this.bytes, n, e) : e > jr.TEXT_DECODER_THRESHOLD ? o = (0, jr.utf8DecodeTD)(this.bytes, n, e) : o = (0, jr.utf8DecodeJs)(this.bytes, n, e), this.pos += t + e, o;
     }
     stateIsMapKey() {
       return this.stack.length > 0 ? this.stack[this.stack.length - 1].type === 1 : false;
     }
     decodeBinary(e, t) {
       if (e > this.maxBinLength)
-        throw new $2.DecodeError(`Max length exceeded: bin length (${e}) > maxBinLength (${this.maxBinLength})`);
+        throw new K2.DecodeError(`Max length exceeded: bin length (${e}) > maxBinLength (${this.maxBinLength})`);
       if (!this.hasRemaining(e + t))
-        throw xs;
-      let s = this.pos + t, n = this.bytes.subarray(s, s + e);
+        throw vs;
+      let r = this.pos + t, n = this.bytes.subarray(r, r + e);
       return this.pos += t + e, n;
     }
     decodeExtension(e, t) {
       if (e > this.maxExtLength)
-        throw new $2.DecodeError(`Max length exceeded: ext length (${e}) > maxExtLength (${this.maxExtLength})`);
-      let s = this.view.getInt8(this.pos + t), n = this.decodeBinary(e, t + 1);
-      return this.extensionCodec.decode(n, s, this.context);
+        throw new K2.DecodeError(`Max length exceeded: ext length (${e}) > maxExtLength (${this.maxExtLength})`);
+      let r = this.view.getInt8(this.pos + t), n = this.decodeBinary(e, t + 1);
+      return this.extensionCodec.decode(n, r, this.context);
     }
     lookU8() {
       return this.view.getUint8(this.pos);
@@ -953,11 +953,11 @@ var qt = S((K2) => {
       return this.pos += 4, e;
     }
     readU64() {
-      let e = (0, le2.getUint64)(this.view, this.pos);
+      let e = (0, ce2.getUint64)(this.view, this.pos);
       return this.pos += 8, e;
     }
     readI64() {
-      let e = (0, le2.getInt64)(this.view, this.pos);
+      let e = (0, ce2.getInt64)(this.view, this.pos);
       return this.pos += 8, e;
     }
     readF32() {
@@ -969,281 +969,283 @@ var qt = S((K2) => {
       return this.pos += 8, e;
     }
   };
-  K2.Decoder = Nr;
+  Q2.Decoder = Br;
 });
-var Lr = S((J2) => {
+var Fr = S((H2) => {
   "use strict";
-  Object.defineProperty(J2, "__esModule", { value: true });
-  J2.decodeMulti = J2.decode = J2.defaultDecodeOptions = void 0;
-  var vs = qt();
-  J2.defaultDecodeOptions = {};
-  function Hn(r, e = J2.defaultDecodeOptions) {
-    return new vs.Decoder(e.extensionCodec, e.context, e.maxStrLength, e.maxBinLength, e.maxArrayLength, e.maxMapLength, e.maxExtLength).decode(r);
+  Object.defineProperty(H2, "__esModule", { value: true });
+  H2.decodeMulti = H2.decode = H2.defaultDecodeOptions = void 0;
+  var Es = Vt();
+  H2.defaultDecodeOptions = {};
+  function zn(s, e = H2.defaultDecodeOptions) {
+    return new Es.Decoder(e.extensionCodec, e.context, e.maxStrLength, e.maxBinLength, e.maxArrayLength, e.maxMapLength, e.maxExtLength).decode(s);
   }
-  J2.decode = Hn;
-  function zn(r, e = J2.defaultDecodeOptions) {
-    return new vs.Decoder(e.extensionCodec, e.context, e.maxStrLength, e.maxBinLength, e.maxArrayLength, e.maxMapLength, e.maxExtLength).decodeMulti(r);
+  H2.decode = zn;
+  function Xn(s, e = H2.defaultDecodeOptions) {
+    return new Es.Decoder(e.extensionCodec, e.context, e.maxStrLength, e.maxBinLength, e.maxArrayLength, e.maxMapLength, e.maxExtLength).decodeMulti(s);
   }
-  J2.decodeMulti = zn;
+  H2.decodeMulti = Xn;
 });
-var Ps = S((te) => {
+var _s = S((re2) => {
   "use strict";
-  Object.defineProperty(te, "__esModule", { value: true });
-  te.ensureAsyncIterable = te.asyncIterableFromStream = te.isAsyncIterable = void 0;
-  function Es(r) {
-    return r[Symbol.asyncIterator] != null;
+  Object.defineProperty(re2, "__esModule", { value: true });
+  re2.ensureAsyncIterable = re2.asyncIterableFromStream = re2.isAsyncIterable = void 0;
+  function Ts(s) {
+    return s[Symbol.asyncIterator] != null;
   }
-  te.isAsyncIterable = Es;
-  function Xn(r) {
-    if (r == null)
+  re2.isAsyncIterable = Ts;
+  function Gn(s) {
+    if (s == null)
       throw new Error("Assertion Failure: value must not be null nor undefined");
   }
-  async function* Ts(r) {
-    let e = r.getReader();
+  async function* Ps(s) {
+    let e = s.getReader();
     try {
       for (; ; ) {
-        let { done: t, value: s } = await e.read();
+        let { done: t, value: r } = await e.read();
         if (t)
           return;
-        Xn(s), yield s;
+        Gn(r), yield r;
       }
     } finally {
       e.releaseLock();
     }
   }
-  te.asyncIterableFromStream = Ts;
-  function Gn(r) {
-    return Es(r) ? r : Ts(r);
+  re2.asyncIterableFromStream = Ps;
+  function $n(s) {
+    return Ts(s) ? s : Ps(s);
   }
-  te.ensureAsyncIterable = Gn;
+  re2.ensureAsyncIterable = $n;
 });
-var Ss = S((H2) => {
+var ks = S((z2) => {
   "use strict";
-  Object.defineProperty(H2, "__esModule", { value: true });
-  H2.decodeStream = H2.decodeMultiStream = H2.decodeArrayStream = H2.decodeAsync = void 0;
-  var Fr = qt(), qr = Ps(), Vt = Lr();
-  async function $n(r, e = Vt.defaultDecodeOptions) {
-    let t = (0, qr.ensureAsyncIterable)(r);
-    return new Fr.Decoder(e.extensionCodec, e.context, e.maxStrLength, e.maxBinLength, e.maxArrayLength, e.maxMapLength, e.maxExtLength).decodeAsync(t);
+  Object.defineProperty(z2, "__esModule", { value: true });
+  z2.decodeStream = z2.decodeMultiStream = z2.decodeArrayStream = z2.decodeAsync = void 0;
+  var qr = Vt(), Vr = _s(), Jt = Fr();
+  async function Kn(s, e = Jt.defaultDecodeOptions) {
+    let t = (0, Vr.ensureAsyncIterable)(s);
+    return new qr.Decoder(e.extensionCodec, e.context, e.maxStrLength, e.maxBinLength, e.maxArrayLength, e.maxMapLength, e.maxExtLength).decodeAsync(t);
   }
-  H2.decodeAsync = $n;
-  function Kn(r, e = Vt.defaultDecodeOptions) {
-    let t = (0, qr.ensureAsyncIterable)(r);
-    return new Fr.Decoder(e.extensionCodec, e.context, e.maxStrLength, e.maxBinLength, e.maxArrayLength, e.maxMapLength, e.maxExtLength).decodeArrayStream(t);
+  z2.decodeAsync = Kn;
+  function Qn(s, e = Jt.defaultDecodeOptions) {
+    let t = (0, Vr.ensureAsyncIterable)(s);
+    return new qr.Decoder(e.extensionCodec, e.context, e.maxStrLength, e.maxBinLength, e.maxArrayLength, e.maxMapLength, e.maxExtLength).decodeArrayStream(t);
   }
-  H2.decodeArrayStream = Kn;
-  function _s(r, e = Vt.defaultDecodeOptions) {
-    let t = (0, qr.ensureAsyncIterable)(r);
-    return new Fr.Decoder(e.extensionCodec, e.context, e.maxStrLength, e.maxBinLength, e.maxArrayLength, e.maxMapLength, e.maxExtLength).decodeStream(t);
+  z2.decodeArrayStream = Qn;
+  function Ss(s, e = Jt.defaultDecodeOptions) {
+    let t = (0, Vr.ensureAsyncIterable)(s);
+    return new qr.Decoder(e.extensionCodec, e.context, e.maxStrLength, e.maxBinLength, e.maxArrayLength, e.maxMapLength, e.maxExtLength).decodeStream(t);
   }
-  H2.decodeMultiStream = _s;
-  function Qn(r, e = Vt.defaultDecodeOptions) {
-    return _s(r, e);
+  z2.decodeMultiStream = Ss;
+  function Zn(s, e = Jt.defaultDecodeOptions) {
+    return Ss(s, e);
   }
-  H2.decodeStream = Qn;
+  z2.decodeStream = Zn;
 });
-var Ht = S((h) => {
+var zt = S((h2) => {
   "use strict";
-  Object.defineProperty(h, "__esModule", { value: true });
-  h.decodeTimestampExtension = h.encodeTimestampExtension = h.decodeTimestampToTimeSpec = h.encodeTimeSpecToTimestamp = h.encodeDateToTimeSpec = h.EXT_TIMESTAMP = h.ExtData = h.ExtensionCodec = h.Encoder = h.DataViewIndexOutOfBoundsError = h.DecodeError = h.Decoder = h.decodeStream = h.decodeMultiStream = h.decodeArrayStream = h.decodeAsync = h.decodeMulti = h.decode = h.encode = void 0;
-  var Zn = gs();
-  Object.defineProperty(h, "encode", { enumerable: true, get: function() {
-    return Zn.encode;
+  Object.defineProperty(h2, "__esModule", { value: true });
+  h2.decodeTimestampExtension = h2.encodeTimestampExtension = h2.decodeTimestampToTimeSpec = h2.encodeTimeSpecToTimestamp = h2.encodeDateToTimeSpec = h2.EXT_TIMESTAMP = h2.ExtData = h2.ExtensionCodec = h2.Encoder = h2.DataViewIndexOutOfBoundsError = h2.DecodeError = h2.Decoder = h2.decodeStream = h2.decodeMultiStream = h2.decodeArrayStream = h2.decodeAsync = h2.decodeMulti = h2.decode = h2.encode = void 0;
+  var Yn = bs();
+  Object.defineProperty(h2, "encode", { enumerable: true, get: function() {
+    return Yn.encode;
   } });
-  var Ms = Lr();
-  Object.defineProperty(h, "decode", { enumerable: true, get: function() {
+  var Ms = Fr();
+  Object.defineProperty(h2, "decode", { enumerable: true, get: function() {
     return Ms.decode;
   } });
-  Object.defineProperty(h, "decodeMulti", { enumerable: true, get: function() {
+  Object.defineProperty(h2, "decodeMulti", { enumerable: true, get: function() {
     return Ms.decodeMulti;
   } });
-  var Jt = Ss();
-  Object.defineProperty(h, "decodeAsync", { enumerable: true, get: function() {
-    return Jt.decodeAsync;
+  var Ht = ks();
+  Object.defineProperty(h2, "decodeAsync", { enumerable: true, get: function() {
+    return Ht.decodeAsync;
   } });
-  Object.defineProperty(h, "decodeArrayStream", { enumerable: true, get: function() {
-    return Jt.decodeArrayStream;
+  Object.defineProperty(h2, "decodeArrayStream", { enumerable: true, get: function() {
+    return Ht.decodeArrayStream;
   } });
-  Object.defineProperty(h, "decodeMultiStream", { enumerable: true, get: function() {
-    return Jt.decodeMultiStream;
+  Object.defineProperty(h2, "decodeMultiStream", { enumerable: true, get: function() {
+    return Ht.decodeMultiStream;
   } });
-  Object.defineProperty(h, "decodeStream", { enumerable: true, get: function() {
-    return Jt.decodeStream;
+  Object.defineProperty(h2, "decodeStream", { enumerable: true, get: function() {
+    return Ht.decodeStream;
   } });
-  var Ds = qt();
-  Object.defineProperty(h, "Decoder", { enumerable: true, get: function() {
+  var Ds = Vt();
+  Object.defineProperty(h2, "Decoder", { enumerable: true, get: function() {
     return Ds.Decoder;
   } });
-  Object.defineProperty(h, "DataViewIndexOutOfBoundsError", { enumerable: true, get: function() {
+  Object.defineProperty(h2, "DataViewIndexOutOfBoundsError", { enumerable: true, get: function() {
     return Ds.DataViewIndexOutOfBoundsError;
   } });
-  var Yn = Ut();
-  Object.defineProperty(h, "DecodeError", { enumerable: true, get: function() {
-    return Yn.DecodeError;
+  var eo = Ct();
+  Object.defineProperty(h2, "DecodeError", { enumerable: true, get: function() {
+    return eo.DecodeError;
   } });
-  var eo = Ar();
-  Object.defineProperty(h, "Encoder", { enumerable: true, get: function() {
-    return eo.Encoder;
+  var to = Ir();
+  Object.defineProperty(h2, "Encoder", { enumerable: true, get: function() {
+    return to.Encoder;
   } });
-  var to = Nt();
-  Object.defineProperty(h, "ExtensionCodec", { enumerable: true, get: function() {
-    return to.ExtensionCodec;
+  var ro = Bt();
+  Object.defineProperty(h2, "ExtensionCodec", { enumerable: true, get: function() {
+    return ro.ExtensionCodec;
   } });
-  var ro = Dr();
-  Object.defineProperty(h, "ExtData", { enumerable: true, get: function() {
-    return ro.ExtData;
+  var so = Dr();
+  Object.defineProperty(h2, "ExtData", { enumerable: true, get: function() {
+    return so.ExtData;
   } });
-  var xe = kr();
-  Object.defineProperty(h, "EXT_TIMESTAMP", { enumerable: true, get: function() {
-    return xe.EXT_TIMESTAMP;
+  var ve = Wr();
+  Object.defineProperty(h2, "EXT_TIMESTAMP", { enumerable: true, get: function() {
+    return ve.EXT_TIMESTAMP;
   } });
-  Object.defineProperty(h, "encodeDateToTimeSpec", { enumerable: true, get: function() {
-    return xe.encodeDateToTimeSpec;
+  Object.defineProperty(h2, "encodeDateToTimeSpec", { enumerable: true, get: function() {
+    return ve.encodeDateToTimeSpec;
   } });
-  Object.defineProperty(h, "encodeTimeSpecToTimestamp", { enumerable: true, get: function() {
-    return xe.encodeTimeSpecToTimestamp;
+  Object.defineProperty(h2, "encodeTimeSpecToTimestamp", { enumerable: true, get: function() {
+    return ve.encodeTimeSpecToTimestamp;
   } });
-  Object.defineProperty(h, "decodeTimestampToTimeSpec", { enumerable: true, get: function() {
-    return xe.decodeTimestampToTimeSpec;
+  Object.defineProperty(h2, "decodeTimestampToTimeSpec", { enumerable: true, get: function() {
+    return ve.decodeTimestampToTimeSpec;
   } });
-  Object.defineProperty(h, "encodeTimestampExtension", { enumerable: true, get: function() {
-    return xe.encodeTimestampExtension;
+  Object.defineProperty(h2, "encodeTimestampExtension", { enumerable: true, get: function() {
+    return ve.encodeTimestampExtension;
   } });
-  Object.defineProperty(h, "decodeTimestampExtension", { enumerable: true, get: function() {
-    return xe.decodeTimestampExtension;
+  Object.defineProperty(h2, "decodeTimestampExtension", { enumerable: true, get: function() {
+    return ve.decodeTimestampExtension;
   } });
 });
-var A = class extends Error {
+var I = class extends Error {
   constructor(e) {
     super(e), this.name = this.constructor.name, Object.setPrototypeOf(this, new.target.prototype);
   }
 };
-var P = class extends A {
+var O = class extends I {
+};
+var T = class extends I {
 };
 var m = typeof process < "u" && process.release && process.release.name === "node";
-var fr;
+var Rr;
 if (globalThis.document)
-  fr = (r) => new Promise((e, t) => {
-    let s = document.createElement("script");
-    s.src = r, s.onload = () => e(), s.onerror = t, document.head.appendChild(s);
+  Rr = (s) => new Promise((e, t) => {
+    let r = document.createElement("script");
+    r.src = s, r.onload = () => e(), r.onerror = t, document.head.appendChild(r);
   });
 else if (globalThis.importScripts)
-  fr = async (r) => {
+  Rr = async (s) => {
     try {
-      globalThis.importScripts(r);
+      globalThis.importScripts(s);
     } catch (e) {
       if (e instanceof TypeError)
-        await Promise.resolve().then(() => ne(N(r)));
+        await Promise.resolve().then(() => oe(B(s)));
       else
         throw e;
     }
   };
 else if (m)
-  fr = async (r) => {
-    let e = (await Promise.resolve().then(() => ne(N("path")))).default;
-    await Promise.resolve().then(() => ne(N(e.resolve(r))));
+  Rr = async (s) => {
+    let e = (await Promise.resolve().then(() => oe(B("path")))).default;
+    await Promise.resolve().then(() => oe(B(e.resolve(s))));
   };
 else
-  throw new A("Cannot determine runtime environment");
+  throw new I("Cannot determine runtime environment");
 var l = {};
-function Yr(r) {
-  Object.keys(r).forEach((e) => l._free(r[e]));
+function es(s) {
+  Object.keys(s).forEach((e) => l._free(s[e]));
 }
-var j = { null: 0, symbol: 1, pairlist: 2, closure: 3, environment: 4, promise: 5, call: 6, special: 7, builtin: 8, string: 9, logical: 10, integer: 13, double: 14, complex: 15, character: 16, dots: 17, any: 18, list: 19, expression: 20, bytecode: 21, pointer: 22, weakref: 23, raw: 24, s4: 25, new: 30, free: 31, function: 99 };
-function Rr(r) {
-  return !!r && typeof r == "object" && Object.keys(j).includes(r.type);
+var N = { null: 0, symbol: 1, pairlist: 2, closure: 3, environment: 4, promise: 5, call: 6, special: 7, builtin: 8, string: 9, logical: 10, integer: 13, double: 14, complex: 15, character: 16, dots: 17, any: 18, list: 19, expression: 20, bytecode: 21, pointer: 22, weakref: 23, raw: 24, s4: 25, new: 30, free: 31, function: 99 };
+function mr(s) {
+  return !!s && typeof s == "object" && Object.keys(N).includes(s.type);
 }
-function Ue(r) {
-  return !!r && typeof r == "object" && "re" in r && "im" in r;
+function Ce(s) {
+  return !!s && typeof s == "object" && "re" in s && "im" in s;
 }
-function Ce(r) {
-  return l._Rf_protect(B(r)), r;
+function je(s) {
+  return l._Rf_protect(L(s)), s;
 }
-function w(r, e) {
-  return l._Rf_protect(B(r)), ++e.n, r;
+function w(s, e) {
+  return l._Rf_protect(L(s)), ++e.n, s;
 }
-function es(r) {
+function ts(s) {
   let e = l._malloc(4);
-  return l._R_ProtectWithIndex(B(r), e), { loc: l.getValue(e, "i32"), ptr: e };
+  return l._R_ProtectWithIndex(L(s), e), { loc: l.getValue(e, "i32"), ptr: e };
 }
-function ts(r) {
-  l._Rf_unprotect(1), l._free(r.ptr);
+function rs(s) {
+  l._Rf_unprotect(1), l._free(s.ptr);
 }
-function rs(r, e) {
-  return l._R_Reprotect(B(r), e.loc), r;
+function ss(s, e) {
+  return l._R_Reprotect(L(s), e.loc), s;
 }
-function T(r) {
-  l._Rf_unprotect(r);
+function P(s) {
+  l._Rf_unprotect(s);
 }
-function mr(r, e, t) {
-  l._Rf_defineVar(B(e), B(t), B(r));
+function gr(s, e, t) {
+  l._Rf_defineVar(L(e), L(t), L(s));
 }
-function gr(r, e) {
-  let t = {}, s = { n: 0 };
+function br(s, e) {
+  let t = {}, r = { n: 0 };
   try {
-    let n = new Ne(e);
-    w(n, s), t.code = l.allocateUTF8(r);
+    let n = new Be(e);
+    w(n, r), t.code = l.allocateUTF8(s);
     let o = l._R_ParseEvalString(t.code, n.ptr);
     return y.wrap(o);
   } finally {
-    Yr(t), T(s.n);
+    es(t), P(r.n);
   }
 }
-function je(r, e) {
-  return l.getWasmTableEntry(l.GOT.ffi_safe_eval.value)(B(r), B(e));
+function Ne(s, e) {
+  return l.getWasmTableEntry(l.GOT.ffi_safe_eval.value)(L(s), L(e));
 }
-var ln = /* @__PURE__ */ new WeakMap();
-function ss(r, e) {
-  return ln.set(r, e), r;
+var cn = /* @__PURE__ */ new WeakMap();
+function ns(s, e) {
+  return cn.set(s, e), s;
 }
-function B(r) {
-  return Tt(r) ? r.ptr : r;
+function L(s) {
+  return Pt(s) ? s.ptr : s;
 }
-function ie(r, e) {
-  if (l._TYPEOF(r.ptr) !== j[e])
-    throw new Error(`Unexpected object type "${r.type()}" when expecting type "${e}"`);
+function le(s, e) {
+  if (l._TYPEOF(s.ptr) !== N[e])
+    throw new Error(`Unexpected object type "${s.type()}" when expecting type "${e}"`);
 }
-function ns(r) {
-  if (Rr(r))
-    return new (os(r.type))(r);
-  if (r && typeof r == "object" && "type" in r && r.type === "null")
-    return new Et();
-  if (r === null)
-    return new Z({ type: "logical", names: null, values: [null] });
-  if (typeof r == "boolean")
-    return new Z(r);
-  if (typeof r == "number")
-    return new ye(r);
-  if (typeof r == "string")
-    return new L(r);
-  if (Ue(r))
-    return new Be(r);
-  if (ArrayBuffer.isView(r) || r instanceof ArrayBuffer)
-    return new Le(r);
-  if (Array.isArray(r))
-    return pn(r);
-  if (typeof r == "object")
-    return Y.fromObject(r);
+function os(s) {
+  if (mr(s))
+    return new (as(s.type))(s);
+  if (s && typeof s == "object" && "type" in s && s.type === "null")
+    return new Tt();
+  if (s === null)
+    return new Y({ type: "logical", names: null, values: [null] });
+  if (typeof s == "boolean")
+    return new Y(s);
+  if (typeof s == "number")
+    return new fe(s);
+  if (typeof s == "string")
+    return new F(s);
+  if (Ce(s))
+    return new Le(s);
+  if (ArrayBuffer.isView(s) || s instanceof ArrayBuffer)
+    return new Fe(s);
+  if (Array.isArray(s))
+    return dn(s);
+  if (typeof s == "object")
+    return ee.fromObject(s);
   throw new Error("Robj construction for this JS object is not yet supported");
 }
-function pn(r) {
+function dn(s) {
   let e = { n: 0 };
-  if (r.every((s) => s && typeof s == "object" && !Tt(s) && !Ue(s))) {
-    let s = r, n = s.every((i) => Object.keys(i).filter((c) => !Object.keys(s[0]).includes(c)).length === 0 && Object.keys(s[0]).filter((c) => !Object.keys(i).includes(c)).length === 0), o = s.every((i) => Object.values(i).every((c) => is(c) || as(c)));
+  if (s.every((r) => r && typeof r == "object" && !Pt(r) && !Ce(r))) {
+    let r = s, n = r.every((i) => Object.keys(i).filter((c2) => !Object.keys(r[0]).includes(c2)).length === 0 && Object.keys(r[0]).filter((c2) => !Object.keys(i).includes(c2)).length === 0), o = r.every((i) => Object.values(i).every((c2) => ls(c2) || is(c2)));
     if (n && o)
-      return Y.fromD3(s);
+      return ee.fromD3(r);
   }
-  if (r.every((s) => typeof s == "boolean" || s === null))
-    return new Z(r);
-  if (r.every((s) => typeof s == "number" || s === null))
-    return new ye(r);
-  if (r.every((s) => typeof s == "string" || s === null))
-    return new L(r);
+  if (s.every((r) => typeof r == "boolean" || r === null))
+    return new Y(s);
+  if (s.every((r) => typeof r == "number" || r === null))
+    return new fe(s);
+  if (s.every((r) => typeof r == "string" || r === null))
+    return new F(s);
   try {
-    let s = new F([new I("c"), ...r]);
-    return w(s, e), s.eval();
+    let r = new q([new U("c"), ...s]);
+    return w(r, e), r.eval();
   } finally {
-    T(e.n);
+    P(e.n);
   }
 }
 var x = class {
@@ -1252,136 +1254,136 @@ var x = class {
   }
   type() {
     let e = l._TYPEOF(this.ptr);
-    return Object.keys(j).find((s) => j[s] === e);
+    return Object.keys(N).find((r) => N[r] === e);
   }
 };
-var fe;
-var xt;
-var oe = class extends x {
+var Re;
+var vt;
+var ae = class extends x {
   constructor(t) {
     if (!(t instanceof x))
-      return ns(t);
+      return os(t);
     super(t.ptr);
-    u(this, fe);
+    u(this, Re);
   }
   static wrap(t) {
-    let s = l._TYPEOF(t), n = Object.keys(j)[Object.values(j).indexOf(s)];
-    return new (os(n))(new x(t));
+    let r = l._TYPEOF(t), n = Object.keys(N)[Object.values(N).indexOf(r)];
+    return new (as(n))(new x(t));
   }
   get [Symbol.toStringTag]() {
     return `RObject:${this.type()}`;
   }
   static getPersistentObject(t) {
-    return M[t];
+    return k[t];
   }
   getPropertyValue(t) {
     return this[t];
   }
   inspect() {
-    gr(".Internal(inspect(x))", { x: this });
+    br(".Internal(inspect(x))", { x: this });
   }
   isNull() {
-    return l._TYPEOF(this.ptr) === j.null;
+    return l._TYPEOF(this.ptr) === N.null;
   }
   isNa() {
     try {
-      let t = gr("is.na(x)", { x: this });
-      return Ce(t), t.toBoolean();
+      let t = br("is.na(x)", { x: this });
+      return je(t), t.toBoolean();
     } finally {
-      T(1);
+      P(1);
     }
   }
   isUnbound() {
-    return this.ptr === M.unboundValue.ptr;
+    return this.ptr === k.unboundValue.ptr;
   }
   attrs() {
-    return ae.wrap(l._ATTRIB(this.ptr));
+    return ie.wrap(l._ATTRIB(this.ptr));
   }
   class() {
-    let t = { n: 0 }, s = new F([new I("class"), this]);
-    w(s, t);
+    let t = { n: 0 }, r = new q([new U("class"), this]);
+    w(r, t);
     try {
-      return s.eval();
+      return r.eval();
     } finally {
-      T(t.n);
+      P(t.n);
     }
   }
   setNames(t) {
-    let s;
+    let r;
     if (t === null)
-      s = M.null;
+      r = k.null;
     else if (Array.isArray(t) && t.every((n) => typeof n == "string" || n === null))
-      s = new L(t);
+      r = new F(t);
     else
       throw new Error("Argument to setNames must be null or an Array of strings or null");
-    return l._Rf_setAttrib(this.ptr, M.namesSymbol.ptr, s.ptr), this;
+    return l._Rf_setAttrib(this.ptr, k.namesSymbol.ptr, r.ptr), this;
   }
   names() {
-    let t = L.wrap(l._Rf_getAttrib(this.ptr, M.namesSymbol.ptr));
+    let t = F.wrap(l._Rf_getAttrib(this.ptr, k.namesSymbol.ptr));
     return t.isNull() ? null : t.toArray();
   }
   includes(t) {
-    let s = this.names();
-    return s && s.includes(t);
+    let r = this.names();
+    return r && r.includes(t);
   }
-  toJs(t = { depth: 0 }, s = 1) {
+  toJs(t = { depth: 0 }, r = 1) {
     throw new Error("This R object cannot be converted to JS");
   }
   subset(t) {
-    return E(this, fe, xt).call(this, t, M.bracketSymbol.ptr);
+    return E(this, Re, vt).call(this, t, k.bracketSymbol.ptr);
   }
   get(t) {
-    return E(this, fe, xt).call(this, t, M.bracket2Symbol.ptr);
+    return E(this, Re, vt).call(this, t, k.bracket2Symbol.ptr);
   }
   getDollar(t) {
-    return E(this, fe, xt).call(this, t, M.dollarSymbol.ptr);
+    return E(this, Re, vt).call(this, t, k.dollarSymbol.ptr);
   }
   pluck(...t) {
-    let s = es(M.null);
+    let r = ts(k.null);
     try {
-      let n = (i, c) => {
-        let p = i.get(c);
-        return rs(p, s);
+      let n = (i, c2) => {
+        let p2 = i.get(c2);
+        return ss(p2, r);
       }, o = t.reduce(n, this);
       return o.isNull() ? void 0 : o;
     } finally {
-      ts(s);
+      rs(r);
     }
   }
-  set(t, s) {
+  set(t, r) {
     let n = { n: 0 };
     try {
-      let o = new oe(t);
+      let o = new ae(t);
       w(o, n);
-      let i = new oe(s);
+      let i = new ae(r);
       w(i, n);
-      let c = new I("[[<-"), p = l._Rf_lang4(c.ptr, this.ptr, o.ptr, i.ptr);
-      return w(p, n), oe.wrap(je(p, M.baseEnv));
+      let c2 = new U("[[<-"), p2 = l._Rf_lang4(c2.ptr, this.ptr, o.ptr, i.ptr);
+      return w(p2, n), ae.wrap(Ne(p2, k.baseEnv));
     } finally {
-      T(n.n);
+      P(n.n);
     }
   }
   static getMethods(t) {
-    let s = /* @__PURE__ */ new Set(), n = t;
+    let r = /* @__PURE__ */ new Set(), n = t;
     do
-      Object.getOwnPropertyNames(n).map((o) => s.add(o));
+      Object.getOwnPropertyNames(n).map((o) => r.add(o));
     while (n = Object.getPrototypeOf(n));
-    return [...s.keys()].filter((o) => typeof t[o] == "function");
+    return [...r.keys()].filter((o) => typeof t[o] == "function");
   }
 };
-var y = oe;
-fe = /* @__PURE__ */ new WeakSet(), xt = function(t, s) {
+var y = ae;
+Re = /* @__PURE__ */ new WeakSet(), vt = function(t, r) {
   let n = { n: 0 };
   try {
-    let o = new oe(t);
+    let o = new ae(t);
     w(o, n);
-    let i = l._Rf_lang3(s, this.ptr, o.ptr);
-    return w(i, n), oe.wrap(je(i, M.baseEnv));
+    let i = l._Rf_lang3(r, this.ptr, o.ptr);
+    return w(i, n), ae.wrap(Ne(i, k.baseEnv));
   } finally {
-    T(n.n);
+    P(n.n);
   }
 };
-var Et = class extends y {
+var Tt = class extends y {
   constructor() {
     return super(new x(l.getValue(l._R_NilValue, "*"))), this;
   }
@@ -1389,10 +1391,10 @@ var Et = class extends y {
     return { type: "null" };
   }
 };
-var I = class extends y {
+var U = class extends y {
   constructor(e) {
     if (e instanceof x) {
-      ie(e, "symbol"), super(e);
+      le(e, "symbol"), super(e);
       return;
     }
     let t = l.allocateUTF8(e);
@@ -1413,7 +1415,7 @@ var I = class extends y {
     return this.printname().toString();
   }
   printname() {
-    return qe.wrap(l._PRINTNAME(this.ptr));
+    return Ve.wrap(l._PRINTNAME(this.ptr));
   }
   symvalue() {
     return y.wrap(l._SYMVALUE(this.ptr));
@@ -1422,19 +1424,19 @@ var I = class extends y {
     return y.wrap(l._INTERNAL(this.ptr));
   }
 };
-var ae = class extends y {
+var ie = class extends y {
   constructor(e) {
     if (e instanceof x)
-      return ie(e, "pairlist"), super(e), this;
+      return le(e, "pairlist"), super(e), this;
     let t = { n: 0 };
     try {
-      let { names: s, values: n } = Re(e), o = ae.wrap(l._Rf_allocList(n.length));
+      let { names: r, values: n } = me(e), o = ie.wrap(l._Rf_allocList(n.length));
       w(o, t);
-      for (let [i, c] = [0, o]; !c.isNull(); [i, c] = [i + 1, c.cdr()])
-        c.setcar(new y(n[i]));
-      o.setNames(s), super(o);
+      for (let [i, c2] = [0, o]; !c2.isNull(); [i, c2] = [i + 1, c2.cdr()])
+        c2.setcar(new y(n[i]));
+      o.setNames(r), super(o);
     } finally {
-      T(t.n);
+      P(t.n);
     }
   }
   get length() {
@@ -1443,25 +1445,25 @@ var ae = class extends y {
   toArray(e = { depth: 1 }) {
     return this.toJs(e).values;
   }
-  toObject({ allowDuplicateKey: e = true, allowEmptyKey: t = false, depth: s = -1 } = {}) {
-    let n = this.entries({ depth: s }), o = n.map(([i]) => i);
+  toObject({ allowDuplicateKey: e = true, allowEmptyKey: t = false, depth: r = -1 } = {}) {
+    let n = this.entries({ depth: r }), o = n.map(([i]) => i);
     if (!e && new Set(o).size !== o.length)
       throw new Error("Duplicate key when converting pairlist without allowDuplicateKey enabled");
     if (!t && o.some((i) => !i))
       throw new Error("Empty or null key when converting pairlist without allowEmptyKey enabled");
-    return Object.fromEntries(n.filter((i, c) => n.findIndex((p) => p[0] === i[0]) === c));
+    return Object.fromEntries(n.filter((i, c2) => n.findIndex((p2) => p2[0] === i[0]) === c2));
   }
   entries(e = { depth: 1 }) {
     let t = this.toJs(e);
-    return t.values.map((s, n) => [t.names ? t.names[n] : null, s]);
+    return t.values.map((r, n) => [t.names ? t.names[n] : null, r]);
   }
   toJs(e = { depth: 0 }, t = 1) {
-    let s = [], n = false, o = [];
-    for (let c = this; !c.isNull(); c = c.cdr()) {
-      let p = c.tag();
-      p.isNull() ? s.push("") : (n = true, s.push(p.toString())), e.depth && t >= e.depth ? o.push(c.car()) : o.push(c.car().toJs(e, t + 1));
+    let r = [], n = false, o = [];
+    for (let c2 = this; !c2.isNull(); c2 = c2.cdr()) {
+      let p2 = c2.tag();
+      p2.isNull() ? r.push("") : (n = true, r.push(p2.toString())), e.depth && t >= e.depth ? o.push(c2.car()) : o.push(c2.car().toJs(e, t + 1));
     }
-    return { type: "pairlist", names: n ? s : null, values: o };
+    return { type: "pairlist", names: n ? r : null, values: o };
   }
   includes(e) {
     return e in this.toObject();
@@ -1479,19 +1481,19 @@ var ae = class extends y {
     return y.wrap(l._TAG(this.ptr));
   }
 };
-var F = class extends y {
+var q = class extends y {
   constructor(e) {
     if (e instanceof x)
-      return ie(e, "call"), super(e), this;
+      return le(e, "call"), super(e), this;
     let t = { n: 0 };
     try {
-      let { values: s } = Re(e), n = s.map((i) => w(new y(i), t)), o = F.wrap(l._Rf_allocVector(j.call, s.length));
+      let { values: r } = me(e), n = r.map((i) => w(new y(i), t)), o = q.wrap(l._Rf_allocVector(N.call, r.length));
       w(o, t);
-      for (let [i, c] = [0, o]; !c.isNull(); [i, c] = [i + 1, c.cdr()])
-        c.setcar(n[i]);
+      for (let [i, c2] = [0, o]; !c2.isNull(); [i, c2] = [i + 1, c2.cdr()])
+        c2.setcar(n[i]);
       super(o);
     } finally {
-      T(t.n);
+      P(t.n);
     }
   }
   setcar(e) {
@@ -1504,7 +1506,7 @@ var F = class extends y {
     return y.wrap(l._CDR(this.ptr));
   }
   eval() {
-    return l.webr.evalR(this, { env: M.baseEnv });
+    return l.webr.evalR(this, { env: k.baseEnv });
   }
   capture(e = {}) {
     return l.webr.captureR(this, e);
@@ -1512,125 +1514,125 @@ var F = class extends y {
   deparse() {
     let e = { n: 0 };
     try {
-      let t = l._Rf_lang2(new I("deparse1").ptr, l._Rf_lang2(new I("quote").ptr, this.ptr));
+      let t = l._Rf_lang2(new U("deparse1").ptr, l._Rf_lang2(new U("quote").ptr, this.ptr));
       w(t, e);
-      let s = L.wrap(je(t, M.baseEnv));
-      return w(s, e), s.toString();
+      let r = F.wrap(Ne(t, k.baseEnv));
+      return w(r, e), r.toString();
     } finally {
-      T(e.n);
+      P(e.n);
     }
   }
 };
-var Fe = class extends y {
+var qe = class extends y {
   constructor(e, t = null) {
     if (e instanceof x) {
-      if (ie(e, "list"), super(e), t) {
+      if (le(e, "list"), super(e), t) {
         if (t.length !== this.length)
           throw new Error("Can't construct named `RList`. Supplied `names` must be the same length as the list.");
         this.setNames(t);
       }
       return this;
     }
-    let s = { n: 0 };
+    let r = { n: 0 };
     try {
-      let n = Re(e), o = l._Rf_allocVector(j.list, n.values.length);
-      w(o, s), n.values.forEach((c, p) => {
-        l._SET_VECTOR_ELT(o, p, new y(c).ptr);
+      let n = me(e), o = l._Rf_allocVector(N.list, n.values.length);
+      w(o, r), n.values.forEach((c2, p2) => {
+        l._SET_VECTOR_ELT(o, p2, new y(c2).ptr);
       });
       let i = t || n.names;
       if (i && i.length !== n.values.length)
         throw new Error("Can't construct named `RList`. Supplied `names` must be the same length as the list.");
       y.wrap(o).setNames(i), super(new x(o));
     } finally {
-      T(s.n);
+      P(r.n);
     }
   }
   get length() {
     return l._LENGTH(this.ptr);
   }
   isDataFrame() {
-    let e = ae.wrap(l._ATTRIB(this.ptr)).get("class");
+    let e = ie.wrap(l._ATTRIB(this.ptr)).get("class");
     return !e.isNull() && e.toArray().includes("data.frame");
   }
   toArray(e = { depth: 1 }) {
     return this.toJs(e).values;
   }
-  toObject({ allowDuplicateKey: e = true, allowEmptyKey: t = false, depth: s = -1 } = {}) {
-    let n = this.entries({ depth: s }), o = n.map(([i]) => i);
+  toObject({ allowDuplicateKey: e = true, allowEmptyKey: t = false, depth: r = -1 } = {}) {
+    let n = this.entries({ depth: r }), o = n.map(([i]) => i);
     if (!e && new Set(o).size !== o.length)
       throw new Error("Duplicate key when converting list without allowDuplicateKey enabled");
     if (!t && o.some((i) => !i))
       throw new Error("Empty or null key when converting list without allowEmptyKey enabled");
-    return Object.fromEntries(n.filter((i, c) => n.findIndex((p) => p[0] === i[0]) === c));
+    return Object.fromEntries(n.filter((i, c2) => n.findIndex((p2) => p2[0] === i[0]) === c2));
   }
   toD3() {
     if (!this.isDataFrame())
       throw new Error("Can't convert R list object to D3 format. Object must be of class 'data.frame'.");
-    return this.entries().reduce((t, s) => (s[1].forEach((n, o) => t[o] = Object.assign(t[o] || {}, { [s[0]]: n })), t), []);
+    return this.entries().reduce((t, r) => (r[1].forEach((n, o) => t[o] = Object.assign(t[o] || {}, { [r[0]]: n })), t), []);
   }
   entries(e = { depth: -1 }) {
     let t = this.toJs(e);
-    return this.isDataFrame() && e.depth < 0 && (t.values = t.values.map((s) => s.toArray())), t.values.map((s, n) => [t.names ? t.names[n] : null, s]);
+    return this.isDataFrame() && e.depth < 0 && (t.values = t.values.map((r) => r.toArray())), t.values.map((r, n) => [t.names ? t.names[n] : null, r]);
   }
   toJs(e = { depth: 0 }, t = 1) {
-    return { type: "list", names: this.names(), values: [...Array(this.length).keys()].map((s) => e.depth && t >= e.depth ? this.get(s + 1) : this.get(s + 1).toJs(e, t + 1)) };
+    return { type: "list", names: this.names(), values: [...Array(this.length).keys()].map((r) => e.depth && t >= e.depth ? this.get(r + 1) : this.get(r + 1).toJs(e, t + 1)) };
   }
 };
-var Y = class extends Fe {
+var ee = class extends qe {
   constructor(e) {
     if (e instanceof x) {
       if (super(e), !this.isDataFrame())
         throw new Error("Can't construct `RDataFrame`. Supplied R object is not a `data.frame`.");
       return this;
     }
-    return Y.fromObject(e);
+    return ee.fromObject(e);
   }
   static fromObject(e) {
-    let { names: t, values: s } = Re(e), n = { n: 0 };
+    let { names: t, values: r } = me(e), n = { n: 0 };
     try {
-      let o = !!t && t.length > 0 && t.every((c) => c), i = s.length > 0 && s.every((c) => Array.isArray(c) || ArrayBuffer.isView(c) || c instanceof ArrayBuffer);
+      let o = !!t && t.length > 0 && t.every((c2) => c2), i = r.length > 0 && r.every((c2) => Array.isArray(c2) || ArrayBuffer.isView(c2) || c2 instanceof ArrayBuffer);
       if (o && i) {
-        let c = s, p = c.every((b2) => b2.length === c[0].length), k2 = c.every((b2) => is(b2[0]) || as(b2[0]));
-        if (p && k2) {
-          let b2 = new Fe({ type: "list", names: t, values: c.map((en) => ns(en)) });
+        let c2 = r, p2 = c2.every((b2) => b2.length === c2[0].length), D2 = c2.every((b2) => ls(b2[0]) || is(b2[0]));
+        if (p2 && D2) {
+          let b2 = new qe({ type: "list", names: t, values: c2.map((tn) => os(tn)) });
           w(b2, n);
-          let C2 = new F([new I("as.data.frame"), b2]);
-          return w(C2, n), new Y(C2.eval());
+          let j2 = new q([new U("as.data.frame"), b2]);
+          return w(j2, n), new ee(j2.eval());
         }
       }
     } finally {
-      T(n.n);
+      P(n.n);
     }
     throw new Error("Can't construct `data.frame`. Source object is not eligible.");
   }
   static fromD3(e) {
-    return this.fromObject(Object.fromEntries(Object.keys(e[0]).map((t) => [t, e.map((s) => s[t])])));
+    return this.fromObject(Object.fromEntries(Object.keys(e[0]).map((t) => [t, e.map((r) => r[t])])));
   }
 };
-var he = class extends y {
+var ye = class extends y {
   exec(...e) {
     let t = { n: 0 };
     try {
-      let s = new F([this, ...e]);
-      return w(s, t), s.eval();
+      let r = new q([this, ...e]);
+      return w(r, t), r.eval();
     } finally {
-      T(t.n);
+      P(t.n);
     }
   }
   capture(e = {}, ...t) {
-    let s = { n: 0 };
+    let r = { n: 0 };
     try {
-      let n = new F([this, ...t]);
-      return w(n, s), n.capture(e);
+      let n = new q([this, ...t]);
+      return w(n, r), n.capture(e);
     } finally {
-      T(s.n);
+      P(r.n);
     }
   }
 };
-var qe = class extends y {
+var Ve = class extends y {
   constructor(e) {
     if (e instanceof x) {
-      ie(e, "string"), super(e);
+      le(e, "string"), super(e);
       return;
     }
     let t = l.allocateUTF8(e);
@@ -1647,37 +1649,37 @@ var qe = class extends y {
     return { type: "string", value: this.toString() };
   }
 };
-var Ne = class extends y {
+var Be = class extends y {
   constructor(e = {}) {
     if (e instanceof x)
-      return ie(e, "environment"), super(e), this;
+      return le(e, "environment"), super(e), this;
     let t = 0;
     try {
-      let { names: s, values: n } = Re(e), o = Ce(l._R_NewEnv(M.globalEnv.ptr, 0, 0));
-      ++t, n.forEach((i, c) => {
-        let p = s ? s[c] : null;
-        if (!p)
+      let { names: r, values: n } = me(e), o = je(l._R_NewEnv(k.globalEnv.ptr, 0, 0));
+      ++t, n.forEach((i, c2) => {
+        let p2 = r ? r[c2] : null;
+        if (!p2)
           throw new Error("Can't create object in new environment with empty symbol name");
-        let k2 = new I(p), b2 = Ce(new y(i));
+        let D2 = new U(p2), b2 = je(new y(i));
         try {
-          mr(o, k2, b2);
+          gr(o, D2, b2);
         } finally {
-          T(1);
+          P(1);
         }
       }), super(new x(o));
     } finally {
-      T(t);
+      P(t);
     }
   }
   ls(e = false, t = true) {
-    return L.wrap(l._R_lsInternal3(this.ptr, Number(e), Number(t))).toArray();
+    return F.wrap(l._R_lsInternal3(this.ptr, Number(e), Number(t))).toArray();
   }
   bind(e, t) {
-    let s = new I(e), n = Ce(new y(t));
+    let r = new U(e), n = je(new y(t));
     try {
-      mr(this, s, n);
+      gr(this, r, n);
     } finally {
-      T(1);
+      P(1);
     }
   }
   names() {
@@ -1693,26 +1695,26 @@ var Ne = class extends y {
   }
   toObject({ depth: e = -1 } = {}) {
     let t = this.names();
-    return Object.fromEntries([...Array(t.length).keys()].map((s) => {
-      let n = this.getDollar(t[s]);
-      return [t[s], e < 0 ? n : n.toJs({ depth: e })];
+    return Object.fromEntries([...Array(t.length).keys()].map((r) => {
+      let n = this.getDollar(t[r]);
+      return [t[r], e < 0 ? n : n.toJs({ depth: e })];
     }));
   }
   toJs(e = { depth: 0 }, t = 1) {
-    let s = this.names(), n = [...Array(s.length).keys()].map((o) => e.depth && t >= e.depth ? this.getDollar(s[o]) : this.getDollar(s[o]).toJs(e, t + 1));
-    return { type: "environment", names: s, values: n };
+    let r = this.names(), n = [...Array(r.length).keys()].map((o) => e.depth && t >= e.depth ? this.getDollar(r[o]) : this.getDollar(r[o]).toJs(e, t + 1));
+    return { type: "environment", names: r, values: n };
   }
 };
-var ee = class extends y {
-  constructor(e, t, s) {
+var te = class extends y {
+  constructor(e, t, r) {
     if (e instanceof x)
-      return ie(e, t), super(e), this;
+      return le(e, t), super(e), this;
     let n = { n: 0 };
     try {
-      let { names: o, values: i } = Re(e), c = l._Rf_allocVector(j[t], i.length);
-      w(c, n), i.forEach(s(c)), y.wrap(c).setNames(o), super(new x(c));
+      let { names: o, values: i } = me(e), c2 = l._Rf_allocVector(N[t], i.length);
+      w(c2, n), i.forEach(r(c2)), y.wrap(c2).setNames(o), super(new x(c2));
     } finally {
-      T(n.n);
+      P(n.n);
     }
   }
   get length() {
@@ -1730,40 +1732,40 @@ var ee = class extends y {
   detectMissing() {
     let e = { n: 0 };
     try {
-      let t = l._Rf_lang2(new I("is.na").ptr, this.ptr);
+      let t = l._Rf_lang2(new U("is.na").ptr, this.ptr);
       w(t, e);
-      let s = Z.wrap(je(t, M.baseEnv));
-      w(s, e);
-      let n = s.toTypedArray();
+      let r = Y.wrap(Ne(t, k.baseEnv));
+      w(r, e);
+      let n = r.toTypedArray();
       return Array.from(n).map((o) => !!o);
     } finally {
-      T(e.n);
+      P(e.n);
     }
   }
   toArray() {
     let e = this.toTypedArray();
-    return this.detectMissing().map((t, s) => t ? null : e[s]);
+    return this.detectMissing().map((t, r) => t ? null : e[r]);
   }
   toObject({ allowDuplicateKey: e = true, allowEmptyKey: t = false } = {}) {
-    let s = this.entries(), n = s.map(([o]) => o);
+    let r = this.entries(), n = r.map(([o]) => o);
     if (!e && new Set(n).size !== n.length)
       throw new Error("Duplicate key when converting atomic vector without allowDuplicateKey enabled");
     if (!t && n.some((o) => !o))
       throw new Error("Empty or null key when converting atomic vector without allowEmptyKey enabled");
-    return Object.fromEntries(s.filter((o, i) => s.findIndex((c) => c[0] === o[0]) === i));
+    return Object.fromEntries(r.filter((o, i) => r.findIndex((c2) => c2[0] === o[0]) === i));
   }
   entries() {
     let e = this.toArray(), t = this.names();
-    return e.map((s, n) => [t ? t[n] : null, s]);
+    return e.map((r, n) => [t ? t[n] : null, r]);
   }
   toJs() {
     return { type: this.type(), names: this.names(), values: this.toArray() };
   }
 };
-var Pt;
-var br = class extends ee {
+var _t;
+var wr = class extends te {
   constructor(e) {
-    super(e, "logical", a(br, Pt));
+    super(e, "logical", a(wr, _t));
   }
   getBoolean(e) {
     return this.get(e).toArray()[0];
@@ -1781,20 +1783,20 @@ var br = class extends ee {
   }
   toArray() {
     let e = this.toTypedArray();
-    return this.detectMissing().map((t, s) => t ? null : !!e[s]);
+    return this.detectMissing().map((t, r) => t ? null : !!e[r]);
   }
 };
-var Z = br;
-Pt = /* @__PURE__ */ new WeakMap(), u(Z, Pt, (e) => {
-  let t = l._LOGICAL(e), s = l.getValue(l._R_NaInt, "i32");
+var Y = wr;
+_t = /* @__PURE__ */ new WeakMap(), u(Y, _t, (e) => {
+  let t = l._LOGICAL(e), r = l.getValue(l._R_NaInt, "i32");
   return (n, o) => {
-    l.setValue(t + 4 * o, n === null ? s : !!n, "i32");
+    l.setValue(t + 4 * o, n === null ? r : !!n, "i32");
   };
 });
-var _t;
-var wr = class extends ee {
+var St;
+var xr = class extends te {
   constructor(e) {
-    super(e, "integer", a(wr, _t));
+    super(e, "integer", a(xr, St));
   }
   getNumber(e) {
     return this.get(e).toArray()[0];
@@ -1811,17 +1813,17 @@ var wr = class extends ee {
     return new Int32Array(l.HEAP32.subarray(l._INTEGER(this.ptr) / 4, l._INTEGER(this.ptr) / 4 + this.length));
   }
 };
-var vt = wr;
-_t = /* @__PURE__ */ new WeakMap(), u(vt, _t, (e) => {
-  let t = l._INTEGER(e), s = l.getValue(l._R_NaInt, "i32");
+var Et = xr;
+St = /* @__PURE__ */ new WeakMap(), u(Et, St, (e) => {
+  let t = l._INTEGER(e), r = l.getValue(l._R_NaInt, "i32");
   return (n, o) => {
-    l.setValue(t + 4 * o, n === null ? s : Math.round(Number(n)), "i32");
+    l.setValue(t + 4 * o, n === null ? r : Math.round(Number(n)), "i32");
   };
 });
-var St;
-var xr = class extends ee {
+var kt;
+var vr = class extends te {
   constructor(e) {
-    super(e, "double", a(xr, St));
+    super(e, "double", a(vr, kt));
   }
   getNumber(e) {
     return this.get(e).toArray()[0];
@@ -1838,17 +1840,17 @@ var xr = class extends ee {
     return new Float64Array(l.HEAPF64.subarray(l._REAL(this.ptr) / 8, l._REAL(this.ptr) / 8 + this.length));
   }
 };
-var ye = xr;
-St = /* @__PURE__ */ new WeakMap(), u(ye, St, (e) => {
-  let t = l._REAL(e), s = l.getValue(l._R_NaReal, "double");
+var fe = vr;
+kt = /* @__PURE__ */ new WeakMap(), u(fe, kt, (e) => {
+  let t = l._REAL(e), r = l.getValue(l._R_NaReal, "double");
   return (n, o) => {
-    l.setValue(t + 8 * o, n === null ? s : n, "double");
+    l.setValue(t + 8 * o, n === null ? r : n, "double");
   };
 });
 var Mt;
-var vr = class extends ee {
+var Er = class extends te {
   constructor(e) {
-    super(e, "complex", a(vr, Mt));
+    super(e, "complex", a(Er, Mt));
   }
   getComplex(e) {
     return this.get(e).toArray()[0];
@@ -1866,20 +1868,20 @@ var vr = class extends ee {
   }
   toArray() {
     let e = this.toTypedArray();
-    return this.detectMissing().map((t, s) => t ? null : { re: e[2 * s], im: e[2 * s + 1] });
+    return this.detectMissing().map((t, r) => t ? null : { re: e[2 * r], im: e[2 * r + 1] });
   }
 };
-var Be = vr;
-Mt = /* @__PURE__ */ new WeakMap(), u(Be, Mt, (e) => {
-  let t = l._COMPLEX(e), s = l.getValue(l._R_NaReal, "double");
+var Le = Er;
+Mt = /* @__PURE__ */ new WeakMap(), u(Le, Mt, (e) => {
+  let t = l._COMPLEX(e), r = l.getValue(l._R_NaReal, "double");
   return (n, o) => {
-    l.setValue(t + 8 * (2 * o), n === null ? s : n.re, "double"), l.setValue(t + 8 * (2 * o + 1), n === null ? s : n.im, "double");
+    l.setValue(t + 8 * (2 * o), n === null ? r : n.re, "double"), l.setValue(t + 8 * (2 * o + 1), n === null ? r : n.im, "double");
   };
 });
 var Dt;
-var Er = class extends ee {
+var Tr = class extends te {
   constructor(e) {
-    super(e, "character", a(Er, Dt));
+    super(e, "character", a(Tr, Dt));
   }
   getString(e) {
     return this.get(e).toArray()[0];
@@ -1899,14 +1901,14 @@ var Er = class extends ee {
     return this.detectMissing().map((e, t) => e ? null : l.UTF8ToString(l._R_CHAR(l._STRING_ELT(this.ptr, t))));
   }
 };
-var L = Er;
-Dt = /* @__PURE__ */ new WeakMap(), u(L, Dt, (e) => (t, s) => {
-  t === null ? l._SET_STRING_ELT(e, s, M.naString.ptr) : l._SET_STRING_ELT(e, s, new qe(t).ptr);
+var F = Tr;
+Dt = /* @__PURE__ */ new WeakMap(), u(F, Dt, (e) => (t, r) => {
+  t === null ? l._SET_STRING_ELT(e, r, k.naString.ptr) : l._SET_STRING_ELT(e, r, new Ve(t).ptr);
 });
-var kt;
-var Tr = class extends ee {
+var Wt;
+var Pr = class extends te {
   constructor(e) {
-    e instanceof ArrayBuffer && (e = new Uint8Array(e)), super(e, "raw", a(Tr, kt));
+    e instanceof ArrayBuffer && (e = new Uint8Array(e)), super(e, "raw", a(Pr, Wt));
   }
   getNumber(e) {
     return this.get(e).toArray()[0];
@@ -1923,179 +1925,192 @@ var Tr = class extends ee {
     return new Uint8Array(l.HEAPU8.subarray(l._RAW(this.ptr), l._RAW(this.ptr) + this.length));
   }
 };
-var Le = Tr;
-kt = /* @__PURE__ */ new WeakMap(), u(Le, kt, (e) => {
+var Fe = Pr;
+Wt = /* @__PURE__ */ new WeakMap(), u(Fe, Wt, (e) => {
   let t = l._RAW(e);
-  return (s, n) => {
-    l.setValue(t + n, Number(s), "i8");
+  return (r, n) => {
+    l.setValue(t + n, Number(r), "i8");
   };
 });
-function Re(r) {
-  return Rr(r) ? r : Array.isArray(r) || ArrayBuffer.isView(r) ? { names: null, values: r } : r && typeof r == "object" && !Ue(r) ? { names: Object.keys(r), values: Object.values(r) } : { names: null, values: [r] };
+function me(s) {
+  return mr(s) ? s : Array.isArray(s) || ArrayBuffer.isView(s) ? { names: null, values: s } : s && typeof s == "object" && !Ce(s) ? { names: Object.keys(s), values: Object.values(s) } : { names: null, values: [s] };
 }
-function os(r) {
-  let e = { object: y, null: Et, symbol: I, pairlist: ae, closure: he, environment: Ne, call: F, special: he, builtin: he, string: qe, logical: Z, integer: vt, double: ye, complex: Be, character: L, list: Fe, raw: Le, function: he, dataframe: Y };
-  return r in e ? e[r] : y;
+function as(s) {
+  let e = { object: y, null: Tt, symbol: U, pairlist: ie, closure: ye, environment: Be, call: q, special: ye, builtin: ye, string: Ve, logical: Y, integer: Et, double: fe, complex: Le, character: F, list: qe, raw: Fe, function: ye, dataframe: ee };
+  return s in e ? e[s] : y;
 }
-function Tt(r) {
-  return r instanceof y;
+function Pt(s) {
+  return s instanceof y;
 }
-function as(r) {
+function is(s) {
   let e = ["logical", "integer", "double", "complex", "character"];
-  return Tt(r) && e.includes(r.type()) || Tt(r) && r.isNa();
+  return Pt(s) && e.includes(s.type()) || Pt(s) && s.isNa();
 }
-function is(r) {
-  return r === null || typeof r == "number" || typeof r == "boolean" || typeof r == "string" || Ue(r);
+function ls(s) {
+  return s === null || typeof s == "number" || typeof s == "boolean" || typeof s == "string" || Ce(s);
 }
-var M;
-var Os = ne(Ht());
-var so = new TextEncoder();
-var z;
+var k;
+var Os = oe(zt());
+var no = new TextEncoder();
 var X;
-var Ge;
-var Vr;
-z = /* @__PURE__ */ new WeakMap(), X = /* @__PURE__ */ new WeakMap(), Ge = /* @__PURE__ */ new WeakSet(), Vr = function() {
-  a(this, z).push(new Promise((e) => {
-    a(this, X).push(e);
+var G;
+var $e;
+var Jr;
+X = /* @__PURE__ */ new WeakMap(), G = /* @__PURE__ */ new WeakMap(), $e = /* @__PURE__ */ new WeakSet(), Jr = function() {
+  a(this, X).push(new Promise((e) => {
+    a(this, G).push(e);
   }));
 };
-function $e(r, e, t) {
-  return As({ type: "response", data: { uuid: r, resp: e } }, t);
+function Ke(s, e, t) {
+  return Is({ type: "response", data: { uuid: s, resp: e } }, t);
 }
-function As(r, e) {
-  return e && ss(r, e), r;
+function Is(s, e) {
+  return e && ns(s, e), s;
 }
-var Te;
-Te = /* @__PURE__ */ new WeakMap();
-var js = ne(Ht());
-var io = new TextDecoder("utf-8");
 var Pe;
-var _e;
-var Ke;
 var Qe;
+Pe = /* @__PURE__ */ new WeakMap(), Qe = /* @__PURE__ */ new WeakMap();
+var Ns = oe(zt());
+var lo = new TextDecoder("utf-8");
+var _e;
 var Se;
-Pe = /* @__PURE__ */ new WeakMap(), _e = /* @__PURE__ */ new WeakMap(), Ke = /* @__PURE__ */ new WeakMap(), Qe = /* @__PURE__ */ new WeakMap(), Se = /* @__PURE__ */ new WeakMap();
-var Hr = new Int32Array(new ArrayBuffer(4));
-m && (globalThis.Worker = N("worker_threads").Worker);
-var Me;
-var Qt;
-var Fs;
+var Ze;
 var Ye;
-Me = /* @__PURE__ */ new WeakMap(), Qt = /* @__PURE__ */ new WeakSet(), Fs = function(t) {
-  m ? t.on("message", (s) => {
-    a(this, Ye).call(this, t, s);
-  }) : t.onmessage = (s) => a(this, Ye).call(this, t, s.data);
-}, Ye = /* @__PURE__ */ new WeakMap();
-var ce;
-var et;
-var ue;
-var tt;
-ce = /* @__PURE__ */ new WeakMap(), et = /* @__PURE__ */ new WeakMap(), ue = /* @__PURE__ */ new WeakMap(), tt = /* @__PURE__ */ new WeakMap();
-var rr = ne(Ht());
-m && (globalThis.Worker = N("worker_threads").Worker);
-var De;
-var pe;
 var ke;
-var Yt;
+_e = /* @__PURE__ */ new WeakMap(), Se = /* @__PURE__ */ new WeakMap(), Ze = /* @__PURE__ */ new WeakMap(), Ye = /* @__PURE__ */ new WeakMap(), ke = /* @__PURE__ */ new WeakMap();
+var zr = new Int32Array(new ArrayBuffer(4));
+m && (globalThis.Worker = B("worker_threads").Worker);
+var Me;
+var Zt;
 var qs;
+var tt;
+Me = /* @__PURE__ */ new WeakMap(), Zt = /* @__PURE__ */ new WeakSet(), qs = function(t) {
+  m ? (t.on("message", (r) => {
+    a(this, tt).call(this, t, r);
+  }), t.on("error", (r) => {
+    console.error(r), this.reject(new O("An error occurred initialising the webR SharedBufferChannel worker."));
+  })) : (t.onmessage = (r) => a(this, tt).call(this, t, r.data), t.onerror = (r) => {
+    console.error(r), this.reject(new O("An error occurred initialising the webR SharedBufferChannel worker."));
+  });
+}, tt = /* @__PURE__ */ new WeakMap();
+var ue;
+var rt;
+var pe;
+var st;
+ue = /* @__PURE__ */ new WeakMap(), rt = /* @__PURE__ */ new WeakMap(), pe = /* @__PURE__ */ new WeakMap(), st = /* @__PURE__ */ new WeakMap();
+var sr = oe(zt());
+m && (globalThis.Worker = B("worker_threads").Worker);
+var De;
+var de;
+var We;
 var er;
 var Vs;
 var tr;
 var Js;
-var rt;
-De = /* @__PURE__ */ new WeakMap(), pe = /* @__PURE__ */ new WeakMap(), ke = /* @__PURE__ */ new WeakMap(), Yt = /* @__PURE__ */ new WeakSet(), qs = async function(t) {
-  d(this, pe, await navigator.serviceWorker.register(t)), await navigator.serviceWorker.ready, window.addEventListener("beforeunload", () => {
+var rr;
+var Hs;
+var nt;
+De = /* @__PURE__ */ new WeakMap(), de = /* @__PURE__ */ new WeakMap(), We = /* @__PURE__ */ new WeakMap(), er = /* @__PURE__ */ new WeakSet(), Vs = async function(t) {
+  d(this, de, await navigator.serviceWorker.register(t)), await navigator.serviceWorker.ready, window.addEventListener("beforeunload", () => {
     var n;
-    (n = a(this, pe)) == null || n.unregister();
+    (n = a(this, de)) == null || n.unregister();
   });
-  let s = await new Promise((n) => {
+  let r = await new Promise((n) => {
     navigator.serviceWorker.addEventListener("message", function o(i) {
       i.data.type === "registration-successful" && (navigator.serviceWorker.removeEventListener("message", o), n(i.data.clientId));
     }), this.activeRegistration().postMessage({ type: "register-client-main" });
   });
   return navigator.serviceWorker.addEventListener("message", (n) => {
-    E(this, er, Vs).call(this, n);
-  }), s;
-}, er = /* @__PURE__ */ new WeakSet(), Vs = async function(t) {
+    E(this, tr, Js).call(this, n);
+  }), r;
+}, tr = /* @__PURE__ */ new WeakSet(), Js = async function(t) {
   if (t.data.type === "request") {
-    let s = t.data.data, n = a(this, De).get(s);
+    let r = t.data.data, n = a(this, De).get(r);
     if (!n)
-      throw new P("Request not found during service worker XHR request");
-    switch (a(this, De).delete(s), n.type) {
+      throw new T("Request not found during service worker XHR request");
+    switch (a(this, De).delete(r), n.type) {
       case "read": {
         let o = await this.inputQueue.get();
-        this.activeRegistration().postMessage({ type: "wasm-webr-fetch-response", uuid: s, response: $e(s, o) });
+        this.activeRegistration().postMessage({ type: "wasm-webr-fetch-response", uuid: r, response: Ke(r, o) });
         break;
       }
       case "interrupt": {
-        let o = a(this, ke);
-        this.activeRegistration().postMessage({ type: "wasm-webr-fetch-response", uuid: s, response: $e(s, o) }), this.inputQueue.reset(), d(this, ke, false);
+        let o = a(this, We);
+        this.activeRegistration().postMessage({ type: "wasm-webr-fetch-response", uuid: r, response: Ke(r, o) }), this.inputQueue.reset(), d(this, We, false);
         break;
       }
       default:
-        throw new P(`Unsupported request type '${n.type}'.`);
+        throw new T(`Unsupported request type '${n.type}'.`);
     }
     return;
   }
-}, tr = /* @__PURE__ */ new WeakSet(), Js = function(t) {
-  m ? t.on("message", (s) => {
-    a(this, rt).call(this, t, s);
-  }) : t.onmessage = (s) => a(this, rt).call(this, t, s.data);
-}, rt = /* @__PURE__ */ new WeakMap();
+}, rr = /* @__PURE__ */ new WeakSet(), Hs = function(t) {
+  m ? (t.on("message", (r) => {
+    a(this, nt).call(this, t, r);
+  }), t.on("error", (r) => {
+    console.error(r), this.reject(new O("An error occurred initialising the webR ServiceWorkerChannel worker."));
+  })) : (t.onmessage = (r) => a(this, nt).call(this, t, r.data), t.onerror = (r) => {
+    console.error(r), this.reject(new O("An error occurred initialising the webR ServiceWorkerChannel worker."));
+  });
+}, nt = /* @__PURE__ */ new WeakMap();
 var Oe;
-var st;
-var nt;
 var ot;
 var at;
 var it;
-Oe = /* @__PURE__ */ new WeakMap(), st = /* @__PURE__ */ new WeakMap(), nt = /* @__PURE__ */ new WeakMap(), ot = /* @__PURE__ */ new WeakMap(), at = /* @__PURE__ */ new WeakMap(), it = /* @__PURE__ */ new WeakMap();
-m && (globalThis.Worker = N("worker_threads").Worker);
-var We;
-var sr;
-var Hs;
+var lt;
 var ct;
-We = /* @__PURE__ */ new WeakMap(), sr = /* @__PURE__ */ new WeakSet(), Hs = function(t) {
-  m ? t.on("message", (s) => {
-    a(this, ct).call(this, t, s);
-  }) : t.onmessage = (s) => a(this, ct).call(this, t, s.data);
-}, ct = /* @__PURE__ */ new WeakMap();
+Oe = /* @__PURE__ */ new WeakMap(), ot = /* @__PURE__ */ new WeakMap(), at = /* @__PURE__ */ new WeakMap(), it = /* @__PURE__ */ new WeakMap(), lt = /* @__PURE__ */ new WeakMap(), ct = /* @__PURE__ */ new WeakMap();
+m && (globalThis.Worker = B("worker_threads").Worker);
 var Ae;
-var Ie;
-var ut;
-var de;
 var nr;
-Ae = /* @__PURE__ */ new WeakMap(), Ie = /* @__PURE__ */ new WeakMap(), ut = /* @__PURE__ */ new WeakMap(), de = /* @__PURE__ */ new WeakMap(), nr = /* @__PURE__ */ new WeakMap();
-var W = { Automatic: 0, SharedArrayBuffer: 1, ServiceWorker: 2, PostMessage: 3 };
-var Xs = m ? __dirname + "/" : "https://webr.r-wasm.org/v0.4.0/";
-var Gs = "https://repo.r-wasm.org";
-var $r = "0.4.0";
+var zs;
 var pt;
+Ae = /* @__PURE__ */ new WeakMap(), nr = /* @__PURE__ */ new WeakSet(), zs = function(t) {
+  m ? (t.on("message", (r) => {
+    a(this, pt).call(this, t, r);
+  }), t.on("error", (r) => {
+    console.error(r), this.reject(new O("An error occurred initialising the webR PostMessageChannel worker."));
+  })) : (t.onmessage = (r) => a(this, pt).call(this, t, r.data), t.onerror = (r) => {
+    console.error(r), this.reject(new O("An error occurred initialising the webR PostMessageChannel worker."));
+  });
+}, pt = /* @__PURE__ */ new WeakMap();
+var Ie;
+var Ue;
 var dt;
+var he;
+var or;
+Ie = /* @__PURE__ */ new WeakMap(), Ue = /* @__PURE__ */ new WeakMap(), dt = /* @__PURE__ */ new WeakMap(), he = /* @__PURE__ */ new WeakMap(), or = /* @__PURE__ */ new WeakMap();
+var A = { Automatic: 0, SharedArrayBuffer: 1, ServiceWorker: 2, PostMessage: 3 };
+var Gs = m ? __dirname + "/" : "https://webr.r-wasm.org/v0.4.1/";
+var $s = "https://repo.r-wasm.org";
+var Kr = "0.4.1";
 var ht;
 var yt;
 var ft;
-var or;
+var Rt;
+var mt;
 var ar;
 var ir;
 var lr;
 var cr;
 var ur;
-var Qs;
-pt = /* @__PURE__ */ new WeakMap(), dt = /* @__PURE__ */ new WeakMap(), ht = /* @__PURE__ */ new WeakMap(), yt = /* @__PURE__ */ new WeakMap(), ft = /* @__PURE__ */ new WeakMap(), or = /* @__PURE__ */ new WeakMap(), ar = /* @__PURE__ */ new WeakMap(), ir = /* @__PURE__ */ new WeakMap(), lr = /* @__PURE__ */ new WeakMap(), cr = /* @__PURE__ */ new WeakMap(), ur = /* @__PURE__ */ new WeakSet(), Qs = async function() {
+var pr;
+var Zs;
+ht = /* @__PURE__ */ new WeakMap(), yt = /* @__PURE__ */ new WeakMap(), ft = /* @__PURE__ */ new WeakMap(), Rt = /* @__PURE__ */ new WeakMap(), mt = /* @__PURE__ */ new WeakMap(), ar = /* @__PURE__ */ new WeakMap(), ir = /* @__PURE__ */ new WeakMap(), lr = /* @__PURE__ */ new WeakMap(), cr = /* @__PURE__ */ new WeakMap(), ur = /* @__PURE__ */ new WeakMap(), pr = /* @__PURE__ */ new WeakSet(), Zs = async function() {
   for (; ; ) {
     let e = await this.webR.read();
     switch (e.type) {
       case "stdout":
-        a(this, pt).call(this, e.data);
-        break;
-      case "stderr":
-        a(this, dt).call(this, e.data);
-        break;
-      case "prompt":
         a(this, ht).call(this, e.data);
         break;
+      case "stderr":
+        a(this, yt).call(this, e.data);
+        break;
+      case "prompt":
+        a(this, ft).call(this, e.data);
+        break;
       case "canvas":
-        e.data.event === "canvasImage" ? a(this, yt).call(this, e.data.image) : e.data.event === "canvasNewPage" && a(this, ft).call(this);
+        e.data.event === "canvasImage" ? a(this, Rt).call(this, e.data.image) : e.data.event === "canvasNewPage" && a(this, mt).call(this);
         break;
       case "closed":
         return;
@@ -2104,19 +2119,19 @@ pt = /* @__PURE__ */ new WeakMap(), dt = /* @__PURE__ */ new WeakMap(), ht = /* 
     }
   }
 };
-var ho = { FONTCONFIG_PATH: "/etc/fonts", R_HOME: "/usr/lib/R", R_ENABLE_JIT: "0", WEBR: "1", WEBR_VERSION: $r };
-var Zs = { RArgs: [], REnv: ho, baseUrl: Xs, serviceWorkerUrl: "", repoUrl: Gs, homedir: "/home/web_user", interactive: true, channelType: W.Automatic, createLazyFilesystem: true };
+var yo = { FONTCONFIG_PATH: "/etc/fonts", R_HOME: "/usr/lib/R", R_ENABLE_JIT: "0", WEBR: "1", WEBR_VERSION: Kr };
+var Ys = { RArgs: [], REnv: yo, baseUrl: Gs, serviceWorkerUrl: "", repoUrl: $s, homedir: "/home/web_user", interactive: true, channelType: A.Automatic, createLazyFilesystem: true };
 var R;
-var Rt;
-var hr;
-var Ys;
-R = /* @__PURE__ */ new WeakMap(), Rt = /* @__PURE__ */ new WeakMap(), hr = /* @__PURE__ */ new WeakSet(), Ys = async function() {
+var gt;
+var yr;
+var en;
+R = /* @__PURE__ */ new WeakMap(), gt = /* @__PURE__ */ new WeakMap(), yr = /* @__PURE__ */ new WeakSet(), en = async function() {
   for (; ; ) {
     let e = await a(this, R).readSystem();
     switch (e.type) {
       case "setTimeoutWasm":
-        setTimeout((t, s) => {
-          this.invokeWasmFunction(t, ...s);
+        setTimeout((t, r) => {
+          this.invokeWasmFunction(t, ...r);
         }, e.data.delay, e.data.ptr, e.data.args);
         break;
       case "console.log":
@@ -2128,15 +2143,18 @@ R = /* @__PURE__ */ new WeakMap(), Rt = /* @__PURE__ */ new WeakMap(), hr = /* @
       case "console.error":
         console.error(e.data);
         break;
+      case "close":
+        a(this, R).close();
+        break;
       default:
-        throw new A("Unknown system message type `" + e.type + "`");
+        throw new I("Unknown system message type `" + e.type + "`");
     }
   }
 };
 var g;
 var f;
-var mt;
-g = /* @__PURE__ */ new WeakMap(), f = /* @__PURE__ */ new WeakMap(), mt = /* @__PURE__ */ new WeakMap();
+var bt;
+g = /* @__PURE__ */ new WeakMap(), f = /* @__PURE__ */ new WeakMap(), bt = /* @__PURE__ */ new WeakMap();
 
 // src/messageporthttp.ts
 async function makeRequest(scope, appName, clientPort, pyodide2) {
@@ -2324,18 +2342,18 @@ async function connect2(path, conn, asgiFunc) {
     }
   }
   conn.addEventListener("message", (e) => {
-    const me2 = e;
+    const me3 = e;
     const event = { type: "websocket.receive" };
-    if (typeof me2.data === "string") {
-      event.text = me2.data;
+    if (typeof me3.data === "string") {
+      event.text = me3.data;
     } else {
-      event.bytes = me2.data;
+      event.bytes = me3.data;
     }
     fromClientQueue.enqueue(event);
   });
   conn.addEventListener("close", (e) => {
-    const ce3 = e;
-    fromClientQueue.enqueue({ type: "websocket.disconnect", code: ce3.code });
+    const ce2 = e;
+    fromClientQueue.enqueue({ type: "websocket.disconnect", code: ce2.code });
   });
   conn.addEventListener("error", (e) => {
     console.error(e);
@@ -2360,497 +2378,452 @@ function errorToPostableErrorObject(e) {
 }
 
 // src/pyodide/pyodide.js
-var ne2 = Object.create;
-var O = Object.defineProperty;
-var ie2 = Object.getOwnPropertyDescriptor;
-var oe2 = Object.getOwnPropertyNames;
-var se = Object.getPrototypeOf;
-var ae2 = Object.prototype.hasOwnProperty;
-var f2 = (t, e) => O(t, "name", { value: e, configurable: true });
-var w2 = ((t) => typeof __require < "u" ? __require : typeof Proxy < "u" ? new Proxy(t, { get: (e, o) => (typeof __require < "u" ? __require : e)[o] }) : t)(function(t) {
+var Q = Object.defineProperty;
+var c = (e, t) => Q(e, "name", { value: t, configurable: true });
+var O2 = ((e) => typeof __require < "u" ? __require : typeof Proxy < "u" ? new Proxy(e, { get: (t, i) => (typeof __require < "u" ? __require : t)[i] }) : e)(function(e) {
   if (typeof __require < "u")
     return __require.apply(this, arguments);
-  throw new Error('Dynamic require of "' + t + '" is not supported');
+  throw new Error('Dynamic require of "' + e + '" is not supported');
 });
-var D = (t, e) => () => (e || t((e = { exports: {} }).exports, e), e.exports);
-var ce2 = (t, e, o, s) => {
-  if (e && typeof e == "object" || typeof e == "function")
-    for (let l2 of oe2(e))
-      !ae2.call(t, l2) && l2 !== o && O(t, l2, { get: () => e[l2], enumerable: !(s = ie2(e, l2)) || s.enumerable });
-  return t;
-};
-var le = (t, e, o) => (o = t != null ? ne2(se(t)) : {}, ce2(e || !t || !t.__esModule ? O(o, "default", { value: t, enumerable: true }) : o, t));
-var M2 = D((R2, T2) => {
-  (function(t, e) {
-    "use strict";
-    typeof define == "function" && define.amd ? define("stackframe", [], e) : typeof R2 == "object" ? T2.exports = e() : t.StackFrame = e();
-  })(R2, function() {
-    "use strict";
-    function t(d2) {
-      return !isNaN(parseFloat(d2)) && isFinite(d2);
-    }
-    f2(t, "_isNumber");
-    function e(d2) {
-      return d2.charAt(0).toUpperCase() + d2.substring(1);
-    }
-    f2(e, "_capitalize");
-    function o(d2) {
-      return function() {
-        return this[d2];
-      };
-    }
-    f2(o, "_getter");
-    var s = ["isConstructor", "isEval", "isNative", "isToplevel"], l2 = ["columnNumber", "lineNumber"], r = ["fileName", "functionName", "source"], n = ["args"], u2 = ["evalOrigin"], i = s.concat(l2, r, n, u2);
-    function c(d2) {
-      if (d2)
-        for (var y2 = 0; y2 < i.length; y2++)
-          d2[i[y2]] !== void 0 && this["set" + e(i[y2])](d2[i[y2]]);
-    }
-    f2(c, "StackFrame"), c.prototype = { getArgs: function() {
-      return this.args;
-    }, setArgs: function(d2) {
-      if (Object.prototype.toString.call(d2) !== "[object Array]")
-        throw new TypeError("Args must be an Array");
-      this.args = d2;
-    }, getEvalOrigin: function() {
-      return this.evalOrigin;
-    }, setEvalOrigin: function(d2) {
-      if (d2 instanceof c)
-        this.evalOrigin = d2;
-      else if (d2 instanceof Object)
-        this.evalOrigin = new c(d2);
-      else
-        throw new TypeError("Eval Origin must be an Object or StackFrame");
-    }, toString: function() {
-      var d2 = this.getFileName() || "", y2 = this.getLineNumber() || "", h = this.getColumnNumber() || "", v = this.getFunctionName() || "";
-      return this.getIsEval() ? d2 ? "[eval] (" + d2 + ":" + y2 + ":" + h + ")" : "[eval]:" + y2 + ":" + h : v ? v + " (" + d2 + ":" + y2 + ":" + h + ")" : d2 + ":" + y2 + ":" + h;
-    } }, c.fromString = f2(function(y2) {
-      var h = y2.indexOf("("), v = y2.lastIndexOf(")"), Q = y2.substring(0, h), Z2 = y2.substring(h + 1, v).split(","), L2 = y2.substring(v + 1);
-      if (L2.indexOf("@") === 0)
-        var _ = /@(.+?)(?::(\d+))?(?::(\d+))?$/.exec(L2, ""), ee2 = _[1], te = _[2], re = _[3];
-      return new c({ functionName: Q, args: Z2 || void 0, fileName: ee2, lineNumber: te || void 0, columnNumber: re || void 0 });
-    }, "StackFrame$$fromString");
-    for (var a2 = 0; a2 < s.length; a2++)
-      c.prototype["get" + e(s[a2])] = o(s[a2]), c.prototype["set" + e(s[a2])] = function(d2) {
-        return function(y2) {
-          this[d2] = !!y2;
-        };
-      }(s[a2]);
-    for (var m2 = 0; m2 < l2.length; m2++)
-      c.prototype["get" + e(l2[m2])] = o(l2[m2]), c.prototype["set" + e(l2[m2])] = function(d2) {
-        return function(y2) {
-          if (!t(y2))
-            throw new TypeError(d2 + " must be a Number");
-          this[d2] = Number(y2);
-        };
-      }(l2[m2]);
-    for (var p = 0; p < r.length; p++)
-      c.prototype["get" + e(r[p])] = o(r[p]), c.prototype["set" + e(r[p])] = function(d2) {
-        return function(y2) {
-          this[d2] = String(y2);
-        };
-      }(r[p]);
-    return c;
-  });
-});
-var $ = D((N2, U) => {
-  (function(t, e) {
-    "use strict";
-    typeof define == "function" && define.amd ? define("error-stack-parser", ["stackframe"], e) : typeof N2 == "object" ? U.exports = e(M2()) : t.ErrorStackParser = e(t.StackFrame);
-  })(N2, f2(function(e) {
-    "use strict";
-    var o = /(^|@)\S+:\d+/, s = /^\s*at .*(\S+:\d+|\(native\))/m, l2 = /^(eval@)?(\[native code])?$/;
-    return { parse: f2(function(n) {
-      if (typeof n.stacktrace < "u" || typeof n["opera#sourceloc"] < "u")
-        return this.parseOpera(n);
-      if (n.stack && n.stack.match(s))
-        return this.parseV8OrIE(n);
-      if (n.stack)
-        return this.parseFFOrSafari(n);
-      throw new Error("Cannot parse given Error object");
-    }, "ErrorStackParser$$parse"), extractLocation: f2(function(n) {
-      if (n.indexOf(":") === -1)
-        return [n];
-      var u2 = /(.+?)(?::(\d+))?(?::(\d+))?$/, i = u2.exec(n.replace(/[()]/g, ""));
-      return [i[1], i[2] || void 0, i[3] || void 0];
-    }, "ErrorStackParser$$extractLocation"), parseV8OrIE: f2(function(n) {
-      var u2 = n.stack.split(`
-`).filter(function(i) {
-        return !!i.match(s);
-      }, this);
-      return u2.map(function(i) {
-        i.indexOf("(eval ") > -1 && (i = i.replace(/eval code/g, "eval").replace(/(\(eval at [^()]*)|(,.*$)/g, ""));
-        var c = i.replace(/^\s+/, "").replace(/\(eval code/g, "(").replace(/^.*?\s+/, ""), a2 = c.match(/ (\(.+\)$)/);
-        c = a2 ? c.replace(a2[0], "") : c;
-        var m2 = this.extractLocation(a2 ? a2[1] : c), p = a2 && c || void 0, d2 = ["eval", "<anonymous>"].indexOf(m2[0]) > -1 ? void 0 : m2[0];
-        return new e({ functionName: p, fileName: d2, lineNumber: m2[1], columnNumber: m2[2], source: i });
-      }, this);
-    }, "ErrorStackParser$$parseV8OrIE"), parseFFOrSafari: f2(function(n) {
-      var u2 = n.stack.split(`
-`).filter(function(i) {
-        return !i.match(l2);
-      }, this);
-      return u2.map(function(i) {
-        if (i.indexOf(" > eval") > -1 && (i = i.replace(/ line (\d+)(?: > eval line \d+)* > eval:\d+:\d+/g, ":$1")), i.indexOf("@") === -1 && i.indexOf(":") === -1)
-          return new e({ functionName: i });
-        var c = /((.*".+"[^@]*)?[^@]*)(?:@)/, a2 = i.match(c), m2 = a2 && a2[1] ? a2[1] : void 0, p = this.extractLocation(i.replace(c, ""));
-        return new e({ functionName: m2, fileName: p[0], lineNumber: p[1], columnNumber: p[2], source: i });
-      }, this);
-    }, "ErrorStackParser$$parseFFOrSafari"), parseOpera: f2(function(n) {
-      return !n.stacktrace || n.message.indexOf(`
-`) > -1 && n.message.split(`
-`).length > n.stacktrace.split(`
-`).length ? this.parseOpera9(n) : n.stack ? this.parseOpera11(n) : this.parseOpera10(n);
-    }, "ErrorStackParser$$parseOpera"), parseOpera9: f2(function(n) {
-      for (var u2 = /Line (\d+).*script (?:in )?(\S+)/i, i = n.message.split(`
-`), c = [], a2 = 2, m2 = i.length; a2 < m2; a2 += 2) {
-        var p = u2.exec(i[a2]);
-        p && c.push(new e({ fileName: p[2], lineNumber: p[1], source: i[a2] }));
-      }
-      return c;
-    }, "ErrorStackParser$$parseOpera9"), parseOpera10: f2(function(n) {
-      for (var u2 = /Line (\d+).*script (?:in )?(\S+)(?:: In function (\S+))?$/i, i = n.stacktrace.split(`
-`), c = [], a2 = 0, m2 = i.length; a2 < m2; a2 += 2) {
-        var p = u2.exec(i[a2]);
-        p && c.push(new e({ functionName: p[3] || void 0, fileName: p[2], lineNumber: p[1], source: i[a2] }));
-      }
-      return c;
-    }, "ErrorStackParser$$parseOpera10"), parseOpera11: f2(function(n) {
-      var u2 = n.stack.split(`
-`).filter(function(i) {
-        return !!i.match(o) && !i.match(/^Error created at/);
-      }, this);
-      return u2.map(function(i) {
-        var c = i.split("@"), a2 = this.extractLocation(c.pop()), m2 = c.shift() || "", p = m2.replace(/<anonymous function(: (\w+))?>/, "$2").replace(/\([^)]*\)/g, "") || void 0, d2;
-        m2.match(/\(([^)]*)\)/) && (d2 = m2.replace(/^[^(]+\(([^)]*)\)$/, "$1"));
-        var y2 = d2 === void 0 || d2 === "[arguments not available]" ? void 0 : d2.split(",");
-        return new e({ functionName: p, args: y2, fileName: a2[0], lineNumber: a2[1], columnNumber: a2[2], source: i });
-      }, this);
-    }, "ErrorStackParser$$parseOpera11") };
-  }, "ErrorStackParser"));
-});
-var z2 = le($());
-var g2 = typeof process == "object" && typeof process.versions == "object" && typeof process.versions.node == "string" && typeof process.browser > "u";
-var F2 = g2 && typeof module < "u" && typeof module.exports < "u" && typeof w2 < "u" && typeof __dirname < "u";
-var C = g2 && !F2;
-var de2 = typeof Deno < "u";
-var W2 = !g2 && !de2;
-var j2 = W2 && typeof window == "object" && typeof document == "object" && typeof document.createElement == "function" && typeof sessionStorage == "object" && typeof importScripts != "function";
-var B2 = W2 && typeof importScripts == "function" && typeof self == "object";
-var Ne2 = typeof navigator == "object" && typeof navigator.userAgent == "string" && navigator.userAgent.indexOf("Chrome") == -1 && navigator.userAgent.indexOf("Safari") > -1;
-var q;
-var P2;
-var V;
-var H;
-var x2;
-async function I2() {
-  if (!g2 || (q = (await import("node:url")).default, H = await import("node:fs"), x2 = await import("node:fs/promises"), V = (await import("node:vm")).default, P2 = await import("node:path"), k = P2.sep, typeof w2 < "u"))
-    return;
-  let t = H, e = await import("node:crypto"), o = await Promise.resolve().then(() => __toESM(require_browser())), s = await import("node:child_process"), l2 = { fs: t, crypto: e, ws: o, child_process: s };
-  globalThis.require = function(r) {
-    return l2[r];
+function Z(e) {
+  return !isNaN(parseFloat(e)) && isFinite(e);
+}
+c(Z, "_isNumber");
+function E2(e) {
+  return e.charAt(0).toUpperCase() + e.substring(1);
+}
+c(E2, "_capitalize");
+function P2(e) {
+  return function() {
+    return this[e];
   };
 }
-f2(I2, "initNodeModules");
-function fe2(t, e) {
-  return P2.resolve(e || ".", t);
+c(P2, "_getter");
+var w2 = ["isConstructor", "isEval", "isNative", "isToplevel"];
+var N2 = ["columnNumber", "lineNumber"];
+var _ = ["fileName", "functionName", "source"];
+var ee2 = ["args"];
+var te2 = ["evalOrigin"];
+var I2 = w2.concat(N2, _, ee2, te2);
+function p(e) {
+  if (e)
+    for (var t = 0; t < I2.length; t++)
+      e[I2[t]] !== void 0 && this["set" + E2(I2[t])](e[I2[t]]);
 }
-f2(fe2, "node_resolvePath");
-function ue2(t, e) {
-  return e === void 0 && (e = location), new URL(t, e).toString();
-}
-f2(ue2, "browser_resolvePath");
-var S2;
-g2 ? S2 = fe2 : S2 = ue2;
-var k;
-g2 || (k = "/");
-function pe2(t, e) {
-  return t.startsWith("file://") && (t = t.slice(7)), t.includes("://") ? { response: fetch(t) } : { binary: x2.readFile(t).then((o) => new Uint8Array(o.buffer, o.byteOffset, o.byteLength)) };
-}
-f2(pe2, "node_getBinaryResponse");
-function me(t, e) {
-  let o = new URL(t, location);
-  return { response: fetch(o, e ? { integrity: e } : {}) };
-}
-f2(me, "browser_getBinaryResponse");
+c(p, "StackFrame");
+p.prototype = { getArgs: function() {
+  return this.args;
+}, setArgs: function(e) {
+  if (Object.prototype.toString.call(e) !== "[object Array]")
+    throw new TypeError("Args must be an Array");
+  this.args = e;
+}, getEvalOrigin: function() {
+  return this.evalOrigin;
+}, setEvalOrigin: function(e) {
+  if (e instanceof p)
+    this.evalOrigin = e;
+  else if (e instanceof Object)
+    this.evalOrigin = new p(e);
+  else
+    throw new TypeError("Eval Origin must be an Object or StackFrame");
+}, toString: function() {
+  var e = this.getFileName() || "", t = this.getLineNumber() || "", i = this.getColumnNumber() || "", r = this.getFunctionName() || "";
+  return this.getIsEval() ? e ? "[eval] (" + e + ":" + t + ":" + i + ")" : "[eval]:" + t + ":" + i : r ? r + " (" + e + ":" + t + ":" + i + ")" : e + ":" + t + ":" + i;
+} };
+p.fromString = c(function(t) {
+  var i = t.indexOf("("), r = t.lastIndexOf(")"), a2 = t.substring(0, i), n = t.substring(i + 1, r).split(","), o = t.substring(r + 1);
+  if (o.indexOf("@") === 0)
+    var s = /@(.+?)(?::(\d+))?(?::(\d+))?$/.exec(o, ""), l2 = s[1], d2 = s[2], u2 = s[3];
+  return new p({ functionName: a2, args: n || void 0, fileName: l2, lineNumber: d2 || void 0, columnNumber: u2 || void 0 });
+}, "StackFrame$$fromString");
+for (b = 0; b < w2.length; b++)
+  p.prototype["get" + E2(w2[b])] = P2(w2[b]), p.prototype["set" + E2(w2[b])] = function(e) {
+    return function(t) {
+      this[e] = !!t;
+    };
+  }(w2[b]);
 var b;
-g2 ? b = pe2 : b = me;
-async function K(t, e) {
-  let { response: o, binary: s } = b(t, e);
-  if (s)
-    return s;
-  let l2 = await o;
-  if (!l2.ok)
-    throw new Error(`Failed to load '${t}': request failed.`);
-  return new Uint8Array(await l2.arrayBuffer());
+for (v = 0; v < N2.length; v++)
+  p.prototype["get" + E2(N2[v])] = P2(N2[v]), p.prototype["set" + E2(N2[v])] = function(e) {
+    return function(t) {
+      if (!Z(t))
+        throw new TypeError(e + " must be a Number");
+      this[e] = Number(t);
+    };
+  }(N2[v]);
+var v;
+for (h = 0; h < _.length; h++)
+  p.prototype["get" + E2(_[h])] = P2(_[h]), p.prototype["set" + E2(_[h])] = function(e) {
+    return function(t) {
+      this[e] = String(t);
+    };
+  }(_[h]);
+var h;
+var x2 = p;
+function ne() {
+  var e = /^\s*at .*(\S+:\d+|\(native\))/m, t = /^(eval@)?(\[native code])?$/;
+  return { parse: c(function(r) {
+    if (r.stack && r.stack.match(e))
+      return this.parseV8OrIE(r);
+    if (r.stack)
+      return this.parseFFOrSafari(r);
+    throw new Error("Cannot parse given Error object");
+  }, "ErrorStackParser$$parse"), extractLocation: c(function(r) {
+    if (r.indexOf(":") === -1)
+      return [r];
+    var a2 = /(.+?)(?::(\d+))?(?::(\d+))?$/, n = a2.exec(r.replace(/[()]/g, ""));
+    return [n[1], n[2] || void 0, n[3] || void 0];
+  }, "ErrorStackParser$$extractLocation"), parseV8OrIE: c(function(r) {
+    var a2 = r.stack.split(`
+`).filter(function(n) {
+      return !!n.match(e);
+    }, this);
+    return a2.map(function(n) {
+      n.indexOf("(eval ") > -1 && (n = n.replace(/eval code/g, "eval").replace(/(\(eval at [^()]*)|(,.*$)/g, ""));
+      var o = n.replace(/^\s+/, "").replace(/\(eval code/g, "(").replace(/^.*?\s+/, ""), s = o.match(/ (\(.+\)$)/);
+      o = s ? o.replace(s[0], "") : o;
+      var l2 = this.extractLocation(s ? s[1] : o), d2 = s && o || void 0, u2 = ["eval", "<anonymous>"].indexOf(l2[0]) > -1 ? void 0 : l2[0];
+      return new x2({ functionName: d2, fileName: u2, lineNumber: l2[1], columnNumber: l2[2], source: n });
+    }, this);
+  }, "ErrorStackParser$$parseV8OrIE"), parseFFOrSafari: c(function(r) {
+    var a2 = r.stack.split(`
+`).filter(function(n) {
+      return !n.match(t);
+    }, this);
+    return a2.map(function(n) {
+      if (n.indexOf(" > eval") > -1 && (n = n.replace(/ line (\d+)(?: > eval line \d+)* > eval:\d+:\d+/g, ":$1")), n.indexOf("@") === -1 && n.indexOf(":") === -1)
+        return new x2({ functionName: n });
+      var o = /((.*".+"[^@]*)?[^@]*)(?:@)/, s = n.match(o), l2 = s && s[1] ? s[1] : void 0, d2 = this.extractLocation(n.replace(o, ""));
+      return new x2({ functionName: l2, fileName: d2[0], lineNumber: d2[1], columnNumber: d2[2], source: n });
+    }, this);
+  }, "ErrorStackParser$$parseFFOrSafari") };
 }
-f2(K, "loadBinaryFile");
-var E2;
-if (j2)
-  E2 = f2(async (t) => await import(t), "loadScript");
-else if (B2)
-  E2 = f2(async (t) => {
+c(ne, "ErrorStackParser");
+var re = new ne();
+var M = re;
+var g2 = typeof process == "object" && typeof process.versions == "object" && typeof process.versions.node == "string" && !process.browser;
+var A2 = g2 && typeof module < "u" && typeof module.exports < "u" && typeof O2 < "u" && typeof __dirname < "u";
+var W = g2 && !A2;
+var Ne2 = typeof globalThis.Bun < "u";
+var oe2 = typeof Deno < "u";
+var B2 = !g2 && !oe2;
+var $ = B2 && typeof window == "object" && typeof document == "object" && typeof document.createElement == "function" && typeof sessionStorage == "object" && typeof importScripts != "function";
+var j = B2 && typeof importScripts == "function" && typeof self == "object";
+var _e2 = typeof navigator == "object" && typeof navigator.userAgent == "string" && navigator.userAgent.indexOf("Chrome") == -1 && navigator.userAgent.indexOf("Safari") > -1;
+var V;
+var L2;
+var z;
+var H;
+var D;
+async function T2() {
+  if (!g2 || (V = (await import("node:url")).default, H = await import("node:fs"), D = await import("node:fs/promises"), z = (await import("node:vm")).default, L2 = await import("node:path"), U2 = L2.sep, typeof O2 < "u"))
+    return;
+  let e = H, t = await import("node:crypto"), i = await Promise.resolve().then(() => __toESM(require_browser())), r = await import("node:child_process"), a2 = { fs: e, crypto: t, ws: i, child_process: r };
+  globalThis.require = function(n) {
+    return a2[n];
+  };
+}
+c(T2, "initNodeModules");
+function ie2(e, t) {
+  return L2.resolve(t || ".", e);
+}
+c(ie2, "node_resolvePath");
+function ae2(e, t) {
+  return t === void 0 && (t = location), new URL(e, t).toString();
+}
+c(ae2, "browser_resolvePath");
+var k2;
+g2 ? k2 = ie2 : k2 = ae2;
+var U2;
+g2 || (U2 = "/");
+function se(e, t) {
+  return e.startsWith("file://") && (e = e.slice(7)), e.includes("://") ? { response: fetch(e) } : { binary: D.readFile(e).then((i) => new Uint8Array(i.buffer, i.byteOffset, i.byteLength)) };
+}
+c(se, "node_getBinaryResponse");
+function ce(e, t) {
+  let i = new URL(e, location);
+  return { response: fetch(i, t ? { integrity: t } : {}) };
+}
+c(ce, "browser_getBinaryResponse");
+var R2;
+g2 ? R2 = se : R2 = ce;
+async function q2(e, t) {
+  let { response: i, binary: r } = R2(e, t);
+  if (r)
+    return r;
+  let a2 = await i;
+  if (!a2.ok)
+    throw new Error(`Failed to load '${e}': request failed.`);
+  return new Uint8Array(await a2.arrayBuffer());
+}
+c(q2, "loadBinaryFile");
+var F2;
+if ($)
+  F2 = c(async (e) => await import(e), "loadScript");
+else if (j)
+  F2 = c(async (e) => {
     try {
-      globalThis.importScripts(t);
-    } catch (e) {
-      if (e instanceof TypeError)
-        await import(t);
+      globalThis.importScripts(e);
+    } catch (t) {
+      if (t instanceof TypeError)
+        await import(e);
       else
-        throw e;
+        throw t;
     }
   }, "loadScript");
 else if (g2)
-  E2 = ye2;
+  F2 = le2;
 else
   throw new Error("Cannot determine runtime environment");
-async function ye2(t) {
-  t.startsWith("file://") && (t = t.slice(7)), t.includes("://") ? V.runInThisContext(await (await fetch(t)).text()) : await import(q.pathToFileURL(t).href);
+async function le2(e) {
+  e.startsWith("file://") && (e = e.slice(7)), e.includes("://") ? z.runInThisContext(await (await fetch(e)).text()) : await import(V.pathToFileURL(e).href);
 }
-f2(ye2, "nodeLoadScript");
-async function J(t) {
+c(le2, "nodeLoadScript");
+async function J(e) {
   if (g2) {
-    await I2();
-    let e = await x2.readFile(t, { encoding: "utf8" });
-    return JSON.parse(e);
+    await T2();
+    let t = await D.readFile(e, { encoding: "utf8" });
+    return JSON.parse(t);
   } else
-    return await (await fetch(t)).json();
+    return await (await fetch(e)).json();
 }
-f2(J, "loadLockFile");
-async function X2() {
-  if (F2)
+c(J, "loadLockFile");
+async function K() {
+  if (A2)
     return __dirname;
-  let t;
+  let e;
   try {
     throw new Error();
-  } catch (s) {
-    t = s;
+  } catch (r) {
+    e = r;
   }
-  let e = z2.default.parse(t)[0].fileName;
-  if (C) {
-    let s = await import("node:path");
-    return (await import("node:url")).fileURLToPath(s.dirname(e));
+  let t = M.parse(e)[0].fileName;
+  if (g2 && !t.startsWith("file://") && (t = `file://${t}`), W) {
+    let r = await import("node:path");
+    return (await import("node:url")).fileURLToPath(r.dirname(t));
   }
-  let o = e.lastIndexOf(k);
-  if (o === -1)
+  let i = t.lastIndexOf(U2);
+  if (i === -1)
     throw new Error("Could not extract indexURL path from pyodide module location");
-  return e.slice(0, o);
+  return t.slice(0, i);
 }
-f2(X2, "calculateDirname");
-function G(t) {
-  let e = t.FS, o = t.FS.filesystems.MEMFS, s = t.PATH, l2 = { DIR_MODE: 16895, FILE_MODE: 33279, mount: function(r) {
-    if (!r.opts.fileSystemHandle)
+c(K, "calculateDirname");
+function Y2(e) {
+  let t = e.FS, i = e.FS.filesystems.MEMFS, r = e.PATH, a2 = { DIR_MODE: 16895, FILE_MODE: 33279, mount: function(n) {
+    if (!n.opts.fileSystemHandle)
       throw new Error("opts.fileSystemHandle is required");
-    return o.mount.apply(null, arguments);
-  }, syncfs: async (r, n, u2) => {
+    return i.mount.apply(null, arguments);
+  }, syncfs: async (n, o, s) => {
     try {
-      let i = l2.getLocalSet(r), c = await l2.getRemoteSet(r), a2 = n ? c : i, m2 = n ? i : c;
-      await l2.reconcile(r, a2, m2), u2(null);
-    } catch (i) {
-      u2(i);
+      let l2 = a2.getLocalSet(n), d2 = await a2.getRemoteSet(n), u2 = o ? d2 : l2, m2 = o ? l2 : d2;
+      await a2.reconcile(n, u2, m2), s(null);
+    } catch (l2) {
+      s(l2);
     }
-  }, getLocalSet: (r) => {
-    let n = /* @__PURE__ */ Object.create(null);
-    function u2(a2) {
-      return a2 !== "." && a2 !== "..";
+  }, getLocalSet: (n) => {
+    let o = /* @__PURE__ */ Object.create(null);
+    function s(u2) {
+      return u2 !== "." && u2 !== "..";
     }
-    f2(u2, "isRealDir");
-    function i(a2) {
-      return (m2) => s.join2(a2, m2);
+    c(s, "isRealDir");
+    function l2(u2) {
+      return (m2) => r.join2(u2, m2);
     }
-    f2(i, "toAbsolute");
-    let c = e.readdir(r.mountpoint).filter(u2).map(i(r.mountpoint));
-    for (; c.length; ) {
-      let a2 = c.pop(), m2 = e.stat(a2);
-      e.isDir(m2.mode) && c.push.apply(c, e.readdir(a2).filter(u2).map(i(a2))), n[a2] = { timestamp: m2.mtime, mode: m2.mode };
+    c(l2, "toAbsolute");
+    let d2 = t.readdir(n.mountpoint).filter(s).map(l2(n.mountpoint));
+    for (; d2.length; ) {
+      let u2 = d2.pop(), m2 = t.stat(u2);
+      t.isDir(m2.mode) && d2.push.apply(d2, t.readdir(u2).filter(s).map(l2(u2))), o[u2] = { timestamp: m2.mtime, mode: m2.mode };
     }
-    return { type: "local", entries: n };
-  }, getRemoteSet: async (r) => {
-    let n = /* @__PURE__ */ Object.create(null), u2 = await ge(r.opts.fileSystemHandle);
-    for (let [i, c] of u2)
-      i !== "." && (n[s.join2(r.mountpoint, i)] = { timestamp: c.kind === "file" ? (await c.getFile()).lastModifiedDate : /* @__PURE__ */ new Date(), mode: c.kind === "file" ? l2.FILE_MODE : l2.DIR_MODE });
-    return { type: "remote", entries: n, handles: u2 };
-  }, loadLocalEntry: (r) => {
-    let u2 = e.lookupPath(r).node, i = e.stat(r);
-    if (e.isDir(i.mode))
-      return { timestamp: i.mtime, mode: i.mode };
-    if (e.isFile(i.mode))
-      return u2.contents = o.getFileDataAsTypedArray(u2), { timestamp: i.mtime, mode: i.mode, contents: u2.contents };
+    return { type: "local", entries: o };
+  }, getRemoteSet: async (n) => {
+    let o = /* @__PURE__ */ Object.create(null), s = await de2(n.opts.fileSystemHandle);
+    for (let [l2, d2] of s)
+      l2 !== "." && (o[r.join2(n.mountpoint, l2)] = { timestamp: d2.kind === "file" ? (await d2.getFile()).lastModifiedDate : /* @__PURE__ */ new Date(), mode: d2.kind === "file" ? a2.FILE_MODE : a2.DIR_MODE });
+    return { type: "remote", entries: o, handles: s };
+  }, loadLocalEntry: (n) => {
+    let s = t.lookupPath(n).node, l2 = t.stat(n);
+    if (t.isDir(l2.mode))
+      return { timestamp: l2.mtime, mode: l2.mode };
+    if (t.isFile(l2.mode))
+      return s.contents = i.getFileDataAsTypedArray(s), { timestamp: l2.mtime, mode: l2.mode, contents: s.contents };
     throw new Error("node type not supported");
-  }, storeLocalEntry: (r, n) => {
-    if (e.isDir(n.mode))
-      e.mkdirTree(r, n.mode);
-    else if (e.isFile(n.mode))
-      e.writeFile(r, n.contents, { canOwn: true });
+  }, storeLocalEntry: (n, o) => {
+    if (t.isDir(o.mode))
+      t.mkdirTree(n, o.mode);
+    else if (t.isFile(o.mode))
+      t.writeFile(n, o.contents, { canOwn: true });
     else
       throw new Error("node type not supported");
-    e.chmod(r, n.mode), e.utime(r, n.timestamp, n.timestamp);
-  }, removeLocalEntry: (r) => {
-    var n = e.stat(r);
-    e.isDir(n.mode) ? e.rmdir(r) : e.isFile(n.mode) && e.unlink(r);
-  }, loadRemoteEntry: async (r) => {
-    if (r.kind === "file") {
-      let n = await r.getFile();
-      return { contents: new Uint8Array(await n.arrayBuffer()), mode: l2.FILE_MODE, timestamp: n.lastModifiedDate };
+    t.chmod(n, o.mode), t.utime(n, o.timestamp, o.timestamp);
+  }, removeLocalEntry: (n) => {
+    var o = t.stat(n);
+    t.isDir(o.mode) ? t.rmdir(n) : t.isFile(o.mode) && t.unlink(n);
+  }, loadRemoteEntry: async (n) => {
+    if (n.kind === "file") {
+      let o = await n.getFile();
+      return { contents: new Uint8Array(await o.arrayBuffer()), mode: a2.FILE_MODE, timestamp: o.lastModifiedDate };
     } else {
-      if (r.kind === "directory")
-        return { mode: l2.DIR_MODE, timestamp: /* @__PURE__ */ new Date() };
-      throw new Error("unknown kind: " + r.kind);
+      if (n.kind === "directory")
+        return { mode: a2.DIR_MODE, timestamp: /* @__PURE__ */ new Date() };
+      throw new Error("unknown kind: " + n.kind);
     }
-  }, storeRemoteEntry: async (r, n, u2) => {
-    let i = r.get(s.dirname(n)), c = e.isFile(u2.mode) ? await i.getFileHandle(s.basename(n), { create: true }) : await i.getDirectoryHandle(s.basename(n), { create: true });
-    if (c.kind === "file") {
-      let a2 = await c.createWritable();
-      await a2.write(u2.contents), await a2.close();
+  }, storeRemoteEntry: async (n, o, s) => {
+    let l2 = n.get(r.dirname(o)), d2 = t.isFile(s.mode) ? await l2.getFileHandle(r.basename(o), { create: true }) : await l2.getDirectoryHandle(r.basename(o), { create: true });
+    if (d2.kind === "file") {
+      let u2 = await d2.createWritable();
+      await u2.write(s.contents), await u2.close();
     }
-    r.set(n, c);
-  }, removeRemoteEntry: async (r, n) => {
-    await r.get(s.dirname(n)).removeEntry(s.basename(n)), r.delete(n);
-  }, reconcile: async (r, n, u2) => {
-    let i = 0, c = [];
-    Object.keys(n.entries).forEach(function(p) {
-      let d2 = n.entries[p], y2 = u2.entries[p];
-      (!y2 || e.isFile(d2.mode) && d2.timestamp.getTime() > y2.timestamp.getTime()) && (c.push(p), i++);
-    }), c.sort();
-    let a2 = [];
-    if (Object.keys(u2.entries).forEach(function(p) {
-      n.entries[p] || (a2.push(p), i++);
-    }), a2.sort().reverse(), !i)
+    n.set(o, d2);
+  }, removeRemoteEntry: async (n, o) => {
+    await n.get(r.dirname(o)).removeEntry(r.basename(o)), n.delete(o);
+  }, reconcile: async (n, o, s) => {
+    let l2 = 0, d2 = [];
+    Object.keys(o.entries).forEach(function(f2) {
+      let y2 = o.entries[f2], S2 = s.entries[f2];
+      (!S2 || t.isFile(y2.mode) && y2.timestamp.getTime() > S2.timestamp.getTime()) && (d2.push(f2), l2++);
+    }), d2.sort();
+    let u2 = [];
+    if (Object.keys(s.entries).forEach(function(f2) {
+      o.entries[f2] || (u2.push(f2), l2++);
+    }), u2.sort().reverse(), !l2)
       return;
-    let m2 = n.type === "remote" ? n.handles : u2.handles;
-    for (let p of c) {
-      let d2 = s.normalize(p.replace(r.mountpoint, "/")).substring(1);
-      if (u2.type === "local") {
-        let y2 = m2.get(d2), h = await l2.loadRemoteEntry(y2);
-        l2.storeLocalEntry(p, h);
+    let m2 = o.type === "remote" ? o.handles : s.handles;
+    for (let f2 of d2) {
+      let y2 = r.normalize(f2.replace(n.mountpoint, "/")).substring(1);
+      if (s.type === "local") {
+        let S2 = m2.get(y2), X2 = await a2.loadRemoteEntry(S2);
+        a2.storeLocalEntry(f2, X2);
       } else {
-        let y2 = l2.loadLocalEntry(p);
-        await l2.storeRemoteEntry(m2, d2, y2);
+        let S2 = a2.loadLocalEntry(f2);
+        await a2.storeRemoteEntry(m2, y2, S2);
       }
     }
-    for (let p of a2)
-      if (u2.type === "local")
-        l2.removeLocalEntry(p);
+    for (let f2 of u2)
+      if (s.type === "local")
+        a2.removeLocalEntry(f2);
       else {
-        let d2 = s.normalize(p.replace(r.mountpoint, "/")).substring(1);
-        await l2.removeRemoteEntry(m2, d2);
+        let y2 = r.normalize(f2.replace(n.mountpoint, "/")).substring(1);
+        await a2.removeRemoteEntry(m2, y2);
       }
   } };
-  t.FS.filesystems.NATIVEFS_ASYNC = l2;
+  e.FS.filesystems.NATIVEFS_ASYNC = a2;
 }
-f2(G, "initializeNativeFS");
-var ge = f2(async (t) => {
-  let e = [];
-  async function o(l2) {
-    for await (let r of l2.values())
-      e.push(r), r.kind === "directory" && await o(r);
+c(Y2, "initializeNativeFS");
+var de2 = c(async (e) => {
+  let t = [];
+  async function i(a2) {
+    for await (let n of a2.values())
+      t.push(n), n.kind === "directory" && await i(n);
   }
-  f2(o, "collect"), await o(t);
-  let s = /* @__PURE__ */ new Map();
-  s.set(".", t);
-  for (let l2 of e) {
-    let r = (await t.resolve(l2)).join("/");
-    s.set(r, l2);
+  c(i, "collect"), await i(e);
+  let r = /* @__PURE__ */ new Map();
+  r.set(".", e);
+  for (let a2 of t) {
+    let n = (await e.resolve(a2)).join("/");
+    r.set(n, a2);
   }
-  return s;
+  return r;
 }, "getFsHandles");
-function Y2(t) {
-  let e = { noImageDecoding: true, noAudioDecoding: true, noWasmDecoding: false, preRun: we(t), quit(o, s) {
-    throw e.exited = { status: o, toThrow: s }, s;
-  }, print: t.stdout, printErr: t.stderr, arguments: t.args, API: { config: t }, locateFile: (o) => t.indexURL + o, instantiateWasm: Se2(t.indexURL) };
-  return e;
+function G2(e) {
+  let t = { noImageDecoding: true, noAudioDecoding: true, noWasmDecoding: false, preRun: ge(e), quit(i, r) {
+    throw t.exited = { status: i, toThrow: r }, r;
+  }, print: e.stdout, printErr: e.stderr, arguments: e.args, API: { config: e }, locateFile: (i) => e.indexURL + i, instantiateWasm: ye2(e.indexURL) };
+  return t;
 }
-f2(Y2, "createSettings");
-function he2(t) {
-  return function(e) {
-    let o = "/";
+c(G2, "createSettings");
+function ue2(e) {
+  return function(t) {
+    let i = "/";
     try {
-      e.FS.mkdirTree(t);
-    } catch (s) {
-      console.error(`Error occurred while making a home directory '${t}':`), console.error(s), console.error(`Using '${o}' for a home directory instead`), t = o;
+      t.FS.mkdirTree(e);
+    } catch (r) {
+      console.error(`Error occurred while making a home directory '${e}':`), console.error(r), console.error(`Using '${i}' for a home directory instead`), e = i;
     }
-    e.FS.chdir(t);
+    t.FS.chdir(e);
   };
 }
-f2(he2, "createHomeDirectory");
-function ve(t) {
-  return function(e) {
-    Object.assign(e.ENV, t);
+c(ue2, "createHomeDirectory");
+function fe2(e) {
+  return function(t) {
+    Object.assign(t.ENV, e);
   };
 }
-f2(ve, "setEnvironment");
-function Ee(t) {
-  return (e) => {
-    for (let o of t)
-      e.FS.mkdirTree(o), e.FS.mount(e.FS.filesystems.NODEFS, { root: o }, o);
+c(fe2, "setEnvironment");
+function me2(e) {
+  return (t) => {
+    for (let i of e)
+      t.FS.mkdirTree(i), t.FS.mount(t.FS.filesystems.NODEFS, { root: i }, i);
   };
 }
-f2(Ee, "mountLocalDirectories");
-function be(t) {
-  let e = K(t);
-  return (o) => {
-    let s = o._py_version_major(), l2 = o._py_version_minor();
-    o.FS.mkdirTree("/lib"), o.FS.mkdirTree(`/lib/python${s}.${l2}/site-packages`), o.addRunDependency("install-stdlib"), e.then((r) => {
-      o.FS.writeFile(`/lib/python${s}${l2}.zip`, r);
-    }).catch((r) => {
-      console.error("Error occurred while installing the standard library:"), console.error(r);
+c(me2, "mountLocalDirectories");
+function pe2(e) {
+  let t = q2(e);
+  return (i) => {
+    let r = i._py_version_major(), a2 = i._py_version_minor();
+    i.FS.mkdirTree("/lib"), i.FS.mkdirTree(`/lib/python${r}.${a2}/site-packages`), i.addRunDependency("install-stdlib"), t.then((n) => {
+      i.FS.writeFile(`/lib/python${r}${a2}.zip`, n);
+    }).catch((n) => {
+      console.error("Error occurred while installing the standard library:"), console.error(n);
     }).finally(() => {
-      o.removeRunDependency("install-stdlib");
+      i.removeRunDependency("install-stdlib");
     });
   };
 }
-f2(be, "installStdlib");
-function we(t) {
-  let e;
-  return t.stdLibURL != null ? e = t.stdLibURL : e = t.indexURL + "python_stdlib.zip", [be(e), he2(t.env.HOME), ve(t.env), Ee(t._node_mounts), G];
+c(pe2, "installStdlib");
+function ge(e) {
+  let t;
+  return e.stdLibURL != null ? t = e.stdLibURL : t = e.indexURL + "python_stdlib.zip", [pe2(t), ue2(e.env.HOME), fe2(e.env), me2(e._node_mounts), Y2];
 }
-f2(we, "getFileSystemInitializationFuncs");
-function Se2(t) {
-  let { binary: e, response: o } = b(t + "pyodide.asm.wasm");
-  return function(s, l2) {
+c(ge, "getFileSystemInitializationFuncs");
+function ye2(e) {
+  let { binary: t, response: i } = R2(e + "pyodide.asm.wasm");
+  return function(r, a2) {
     return async function() {
       try {
-        let r;
-        o ? r = await WebAssembly.instantiateStreaming(o, s) : r = await WebAssembly.instantiate(await e, s);
-        let { instance: n, module: u2 } = r;
-        typeof WasmOffsetConverter < "u" && (wasmOffsetConverter = new WasmOffsetConverter(wasmBinary, u2)), l2(n, u2);
-      } catch (r) {
-        console.warn("wasm instantiation failed!"), console.warn(r);
+        let n;
+        i ? n = await WebAssembly.instantiateStreaming(i, r) : n = await WebAssembly.instantiate(await t, r);
+        let { instance: o, module: s } = n;
+        typeof WasmOffsetConverter < "u" && (wasmOffsetConverter = new WasmOffsetConverter(wasmBinary, s)), a2(o, s);
+      } catch (n) {
+        console.warn("wasm instantiation failed!"), console.warn(n);
       }
     }(), {};
   };
 }
-f2(Se2, "getInstantiateWasmFunc");
-var A2 = "0.26.0";
-async function Be2(t = {}) {
-  await I2();
-  let e = t.indexURL || await X2();
-  e = S2(e), e.endsWith("/") || (e += "/"), t.indexURL = e;
-  let o = { fullStdLib: false, jsglobals: globalThis, stdin: globalThis.prompt ? globalThis.prompt : void 0, lockFileURL: e + "pyodide-lock.json", args: [], _node_mounts: [], env: {}, packageCacheDir: e, packages: [] }, s = Object.assign(o, t);
-  s.env.HOME || (s.env.HOME = "/home/pyodide");
-  let l2 = Y2(s), r = l2.API;
-  if (r.lockFilePromise = J(s.lockFileURL), typeof _createPyodideModule != "function") {
-    let a2 = `${s.indexURL}pyodide.asm.js`;
-    await E2(a2);
+c(ye2, "getInstantiateWasmFunc");
+var C = "0.26.2";
+async function $e2(e = {}) {
+  var u2, m2;
+  await T2();
+  let t = e.indexURL || await K();
+  t = k2(t), t.endsWith("/") || (t += "/"), e.indexURL = t;
+  let i = { fullStdLib: false, jsglobals: globalThis, stdin: globalThis.prompt ? globalThis.prompt : void 0, lockFileURL: t + "pyodide-lock.json", args: [], _node_mounts: [], env: {}, packageCacheDir: t, packages: [], enableRunUntilComplete: false, checkAPIVersion: true }, r = Object.assign(i, e);
+  (u2 = r.env).HOME ?? (u2.HOME = "/home/pyodide"), (m2 = r.env).PYTHONINSPECT ?? (m2.PYTHONINSPECT = "1");
+  let a2 = G2(r), n = a2.API;
+  if (n.lockFilePromise = J(r.lockFileURL), typeof _createPyodideModule != "function") {
+    let f2 = `${r.indexURL}pyodide.asm.js`;
+    await F2(f2);
   }
-  let n;
-  if (t._loadSnapshot) {
-    let a2 = await t._loadSnapshot;
-    ArrayBuffer.isView(a2) ? n = a2 : n = new Uint8Array(a2), l2.noInitialRun = true, l2.INITIAL_MEMORY = n.length;
+  let o;
+  if (e._loadSnapshot) {
+    let f2 = await e._loadSnapshot;
+    ArrayBuffer.isView(f2) ? o = f2 : o = new Uint8Array(f2), a2.noInitialRun = true, a2.INITIAL_MEMORY = o.length;
   }
-  let u2 = await _createPyodideModule(l2);
-  if (l2.exited)
-    throw l2.exited.toThrow;
-  if (t.pyproxyToStringRepr && r.setPyProxyToStringMethod(true), r.version !== A2)
-    throw new Error(`Pyodide version does not match: '${A2}' <==> '${r.version}'. If you updated the Pyodide version, make sure you also updated the 'indexURL' parameter passed to loadPyodide.`);
-  u2.locateFile = (a2) => {
+  let s = await _createPyodideModule(a2);
+  if (a2.exited)
+    throw a2.exited.toThrow;
+  if (e.pyproxyToStringRepr && n.setPyProxyToStringMethod(true), n.version !== C && r.checkAPIVersion)
+    throw new Error(`Pyodide version does not match: '${C}' <==> '${n.version}'. If you updated the Pyodide version, make sure you also updated the 'indexURL' parameter passed to loadPyodide.`);
+  s.locateFile = (f2) => {
     throw new Error("Didn't expect to load any more file_packager files!");
   };
-  let i;
-  n && (i = r.restoreSnapshot(n));
-  let c = r.finalizeBootstrap(i);
-  return r.sys.path.insert(0, r.config.env.HOME), c.version.includes("dev") || r.setCdnUrl(`https://cdn.jsdelivr.net/pyodide/v${c.version}/full/`), r._pyodide.set_excepthook(), await r.packageIndexReady, r.initializeStreams(s.stdin, s.stdout, s.stderr), c;
+  let l2;
+  o && (l2 = n.restoreSnapshot(o));
+  let d2 = n.finalizeBootstrap(l2);
+  return n.sys.path.insert(0, n.config.env.HOME), d2.version.includes("dev") || n.setCdnUrl(`https://cdn.jsdelivr.net/pyodide/v${d2.version}/full/`), n._pyodide.set_excepthook(), await n.packageIndexReady, n.initializeStreams(r.stdin, r.stdout, r.stderr), d2;
 }
-f2(Be2, "loadPyodide");
+c($e2, "loadPyodide");
 
 // src/pyodide-proxy.ts
 async function setupPythonEnv(pyodide2, callJS2) {
@@ -2958,7 +2931,7 @@ self.onmessage = async function(e) {
     if (msg.type === "init") {
       if (pyodideStatus === "none") {
         pyodideStatus = "loading";
-        pyodide = await Be2({
+        pyodide = await $e2({
           ...msg.config,
           stdout: self.stdout_callback,
           stderr: self.stderr_callback

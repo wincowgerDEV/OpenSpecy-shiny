@@ -17969,758 +17969,758 @@ function(input, output, session) {
 
 }
 
-
-.shinyWidgetGalleryFuns$tabAirDate <- function() {
-  tagList(
-    tags$h1("Air Datepicker", class = "fw-bold text-primary"),
-    tags$h5(
-      "via ",
-      tags$a(href = "https://github.com/t1m0n/air-datepicker", "air-datepicker")
-    ),
-    br(),
-
-    fluidRow(
-      column(
-        width = 4,
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Default",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = airDatepickerInput,
-            args = list(
-              inputId = ID(.shinyWidgetGalleryId),
-              label = "Default :",
-              value = Sys.Date(),
-              width = "100%"
-            )
-          )
-        ),
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Multiple",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = airDatepickerInput,
-            args = list(
-              inputId = ID(.shinyWidgetGalleryId),
-              label = "Multiple :",
-              value = Sys.Date() + c(-4, 2, 5),
-              multiple = TRUE,
-              clearButton = TRUE,
-              width = "100%"
-            )
-          )
-        ),
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Range",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = airDatepickerInput,
-            args = list(
-              inputId = ID(.shinyWidgetGalleryId),
-              label = "Range :",
-              value = c(Sys.Date(), Sys.Date() + 7),
-              range = TRUE,
-              width = "100%"
-            )
-          )
-        )
-      ),
-
-      column(
-        width = 4,
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "With timepicker",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = airDatepickerInput,
-            args = list(
-              inputId = ID(.shinyWidgetGalleryId),
-              label = "With timepicker :",
-              value = NULL,
-              timepicker = TRUE,
-              timepickerOpts = timepickerOptions(
-                hoursStep = 1,
-                minutesStep = 30
-              ),
-              width = "100%"
-            )
-          )
-        ),
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Disabled dates",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = airDatepickerInput,
-            args = list(
-              inputId = ID(.shinyWidgetGalleryId),
-              label = "Disabled dates :",
-              value = NULL,
-              disabledDates = Sys.Date() + c(-1, 1),
-              width = "100%"
-            )
-          )
-        ),
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Min & max dates",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = airDatepickerInput,
-            args = list(
-              inputId = ID(.shinyWidgetGalleryId),
-              label = "Min & max dates :",
-              value = NULL,
-              minDate = Sys.Date() - 7,
-              maxDate = Sys.Date() + 7,
-              width = "100%"
-            )
-          )
-        )
-      ),
-
-      column(
-        width = 4,
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Month picker",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = airMonthpickerInput,
-            args = list(
-              inputId = ID(.shinyWidgetGalleryId),
-              label = "Month picker :",
-              value = Sys.Date(),
-              dateFormat = "MMMM yyyy",
-              width = "100%"
-            )
-          )
-        ),
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Year picker",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = airYearpickerInput,
-            args = list(
-              inputId = ID(.shinyWidgetGalleryId),
-              label = "Year picker :",
-              value = Sys.Date(),
-              width = "100%"
-            )
-          )
-        ),
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Language & format",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = airDatepickerInput,
-            args = list(
-              inputId = ID(.shinyWidgetGalleryId),
-              label = "Language & format :",
-              value = Sys.Date(),
-              dateFormat = "dd/MM/yyyy",
-              language = "ko",
-              width = "100%"
-            )
-          )
-        )
-      )
-    )
-  )
-}
-
-.shinyWidgetGalleryFuns$tabAwesome <- function() {
-  tagList(
-    tags$h1("Awesome Checkboxes And Radios", class = "fw-bold text-primary"),
-    tags$h5(
-      "via ",
-      tags$a(href = "http://flatlogic.github.io/awesome-bootstrap-checkbox/demo/", "awesome-bootstrap-checkbox")
-    ),
-    br(),
-
-    fluidRow(
-      column(
-        width = 4,
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Shiny default",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = checkboxInput,
-            args = list(inputId = ID(.shinyWidgetGalleryId), label = "A single checkbox", value = TRUE)
-          )
-        )
-        ,
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Shiny default",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = checkboxGroupInput,
-            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Checkboxes", choices = c("A", "B", "C"), selected = "A")
-          )
-        )
-        ,
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Shiny default",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = radioButtons,
-            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Radio buttons", choices = c("A", "B", "C"))
-          )
-        )
-      ),
-
-      column(
-        width = 4,
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Single",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = awesomeCheckbox,
-            args = list(inputId = ID(.shinyWidgetGalleryId), label = "A single checkbox", value = TRUE)
-          )
-        )
-        ,
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Checkbox group",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = awesomeCheckboxGroup,
-            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Checkboxes", choices = c("A", "B", "C"), selected = "A")
-          )
-        )
-        ,
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Radio buttons",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = awesomeRadio,
-            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Radio buttons", choices = c("A", "B", "C"), selected = "A")
-          )
-        )
-      ),
-
-      column(
-        width = 4,
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Another color",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = awesomeCheckbox,
-            args = list(inputId = ID(.shinyWidgetGalleryId), label = "A single checkbox", value = TRUE, status = "info")
-          )
-        )
-        ,
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Inline & danger",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = awesomeCheckboxGroup,
-            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Checkboxes", choices = c("A", "B", "C"), selected = "A", inline = TRUE, status = "danger")
-          )
-        )
-        ,
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Inline & success",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = awesomeRadio,
-            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Radio buttons", choices = c("A", "B", "C"), selected = "A", inline = TRUE, status = "success")
-          )
-        )
-        ,
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Inline & checkbox styled",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = awesomeRadio,
-            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Radio buttons", choices = c("A", "B", "C"), selected = "A", inline = TRUE, checkbox =  TRUE)
-          )
-        )
-        ,
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Update selected",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = awesomeRadio,
-            args = list(inputId = "upAwesomeRadio", label = "Radio buttons", choices = c("A", "B", "C"), selected = "A", inline = TRUE)
-          ),
-          br(),
-          tags$p("Click to update :"),
-          actionGroupButtons(inputIds = c("upAwesomeRadioA", "upAwesomeRadioB", "upAwesomeRadioC"), labels = c("A", "B", "C"))
-        )
-        ,
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Update choices",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = awesomeCheckboxGroup,
-            args = list(inputId = "upAwesomeCheckbox", label = "Checkbox group", choices = c("A", "B", "C"), selected = "A", inline = TRUE, status = "warning")
-          ),
-          br(),
-          tags$p("Click to update :"),
-          actionGroupButtons(inputIds = c("upAwesomeCheckbox1", "upAwesomeCheckbox2"), labels = c("tolower & success", "TOUPPER & warning"))
-        )
-      )
-    )
-  )
-}
-
-.shinyWidgetGalleryFuns$tabBttn <- function() {
-  tagList(
-    tags$h1("bttn", class = "fw-bold text-primary"),
-
-    fluidRow(
-
-      column(
-        width = 4,
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = NULL,
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = actionBttn,
-            args = list(inputId = ID(.shinyWidgetGalleryId), label = NULL, style = "material-circle", color = "danger", icon = icon("bars"))
-          ),
-          footer = NULL
-        ),
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = NULL,
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = actionBttn,
-            args = list(inputId = ID(.shinyWidgetGalleryId), label = "material-flat", style = "material-flat", color = "danger")
-          ),
-          footer = NULL
-        ),
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = NULL,
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = actionBttn,
-            args = list(inputId = ID(.shinyWidgetGalleryId), label = "pill", style = "pill", color = "danger")
-          ),
-          footer = NULL
-        ),
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = NULL,
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = actionBttn,
-            args = list(inputId = ID(.shinyWidgetGalleryId), label = "float", style = "float", color = "danger")
-          ),
-          footer = NULL
-        ),
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = NULL,
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = actionBttn,
-            args = list(inputId = ID(.shinyWidgetGalleryId), label = "unite", style = "unite", color = "danger")
-          ),
-          footer = NULL
-        ),
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = NULL,
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = actionBttn,
-            args = list(inputId = ID(.shinyWidgetGalleryId), label = "fill", style = "fill", color = "danger")
-          ),
-          footer = NULL
-        )
-      ),
-
-
-
-      column(
-        width = 4,
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = NULL,
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = actionBttn,
-            args = list(inputId = ID(.shinyWidgetGalleryId), label = NULL, style = "simple", color = "primary", icon = icon("bars"))
-          ),
-          footer = NULL
-        ),
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = NULL,
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = actionBttn,
-            args = list(inputId = ID(.shinyWidgetGalleryId), label = "bordered", style = "bordered", color = "success", icon = icon("sliders"))
-          ),
-          footer = NULL
-        ),
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = NULL,
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = actionBttn,
-            args = list(inputId = ID(.shinyWidgetGalleryId), label = "minimal", style = "minimal", color = "danger")
-          ),
-          footer = NULL
-        ),
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = NULL,
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = actionBttn,
-            args = list(inputId = ID(.shinyWidgetGalleryId), label = "stretch", style = "stretch", color = "warning")
-          ),
-          footer = NULL
-        ),
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = NULL,
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = actionBttn,
-            args = list(inputId = ID(.shinyWidgetGalleryId), label = "jelly", style = "jelly", color = "danger")
-          ),
-          footer = NULL
-        ),
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = NULL,
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = actionBttn,
-            args = list(inputId = ID(.shinyWidgetGalleryId), label = "gradient", style = "gradient", color = "danger", icon = icon("thumbs-up"))
-          ),
-          footer = NULL
-        )
-      )
-    )
-  )
-}
-
-.shinyWidgetGalleryFuns$tabMaterialSwitch <- function() {
-  tagList(
-    tags$h1("Material switch", class = "fw-bold text-primary"),
-    tags$h5(
-      "via ",
-      tags$a(href = "http://bootsnipp.com/snippets/featured/material-design-switch", "material-design-switch"),
-      style="color: #d9534f;"
-    ),
-    br(),
-
-    fluidRow(
-
-      column(
-        width = 4,
-
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Default",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = materialSwitch,
-            args = list(inputId = ID(.shinyWidgetGalleryId))
-          )
-        )
-        ,
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Label on left",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = materialSwitch,
-            args = list(inputId = ID(.shinyWidgetGalleryId), label = "A label")
-          )
-        )
-        ,
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Label on right",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = materialSwitch,
-            args = list(inputId = ID(.shinyWidgetGalleryId), label = "A label", right = TRUE)
-          )
-        )
-
-      ),
-
-      column(
-        width = 4,
-
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Status primary",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = materialSwitch,
-            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Primary", value = TRUE, status = "primary")
-          )
-        )
-        ,
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Status danger",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = materialSwitch,
-            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Danger", value = TRUE, status = "danger")
-          )
-        )
-        ,
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Status success",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = materialSwitch,
-            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Success", value = TRUE, status = "success")
-          )
-        )
-        ,
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Status warning",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = materialSwitch,
-            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Warning", value = TRUE, status = "warning")
-          )
-        )
-
-      ),
-
-      column(
-        width = 4,
-
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Update",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = materialSwitch,
-            args = list(inputId = "upMaterial", label = "Update value", value = FALSE, status = "info")
-          ),
-          br(),
-          tags$p("Click to update :"),
-          actionGroupButtons(inputIds = c("upMaterialY", "upMaterialN"), labels = c("TRUE", "FALSE"))
-        )
-      )
-
-    )
-  )
-}
-
-.shinyWidgetGalleryFuns$tabOtherStuff <- function() {
-  code_dropdownButton <- readLines(con = "code_dropdownButton.R")
-  code_dropdownButton <- paste(code_dropdownButton, collapse = "\n")
-  code_dropdown <- readLines(con = "code_dropdown.R")
-  code_dropdown <- paste(code_dropdown, collapse = "\n")
-  code_sa <- readLines(con = "code_sa.R")
-  code_sa <- paste(code_sa, collapse = "\n")
-  tagList(
-    tags$h1("Other widgets", class = "fw-bold text-primary"),
-
-    fluidRow(
-      column(
-        width = 8,
-
-        bslib::card(
-          bslib::card_header("Dropdown Button", class = "bg-primary text-light"),
-          bslib::card_body(
-            dropdownButton(
-              tags$h3("List of Inputs"),
-              selectInput(inputId = "xcol", label = "X Variable", choices = names(iris)),
-              selectInput(inputId = "ycol", label = "Y Variable", choices = names(iris), selected = names(iris)[[2]]),
-              sliderInput(inputId = "clusters", label = "Cluster count", value = 3, min = 1, max = 9),
-              circle = TRUE, status = "danger", icon = icon("gear"), width = "300px",
-              tooltip = tooltipOptions(title = "Click to see inputs !")
-            ),
-            plotOutput(outputId = "plot1"),
-            tags$p("if you want to hide inputs to focus on a plot.."),
-            tags$a(
-              icon("code"),
-              "Show code",
-              `data-bs-toggle` = "collapse",
-              href = "#showcode_dropdownButton"
-            ),
-            tags$div(
-              class = "collapse",
-              id = "showcode_dropdownButton",
-              .shinyWidgetGalleryFuns$rCodeContainer(
-                id="code_dropdownButton",
-                code_dropdownButton
-              )
-            )
-          )
-        ),
-
-        bslib::card(
-          bslib::card_header("Dropdown (bis)", class = "bg-primary text-light"),
-          bslib::card_body(
-            dropdown(
-              tags$h3("List of Input"),
-              pickerInput(inputId = "xcol2", label = "X Variable", choices = names(iris), options = list(`style` = "btn-info")),
-              pickerInput(inputId = "ycol2", label = "Y Variable", choices = names(iris), selected = names(iris)[[2]], options = list(`style` = "btn-warning")),
-              sliderInput(inputId = "clusters2", label = "Cluster count", value = 3, min = 1, max = 9),
-              style = "unite", icon = icon("gear"), status = "danger", width = "300px",
-              animate = animateOptions(
-                enter = animations$fading_entrances$fadeInLeftBig,
-                exit = animations$fading_exits$fadeOutRightBig
-              )
-            ),
-            plotOutput(outputId = "plot2"),
-            tags$p("In this version you can add animations and pickerInput will work in it."),
-            tags$a(
-              icon("code"),
-              "Show code",
-              `data-bs-toggle` = "collapse",
-              href = "#showcode_dropdown"
-            ),
-            tags$div(
-              class = "collapse",
-              id = "showcode_dropdown",
-              .shinyWidgetGalleryFuns$rCodeContainer(
-                id="code_dropdown",
-                code_dropdown
-              )
-            )
-          )
-        )
-      ),
-
-      column(
-        width = 4,
-        bslib::card(
-          bslib::card_header("Sweet Alert", class = "bg-primary text-light"),
-          tags$span(
-            "via ",
-            tags$a(href = "https://github.com/sweetalert2/sweetalert2", "sweetalert2")
-          ), br(), br(),
-          fluidRow(
-            column(
-              width = 6,
-              actionButton(inputId = "success", label = "Success !", width = "100%", class = "btn-success"),
-              br(), br(),
-              actionButton(inputId = "info", label = "Info", width = "100%", class = "btn-info")
-              # receiveSweetAlert(messageId = "infomessage")
-            ),
-            column(
-              width = 6,
-              actionButton(inputId = "error", label = "Error", width = "100%", class = "btn-danger"),
-              br(), br(),
-              actionButton(inputId = "warning", label = "Warning", width = "100%", class = "btn-warning")
-            )
-          ),
-          br(),
-          tags$a(
-            icon("code"),
-            "Show code",
-            `data-bs-toggle` = "collapse",
-            href = "#showcodeSA"
-          ),
-          tags$div(
-            class = "collapse",
-            id = "showcodeSA",
-            .shinyWidgetGalleryFuns$rCodeContainer(
-              id = "codeSA",
-              code_sa
-            )
-          )
-        ),
-        bslib::card(
-          bslib::card_header("Confirmation dialog", class = "bg-primary text-light"),
-          bslib::card_body(
-            actionButton(inputId = "launch_confirmation", label = "Ask for confirmation"),
-            tags$br(),
-            verbatimTextOutput(outputId = "res_confirmation")
-          )
-        )
-      )
-    )
-  )
-
-}
-
-.shinyWidgetGalleryFuns$tabOverview <- function() {
-
-  countries <- list(
-    "France", "United Kingdom", "Germany", "United States of America", "Belgium", "China", "Spain", "Netherlands", "Mexico",
-    "Italy", "Canada", "Brazil", "Denmark", "Norway", "Switzerland", "Luxembourg", "Israel", "Russian Federation",
-    "Turkey", "Saudi Arabia", "United Arab Emirates"
-  )
-  flags <- c("fr", "gb", "de", "us", "be", "cn", "es", "nl", "mx", "it", "ca", "br", "dk", "no", "ch", "lu", "il", "ru", "tr", "sa", "ae")
-  flags <- sprintf("https://cdn.rawgit.com/lipis/flag-icon-css/master/flags/4x3/%s.svg", flags)
-
-  tagList(
-    tags$h1("shinyWidgets Overview", class = "fw-bold text-primary"),
-    br(),
-
-    fluidRow(
-
-      column(
-        width = 4,
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Awesome checkbox Group",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = awesomeCheckboxGroup,
-            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Checkboxes with status", choices = c("A", "B", "C"), inline = TRUE)
-          ),
-          footer = actionLink(inputId = "toAwesome1", label = "More examples", icon = icon("plus"))
-        )
-        ,
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Checkbox Group Buttons",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = checkboxGroupButtons,
-            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Choices", choices = c("Choice 1", "Choice 2", "Choice 3"))
-          ),
-          footer = actionLink(inputId = "tocheckButtons", label = "More examples", icon = icon("plus"))
-        )
-        ,
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Awesome Radio Buttons",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = awesomeRadio,
-            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Radio with status", choices = c("A", "B", "C"), selected = "B", status = "warning")
-          ),
-          footer = actionLink(inputId = "toAwesome2", label = "More examples", icon = icon("plus"))
-        )
-        ,
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Radio Group Buttons",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = radioGroupButtons,
-            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Choices", choices = c("Choice 1", "Choice 2", "Choice 3"))
-          )
-        )
-      )
-      ,
-      column(
-        width = 4,
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Awesome checkbox",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = awesomeCheckbox,
-            args = list(inputId = ID(.shinyWidgetGalleryId), label = "A single checkbox", value = TRUE)
-          ),
-          footer = actionLink(inputId = "toAwesome3", label = "More examples", icon = icon("plus"))
-        )
-        ,
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Material Design Switch",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = materialSwitch,
-            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Primary switch", status = "primary", right = TRUE)
-          ),
-          footer = actionLink(inputId = "toMaterialSwitch", label = "More examples", icon = icon("plus"))
-        )
-        ,
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Bootstrap Switch",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = switchInput,
-            args = list(inputId = ID(.shinyWidgetGalleryId), value = TRUE)
-          ),
-          footer = actionLink(inputId = "toSwictchInput", label = "More examples", icon = icon("plus"))
-        )
-      )
-      ,
-      column(
-        width = 4,
-
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Select Picker",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = pickerInput,
-            args = list(
-              inputId = ID(.shinyWidgetGalleryId), label = "With plain HTML",
-              choices = paste("Badge", c("info", "success", "danger", "primary", "warning")),
-              multiple = TRUE, selected = "Badge danger",
-              choicesOpt = list(
-                content=sprintf(
-                  # "<span class='badge badge-%1$s bg-%1$s'>%2$s</span>", c("info", "success", "danger", "primary", "warning"),
-                  "<span class='badge text-bg-%s'>%s</span>", c("info", "success", "danger", "primary", "warning"),
-                  paste("Badge", c("info", "success", "danger", "primary", "warning"))
-                )
-              ),
-              options = pickerOptions(container = "body")
-            )
-          ),
-          footer = actionLink(inputId = "toSelectPicker", label = "More examples", icon = icon("plus"))
-        ),
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Search field",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = searchInput,
-            args = list(
-              inputId = ID(.shinyWidgetGalleryId), label = "Click search icon to update or hit 'Enter'",
-              placeholder = "A placeholder",
-              btnSearch = icon("magnifying-glass"),
-              btnReset = icon("xmark"),
-              width = "100%"
-            )
-          )
-        ),
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Multi.js",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = multiInput,
-            args = list(
-              inputId = ID(.shinyWidgetGalleryId),
-              label = "Countries :", choices = NULL,
-              choiceNames = lapply(seq_along(countries), function(i) tagList(tags$img(src = flags[i], width=20, height=15), countries[i])),
-              choiceValues = countries,
-              width = "100%"
-            )
-          )
-        )
-      )
-    )
-  )
-}
+
+.shinyWidgetGalleryFuns$tabAirDate <- function() {
+  tagList(
+    tags$h1("Air Datepicker", class = "fw-bold text-primary"),
+    tags$h5(
+      "via ",
+      tags$a(href = "https://github.com/t1m0n/air-datepicker", "air-datepicker")
+    ),
+    br(),
+
+    fluidRow(
+      column(
+        width = 4,
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Default",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = airDatepickerInput,
+            args = list(
+              inputId = ID(.shinyWidgetGalleryId),
+              label = "Default :",
+              value = Sys.Date(),
+              width = "100%"
+            )
+          )
+        ),
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Multiple",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = airDatepickerInput,
+            args = list(
+              inputId = ID(.shinyWidgetGalleryId),
+              label = "Multiple :",
+              value = Sys.Date() + c(-4, 2, 5),
+              multiple = TRUE,
+              clearButton = TRUE,
+              width = "100%"
+            )
+          )
+        ),
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Range",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = airDatepickerInput,
+            args = list(
+              inputId = ID(.shinyWidgetGalleryId),
+              label = "Range :",
+              value = c(Sys.Date(), Sys.Date() + 7),
+              range = TRUE,
+              width = "100%"
+            )
+          )
+        )
+      ),
+
+      column(
+        width = 4,
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "With timepicker",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = airDatepickerInput,
+            args = list(
+              inputId = ID(.shinyWidgetGalleryId),
+              label = "With timepicker :",
+              value = NULL,
+              timepicker = TRUE,
+              timepickerOpts = timepickerOptions(
+                hoursStep = 1,
+                minutesStep = 30
+              ),
+              width = "100%"
+            )
+          )
+        ),
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Disabled dates",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = airDatepickerInput,
+            args = list(
+              inputId = ID(.shinyWidgetGalleryId),
+              label = "Disabled dates :",
+              value = NULL,
+              disabledDates = Sys.Date() + c(-1, 1),
+              width = "100%"
+            )
+          )
+        ),
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Min & max dates",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = airDatepickerInput,
+            args = list(
+              inputId = ID(.shinyWidgetGalleryId),
+              label = "Min & max dates :",
+              value = NULL,
+              minDate = Sys.Date() - 7,
+              maxDate = Sys.Date() + 7,
+              width = "100%"
+            )
+          )
+        )
+      ),
+
+      column(
+        width = 4,
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Month picker",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = airMonthpickerInput,
+            args = list(
+              inputId = ID(.shinyWidgetGalleryId),
+              label = "Month picker :",
+              value = Sys.Date(),
+              dateFormat = "MMMM yyyy",
+              width = "100%"
+            )
+          )
+        ),
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Year picker",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = airYearpickerInput,
+            args = list(
+              inputId = ID(.shinyWidgetGalleryId),
+              label = "Year picker :",
+              value = Sys.Date(),
+              width = "100%"
+            )
+          )
+        ),
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Language & format",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = airDatepickerInput,
+            args = list(
+              inputId = ID(.shinyWidgetGalleryId),
+              label = "Language & format :",
+              value = Sys.Date(),
+              dateFormat = "dd/MM/yyyy",
+              language = "ko",
+              width = "100%"
+            )
+          )
+        )
+      )
+    )
+  )
+}
+
+.shinyWidgetGalleryFuns$tabAwesome <- function() {
+  tagList(
+    tags$h1("Awesome Checkboxes And Radios", class = "fw-bold text-primary"),
+    tags$h5(
+      "via ",
+      tags$a(href = "http://flatlogic.github.io/awesome-bootstrap-checkbox/demo/", "awesome-bootstrap-checkbox")
+    ),
+    br(),
+
+    fluidRow(
+      column(
+        width = 4,
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Shiny default",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = checkboxInput,
+            args = list(inputId = ID(.shinyWidgetGalleryId), label = "A single checkbox", value = TRUE)
+          )
+        )
+        ,
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Shiny default",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = checkboxGroupInput,
+            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Checkboxes", choices = c("A", "B", "C"), selected = "A")
+          )
+        )
+        ,
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Shiny default",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = radioButtons,
+            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Radio buttons", choices = c("A", "B", "C"))
+          )
+        )
+      ),
+
+      column(
+        width = 4,
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Single",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = awesomeCheckbox,
+            args = list(inputId = ID(.shinyWidgetGalleryId), label = "A single checkbox", value = TRUE)
+          )
+        )
+        ,
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Checkbox group",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = awesomeCheckboxGroup,
+            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Checkboxes", choices = c("A", "B", "C"), selected = "A")
+          )
+        )
+        ,
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Radio buttons",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = awesomeRadio,
+            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Radio buttons", choices = c("A", "B", "C"), selected = "A")
+          )
+        )
+      ),
+
+      column(
+        width = 4,
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Another color",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = awesomeCheckbox,
+            args = list(inputId = ID(.shinyWidgetGalleryId), label = "A single checkbox", value = TRUE, status = "info")
+          )
+        )
+        ,
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Inline & danger",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = awesomeCheckboxGroup,
+            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Checkboxes", choices = c("A", "B", "C"), selected = "A", inline = TRUE, status = "danger")
+          )
+        )
+        ,
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Inline & success",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = awesomeRadio,
+            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Radio buttons", choices = c("A", "B", "C"), selected = "A", inline = TRUE, status = "success")
+          )
+        )
+        ,
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Inline & checkbox styled",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = awesomeRadio,
+            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Radio buttons", choices = c("A", "B", "C"), selected = "A", inline = TRUE, checkbox =  TRUE)
+          )
+        )
+        ,
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Update selected",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = awesomeRadio,
+            args = list(inputId = "upAwesomeRadio", label = "Radio buttons", choices = c("A", "B", "C"), selected = "A", inline = TRUE)
+          ),
+          br(),
+          tags$p("Click to update :"),
+          actionGroupButtons(inputIds = c("upAwesomeRadioA", "upAwesomeRadioB", "upAwesomeRadioC"), labels = c("A", "B", "C"))
+        )
+        ,
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Update choices",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = awesomeCheckboxGroup,
+            args = list(inputId = "upAwesomeCheckbox", label = "Checkbox group", choices = c("A", "B", "C"), selected = "A", inline = TRUE, status = "warning")
+          ),
+          br(),
+          tags$p("Click to update :"),
+          actionGroupButtons(inputIds = c("upAwesomeCheckbox1", "upAwesomeCheckbox2"), labels = c("tolower & success", "TOUPPER & warning"))
+        )
+      )
+    )
+  )
+}
+
+.shinyWidgetGalleryFuns$tabBttn <- function() {
+  tagList(
+    tags$h1("bttn", class = "fw-bold text-primary"),
+
+    fluidRow(
+
+      column(
+        width = 4,
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = NULL,
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = actionBttn,
+            args = list(inputId = ID(.shinyWidgetGalleryId), label = NULL, style = "material-circle", color = "danger", icon = icon("bars"))
+          ),
+          footer = NULL
+        ),
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = NULL,
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = actionBttn,
+            args = list(inputId = ID(.shinyWidgetGalleryId), label = "material-flat", style = "material-flat", color = "danger")
+          ),
+          footer = NULL
+        ),
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = NULL,
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = actionBttn,
+            args = list(inputId = ID(.shinyWidgetGalleryId), label = "pill", style = "pill", color = "danger")
+          ),
+          footer = NULL
+        ),
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = NULL,
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = actionBttn,
+            args = list(inputId = ID(.shinyWidgetGalleryId), label = "float", style = "float", color = "danger")
+          ),
+          footer = NULL
+        ),
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = NULL,
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = actionBttn,
+            args = list(inputId = ID(.shinyWidgetGalleryId), label = "unite", style = "unite", color = "danger")
+          ),
+          footer = NULL
+        ),
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = NULL,
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = actionBttn,
+            args = list(inputId = ID(.shinyWidgetGalleryId), label = "fill", style = "fill", color = "danger")
+          ),
+          footer = NULL
+        )
+      ),
+
+
+
+      column(
+        width = 4,
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = NULL,
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = actionBttn,
+            args = list(inputId = ID(.shinyWidgetGalleryId), label = NULL, style = "simple", color = "primary", icon = icon("bars"))
+          ),
+          footer = NULL
+        ),
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = NULL,
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = actionBttn,
+            args = list(inputId = ID(.shinyWidgetGalleryId), label = "bordered", style = "bordered", color = "success", icon = icon("sliders"))
+          ),
+          footer = NULL
+        ),
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = NULL,
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = actionBttn,
+            args = list(inputId = ID(.shinyWidgetGalleryId), label = "minimal", style = "minimal", color = "danger")
+          ),
+          footer = NULL
+        ),
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = NULL,
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = actionBttn,
+            args = list(inputId = ID(.shinyWidgetGalleryId), label = "stretch", style = "stretch", color = "warning")
+          ),
+          footer = NULL
+        ),
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = NULL,
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = actionBttn,
+            args = list(inputId = ID(.shinyWidgetGalleryId), label = "jelly", style = "jelly", color = "danger")
+          ),
+          footer = NULL
+        ),
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = NULL,
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = actionBttn,
+            args = list(inputId = ID(.shinyWidgetGalleryId), label = "gradient", style = "gradient", color = "danger", icon = icon("thumbs-up"))
+          ),
+          footer = NULL
+        )
+      )
+    )
+  )
+}
+
+.shinyWidgetGalleryFuns$tabMaterialSwitch <- function() {
+  tagList(
+    tags$h1("Material switch", class = "fw-bold text-primary"),
+    tags$h5(
+      "via ",
+      tags$a(href = "http://bootsnipp.com/snippets/featured/material-design-switch", "material-design-switch"),
+      style="color: #d9534f;"
+    ),
+    br(),
+
+    fluidRow(
+
+      column(
+        width = 4,
+
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Default",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = materialSwitch,
+            args = list(inputId = ID(.shinyWidgetGalleryId))
+          )
+        )
+        ,
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Label on left",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = materialSwitch,
+            args = list(inputId = ID(.shinyWidgetGalleryId), label = "A label")
+          )
+        )
+        ,
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Label on right",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = materialSwitch,
+            args = list(inputId = ID(.shinyWidgetGalleryId), label = "A label", right = TRUE)
+          )
+        )
+
+      ),
+
+      column(
+        width = 4,
+
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Status primary",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = materialSwitch,
+            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Primary", value = TRUE, status = "primary")
+          )
+        )
+        ,
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Status danger",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = materialSwitch,
+            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Danger", value = TRUE, status = "danger")
+          )
+        )
+        ,
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Status success",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = materialSwitch,
+            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Success", value = TRUE, status = "success")
+          )
+        )
+        ,
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Status warning",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = materialSwitch,
+            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Warning", value = TRUE, status = "warning")
+          )
+        )
+
+      ),
+
+      column(
+        width = 4,
+
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Update",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = materialSwitch,
+            args = list(inputId = "upMaterial", label = "Update value", value = FALSE, status = "info")
+          ),
+          br(),
+          tags$p("Click to update :"),
+          actionGroupButtons(inputIds = c("upMaterialY", "upMaterialN"), labels = c("TRUE", "FALSE"))
+        )
+      )
+
+    )
+  )
+}
+
+.shinyWidgetGalleryFuns$tabOtherStuff <- function() {
+  code_dropdownButton <- readLines(con = "code_dropdownButton.R")
+  code_dropdownButton <- paste(code_dropdownButton, collapse = "\n")
+  code_dropdown <- readLines(con = "code_dropdown.R")
+  code_dropdown <- paste(code_dropdown, collapse = "\n")
+  code_sa <- readLines(con = "code_sa.R")
+  code_sa <- paste(code_sa, collapse = "\n")
+  tagList(
+    tags$h1("Other widgets", class = "fw-bold text-primary"),
+
+    fluidRow(
+      column(
+        width = 8,
+
+        bslib::card(
+          bslib::card_header("Dropdown Button", class = "bg-primary text-light"),
+          bslib::card_body(
+            dropdownButton(
+              tags$h3("List of Inputs"),
+              selectInput(inputId = "xcol", label = "X Variable", choices = names(iris)),
+              selectInput(inputId = "ycol", label = "Y Variable", choices = names(iris), selected = names(iris)[[2]]),
+              sliderInput(inputId = "clusters", label = "Cluster count", value = 3, min = 1, max = 9),
+              circle = TRUE, status = "danger", icon = icon("gear"), width = "300px",
+              tooltip = tooltipOptions(title = "Click to see inputs !")
+            ),
+            plotOutput(outputId = "plot1"),
+            tags$p("if you want to hide inputs to focus on a plot.."),
+            tags$a(
+              icon("code"),
+              "Show code",
+              `data-bs-toggle` = "collapse",
+              href = "#showcode_dropdownButton"
+            ),
+            tags$div(
+              class = "collapse",
+              id = "showcode_dropdownButton",
+              .shinyWidgetGalleryFuns$rCodeContainer(
+                id="code_dropdownButton",
+                code_dropdownButton
+              )
+            )
+          )
+        ),
+
+        bslib::card(
+          bslib::card_header("Dropdown (bis)", class = "bg-primary text-light"),
+          bslib::card_body(
+            dropdown(
+              tags$h3("List of Input"),
+              pickerInput(inputId = "xcol2", label = "X Variable", choices = names(iris), options = list(`style` = "btn-info")),
+              pickerInput(inputId = "ycol2", label = "Y Variable", choices = names(iris), selected = names(iris)[[2]], options = list(`style` = "btn-warning")),
+              sliderInput(inputId = "clusters2", label = "Cluster count", value = 3, min = 1, max = 9),
+              style = "unite", icon = icon("gear"), status = "danger", width = "300px",
+              animate = animateOptions(
+                enter = animations$fading_entrances$fadeInLeftBig,
+                exit = animations$fading_exits$fadeOutRightBig
+              )
+            ),
+            plotOutput(outputId = "plot2"),
+            tags$p("In this version you can add animations and pickerInput will work in it."),
+            tags$a(
+              icon("code"),
+              "Show code",
+              `data-bs-toggle` = "collapse",
+              href = "#showcode_dropdown"
+            ),
+            tags$div(
+              class = "collapse",
+              id = "showcode_dropdown",
+              .shinyWidgetGalleryFuns$rCodeContainer(
+                id="code_dropdown",
+                code_dropdown
+              )
+            )
+          )
+        )
+      ),
+
+      column(
+        width = 4,
+        bslib::card(
+          bslib::card_header("Sweet Alert", class = "bg-primary text-light"),
+          tags$span(
+            "via ",
+            tags$a(href = "https://github.com/sweetalert2/sweetalert2", "sweetalert2")
+          ), br(), br(),
+          fluidRow(
+            column(
+              width = 6,
+              actionButton(inputId = "success", label = "Success !", width = "100%", class = "btn-success"),
+              br(), br(),
+              actionButton(inputId = "info", label = "Info", width = "100%", class = "btn-info")
+              # receiveSweetAlert(messageId = "infomessage")
+            ),
+            column(
+              width = 6,
+              actionButton(inputId = "error", label = "Error", width = "100%", class = "btn-danger"),
+              br(), br(),
+              actionButton(inputId = "warning", label = "Warning", width = "100%", class = "btn-warning")
+            )
+          ),
+          br(),
+          tags$a(
+            icon("code"),
+            "Show code",
+            `data-bs-toggle` = "collapse",
+            href = "#showcodeSA"
+          ),
+          tags$div(
+            class = "collapse",
+            id = "showcodeSA",
+            .shinyWidgetGalleryFuns$rCodeContainer(
+              id = "codeSA",
+              code_sa
+            )
+          )
+        ),
+        bslib::card(
+          bslib::card_header("Confirmation dialog", class = "bg-primary text-light"),
+          bslib::card_body(
+            actionButton(inputId = "launch_confirmation", label = "Ask for confirmation"),
+            tags$br(),
+            verbatimTextOutput(outputId = "res_confirmation")
+          )
+        )
+      )
+    )
+  )
+
+}
+
+.shinyWidgetGalleryFuns$tabOverview <- function() {
+
+  countries <- list(
+    "France", "United Kingdom", "Germany", "United States of America", "Belgium", "China", "Spain", "Netherlands", "Mexico",
+    "Italy", "Canada", "Brazil", "Denmark", "Norway", "Switzerland", "Luxembourg", "Israel", "Russian Federation",
+    "Turkey", "Saudi Arabia", "United Arab Emirates"
+  )
+  flags <- c("fr", "gb", "de", "us", "be", "cn", "es", "nl", "mx", "it", "ca", "br", "dk", "no", "ch", "lu", "il", "ru", "tr", "sa", "ae")
+  flags <- sprintf("https://cdn.rawgit.com/lipis/flag-icon-css/master/flags/4x3/%s.svg", flags)
+
+  tagList(
+    tags$h1("shinyWidgets Overview", class = "fw-bold text-primary"),
+    br(),
+
+    fluidRow(
+
+      column(
+        width = 4,
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Awesome checkbox Group",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = awesomeCheckboxGroup,
+            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Checkboxes with status", choices = c("A", "B", "C"), inline = TRUE)
+          ),
+          footer = actionLink(inputId = "toAwesome1", label = "More examples", icon = icon("plus"))
+        )
+        ,
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Checkbox Group Buttons",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = checkboxGroupButtons,
+            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Choices", choices = c("Choice 1", "Choice 2", "Choice 3"))
+          ),
+          footer = actionLink(inputId = "tocheckButtons", label = "More examples", icon = icon("plus"))
+        )
+        ,
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Awesome Radio Buttons",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = awesomeRadio,
+            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Radio with status", choices = c("A", "B", "C"), selected = "B", status = "warning")
+          ),
+          footer = actionLink(inputId = "toAwesome2", label = "More examples", icon = icon("plus"))
+        )
+        ,
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Radio Group Buttons",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = radioGroupButtons,
+            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Choices", choices = c("Choice 1", "Choice 2", "Choice 3"))
+          )
+        )
+      )
+      ,
+      column(
+        width = 4,
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Awesome checkbox",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = awesomeCheckbox,
+            args = list(inputId = ID(.shinyWidgetGalleryId), label = "A single checkbox", value = TRUE)
+          ),
+          footer = actionLink(inputId = "toAwesome3", label = "More examples", icon = icon("plus"))
+        )
+        ,
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Material Design Switch",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = materialSwitch,
+            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Primary switch", status = "primary", right = TRUE)
+          ),
+          footer = actionLink(inputId = "toMaterialSwitch", label = "More examples", icon = icon("plus"))
+        )
+        ,
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Bootstrap Switch",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = switchInput,
+            args = list(inputId = ID(.shinyWidgetGalleryId), value = TRUE)
+          ),
+          footer = actionLink(inputId = "toSwictchInput", label = "More examples", icon = icon("plus"))
+        )
+      )
+      ,
+      column(
+        width = 4,
+
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Select Picker",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = pickerInput,
+            args = list(
+              inputId = ID(.shinyWidgetGalleryId), label = "With plain HTML",
+              choices = paste("Badge", c("info", "success", "danger", "primary", "warning")),
+              multiple = TRUE, selected = "Badge danger",
+              choicesOpt = list(
+                content=sprintf(
+                  # "<span class='badge badge-%1$s bg-%1$s'>%2$s</span>", c("info", "success", "danger", "primary", "warning"),
+                  "<span class='badge text-bg-%s'>%s</span>", c("info", "success", "danger", "primary", "warning"),
+                  paste("Badge", c("info", "success", "danger", "primary", "warning"))
+                )
+              ),
+              options = pickerOptions(container = "body")
+            )
+          ),
+          footer = actionLink(inputId = "toSelectPicker", label = "More examples", icon = icon("plus"))
+        ),
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Search field",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = searchInput,
+            args = list(
+              inputId = ID(.shinyWidgetGalleryId), label = "Click search icon to update or hit 'Enter'",
+              placeholder = "A placeholder",
+              btnSearch = icon("magnifying-glass"),
+              btnReset = icon("xmark"),
+              width = "100%"
+            )
+          )
+        ),
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Multi.js",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = multiInput,
+            args = list(
+              inputId = ID(.shinyWidgetGalleryId),
+              label = "Countries :", choices = NULL,
+              choiceNames = lapply(seq_along(countries), function(i) tagList(tags$img(src = flags[i], width=20, height=15), countries[i])),
+              choiceValues = countries,
+              width = "100%"
+            )
+          )
+        )
+      )
+    )
+  )
+}
 
 
 .shinyWidgetGalleryFuns$tabPickerInput <- function() {
@@ -19027,1075 +19027,1075 @@ function(input, output, session) {
     )
   )
 }
-
-.shinyWidgetGalleryFuns$tabPretty <- function() {
-  tagList(
-    tags$h1("Pretty Checkboxes And Radios", class = "fw-bold text-primary"),
-    tags$h5(
-      "via ",
-      tags$a(href = "https://lokesh-coder.github.io/pretty-checkbox/", "pretty checkbox")
-    ),
-    br(),
-
-    fluidRow(
-
-      column(
-        width = 4,
-
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Default single checkbox",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = prettyCheckbox,
-            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Click me!", value = TRUE)
-          )
-        )
-        ,
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "With status",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = prettyCheckbox,
-            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Click me!", value = TRUE,
-                        status = "warning")
-          )
-        )
-        ,
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "With curve shape",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = prettyCheckbox,
-            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Click me!", value = TRUE,
-                        status = "danger", shape = "curve")
-          )
-        )
-        ,
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "With outline color",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = prettyCheckbox,
-            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Click me!", value = TRUE,
-                        status = "danger", shape = "curve", outline = TRUE)
-          )
-        )
-        ,
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "With fill color",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = prettyCheckbox,
-            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Click me!", value = TRUE,
-                        status = "success", fill = TRUE)
-          )
-        )
-        ,
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "With Font Awesome icon",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = prettyCheckbox,
-            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Click me!", value = TRUE,
-                        status = "info", icon = icon("thumbs-up"), plain = TRUE, outline = TRUE)
-          )
-        )
-        ,
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "With animation",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = prettyCheckbox,
-            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Click me!", value = TRUE,
-                        icon = icon("check"), status = "success", animation = "rotate")
-          )
-        )
-
-      ),
-
-      column(
-        width = 4,
-
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Default switch",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = prettySwitch,
-            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Click me!")
-          )
-        )
-        ,
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Switch fill & status",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = prettySwitch,
-            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Click me!", status = "success", fill = TRUE)
-          )
-        )
-        ,
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Switch slim & status",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = prettySwitch,
-            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Click me!", status = "primary", slim = TRUE)
-          )
-        )
-        ,
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Default toggle",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = prettyToggle,
-            args = list(inputId = ID(.shinyWidgetGalleryId), label_on = "Checked!",
-                        label_off = "Unchecked...")
-          )
-        )
-        ,
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Toggle with icons & status",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = prettyToggle,
-            args = list(inputId = ID(.shinyWidgetGalleryId),
-                        label_on = "Yes!", icon_on = icon("check"),
-                        status_on = "info", status_off = "warning",
-                        label_off = "No..", icon_off = icon("xmark"))
-          )
-        )
-        ,
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Toggle with icons",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = prettyToggle,
-            args = list(inputId = ID(.shinyWidgetGalleryId), label_on = "Yes!",
-                        label_off = "No..", outline = TRUE,
-                        plain = TRUE,
-                        icon_on = icon("thumbs-up"),
-                        icon_off = icon("thumbs-down"))
-          )
-        )
-
-      ),
-
-      column(
-        width = 4,
-
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Default checkbox group",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = prettyCheckboxGroup,
-            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Choose:", choices = c("Click me !", "Me !", "Or me !"))
-          )
-        )
-        ,
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Inline checkbox group & fill status",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = prettyCheckboxGroup,
-            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Choose:", choices = c("Click me !", "Me !", "Or me !"),
-                        inline = TRUE, status = "danger", fill = TRUE)
-          )
-        )
-        ,
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Checkbox group with icons",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = prettyCheckboxGroup,
-            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Choose:", choices = c("Click me !", "Me !", "Or me !"),
-                        icon = icon("user"), animation = "tada")
-          )
-        )
-        ,
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Checkbox group with icons, status & outline",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = prettyCheckboxGroup,
-            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Choose:", choices = c("Click me !", "Me !", "Or me !"),
-                        icon = icon("square-check"), status = "primary", outline = TRUE, animation = "jelly")
-          )
-        )
-        ,
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Default radio buttons",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = prettyRadioButtons,
-            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Choose:", choices = c("Click me !", "Me !", "Or me !"))
-          )
-        )
-        ,
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Inline radio buttons & fill status",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = prettyRadioButtons,
-            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Choose:", choices = c("Click me !", "Me !", "Or me !"),
-                        inline = TRUE, status = "danger", fill = TRUE)
-          )
-        )
-        ,
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Radio buttons with icons",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = prettyRadioButtons,
-            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Choose:", choices = c("Click me !", "Me !", "Or me !"),
-                        icon = icon("user"), animation = "tada")
-          )
-        )
-        ,
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Radio buttons with icons, status",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = prettyRadioButtons,
-            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Choose:", choices = c("Click me !", "Me !", "Or me !"),
-                        icon = icon("check"), bigger = TRUE,
-                        status = "info", animation = "jelly")
-          )
-        )
-
-      )
-
-    )
-  )
-}
-
-.shinyWidgetGalleryFuns$tabProgressBars <- function() {
-  tagList(
-    tags$h1("Progress Bars", class = "fw-bold text-primary"),
-
-    fluidRow(
-      column(
-        width = 6,
-
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Default",
-          shinyWidgets::progressBar(id = "pb1", value = 50),
-          sliderInput(inputId = "uppb1", label = "Update", min = 0, max = 100, value = 50),
-          .shinyWidgetGalleryFuns$pb_code(
-            id = "pb1",
-            'progressBar(id = "pb1", value = 50)',
-            'updateProgressBar(session = session, id = "pb1", value = input$slider)'
-          )
-        ),
-
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Status : info & title",
-          shinyWidgets::progressBar(id = "pb2", value = 50, status = "info", title = "This is a progress bar"),
-          sliderInput(inputId = "uppb2", label = "Update", min = 0, max = 100, value = 50),
-          .shinyWidgetGalleryFuns$pb_code(
-            id = "pb2",
-            'progressBar(id = "pb2", value = 50, status = "info", title = "This is a progress bar")',
-            'updateProgressBar(session = session, id = "pb2", value = input$slider)'
-          )
-        ),
-
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Status : danger & striped : true",
-          shinyWidgets::progressBar(id = "pb3", value = 50, status = "danger", striped = TRUE),
-          sliderInput(inputId = "uppb3", label = "Update", min = 0, max = 100, value = 50),
-          .shinyWidgetGalleryFuns$pb_code(
-            id = "pb3",
-            'progressBar(id = "pb3", value = 50, status = "danger", striped = TRUE)',
-            'updateProgressBar(session = session, id = "pb3", value = input$slider)'
-          )
-        )
-
-      ),
-      column(
-        width = 6,
-
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Display : percent",
-          shinyWidgets::progressBar(id = "pb4", value = 50, display_pct = TRUE),
-          sliderInput(inputId = "uppb4", label = "Update", min = 0, max = 100, value = 50, step = 5),
-          .shinyWidgetGalleryFuns$pb_code(
-            id = "pb4",
-            'progressBar(id = "pb4", value = 50, display_pct = TRUE)',
-            'updateProgressBar(session = session, id = "pb4", value = input$slider)'
-          )
-        ),
-
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Status : warning & value > 100 (force value and total to appear)",
-          shinyWidgets::progressBar(id = "pb5", value = 1500, total = 5000, status = "warning"),
-          sliderInput(inputId = "uppb5", label = "Update", min = 0, max = 5000, value = 50),
-          .shinyWidgetGalleryFuns$pb_code(
-            id = "pb5",
-            'progressBar(id = "pb5", value = 1500, total = 5000, status = "warning")',
-            'updateProgressBar(session = session, id = "pb5", value = input$slider, total = 5000)'
-          )
-        ),
-
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Status : success & size : xs",
-          shinyWidgets::progressBar(id = "pb6", value = 50, status = "success", size = "xs"),
-          sliderInput(inputId = "uppb6", label = "Update", min = 0, max = 100, value = 50),
-          .shinyWidgetGalleryFuns$pb_code(
-            id = "pb6",
-            'progressBar(id = "pb6", value = 50, status = "success", size = "xs")',
-            'updateProgressBar(session = session, id = "pb6", value = input$slider)'
-          )
-        )
-
-      ),
-
-      column(
-        width = 12,
-
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Status update",
-          shinyWidgets::progressBar(id = "pb7", value = 50, display_pct = TRUE, status = "warning"),
-          sliderInput(inputId = "uppb7", label = "Update", min = 0, max = 100, value = 50, step = 5),
-          .shinyWidgetGalleryFuns$pb_code(
-            id = "pb7",
-            'progressBar(id = "pb7", value = 50, display_pct = TRUE, status = "warning")',
-            paste(
-              'if (input$slider < 33) {',
-              '  status <- "danger"',
-              '} else if (input$slider >= 33 & input$slider < 67) {',
-              '  status <- "warning"',
-              '} else {',
-              '  status <- "success"',
-              '}',
-              'updateProgressBar(session = session, id = "pb7", value = input$slider, status = status)',
-              sep = "\n"
-            )
-          )
-        ),
-
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "",
-          shinyWidgets::progressBar(id = "pb8", value = 1500, total = 5000, status = "info", display_pct = TRUE, striped = TRUE, title = "All options"),
-          sliderInput(inputId = "uppb8", label = "Update", min = 0, max = 5000, value = 50),
-          .shinyWidgetGalleryFuns$pb_code(
-            id = "pb8",
-            'progressBar(id = "pb8", value = 1500, total = 5000, status = "info", display_pct = TRUE, striped = TRUE, title = "All options")',
-            'updateProgressBar(session = session, id = "pb8", value = input$slider, total = 5000)'
-          )
-        ),
-
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Update total",
-          shinyWidgets::progressBar(id = "pb9", value = 1000, total = 1000, display_pct = TRUE),
-          sliderInput(inputId = "uppb9", label = "Update", min = 1000, max = 5000, value = 1000, step = 50),
-          .shinyWidgetGalleryFuns$pb_code(
-            id = "pb9",
-            'progressBar(id = "pb9", value = 1000, total = 1000, display_pct = TRUE)',
-            'updateProgressBar(session = session, id = "pb9", value = 1000, total = input$slider)'
-          )
-        )
-
-      )
-    )
-  )
-}
-
-.shinyWidgetGalleryFuns$tabSliderText <- function() {
-  tagList(
-    tags$h1("Slider Text", class = "fw-bold text-primary"),
-
-    fluidRow(
-
-      column(
-        width = 4,
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "With characters:",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = sliderTextInput,
-            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Choose a letter:", choices = c("a", "b", "c", "d", "e"))
-          )
-        ),
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Range slider:",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = sliderTextInput,
-            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Choose a range:", choices = month.abb, selected = month.abb[c(4, 8)])
-          )
-        ),
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Custom range for numeric:",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = sliderTextInput,
-            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Choose a value:", choices = c(1, 10, 100, 500, 1000), grid = TRUE)
-          )
-        ),
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Decreasing order:",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = sliderTextInput,
-            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Choose a value:", choices = seq(from = 10, to = 1, by = -1), grid = TRUE)
-          )
-        )
-      ),
-
-      column(
-        width = 4,
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "With month",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = sliderTextInput,
-            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Pick a month:", choices = month.name)
-          )
-        ),
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Restricted choices",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = sliderTextInput,
-            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Restricted choices:", choices = LETTERS,
-                        selected = "A",
-                        from_min = "E", from_max = "T")
-          )
-        ),
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Restricted choices",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = sliderTextInput,
-            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Restricted choices for range:", choices = LETTERS,
-                        selected = c("A", "T"),
-                        from_min = "A", from_max = "E",
-                        to_min = "R", to_max = "Z")
-          )
-        )
-      ),
-
-      column(
-        width = 4,
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Likert scale",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = sliderTextInput,
-            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Your choice:", grid = TRUE, force_edges = TRUE,
-                        choices = c("Strongly disagree", "Disagree", "Neither agree nor disagree", "Agree", "Strongly agree"))
-          )
-        ),
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Update selected",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = sliderTextInput,
-            args = list(inputId = "selectedSliderText", label = "Your choice:", grid = TRUE, force_edges = TRUE,
-                        choices = letters[1:5])
-          ),
-          br(),
-          radioButtons(inputId = "upSelectedSliderText", label = "Update selected:", choices = letters[1:5], inline = TRUE)
-        ),
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Update choices",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = sliderTextInput,
-            args = list(inputId = "choicesSliderText", label = "Your choice:", grid = TRUE, force_edges = TRUE,
-                        choices = month.abb)
-          ),
-          br(),
-          radioButtons(inputId = "upChoicesSliderText", label = "Update selected:", choices = c("Abbreviations", "Full names"), inline = TRUE)
-        )
-      )
-
-    )
-  )
-}
-
-
-.shinyWidgetGalleryFuns$tabVirtualSelect <- function() {
-  tagList(
-    tags$h1("Virtual Select", class = "fw-bold text-primary"),
-    tags$h5(
-      "via ",
-      tags$a(href = "https://github.com/sa-si-dev/virtual-select", "virtual-select")
-    ),
-    br(),
-
-    fluidRow(
-      column(
-        width = 4,
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Default",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = virtualSelectInput,
-            args = list(
-              inputId = ID(.shinyWidgetGalleryId),
-              label = "Default :",
-              choices = month.name,
-              width = "100%",
-              dropboxWrapper = "body"
-            )
-          )
-        ),
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Multiple",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = virtualSelectInput,
-            args = list(
-              inputId = ID(.shinyWidgetGalleryId),
-              label = "Multiple :",
-              choices = month.name,
-              multiple = TRUE,
-              width = "100%",
-              dropboxWrapper = "body"
-            )
-          )
-        ),
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Group choices",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = virtualSelectInput,
-            args = list(
-              inputId = ID(.shinyWidgetGalleryId),
-              label = "Group choices :",
-              choices = list(
-                Winter = month.name[1:3],
-                Spring = month.name[4:6],
-                Summer = month.name[7:9],
-                Fall = month.name[10:12]
-              ),
-              multiple = TRUE,
-              width = "100%",
-              dropboxWrapper = "body"
-            )
-          )
-        ),
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "HTML in choices",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = virtualSelectInput,
-            args = list(
-              inputId = ID(.shinyWidgetGalleryId),
-              label = "HTML in choices :",
-              choices = setNames(
-                as.list(month.abb),
-                mapply(
-                  FUN = function(number, month, color) {
-                    as.character(tagList(
-                      icon("calendar-days"),
-                      tags$b(
-                        style = css(color = color),
-                        month
-                      )
-                    ))
-                  },
-                  month = month.name,
-                  color = palette.colors(n = 12, palette = "Alphabet")
-                )
-              ),
-              html = TRUE,
-              width = "100%",
-              dropboxWrapper = "body"
-            )
-          )
-        )
-      ),
-
-      column(
-        width = 4,
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Search",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = virtualSelectInput,
-            args = list(
-              inputId = ID(.shinyWidgetGalleryId),
-              label = "Search :",
-              choices = month.name,
-              search = TRUE,
-              markSearchResults = TRUE,
-              width = "100%",
-              dropboxWrapper = "body"
-            )
-          )
-        ),
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Show values as tags",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = virtualSelectInput,
-            args = list(
-              inputId = ID(.shinyWidgetGalleryId),
-              label = "Show values as tags :",
-              choices = month.name,
-              multiple = TRUE,
-              showValueAsTags = TRUE,
-              width = "100%",
-              dropboxWrapper = "body"
-            )
-          )
-        ),
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Allow new option",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = virtualSelectInput,
-            args = list(
-              inputId = ID(.shinyWidgetGalleryId),
-              label = "Allow new option :",
-              choices = month.name,
-              allowNewOption = TRUE,
-              width = "100%",
-              dropboxWrapper = "body"
-            )
-          )
-        ),
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Always open",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = virtualSelectInput,
-            args = list(
-              inputId = ID(.shinyWidgetGalleryId),
-              label = "Always open :",
-              choices = month.name,
-              keepAlwaysOpen = TRUE,
-              width = "100%",
-              dropboxWrapper = "body"
-            )
-          )
-        )
-      ),
-
-      column(
-        width = 4,
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Add a description",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = virtualSelectInput,
-            args = list(
-              inputId = ID(.shinyWidgetGalleryId),
-              label = "Add a description:",
-              choices = prepare_choices(
-                data.frame(
-                  name = state.name,
-                  abb = state.abb,
-                  region = state.region,
-                  division = state.division
-                ),
-                label = name,
-                value = abb,
-                description = division
-              ),
-              multiple = TRUE,
-              hasOptionDescription = TRUE,
-              width = "100%",
-              dropboxWrapper = "body"
-            )
-          )
-        ),
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Disable group select all",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = virtualSelectInput,
-            args = list(
-              inputId = ID(.shinyWidgetGalleryId),
-              label = "Disable group select all:",
-              choices = list(
-                Winter = month.name[1:3],
-                Spring = month.name[4:6],
-                Summer = month.name[7:9],
-                Fall = month.name[10:12]
-              ),
-              multiple = TRUE,
-              disableOptionGroupCheckbox = TRUE,
-              width = "100%",
-              dropboxWrapper = "body"
-            )
-          )
-        ),
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Show as popup",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = virtualSelectInput,
-            args = list(
-              inputId = ID(.shinyWidgetGalleryId),
-              label = "Show as popup :",
-              choices = month.name,
-              showDropboxAsPopup = TRUE,
-              popupDropboxBreakpoint = "3000px",
-              width = "100%",
-              dropboxWrapper = "body"
-            )
-          )
-        )
-      )
-    )
-  )
-}
-
-.shinyWidgetGalleryFuns$tabcheckButtons <- function() {
-  tagList(
-
-    tags$h1("Turn buttons into checkbox", class = "fw-bold text-primary"),
-    br(),
-
-    fluidRow(
-
-      column(
-        width = 4,
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Default",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = checkboxGroupButtons,
-            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Label", choices = c("A", "B", "C"))
-          )
-        )
-        ,
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "With choices",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = checkboxGroupButtons,
-            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Label", choices = c("A", "B", "C", "D"), selected = c("B", "D"))
-          )
-        )
-        ,
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Danger status",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = checkboxGroupButtons,
-            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Label", choices = c("A", "B", "C", "D"), status = "danger")
-          )
-        )
-        ,
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Success status",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = checkboxGroupButtons,
-            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Label", choices = c("A", "B", "C", "D"), status = "success")
-          )
-        )
-      ),
-
-      column(
-        width = 4,
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Justified",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = checkboxGroupButtons,
-            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Label", choices = c("A", "B"), justified = TRUE)
-          )
-        )
-        ,
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Vertical",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = checkboxGroupButtons,
-            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Label", choices = c("A", "B", "C", "D"), direction = "vertical")
-          )
-        )
-        ,
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Large",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = checkboxGroupButtons,
-            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Label", choices = c("A", "B", "C", "D"), size = "lg")
-          )
-        )
-        ,
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Update",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = checkboxGroupButtons,
-            args = list(inputId = "upcheckboxGroupButtons", label = "Label", choices = c("A", "B", "C", "D"),
-                        checkIcon = list(yes = icon("ok", lib = "glyphicon")))
-          ),
-          br(),
-          tags$p("Click to update :"),
-          actionGroupButtons(inputIds = c("upCheckBtnA", "upCheckBtnB", "upCheckBtnC", "upCheckBtnD"), labels = c("A", "B", "C", "D"))
-        )
-      ),
-
-      column(
-        width = 4,
-
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Large",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = checkboxGroupButtons,
-            args = list(
-              inputId = ID(.shinyWidgetGalleryId), label = "Choose a graph :",
-              choices = c(
-                "<i class='fa fa-bar-chart'></i>" = "bar",
-                "<i class='fa fa-line-chart'></i>" = "line",
-                "<i class='fa fa-pie-chart'></i>" = "pie"
-              ), justified = TRUE
-            )
-          )
-        )
-        ,
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Icons",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = checkboxGroupButtons,
-            args = list(
-              inputId = ID(.shinyWidgetGalleryId), label = "Label", choices = c("A", "B", "C", "D"), justified = TRUE,
-              checkIcon = list(yes = icon("ok", lib = "glyphicon"))
-            )
-          )
-        )
-        ,
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "More icons",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = checkboxGroupButtons,
-            args = list(
-              inputId = ID(.shinyWidgetGalleryId), label = "Label", choices = c("A", "B", "C", "D"), status = "primary",
-              checkIcon = list(yes = icon("ok", lib = "glyphicon"), no = icon("xmark", lib = "glyphicon"))
-            )
-          )
-        )
-        ,
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Colored icons",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = checkboxGroupButtons,
-            args = list(
-              inputId = ID(.shinyWidgetGalleryId), label = "Label", choices = c("Option 1", "Option 2", "Option 3", "Option 4"),
-              checkIcon = list(yes = tags$i(class = "fa fa-check-square", style = "color: steelblue"),
-                               no = tags$i(class = "fa fa-square-o", style = "color: steelblue")))
-          )
-        )
-        ,
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Separated buttons",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = checkboxGroupButtons,
-            args = list(
-              inputId = ID(.shinyWidgetGalleryId), label = "Label", choices = c("Option 1", "Option 2", "Option 3", "Option 4"), individual = TRUE,
-              checkIcon = list(yes = tags$i(class = "fa fa-circle", style = "color: steelblue"),
-                               no = tags$i(class = "fa fa-circle-o", style = "color: steelblue"))
-            )
-          )
-        )
-
-      )
-    )
-  )
-}
-
-.shinyWidgetGalleryFuns$tabradioButtons <- function() {
-  tagList(
-    tags$h1("Turn buttons into radio", class = "fw-bold text-primary"),
-    br(),
-
-    fluidRow(
-
-      column(
-        width = 4,
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Default",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = radioGroupButtons,
-            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Label", choices = c("A", "B", "C"))
-          )
-        )
-        ,
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "With choices",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = radioGroupButtons,
-            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Label", choices = c("A", "B", "C", "D"), selected = "B")
-          )
-        )
-        ,
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Danger status",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = radioGroupButtons,
-            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Label", choices = c("A", "B", "C", "D"), status = "danger")
-          )
-        )
-        ,
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Success status",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = radioGroupButtons,
-            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Label", choices = c("A", "B", "C", "D"), status = "success")
-          )
-        )
-      ),
-
-      column(
-        width = 4,
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Justified",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = radioGroupButtons,
-            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Label", choices = c("A", "B"), justified = TRUE)
-          )
-        )
-        ,
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Vertical",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = radioGroupButtons,
-            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Label", choices = c("A", "B", "C", "D"), direction = "vertical")
-          )
-        )
-        ,
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Large",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = radioGroupButtons,
-            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Label", choices = c("A", "B", "C", "D"), size = "lg")
-          )
-        )
-        ,
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Update",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = radioGroupButtons,
-            args = list(inputId = "upradioGroupButtons", label = "Label", choices = c("A", "B", "C", "D"),
-                        checkIcon = list(yes = icon("ok", lib = "glyphicon")))
-          ),
-          br(),
-          tags$p("Click to update :"),
-          actionGroupButtons(inputIds = c("upRadioBtnA", "upRadioBtnB", "upRadioBtnC", "upRadioBtnD"), labels = c("A", "B", "C", "D"))
-        )
-      ),
-
-      column(
-        width = 4,
-
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Large",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = radioGroupButtons,
-            args = list(
-              inputId = ID(.shinyWidgetGalleryId), label = "Choose a graph :",
-              choices = c(
-                "<i class='fa fa-bar-chart'></i>" = "bar",
-                "<i class='fa fa-line-chart'></i>" = "line",
-                "<i class='fa fa-pie-chart'></i>" = "pie"
-              ), justified = TRUE
-            )
-          )
-        )
-        ,
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Icons",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = radioGroupButtons,
-            args = list(
-              inputId = ID(.shinyWidgetGalleryId), label = "Label", choices = c("A", "B", "C", "D"), justified = TRUE,
-              checkIcon = list(yes = icon("ok", lib = "glyphicon"))
-            )
-          )
-        )
-        ,
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "More icons",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = radioGroupButtons,
-            args = list(
-              inputId = ID(.shinyWidgetGalleryId), label = "Label", choices = c("A", "B", "C", "D"), status = "primary",
-              checkIcon = list(yes = icon("ok", lib = "glyphicon"), no = icon("xmark", lib = "glyphicon"))
-            )
-          )
-        )
-        ,
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Colored icons",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = radioGroupButtons,
-            args = list(
-              inputId = ID(.shinyWidgetGalleryId), label = "Label", choices = c("Option 1", "Option 2", "Option 3", "Option 4"),
-              checkIcon = list(yes = tags$i(class = "fa fa-check-square", style = "color: steelblue"),
-                               no = tags$i(class = "fa fa-square-o", style = "color: steelblue")))
-          )
-        )
-        ,
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Separated buttons",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = radioGroupButtons,
-            args = list(
-              inputId = ID(.shinyWidgetGalleryId), label = "Label", choices = c("Option 1", "Option 2", "Option 3", "Option 4"), individual = TRUE,
-              checkIcon = list(yes = tags$i(class = "fa fa-circle", style = "color: steelblue"),
-                               no = tags$i(class = "fa fa-circle-o", style = "color: steelblue"))
-            )
-          )
-        )
-
-      )
-    )
-  )
-}
-
-.shinyWidgetGalleryFuns$tabswitchInput <- function() {
-  tagList(
-    tags$h1("switchInput", class = "fw-bold text-primary"),
-    tags$h5(
-      "via ",
-      tags$a(href = "http://www.bootstrap-switch.org/examples.html", "bootstrap-switch.org")
-    ),
-    br(),
-
-    fluidRow(
-      column(
-        width = 4,
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Default",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = switchInput,
-            args = list(inputId = ID(.shinyWidgetGalleryId))
-          )
-        )
-        ,
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "TRUE at start",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = switchInput,
-            args = list(inputId = ID(.shinyWidgetGalleryId), value = TRUE)
-          )
-        )
-        ,
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Change ON/OFF labels",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = switchInput,
-            args = list(inputId = ID(.shinyWidgetGalleryId), onLabel = "Yes", offLabel = "No")
-          )
-        )
-      )
-      ,
-      column(
-        width = 4,
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Change ON/OFF colors",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = switchInput,
-            args = list(inputId = ID(.shinyWidgetGalleryId), onStatus = "success", offStatus = "danger")
-          )
-        )
-        ,
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Label in the middle",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = switchInput,
-            args = list(inputId = ID(.shinyWidgetGalleryId), label = "My label", labelWidth = "80px")
-          )
-        )
-        ,
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Size : mini",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = switchInput,
-            args = list(inputId = ID(.shinyWidgetGalleryId), size = "mini")
-          )
-        )
-        ,
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Size : large",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = switchInput,
-            args = list(inputId = ID(.shinyWidgetGalleryId), size = "large")
-          )
-        )
-      )
-      ,
-      column(
-        width = 4,
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Icon in the middle",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = switchInput,
-            args = list(inputId = ID(.shinyWidgetGalleryId), label = "<i class=\"fa fa-thumbs-up\"></i>")
-          )
-        )
-        ,
-        .shinyWidgetGalleryFuns$box_wrapper(
-          title = "Update value",
-          .shinyWidgetGalleryFuns$widget_wrapper(
-            fun = switchInput,
-            args = list(inputId = "switchUp", label = "<i class=\"fa fa-thumbs-up\"></i>")
-          ),
-          br(),
-          tags$p("Click to update :"),
-          actionGroupButtons(inputIds = c("on", "off"), labels = c("ON", "OFF"))
-        )
-      )
-    )
-  )
-}
+
+.shinyWidgetGalleryFuns$tabPretty <- function() {
+  tagList(
+    tags$h1("Pretty Checkboxes And Radios", class = "fw-bold text-primary"),
+    tags$h5(
+      "via ",
+      tags$a(href = "https://lokesh-coder.github.io/pretty-checkbox/", "pretty checkbox")
+    ),
+    br(),
+
+    fluidRow(
+
+      column(
+        width = 4,
+
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Default single checkbox",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = prettyCheckbox,
+            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Click me!", value = TRUE)
+          )
+        )
+        ,
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "With status",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = prettyCheckbox,
+            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Click me!", value = TRUE,
+                        status = "warning")
+          )
+        )
+        ,
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "With curve shape",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = prettyCheckbox,
+            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Click me!", value = TRUE,
+                        status = "danger", shape = "curve")
+          )
+        )
+        ,
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "With outline color",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = prettyCheckbox,
+            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Click me!", value = TRUE,
+                        status = "danger", shape = "curve", outline = TRUE)
+          )
+        )
+        ,
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "With fill color",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = prettyCheckbox,
+            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Click me!", value = TRUE,
+                        status = "success", fill = TRUE)
+          )
+        )
+        ,
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "With Font Awesome icon",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = prettyCheckbox,
+            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Click me!", value = TRUE,
+                        status = "info", icon = icon("thumbs-up"), plain = TRUE, outline = TRUE)
+          )
+        )
+        ,
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "With animation",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = prettyCheckbox,
+            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Click me!", value = TRUE,
+                        icon = icon("check"), status = "success", animation = "rotate")
+          )
+        )
+
+      ),
+
+      column(
+        width = 4,
+
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Default switch",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = prettySwitch,
+            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Click me!")
+          )
+        )
+        ,
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Switch fill & status",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = prettySwitch,
+            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Click me!", status = "success", fill = TRUE)
+          )
+        )
+        ,
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Switch slim & status",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = prettySwitch,
+            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Click me!", status = "primary", slim = TRUE)
+          )
+        )
+        ,
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Default toggle",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = prettyToggle,
+            args = list(inputId = ID(.shinyWidgetGalleryId), label_on = "Checked!",
+                        label_off = "Unchecked...")
+          )
+        )
+        ,
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Toggle with icons & status",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = prettyToggle,
+            args = list(inputId = ID(.shinyWidgetGalleryId),
+                        label_on = "Yes!", icon_on = icon("check"),
+                        status_on = "info", status_off = "warning",
+                        label_off = "No..", icon_off = icon("xmark"))
+          )
+        )
+        ,
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Toggle with icons",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = prettyToggle,
+            args = list(inputId = ID(.shinyWidgetGalleryId), label_on = "Yes!",
+                        label_off = "No..", outline = TRUE,
+                        plain = TRUE,
+                        icon_on = icon("thumbs-up"),
+                        icon_off = icon("thumbs-down"))
+          )
+        )
+
+      ),
+
+      column(
+        width = 4,
+
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Default checkbox group",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = prettyCheckboxGroup,
+            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Choose:", choices = c("Click me !", "Me !", "Or me !"))
+          )
+        )
+        ,
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Inline checkbox group & fill status",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = prettyCheckboxGroup,
+            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Choose:", choices = c("Click me !", "Me !", "Or me !"),
+                        inline = TRUE, status = "danger", fill = TRUE)
+          )
+        )
+        ,
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Checkbox group with icons",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = prettyCheckboxGroup,
+            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Choose:", choices = c("Click me !", "Me !", "Or me !"),
+                        icon = icon("user"), animation = "tada")
+          )
+        )
+        ,
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Checkbox group with icons, status & outline",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = prettyCheckboxGroup,
+            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Choose:", choices = c("Click me !", "Me !", "Or me !"),
+                        icon = icon("square-check"), status = "primary", outline = TRUE, animation = "jelly")
+          )
+        )
+        ,
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Default radio buttons",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = prettyRadioButtons,
+            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Choose:", choices = c("Click me !", "Me !", "Or me !"))
+          )
+        )
+        ,
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Inline radio buttons & fill status",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = prettyRadioButtons,
+            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Choose:", choices = c("Click me !", "Me !", "Or me !"),
+                        inline = TRUE, status = "danger", fill = TRUE)
+          )
+        )
+        ,
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Radio buttons with icons",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = prettyRadioButtons,
+            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Choose:", choices = c("Click me !", "Me !", "Or me !"),
+                        icon = icon("user"), animation = "tada")
+          )
+        )
+        ,
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Radio buttons with icons, status",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = prettyRadioButtons,
+            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Choose:", choices = c("Click me !", "Me !", "Or me !"),
+                        icon = icon("check"), bigger = TRUE,
+                        status = "info", animation = "jelly")
+          )
+        )
+
+      )
+
+    )
+  )
+}
+
+.shinyWidgetGalleryFuns$tabProgressBars <- function() {
+  tagList(
+    tags$h1("Progress Bars", class = "fw-bold text-primary"),
+
+    fluidRow(
+      column(
+        width = 6,
+
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Default",
+          shinyWidgets::progressBar(id = "pb1", value = 50),
+          sliderInput(inputId = "uppb1", label = "Update", min = 0, max = 100, value = 50),
+          .shinyWidgetGalleryFuns$pb_code(
+            id = "pb1",
+            'progressBar(id = "pb1", value = 50)',
+            'updateProgressBar(session = session, id = "pb1", value = input$slider)'
+          )
+        ),
+
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Status : info & title",
+          shinyWidgets::progressBar(id = "pb2", value = 50, status = "info", title = "This is a progress bar"),
+          sliderInput(inputId = "uppb2", label = "Update", min = 0, max = 100, value = 50),
+          .shinyWidgetGalleryFuns$pb_code(
+            id = "pb2",
+            'progressBar(id = "pb2", value = 50, status = "info", title = "This is a progress bar")',
+            'updateProgressBar(session = session, id = "pb2", value = input$slider)'
+          )
+        ),
+
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Status : danger & striped : true",
+          shinyWidgets::progressBar(id = "pb3", value = 50, status = "danger", striped = TRUE),
+          sliderInput(inputId = "uppb3", label = "Update", min = 0, max = 100, value = 50),
+          .shinyWidgetGalleryFuns$pb_code(
+            id = "pb3",
+            'progressBar(id = "pb3", value = 50, status = "danger", striped = TRUE)',
+            'updateProgressBar(session = session, id = "pb3", value = input$slider)'
+          )
+        )
+
+      ),
+      column(
+        width = 6,
+
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Display : percent",
+          shinyWidgets::progressBar(id = "pb4", value = 50, display_pct = TRUE),
+          sliderInput(inputId = "uppb4", label = "Update", min = 0, max = 100, value = 50, step = 5),
+          .shinyWidgetGalleryFuns$pb_code(
+            id = "pb4",
+            'progressBar(id = "pb4", value = 50, display_pct = TRUE)',
+            'updateProgressBar(session = session, id = "pb4", value = input$slider)'
+          )
+        ),
+
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Status : warning & value > 100 (force value and total to appear)",
+          shinyWidgets::progressBar(id = "pb5", value = 1500, total = 5000, status = "warning"),
+          sliderInput(inputId = "uppb5", label = "Update", min = 0, max = 5000, value = 50),
+          .shinyWidgetGalleryFuns$pb_code(
+            id = "pb5",
+            'progressBar(id = "pb5", value = 1500, total = 5000, status = "warning")',
+            'updateProgressBar(session = session, id = "pb5", value = input$slider, total = 5000)'
+          )
+        ),
+
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Status : success & size : xs",
+          shinyWidgets::progressBar(id = "pb6", value = 50, status = "success", size = "xs"),
+          sliderInput(inputId = "uppb6", label = "Update", min = 0, max = 100, value = 50),
+          .shinyWidgetGalleryFuns$pb_code(
+            id = "pb6",
+            'progressBar(id = "pb6", value = 50, status = "success", size = "xs")',
+            'updateProgressBar(session = session, id = "pb6", value = input$slider)'
+          )
+        )
+
+      ),
+
+      column(
+        width = 12,
+
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Status update",
+          shinyWidgets::progressBar(id = "pb7", value = 50, display_pct = TRUE, status = "warning"),
+          sliderInput(inputId = "uppb7", label = "Update", min = 0, max = 100, value = 50, step = 5),
+          .shinyWidgetGalleryFuns$pb_code(
+            id = "pb7",
+            'progressBar(id = "pb7", value = 50, display_pct = TRUE, status = "warning")',
+            paste(
+              'if (input$slider < 33) {',
+              '  status <- "danger"',
+              '} else if (input$slider >= 33 & input$slider < 67) {',
+              '  status <- "warning"',
+              '} else {',
+              '  status <- "success"',
+              '}',
+              'updateProgressBar(session = session, id = "pb7", value = input$slider, status = status)',
+              sep = "\n"
+            )
+          )
+        ),
+
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "",
+          shinyWidgets::progressBar(id = "pb8", value = 1500, total = 5000, status = "info", display_pct = TRUE, striped = TRUE, title = "All options"),
+          sliderInput(inputId = "uppb8", label = "Update", min = 0, max = 5000, value = 50),
+          .shinyWidgetGalleryFuns$pb_code(
+            id = "pb8",
+            'progressBar(id = "pb8", value = 1500, total = 5000, status = "info", display_pct = TRUE, striped = TRUE, title = "All options")',
+            'updateProgressBar(session = session, id = "pb8", value = input$slider, total = 5000)'
+          )
+        ),
+
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Update total",
+          shinyWidgets::progressBar(id = "pb9", value = 1000, total = 1000, display_pct = TRUE),
+          sliderInput(inputId = "uppb9", label = "Update", min = 1000, max = 5000, value = 1000, step = 50),
+          .shinyWidgetGalleryFuns$pb_code(
+            id = "pb9",
+            'progressBar(id = "pb9", value = 1000, total = 1000, display_pct = TRUE)',
+            'updateProgressBar(session = session, id = "pb9", value = 1000, total = input$slider)'
+          )
+        )
+
+      )
+    )
+  )
+}
+
+.shinyWidgetGalleryFuns$tabSliderText <- function() {
+  tagList(
+    tags$h1("Slider Text", class = "fw-bold text-primary"),
+
+    fluidRow(
+
+      column(
+        width = 4,
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "With characters:",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = sliderTextInput,
+            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Choose a letter:", choices = c("a", "b", "c", "d", "e"))
+          )
+        ),
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Range slider:",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = sliderTextInput,
+            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Choose a range:", choices = month.abb, selected = month.abb[c(4, 8)])
+          )
+        ),
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Custom range for numeric:",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = sliderTextInput,
+            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Choose a value:", choices = c(1, 10, 100, 500, 1000), grid = TRUE)
+          )
+        ),
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Decreasing order:",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = sliderTextInput,
+            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Choose a value:", choices = seq(from = 10, to = 1, by = -1), grid = TRUE)
+          )
+        )
+      ),
+
+      column(
+        width = 4,
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "With month",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = sliderTextInput,
+            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Pick a month:", choices = month.name)
+          )
+        ),
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Restricted choices",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = sliderTextInput,
+            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Restricted choices:", choices = LETTERS,
+                        selected = "A",
+                        from_min = "E", from_max = "T")
+          )
+        ),
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Restricted choices",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = sliderTextInput,
+            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Restricted choices for range:", choices = LETTERS,
+                        selected = c("A", "T"),
+                        from_min = "A", from_max = "E",
+                        to_min = "R", to_max = "Z")
+          )
+        )
+      ),
+
+      column(
+        width = 4,
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Likert scale",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = sliderTextInput,
+            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Your choice:", grid = TRUE, force_edges = TRUE,
+                        choices = c("Strongly disagree", "Disagree", "Neither agree nor disagree", "Agree", "Strongly agree"))
+          )
+        ),
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Update selected",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = sliderTextInput,
+            args = list(inputId = "selectedSliderText", label = "Your choice:", grid = TRUE, force_edges = TRUE,
+                        choices = letters[1:5])
+          ),
+          br(),
+          radioButtons(inputId = "upSelectedSliderText", label = "Update selected:", choices = letters[1:5], inline = TRUE)
+        ),
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Update choices",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = sliderTextInput,
+            args = list(inputId = "choicesSliderText", label = "Your choice:", grid = TRUE, force_edges = TRUE,
+                        choices = month.abb)
+          ),
+          br(),
+          radioButtons(inputId = "upChoicesSliderText", label = "Update selected:", choices = c("Abbreviations", "Full names"), inline = TRUE)
+        )
+      )
+
+    )
+  )
+}
+
+
+.shinyWidgetGalleryFuns$tabVirtualSelect <- function() {
+  tagList(
+    tags$h1("Virtual Select", class = "fw-bold text-primary"),
+    tags$h5(
+      "via ",
+      tags$a(href = "https://github.com/sa-si-dev/virtual-select", "virtual-select")
+    ),
+    br(),
+
+    fluidRow(
+      column(
+        width = 4,
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Default",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = virtualSelectInput,
+            args = list(
+              inputId = ID(.shinyWidgetGalleryId),
+              label = "Default :",
+              choices = month.name,
+              width = "100%",
+              dropboxWrapper = "body"
+            )
+          )
+        ),
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Multiple",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = virtualSelectInput,
+            args = list(
+              inputId = ID(.shinyWidgetGalleryId),
+              label = "Multiple :",
+              choices = month.name,
+              multiple = TRUE,
+              width = "100%",
+              dropboxWrapper = "body"
+            )
+          )
+        ),
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Group choices",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = virtualSelectInput,
+            args = list(
+              inputId = ID(.shinyWidgetGalleryId),
+              label = "Group choices :",
+              choices = list(
+                Winter = month.name[1:3],
+                Spring = month.name[4:6],
+                Summer = month.name[7:9],
+                Fall = month.name[10:12]
+              ),
+              multiple = TRUE,
+              width = "100%",
+              dropboxWrapper = "body"
+            )
+          )
+        ),
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "HTML in choices",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = virtualSelectInput,
+            args = list(
+              inputId = ID(.shinyWidgetGalleryId),
+              label = "HTML in choices :",
+              choices = setNames(
+                as.list(month.abb),
+                mapply(
+                  FUN = function(number, month, color) {
+                    as.character(tagList(
+                      icon("calendar-days"),
+                      tags$b(
+                        style = css(color = color),
+                        month
+                      )
+                    ))
+                  },
+                  month = month.name,
+                  color = palette.colors(n = 12, palette = "Alphabet")
+                )
+              ),
+              html = TRUE,
+              width = "100%",
+              dropboxWrapper = "body"
+            )
+          )
+        )
+      ),
+
+      column(
+        width = 4,
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Search",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = virtualSelectInput,
+            args = list(
+              inputId = ID(.shinyWidgetGalleryId),
+              label = "Search :",
+              choices = month.name,
+              search = TRUE,
+              markSearchResults = TRUE,
+              width = "100%",
+              dropboxWrapper = "body"
+            )
+          )
+        ),
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Show values as tags",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = virtualSelectInput,
+            args = list(
+              inputId = ID(.shinyWidgetGalleryId),
+              label = "Show values as tags :",
+              choices = month.name,
+              multiple = TRUE,
+              showValueAsTags = TRUE,
+              width = "100%",
+              dropboxWrapper = "body"
+            )
+          )
+        ),
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Allow new option",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = virtualSelectInput,
+            args = list(
+              inputId = ID(.shinyWidgetGalleryId),
+              label = "Allow new option :",
+              choices = month.name,
+              allowNewOption = TRUE,
+              width = "100%",
+              dropboxWrapper = "body"
+            )
+          )
+        ),
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Always open",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = virtualSelectInput,
+            args = list(
+              inputId = ID(.shinyWidgetGalleryId),
+              label = "Always open :",
+              choices = month.name,
+              keepAlwaysOpen = TRUE,
+              width = "100%",
+              dropboxWrapper = "body"
+            )
+          )
+        )
+      ),
+
+      column(
+        width = 4,
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Add a description",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = virtualSelectInput,
+            args = list(
+              inputId = ID(.shinyWidgetGalleryId),
+              label = "Add a description:",
+              choices = prepare_choices(
+                data.frame(
+                  name = state.name,
+                  abb = state.abb,
+                  region = state.region,
+                  division = state.division
+                ),
+                label = name,
+                value = abb,
+                description = division
+              ),
+              multiple = TRUE,
+              hasOptionDescription = TRUE,
+              width = "100%",
+              dropboxWrapper = "body"
+            )
+          )
+        ),
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Disable group select all",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = virtualSelectInput,
+            args = list(
+              inputId = ID(.shinyWidgetGalleryId),
+              label = "Disable group select all:",
+              choices = list(
+                Winter = month.name[1:3],
+                Spring = month.name[4:6],
+                Summer = month.name[7:9],
+                Fall = month.name[10:12]
+              ),
+              multiple = TRUE,
+              disableOptionGroupCheckbox = TRUE,
+              width = "100%",
+              dropboxWrapper = "body"
+            )
+          )
+        ),
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Show as popup",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = virtualSelectInput,
+            args = list(
+              inputId = ID(.shinyWidgetGalleryId),
+              label = "Show as popup :",
+              choices = month.name,
+              showDropboxAsPopup = TRUE,
+              popupDropboxBreakpoint = "3000px",
+              width = "100%",
+              dropboxWrapper = "body"
+            )
+          )
+        )
+      )
+    )
+  )
+}
+
+.shinyWidgetGalleryFuns$tabcheckButtons <- function() {
+  tagList(
+
+    tags$h1("Turn buttons into checkbox", class = "fw-bold text-primary"),
+    br(),
+
+    fluidRow(
+
+      column(
+        width = 4,
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Default",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = checkboxGroupButtons,
+            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Label", choices = c("A", "B", "C"))
+          )
+        )
+        ,
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "With choices",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = checkboxGroupButtons,
+            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Label", choices = c("A", "B", "C", "D"), selected = c("B", "D"))
+          )
+        )
+        ,
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Danger status",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = checkboxGroupButtons,
+            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Label", choices = c("A", "B", "C", "D"), status = "danger")
+          )
+        )
+        ,
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Success status",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = checkboxGroupButtons,
+            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Label", choices = c("A", "B", "C", "D"), status = "success")
+          )
+        )
+      ),
+
+      column(
+        width = 4,
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Justified",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = checkboxGroupButtons,
+            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Label", choices = c("A", "B"), justified = TRUE)
+          )
+        )
+        ,
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Vertical",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = checkboxGroupButtons,
+            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Label", choices = c("A", "B", "C", "D"), direction = "vertical")
+          )
+        )
+        ,
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Large",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = checkboxGroupButtons,
+            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Label", choices = c("A", "B", "C", "D"), size = "lg")
+          )
+        )
+        ,
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Update",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = checkboxGroupButtons,
+            args = list(inputId = "upcheckboxGroupButtons", label = "Label", choices = c("A", "B", "C", "D"),
+                        checkIcon = list(yes = icon("ok", lib = "glyphicon")))
+          ),
+          br(),
+          tags$p("Click to update :"),
+          actionGroupButtons(inputIds = c("upCheckBtnA", "upCheckBtnB", "upCheckBtnC", "upCheckBtnD"), labels = c("A", "B", "C", "D"))
+        )
+      ),
+
+      column(
+        width = 4,
+
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Large",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = checkboxGroupButtons,
+            args = list(
+              inputId = ID(.shinyWidgetGalleryId), label = "Choose a graph :",
+              choices = c(
+                "<i class='fa fa-bar-chart'></i>" = "bar",
+                "<i class='fa fa-line-chart'></i>" = "line",
+                "<i class='fa fa-pie-chart'></i>" = "pie"
+              ), justified = TRUE
+            )
+          )
+        )
+        ,
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Icons",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = checkboxGroupButtons,
+            args = list(
+              inputId = ID(.shinyWidgetGalleryId), label = "Label", choices = c("A", "B", "C", "D"), justified = TRUE,
+              checkIcon = list(yes = icon("ok", lib = "glyphicon"))
+            )
+          )
+        )
+        ,
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "More icons",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = checkboxGroupButtons,
+            args = list(
+              inputId = ID(.shinyWidgetGalleryId), label = "Label", choices = c("A", "B", "C", "D"), status = "primary",
+              checkIcon = list(yes = icon("ok", lib = "glyphicon"), no = icon("xmark", lib = "glyphicon"))
+            )
+          )
+        )
+        ,
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Colored icons",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = checkboxGroupButtons,
+            args = list(
+              inputId = ID(.shinyWidgetGalleryId), label = "Label", choices = c("Option 1", "Option 2", "Option 3", "Option 4"),
+              checkIcon = list(yes = tags$i(class = "fa fa-check-square", style = "color: steelblue"),
+                               no = tags$i(class = "fa fa-square-o", style = "color: steelblue")))
+          )
+        )
+        ,
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Separated buttons",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = checkboxGroupButtons,
+            args = list(
+              inputId = ID(.shinyWidgetGalleryId), label = "Label", choices = c("Option 1", "Option 2", "Option 3", "Option 4"), individual = TRUE,
+              checkIcon = list(yes = tags$i(class = "fa fa-circle", style = "color: steelblue"),
+                               no = tags$i(class = "fa fa-circle-o", style = "color: steelblue"))
+            )
+          )
+        )
+
+      )
+    )
+  )
+}
+
+.shinyWidgetGalleryFuns$tabradioButtons <- function() {
+  tagList(
+    tags$h1("Turn buttons into radio", class = "fw-bold text-primary"),
+    br(),
+
+    fluidRow(
+
+      column(
+        width = 4,
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Default",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = radioGroupButtons,
+            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Label", choices = c("A", "B", "C"))
+          )
+        )
+        ,
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "With choices",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = radioGroupButtons,
+            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Label", choices = c("A", "B", "C", "D"), selected = "B")
+          )
+        )
+        ,
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Danger status",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = radioGroupButtons,
+            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Label", choices = c("A", "B", "C", "D"), status = "danger")
+          )
+        )
+        ,
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Success status",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = radioGroupButtons,
+            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Label", choices = c("A", "B", "C", "D"), status = "success")
+          )
+        )
+      ),
+
+      column(
+        width = 4,
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Justified",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = radioGroupButtons,
+            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Label", choices = c("A", "B"), justified = TRUE)
+          )
+        )
+        ,
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Vertical",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = radioGroupButtons,
+            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Label", choices = c("A", "B", "C", "D"), direction = "vertical")
+          )
+        )
+        ,
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Large",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = radioGroupButtons,
+            args = list(inputId = ID(.shinyWidgetGalleryId), label = "Label", choices = c("A", "B", "C", "D"), size = "lg")
+          )
+        )
+        ,
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Update",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = radioGroupButtons,
+            args = list(inputId = "upradioGroupButtons", label = "Label", choices = c("A", "B", "C", "D"),
+                        checkIcon = list(yes = icon("ok", lib = "glyphicon")))
+          ),
+          br(),
+          tags$p("Click to update :"),
+          actionGroupButtons(inputIds = c("upRadioBtnA", "upRadioBtnB", "upRadioBtnC", "upRadioBtnD"), labels = c("A", "B", "C", "D"))
+        )
+      ),
+
+      column(
+        width = 4,
+
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Large",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = radioGroupButtons,
+            args = list(
+              inputId = ID(.shinyWidgetGalleryId), label = "Choose a graph :",
+              choices = c(
+                "<i class='fa fa-bar-chart'></i>" = "bar",
+                "<i class='fa fa-line-chart'></i>" = "line",
+                "<i class='fa fa-pie-chart'></i>" = "pie"
+              ), justified = TRUE
+            )
+          )
+        )
+        ,
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Icons",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = radioGroupButtons,
+            args = list(
+              inputId = ID(.shinyWidgetGalleryId), label = "Label", choices = c("A", "B", "C", "D"), justified = TRUE,
+              checkIcon = list(yes = icon("ok", lib = "glyphicon"))
+            )
+          )
+        )
+        ,
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "More icons",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = radioGroupButtons,
+            args = list(
+              inputId = ID(.shinyWidgetGalleryId), label = "Label", choices = c("A", "B", "C", "D"), status = "primary",
+              checkIcon = list(yes = icon("ok", lib = "glyphicon"), no = icon("xmark", lib = "glyphicon"))
+            )
+          )
+        )
+        ,
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Colored icons",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = radioGroupButtons,
+            args = list(
+              inputId = ID(.shinyWidgetGalleryId), label = "Label", choices = c("Option 1", "Option 2", "Option 3", "Option 4"),
+              checkIcon = list(yes = tags$i(class = "fa fa-check-square", style = "color: steelblue"),
+                               no = tags$i(class = "fa fa-square-o", style = "color: steelblue")))
+          )
+        )
+        ,
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Separated buttons",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = radioGroupButtons,
+            args = list(
+              inputId = ID(.shinyWidgetGalleryId), label = "Label", choices = c("Option 1", "Option 2", "Option 3", "Option 4"), individual = TRUE,
+              checkIcon = list(yes = tags$i(class = "fa fa-circle", style = "color: steelblue"),
+                               no = tags$i(class = "fa fa-circle-o", style = "color: steelblue"))
+            )
+          )
+        )
+
+      )
+    )
+  )
+}
+
+.shinyWidgetGalleryFuns$tabswitchInput <- function() {
+  tagList(
+    tags$h1("switchInput", class = "fw-bold text-primary"),
+    tags$h5(
+      "via ",
+      tags$a(href = "http://www.bootstrap-switch.org/examples.html", "bootstrap-switch.org")
+    ),
+    br(),
+
+    fluidRow(
+      column(
+        width = 4,
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Default",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = switchInput,
+            args = list(inputId = ID(.shinyWidgetGalleryId))
+          )
+        )
+        ,
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "TRUE at start",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = switchInput,
+            args = list(inputId = ID(.shinyWidgetGalleryId), value = TRUE)
+          )
+        )
+        ,
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Change ON/OFF labels",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = switchInput,
+            args = list(inputId = ID(.shinyWidgetGalleryId), onLabel = "Yes", offLabel = "No")
+          )
+        )
+      )
+      ,
+      column(
+        width = 4,
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Change ON/OFF colors",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = switchInput,
+            args = list(inputId = ID(.shinyWidgetGalleryId), onStatus = "success", offStatus = "danger")
+          )
+        )
+        ,
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Label in the middle",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = switchInput,
+            args = list(inputId = ID(.shinyWidgetGalleryId), label = "My label", labelWidth = "80px")
+          )
+        )
+        ,
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Size : mini",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = switchInput,
+            args = list(inputId = ID(.shinyWidgetGalleryId), size = "mini")
+          )
+        )
+        ,
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Size : large",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = switchInput,
+            args = list(inputId = ID(.shinyWidgetGalleryId), size = "large")
+          )
+        )
+      )
+      ,
+      column(
+        width = 4,
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Icon in the middle",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = switchInput,
+            args = list(inputId = ID(.shinyWidgetGalleryId), label = "<i class=\"fa fa-thumbs-up\"></i>")
+          )
+        )
+        ,
+        .shinyWidgetGalleryFuns$box_wrapper(
+          title = "Update value",
+          .shinyWidgetGalleryFuns$widget_wrapper(
+            fun = switchInput,
+            args = list(inputId = "switchUp", label = "<i class=\"fa fa-thumbs-up\"></i>")
+          ),
+          br(),
+          tags$p("Click to update :"),
+          actionGroupButtons(inputIds = c("on", "off"), labels = c("ON", "OFF"))
+        )
+      )
+    )
+  )
+}
 
 #  ------------------------------------------------------------------------
 #
@@ -20905,7 +20905,7 @@ wNumbFormat	wNumbFormat
 xç<­•	ºVòHƒÅ¡ilr!;Å æo°”Ï|¨ßğ4çÌsÚB{sâûùÂıÜjÔoSà°édÅâœbú"MëSß·¥’V"»IG´Zlùr[ÕşLä­BÜ3Ê‘B“ÊNĞ*bk…9µ¨oG†µ¢<Y§}ÈlC7éÂíàƒl×ßJLŞÏÌ.âV\”é[ÅæÒIâ*¬—n*?¶Ğ
 ¡w3øªÂ¸ÊÍ+—~ïÂÌÇøÎ\ààÕ‰[°9V]îº;3x\åC8‹üP[•º>¢R­j—ÉVÕ©ReR*%gƒâ%‰^‚ûífÄ§YöcÇHî è•rr òF´­­·2ı·â½(Œæ“Fc=³ùÇV­µLôÙY:>zŞÎiúJA»„rFEæÚ²oöA$û“Ñ—^^cö,£•.¹W]T¡ä£?e
 W‘]³¡<[i¶$Ü[áì ¾œş_tf+5? 6»–€Lúdîœ	üzÂ¨ukUgW×áLEoîÃ˜±DA|Z©yàcfÙŒ`¨¿O+2Ûˆ8|z¬ºÜ[ÈP•ö¨ÕuÇe]§Y·À2<ãÜltı
-^Ä­"3É¡ĞËh1IşT·Á“4g3À\LçF±~l¹¹Í®^0vdŒØª a¸9×¥õŸ—-m>K]2Y÷+Tm‡Q&ŸÏœ=ôÉÔ—}´¨ccùµ¹ÌÜÊ5¢./€$–bk‘¥¦¹Á#æ^¢KL‘©È×Ô•Ô2úŒde#±Xı(1¸ªé‹²4Ç5¸]i§³º&õEV¾¨¬ÔVØôckKõ®ãR‰?E`j9YªÍWP™{R°9%§€çã€´ùÏ†¥›hÈ„K}i›ÑârGà*ˆu„Ê31N’Qû»DegUÜÇºÌªö¯¦C½ş´€ƒöê  ‰PNG
+^Ä­"3É¡ĞËh1IşT·Á“4g3À\LçF±~l¹¹Í®^0vdŒØª a¸9×¥õŸ—-m>K]2Y÷+Tm‡Q&ŸÏœ=ôÉÔ—}´¨ccùµ¹ÌÜÊ5¢./€$–bk‘¥¦¹Á#æ^¢KL‘©È×Ô•Ô2úŒde#±Xı(1¸ªé‹²4Ç5¸]i§³º&õEV¾¨¬ÔVØôckKõ®ãR‰?E`j9YªÍWP™{R°9%§€çã€´ùÏ†¥›hÈ„K}i›ÑârGà*ˆu„Ê31N’Qû»DegUÜÇºÌªö¯¦C½ş´€ƒöê  ‰PNG
 
    IHDR  C  r   o¸   sRGB ®Îé   gAMA  ±üa   	pHYs  Ã  ÃÇo¨d  *	IDATx^íoÇ}ç÷mÜëğ» y&Q  3‚äLw€²=¹ Cğƒƒy°Ğ	¼Ü†%ãdä°²$R‘bGdâšô,É%©Ùår¹"÷Ÿ+õ­îš©ªşõŸÙîêéú~à¯¼3=3]]İ¿ÏTuÔkŠBˆ¢	!DCBˆ†2$„eH!š2üzã;ßQß±yõu/_Òûş7ô_İò›7¾£ŞèúC	!IR#Ã@„6(!B´…2$„tAµï½£^…Èf£AYl÷Şyu.Ê‚ .òpO½óê|ùüıáó:æÍñF „ñÓL†:e#0;Bóê;v2]”Tı{á™à3(CBH÷ÔL“%)9²)Œ}}] ©&ï™Ix¾®pZÌi2!¤K\@‘Fr¹¤~óFğ¼›WU6ĞdØä=ùkæ#Å"”!!¤KÉpF8m,Ãª5”!!¤K*e8»ÈáÇ“8åi2M¦É¶-v´HBº¤ñ?sI§Ğy*®@×¿§êJ†÷ÆˆÅõBHSê§É!Úéïœ‚Ü¼QŸ,©ê÷dø¯	Öë¶Ë¼—2$„\œÆçÿÄ0L²IRz¡ÿÁ0£ÿ7Z9dh7Öí€ó gÃŒ>aİ#c–âL†vã\šN9ÏrªŸpsÂ0ÌhÖ;b\»›Íå‡tx¢·9ÎóòtÃŒ.nÛº·¥h½¡ÿ·ò¬a#fD	¢Ğ9ßd9Òy~|nrÈ0ÌhcëüèÉê.°b´R“×ì†@„F‚:V‚V~Ï^«§/ÎÕ~½o†sPç¨yÔ> xR…˜KeU12œ‰Pÿ¡16ßètÈôÛ3õäèL=~~¦©]‡È3›S†aV>y=ç5ZGÍ£öá ¸À•âØ„¸†ÀÆ`£\âáİ	tg £vNÕäé©º·ªîšœ¨?ì13¶ ¶Qã¨uÔü}]û$Ä)Âp„¢™2kX!®*kvTˆ²"Ä7À#Á35ÑÎ¹3=Q·¿9QÿöäDİ||lò•Í#†aV>y=£¶oé ÖQóÛºö!Gˆ0bÄ 	BÄSf{ÑÊpU}¸fF…zc°QvD>xvª¾xx¬~¶µ¯şÓÿ~Ä0còëß~¡>úäŸÕ?él}ú¹úíg7Ô':Ÿ^¿®>Ó¹ŞSnŞ¼©={–«¬=kvTˆ‹%8GëcDbÃuë@==80+e&Íh<}úÔ8á«ÉTİ¾?UwNÕÎ£=õğÉzüÍz2İSßèL÷öÔ^¹{÷®‘"Ú×kî¨Ócœ#ÄÔ#BˆğèèH½|ùR3“pàÈğwœªÛ™ªm-Ã‰–áƒÇ{êÑ 2D DŒ»ÀÈç
 q•'Gq±ç±ÑÏõÆŸœœ¨óósõ§?ı‰a˜D@ˆğÂw§ê¦~ı`ªş¸»§îC†ùèĞÊ°O!btØköÂ	¦È¸„“¤¸X‚Æˆ@IÑÊğó?LÕ¿êÑ!¦Ê÷rîE†8_ˆ'¸tKé¸‚„ÆÆ£!iãÊğúöÔL•ÿ¿=oÊ°ç©rg2Äoq‰Üœ/<<3¿-Â%uÊbqeødx/“áò‹(£’!şõü†¿'ÂoŒ(CBˆÅ•á§w¦ê_´qÅÊĞ^Q^yâJ2dˆ_™ãâ	~tIB,IÈĞş¬ÆÊÿ:~…NB,U2ÄÏkÉğñºsgG=ößU÷nß1ç½×.82|FBŠ„2üò2üıÕuõÊ+ëêêïçÿïW¯½òŠú›¸í½v‘P†„ŞpeøI.Ã[døXİùäÕÏßzSıhı5-Ã×ÔúŞTo¾™çßÓÏ½¢^[ÿ‘zó­Ÿ«üì®'º&‰$ÃÓL†ÚÈğSõ¶Ş8l`–·õ3.;êÚ•ùò+×vòç-‹½ÿ•·ı¥2m×YEöÙ…fì\SW¼ÏÔ¹rM¿ºìÛŒºu’®¹°oÿƒúoÿ×ä»?Vï/8e^Rf¾{pî\»¢7Ò@~Ïîğõuï×¯xÛ}öyÕÅĞ~åÌ‹²P°Ÿ¾İP&MaßfÔ­“ÄàÂ2üòçê¯õşñ„W™¿V?ÿÒ—]]–S†@á@ÇÁzE™cÕŒ–ò¿-x1]àı¦¸ªF\m×YBVÔzç]y[½­‹Ó/X|¬4¢iû6£n$
@@ -20933,7 +20933,7 @@ KÚa„˜÷G¿"Ë$C´£ÕüaŸÙs†Cö‡;E§û"®d‚ótùsŞtÕˆ1¢Œ¤v8T;ElGvÑí#Æ^/¢,‰s-ÁYƒ
 É»há¦ïödòsÛ°<ç.)Ã>ˆ{…²tP†2”!!‰AÊP†„$e(C’”¡eHHbP†2”!!‰AÊP†„$e(C’”¡eHHbP†2”!!‰AÊP†„$e(C’”¡eHHbP†2”!!‰AÊTÊpŸa˜‘…2”áÈÄ e(CBƒ2”¡	IÊP†2$$1(CÊÄ e(CBƒ2”¡	IÊP†2$$1(CÊÄ e(CBƒ2”¡	IÊP†2$$1(CÊÄ e(CBƒ2”¡	IÊP†2$$1(CÊp¤Ln=Vöşƒy>:P³äH½õşT}lş&)BÊP†£²så—sªŞº?(ÃÔ¡e(Ã‘ññu-ÂëGù#	Ê0u(CÊpL¨×ß¬Ş=È‹„2ÌG’y²ÑcMÎ§Úîç«w?Òïc}XF¹®”¡e8& ¯pz\À•!¤ö@½~ëØ<Ê–Í¥÷ñ-ç³¼ÏÎŞW¿.²ŒP†2”á˜XT†Âë1ÍËÑ¥(QoIVÊP†2fš\7ed8›Ï3“¡ù<w™+Ãºé8YV(CÊpT„Ó^‰ê‘á#JW¬áÈ2\U(CÊplØÑ\xEYË­øÓü]"Ï@”Ùï)Ã1@ÊP†£$!ºSß¹]‚LˆòTxşüë·82	”¡eHHbP†2”!!‰AÊP†„$e(C’”¡Œ‘á‹/(CBA’!@æ2<::šÉpoo2$d¤ ¶QãV†¨}Ê2$$9(CO†‡‡‡”!!#Ç•!j2Ì(Èğàà€2$dÄX¢Ö)Ã9kÇÇÇ”!!	Q&C¸€2d¸¿¿O2RPÛ¨qÊĞg&C÷·†”!!ãÅÊµncèÊ"LV†8Wşğúşıûæÿ	!ãÁ­mW†p \`G…IÊßÒEt¾A(DBÆ[ÓáYºx’¤íTã1”Æ·:a˜Õj5Ú¶£Âªó…®S`&Cwªì^HÁ¿¶óÍ7ß¨Ç«G©İİ]õğáCõàÁÓ¹ÈÎÎÃ0ÇÖ#j5ŠZEÍ¢vQÃ¨eÔ´†SäP†)
 Á6àN•íè0â“'O
 R´Á`f˜¸µèJ5Š0†SääeèÑIøæp…ˆß%…R´btƒÁ0L?	ëÏÖ¥+AÔ®+B{®°jT˜¤±ñ®ñM!	ÑC´R´b´rdfØØz´õi%h/˜„"”Î¦:*Úé²¢=‡JÑŠ1ŒİÃÄTƒ¶>C	Ú©±!G…>F†M„èJÑŠÑÎ0Ì°qkÒÖ©•`Z¦(B°†—„(I1£ÛùÃôŸ°]J,aò2”„è­­]9J±;‚a˜x‘jÏÆÖ©­[[ÇV‚a‘5l´$ÄPŠ’ËbwÃ0ñ"ÕW€¡ëD˜¬‘Pˆ’]1ÚØgfø„õéÖn(A„"œ3“!b;¦LŠ6n3³œ	ëÖ­i·Ö] ©âÉĞÆí(·İ„Í0ÌòDªYÄ­m©öSfÿ:q;ÎFê`†a–3RKµ¤‘!:ÇÔ©Ã¬F¤švCZ¤bfœ!s
-2t‘:a˜Õ‘©”¡EêP†aV+¤šF2$„±CBˆ†2$„¥Ô¿Ó“ó~i‡WŞ    IEND®B`‚‰PNG
+2t‘:a˜Õ‘©”¡EêP†aV+¤šF2$„±CBˆ†2$„¥Ô¿Ó“ó~i‡WŞ    IEND®B`‚‰PNG
 
    IHDR  I     ­-˜D    IDATx^ì¸Å•¶K9g	E$$F ¢ˆ"gL#0Á$ar0`ã5»ëÍö0Ù€Àd–œƒ‘£$2Ê9çüß¯şíÙº}{fzfzævxÏóÜGp§§ºê=5sëësêT“Q£F­7  @ €   XMIÌ@ €   @ ÿG ‘Äl€   @ €  à@$1  @ €    ’˜€   @ € ‚	Ibf@ €   @  ’Ä€   @ €  @$‰9 @ €   @ (ÒíŠ"â@ €   @ KIYò6c…   @ € Š@$EÄ€   @ €@– ’²ämÆ
 @ €   %€H*Šˆ  @ €   ,@$eÉÛŒ€   @ (J ‘T@ €   @ Y"€HÊ’·+  @ €  P” "©(".€   @ € ²D ‘”%o3V@ €   @ (DRQD\ @ €   d‰ ")KŞf¬€   @ €@Qˆ¤¢ˆ¸ €   @ ÈDR–¼ÍX! @ €   ¢ª.’¦M›fîºë®zÙgŸ}ÌÎ;ï\´sQ^0{ölsÛm·Ù&{öìiFeóµuÿı÷›üÑ¶qÒI'™şıûWÔoN6¹sçš7ß|ÓLŸ>İ,^¼Ø´oßŞœ}öÙ¦Y³fÉXÊ{¯Ïğ»ï¾kæÌ™cV¬Xa6Úh#sì±ÇæFıÊ+¯˜÷ßßşÿşûïovØa‡”‰nxÏ<óŒùì³Ïlƒ|°Ùf›m¢kœ–  @ ª.’Fmşş÷¿×»ucˆ”ÆIkÖ¬1óçÏ·coÑ¢…éÜ¹sà$D$ñÙôÌ˜1Ã>TX·n]=(¿ıíoI1&cÇ5ûÛß
@@ -21066,7 +21066,7 @@ I™L» @ !©D[”& $•Fi£²„¤²$íC€ ò’ò™U:’ª0åÌÎñÀŒ1cÆdÖµv	 @€ ¡
  @€  ƒ€”Ã”ôH€  @€@2!)µB @€ ä  $å0%= @€  L@HJF­ @€ 9I9LI @€ $’’Q+D€  @€@BRSÒ# @€ É„¤dÔ
  @€  ƒ€”Ã”ôH€  @€@2!)µB @€ ä  $å0%= @€  L@HJF­ @€ 9I9LI @€ $’’Q+D€  @€@BRSÒ# @€ É„¤dÔ
  @€  ƒ€”Ã”ôH€  @€@2!)µB @€ ä  $å0%= @€  L@HJF­ @€ 9I9LI @€ $’’Q+D€  @€@BRSÒ# @€ É„¤dÔ
- @€  ƒ€”Ã”ôH€  @€@2!)µB @€ ä  $å0%= @€  L@HJF­ @€ 9I9LI @€ $’’Q+D€  @€@BRSÒ# @€ Éş¦ĞÅ²¦WM•    IEND®B`‚‰PNG
+ @€  ƒ€”Ã”ôH€  @€@2!)µB @€ ä  $å0%= @€  L@HJF­ @€ 9I9LI @€ $’’Q+D€  @€@BRSÒ# @€ Éş¦ĞÅ²¦WM•    IEND®B`‚‰PNG
 
    IHDR  F   S   »×­   sRGB ®Îé   gAMA  ±üa   	pHYs  Ã  ÃÇo¨d  ÁIDATx^íß‹×Çû§4ÕÕ>5_}+}iKPÓæ¦¦}
 …ĞEÚ˜Ğ‹¦imªı‘‡¼‚môÉ>ˆ¡H²°õE² Ù‡ÚÕÂB¢RI0Ï§ççÌ™3çÌœ»÷NÜ¹çóÙ¹ó+ìñ;ß3ãú5     P8#     (Š     Å     Š‡b     ÅC1    €â¡    @ñPŒ      x:ŠÑ–X‡'«[v¹akuR­;4Y•ŸÎaMLõ6SùÕnÅ]÷¼ç8†k     EF1šˆ‰úo£ü4KÅ     ÆLV1šNÕÓ!¿(˜‚3™NÅ$,FkSS–*'¢~Ø£º`M½Òx¬‹ÒyÌA±k\›WŒ¶VÍõµ>cÏ³ùT-V»k˜íÚy*    °²ŠÑêš)ÕMº-"ÓU[ªbänÔ[ëÍ¼+şÍÿÚ4ØÖ¾ÊWÓwÌ°œ8]¹H­—z'š:Ïú3aié;î<×N1    ˜‡¼b´enÀİº)4òfÜ=QI–ğÆİûŞnÛ¸éîÏGîÍOY¨Õë]!1¦.0Õ¹…çUí#ö4Ì-Î£ï¸¹v     Ø	™ÅÈŞÄë›v»\}½™W¸Ràt7öuyĞoI~í?-’ñ¶	õKHŒÔ1ì1ÒOaš×m°ûv×éÎ³qòªÛøOÀ‚bÔwÜ¹®     æ!»UO‰ì¿¾ÁO>I	‹Qld'å ÷˜‰RS{J³¸b”<.Å    à‰‘]Œ\™NÕ|s™+®´^Ak#ó}òó­'PiúYßÜGF1ªöáwmnYPŒú»ƒk    €Å_ŒªıÈÍ~ø$¥¥+AYh}¯váoç™*½Çq×•ú|F1RKRçY=
@@ -21081,7 +21081,7 @@ b¿d
 Šâbˆ¾é#Sû%S}M¦ì‰b„8
 c!¦0!†eš12±_2Ñ7)C‘,F_Ïœü0:pÑØ
 ±cç‚C,Lbr,PŒg“LAÔo Ô™²òÂ±÷ğIÛVO²}çÔeqğÄß£UˆM\ˆÕ³Õ«ˆÅiföÔXĞÅHŠbd
-¢¯-E.S^|[ì=zJ<ûòYÛVO²müçxúÕâÀ‰K<9BLèBlerFXbz†Ï¼ş`fú—_÷ónLbjlPŒó$Sı<©3eebJÑSßÿ¥øç­;¶­,d1R¨r¤©‚¤+"¶U!†ˆİÆÆ"¶ÄÒİóÜkúIÑ¥HÑYŒ      J€b     ÅC1    €â¡    @ñPŒ      x(F     P<#     (Š     Å     Š‡b     ÅC1    €â¡    @ñPŒ      x(F     P<#     (Š     Å     Š‡b     ÅC1    €â¡    @ñPŒ      p„ø?}u‰Ü5“£a    IEND®B`‚‰PNG
+¢¯-E.S^|[ì=zJ<ûòYÛVO²müçxúÕâÀ‰K<9BLèBlerFXbz†Ï¼ş`fú—_÷ónLbjlPŒó$Sı<©3eebJÑSßÿ¥øç­;¶­,d1R¨r¤©‚¤+"¶U!†ˆİÆÆ"¶ÄÒİóÜkúIÑ¥HÑYŒ      J€b     ÅC1    €â¡    @ñPŒ      x(F     P<#     (Š     Å     Š‡b     ÅC1    €â¡    @ñPŒ      x(F     P<#     (Š     Å     Š‡b     ÅC1    €â¡    @ñPŒ      p„ø?}u‰Ü5“£a    IEND®B`‚‰PNG
 
    IHDR  n  
    2Ç¿Ã   sRGB ®Îé   gAMA  ±üa   	pHYs  Ä  Ä•+  œìIDATx^í]`ÇÕşQfæØNfp˜¡a††n¸I“4MÚ&ôo8ifpÃà8ÇÌŒâ“ñßì­}–%Y’¥;KÚOßİìî¼ÙoŞÌ¼™1¥0`À€]æô§è"0ˆÛ€ºâ6`À€.ƒ¸0` ‹Á nèb0ˆÛ€ºâ6`À€.†±ãN%HFÂğ}ù9Â3g" 
@@ -21230,7 +21230,7 @@ ió´jÛÙ(¯qkòƒâîHtÛ1îÖ¢;jÜzºlIxİ1QµË€hêƒvDbÚ{f«¬Äm·AÜì×$–CºôÚZbò¹
 î¿ÿşuïÏ8éñêjèñÄİ°lÙ280ı«ç!ª%÷}ûöMûô<PÓD"(..Nûô,„ÃaÕëëÕkıªé®ƒ¸0` ‹Á˜œ4`À€.ƒ¸»3B«ğäí—ãš[ÃŠ´WOCbåO¸î’?àõo*Ò>=%¸ÿ–ËpÑåWãé~A0öïA¨ùîe\rùõøzn4íÓõa•tc¬\ü5>ı<„ƒ~·'zºÒ¾=¡
 ¼õú«(w êç…qG‹Áémn{VMû	sCfìµóvÈşn)9Dx>îsNÛw<~üñslsĞéèkK_ëÂ04în{0ˆe¿âÅ·ŞÀŒµ=¯}NEíHªñÛ÷ï¢Ú:Î´C¼‹fÏ@ßm{i>Ø¾4Œ?ûŞPÜH›0ˆ»#b.Æ¯¿çìü´4‘öí90%,Ÿ€K/ø#vèµ
 s×¦/ô0+Æ”ØvÕ{ÕK±<ZˆwÿÚEXY“öïâ0ˆ»#ßÄß¿‡³vÊ8|²§ x ¶+¨ÄA{í…7çÄ^Òş=ş_?…uø˜ô¯†ÒApüöN?çÏ˜_S‚¾İÄÒã6`À€.Cã6`À€.ƒ¸0` ‹Á nèb0ˆÛ@D
-~_5êüaõ«~ÍRzÑ.ƒ¸ô@˜0ÿë—qû“o£zÎqÆµ¢Î n]†U‰‰d?z=®ùÛ×xèûŸ°[ã@N]†Æm gÂAm•ñ5k0;e¶®ƒ¸ô@DñúC·á÷‘˜]‚çNŞŸ÷ĞU•º&Œ¡=ñDV‹®·DO:`5Ô]q0`À@ƒ¡c0`À@ƒAÜ0ĞÅ`·t1ÄmÀ€]q0`À@—ğÿ‹TğwÎÉ“    IEND®B`‚‰PNG
+~_5êüaõ«~ÍRzÑ.ƒ¸ô@˜0ÿë—qû“o£zÎqÆµ¢Î n]†U‰‰d?z=®ùÛ×xèûŸ°[ã@N]†Æm gÂAm•ñ5k0;e¶®ƒ¸ô@DñúC·á÷‘˜]‚çNŞŸ÷ĞU•º&Œ¡=ñDV‹®·DO:`5Ô]q0`À@ƒ¡c0`À@ƒAÜ0ĞÅ`·t1ÄmÀ€]q0`À@—ğÿ‹TğwÎÉ“    IEND®B`‚‰PNG
 
    IHDR  q     [*tã   sRGB ®Îé   gAMA  ±üa   	pHYs  Ä  Ä•+  …’IDATx^í`ÅÚ†ßÓ[z'!ô.EDÁŠ
 Q¬X°cï]¯íZîµ{í‚{ıE¬ R¥7é5Zéíôúßœ³á$œ„Ò3LÎîìîÌ–™w¿ª
@@ -21352,7 +21352,7 @@ uqi¶dtd…üó+®¿ò6ü¸51ü½ÚŞòÀ­ÒâÄ!é°mŞ‡-ÉI¸¾ƒ	.’ŞfQ«ÉzÖbÎW¯#«ëe˜tZGüıÓìóD
 ¥üÚÒ4püÜ&»¹Ú©+×Ïƒ½qü<!ºâ'»İK$mç{l²è†‹9gzvœ7%,¥£ISÃ×´xñb!X< çõ¦†ÏÅ¼9âæç¹téRñ"åñî¹×&¿Hùœ¸×fkGŠ¸D‚'®`ëŒ3=çEÌyYòÖÊW_}…ÌÌL><äÓ¾øî»ïDù÷™gòi;H—HBğìIl™±…V]ÄÅ*o(E8­ùEt$´åëoq›IsÒVE¯«½
 8Ó–¯_Š¸DÒ–q[±}ËFlÉÚ‚ò¦|ª%à,Ø­;¦tKDŠ¸DÒ–±aõªåøcÚOX°y[;ìÁZŠß~ÿÎ˜Y{B~m)âI[&®3.¼ğLôÜÒz´¿_´»c‡áºÓÒQ˜¿¦kİÙdH—HÚ8ûw•Î8éÔ°cé·
 â‡à$ß_ø×·Ñu(Lm°X\ˆxSv>H$MKÁî?±3~@h­Q¸æd`üQ	X¸taÃŒ«ßÂ¨ñö^{-‘0œÚšQ“Ùí$ŒîßúÇ9,RNÀ¸AI(2tÃ¹Ã‡"ºé‡®itTv»=À=˜¸7·g!—íÄ%ín'Î}¸=8;n/Î(İî[s;qIÛEXâJÂ”Å*	eŠPÍêÈü!i‰Tqî¡ær¹ÄØI{‚¿B•bÅH°¿qIKDE‰7À]î¹ë=©ğ(g¼Nm‰["imPj†Ñd‚Æïİ€%Ê§µjfòç´ÎE'\ŒÂV¹â8°¿DÒ’"®Œ.Æ¿l…+c©ğ¯"îÿJkDÒšQ©ÔĞkØğÏRøSâ”A‰˜ıãLô:í¤›|¨uôEªB®”…ó¯b‰K—´4TN§S€¥ˆu¸€óºâNÄRÄ%­qAíó>Å{+İ8ÎóÆŞ‰÷ïMÀ•:X©©Xãì”2r)â’–ˆÊår	çªXãÕœ·)¿Ik†´˜„ÚˆŒô8üòàhŒ}Eƒß,$ØŠQêRA¯×	Á/FaáVÒ¾qIKCåñxªXâ‘'`ÅI$­Qœ¢WcÃ¬0e®g'àsÏPL}t,d‰TAË[qŠ +„/K$-JëêëŠx³ŸDÒšáâ˜7{&4]NÆ9Ç¤â³O¦`ÈÙ· g| JâŠx+V·"äœ¤ˆKZBÄy…[ìpW„›—•_NÔIkCI»*²¶-QQPû]°“jG™Íğ8íğ‚½–Y¨±Vó,J‘´DT$Ş”¶«–yó2;N¼Ê6e‰¤5n€Áæ4NÿÔd¡Wneßê¿IK¢RÄÇDZæî/‘´F¡VÒt¸0+Û¿ğ
-Me›DÒÒ"ÎŠµÍ‰U)Za¤hKÚ*áÎËœö•ô®<¯ËbIKFEâ]©Òá‚]]¼¥˜KÚá"Î(ëüËF‹zõ}$’–†ŠÄY¨3[ßŠ%ÂN±B”DÚM"i3„§qå·ú²DÒÒ©,è/óOÀœ ¥€KÚ"Jº®.ØÕ×%’–L¥%® [Ò‘â-im$â‰D"i=ÈvS‰DÒŠ‘".‘H$­)â‰DÒŠ‘".‘H$­)â‰DÒŠ‘".‘H$­)â‰DÒŠ‘".‘H$­)â‰DÒŠ‘".‘H$­)â‰DÒjşXq%¸ÿ“æ    IEND®B`‚‰PNG
+Me›DÒÒ"ÎŠµÍ‰U)Za¤hKÚ*áÎËœö•ô®<¯ËbIKFEâ]©Òá‚]]¼¥˜KÚá"Î(ëüËF‹zõ}$’–†ŠÄY¨3[ßŠ%ÂN±B”DÚM"i3„§qå·ú²DÒÒ©,è/óOÀœ ¥€KÚ"Jº®.ØÕ×%’–L¥%® [Ò‘â-im$â‰D"i=ÈvS‰DÒŠ‘".‘H$­)â‰DÒŠ‘".‘H$­)â‰DÒŠ‘".‘H$­)â‰DÒŠ‘".‘H$­)â‰DÒŠ‘".‘H$­)â‰DÒjşXq%¸ÿ“æ    IEND®B`‚‰PNG
 
    IHDR  	   Š    ÙÙ§   sRGB ®Îé   gAMA  ±üa   	pHYs  Ã  ÃÇo¨d  
 õIDATx^íİËo\ÕğşO³jYuYµtQ©6İ U•¢XU«n+V•¡C!PŞUh%§+º`Mh\ó,˜@BL‹' ó†Óû»3×¾3ş3¶Ç3~|>ÒWñÜ×xw¾9çÌø;  ¡$  )% H)	 @JIØgß~ûí¶€ƒJIØMøæ›oê|ıõ×å«¯¾êKkÎ+ DJÂµËA/¿ü²|şùçå³Ï>+ëëë}‰cq.®‰k• %aLÚåà‹/¾(Ÿ~úiY[[+üq¹qãF¹~ız¹víZø9Å¹¸&®{Úe ¦MIƒ¦ Ä¬@Ì|òÉ'u	øàßÿ*—¹¿¼ûëŸ—Kwı \ºónªŸãXœ‹kâÚ¸'îg(
@@ -21361,7 +21361,7 @@ Me›DÒÒ"ÎŠµÍ‰U)Za¤hKÚ*áÎËœö•ô®<¯ËbIKFEâ]©Òá‚]]¼¥˜KÚá"Î(ëüËF‹zõ}$’–†ŠÄY¨3[ß
 ±™QI `uI¸òÂóå•^)x³Ê[.o?~º,Uy§Î™4KUŞ®®}³*	‹§ï+/ıî·åÒ¾—ø»ÊwÔ{b3£e ¦åØ–„wşş·òjU¢D)¸Tüï=q¦\~òár¥—÷‡äJuİ{Õ=oW%á•ÿP^¿û§ù`¿‡ÄfÆXvˆGšM `eI¸üÂóuAøÏcİÙ‚ËÕ ƒÿòS”ªü7òtş×ÊOUeá‰êŞ³”×~O:È#1›ß£ĞìM €IRVËüÉNétZ™[ì;ÜbB,1ÄB]zå ŠÀ‡OŸ-+‘gÎ–kCç>¬®_’ğÈıå_ŞğãHlbŒ/\Šof´ä À¤m[fz/+‹sUQ89_9ÜbáµGª÷ÄòÂÕ§®g¢D	¸^eõ™G7óçşÄù•êú(	KÏ•·~öãt€Gâ—bÉ!60úŞ &mä’Ğ›9ßÔ„Ù†öLÃÂlıº.½ó›÷UVæËLs_“ÒÿÜÍß!Ï”ù…Ş½»,,o<ûdıé„˜Eˆ}±´¡.U	¸q›¬V×]‹’ğxU4ÎÜW–~òıt€KîúAıÎñqHû ˜´”„êèù™2°z~¶Ì¯Ô?VËl{@’°åõluUH®İ(ƒE$®mîë•‡=Îf,ö>É¯FI¨ü˜AˆYƒ(7o“Qb¹á±ª$œï§sçõßzP ˜†]—„A1k°1¸ÇÀß7˜Ç`?Ó-õ,B3ğWÚ¯ãçÏíşùï´SJ Œfo%¡7cĞd¤’0ğìú™ÍµÏk2Î’0¸ÜŸf°Ü  [íxOBslp#ãÈ3	•ºl”€Ö¬Â–ûÚÆSv´q1JÁ@l\à¸±$t_oàƒç»ûF+	ñs«ôé>wsOBeeuÈ{îÎĞ@VñH Ø´mIhOùoÙ‹Ğ·40[æÏÏìr&¡›Íb0ğŞ'«B‘,Sì…/S€ÛRöQ²9qûe†ı±tş¯¾– ¶1ù’‚zÃOMì§˜Qğ  7ù’P©KAk©a¡±İŸŠnÿièÁøSÑ uS)	GAÜñ?üØ/QŒ¥Øh˜ú;I<#Ïlö"(	 Lƒ’°MQˆ%[·nÕƒ{ÌÄrAV ¶MuOÜÏˆgYf `Ú”„=ŠA<¾Ã õøß,Ä~‚Øx˜–$qmÜ÷Æ3âY¾€iSÆ ™QˆåØGcF şX>ˆ/EŠoO¬g"ÕÏq,ÎÅ5qmÜ÷Zb à PÆ¤)
 ±Ñ0fâ£‹ññeHQâë•ãï0Dâç8çâš¸6î‰{ 
 %aŒbpo—…˜ˆoKŒ‚XFh'Å¹¸¦] 
-%a´ËB$öDh'5ç• "%aŸ5`X à R €”’  ¤”  ¥$  )% H)	 @JI  RJ R €”’  ¤”  ¥$  )% H)	 @*-	7oŞ‘#œQ˜I  RJ R €”’  ¤”  ¥$  )% H)	 @JI  RJ R €”’  ¤”  ¥$  )% H)	 @JI  RJ R €”’  ¤”  ¥$  )% H)	 @JI  Rc/	‹sÒétÊÌùÕŞ à0ÚZfëA¾Ó™-‹½CaõüL÷ø\ûèVJ ÉLÂj™?Ùègz‡Òc¹}+	½ò¢| Àd¤ËÍ¬Áæ€¼Xf«×İÙ…æçVZ³ƒ%¡yİ”‹­ÏnÍRÔéŸÁh4Ïéœœ¯* °ßò=	+óe¦= 7KQVVËâÂâÆ@=XvZú_÷f,²"`& &jÈÆÅfya¦Ì¯läÙRÃÆ,@o6ag%¡yŸÍÙƒîùîû Ó3¤$´‹ÁÖ¼ú‡.9ì¬$$Ï©£$ À´-	›K³İ¼ÙwĞ,EôJÃ¸g†²Ü  5¼$ü/cpnïO¨4% yİ_†•‚aç‡Ûx`"¶)	­y`úóx5¸ÏÍvgš™†V¹èÎ´ËFõœ…îLD»lÌFl$™Y0“  µmI  /% H)	 @JI  RJ ZÖ××ËÒÒR¹xñbyùå—EDDä'Æó×c|UZâñ°ååå²¶¶V¿‘Ã›Ïc\ñ=^"-	Ñ4âAƒo """‡;1¾Ç8?Š´$DË0ƒ ""rôã{Œó£HKB¬]d‘ÃŸçG¡$ˆˆˆ³(	"""’FI‘4J‚ˆˆˆ¤QDDD$’ """i”I£$ˆˆˆH%ADDDÒ(	"""’f¢%áês'J§ÓéæŞé5Y.ÜÛ»§Ê‰ç®¦×ˆˆˆÈx3ù’0¤lˆçÊÕä|$ÊÂ¨%¡],Ú9õbœ¿PN¥Ç«¼xjËïĞ÷¾q~Ø½"""G(¢$Ôzu¼>?¦’°‘ËçÊ‰Î©r¡ïx”„åÜåŞëzàï]3JIØæw9*903	‘©•„úšŞk%ADD¤’P½î{ßQJ‚å99Æ%¡5Ğ·ßÓL‚ˆˆH3	Mah~¯!%a»"""G1JBõº~ßæšöş„ìµ’ ""Ç$¢$téÖôûö­ìWIX_¿ZÎXRhı.}{Îm9/""rDr fn—]•ÙU”I3ù’ĞLÓï ,D9hîSDDD&“‰–9<QDDD$’ """i”I£$ˆˆˆH%ADDDÒ(	"""’FI‘4{*	/^,kkkéƒEDDäğ&Æ÷çG‘–„¥¥¥²¼¼œ>\DDDob|q~iIˆ‡DËˆ™Q9ü‰ñ<Æõßãõ(Ò’âÑ4âa±v!"""‡71Ç¸>jACK p¼)	 @JI  RJ R €”’  ¤”  ¥$  ‰RşĞG_"õ"`(    IEND®B`‚‰PNG
+%a´ËB$öDh'5ç• "%aŸ5`X à R €”’  ¤”  ¥$  )% H)	 @JI  RJ R €”’  ¤”  ¥$  )% H)	 @*-	7oŞ‘#œQ˜I  RJ R €”’  ¤”  ¥$  )% H)	 @JI  RJ R €”’  ¤”  ¥$  )% H)	 @JI  RJ R €”’  ¤”  ¥$  )% H)	 @JI  Rc/	‹sÒétÊÌùÕŞ à0ÚZfëA¾Ó™-‹½CaõüL÷ø\ûèVJ ÉLÂj™?Ùègz‡Òc¹}+	½ò¢| Àd¤ËÍ¬Áæ€¼Xf«×İÙ…æçVZ³ƒ%¡yİ”‹­ÏnÍRÔéŸÁh4Ïéœœ¯* °ßò=	+óe¦= 7KQVVËâÂâÆ@=XvZú_÷f,²"`& &jÈÆÅfya¦Ì¯läÙRÃÆ,@o6ag%¡yŸÍÙƒîùîû Ó3¤$´‹ÁÖ¼ú‡.9ì¬$$Ï©£$ À´-	›K³İ¼ÙwĞ,EôJÃ¸g†²Ü  5¼$ü/cpnïO¨4% yİ_†•‚aç‡Ûx`"¶)	­y`úóx5¸ÏÍvgš™†V¹èÎ´ËFõœ…îLD»lÌFl$™Y0“  µmI  /% H)	 @JI  RJ ZÖ××ËÒÒR¹xñbyùå—EDDä'Æó×c|UZâñ°ååå²¶¶V¿‘Ã›Ïc\ñ=^"-	Ñ4âAƒo """‡;1¾Ç8?Š´$DË0ƒ ""rôã{Œó£HKB¬]d‘ÃŸçG¡$ˆˆˆ³(	"""’FI‘4J‚ˆˆˆ¤QDDD$’ """i”I£$ˆˆˆH%ADDDÒ(	"""’f¢%áês'J§ÓéæŞé5Y.ÜÛ»§Ê‰ç®¦×ˆˆˆÈx3ù’0¤lˆçÊÕä|$ÊÂ¨%¡],Ú9õbœ¿PN¥Ç«¼xjËïĞ÷¾q~Ø½"""G(¢$Ôzu¼>?¦’°‘ËçÊ‰Î©r¡ïx”„åÜåŞëzàï]3JIØæw9*903	‘©•„úšŞk%ADD¤’P½î{ßQJ‚å99Æ%¡5Ğ·ßÓL‚ˆˆH3	Mah~¯!%a»"""G1JBõº~ßæšöş„ìµ’ ""Ç$¢$téÖôûö­ìWIX_¿ZÎXRhı.}{Îm9/""rDr fn—]•ÙU”I3ù’ĞLÓï ,D9hîSDDD&“‰–9<QDDD$’ """i”I£$ˆˆˆH%ADDDÒ(	"""’FI‘4{*	/^,kkkéƒEDDäğ&Æ÷çG‘–„¥¥¥²¼¼œ>\DDDob|q~iIˆ‡DËˆ™Q9ü‰ñ<Æõßãõ(Ò’âÑ4âa±v!"""‡71Ç¸>jACK p¼)	 @JI  RJ R €”’  ¤”  ¥$  ‰RşĞG_"õ"`(    IEND®B`‚‰PNG
 
    IHDR  ¼   r   (%d¯   sRGB ®Îé   gAMA  ±üa   	pHYs  Ã  ÃÇo¨d  _IDATx^íIrÛJE½'4ªîWû+êWMµ mÃKĞ¼‚rMznF²-Érß÷
 Ä£’I ¥L3›s"n„Lˆ‰Ì÷pó’ ÃºÔ   T   U@à @x  P  TÁw³¹rùrsÙ´{µ9èLÃ¥ı),7¯\n®„  ŠbbàyagÚ(eâÂNs!ğ  `Óïàj³«°š¿«¯ƒ«»ga¸Bçy8h®î?{¾ÿx«îÉñŞI @¾lx­V½“²wZ¾v¯ÚÏå Î@¨uÒ  Lgâ-Í¡àqeé °çØïyA4å9ó =;—“[š  0…¾´2ô¬¢›W¼Ç]í6³7l^àMyNÿ;gïø–!ğ  `
@@ -21381,7 +21381,7 @@ PAàœœ4ÇÇÇE™]kÑš´¶P³ò § !ô*°$Å695+z
 <  ¨  ª€À €* ğ   
 <  ¨  ª€À €* ğ   
 <  ¨  ª€À €* ğ   
-<  ¨  * iş{ı€*¯[Ì:    IEND®B`‚‰PNG
+<  ¨  * iş{ı€*¯[Ì:    IEND®B`‚‰PNG
 
    IHDR  9  Û   °míx   sRGB ®Îé   gAMA  ±üa   	pHYs  Ã  ÃÇo¨d   «IDATx^íí’ÜFÙ@ß{Úá*È”÷*Â
 jk/!À¯P»U|©âÃNÅ1Ş8ààÄ&qb'`Ø„$C½ó´ÔR«õ´4ÏÌh¶ÕsNÕ)Ø‘FÒhZg¥gõ @Á9 (" ECä  hˆ ‘€¢!r P4D Š†È@Ñl¹;ÕÉÑQuÔz²zd]üs-Ï™àâ¤::–&%×ÑlÃµ³ê²yd>öôz×åÉYu¾öøç­¹¬Î®Éë­=>Ÿ›ØfßMpy~¼ã×,ûò¸:{ÒühÆ¿;{dƒÈõqçº;rÇ½‹ÙjyÑÀ½sºz,yà.8r‰×»6›FnİõúåÍ’­ØvßM°ÛÈùãŒÈm‹=rƒƒ¢‹ŞÉ…{Àá"#ó9Ã¬ôş±ÆÁ LL÷ƒ¶Õ/³Ş¦p°…Ûsr¡DÎ¿®Æş@†=|­ÂÕ¾Şˆ±ùæŒÜ`½ÁMëíßvNª“f?Ÿßïòóî¹õóÂ÷£¿|hZıëÚtßÅûedœh‘ëoÏ0Xúôáxk—9:NûË;>¿Ó,'ñZ„Îäº0ŞÁşßØ–ø èÆnÙútw°¥n3|ˆßè‘şùêë	ì•¿ŞÄkiãä§Ç¯=>˜cüº7‰ÜàñÆx›ZåyÃİO;÷ËI¬ÇíÛ]î»Èxœù÷RwİzõéúkwËœXr?k¯õ€Øè3¹áAİğíA4şÍ¬ßŒè oŞ˜î ÷op=½íÁ¥?¿wğ¹Çü6uÑ†fûÛ'ô_CızÃ×’Áë#ØÔÏ=º}§Ùí¯€Áöuì`ÿú}Ú¼á>îç÷U;îü¶Fïã€x[¦ößÄô©qâ§×ÛÛ_ÍúëéÑ>X¡?8]_ÿpuû5Ø†dÃ/ºêv~»c‡ößÜè X¿¹~`«” \·L?ğÕƒ¸?8Õ31g–øq!ƒ×«ã×Û˜ÚêşñDËˆT·1Ş¾Äò{¬:Oú Äñ¶ûÇ½~[&÷]
@@ -21394,7 +21394,7 @@ kä¤IÒ¦­"çÿS®0rëÜD‚)bİ±!Š#çÿ	‘ƒ+‡±)ˆcR9(Æ¤ r³r§:9:ªZOV¬ÁÅIutí¬ºl
 "·SÔÈõömztï§½gÑ¨ç[o¹õ´n|È4Ğ‰@ÉöøĞÊsº±¬—Èèáoİ`àÕ" mlúƒu½ÕÄdÙíÁ#Ëæ%r;e2r#c ¹÷x¬Ú{6²ÜnşˆÑ@)ã¤7†¦ÆäÕBäö‰Í`q±‹_m0-ˆ\<Ÿûä–ñÈ¹O[Ğ®—Èí=rÁ/®±1 sï•/\äzó‹2âÈÅóÔËDÒ3(7-^Ÿ—È92r2Ğ¦~‹kƒMh§+9 ¦M—Ó®—Èí5rá{06ztïiêÏ>¶"F¥½y¬şåHä970£PÈ k#ÓŸ^ÿ†c07ˆüs”ç»ç¤#§ÿ–Ó®—Èí‚aêıÚ=–]D™¯a$W¸uŞ³ôrÕçËö$Õ_–§KDÎq˜‘ê_2´4ÑLëı¶mŒf¾nà¯è=ß.?ºúñŞóÚ…Èí·_Û÷§1:#JhìôŞ÷ËÒOë¿ïí|Éå®Ÿß3¿¾(Rn^%\ÍòO.‚õºÇˆÜEöcR9(Æ¤ rPŒHAä ‚ÈA06 ‘ƒ"`l@
 "EÀØ€DŠ€±)9n.)ˆhH/Ö½¹t‘“ÛıËmÿ	Ä9ˆ‘NH/¤ëEäÙ`)³jDÄ”Ò‰u'd9 €9 r P4D Š†È@Ñ9 È–O?ıtk‰ d‹-«D ²E‹–U" Ù¢EË*‘€lÑ¢e•È@¶hÑ²Jä  [´hY%r -Z´B¿ÿıï«‡.?rÍ½&µûÀÕPß›6¾G°-Z^	œW›î]xäšà&n” {§óííB§EK7ºeG®½³w}—ğ%İ Dúk<İüôC‹–8¯6ÿ¢#wy~Üî@·s·Ø™ °Zà¶=ñĞ¢euÁ‘‹ÎŞÜYİöŸ À8—çgƒ†æœ EËêr#'_8\;«º¯êÏçø`>ÜÕ“‹X÷ø\´hY]häê Å;¶–/  æ œ÷¸:VÃ]~6®EËê2#—º4uïv'€gìä¢v×Ç-«‹ŒœûÒ»Tíà€9I‡n“-ZV¹ú‡ägoîóÀ|C7×Õ“Õo~ó³ \=]èæüxˆÈ@Ñ9 (" ECä  hˆ ‘€¢!r P4D Š†È@Ñ9 (" ECä  hˆ ‘€¢!r P4¹ışuR °QßÜfwwĞ×"6e‘¿
 påôïŞµİñHägmò§Ñ‰ÀU¡İpwĞ×"6e™‘“39nbp%ÌqÿÕƒ\¼C‰»xÀn¸Š;èk›²ˆÈv"÷]˜•«ºƒ¾±)ËŒÜ
-·Ã¹dØ9Wy}-bS¹ä=Y`F>&jÜõU‘‹w¨»\åÛU€ùH‡n×>rûÚÑ 2<şæ:î8r pµt¡›óÄ‚È@Ñ9 (" ECä  hˆ ‘€¢!r P4D Š†È@Ñ9 (" ECä  hˆ ‘€¢!r P4DNùã}üés€«§¾¹wĞßæÎ\ı¨ÉÍ¥W;—Ù \ı»wqı©ÏàÔ³6îó peh·'äú›@È ²CÜ¶ıp#wq²ÚİÍm`p}"P,ÜA_‘ãr`ïpı}Fnì‹‡æÖ9o“p˜ÿÉVì®»ÜŠ±Brílõv ÀîI‡n‹Ãœ£‰Z ÿ`n†¡›ëÊ‰ÈÀÑ…nÎ†ˆ ‘€¢!r P4D Š†È@Ñ9 (" ECä  hˆ ‘€¢!r P4D Š†È@Ñ9 (" EsÀ‘Ûï_' õÍm¸ƒşÔ‘­ù“è„àêèß½‹;èoH"r·+¸2´Ûrı‰œ»ï·+Ø7sÜ•È©;pl lwĞ'r ÅÂô³ˆ—« sÀôs‰_< ÌD}ÜÅQİõ‘‹w(ÿ„`fÒ¡›ã¸;øÈw4—© ó3<şæ:±8àÈÀÕÒ…nÎ+'" ECä  hˆ ‘€¢!r P4D Š†È@Ñ9 (ªm$r -Z´¬9 È-ZV‰ d‹-«D ²E‹–U" Ù¢EË*‘€lÑ¢e•È@¶hÑ²ºĞÈ¥ÿ:©È_(-ZV9bP6Z´¬9 È-ZV‰ d‹-«‹œöy·#(-ZV9“€lÑ¢e•È@¶hÑ²Jä  [´hY%r -Z´¬.:rú+Oùê ´hY]hä àĞ¢e•È@¶hÑ²Jä  [´hY%r -Z´¬9 È-ZV‰ d‹-«D ²E‹–U" Ù¢EË*‘€lÑ¢e•È@¶hÑ²Jä  [´hY%r -Z´¬9 È-ZV‰ d‹-«D ²E‹–U" Ù¢EËêB#7öG3¹[@)hÑ²ºèÈñçÏÊF‹–U" Ù¢EË*‘€lÑ¢euÑ‘~w\=if€Å£EË*gr -Z´¬9 È-ZV‰ d‹-«D ²E‹–U" Ù¢EËêB# ‡€-«D ²E‹–U" Ù¢EË*‘€lÑ¢e•È@¶hÑ²Jä  [´hY%r -Z´¬9 È-ZV‰ d‹-«D ²E‹–U" Ù¢EË*‘€lÑ¢e•È@¶hÑ²Jä  [´hY%r -Z´¬9 È-ZV¹;§Ü± T´hY]päîT'µÓ;ÍÏ'.vüÕ`€å£EËêb#çÎàâÀ5\'§ÀrĞ¢eu¡‘“³8.KJG‹–ÕeFîÉYu|t²J ”Œ-«åD®ù,®“,-ZV—¹©ËU<"°t´hY]häÆ¿x r e EËêb#—ü'$îR–ËU€Ğ¢euÁ‘«şc`ş@)hÑ²ºøÈ@¹hÑ²Jä  [´hY%r -Z´¬9 È-ZV‰ d‹-«D ²E‹–U" Ù¢EË*‘€lÑ¢e•È@¶hÑ²Jä  [´hY%r -Z´¬9 È-ZV‰ d‹-«D ²E‹–U" Ù¢EË*‘€lÑ¢eu¡‘»¬Î®%ş8&ú ´hY%r -Z´¬9 È-ZV‰ d‹-«‹\|›N"PZ´¬r& Ù¢EË*‘€lÑ¢e•È@¶hÑ²Jä  [´hY%r -Z´¬.4r phÑ²Jä  [´hY%r -Z´¬9 È-ZV‰ d‹-«D ²E‹–U" Ù¢EË*‘€lÑ¢e•È@¶hÑ²Jä  [´hY%r -Z´¬9 È-ZV‰ d‹-«D ²E‹–U" Ù¢EË*‘€lÑ¢eu¡‘«ÿhæñùeó3 ”ˆ-«D ²E‹–U" Ù¢EË*‘€lÑ¢e•È@¶hÑ²Jä  [´hY%r -Z´¬9 È-ZV‰ d‹-«D ²E‹–Õ…F -ZV‰ d‹-«D ²E‹–U" Ù¢EË*‘€lÑ¢e•È@¶hÑ²Jä  [´hY%r -Z´¬9 È-ZV‰ d‹-«D ²E‹–U" Ù¢EË*‘€lÑ¢e•È@¶hÑ²Jä  [´hY%r -Z´¬–¹‹“êèÚYÅŸĞ(-ZV‰ d‹-«D ²E‹–U" Ù¢EË*‘€lÑ¢e•È@¶hÑ²Jä  [´hY]dä.Ï«£Ó;ÍO+ˆ@‘hÑúÆ7¾‘T›™grµ£“ÊgîÎéQ?z PZ´Äu'.3r+\Ø9‹(-ZŞu'.6r P>Z´B§'9 È-ZV‰ d‹-«D ²E‹–U" Ù¢EË*‘€lÑ¢e•È@¶hÑ²Jä  [´hY%r P4D Šf§‘ûê«¯‘»qãFõõ×_7Ï  ØÒiP9iÕV‘ûüóÏ«O>ùÄ-øââ¢úûßÿŞ< `H{¤AÒ"i’´i§‘»¼¼¬>|èJú×¿şÕÍ 07Ò"iÎõë×]ƒ¤E[GNNµÈıío«şò—¿T¯¾újõë_ÿºúå/Yıâ¿¨~şóŸW?ûÙÏªŸşô§ÎŸüä'ˆˆ&}?¤%Òi‹4FZ#Í‘öHƒ´ÈI³6ŠÜ—_~Y={öÌ}uûÑGUO<©>øàƒê½÷Ş«ŞyçêşıûÕ[o½Uİ»w¯úóŸÿ\½ùæ›ˆˆ[)-‘¦H[¤1Òi´G$-’&I›¤Q;‰ÜgŸ}V}üñÇîšXN=zäN¥¬<¨Ş~ûm·A>xˆˆ›è;"M‘¶Hc¤5Òi4HZ$MÚ:rr+_Í~ñÅî[ÉêÏæŞÿ}·r©¬T×+‰ˆ¸a;|Ü¤-Òi?‹ó—ªÒ$i“ÿç#kENCù §‡RPùfC®‹e¥RW9”y÷İw²aˆˆ›è;"M‘¶Hc¤5Òi4HZ´î—B2rá%kx6çC'UığÃİ<~üØmŒ(ÕEDÜDßiŠ´E#­ñÏâÖ¹T’‘‹Ïæäú7œ6Êõ±l€TV®—½²aˆˆÃ†HS¤-ÒiM8iQ|·vä„0tágsaèätÑÇN¾é¥¶ˆˆÛè{"mñq“æ„[ç³8Ïhä|è¤˜²Pé*×Ã²Bù†CVî£'Ênˆ¸‰¾#¾+Òi4Ç_¢J‹ÂËTsä-tşÒUV"%•JUEÙ ¯l"â&†-ñ}‘ÖHsügpáÜTà„ÑÈ¥BÙùè!"îRßæ681…9!|r:»0x¡²Aˆˆ›¨5Å÷Æ÷Ç8!9!\ˆèÏë7q[ã¾„í‰»4Åhä<ñBÅp¥ˆˆsª5h]ÖŠœG["â>µbŠ\ˆ¶rDÄ9Ü†# °ˆ ‘€¢!r P4D Š†È@Ñ9 (" ECä  hˆ ‘€¢!r P4D ŠÆ¹ËêìÚQuttT\4µÜ©NVWgOš‡Ü9M- `÷˜Îä.Ï] Nï44\œè+9 Ø'¶ËÕ'gÕ±;c;Y»uôÃÕñyÏ/İ|B¹aôš³Âkg«%5´ë.o€Ÿ7|> ,æÏä|”ÚĞDáóÓûv—±æÈEóvóG9 °ñà/M›ˆ$/a¦¢69¿üd F°GÎGÆùKÓámü7œŸ>´É  ±AäºğŸ.§"6õs|¹é§ş& `£Èµ—¬İş,ÏŸeÿÙI*r~í`òr `}6‹\¯şe£ÜĞTäâËÚVv˜øâ!ùÏUøâ 6Œ\§Ô¿™ó¡ñÑiæ\ö‚)+_,Ä¡‘€€# °ˆ ‘€¢!r P4D ŠÆ¹gÏU÷ïß¯nß¾]İºuqV¥5ÒiÏ&˜"'+‘>~ü¸zúô©ûqN¥5ÒiülÅ9©©¬,ŞDÄ¹•öHƒ¬˜"'%å¯Bi4ÈŠ)rr}¬­qJƒ¬9D\ŒD‹–È!bÑ9D,Z"‡ˆEKä±h‰"-‘CÄ¢%rˆX´D‹6¿È½òíîæ3Ï¿T=ÒæÑÜğy~øüê9ß®n>{T½ôüê¹ß¹©Î7ôfõíÕºÿá£fİÏW/=Ôæzó;~ƒe(óÅn¼­_ª_­çÛ¯„ËPæ¸ÿ×¸ù¶"êæ¹d¤êFB&ÁpúÊÑç+ºƒ·Çğ`lÖ9Xf0»ŒpzZwğh_Ks€·±§‰“Ûš²[O·î`z¼Şvú¯Ñ-'X× œÛŠht9‘s¢ÑA›z~Ê`~9û„c5ıùŞ\ìñÁXÀm‡Û6c ÜYX°™/'~-SÛšTöY³ıÚ2“ûs†×¨®?Ü·#ÛŠ¸;“w¹	o~§>àä ]?*ªEníËçÍ´År*ïÏŞ·J"7êj]~Y ÆSÕE.¼”[ÿÌi3£³¬}¨¼?İY_0â$r#ö>	B|Éºcµ3¹YC7±/çÈá%rIë³œî¬ªvÖËªÁç^òZçkı¹\Å’%r)ÁiÛI@îıLn¥[ÇÌg¨¡ÑûãÎâæ~xĞ.(ruÜúgVÊÁ¹£Èé—P3_Ş¹È…¯oO¿]°Ş9C¾Ïu!®\à™Ü„;Š"–!‘CÄ¢Í3r›\Êlú<D,Úü"‡ˆ¸C‰"-‘CÄ¢%rˆX´D‹–È!bÑ9D,Z"‡ˆE;{änß¾]=}úT]9"âœJ{¤AVL‘»ÿ~õøñcuçTÚ#²bŠœ¬HJ*+ãŒ÷¡´Fš#í‘Ÿ­˜"'ÈJ¤¦²B¹>FDœSi4g“À	æÈ ,	" ECä  hˆ ‘€¢!r P4D Š†È@Ñ9 (" ECä  hˆ ‘€¢!r P4D Š†È@Ñ9 (" SUÿŞB³ÛÕ    IEND®B`‚‰PNG
+·Ã¹dØ9Wy}-bS¹ä=Y`F>&jÜõU‘‹w¨»\åÛU€ùH‡n×>rûÚÑ 2<şæ:î8r pµt¡›óÄ‚È@Ñ9 (" ECä  hˆ ‘€¢!r P4D Š†È@Ñ9 (" ECä  hˆ ‘€¢!r P4DNùã}üés€«§¾¹wĞßæÎ\ı¨ÉÍ¥W;—Ù \ı»wqı©ÏàÔ³6îó peh·'äú›@È ²CÜ¶ıp#wq²ÚİÍm`p}"P,ÜA_‘ãr`ïpı}Fnì‹‡æÖ9o“p˜ÿÉVì®»ÜŠ±Brílõv ÀîI‡n‹Ãœ£‰Z ÿ`n†¡›ëÊ‰ÈÀÑ…nÎ†ˆ ‘€¢!r P4D Š†È@Ñ9 (" ECä  hˆ ‘€¢!r P4D Š†È@Ñ9 (" EsÀ‘Ûï_' õÍm¸ƒşÔ‘­ù“è„àêèß½‹;èoH"r·+¸2´Ûrı‰œ»ï·+Ø7sÜ•È©;pl lwĞ'r ÅÂô³ˆ—« sÀôs‰_< ÌD}ÜÅQİõ‘‹w(ÿ„`fÒ¡›ã¸;øÈw4—© ó3<şæ:±8àÈÀÕÒ…nÎ+'" ECä  hˆ ‘€¢!r P4D Š†È@Ñ9 (ªm$r -Z´¬9 È-ZV‰ d‹-«D ²E‹–U" Ù¢EË*‘€lÑ¢e•È@¶hÑ²ºĞÈ¥ÿ:©È_(-ZV9bP6Z´¬9 È-ZV‰ d‹-«‹œöy·#(-ZV9“€lÑ¢e•È@¶hÑ²Jä  [´hY%r -Z´¬.:rú+Oùê ´hY]hä àĞ¢e•È@¶hÑ²Jä  [´hY%r -Z´¬9 È-ZV‰ d‹-«D ²E‹–U" Ù¢EË*‘€lÑ¢e•È@¶hÑ²Jä  [´hY%r -Z´¬9 È-ZV‰ d‹-«D ²E‹–U" Ù¢EËêB#7öG3¹[@)hÑ²ºèÈñçÏÊF‹–U" Ù¢EË*‘€lÑ¢euÑ‘~w\=if€Å£EË*gr -Z´¬9 È-ZV‰ d‹-«D ²E‹–U" Ù¢EËêB# ‡€-«D ²E‹–U" Ù¢EË*‘€lÑ¢e•È@¶hÑ²Jä  [´hY%r -Z´¬9 È-ZV‰ d‹-«D ²E‹–U" Ù¢EË*‘€lÑ¢e•È@¶hÑ²Jä  [´hY%r -Z´¬9 È-ZV¹;§Ü± T´hY]päîT'µÓ;ÍÏ'.vüÕ`€å£EËêb#çÎàâÀ5\'§ÀrĞ¢eu¡‘“³8.KJG‹–ÕeFîÉYu|t²J ”Œ-«åD®ù,®“,-ZV—¹©ËU<"°t´hY]häÆ¿x r e EËêb#—ü'$îR–ËU€Ğ¢euÁ‘«şc`ş@)hÑ²ºøÈ@¹hÑ²Jä  [´hY%r -Z´¬9 È-ZV‰ d‹-«D ²E‹–U" Ù¢EË*‘€lÑ¢e•È@¶hÑ²Jä  [´hY%r -Z´¬9 È-ZV‰ d‹-«D ²E‹–U" Ù¢EË*‘€lÑ¢eu¡‘»¬Î®%ş8&ú ´hY%r -Z´¬9 È-ZV‰ d‹-«‹\|›N"PZ´¬r& Ù¢EË*‘€lÑ¢e•È@¶hÑ²Jä  [´hY%r -Z´¬.4r phÑ²Jä  [´hY%r -Z´¬9 È-ZV‰ d‹-«D ²E‹–U" Ù¢EË*‘€lÑ¢e•È@¶hÑ²Jä  [´hY%r -Z´¬9 È-ZV‰ d‹-«D ²E‹–U" Ù¢EË*‘€lÑ¢eu¡‘«ÿhæñùeó3 ”ˆ-«D ²E‹–U" Ù¢EË*‘€lÑ¢e•È@¶hÑ²Jä  [´hY%r -Z´¬9 È-ZV‰ d‹-«D ²E‹–Õ…F -ZV‰ d‹-«D ²E‹–U" Ù¢EË*‘€lÑ¢e•È@¶hÑ²Jä  [´hY%r -Z´¬9 È-ZV‰ d‹-«D ²E‹–U" Ù¢EË*‘€lÑ¢e•È@¶hÑ²Jä  [´hY%r -Z´¬–¹‹“êèÚYÅŸĞ(-ZV‰ d‹-«D ²E‹–U" Ù¢EË*‘€lÑ¢e•È@¶hÑ²Jä  [´hY]dä.Ï«£Ó;ÍO+ˆ@‘hÑúÆ7¾‘T›™grµ£“ÊgîÎéQ?z PZ´Äu'.3r+\Ø9‹(-ZŞu'.6r P>Z´B§'9 È-ZV‰ d‹-«D ²E‹–U" Ù¢EË*‘€lÑ¢e•È@¶hÑ²Jä  [´hY%r P4D Šf§‘ûê«¯‘»qãFõõ×_7Ï  ØÒiP9iÕV‘ûüóÏ«O>ùÄ-øââ¢úûßÿŞ< `H{¤AÒ"i’´i§‘»¼¼¬>|èJú×¿şÕÍ 07Ò"iÎõë×]ƒ¤E[GNNµÈıío«şò—¿T¯¾újõë_ÿºúå/Yıâ¿¨~şóŸW?ûÙÏªŸşô§ÎŸüä'ˆˆ&}?¤%Òi‹4FZ#Í‘öHƒ´ÈI³6ŠÜ—_~Y={öÌ}uûÑGUO<©>øàƒê½÷Ş«ŞyçêşıûÕ[o½Uİ»w¯úóŸÿ\½ùæ›ˆˆ[)-‘¦H[¤1Òi´G$-’&I›¤Q;‰ÜgŸ}V}üñÇîšXN=zäN¥¬<¨Ş~ûm·A>xˆˆ›è;"M‘¶Hc¤5Òi4HZ$MÚ:rr+_Í~ñÅî[ÉêÏæŞÿ}·r©¬T×+‰ˆ¸a;|Ü¤-Òi?‹ó—ªÒ$i“ÿç#kENCù §‡RPùfC®‹e¥RW9”y÷İw²aˆˆ›è;"M‘¶Hc¤5Òi4HZ´î—B2rá%kx6çC'UığÃİ<~üØmŒ(ÕEDÜDßiŠ´E#­ñÏâÖ¹T’‘‹Ïæäú7œ6Êõ±l€TV®—½²aˆˆÃ†HS¤-ÒiM8iQ|·vä„0tágsaèätÑÇN¾é¥¶ˆˆÛè{"mñq“æ„[ç³8Ïhä|è¤˜²Pé*×Ã²Bù†CVî£'Ênˆ¸‰¾#¾+Òi4Ç_¢J‹ÂËTsä-tşÒUV"%•JUEÙ ¯l"â&†-ñ}‘ÖHsügpáÜTà„ÑÈ¥BÙùè!"îRßæ681…9!|r:»0x¡²Aˆˆ›¨5Å÷Æ÷Ç8!9!\ˆèÏë7q[ã¾„í‰»4Åhä<ñBÅp¥ˆˆsª5h]ÖŠœG["â>µbŠ\ˆ¶rDÄ9Ü†# °ˆ ‘€¢!r P4D Š†È@Ñ9 (" ECä  hˆ ‘€¢!r P4D ŠÆ¹ËêìÚQuttT\4µÜ©NVWgOš‡Ü9M- `÷˜Îä.Ï] Nï44\œè+9 Ø'¶ËÕ'gÕ±;c;Y»uôÃÕñyÏ/İ|B¹aôš³Âkg«%5´ë.o€Ÿ7|> ,æÏä|”ÚĞDáóÓûv—±æÈEóvóG9 °ñà/M›ˆ$/a¦¢69¿üd F°GÎGÆùKÓámü7œŸ>´É  ±AäºğŸ.§"6õs|¹é§ş& `£Èµ—¬İş,ÏŸeÿÙI*r~í`òr `}6‹\¯şe£ÜĞTäâËÚVv˜øâ!ùÏUøâ 6Œ\§Ô¿™ó¡ñÑiæ\ö‚)+_,Ä¡‘€€# °ˆ ‘€¢!r P4D ŠÆ¹gÏU÷ïß¯nß¾]İºuqV¥5ÒiÏ&˜"'+‘>~ü¸zúô©ûqN¥5ÒiülÅ9©©¬,ŞDÄ¹•öHƒ¬˜"'%å¯Bi4ÈŠ)rr}¬­qJƒ¬9D\ŒD‹–È!bÑ9D,Z"‡ˆEKä±h‰"-‘CÄ¢%rˆX´D‹6¿È½òíîæ3Ï¿T=ÒæÑÜğy~øüê9ß®n>{T½ôüê¹ß¹©Î7ôfõíÕºÿá£fİÏW/=Ôæzó;~ƒe(óÅn¼­_ª_­çÛ¯„ËPæ¸ÿ×¸ù¶"êæ¹d¤êFB&ÁpúÊÑç+ºƒ·Çğ`lÖ9Xf0»ŒpzZwğh_Ks€·±§‰“Ûš²[O·î`z¼Şvú¯Ñ-'X× œÛŠht9‘s¢ÑA›z~Ê`~9û„c5ıùŞ\ìñÁXÀm‡Û6c ÜYX°™/'~-SÛšTöY³ıÚ2“ûs†×¨®?Ü·#ÛŠ¸;“w¹	o~§>àä ]?*ªEníËçÍ´År*ïÏŞ·J"7êj]~Y ÆSÕE.¼”[ÿÌi3£³¬}¨¼?İY_0â$r#ö>	B|Éºcµ3¹YC7±/çÈá%rIë³œî¬ªvÖËªÁç^òZçkı¹\Å’%r)ÁiÛI@îıLn¥[ÇÌg¨¡ÑûãÎâæ~xĞ.(ruÜúgVÊÁ¹£Èé—P3_Ş¹È…¯oO¿]°Ş9C¾Ïu!®\à™Ü„;Š"–!‘CÄ¢Í3r›\Êlú<D,Úü"‡ˆ¸C‰"-‘CÄ¢%rˆX´D‹–È!bÑ9D,Z"‡ˆE;{änß¾]=}úT]9"âœJ{¤AVL‘»ÿ~õøñcuçTÚ#²bŠœ¬HJ*+ãŒ÷¡´Fš#í‘Ÿ­˜"'ÈJ¤¦²B¹>FDœSi4g“À	æÈ ,	" ECä  hˆ ‘€¢!r P4D Š†È@Ñ9 (" ECä  hˆ ‘€¢!r P4D Š†È@Ñ9 (" SUÿŞB³ÛÕ    IEND®B`‚‰PNG
 
    IHDR  „  "   ¡”á   sRGB ®Îé   gAMA  ±üa   	pHYs  Ã  ÃÇo¨d  /KIDATx^íİï¯e×]ßñş1mŸöÁ<â¥*¢OZUPÚ†´¡"Ä‹B‰Š@4'Á¤ª‰š¢*© ŠÆm)¤4šƒ3øGì8™ØcãØîÄ±ÆÁÎîYûÇ9k­½ösî>sî½ûõ–Şš¹ûç:k¯½î÷s÷¹÷üµ
     °JB    X)!    ¬    VŠ@    +E    €•"   ÀJ   `¥„    °RB    X)!    ¬    VŠ@    +E    €•"   ÀJ   `¥„    °RB    X)!    ¬    VŠ@    +E    €•"   ÀJ   `¥„    °RB    X)!    ¬    VŠ@    +eÑ@øİï¸¾ˆÀ©ø£?şdõÖ_x{õ¦yu/Ã>a_àô|«zö¡Ç«÷øÑêÚC/´Ë†è¶}¬úßO½Ô.NÃ›ÿÍ‹œ¾ğÒ7«ÿô…ç«ŸşÌÓÕ?ÿø—«üØÍúßğuXÖçh	îg~şmÕç¿ğD»d>aŸ°¯PˆÓòzõìG¬¾7šOâcC¡ğõê‘ÿö@2÷şìŸ|­]Üy–s!Î!ğİõ©[Õ¿õµêéW^«^ÿö·ëåáßğuXÖ‡í€S#-á)ß!a°#ìœgª÷üZ6§¾÷ñêÙvmõÊKÕËß|½ıâVõîweÛ¾ï‰êÅv-p§qYø•?¶úÇŸß†À!Âú°]Ø8%2¾pÿ]Õ•+W"ï©n´ënT÷l–ßó`ûåQ¸ç˜Áƒ÷Ô}pòv\Â[?'yî÷ªŸûg?SİóñgÚ)³Ñxßuú§ão¹VM½áï,Ü‰sLóBuí-›>8y;.›ş|o6§nBŞ³O=QıÒ¯ï–}ï{®>ıü_ôÃão~©z¹=ÒæàsğbÄaîş/İ?Û?ıË?m÷šÍÁ;ÌÁKø…—óì7¾U¿Eô‹ŸÿÕ.mÛïó¤Ğa^„ÛI<›¸šã®êÚsí7`N˜»ùÛoj'ßŸ«>úõvaÄÔ1ºI<½^í¸~÷n:WŒàP^¾ñpõ¦îÉß»>[½ÿúãÕÏæOƒÿşáê×ãm¬®}¥{z8„9¸‡9x1ò@¾ã>Ğœc^’øÂÛ@ã'ƒ<ÿjõSŸyºşıÁØ_øÜ3Õ¿ŞüaØ>ì7ı;…æàæàE8] üÀ_TŸûÆf§o¾Z]ûpºnˆï´ÒunìÏt l¿qnú;xwŒã¹kÕ]C×*[§Á!<û'WïùÄ3Õ‹_¹zùk/U/¿ò­ê©ßKO0¶şÁWÚm¿şÕêsy¸úàç‡Ÿšƒ˜ƒ#sG	„æàæà%	OùÂïv„0˜ÁØùã'«§^~­Ş6ì7õ”Ğ\À¼§	„]ìøÆKÕ{¢õeöxí¶÷7|SÀ—öü`şÈ½°£cìŞV’·§ùz((”ÛÔl›œ£w£O´Ñ°Sğ™Íuúî:|ßª›íò˜±cìóÍ¿ÛöZ˜à»s–öm¯gş¶§İ¸ìÜŸ¼=Ûqı”<¦Ø¦zÛô½±8ÚFÅÈ’ô~'ğ¾[ÕçîË–EşĞGì¿Å4şÃ„|Î£4ß•ö5cGæó9oŒâ|WÚ×Œˆğ×CÃŒé(=Ìí~0ìö&ŸóÆ(Íw…}Û„lÇGaìmÇeëÁsp}®ÍºûãñØÜu˜í–õÚ`¾Üù@˜‡Á¯½øÕêg£mŠt©ø>§”Ñ ©L¼³M<16ƒ>›¬ã}’Ÿ Æ7B{¾I¼¡ß¦îÈo®á¯ûmt#,ÇX˜{mÓÏß__¿Æïùñ_©î}Ï½Õ½ÿùZuıË»÷£¾Ş£cdG7ï®};!Fû÷ÆÂÀø‰÷‰‚Xïÿâşêµiû$¿g†¿î·Q1²$?Í£µ›p÷‰Ñ'„OöğWŸk—`®éisğbÄaîĞÈÛh^’ğ‘İÛEÃï–`Éo¾şíz¿°ÿ KÏÁ½9yhŒ/4wãu;ÖÚóm±!9~ ¯…1m^„ãÂ?[=Bß+/Uïy_Th¼ïV!¾PıR¼ÍÆ"õ ‰'µ1ú(¸Â êM€Íàlö‹ÿ_¢;ŞŒ› ¦Ğ¦zÇ¯);çd7¸£	s¯UÏ<x½ºşéÆÇ^øzõÌÇï­~ø;›I«ì÷Wøb|Œ2¡O)ıoâí²l"í]÷xLõÆWJw¼ù„?@¿M…{$9çŒ6¶ÛôÇ9¡ßñÙêƒ>1ú;„?_>‡ÇSŠ9û‡¹cÂáñ”bÆ!„p×~0~CŞ~­ùıíğÿAƒ‹÷C}n,ÆWÂsp/ìµc:{ië±j¾#!f¡/¼4¾™a0X$¤Sdª&]ÖL¬¡˜ïÛ²Ò1bÚ ÙgŒÂñzß,ÒA>İÆn„ÅhÂ\~]¯%_—ıêŞ?QfïŸNg“`º,mgj3¦JÇˆIÇ×ô7™şñ
@@ -21436,14 +21436,14 @@ xû:ˆ9¸¥°Müºp0ı1™ÜÍ1†0·¶1/ÃYÂ`ğoşÓ_îÕsa2œ¿ÌÀX`rü|?¨YòFæån}ıoáX9õvÉ8Í¾§l
 „ÁY0{*]ìïdY¶?I’<“áI	„›å[ãß«)ôÙ²|ÿŞ1.¾£0zİI?M˜m1í¼\çX Œ_wÚOóa¼ÿÆËrJãg»<zİÉ½63ÆûWq¿6cq÷ºã'Ô'ï×|ÿÂ1H’älÂ“8»â©WÍ„—­Ï„m1İÛf²Àô„°)¦ûã²ÔßÉ2O›~èm33Æòe²|¿6c±é‡Â¸,õw²,ŞŸ$IUğ$Î„…B©Z²Âhµf»|ût%ëßRhÉúJ l¾îõoaL%}-¶}“÷o)´¤}½Şûµ0oÅı;y¿–ú–$Iª@xçÂöë¨0*ëqá”ï	-˜YHé¾Şn—÷w?	„ñ×Q_ÕÅùÔúBXºLæ÷Y¼|ä~¬ß†<8&ÛíWy¿æ.›S÷k¾?I’<‹áIÌÖ^Ø>qQY™›}‡÷&^¿ñ’œsa×ÇÛ"².Q¿$ÛæıÚx¹b^Tw†~JÇQİ—ù†ú%ï×ÚK³ —,½_Û¯‡úeµ÷k!ĞÕ}ÃÑû5ï×F‘$ÉÃI’$Ir¥
 „$I’$¹RB’$I’\©!I’$I®T$I’$Wª@H’$I’+U $I’$É•*’$I’äJI’$Ir¥
 „$I’$¹RB’$I’\©!I’$I®T$I’$Wê¹„7nÜ¨nß¾]l<I’$Iò0CÎ
-yki„·nİªnŞ¼Y|$I’$ÉÃ9+ä­¥Y4¾ñÆÕ£>Z7Ö“B’$I’<›!W…|rVÈ[K³h „F†äg†÷¸’$I’$3äª¯‹B    ÀÅ@    €•"   ÀJ   `¥„    °RB    X)!    ¬    VŠ@    +E    €•"   ÀJ   `¥„    °RB    X)!    ¬    VŠ@    +E    €•"   ÀJ   `¥„    °RB    X)!    ¬    VŠ@    +E    €•"   ÀJ   `¥„    °JªêÿûÔñCÇõo    IEND®B`‚‰PNG
+yki„·nİªnŞ¼Y|$I’$ÉÃ9+ä­¥Y4¾ñÆÕ£>Z7Ö“B’$I’<›!W…|rVÈ[K³h „F†äg†÷¸’$I’$3äª¯‹B    ÀÅ@    €•"   ÀJ   `¥„    °RB    X)!    ¬    VŠ@    +E    €•"   ÀJ   `¥„    °RB    X)!    ¬    VŠ@    +E    €•"   ÀJ   `¥„    °RB    X)!    ¬    VŠ@    +E    €•"   ÀJ   `¥„    °JªêÿûÔñCÇõo    IEND®B`‚‰PNG
 
    IHDR  ã   W   7[-ï   sRGB ®Îé   gAMA  ±üa   	pHYs  Ã  ÃÇo¨d  ÁIDATx^íÜMnÛ:†á»'/Ç‹ñ::ó<[ÈÄóÂMdT$È$@Ši´MÚ¤áÕ‘Ié¢~,¹¢ä¼p€X")J¾ĞgÊîıÏ  €¤c  #Œ HŒ0  1Â €Äc  #Œ HŒ0  1Â €Äc  kãY-f­¥YßØfmV³ÚØHàÆ¬—òŞ­²w 0%£„±±ô#ŒS"Œ`ªÚÃx¹ÎnãuÔ~³²A­oøn¿*•È7ë¥·Ïk×wiV+×.ü	;¥jGï‹Q9÷.s±nÖf©¿æóÎx×RJ«i.nŸ+}luŞ«ó+¹dMm  C(Œ#•'Ld¿M·Z«ÊHßÈ\\°¹@Û[†WİqÊ*¤ì–ê¹w›KÑ/,Õ¶ı¼ÛÆ¨›Kd{^î¼êögUù4àÆ 0†~©#ÁP„‰[ÕE¨Ì?»2SmÊ±"áQ7VŞ&£Xê•¥;¯p5Ù1Œ»ÌÅ;/¥Óy‡Â@¬™Kq®å8şu/ûïUÛ| £8PGÂNİà+a\y«+I=vŒm—ÏÛÈ'P5íÓ%ŒÛæ»fjÜNçí„c…a´·cûàµX¿ê{ ßá¾3¶[bışmg-ópÍÚmv+½Ê*}´0Î+T]¶_—óö—êÆõ+÷nï `|iÂ¸ÓãÑ¾¨ÚÛõv~Å6wœr~Å¬ú„qÀ;÷çí]y”ÜÆ•váXİŞ+ Àøú=¦Îªûª²¤¼lâyÛtõ
 @×V÷ß©=NñÉà€sñ>è*¯Oë±jWÏ-a\l+ì·O»ÿt À¡Æ^H©í•`òB¡c ZÅX*db¥k«ú½ª®«Mx{Ì¥ÈÕ>Íçíï—¹Æ«Ççâ­ÛÆ 0Ua</~` 0GÆ±U  ó0û0Ö Y æèhS 0W„1  ‰Æ  $F a @b„1  ‰Æ  $Ö)Œ___Ííí­¹¼¼4ÛíÖ|üø‘¢(Š¢ªÎÏÏÍÕÕ•ùıû·M¿ñ´†ñÃÃƒ¹¸¸0Ÿ?6_¾|É_?>>REQ3«ïß¿ç¡3%SšÏŸ?Ìİİ9;;=ÃX‚÷Ó§OyÿøñÃ<==™ççç|’EQÔ|Jîİ?ş$Œ;@–ò˜jÃXMËŠX‚ø×¯_ù'Ùö÷ï_Š¢(jf%÷o	dÂ¸ä<²SmËwÄòhZ‚øåå%3ßŞŞì^ ÀœÈ=\VÈ„q7cÏ«6ŒåÇZ_¿~Í?!È› ˜/Âx?“	cùÕ´|¿ 6XÀ¼Æû™LËDäûVÅ 0„ñ~&ÆòÆÆ 0„ñ~c ÀÁÆû!Œ '÷rùA.aÜa 8¸ãã³^.Ìb¡j¹Î¶7ë0¾ß˜>ÔÖéµ´º6§Åß1²ÿÄlïíËÎúö;´±æÑvÛ´Ìóú4{ÏN³V ÁÑ…ñfå‡pP«m×Ó¬ÃØs¿5'Ñ›ıĞ™:ÂÀôc~AÊmVÃÂ¯×|nÖfé‚·f>‹ÅÒ¬,‘ßOoe¿[5ëv~Hø«í¦ëÛ/“ÏÕµİUëÊıZ÷Ñ¡„\ÛØzÿÉÖøÓ¼7ÛÕ×ÛßvE[İ~7^1Î6ã¦±dŸëcû{ó Ú 0Öá§°>©~á×g>Åqk>´íïâİ„±¾Ñ_Ÿê›»
 ‰puÖ¸ZÒÏÈ|>-íõş]ğ»×j¶mıØzÿ.ìNŠ¾¶Çñ®SÓu´á©^{+Ç
-Çn›‹=VñÀÔ]ûÁ©Á·ÿ|Ü÷Äáï><øşøİ„±·:ôÂR…Dcˆ†úö‹Ø3¼ımj1zì¦ãD÷íB¯<NÃuÌ¯Ø¿f±cµÎSÏ¥Ö ¦eh‹Ú@uº1«ü¸«ì¯:]Ú4#Œóı®Ÿ]qeí¥¼>}û9»y¹>ÕğqôqF±ıñ±ıÕ¥ÏÌîWyœ†ë(WÆÏ3:æísÙÛí:Háa,*< ˆÅşóae¼Ÿƒ„qi÷xW*6¦ÒO‹lŠ­ØqêÂ¸yìÖ0n|ì»{´0nœaLİñ¬ŒÕ<jÛ¶¿ÂX…D•“PÏ~±ĞòæŠÌßÛ¦æÑ6vÓqç "óĞ}T˜–æ¶í:ÏaLİĞ0®bW=ƒ¯×|ø5õÆaÔ)zö‹¶í²’.ûÔş0ªulÿZä+ĞâÂìÎó|¼xßœw<Û_5hûWÙ6<Ç¶¹ÆÀÔ
+Çn›‹=VñÀÔ]ûÁ©Á·ÿ|Ü÷Äáï><øşøİ„±·:ôÂR…Dcˆ†úö‹Ø3¼ımj1zì¦ãD÷íB¯<NÃuÌ¯Ø¿f±cµÎSÏ¥Ö ¦eh‹Ú@uº1«ü¸«ì¯:]Ú4#Œóı®Ÿ]qeí¥¼>}û9»y¹>ÕğqôqF±ıñ±ıÕ¥ÏÌîWyœ†ë(WÆÏ3:æísÙÛí:Háa,*< ˆÅşóae¼Ÿƒ„qi÷xW*6¦ÒO‹lŠ­ØqêÂ¸yìÖ0n|ì»{´0nœaLİñ¬ŒÕ<jÛ¶¿ÂX…D•“PÏ~±ĞòæŠÌßÛ¦æÑ6vÓqç "óĞ}T˜–æ¶í:ÏaLİĞ0®bW=ƒ¯×|ø5õÆaÔ)zö‹¶í²’.ûÔş0ªulÿZä+ĞâÂìÎó|¼xßœw<Û_5hûWÙ6<Ç¶¹ÆÀÔ
 ã‰ıš:×òïŒwÅwÆÙıù a,¯ŠÇÌ»ª¿á÷í¶•yDæX°ûNeÎ¶·úmšGdì" İ~Í†`±__ÏÈÃğû7ÌÓo›moû§M‘¾M×@ZCWÆEøÕ¬Dû>zuÿ.½½_ O­HÀÄãäßÍGrrÆ“G˜Ÿ÷ÆÂ2a|Œc óó>Ã¸?Â pp„ñ~c ÀÁÉ½\îé„q7“	ãívkc 8„ñ~&Æ———æÛ·o„1 Âx?“	ãÛÛ[suue^__ÍÛÛ›İ
- ˜#Âx?“	c	á‹‹sÏê f0îN~èv~~n_£6ŒÅÃÃƒ9;;+W³B€y"Œ»»»»ËŸ©1Œ…²¬¯¯¯Íãã£yyyÉßTÎEQÔôKv>??ÆdE,A,‹Pùà2¦Ö0ò&ÊwÈò£.ù•µ\<Š¢(Š:¦’GÓ²";ˆE§0  ÿa @b„1  ‰Æ  $F a @b„1  ‰Æ  $F a @b„1  ‰Æ  $F a @b„1  ‰Æ  $F a @b„1  ‰Æ  $F a @b„1  Ió?EçÄ*Ó­ïR    IEND®B`‚‰PNG
+ ˜#Âx?“	c	á‹‹sÏê f0îN~èv~~n_£6ŒÅÃÃƒ9;;+W³B€y"Œ»»»»ËŸ©1Œ…²¬¯¯¯Íãã£yyyÉßTÎEQÔôKv>??ÆdE,A,‹Pùà2¦Ö0ò&ÊwÈò£.ù•µ\<Š¢(Š:¦’GÓ²";ˆE§0  ÿa @b„1  ‰Æ  $F a @b„1  ‰Æ  $F a @b„1  ‰Æ  $F a @b„1  ‰Æ  $F a @b„1  ‰Æ  $F a @b„1  Ió?EçÄ*Ó­ïR    IEND®B`‚‰PNG
 
    IHDR  I     ­-˜D    IDATx^ìœ$EõÇëno÷"—‹dÉ ÉQ$ˆ  €A@Àğ7gQ’€AA%ˆ ÁÉ .ßq9ìŞŞı÷×ZcooÏôLO÷lM×·üÜGî¦»ú½ï«©_¿ª×}®¸âŠ•†@ €   @ >ˆ$F  @ €   ÿ@$1  @ €   „ ’€   @ € IŒ@ €   @ ñÈ$12  @ €   Ib@ €   @  “Ä€   @ €  H€åv‰ˆ8 €   @ ğ‰ "É§hã+  @ €  H ‘”ˆˆ  @ €   Ÿ ’|Š6¾B €   @ ‰I‰ˆ8 €   @ ğ‰ "É§hã+  @ €  H ‘”ˆˆ  @ €   Ÿ ’|Š6¾B €   @ ‰I‰ˆ8 €   @ ğ‰ "É§hã+  @ €  H ‘”ˆˆ  @ €   Ÿ ’|Š6¾B €   @ ‰I‰ˆ8 €   @ ğ‰@æ"©½½İ<şøãfÊ”)fîÜ¹æİwß5}úô1C†1#FŒ0n¸¡Yo½õLÿşı}âœ»¯—\r‰™?~pñşìg?kœxİsÎ9Çtvvš÷½ï}f=öH<ü%ğğÃ›ûî»/ pöÙg›ÖÖVaà9  @ …&©HzôÑGÍC=d–,YRÚÀÍ?øÁ@,ùÖşıï›+V˜‘#GšÑ£GgâşÛo¿m®»îºn}íµ×^f›m¶Iìß‘´lÙ2óÆoöNš4É4(Ñvh,DRcys5@ € z@f"Ié{î)y²ÖZk™‰'šaÃ†e—æÍ›g^{í53sæÌÒ1J›m¶YïyßWşÑ~d:::ÌöÛoovÛm·L,¸óÎ;Í?ÿùÏn}‰ıÑGØ¿+"iÚ´iæg?ûY`ïÇ?şq³öÚk'ÚÎ%€Hj,o®@ €@ïÈD$)“ñ‹_üÂ¬\¹2È h’;nÜ¸X¯^zé%sÛm·™åË—›~ıú™OúÓføğá½G ÁWÎZ$)+õãÿ8ÈŞiI£Dé;ï¼xuòÉ''²E$5x 4ñåIM<L‡   @ &™ˆ¤ßıîwæÙgŸ.|ÄG˜5ÖX£¢O?ı´¹ıöÛƒc¶Şzk³÷Ş{×dt3œµHÒò½›o¾9@²İvÛ™¡C‡š?ÿùÏÁßwİuW³Ã;TÄ…HjæÑÔXÛIåÍÕ  @ è=™ˆ¤+®¸ÂÌ=;ØÈ}ÖYg…*5e?$T0`Ì˜1æøãï=¾rÖ"IY¹ç{.ğBµßë¢‹.
 ş^ÛŞIK—.2‰ú£Ær»Qû´Ä§¥¥%·Qª¥°ºo“îY€HÊ-t@ €€c2I—]vYPÅN“9U½êÛ·o¢›šp-\¸0˜Ôï¸ãÁñ¿ùÍoŒ–ã©qÆÁgá&quî¹çKõÔ>üá›õ×_¿Çµ~õ«_ûŸÔN;í´UŞ^yåó¯ıËh™àâÅ‹ƒÏUHaÓM75o¼q¢ı²ãÉ'Ÿ4Ï?ÿ|°ÇJ“Y-s[uÕUÍV[mÕ#“¶hÑ¢`I\¹vê©§šUVY%‘Yô Mp/¼ğÂ€‡®}ÜqÇ‡üò—¿4o¾ùfğßNKåZ5"IKù&Ol”µRœµ¬R•
@@ -21503,7 +21503,7 @@ B@å³çvU‡k_±¤¬GZ†§÷è;(÷*È°tÅâàıNáeu²/,”ôß#ûë5Wğãr%€HÊ/×H ‘T#0ÏŸ ")Æ\
 @ pš "Ééğxg"É»»ï0"Éıa!  @ kˆ¤¬‰Ò_=IõĞãÜ\ ’rÁJ§€   §	 ’œwÆ!’¼¹û#’ÜB € ²&€HÊš(ıÕC ‘T=ÎÍ… ")¬t
 @ pš "Ééğxg"É»»ï0"Éıaa}fÌ˜aî¾ûn3eÊ3sæL£¿·µµ™1cÆÆovØa3iÒ¤ú.ÄÙÎ8ÿüóÍ‚Jöm±ÅæCúP{«=ÎYG15@$Õ ‹Cs'€HÊ1¨• "©Vbß,Ş}÷]sóÍ7›xÀ¬X±"Ñìí¶ÛÎ|ò“Ÿ4«¬²Jâ±Ğ\N9å3gÎœ’Ñ»í¶›9şøã{8QíqÍå=ÖB  "‰‘áD’KÑÀ–€ "‰PDsçÎ5_ÿú×ƒÌQ-MÙ¤¯}íkfÈ!µœÆ±¨VüT{œãîbª"€Hª
 5ˆ "©A ¹LõIÕ³âÈæ!pÑE™Gy¤›Á­­­fİu×5#FŒ0‹-2Ó§O7S§NíáÔ®»îÊÃƒæ	uU–V+~ª=®ª‹r'€Hr<@™‡Hò,àÍà."©¢„µ˜7o9ùä“ÍÊ•+K§mµÕVğ‰.¥{ñÅÍO~ò3kÖ¬Ò±}ûö5W\q…<xp-—åX‡	T+~ª=ÎaW1U@$UŠ@ ‘Ô È\¢6ˆ¤Úxq´ûüqsŞyç•íÓ§¹êª«ÌÀcë­·Ì¾ğ…nŸ}îsŸ3[o½µûÎbaUª?ÕWÕE9@$9 ÏÌC$yğfp‘ÔQÂÆZÜÿıA&È6‰#‰$‰¥rí?øA·ı‡rˆQ!5}8òÈ#»úıïß¬±Æ=ºûŞ÷¾gyæ™Ò¿üã­¢¦^yåó·¿ıÍ<ûì³FE&Ô&L˜TÛSa7Ü°¢ÛÊ”M<Ù<úè£æå—_6Ê 4(ècµÕV3ûí·ŸYuÕU+öÑÑÑaîºë.#a©¥‡K–,1£GlØyçÍ6ÛlS‘›:ÿ÷¿ÿmşò—¿ÕU9P}êºª¸å–[ı´´´”µC~È‡‡z(8?\}pìØ±f—]v1›nºi-C Ç±Ÿıìg»e÷Øcsì±Ç¦>®.c8@$9Ì ’Î@$9ª“€DÇw¿ûİn½qÄh¨$”Ê]6k‘´|ùrsõÕW‰¹JMå¸ã‹­¶§Jm\pA ´Êµ~ıú>ìc‹õûÍ7ß4—\r‰yûí·Ëö!ÁuÖYg™qãÆõ8¦½½İhï×?ÿùÏŠ~Œ9ÒœpÂ	±BGÂL~T²A¯³Î:æ´ÓN\šöÍo~Óhi¥mbràöèªÚãÒØÀ9p "Éµˆøm"Éïø;é="ÉÉ°`T”QÑ²©ÎÎÎn½hÂ¿í¶ÛšõÖ[Ï¬½öÚfèĞ¡U]%k‘$a¢¬I5m³Í63Ÿÿüç»‰ejÎ>ûì ãRM‹Ëf)óôíoÛH°%5íãúò—¿lV_}õn‡Öâ‡²y áwQ)kõÕ¯~5È@UÓtıo|ãfÀ€ÕŞí˜Ë.»,(o›2K6S>°Úãj6€ à D’ƒAñØ$D’ÇÁwÕuD’«‘Á®züö·¿5¿ùÍo*v1|øğ`â/Á¤å\OqËÂ²I/¼ğ‚ùÖ·¾ÕÍ®5×\Ól¾ùæAÙq}şØcuûüè£6ûì³Oéßâ|ÓËQ×_ı X…–®½şúë¥ã•=Ó2@»<PÇ|å+_1¯½öZé-íÓ´aÃ†Y;î¸ÃÌ=»ô¹ITÙLœÎ•p
-·÷½ï}UÊİ{ï½F¥Øm“àïıúÃş`®¿şúÒçıû÷7;í´S]çÕW_5ıë_ƒå{¶vØaæ€¨yhh,ˆ›mÊ4®µÖZ=ú©ö¸šà8H ‘ä`P<6	‘äqğ]u‘äjd°«Ê"iR¬É~x’]©Oe;$F>ø`£rá¶e)’¾ô¥/™7Şx£Ô·ªî~úéİÄÙ7ÜØmÛl¼»IM{—Î8ã£¥n¶~øáfÿı÷/ı]¾Kˆ)[d›öXzè¡Á_£{¶T]šğRD‰e°.\XêCÙ¹vØ!ø»ö ıüç?/}&‘)ßÂMBéÌ3Ï,ı“ø^yå•FÕÕ~üã‚Î¶¸%p÷ÜsO°4Ñ6‰IÙUkSIY"ÛdG\õÂj«õú	 ’\ŒŠ¿6!’ü½³#’œ†e@@KÒ|ğÁ ˜‚DCt	^Ü%&Nœˆ[/+‘¤eeÚßnq ,X”0·¶*»¥ÂÊ´DEƒ²6—^ziX´ÂŸ²dBjßùÎwÌsÏ=W2ãÔSO5Ûo¿}×\sùóŸÿ\úw	$	%µ[n¹%øc›lûèG?j$úÂÅ"şùnÌ•i²T™)}n›ö=IÈIpÙRíK—.
+·÷½ï}UÊİ{ï½F¥Øm“àïıúÃş`®¿şúÒçıû÷7;í´S]çÕW_5ıë_ƒå{¶vØaæ€¨yhh,ˆ›mÊ4®µÖZ=ú©ö¸šà8H ‘ä`P<6	‘äqğ]u‘äjd°«Ê"iR¬É~x’]©Oe;$F>ø`£rá¶e)’¾ô¥/™7Şx£Ô·ªî~úéİÄÙ7ÜØmÛl¼»IM{—Î8ã£¥n¶~øáfÿı÷/ı]¾Kˆ)[d›öXzè¡Á_£{¶T]šğRD‰e°.\XêCÙ¹vØ!ø»ö ıüç?/}&‘)ßÂMBéÌ3Ï,ı“ø^yå•FÕÕ~üã‚Î¶¸%p÷ÜsO°4Ñ6‰IÙUkSIY"ÛdG\õÂj«õú	 ’\ŒŠ¿6!’ü½³#’œ†e@@KÒ|ğÁ ˜‚DCt	^Ü%&Nœˆ[/+‘¤eeÚßnq ,X”0·¶*»¥ÂÊ´DEƒ²6—^ziX´ÂŸ²dBjßùÎwÌsÏ=W2ãÔSO5Ûo¿}×\sùóŸÿ\úw	$	%µ[n¹%øc›lûèG?j$úÂÅ"şùnÌ•i²T™)}n›ö=IÈIpÙRíK—.
 CØÖÖÖdüjmÚ¤å~jGIq­Úãj½>ÇCÀEˆ$£â¯Mˆ$cï¬çˆ$gCƒaX¶l™Q±ıQ6ç¥—^2*ÿ~Ÿ’½ä{îi>õ©OÍJ$I¬IĞØ¦å~á¿‡İÕ5ÃÍf_4©Ñ4ÛÂÂ%Š«\ÇsL·L”*áIäD›²Iá÷G©â-­şôÓO	¼¸¦â
 o¼qğg£62*Ü×nºé&ó»ßı.ö3-´}(“V®|{µCD….¬ÀÓr>	Å¸VíqÕ^—ã à2D’ËÑñÏ6D’1wŞcD’ó!ÂÀ	(k£¥c·Şzk·Œ‡²Ê¤h	ZV"éü£ùå/YòFÛ”M©¥{î¹İªÉiöéTÛ”™±â¯ÚsìqÊî„K«kœ2[IMÅTÒ|ï½÷î–ñRáíÒŞ£JM1ØÒRÈ´ï®’ÖŞ.ªPÖLÙ³¸VíqI>ó9š "©¢äˆ$bİ4"’š&TZ%hE“ì¤ÒßzWĞµ×^Ûí
 ^xa°t,+‘¤}FÚod[x	\•®™şğ‡æÉ'Ÿ,~ĞAËÜªm‹-2Ç|µ‡w;NËş~ñ‹_tû7eã”!{â‰'ºzˆ»€„Š=„c!¶ÿøÇ?‚½IÊN-^¼¸¢má½Uµ:¡¥Zò˜Ä¬Úãj½>ÇCÀ5ˆ$×"â·=ˆ$¿ãï¤÷ˆ$'Ã‚QuĞ‹aÿõ¯•zxï{ßk¾øÅ/Vì1n¿*Â©ò\œH²ŸE;­ô2ÙhÁ„Q£F™‹/¾¸&O£%ªUî¤“NªºeJ:ê¨nY3e§T½ŞöÎ;ïÜŸzê©`¯Q\ÁŒpñ‡èõÄYûlÊ0E—BjÙ¡ŞÍTn	_%”Ô¾4æ¨”‘ªö¸zyq>z› "©·#ÀõÃIŒç ’œ	ÕI@KÚ´´Í6-“3fLÙyä‘`ònZZ¦%fš¨yä‘İ&ìzO‘ÊnG›*Õ…ß_~G‘öAE+ÀIĞEß?¤%€zqª-Ü —Âjï’öıéOê–ÍÑ¾&Ù­cÂM/xUõ8Û”µ²%»õÿáòßå|‘ßq"EvMŸ>½Ûõ¢"KiòäÉA<e¯lûà?hôb_-µS¥>Ûä›Dc¸‰ƒ–óİ|óÍİ–WË¦    IDATş½œ½uN‡€wIŞ…Üi‡IN‡ÇOãI~Æ½È^+[ğõ¯½›‹ªœvÂ	'ïñ‰6U¾SFG“rÛ¢›û%ZfÎœYú\¥¨UŞÚ¾WIÂAÕŞn»í¶nİ‡E’‡Êw‡E”*¹iyW¸ä¸Ş¤wÙÎ„M›6-x‘l¸JŸ2#ùÈGJÇÇ• ÛñûßÿŞÜxã¥ãU AeµÃ6¨Ä¸
@@ -21527,7 +21527,7 @@ A`‹ï=_?âœxâÿ6,¬o8f$€HjÆ¨×fDRqcÛ´!’š6t^@ˆ¤— à(D’£ñÔ,D’§wÙmD’ËÑÁ6ß ’
 o½àÔò±7O–‡;<ø¥»3ÿ˜ìÙË'Êb7µl¢\}Ûr×àÿƒ4üïXÿ˜ìğî¦ÿŞÒÛoúãÿü;K£§$*çub”¤WSGP’Fsóª@%)×h³h³$ßzå‹&ÊåëN+¯|é¢²rPö>ştùİCO–›ïŞWöìúèvÇ*Iç½ø…å{Wœ[¾úË}ƒçÿ6ËKÿ¸’4gB´* $µÊiØ”¤9zyûJRû¦&U í’4ê¯S’"TÍ$0º€’4ºW¶/ $µojâ”¤9z9”¤1"@à„J’HŸ”¤>¥a—%É@”¤şdaµ(Iµ'œë>%)W^c±­’41;2‰€’”$(k¨@@Iª ÄŠNP’*
 ³–S”¤Z’tGJR)º@%)GNã²¥’4.I'ºSIJ–U«P’ªØz# $õ&
 ‹”$ƒŞ	(I½‹ÄBc, $qøN'Ğ±€’Ô1¸·;¡€’äÒ;%©w‘XhŒ”¤1ßé:P’:÷vJ’Ï@.%)W^¶­[@Iª;_×è“€’Ô§4ìâ›$ŸŞ	(I½‹ÄBc, $qøN'Ğ±€’Ô1¸·óM’Ï@.%)W^¶­[@Iª;_×è“€’Ô§4ìâ›$ŸŞ	(I½‹ÄBc, $qøN'Ğ±€’Ô1¸·óM’Ï@.%)W^¶­[@Iª;_×è“€’Ô§4ìâ›$ŸŞ	(I½‹ÄBc, $qøN'Ğ±€’Ô1¸·óM’Ï@.%)W^¶­[àõ_¼¿üãĞ3Õ¹üäùeëUçWw—ƒdP’2§Wßî¾Iª/Óô)Ié#t@E×Ü1]¶üşñŠ.zö”œZ>½ñeÕİå ™”¤ÌéÕ·»’T_¦é/R’ÒGè€Šö<R.ûæîòÈ#Õ\uÆ)ÊŞ·ª,]8¯š›B %©†ë¹AIª'Ëj.Q’ª‰Ò!•‹Òu?Ş[~;ıdyôÉ¼z·lÑürÁÔ¢rí†Érú’•¤ãõ(IõdYÃ%JR)Vvƒ’TY Î!@€ ”¤HéL@IêŒÚ5P’šJy Ô# $Õ“e—(I5¤XÙJRe:‡ 4P’ y¤3%©3joÔT@Ij*å9 P€’TO–5\¢$Õbe7(I•ê Ğ@@Ij€ä‘Î”¤Î¨½QS%©©”ç @€@=JR=YÖp‰’TCŠ•İ $U¨s @€@%©’G:P’:£öFM”¤¦R#@€ õ(IõdYÃ%JR)Vvƒ’TY Î!@€ ”¤HéL@IêŒÚ5P’šJy Ô# $Õ“e—(I5¤XÙJRe:‡ 4P’ y¤3%©3joÔT@Ij*å9 P€’TO–5\¢$Õbe7(I•ê Ğ@@Ij€ä‘Î”¤Î¨½QS%©©”ç @€@=JR=YÖp‰’TCŠ•İ $U¨s @€@%©’G:P’:£öFM”¤¦R#@€ õ(IõdYÃ%JR)Vvƒ’TY Î!@€ ”¤HéL@IêŒÚ5P’šJy Ô# $Õ“e—(I5¤XÙJRe:‡ 4P’ y¤3%©3joÔT@Ij*å9 P€’TO–5\¢$Õbe7lÚ´©LLLTv•s @€ ã	>|¸ÜrË-€ôF@IêMyN`ãÆerr 0&{÷î-›7o“k™A@IÊÒ˜í¸bÅŠ²~ıú1»Ú¹ @`|¶lÙRöìÙ3¾ .ï€’Ô»H,4X»vmY³f @ r;v”íÛ·W~¥ó²	(IÙ£}Ï9çœ²zõê2555FW;• Œ‡ÀôôtÙ¹sgÙ½{÷xìÊTJRª¸,K€  @€@´€’-l> @€ ©”¤TqY–  @€ h%)ZØ| @€ R	(I©â², @€ ÑJR´°ù @€ ¤P’RÅeY @€ ¢”¤haó	 @€ H% $¥ŠË² @€ D(IÑÂæ @€  J@IJ—e	 @€ ˆP’¢…Í'@€  @ •€’”*.Ë @€  - $E›O€  @€@*%)U\–%1œ™»  
-IDAT@€  @ Z@IŠ6Ÿ  @€ TJRª¸,K€  @€@´€’-l> @€ ©”¤TqY–  @€ h%)ZØ| @€ R	(I©â², @€ ÑJR´°ù @€ ¤P’RÅeY @€ ¢”¤haó	 @€ H% $¥ŠË² @€ D(IÑÂæ @€  J@IJ—e	 @€ ˆP’¢…Í'@€  @ •€’”*.Ë @€  - $E›O€  @€@*%)U\–%@€  @ Z@IŠ6Ÿ  @€ TJRª¸,K€  @€@´€’-l> @€ ©”¤TqY–  @€ h%)ZØ| @€ R	(I©â², @€ ÑJR´°ù @€ ¤P’RÅeY @€ ¢”¤haó	 @€ H% $¥ŠË² @€ D(IÑÂæ @€  J@IJ—e	 @€ ˆP’¢…Í'@€  @ •€’”*.Ë @€  - $E›O€  @€@*%)U\–%@€  @ Z@IŠ6Ÿ  @€ TJRª¸,K€  @€@´€’-l> @€ ©”¤TqY–  @€ h%)ZØ| @€ R	(I©â², @€ ÑJR´°ù @€ ¤P’RÅeY @€ ¢”¤haó	 @€ H% $¥ŠË² @€ D(IÑÂæ @€  J@IJ—e	 @€ ˆP’¢…Í'@€  @ •€’”*.Ë @€  - $E›O€  @€@*%)U\–%@€  @ Z@IŠ6Ÿ  @€ TJRª¸,K€  @€@´€’-l> @€ ©”¤TqY–  @€ h%)ZØ| @€ R	(I©â², @€ ÑJR´°ù @€ ¤P’RÅeY @€ ¢”¤haó	 @€ H% $¥ŠË² @€ D(IÑÂæ @€  J@IJ—e	 @€ ˆP’¢…Í'@€  @ •€’”*.Ë @€  - $E›O€  @€@*%)U\–%@€  @ Z@IŠ6Ÿ  @€ TJRª¸,K€  @€@´€’-l> @€ ©”¤TqY–  @€ h%)ZØ| @€ R	(I©â², @€ ÑJR´°ù @€ ¤P’RÅeY @€ ¢”¤haó	 @€ H% $¥ŠË² @€ D(IÑÂæ @€  J@IJ—e	 @€ ˆP’¢…Í'@€  @ •€’”*.Ë @€  - $E›O€  @€@*%)U\–%@€  @ Z@IŠ6Ÿ  @€ TJRª¸,K€  @€@´€’-l> @€ ©”¤TqY–  @€ h%)ZØ| @€ R	(I©â², @€ ÑJR´°ù @€ ¤P’RÅeY @€ ¢”¤haó	 @€ H% $¥ŠË² @€ D(IÑÂæ @€  J@IJ—e	 @€ ˆP’¢…Í'@€  @ •€’”*.Ë @€  - $E›O€  @€@*%)U\–%@€  @ Z@IŠ6Ÿ  @€ TJRª¸,K€  @€@´€’-l> @€ ©”¤TqY–  @€ h%)ZØ| @€ R	(I©â², @€ ÑJR´°ù @€ ¤P’RÅeY @€ ¢”¤haó	 @€ H% $¥ŠË² @€ D(IÑÂæ @€  J@IJ—e	 @€ ˆP’¢…Í'@€  @ •€’”*.Ë @€  - $E›O€  @€@*%)U\–%@€  @ Z@IŠ6Ÿ  @€ TJRª¸,K€  @€@´€’-l> @€ ©”¤TqY–  @€ h%)ZØ| @€ R	(I©â², @€ ÑJR´°ù @€ ¤P’RÅeY @€ ¢”¤haó	 @€ H% $¥ŠË² @€ D(IÑÂæ @€  J@IJ—e	 @€ ˆP’¢…Í'@€  @ •€’”*.Ë @€  - $E›O€  @€@*%)U\–%@€  @ Z@IŠ6Ÿ  @€ TJRª¸,K€  @€@´€’-l> @€ ©”¤TqY–  @€ h%)ZØ| @€ R	(I©â², @€ ÑJR´°ù @€ ¤P’RÅeY @€ ¢”¤haó	 @€ H% $¥ŠË² @€ DüŠo¯”Àw    IEND®B`‚‰PNG
+IDAT@€  @ Z@IŠ6Ÿ  @€ TJRª¸,K€  @€@´€’-l> @€ ©”¤TqY–  @€ h%)ZØ| @€ R	(I©â², @€ ÑJR´°ù @€ ¤P’RÅeY @€ ¢”¤haó	 @€ H% $¥ŠË² @€ D(IÑÂæ @€  J@IJ—e	 @€ ˆP’¢…Í'@€  @ •€’”*.Ë @€  - $E›O€  @€@*%)U\–%@€  @ Z@IŠ6Ÿ  @€ TJRª¸,K€  @€@´€’-l> @€ ©”¤TqY–  @€ h%)ZØ| @€ R	(I©â², @€ ÑJR´°ù @€ ¤P’RÅeY @€ ¢”¤haó	 @€ H% $¥ŠË² @€ D(IÑÂæ @€  J@IJ—e	 @€ ˆP’¢…Í'@€  @ •€’”*.Ë @€  - $E›O€  @€@*%)U\–%@€  @ Z@IŠ6Ÿ  @€ TJRª¸,K€  @€@´€’-l> @€ ©”¤TqY–  @€ h%)ZØ| @€ R	(I©â², @€ ÑJR´°ù @€ ¤P’RÅeY @€ ¢”¤haó	 @€ H% $¥ŠË² @€ D(IÑÂæ @€  J@IJ—e	 @€ ˆP’¢…Í'@€  @ •€’”*.Ë @€  - $E›O€  @€@*%)U\–%@€  @ Z@IŠ6Ÿ  @€ TJRª¸,K€  @€@´€’-l> @€ ©”¤TqY–  @€ h%)ZØ| @€ R	(I©â², @€ ÑJR´°ù @€ ¤P’RÅeY @€ ¢”¤haó	 @€ H% $¥ŠË² @€ D(IÑÂæ @€  J@IJ—e	 @€ ˆP’¢…Í'@€  @ •€’”*.Ë @€  - $E›O€  @€@*%)U\–%@€  @ Z@IŠ6Ÿ  @€ TJRª¸,K€  @€@´€’-l> @€ ©”¤TqY–  @€ h%)ZØ| @€ R	(I©â², @€ ÑJR´°ù @€ ¤P’RÅeY @€ ¢”¤haó	 @€ H% $¥ŠË² @€ D(IÑÂæ @€  J@IJ—e	 @€ ˆP’¢…Í'@€  @ •€’”*.Ë @€  - $E›O€  @€@*%)U\–%@€  @ Z@IŠ6Ÿ  @€ TJRª¸,K€  @€@´€’-l> @€ ©”¤TqY–  @€ h%)ZØ| @€ R	(I©â², @€ ÑJR´°ù @€ ¤P’RÅeY @€ ¢”¤haó	 @€ H% $¥ŠË² @€ D(IÑÂæ @€  J@IJ—e	 @€ ˆP’¢…Í'@€  @ •€’”*.Ë @€  - $E›O€  @€@*%)U\–%@€  @ Z@IŠ6Ÿ  @€ TJRª¸,K€  @€@´€’-l> @€ ©”¤TqY–  @€ h%)ZØ| @€ R	(I©â², @€ ÑJR´°ù @€ ¤P’RÅeY @€ ¢”¤haó	 @€ H% $¥ŠË² @€ D(IÑÂæ @€  J@IJ—e	 @€ ˆP’¢…Í'@€  @ •€’”*.Ë @€  - $E›O€  @€@*%)U\–%@€  @ Z@IŠ6Ÿ  @€ TJRª¸,K€  @€@´€’-l> @€ ©”¤TqY–  @€ h%)ZØ| @€ R	(I©â², @€ ÑJR´°ù @€ ¤P’RÅeY @€ ¢”¤haó	 @€ H% $¥ŠË² @€ D(IÑÂæ @€  J@IJ—e	 @€ ˆP’¢…Í'@€  @ •€’”*.Ë @€  - $E›O€  @€@*%)U\–%@€  @ Z@IŠ6Ÿ  @€ TJRª¸,K€  @€@´€’-l> @€ ©”¤TqY–  @€ h%)ZØ| @€ R	(I©â², @€ ÑJR´°ù @€ ¤P’RÅeY @€ ¢”¤haó	 @€ H% $¥ŠË² @€ DüŠo¯”Àw    IEND®B`‚‰PNG
 
    IHDR     Å   1
     sRGB ®Îé   gAMA  ±üa   	pHYs  Ã  ÃÇo¨d  ¤IDATx^íkµÆ÷;Í'`µ+­´ãH'/"ò%"^¢HHìJçE"RHĞ„@6»0dW“Ciá’pÉ•Ë 	àõã²«\¶«ú2İ=}ùı¤gºÊå²]®Ëÿ)WuÏ?   €   d`    ƒ       ÈÀ    @   2Ë \?nÖÖÖÌÚÓëæO…­v]»ş‘sã¬  °:Â=³ştH×Nlù4›zîÈ¾‚óDØ—A(o   ätŒ l™ã
@@ -21545,13 +21545,13 @@ o½àÔò±7O–‡;<ø¥»3ÿ˜ìÙË'Êb7µl¢\}Ûr×àÿƒ4üïXÿ˜ìğî¦ÿŞÒÛoúãÿü;K£§$*çub”¤W
 ºÅu•öüUsõyŸ'^6sE}#3ƒA@!4šƒiÒ¡_ºSwÆ@Ù…Ör7âkÄ#j£İ†+j‹_Ö
 æ•Ùi¯Ó”+3–aBÍ»VĞ ¨®P–Ú•ëêiÚé†ükQµ±	îÕ|5áÍC½}íy•o[:BÍ›VÏ $Ãø­Ç%ƒP4‰ÜzÑWcòeÙÈB!4GZ9ƒĞêÏ‚uÌã:„ÎÇZ¯oÛB¡ùÓŠ„R;¢Ç¥wjõWFwû)á½„B¤6é{¥,OÊ ¿%›“R{B½}Á*{Ì>Äåv–ƒBÍæda€&øˆ¡W™ˆÍC”!„Zra"µ_J”ªGÜí#„Z5ÍĞ „áõŒBkØ~#…GŒ „ZEÍÈ  „Bh‘„A@!„P&B!„2aB!”	ƒ€B¡L„BeÂ  „B(!„B™Æ2›››foo¯X B!„[ŠñŠõ}Â7Ì­[·Š…"„Bh±¥¯XßGÑ he9ÀHB!´RLWlWŒ×|Eƒ ´¢Ü…
 Ñs
-„B-¶ÓÛ™Ñi   `uÁ    @   20   A   €   d`    ƒ       ÈÀ    @‚1ÿZF8õ¢½    IEND®B`‚‰PNG
+„B-¶ÓÛ™Ñi   `uÁ    @   20   A   €   d`    ƒ       ÈÀ    @‚1ÿZF8õ¢½    IEND®B`‚‰PNG
 
    IHDR     ’   Ë©‰l   sRGB ®Îé   gAMA  ±üa   	pHYs  Ã  ÃÇo¨d  mIDATx^íÛAkc×Çá~'­ó}&ş .²&ëÎ'˜ÙxV…
 ]…ºFƒ!…]H°»0L'!ÚÒÅ©_İ{å+üJšûØÏ~±%åÁ^œ¿¯<(  	c H @ÊX  R{…ù|^...Êt:-§§§ªP|­ãk_{ ¨m¯±‡U\/¿ÿ©|ñÍeòõŸ›«U³Ùlñµ7 ¨m¯±?İÆPØt·RËb0Ä÷  jÚk,ÄO¶­^Qj]|  ¦½ÆB¼~¾é n©ÖÅ÷  j2c, P›±Ğc€ÚŒ…Æ Ôf,4ÆX  6c¡1Æ µ1 ¨ÍXhŒ± @mÆBcŒ j{±ğ·‹wı3vâöøñ\ÏÊõïÿ._¾<YŞwü÷Ëîû˜Zg, P[õ±C`şŸÿ•?¾>[Ü·q{<~şçï‹ûb ÷c€Úª…?ıåb1âmvŠ³_+¿Íÿ»ÆBÇX  ¶ªcá®?nÇıÃ•„ñ~¼®8c€Úª…8ø÷qU!®.Äc¡c, PÛ£¾²ïÇÀnÆ õ=šßYÿ~Âx,Ä8¸ú×¼üõçëÅ[cÁX  ®ªc!Š+1²1Q¼\Y0 ¨¯úXˆbŒ‡A´>†ûŒc€úd,<d­3 ¨ÍXhŒ± @mÆBcŒ j3c, P›±Ğc€ÚŒ…Æ Ôf,4ÆX  6c¡1Æ µí5¦Óiùâ›6Â­Ôºø @M{…‹‹‹òòûŸ6Â­Ô²Ùl¶ø @M{…ù|¾øÉ6C«WZC!¾öñ= €šö!«øé6®xı\÷_|­ãkn( ğö Àób,  )c H @ÊX  RÆ 2 €”±  ¤Œ  e,  )c H @ÊX  RÆ 2 €”±  ¤Œ  e,  )c H @jëXxÿş½$Izâe\Y  RÆ 2 €”±  ¤Œ  e,  )c H @ÊX  RÆ 2 €”±  ¤Œ  e,  )c H @ÊX  RÆ 2 €”±  ¤Œ  e,  )c H @ÊX  R÷;Ş•ÉdR&_—wı] @[ò±p}\ã°Ÿ–ãëş¾°ë0  y[¯,œ}caRßÜ÷›îÛèŞÆÂ»rüUüÊY p?¶¿1øßÇòpPwW†ápÛè _ëÏ5\¹‰åÕŒ®£·ııc£?³ñq à³ÙáwÎÊÑâ`îGÀÊóßÛ³r6¼D±>ök·ß½9¼ùók/,¸²  µìôÃÕƒÅOñı¿ñ%ˆåOüı!¾çXèÆÁèjAÿøÖ—; €{³ÓX„n8¬ş´çK{…Ÿ§ËX €‡³ÛXXêGå(.ÿ‡ÿÍÿ»—ú«ŸûÊÂ¼ µì6F£`å°¿9ªW~ŸaÃíµ1p×8¸ëñ;-G‰_p€û¶ãXìëôr Ä!ß_yıÄ¿|i¡ã—ßœu#d<FC`èÃAàÊ Ô²óX  'c H @ÊX  RÆ Úi,Ìçór~~^¦Ói9==•$IgzœíqÆo³u,Ä“Ä^]]•Ùl¶¸-I’Ú.Îô8ÛãŒÛ™­c!VG<Ùú'‘$Iíg|œõ™­c!‡+
 ’$=ÍâŒ³>³u,Äë›\’$=â¬Ï’$=óŒI’”f,H’¤4cA’$¥’$)ÍX$IiÆ‚$IJ3$IRš± I’ÒŒI’”V,üø¢L&“®ƒWårÓŸÙÔÇ~œ$Iú¤f,ÜyØŸ”ı xñã¦ÇoJ?~µË×·cÔÁëËÅã'ß®=öíIÿ±—åÕÁÚßá—Wå`ò¢œ,ß_ıØá9%Izj=±°8€Ê«_ºÁğ9ÆÂmñœñÜ«÷ÇX¸=äÇŸw—±Ğ¿/IÒï‘]Yˆj,t¡»m,H’4d,caye#ó2„$ICÏ~,ÜøãÇ]Y$iÈ•…şŠ@7†pÇX>¯± IzF+/CÜ~ŞÅxXşëˆµÛÆ‚$éõˆÆB7Æ¿°úÒ@ß}…›ÿÔrùÜİÕ…åßeü9ûa1ş»úIÒSí^YØÒ§~¼$IÚ+cA’$¥=ÌX.ßïsèìÇI’¤OªşX$IMe,H’¤4cA’$¥’$)ÍX$IiÆ‚$IJ3$IRš± I’Ò>y,L§Ó2›Í6>¹$Ij»8ãã¬Ïlçççåêêjã'$Img|œõ™­c!(G<™+’$=âL³=Îø¸Ù:B<I¬xÂx]C’$µ]œéq¶o
 a§±  <_Æ 2 €”±  ¤Œ  e,  )c H @¢”ÿÇ
-0tI€ÊB    IEND®B`‚‰PNG
+0tI€ÊB    IEND®B`‚‰PNG
 
    IHDR   Ê  ;   œÜ    sRGB ®Îé   gAMA  ±üa   	pHYs  Ã  ÃÇo¨d  †IDATx^í=ä¼@}û_æĞpè`Náìœnæ°3G62ì¼'ø ›nÒVñG*şˆ¤Ô­¦¨~ 0-‰”z·HjŠš_İ  
 ¢ 4€(  
@@ -21587,7 +21587,7 @@ C/èé|%æ^QAòË‘ë¢ØóÉg†]„ÉüDi2z”	wŠ"íÇ"nÅ_/¸x(İEÙ"‰p„(> “ 5A.wxØ6ƒãL †ûï
 @ˆĞ ¢ 40œ(<õ‚'Š<¿Gg3œ(Ò;ìåºğÚ Š#Ì±šÊC¥âü.î¢œ!{8M³w‰d‚£»(ı×£¬Üíƒ¬\wLğR‡|Æ®î•Ïô9rmÑÛœSˆÒw…cKï!Á-½ÈaSòµHaZ»ÊE¢Í¢„m™cÉÏ:5§¥U–Ç‹"øàu%	ÚT„ü6E®GR¢õrkJàT J‚’ffèÛ…éìª®)ˆrz­¬L¬‰²²şRD&ó«Aª:Üz›´×åRte‹$Âã{7™=7Y×ÁLÀã@ŸŸ€åz$D‘î¢låñ¢X’_8â¸àş$Û×— ×B Êè J™à†—b8Qú$E"Ê«3œ(}ÒìåÕN€ 
 @ˆĞ ¢ 4€(  
 @‡‹Â[Sà
-.Š<oMÑ9\éörOİ>>t¶Öã9º}xC‹âÿBÖöß˜ç]=’¸}	#2°(6­äím’%^RåÙ¢ÀèŒ+ŠOMV"zÜ<û¦·şÄo÷İQñ-*RgªÿîÓì][ºÎ,k®ı¨GÉÖs¯z1¬(²şÃŞ±swoÛÛè5á›Nâ:öxv}‰¯ï‚?j]'n/×¾¥T¯vĞ‹1E‰z‘p5¢ÜÜ™q€f¨_\lUeë"­­ÇÃ!)Šcõî.ìÅÖ[†=áñº½ô4ë¢”ëyÖ®z1 (q©2àVQ–6çm™ã¥vĞ‹ñDY³=7p”D‘}qğf_o/f]”b½êu@/†ÅLnƒˆõèàÜ!ŠÆùÉ“/#JtÓSÌD)Õ«^ôb,Q¢I|Œ	:h5Qü±‹töé’/q9Q&‚G¹*À'Âöµ(…zåë€^9™x6‡‹BR$\ÃE!Í®Àá¢ \Dh Q @€ Dh Q @€ Dh Q ªÜnÿh5—`i·®    IEND®B`‚‰PNG
+.Š<oMÑ9\éörOİ>>t¶Öã9º}xC‹âÿBÖöß˜ç]=’¸}	#2°(6­äím’%^RåÙ¢ÀèŒ+ŠOMV"zÜ<û¦·şÄo÷İQñ-*RgªÿîÓì][ºÎ,k®ı¨GÉÖs¯z1¬(²şÃŞ±swoÛÛè5á›Nâ:öxv}‰¯ï‚?j]'n/×¾¥T¯vĞ‹1E‰z‘p5¢ÜÜ™q€f¨_\lUeë"­­ÇÃ!)Šcõî.ìÅÖ[†=áñº½ô4ë¢”ëyÖ®z1 (q©2àVQ–6çm™ã¥vĞ‹ñDY³=7p”D‘}qğf_o/f]”b½êu@/†ÅLnƒˆõèàÜ!ŠÆùÉ“/#JtÓSÌD)Õ«^ôb,Q¢I|Œ	:h5Qü±‹töé’/q9Q&‚G¹*À'Âöµ(…zåë€^9™x6‡‹BR$\ÃE!Í®Àá¢ \Dh Q @€ Dh Q @€ Dh Q ªÜnÿh5—`i·®    IEND®B`‚‰PNG
 
    IHDR  H     eµ…š   sRGB ®Îé   gAMA  ±üa   	pHYs  Ã  ÃÇo¨d  (åIDATx^íÍ«×İ û
 d0ZÜÌlÂì³d%òrMÂ»É*[ğ…Ş—,´Èf¡hÊM”\{„ô[Œñk_MD.–4¾Ø±¾ŒolË²­ØäLıªêTŸªşUuıª«¿N=<Vw}uUëö£sºÛÒÈ €
@@ -22340,7 +22340,7 @@ uè:ŞG:{æĞè:.<é,ìÙ¾)¢DUP©OènÀ_‰öxÚro»şgßDÈölÚòbi“û¼
 üDVÊ¿á…  –mxœÕ]ûwÓÆºUBBÂ›@!--djÂ±]œ7ŞÏ’’BÚ{oZ:±Æ¶ZY2’ì$=«w­óœsÏıkÏo§GŸ´e+Æn;Bc»¬5ìíØNö7óÍ7ïÑ·G5M;¤ŒøÿúTİÚ|:³â¿:ë¿8¢iÃ„C>p„~¦}ú°îy¶å²Ï»^c\7l¶fÕê{d[c›š62ûÂáıÇË>‹ÿš‘Í'ßn¶ÒuŠ(ùNĞ+Rä§q`<×ö­1ÿ[%Ã>ı—şk¾%¬ÆêêòrÛ7F‹&wİ6AÍ?®ı;Lô•¡_Û?µíı-zwø×6©CÀ<x>üÜ¡_WÛè;¨]NÇÂ˜p(ûƒ’@±tÑ=òúÉÆÃª‘à$ødŠª;Šİ¶xµSB¾~şáÀçásªÇSVİÅ¹ip·‹œ!àGà¥‰Ãm™8t´[¦µêù•Oıt2†Hé©Œ¿{í‘#¸'ØBW™
 [èÌ«pñ¢ÇLã'Á?ˆ>3+kĞçÈjÂkà×T{Áñm]¸EÇ¨y†muÉeòˆ”®/LüQ_İxôòñ“2£ÖDˆ¤ÆÎ¾SßsÒ‚Ç—„ˆ)„jcÌ öuM/H‡8ÂcàÇT	=Í˜Éw„Éî°[ëëòj@á‘æT£öcÅŠm…›XïQh$<~F™ß2æ
 S=?p%sõ~{Şìq¯Nù›ÑE‰×M/#¯ù8t?¯2“Ÿ)¶l§ÊÍ‚O@ä‰^dò'Œé†ã{…ß êŠí?ûığDÊOB-á'àŸ¨R~±ë®g”ŒÀ¡Ÿ>XõD^ò)È$<~N¡G–n4½ÎÍäšc¡M½GŸ§0'Š?­1×Ëåå5O@çD/4ûÉ®¡{•Äq.ŒÕ7$ç£†ä…?ªIŞ˜ÄB…úŒ4¿æfı=D ¡„“àiÛƒ³n¸|ÇliÁ±¡>8ç¥õÅJ^V?˜¬»¼ÜiD~¸U¦êÙ÷LÒ¨ûx‘RòjæÆĞ9—ÔLCó1à	ğ)j´jÓ:²Y,ĞÓÀ³à©Ö˜N™:dªlå!‰€—À/©ŸÍ*Úz§ºC*> NO©
-5æš¶Îhì¦Év«»4Ça3^ô9®ÿ`
+5æš¶Îhì¦Év«»4Ça3^ô9®ÿ`
 ÷³	<€Ÿƒ?WŸ­†'ª]Ô`NK[_W•­Ò¡ˆT}C¤Qwù¡’pŞ-P“’Š?ÖÂĞHx<Í	Œa2óØpk&ßÇtFÉv‚ÊS×7
 ÌÀŒ“À9ğ9ÕAt„út²1”^Ş¿Ù·J*æ«à«ªªÓÉ ¤-;,vÙ(IoŸ?ë[”ü8ô‡ ×À×&‘ª/bˆ4 êbS½’c˜””Ô|Qc#¡²îä‘6­·Ö×cv)ìV¸Ô×§(YÉ±«,g”˜ÿ²*,Ï¥OQ¥ùÆ![&ñ¹‹ğ–Ó*=fÖ'iyHXaŠ^3‡û? –€[­¾3\”Rkv¶è¿ãåägÙZIÖÊKğ¶K½¨µ¾T_<wÊu*!2¤æØCz!4]Rü2p¦º;›z‘mêHh¸ ¾Ğ·¦T|
 \_TUö£Œ[z’^Ş ¿¡º€Çç©’”ğ]àxšõI¾„W€_€+‹aGYµî‡ZËödƒÉ{ÜßT%ósœÚ
@@ -22694,7 +22694,7 @@ w„­/-6l'$S®ÊĞv|á®/2Ã(öÚQO–Œ$;ÉÜtæşë{Wné+gãØw]GŒg”ïãÈ’?Ï³»ÏîJ+ÿ2cÆ¤‘N‹¿a
 %½ûš.ìc>÷}QÎì1kò`ƒ7ÌT¹Y¬.ßp[¦åäòe/¦ANšƒÓåÅµ®—uuĞó€Ïû‚.ĞyÆls—Û"Ø?¾İÚR§áLï€PõĞ^bÈf­2¬NãìKº`Sye¾‹`"MÁNéïX;¾Ù4F9„YCcZ½xÚu‹[âİ¿1hD5…d¥ÈL•o
 :{6Aæ¬¶Åh N®îî¯¼°¶˜#ğ:\Öè85ê^YS¤Y‡şãïYÎáß¸×åŞ½ü›‡¾‚ıJÿXÛ
 xkšºñök]Í^¹şÕ–¤ØÆ„NÊéúrÀĞÖ…NT‘ù2ZÔe­k²5M­kĞyèìİ“ÀŒõ?¦|C»&B¼]„­}Î—Ù©¹õA=Q|½	;Ñ)Ÿ¼·À|ÛÄ\ÊØ¾eÛl—³²¦Y«‰„z4ÏRM”ä ƒ¾†djRK”—£êêìñIEDõFRlcB÷âë™&ÊL8ˆW$Æ¤6Ô°“œhL“ÙËoÛæ!¦×OÍuÏµL¼Á9hvQwMÓüC5‡Ò‰Ö a?üh9”(JĞ
-ìŠ®æ4–´ãFÅ®š%	ñôì-K¢>„úöË±ÉCDõJRlcB÷9âëÙfÉ°‹V$¾bD™‘T[–L÷‘~CƒIË±Ë´£EÎÏ÷’exùö{¢|raº{EWÕx_lîŠy¦ wÌæN3Øc®Ã{ã¨z§m[53ˆFSo{ÜçNºÙhuZÌtêª~ªEú¶¶¡ÂVË<A…‹½ây$]n?Š@°ïR×r=„`ÏìŠ‚üØYUG¯Â9Rí#¶UQ,vÖç'J‰
+ìŠ®æ4–´ãFÅ®š%	ñôì-K¢>„úöË±ÉCDõJRlcB÷9âëÙfÉ°‹V$¾bD™‘T[–L÷‘~CƒIË±Ë´£EÎÏ÷’exùö{¢|raº{EWÕx_lîŠy¦ wÌæN3Øc®Ã{ã¨z§m[53ˆFSo{ÜçNºÙhuZÌtêª~ªEú¶¶¡ÂVË<A…‹½ây$]n?Š@°ïR×r=„`ÏìŠ‚üØYUG¯Â9Rí#¶UQ,vÖç'J‰
 „j®ÿ^®Â^ıh¹şŠD³{ml²)Q=›ŞXÍì˜^SÔl't3nAŠohIğıƒJåÀQ·=#)¶äÇŒƒº¡çÄ=™¼"?uê_AW`'™É‡4Ûrşíìıó|µşÎÅ}¹c^~öø„›#89]„ô%‡_8½ûşGŸ¿Bë!Õ‘O×‚ˆjMRlzc5½ãsnÚ¾;¤IãÂ®¾ÄsçÔ÷€iåÉI±é)ÕK¶µë™Şa.¼”¯~?JZ˜¢ÿ~ÙÇ`ÿaÕ›<ğÕ™o‚“Tq³ŠÇ€kâÕTŞ{¹c±oï²†İ±ê?›M®~ïÿ+ ’JWÇ%šY Åª5š³ŒfÓ_ÚõFYğà‘Æ7T“¼)qÊH.)V­‘¼ÂØÉ12ò×À$ÇéWt!_e¬·¦ƒ=fÙÖá;«U¯ß ”Tš¼é^"èx}GKXs½2‚·@}ëx­ÑãÁ—äA¼æ£–+—Jv¿TRï¤%?òSu†±2DX¤ÒB[=ˆyVîíšÕÚæÁO€Ú JTÃ=î—³#¸!­
 ”]ÒãÆ-‘“~”A²aUÏXöm¸ö-ªú•Qœ¸ğ;Ç+¼'J½t?D…/KnDõ¿,+`o
 ğ€´»¤Ë›â o–Ox³LŞŒÔ’ïÂÒ"ìDï÷œ®#½¤Xµv¤#¬1“B¦eÙ)Ã'UOıá»ë‡«›Â12–?åÂ>¾À¢LXˆ×KåÙ¿”]‘+í¸DzH±jôm†ˆ.Q·B÷¸SçŞÏåQÌ—Â!•z…^;©é§ó} Åª5Ì‹"Ì»a¥Şìò^`Ãn°0B–.;éyHEŞ{ƒ†z‰-Z—.Ö‡×Z&ŒdŸö9¾Ö…¯£…ë°Ô{ê@%Õ¾ÖØ	ÌjÖº~Ø×#ìx^#Õqeî‡`%"¹®‹ûQ«ç·
