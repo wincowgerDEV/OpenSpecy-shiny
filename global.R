@@ -26,15 +26,15 @@ downloadButton <- function(...) {
 lapply(list.files("R", full.names = TRUE), source)
 
 
-# Load all data ----
+ #Load all data ----
 
 load_data <- function() {
-    data("raman_hdpe")
-    testdata <- data.table(wavenumber = raman_hdpe$wavenumber,
-                           intensity = raman_hdpe$spectra$intensity)
-    # Inject variables into the parent environment
-    invisible(list2env(as.list(environment()), parent.frame()))
-
+  data("raman_hdpe")
+  testdata <- data.table(wavenumber = raman_hdpe$wavenumber,
+                         intensity = raman_hdpe$spectra$intensity)
+  # Inject variables into the parent environment
+  invisible(list2env(as.list(environment()), parent.frame()))
+  
 }
 
 # # Name keys for human readable column names ----
