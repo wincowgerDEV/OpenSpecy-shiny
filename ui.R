@@ -666,8 +666,8 @@ ui <- dashboardPage(
                         h4(id = "placeholder1", "Upload some data to get started..."),
                         uiOutput("progress_bars"),
                         fluidRow(
-                            footer = tags$script(src = "https://cdn.plot.ly/plotly-2.11.1.min.js"),
-                            footer = tags$script(src = "https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"),
+                            tags$script(src = "https://cdn.plot.ly/plotly-2.11.1.min.js"),
+                            tags$script(src = "https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"),
                             plotlyOutput("heatmap", inline = T),
                             plotlyOutput("MyPlotC", inline = T),
                             div(style = "overflow-x: scroll", DT::dataTableOutput("eventmetadata"))
