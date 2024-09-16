@@ -8,7 +8,8 @@ ui <- dashboardPage(
         title = tags$a(
             href = "https://www.openanalysis.org",
             target = "_blank",
-            tags$img(src = "logo.png", style = 'width: 15vw; padding:1rem;')
+            tags$img(src = "logo.png", style = 'width: 15vw; padding:1rem;'),
+            tags$head(HTML('<div class = "dark raised" data-ea-publisher="openanalysisorg" data-ea-type="text" data-ea-style="fixedfooter"></div>'))
         )
     ),
     #
@@ -588,13 +589,13 @@ ui <- dashboardPage(
                                     inputId = "id_strategy",
                                     label =  "ID Library",
                                     choices =  c(
-                                        "Cor: Both Deriv" = "both_deriv",
+                                        #"Cor: Both Deriv" = "both_deriv",
                                         "Cor: Both No Baseline" = "both_nobaseline",
-                                        "Cor: FTIR Deriv" = "ftir_deriv",
-                                        "Cor: Raman Deriv" = "raman_deriv",
+                                        #"Cor: FTIR Deriv" = "ftir_deriv",
+                                        #"Cor: Raman Deriv" = "raman_deriv",
                                         "Cor: FTIR No Baseline" = "ftir_nobaseline",
                                         "Cor: Raman No Baseline" = "raman_nobaseline",
-                                        "AI: FTIR Deriv Multinomial" = "ai",
+                                        #"AI: FTIR Deriv Multinomial" = "ai",
                                         "AI: Both Deriv Mediod" = "mediod"
                                     )
                                 ),
