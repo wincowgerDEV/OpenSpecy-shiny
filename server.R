@@ -137,20 +137,50 @@ function(input, output, session) {
     })
   })
   
-  #The matching library to use.
+  #The matching library to use. 
   libraryR <- reactive({
     req(input$active_identification)
-    library <- read_any("data/mediod.rds")
-    if (grepl("^both", input$id_strategy)) {
+    if(input$id_strategy == "mediod"){
+      if(file.exists("data/mediod.rds")){
+        library <- read_any("data/mediod.rds")
+      }
+      return(library)
+    }
+    else if(grepl("ai$", input$id_strategy)) {
+      if(file.exists("data/model.rds")){
+        library <- read_any("data/model.rds")
+      }
+     
+      return(library)
+    }
+    else if(grepl("nobaseline$", input$id_strategy)) {
+      if(file.exists("data/nobaseline.rds")){
+        library <- read_any("data/nobaseline.rds")
+      }
+      
+    }
+    else if(grepl("deriv$", input$id_strategy)){
+      if(file.exists("data/derivative.rds")){
+        library <- read_any("data/derivative.rds")
+      }
+     
+    }
+    if(grepl("^both", input$id_strategy)) {
       library
     }
-    else if (grepl("^ftir", input$id_strategy)) {
+    else if (grepl("^ftir", input$id_strategy)){
       filter_spec(library, logic = library$metadata$spectrum_type == "ftir")
     }
-    else if (grepl("^raman", input$id_strategy)) {
+    else if (grepl("^raman", input$id_strategy)){
       filter_spec(library, logic = library$metadata$spectrum_type == "raman")
     }
   })
+
+  
+
+  
+  
+  
   
   # Corrects spectral intensity units using the user specified correction
   
