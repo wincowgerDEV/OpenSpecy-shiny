@@ -1,6 +1,5 @@
 function(input, output, session) {
   #Setup ----
-  
   #URL Query
   observe({
     query <- parseQueryString(session$clientData$url_search)
@@ -346,6 +345,7 @@ function(input, output, session) {
     req(!is.null(preprocessed$data))
     req(input$active_identification)
     req(!grepl("^ai$", input$id_strategy))
+    if(input$active_identification){
     withProgress(message = 'Analyzing Spectrum', value = 1 / 3, {
       cor_spec(
         x = DataR(),
@@ -354,7 +354,7 @@ function(input, output, session) {
         type = "roll"
       )
     })
-  })
+  }})
   
   #The output from the AI classification algorithm.
   ai_output <- reactive({
@@ -374,7 +374,7 @@ function(input, output, session) {
   max_cor <- reactive({
     req(!is.null(preprocessed$data))
     #req(input$active_identification)
-    if (isTruthy(input$active_identification)) {
+    if ((input$active_identification)) {
       if (!grepl("^ai$", input$id_strategy)) {
         max_cor_named(correlation())
       }
@@ -635,7 +635,8 @@ function(input, output, session) {
           display_pct = TRUE
         )
       )))
-    } else {
+    }  else {
+   
       tagList(fluidRow(column(
         6,
         selectInput(
@@ -749,7 +750,7 @@ function(input, output, session) {
     ) %>%
       event_register("plotly_click")
   })
-  
+
   thresholded_particles <- reactive({
     if (input$active_identification) {
       particles_logi <- signal_to_noise() > MinSNR() &
@@ -811,13 +812,13 @@ function(input, output, session) {
       data_click$data <- event_data("plotly_click", source = "heat_plot")[["pointNumber"]] + 1
     }
   })
-  
-  #Google translate.
-  output$translate <- renderUI({
-    if (translate & curl::has_internet()) {
-      includeHTML("www/googletranslate.html")
-    }
-  })
+  # 
+  # #Google translate.
+  # output$translate <- renderUI({
+  #   if (translate & curl::has_internet()) {
+  #     includeHTML("www/googletranslate.html")
+  #   }
+  # })
   
   #output$event_test <- renderPrint({
   #    list(
