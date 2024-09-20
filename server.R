@@ -134,7 +134,15 @@ function(input, output, session) {
         #print(preprocessed$data)
       }
     })
-  })
+    
+    # Reset UI inputs
+    # updatePrettySwitch(session, "active_identification", value = FALSE)
+    # updatePrettySwitch(session, "active_preprocessing", value = FALSE)
+    # 
+
+    
+    
+      })
   
   #The matching library to use. 
   libraryR <- reactive({
@@ -175,12 +183,6 @@ function(input, output, session) {
     }
   })
 
-  
-
-  
-  
-  
-  
   # Corrects spectral intensity units using the user specified correction
   
   # Redirecting preprocessed data to be a reactive variable. Not totally sure why this is happening in addition to the other.
@@ -445,7 +447,8 @@ function(input, output, session) {
   
   #Metadata for all the matches for a single unknown spectrum
   matches_to_single <- reactive({
-    req(input$active_identification)
+    req(!is.null(preprocessed$data))
+    req(input$active_identification, cancelOutput = FALSE)
     req(!grepl("^ai$", input$id_strategy))
     if (is.null(preprocessed$data)) {
       libraryR()$metadata %>%
@@ -497,6 +500,7 @@ function(input, output, session) {
   #All matches table for the current selection
   top_matches <- reactive({
     #req(input$file)
+    req(!is.null(preprocessed$data))
     req(input$active_identification)
     req(!grepl("^ai$", input$id_strategy))
     if (is.null(preprocessed$data)) {
@@ -520,6 +524,7 @@ function(input, output, session) {
   
   #Create the data table that goes below the plot which provides extra metadata.
   match_metadata <- reactive({
+    req(!is.null(preprocessed$data))
     req(input$active_identification)
     req(!grepl("^ai$", input$id_strategy))
     matches_to_single()[input$event_rows_selected, ] %>%
@@ -543,7 +548,8 @@ function(input, output, session) {
   
   #Table of metadata for the selected library value
   output$eventmetadata <- DT::renderDataTable({
-    req(input$active_identification)
+    req(input$active_identification, cancelOutput = FALSE)
+    req(!is.null(preprocessed$data))
     req(!grepl("^ai$", input$id_strategy))
     DT::datatable(
       match_metadata(),
@@ -564,31 +570,39 @@ function(input, output, session) {
   
   # Create the data tables for all matches
   output$event <- DT::renderDataTable({
-    req(input$active_identification)
+    req(!is.null(preprocessed$data))
+    req(input$active_identification, cancelOutput = FALSE)
     req(!grepl("^ai$", input$id_strategy))
-    DT::datatable(
-      top_matches() %>%
-        mutate(
-          organization = as.factor(organization),
-          `Plastic Pollution Category` = as.factor(`Plastic Pollution Category`)
+    if(input$active_identification){
+      DT::datatable(
+        top_matches() %>%
+          mutate(
+            organization = as.factor(organization),
+            `Plastic Pollution Category` = as.factor(`Plastic Pollution Category`)
+          ),
+        options = list(
+          searchHighlight = TRUE,
+          scrollX = TRUE,
+          sDom  = '<"top">lrt<"bottom">ip',
+          lengthChange = FALSE,
+          pageLength = 5
         ),
-      options = list(
-        searchHighlight = TRUE,
-        scrollX = TRUE,
-        sDom  = '<"top">lrt<"bottom">ip',
-        lengthChange = FALSE,
-        pageLength = 5
-      ),
-      rownames = FALSE,
-      filter = "top",
-      caption = "Selectable Matches",
-      style = "bootstrap",
-      selection = list(mode = "single", selected = c(1))
-    )
+        rownames = FALSE,
+        filter = "top",
+        caption = "Selectable Matches",
+        style = "bootstrap",
+        selection = list(mode = "single", selected = c(1))
+      )
+    }
+    else{
+      NULL
+    }
+    
   })
   
   # Progress Bars
   output$progress_bars <- renderUI({
+    req(!is.null(preprocessed$data))
     req(ncol(preprocessed$data$spectra) > 1)
     req(
       input$threshold_decision |
