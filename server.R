@@ -238,7 +238,6 @@ function(input, output, session) {
   
   
   # Choose which spectra to use for matching and plotting.
-  # Add a debounce
   DataR <- reactive({
     req(!is.null(preprocessed$data))
     if (input$active_preprocessing) {
