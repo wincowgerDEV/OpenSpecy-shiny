@@ -1,0 +1,1 @@
+<span style ="font-size:13px">  Min-Max normalization improves comparability, for many applications, between spectra except in cases where raw intensity values are necessary for interpretation. For example raw values can be useful for thresholding. Min-Max normalization rescales spectral intensity values between 0-1.</span>
