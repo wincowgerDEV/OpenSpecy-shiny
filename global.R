@@ -12,9 +12,6 @@ library(bs4Dash)
 library(digest)
 library(shinyjs)
 library(dplyr)
-#webr::install("OpenSpecyWebr", repos = "https://moore-institute-4-plastic-pollution-res.github.io/OpenSpecyWebr/")
-#library(OpenSpecyWebr)
-
 
 # Workaround for Chromium Issue 468227
 downloadButton <- function(...) {
