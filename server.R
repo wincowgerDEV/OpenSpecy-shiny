@@ -1,5 +1,6 @@
 function(input, output, session) {
   #Setup ----
+  
   #URL Query
   observe({
     query <- parseQueryString(session$clientData$url_search)
@@ -83,7 +84,7 @@ function(input, output, session) {
         #    w$message
         #}
       )
-
+      
       if (all(!grepl("(\\.hdr$)|(\\.dat$)|(\\.zip$)", input$file$datapath))) {
         rout$metadata$file_name <- input$file$name
       }
@@ -134,15 +135,7 @@ function(input, output, session) {
         #print(preprocessed$data)
       }
     })
-    
-    # Reset UI inputs
-    # updatePrettySwitch(session, "active_identification", value = FALSE)
-    # updatePrettySwitch(session, "active_preprocessing", value = FALSE)
-    # 
-
-    
-    
-      })
+  })
   
   #The matching library to use. 
   libraryR <- reactive({
@@ -153,47 +146,20 @@ function(input, output, session) {
       }
       return(library)
     }
-    else if(grepl("ai$", input$id_strategy)) {
-      if(file.exists("data/model.rds")){
-        library <- read_any("data/model.rds")
-      }
-     
-      return(library)
-    }
-    else if(grepl("nobaseline$", input$id_strategy)) {
-      if(file.exists("data/nobaseline.rds")){
-        library <- read_any("data/nobaseline.rds")
-      }
-      
-    }
-    else if(grepl("deriv$", input$id_strategy)){
-      if(file.exists("data/derivative.rds")){
-        library <- read_any("data/derivative.rds")
-      }
-     
-    }
     if(grepl("^both", input$id_strategy)) {
       library
     }
-    else if (grepl("^ftir", input$id_strategy)){
-      filter_spec(library, logic = library$metadata$spectrum_type == "ftir")
-    }
-    else if (grepl("^raman", input$id_strategy)){
-      filter_spec(library, logic = library$metadata$spectrum_type == "raman")
-    }
+    
   })
 
   # Corrects spectral intensity units using the user specified correction
-  
   # Redirecting preprocessed data to be a reactive variable. Not totally sure why this is happening in addition to the other.
   data <- reactive({
     req(input$file)
     preprocessed$data
   })
-  
-  
+
   #Preprocess ----
-  
   # All cleaning of the data happens here. Range selection, Smoothing, and Baseline removing
   baseline_data <- reactive({
     req(!is.null(preprocessed$data))
@@ -238,6 +204,7 @@ function(input, output, session) {
   
   
   # Choose which spectra to use for matching and plotting.
+  # Add a debounce
   DataR <- reactive({
     req(!is.null(preprocessed$data))
     if (input$active_preprocessing) {
@@ -280,8 +247,6 @@ function(input, output, session) {
       input$MinSNR
     }
   })
-  
-  
   
   #Identification ----
   output$correlation_head <- renderUI({
@@ -346,7 +311,6 @@ function(input, output, session) {
     req(!is.null(preprocessed$data))
     req(input$active_identification)
     req(!grepl("^ai$", input$id_strategy))
-    if(input$active_identification){
     withProgress(message = 'Analyzing Spectrum', value = 1 / 3, {
       cor_spec(
         x = DataR(),
@@ -355,7 +319,7 @@ function(input, output, session) {
         type = "roll"
       )
     })
-  }})
+  })
   
   #The output from the AI classification algorithm.
   ai_output <- reactive({
@@ -375,7 +339,7 @@ function(input, output, session) {
   max_cor <- reactive({
     req(!is.null(preprocessed$data))
     #req(input$active_identification)
-    if ((input$active_identification)) {
+    if (isTruthy(input$active_identification)) {
       if (!grepl("^ai$", input$id_strategy)) {
         max_cor_named(correlation())
       }
@@ -446,8 +410,7 @@ function(input, output, session) {
   
   #Metadata for all the matches for a single unknown spectrum
   matches_to_single <- reactive({
-    req(!is.null(preprocessed$data))
-    req(input$active_identification, cancelOutput = FALSE)
+    req(input$active_identification)
     req(!grepl("^ai$", input$id_strategy))
     if (is.null(preprocessed$data)) {
       libraryR()$metadata %>%
@@ -499,7 +462,6 @@ function(input, output, session) {
   #All matches table for the current selection
   top_matches <- reactive({
     #req(input$file)
-    req(!is.null(preprocessed$data))
     req(input$active_identification)
     req(!grepl("^ai$", input$id_strategy))
     if (is.null(preprocessed$data)) {
@@ -523,7 +485,6 @@ function(input, output, session) {
   
   #Create the data table that goes below the plot which provides extra metadata.
   match_metadata <- reactive({
-    req(!is.null(preprocessed$data))
     req(input$active_identification)
     req(!grepl("^ai$", input$id_strategy))
     matches_to_single()[input$event_rows_selected, ] %>%
@@ -547,8 +508,7 @@ function(input, output, session) {
   
   #Table of metadata for the selected library value
   output$eventmetadata <- DT::renderDataTable({
-    req(input$active_identification, cancelOutput = FALSE)
-    req(!is.null(preprocessed$data))
+    req(input$active_identification)
     req(!grepl("^ai$", input$id_strategy))
     DT::datatable(
       match_metadata(),
@@ -569,39 +529,31 @@ function(input, output, session) {
   
   # Create the data tables for all matches
   output$event <- DT::renderDataTable({
-    req(!is.null(preprocessed$data))
-    req(input$active_identification, cancelOutput = FALSE)
+    req(input$active_identification)
     req(!grepl("^ai$", input$id_strategy))
-    if(input$active_identification){
-      DT::datatable(
-        top_matches() %>%
-          mutate(
-            organization = as.factor(organization),
-            `Plastic Pollution Category` = as.factor(`Plastic Pollution Category`)
-          ),
-        options = list(
-          searchHighlight = TRUE,
-          scrollX = TRUE,
-          sDom  = '<"top">lrt<"bottom">ip',
-          lengthChange = FALSE,
-          pageLength = 5
+    DT::datatable(
+      top_matches() %>%
+        mutate(
+          organization = as.factor(organization),
+          `Plastic Pollution Category` = as.factor(`Plastic Pollution Category`)
         ),
-        rownames = FALSE,
-        filter = "top",
-        caption = "Selectable Matches",
-        style = "bootstrap",
-        selection = list(mode = "single", selected = c(1))
-      )
-    }
-    else{
-      NULL
-    }
-    
+      options = list(
+        searchHighlight = TRUE,
+        scrollX = TRUE,
+        sDom  = '<"top">lrt<"bottom">ip',
+        lengthChange = FALSE,
+        pageLength = 5
+      ),
+      rownames = FALSE,
+      filter = "top",
+      caption = "Selectable Matches",
+      style = "bootstrap",
+      selection = list(mode = "single", selected = c(1))
+    )
   })
   
   # Progress Bars
   output$progress_bars <- renderUI({
-    req(!is.null(preprocessed$data))
     req(ncol(preprocessed$data$spectra) > 1)
     req(
       input$threshold_decision |
@@ -648,8 +600,7 @@ function(input, output, session) {
           display_pct = TRUE
         )
       )))
-    }  else {
-   
+    } else {
       tagList(fluidRow(column(
         6,
         selectInput(
@@ -763,7 +714,7 @@ function(input, output, session) {
     ) %>%
       event_register("plotly_click")
   })
-
+  
   thresholded_particles <- reactive({
     if (input$active_identification) {
       particles_logi <- signal_to_noise() > MinSNR() &
@@ -825,19 +776,5 @@ function(input, output, session) {
       data_click$data <- event_data("plotly_click", source = "heat_plot")[["pointNumber"]] + 1
     }
   })
-  # 
-  # #Google translate.
-  # output$translate <- renderUI({
-  #   if (translate & curl::has_internet()) {
-  #     includeHTML("www/googletranslate.html")
-  #   }
-  # })
-  
-  #output$event_test <- renderPrint({
-  #    list(
-  #        conform_spec = input$conform_decision,
-  #        conform_args = list(range = NULL, res = input$conform_res, type = input$conform_selection)
-  #    )
-  #})
   
 }
