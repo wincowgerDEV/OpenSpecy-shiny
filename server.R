@@ -478,8 +478,9 @@ function(input, output, session) {
   
   #Metadata for all the matches for a single unknown spectrum
   matches_to_single <- reactive({
-    req(input$active_identification)
-    req(!grepl("^ai$", input$id_strategy))
+    # req(input$active_identification)
+    # req(!grepl("^ai$", input$id_strategy))
+    if(input$active_identification && !grepl("^ai$", input$id_strategy)){
     if (is.null(preprocessed$data)) {
       libraryR()$metadata %>%
         mutate("Pearson's r" = NA) %>%
@@ -503,6 +504,7 @@ function(input, output, session) {
           "Plastic Pollution Category" = "material_class"
         )
     }
+    }
   })
   
   #Spectral data for the selected match.
@@ -510,7 +512,8 @@ function(input, output, session) {
     # Default to first row if not yet clicked
     #req(input$file)
     #req(input$active_identification)
-    req(!grepl("^ai$", input$id_strategy))
+    #req(!grepl("^ai$", input$id_strategy))
+    if(!grepl("^ai$", input$id_strategy)){
     if (!input$active_identification) {
       as_OpenSpecy(x = numeric(), spectra = data.table(empty = numeric()))
     }
@@ -525,13 +528,15 @@ function(input, output, session) {
       # Get data from filter_spec
       filter_spec(libraryR(), logic = id_select)
     }
+    }
   })
   
   #All matches table for the current selection
   top_matches <- reactive({
     #req(input$file)
-    req(input$active_identification)
-    req(!grepl("^ai$", input$id_strategy))
+    # req(input$active_identification)
+    # req(!grepl("^ai$", input$id_strategy))
+    if(input$active_identification && !grepl("^ai$", input$id_strategy)){
     if (is.null(preprocessed$data)) {
       matches_to_single() %>%
         dplyr::select("Material",
@@ -548,6 +553,7 @@ function(input, output, session) {
           "organization",
           "library_id"
         )
+    }
     }
   })
   
