@@ -623,7 +623,7 @@ function(input, output, session) {
           info = FALSE
         ),
         rownames = FALSE,
-        style = 'bootstrap4',
+        style = 'bootstrap',
         class = 'table table-dark',
         caption = "Selection Metadata",
         selection = list(mode = 'none')
@@ -655,8 +655,8 @@ function(input, output, session) {
         rownames = FALSE,
         filter = "top",
         caption = "Selectable Matches",
-        style = "bootstrap4",
-        class = 'table table-dark',
+        style = "bootstrap",
+        class = "table table-dark",
         selection = list(mode = "single", selected = c(1))
       )
     } else{
@@ -799,51 +799,51 @@ function(input, output, session) {
     
     if(isTruthy(!is.null(preprocessed$data) &&
                 ncol(preprocessed$data$spectra > 1)
-                )){
-    heatmap_spec(
-      x = DataR(),
-      z = if (!is.null(max_cor()) &
-              !isTruthy(input$map_color)) {
-        max_cor()
-      }
-      else if (!is.null(signal_to_noise()) &
-               !isTruthy(input$map_color)) {
-        signal_to_noise()
-      }
-      else if (!is.null(max_cor()) &
-               input$map_color == "Match ID") {
-        names(max_cor())
-      }
-      else if (!is.null(max_cor()) &
-               input$map_color == "Correlation") {
-        max_cor()
-      }
-      else if (!is.null(signal_to_noise()) &
-               input$map_color == "Signal/Noise") {
-        signal_to_noise()
-      }
-      else if (!is.null(max_cor()) &
-               input$map_color == "Match Name") {
-        libraryR()$metadata$material_class[match(names(max_cor()), libraryR()$metadata$sample_name)]
-      }
-      else{
-        NULL
-      },
-      sn = signif(signal_to_noise(), 2),
-      cor = if (is.null(max_cor())) {
-        max_cor()
-      } else{
-        signif(max_cor(), 2)
-      },
-      min_sn = MinSNR(),
-      min_cor = MinCor(),
-      select = data_click$data,
-      source = "heat_plot"
-    ) %>%
-      event_register("plotly_click")
-  } else{
-    NULL
-  }
+    )){
+      heatmap_spec(
+        x = DataR(),
+        z = if (!is.null(max_cor()) &
+                !isTruthy(input$map_color)) {
+          max_cor()
+        }
+        else if (!is.null(signal_to_noise()) &
+                 !isTruthy(input$map_color)) {
+          signal_to_noise()
+        }
+        else if (!is.null(max_cor()) &
+                 input$map_color == "Match ID") {
+          names(max_cor())
+        }
+        else if (!is.null(max_cor()) &
+                 input$map_color == "Correlation") {
+          max_cor()
+        }
+        else if (!is.null(signal_to_noise()) &
+                 input$map_color == "Signal/Noise") {
+          signal_to_noise()
+        }
+        else if (!is.null(max_cor()) &
+                 input$map_color == "Match Name") {
+          libraryR()$metadata$material_class[match(names(max_cor()), libraryR()$metadata$sample_name)]
+        }
+        else{
+          NULL
+        },
+        sn = signif(signal_to_noise(), 2),
+        cor = if (is.null(max_cor())) {
+          max_cor()
+        } else{
+          signif(max_cor(), 2)
+        },
+        min_sn = MinSNR(),
+        min_cor = MinCor(),
+        select = data_click$data,
+        source = "heat_plot"
+      ) %>%
+        event_register("plotly_click")
+    } else{
+      NULL
+    }
   })
   
   thresholded_particles <- reactive({
@@ -908,5 +908,5 @@ function(input, output, session) {
       data_click$data <- event_data("plotly_click", source = "heat_plot")[["pointNumber"]] + 1
     }
   })
-
+  
 }
