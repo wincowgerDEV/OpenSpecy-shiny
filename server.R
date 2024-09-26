@@ -453,13 +453,22 @@ observeEvent(input$file, {
 
   #Create the data table that goes below the plot which provides extra metadata. 
 match_metadata <- reactive({
-    req(input$active_identification)
-    req(!grepl("^ai$", input$id_strategy))
-        matches_to_single()[input$event_rows_selected,] %>%
-            .[, !sapply(., OpenSpecy::is_empty_vector), with = F] #%>%
-           # dplyr::select("Material",
-        #                  "Plastic Pollution Category", 
-        #                  "library_id", everything())
+    req(!is.null(preprocessed$data))
+    if(input$active_identification & !grepl("^ai$", input$id_strategy)){
+        selected_match <- matches_to_single()[input$event_rows_selected, ]
+        dataR_metadata <- DataR()$metadata
+        
+        setkey(dataR_metadata, col_id)
+        setkey(selected_match, object_id)
+        
+        result <- dataR_metadata[selected_match, on = c(col_id = "object_id")]
+        result <- result[, !sapply(result, OpenSpecy::is_empty_vector), with = FALSE]
+        result
+    }
+    else{
+        DataR()$metadata[data_click$data,] %>%
+            .[, !sapply(., OpenSpecy::is_empty_vector), with = F]
+    }
 })
 
   # Display ----
@@ -476,8 +485,8 @@ output$snr_plot <- renderPlot({
 
 #Table of metadata for the selected library value
 output$eventmetadata <- DT::renderDataTable({
-    req(input$active_identification)
-    req(!grepl("^ai$", input$id_strategy))
+    req(!is.null(preprocessed$data))
+    #req(!grepl("^ai$", input$id_strategy))
     datatable(match_metadata(),
               escape = FALSE,
               options = list(dom = 't', bSort = F,
