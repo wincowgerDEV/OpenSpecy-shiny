@@ -507,7 +507,7 @@ output$event <- DT::renderDataTable({
 })
 
 # Progress Bars
-output$progress_bars <- renderUI({
+output$choice_names <- renderUI({
     req(ncol(preprocessed$data$spectra) > 1)
     req(input$threshold_decision | (input$cor_threshold_decision & input$active_identification))
     choice_names = c(if(input$cor_threshold_decision & input$active_identification) c("Match Name", "Correlation", "Match ID") 
@@ -523,24 +523,38 @@ output$progress_bars <- renderUI({
                                       label = "Map Color", 
                                       choices = choice_names)
             )
-            ),
+            )
+                )
+})
+
+output$progress_bars <- renderUI({
+    req(ncol(preprocessed$data$spectra) > 1)
+    req(input$threshold_decision | (input$cor_threshold_decision & input$active_identification))
+    tagList(
+        box(title = "Summary", 
+            maximizable = T,
+            width = 12,
             fluidRow(
                 column(4, 
                        if(input$threshold_decision)
-                       shinyWidgets::progressBar(id = "signal_progress", value = sum(signal_to_noise() > MinSNR())/length(signal_to_noise()) * 100, status = "success", title = "Good Signal", display_pct = TRUE)
+                           shinyWidgets::progressBar(id = "signal_progress", value = sum(signal_to_noise() > MinSNR())/length(signal_to_noise()) * 100, status = "success", title = "Good Signal", display_pct = TRUE)
                        else NULL
-                       ),
+                ),
                 column(4,
                        if(input$cor_threshold_decision & input$active_identification) shinyWidgets::progressBar(id = "correlation_progress", value = sum(max_cor() > MinCor())/length(max_cor()) * 100, status = "success", title = "Good Correlations", display_pct = TRUE)
                        else NULL
                 ),
                 column(4,
                        if(input$cor_threshold_decision & input$active_identification & input$threshold_decision)
-                       shinyWidgets::progressBar(id = "match_progress", value = sum(signal_to_noise() > MinSNR() & max_cor() > MinCor())/length(signal_to_noise()) * 100, status = "success", title = "Good Identifications", display_pct = TRUE)
+                           shinyWidgets::progressBar(id = "match_progress", value = sum(signal_to_noise() > MinSNR() & max_cor() > MinCor())/length(signal_to_noise()) * 100, status = "success", title = "Good Identifications", display_pct = TRUE)
                        else NULL
-                      )
-            )
                 )
+            ),
+            fluidRow(column(6, 
+                            plotOutput("particle_plot", height = "25vh")),
+                     column(6,
+                            plotOutput("material_plot", height = "25vh"))))    
+    )
 })
 
  output$MyPlotC <- renderPlotly({
@@ -604,6 +618,30 @@ output$progress_bars <- renderUI({
       ) %>%
           filter_spec(., logic = .$metadata$feature_id != "-88")
   })
+  
+  #Thresholded Map Options ----
+  output$particle_plot <- renderPlot({
+      req(!is.null(preprocessed$data))
+      req(particles_logi(), input$collapse_decision)
+      ggplot() +
+          geom_histogram(aes(x = sqrt(thresholded_particles()$metadata$area))) +
+          #scale_x_continuous(trans =  scales::modulus_trans(p = 0, offset = 1)) +
+          #geom_vline(xintercept = MinCor(), color = "red") +
+          theme_minimal() +
+          labs(x = "Nominal Particle Size (√pixels)", y = "Count")
+  })
+  
+  output$material_plot <- renderPlot({
+      req(!is.null(preprocessed$data))
+      req(top_correlation())
+      ggplot() +
+          geom_bar(aes(y = top_correlation()$material_class)) +
+          #scale_x_continuous(trans =  scales::modulus_trans(p = 0, offset = 1)) +
+          #geom_vline(xintercept = MinCor(), color = "red") +
+          theme_minimal() +
+          labs(x = "Count", y = "Material Class")
+  })
+  
   
   # Data Download options ----
   output$download_data <- downloadHandler(

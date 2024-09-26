@@ -389,7 +389,7 @@ dashboardPage(dark = T,
                                                                 fluidRow(
                                                                     box(width = 12,
                                                                         collapsed = T,
-                                                                        footer = tags$small("Define Features"),
+                                                                        footer = tags$small("Options for showing collapsed versions of identification"),
                                                                         title = prettySwitch("collapse_decision",
                                                                                              label = "Collapse Spectra",
                                                                                              inline = T,
@@ -484,7 +484,7 @@ dashboardPage(dark = T,
                                   #background = "black",
                                   label = uiOutput("correlation_head"),
                                   h4(id = "placeholder1", "Upload some data to get started..."),
-                                  uiOutput("progress_bars"),
+                                  uiOutput("choice_names"),
                                   fluidRow(
                                       plotlyOutput("heatmap",inline = T),
                                       plotlyOutput("MyPlotC", inline = T),
@@ -500,7 +500,8 @@ dashboardPage(dark = T,
                                                DT::dataTableOutput("event"))
                                   )
                               )
-                          )
+                          ),
+                      uiOutput("progress_bars")
                       ),
               tabItem("partner", 
                       #Partner With Us tab ----
