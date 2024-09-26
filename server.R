@@ -498,47 +498,37 @@ output$event <- DT::renderDataTable({
 output$progress_bars <- renderUI({
     req(ncol(preprocessed$data$spectra) > 1)
     req(input$threshold_decision | (input$cor_threshold_decision & input$active_identification))
-    
-    if(input$threshold_decision & (!input$cor_threshold_decision | !input$active_identification)){
+    choice_names = c(if(input$cor_threshold_decision & input$active_identification) c("Match Name", "Correlation", "Match ID") 
+                    else NA, 
+                    if(input$threshold_decision) "Signal/Noise"
+                    else NA,
+                    if(input$collapse_decision) "Feature ID"
+                    else NA)
+    choice_names = choice_names[!is.na(choice_names)]
         tagList(
-                fluidRow(
-                    column(6, selectInput(inputId = "map_color", label = "Map Color", choices = if(input$collapse_decision) c("Signal/Noise", "Feature ID") else "Signal/Noise"))
-                ),
             fluidRow(
-                column(4, 
-                       shinyWidgets::progressBar(id = "signal_progress", value = sum(signal_to_noise() > MinSNR())/length(signal_to_noise()) * 100, status = "success", title = "Good Signal", display_pct = TRUE)
-                )
+                column(6, selectInput(inputId = "map_color", 
+                                      label = "Map Color", 
+                                      choices = choice_names)
             )
-        )
-    } else if(!input$threshold_decision & input$cor_threshold_decision & input$active_identification){
-        tagList(
-            fluidRow(
-                column(6, selectInput(inputId = "map_color", label = "Map Color", choices = if(!input$collapse_decision) c("Match Name", "Correlation", "Match ID") else c("Match Name", "Correlation", "Match ID", "Feature ID")))
-            ), 
-            fluidRow(
-                column(4, 
-                       shinyWidgets::progressBar(id = "correlation_progress", value = sum(max_cor() > MinCor())/length(max_cor()) * 100, status = "success", title = "Good Correlations", display_pct = TRUE)
-                )
-            )
-        )
-    } else {
-        tagList(
-            fluidRow(
-                column(6, selectInput(inputId = "map_color", label = "Map Color", choices = if(!input$collapse_decision) c("Match Name", "Correlation", "Match ID", "Signal/Noise") else c("Match Name", "Correlation", "Match ID", "Signal/Noise", "Feature ID")))
             ),
             fluidRow(
                 column(4, 
+                       if(input$threshold_decision)
                        shinyWidgets::progressBar(id = "signal_progress", value = sum(signal_to_noise() > MinSNR())/length(signal_to_noise()) * 100, status = "success", title = "Good Signal", display_pct = TRUE)
-                ),
-                column(4, 
-                       shinyWidgets::progressBar(id = "correlation_progress", value = sum(max_cor() > MinCor())/length(max_cor()) * 100, status = "success", title = "Good Correlations", display_pct = TRUE)
+                       else NULL
+                       ),
+                column(4,
+                       if(input$cor_threshold_decision & input$active_identification) shinyWidgets::progressBar(id = "correlation_progress", value = sum(max_cor() > MinCor())/length(max_cor()) * 100, status = "success", title = "Good Correlations", display_pct = TRUE)
+                       else NULL
                 ),
                 column(4,
+                       if(input$cor_threshold_decision & input$active_identification & input$threshold_decision)
                        shinyWidgets::progressBar(id = "match_progress", value = sum(signal_to_noise() > MinSNR() & max_cor() > MinCor())/length(signal_to_noise()) * 100, status = "success", title = "Good Identifications", display_pct = TRUE)
-                )
+                       else NULL
+                      )
             )
-        )
-    }
+                )
 })
 
  output$MyPlotC <- renderPlotly({
@@ -610,9 +600,9 @@ output$progress_bars <- renderUI({
       else{
           particles_logi <- signal_to_noise() > MinSNR()
       }
-      #collapse_spec(
-      #    def_features(DataR(), features = particles_logi)
-      #) #%>%
+      collapse_spec(
+          def_features(DataR(), features = particles_logi)
+      ) #%>%
          # filter_spec(., logic = .$metadata$feature_id != "-88")
   })
   
