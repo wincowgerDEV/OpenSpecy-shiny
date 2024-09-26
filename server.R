@@ -256,6 +256,18 @@ observeEvent(input$file, {
       }
   })
   
+  particles_logi <- reactive({
+      if(input$active_identification & input$threshold_decision & input$cor_threshold_decision){
+          return(signal_to_noise() > MinSNR() & max_cor() > MinCor())
+      }
+      if(input$threshold_decision){
+          return(signal_to_noise() > MinSNR())
+      }
+      if(input$active_identification & input$cor_threshold_decision){
+          return(max_cor() > MinCor())
+      }
+      return(NULL)
+  })
   
   
   #Identification ----
@@ -502,7 +514,7 @@ output$progress_bars <- renderUI({
                     else NA, 
                     if(input$threshold_decision) "Signal/Noise"
                     else NA,
-                    if(input$collapse_decision) "Feature ID"
+                    if(isTruthy(particles_logi())) "Feature ID"
                     else NA)
     choice_names = choice_names[!is.na(choice_names)]
         tagList(
@@ -547,15 +559,8 @@ output$progress_bars <- renderUI({
       req(!is.null(preprocessed$data))
       req(ncol(preprocessed$data$spectra) > 1)
       #req(input$map_color)
-      if(input$collapse_decision){
-          if(input$active_identification & input$threshold_decision & input$cor_threshold_decision){
-              particles_logi <- signal_to_noise() > MinSNR() & max_cor() > MinCor()
-          }
-          else if(input$threshold_decision){
-              particles_logi <- signal_to_noise() > MinSNR()
-          }
-          #data$metadata$feature_id = ifelse(data$metadata$feature_id == "-88", NA, data$metadata$feature_id)
-          test = def_features(DataR(), features = particles_logi)
+      if(isTruthy(particles_logi())){
+          test = def_features(DataR(), features = particles_logi())
       }
       else{
           test = DataR()
@@ -580,7 +585,7 @@ output$progress_bars <- renderUI({
                    else if(!is.null(max_cor()) & input$map_color == "Match Name"){
                        libraryR()$metadata$material_class[match(names(max_cor()), libraryR()$metadata$sample_name)]
                    }
-                   else if(isTruthy(input$collapse_decision) & input$map_color == "Feature ID"){
+                   else if(isTruthy(particles_logi()) & input$map_color == "Feature ID"){
                        test$metadata$feature_id
                    }
                    else{NULL},
@@ -594,16 +599,10 @@ output$progress_bars <- renderUI({
   })
 
   thresholded_particles <- reactive({
-      if(input$active_identification){
-          particles_logi <- signal_to_noise() > MinSNR() & max_cor() > MinCor()
-      }
-      else{
-          particles_logi <- signal_to_noise() > MinSNR()
-      }
       collapse_spec(
-          def_features(DataR(), features = particles_logi)
-      ) #%>%
-         # filter_spec(., logic = .$metadata$feature_id != "-88")
+          def_features(DataR(), features = particles_logi())
+      ) %>%
+          filter_spec(., logic = .$metadata$feature_id != "-88")
   })
   
   # Data Download options ----

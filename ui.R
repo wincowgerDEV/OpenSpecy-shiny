@@ -389,10 +389,7 @@ dashboardPage(dark = T,
                                                                 fluidRow(
                                                                     box(width = 12,
                                                                         collapsed = T,
-                                                                        footer = tags$small("Sometimes peaks are undersireable. 
-                                                                                     These options will replace peak regions with the mean of their edges. 
-                                                                                     Specify the edge locations of the peaks minimum and maximum wavenumbers to use for flattening.
-                                                                                     Defaults are set to flatten the CO2 region in infrared spectra."),
+                                                                        footer = tags$small("Define Features"),
                                                                         title = prettySwitch("collapse_decision",
                                                                                              label = "Collapse Spectra",
                                                                                              inline = T,
