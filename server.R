@@ -623,7 +623,8 @@ function(input, output, session) {
           info = FALSE
         ),
         rownames = FALSE,
-        style = 'bootstrap',
+        style = 'bootstrap4',
+        class = 'table table-dark',
         caption = "Selection Metadata",
         selection = list(mode = 'none')
       )
@@ -654,7 +655,8 @@ function(input, output, session) {
         rownames = FALSE,
         filter = "top",
         caption = "Selectable Matches",
-        style = "bootstrap",
+        style = "bootstrap4",
+        class = 'table table-dark',
         selection = list(mode = "single", selected = c(1))
       )
     } else{
