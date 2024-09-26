@@ -385,7 +385,20 @@ dashboardPage(dark = T,
                                                                                          min = 1,
                                                                                          max = 6000,
                                                                                          step = 1
-                                                                                     )))
+                                                                                     ))),
+                                                                fluidRow(
+                                                                    box(width = 12,
+                                                                        collapsed = T,
+                                                                        footer = tags$small("Sometimes peaks are undersireable. 
+                                                                                     These options will replace peak regions with the mean of their edges. 
+                                                                                     Specify the edge locations of the peaks minimum and maximum wavenumbers to use for flattening.
+                                                                                     Defaults are set to flatten the CO2 region in infrared spectra."),
+                                                                        title = prettySwitch("collapse_decision",
+                                                                                             label = "Collapse Spectra",
+                                                                                             inline = T,
+                                                                                             value = F,
+                                                                                             status = "success",
+                                                                                             fill = T)))
                                                                              
                                                             )
                                                         )

@@ -213,6 +213,8 @@ observeEvent(input$file, {
                                               derivative = input$derivative_order, 
                                               abs = input$derivative_abs),
                     make_rel = input$make_rel_decision)
+    
+
   })
 
 
@@ -220,7 +222,7 @@ observeEvent(input$file, {
   DataR <- reactive({
     req(!is.null(preprocessed$data))
     if(input$active_preprocessing) {
-        baseline_data()
+            baseline_data()
     }
     else {
         data()
@@ -500,7 +502,7 @@ output$progress_bars <- renderUI({
     if(input$threshold_decision & (!input$cor_threshold_decision | !input$active_identification)){
         tagList(
                 fluidRow(
-                    column(6, selectInput(inputId = "map_color", label = "Map Color", choices = "Signal/Noise"))
+                    column(6, selectInput(inputId = "map_color", label = "Map Color", choices = if(input$collapse_decision) c("Signal/Noise", "Feature ID") else "Signal/Noise"))
                 ),
             fluidRow(
                 column(4, 
@@ -511,7 +513,7 @@ output$progress_bars <- renderUI({
     } else if(!input$threshold_decision & input$cor_threshold_decision & input$active_identification){
         tagList(
             fluidRow(
-                column(6, selectInput(inputId = "map_color", label = "Map Color", choices = c("Match Name", "Correlation", "Match ID")))
+                column(6, selectInput(inputId = "map_color", label = "Map Color", choices = if(!input$collapse_decision) c("Match Name", "Correlation", "Match ID") else c("Match Name", "Correlation", "Match ID", "Feature ID")))
             ), 
             fluidRow(
                 column(4, 
@@ -522,7 +524,7 @@ output$progress_bars <- renderUI({
     } else {
         tagList(
             fluidRow(
-                column(6, selectInput(inputId = "map_color", label = "Map Color", choices = c("Match Name", "Correlation", "Match ID", "Signal/Noise")))
+                column(6, selectInput(inputId = "map_color", label = "Map Color", choices = if(!input$collapse_decision) c("Match Name", "Correlation", "Match ID", "Signal/Noise") else c("Match Name", "Correlation", "Match ID", "Signal/Noise", "Feature ID")))
             ),
             fluidRow(
                 column(4, 
@@ -555,8 +557,21 @@ output$progress_bars <- renderUI({
       req(!is.null(preprocessed$data))
       req(ncol(preprocessed$data$spectra) > 1)
       #req(input$map_color)
-      
-      heatmap_spec(x = DataR(), 
+      if(input$collapse_decision){
+          if(input$active_identification & input$threshold_decision & input$cor_threshold_decision){
+              particles_logi <- signal_to_noise() > MinSNR() & max_cor() > MinCor()
+          }
+          else if(input$threshold_decision){
+              particles_logi <- signal_to_noise() > MinSNR()
+          }
+          #data$metadata$feature_id = ifelse(data$metadata$feature_id == "-88", NA, data$metadata$feature_id)
+          test = def_features(DataR(), features = particles_logi)
+      }
+      else{
+          test = DataR()
+      }
+
+      heatmap_spec(x = test, 
                         z = if(!is.null(max_cor()) & !isTruthy(input$map_color)){
                                 max_cor()
                         }
@@ -575,6 +590,9 @@ output$progress_bars <- renderUI({
                    else if(!is.null(max_cor()) & input$map_color == "Match Name"){
                        libraryR()$metadata$material_class[match(names(max_cor()), libraryR()$metadata$sample_name)]
                    }
+                   else if(isTruthy(input$collapse_decision) & input$map_color == "Feature ID"){
+                       test$metadata$feature_id
+                   }
                    else{NULL},
                         sn = signif(signal_to_noise(), 2), 
                         cor = if(is.null(max_cor())){max_cor()} else{signif(max_cor(), 2)}, 
@@ -592,10 +610,10 @@ output$progress_bars <- renderUI({
       else{
           particles_logi <- signal_to_noise() > MinSNR()
       }
-      collapse_spec(
-          def_features(DataR(), features = particles_logi)
-      ) %>%
-          filter_spec(., logic = .$metadata$feature_id != "-88")
+      #collapse_spec(
+      #    def_features(DataR(), features = particles_logi)
+      #) #%>%
+         # filter_spec(., logic = .$metadata$feature_id != "-88")
   })
   
   # Data Download options ----
