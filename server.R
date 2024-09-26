@@ -363,10 +363,11 @@ observeEvent(input$file, {
   output$cor_plot <- renderPlot({
       req(!is.null(preprocessed$data))
       ggplot() +
-          geom_histogram(aes(x = max_cor())) +
+          geom_histogram(aes(x = max_cor()), fill = "white") +
           scale_x_continuous(trans =  scales::modulus_trans(p = 0, offset = 1)) +
           geom_vline(xintercept = MinCor(), color = "red") +
-          theme_minimal()
+          theme_black_minimal() +
+          labs(x = "Correlation")
   })
   
   #Metadata for all the top correlations.
@@ -384,7 +385,6 @@ observeEvent(input$file, {
                  good_matches = max_cor() > MinCor() & signal_to_noise() > MinSNR()) %>%
           {if(!grepl("^ai$", input$id_strategy)){bind_cols(., DataR()$metadata)} else{.}} %>%
           {if(!grepl("^ai$", input$id_strategy)){left_join(., libraryR()$metadata, by = c("library_id" = "sample_name"))} else{.}}
-          
   })
   
   #Metadata for all the matches for a single unknown spectrum
@@ -477,10 +477,11 @@ match_metadata <- reactive({
 output$snr_plot <- renderPlot({
     req(!is.null(preprocessed$data))
     ggplot() +
-        geom_histogram(aes(x = signal_to_noise())) +
+        geom_histogram(aes(x = signal_to_noise()), fill = "white") +
         scale_x_continuous(trans =  scales::modulus_trans(p = 0, offset = 1)) +
         geom_vline(xintercept = MinSNR(), color = "red") +
-        theme_minimal()
+        theme_black_minimal() +
+        labs(x = "Signal/Noise")
 })
 
 #Table of metadata for the selected library value
@@ -633,10 +634,11 @@ output$progress_bars <- renderUI({
       req(!is.null(preprocessed$data))
       req(particles_logi(), input$collapse_decision)
       ggplot() +
-          geom_histogram(aes(x = sqrt(thresholded_particles()$metadata$area))) +
+          geom_histogram(aes(x = sqrt(thresholded_particles()$metadata$area)), 
+                         fill = "white") +
           #scale_x_continuous(trans =  scales::modulus_trans(p = 0, offset = 1)) +
           #geom_vline(xintercept = MinCor(), color = "red") +
-          theme_minimal() +
+          theme_black_minimal() +
           labs(x = "Nominal Particle Size (√pixels)", y = "Count")
   })
   
@@ -644,10 +646,11 @@ output$progress_bars <- renderUI({
       req(!is.null(preprocessed$data))
       req(top_correlation())
       ggplot() +
-          geom_bar(aes(y = top_correlation()$material_class)) +
+          geom_bar(aes(y = top_correlation()$material_class), 
+                   fill = "white") +
           #scale_x_continuous(trans =  scales::modulus_trans(p = 0, offset = 1)) +
           #geom_vline(xintercept = MinCor(), color = "red") +
-          theme_minimal() +
+          theme_black_minimal() +
           labs(x = "Count", y = "Material Class")
   })
   

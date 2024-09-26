@@ -28,6 +28,30 @@ library(ggplot2)
 if(droptoken) library(aws.s3)
 
 
+# Define the custom theme
+theme_black_minimal <- function(base_size = 11, base_family = "") {
+    theme_minimal(base_size = base_size, base_family = base_family) +
+        theme(
+            plot.background = element_rect(fill = "black", color = NA),
+            panel.background = element_rect(fill = "black", color = NA),
+            panel.grid.major = element_line(color = "white"),
+            panel.grid.minor = element_line(color = "white"),
+            axis.line = element_line(color = "white"),
+            axis.ticks = element_line(color = "white"),
+            axis.text = element_text(color = "white"),
+            axis.title = element_text(color = "white"),
+            plot.title = element_text(color = "white", hjust = 0.5),
+            plot.subtitle = element_text(color = "white", hjust = 0.5),
+            plot.caption = element_text(color = "white"),
+            legend.text = element_text(color = "white"),
+            legend.title = element_text(color = "white"),
+            legend.background = element_rect(fill = "black"),
+            legend.key = element_rect(fill = "black"),
+            strip.background = element_rect(fill = "black", color = NA),
+            strip.text = element_text(color = "white")
+        )
+}
+
 # Global config ----
 if(config_exists){
     conf <- config::get() #Add config = "shinyapps" for ec2 server
