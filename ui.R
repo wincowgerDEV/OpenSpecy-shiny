@@ -395,7 +395,29 @@ dashboardPage(dark = T,
                                                                                              inline = T,
                                                                                              value = F,
                                                                                              status = "success",
-                                                                                             fill = T)))
+                                                                                             fill = T)
+                                                                        
+                                                                        )), 
+                                                                fluidRow(
+                                                                    box(width = 12,
+                                                                        collapsed = T,
+                                                                        footer = tags$small("Options for spatial Gaussian smoothing of hyperspectral images"),
+                                                                        title = prettySwitch("spatial_decision",
+                                                                                             label = "Spatial Smooth",
+                                                                                             inline = T,
+                                                                                             value = F,
+                                                                                             status = "success",
+                                                                                             fill = T),
+                                                                        
+                                                                        numericInput(
+                                                                            "sigma",
+                                                                            "Spatial Standard Deviation",
+                                                                            value = 1,
+                                                                            min = 0.01,
+                                                                            max = 3,
+                                                                            step = 0.01
+                                                                        )
+                                                                    ))
                                                                              
                                                             )
                                                         )

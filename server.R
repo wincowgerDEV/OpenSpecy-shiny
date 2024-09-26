@@ -184,7 +184,7 @@ observeEvent(input$file, {
   baseline_data <- reactive({
     req(!is.null(preprocessed$data))
     req(input$active_preprocessing)
-    process_spec(x = data(),
+    processed = process_spec(x = data(),
                     active = input$active_preprocessing,
                     adj_intens = input$intensity_decision, 
                     adj_intens_args = list(type = input$intensity_corr),
@@ -214,7 +214,10 @@ observeEvent(input$file, {
                                               abs = input$derivative_abs),
                     make_rel = input$make_rel_decision)
     
-
+    if(input$spatial_decision){
+        processed = spatial_smooth(processed, sigma = c(input$sigma, input$sigma, input$sigma))
+    }
+    processed
   })
 
 
