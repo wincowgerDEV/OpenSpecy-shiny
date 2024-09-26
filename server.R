@@ -870,7 +870,8 @@ function(input, output, session) {
         fwrite(testdata, file)
       }
       if (input$download_selection == "Test Map") {
-        file.copy(read_extdata("CA_tiny_map.zip"), file)
+        # remove read_extdata as it is dependent on OpenSpecy ext
+        file.copy(("data/CA_tiny_map.zip"), file)
       }
       if (input$download_selection == "Your Spectra") {
         your_spec <- DataR()
