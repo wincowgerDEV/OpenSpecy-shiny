@@ -908,5 +908,5 @@ function(input, output, session) {
       data_click$data <- event_data("plotly_click", source = "heat_plot")[["pointNumber"]] + 1
     }
   })
- 
+
 }
