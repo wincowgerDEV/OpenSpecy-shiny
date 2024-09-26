@@ -1,6 +1,5 @@
 function(input, output, session) {
   #Setup ----
-  browser()
   #URL Query
   observe({
     query <- parseQueryString(session$clientData$url_search)
@@ -140,51 +139,23 @@ function(input, output, session) {
         }
       })
     } else {
-      NULL
+      preprocessed$data <- NULL
     }
   })
   
-  #The matching library to use.
+  #The matching library to use. 
   libraryR <- reactive({
-    #req(input$active_identification)
-    if (isTruthy(input$active_identification)) {
-      if (input$id_strategy == "mediod") {
-        if (file.exists("data/mediod.rds")) {
-          library <- read_any("data/mediod.rds")
-        }
-        return(library)
+    req(input$active_identification)
+    if(input$id_strategy == "mediod"){
+      if(file.exists("data/mediod.rds")){
+        library <- read_any("data/mediod.rds")
       }
-      else if (grepl("ai$", input$id_strategy)) {
-        if (file.exists("data/model.rds")) {
-          library <- read_any("data/model.rds")
-        }
-        
-        return(library)
-      }
-      else if (grepl("nobaseline$", input$id_strategy)) {
-        if (file.exists("data/nobaseline.rds")) {
-          library <- read_any("data/nobaseline.rds")
-        }
-        
-      }
-      else if (grepl("deriv$", input$id_strategy)) {
-        if (file.exists("data/derivative.rds")) {
-          library <- read_any("data/derivative.rds")
-        }
-        
-      }
-      if (grepl("^both", input$id_strategy)) {
-        library
-      }
-      else if (grepl("^ftir", input$id_strategy)) {
-        filter_spec(library, logic = library$metadata$spectrum_type == "ftir")
-      }
-      else if (grepl("^raman", input$id_strategy)) {
-        filter_spec(library, logic = library$metadata$spectrum_type == "raman")
-      }
-    } else{
-      NULL
+      return(library)
     }
+    if(grepl("^both", input$id_strategy)) {
+      library
+    }
+    
   })
   
   
@@ -193,8 +164,11 @@ function(input, output, session) {
   # Redirecting preprocessed data to be a reactive variable. Not totally sure why this is happening in addition to the other.
   data <- reactive({
     #req(input$file)
-    if (input$file) {
+    if (isTruthy(input$file)) {
       preprocessed$data
+    }
+    else{
+      NULL
     }
   })
   
