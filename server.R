@@ -43,7 +43,6 @@ function(input, output, session) {
       #req(input$file)
       data_click$data <- 1
       preprocessed$data <- NULL
-      
       if (!all(
         grepl(
           "(\\.tsv$)|(\\.dat$)|(\\.hdr$)|(\\.json$)|(\\.rds$)|(\\.yml$)|(\\.csv$)|(\\.asp$)|(\\.spa$)|(\\.spc$)|(\\.jdx$)|(\\.dx$)|(\\.RData$)|(\\.zip$)|(\\.[0-9]$)",
@@ -675,11 +674,11 @@ function(input, output, session) {
     # )
     if (isTruthy(
       ncol(preprocessed$data$spectra) > 1 &&
-      input$threshold_decision ||
+     (input$threshold_decision ||
       (
         input$cor_threshold_decision &&
         input$active_identification
-      )
+      ))
     )) {
       if (input$threshold_decision &
           (!input$cor_threshold_decision |
@@ -764,7 +763,9 @@ function(input, output, session) {
           )
         ))
       }
-    } else{
+  
+    }
+    else{
       NULL
     }
   })
