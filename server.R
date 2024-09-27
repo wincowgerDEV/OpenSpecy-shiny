@@ -142,6 +142,33 @@ function(input, output, session) {
     }
   })
   
+  # #The matching library to use. 
+  # libraryR <- reactive({
+  #   if (isTruthy(input$active_identification)) {
+  #     # Case for medoid
+  #     if (input$id_strategy == "mediod") {
+  #       if (file.exists("data/mediod.rds")) {
+  #         library <- read_any("data/mediod.rds")
+  #       }
+  #       return(library)
+  #     }
+  #     # Case for "ai$"
+  #     else if (grepl("ai$", input$id_strategy)) {
+  #       if (file.exists("data/model.rds")) {
+  #         library <- read_any("data/model.rds")
+  #       }
+  #       return(library)
+  #     }
+  #     else if (grepl("^both", input$id_strategy)) {
+  #       return(library)
+  #     }
+  #   }
+  #   else{
+  #     NULL
+  #   }
+  #   
+  # })
+  
   #The matching library to use. 
   libraryR <- reactive({
     req(input$active_identification)
@@ -151,12 +178,35 @@ function(input, output, session) {
       }
       return(library)
     }
+    else if(grepl("ai$", input$id_strategy)) {
+      if(file.exists("data/model.rds")){
+        library <- read_any("data/model.rds")
+      }
+      
+      return(library)
+    }
+    else if(grepl("nobaseline$", input$id_strategy)) {
+      if(file.exists("data/nobaseline.rds")){
+        library <- read_any("data/nobaseline.rds")
+      }
+      
+    }
+    else if(grepl("deriv$", input$id_strategy)){
+      if(file.exists("data/derivative.rds")){
+        library <- read_any("data/derivative.rds")
+      }
+      
+    }
     if(grepl("^both", input$id_strategy)) {
       library
     }
-    
+    else if (grepl("^ftir", input$id_strategy)){
+      filter_spec(library, logic = library$metadata$spectrum_type == "ftir")
+    }
+    else if (grepl("^raman", input$id_strategy)){
+      filter_spec(library, logic = library$metadata$spectrum_type == "raman")
+    }
   })
-  
   
   # Corrects spectral intensity units using the user specified correction
   
