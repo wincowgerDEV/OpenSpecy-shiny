@@ -125,7 +125,7 @@ observeEvent(input$file, {
   #The matching library to use. 
   libraryR <- reactive({
       req(input$active_identification)
-      if(input$id_strategy == "mediod"){
+      if(input$id_strategy == "medoid"){
           if(file.exists("data/mediod.rds")){
               library <- read_any("data/mediod.rds")
           }
@@ -159,13 +159,13 @@ observeEvent(input$file, {
               library <- load_lib("derivative")
           }
       }
-      if(grepl("^both", input$id_strategy)) {
+      if(grepl("^both", input$id_spec_type)) {
           library
       }
-      else if (grepl("^ftir", input$id_strategy)){
+      else if (grepl("^ftir", input$id_spec_type)){
           filter_spec(library, logic = library$metadata$spectrum_type == "ftir")
       }
-      else if (grepl("^raman", input$id_strategy)){
+      else if (grepl("^raman", input$id_spec_type)){
           filter_spec(library, logic = library$metadata$spectrum_type == "raman")
       }
   })
