@@ -387,7 +387,9 @@ observeEvent(input$file, {
                  good_signal = signal_to_noise() > MinSNR(), 
                  good_matches = max_cor() > MinCor() & signal_to_noise() > MinSNR()) %>%
           {if(!grepl("^ai$", input$id_strategy)){bind_cols(., DataR()$metadata)} else{.}} %>%
-          {if(!grepl("^ai$", input$id_strategy)){left_join(., libraryR()$metadata, by = c("library_id" = "sample_name"))} else{.}}
+          {if(!grepl("^ai$", input$id_strategy)){left_join(., libraryR()$metadata, by = c("library_id" = "sample_name"))} else{.}} %>%
+          .[, !sapply(., OpenSpecy::is_empty_vector), with = F] %>%
+          select(file_name, material_class, match_val, signal_to_noise, everything())
   })
   
   #Metadata for all the matches for a single unknown spectrum
