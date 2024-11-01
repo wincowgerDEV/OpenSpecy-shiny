@@ -126,13 +126,13 @@ observeEvent(input$file, {
   libraryR <- reactive({
       req(input$active_identification)
       if(input$id_strategy == "medoid"){
-          if(file.exists("data/mediod.rds")){
-              library <- read_any("data/mediod.rds")
+          if(file.exists("data/medoid.rds")){
+              library <- read_any("data/medoid.rds")
           }
           else{
-              library <- load_lib("mediod")
+              library <- load_lib("medoid")
               }
-          return(library)
+          #return(library)
       }
       else if(grepl("ai$", input$id_strategy)) {
           if(file.exists("data/model.rds")){
@@ -378,7 +378,7 @@ observeEvent(input$file, {
       req(!is.null(preprocessed$data))
       req(input$active_identification)
       data.table(object_id = names(DataR()$spectra), 
-                 library_id = names(max_cor()),
+                 sample_name = names(max_cor()),
                  match_val = max_cor(), 
                  match_threshold = MinCor(),
                  good_correlations = max_cor() > MinCor(),
@@ -387,9 +387,9 @@ observeEvent(input$file, {
                  good_signal = signal_to_noise() > MinSNR(), 
                  good_matches = max_cor() > MinCor() & signal_to_noise() > MinSNR()) %>%
           {if(!grepl("^ai$", input$id_strategy)){bind_cols(., DataR()$metadata)} else{.}} %>%
-          {if(!grepl("^ai$", input$id_strategy)){left_join(., libraryR()$metadata, by = c("library_id" = "sample_name"))} else{.}} %>%
+          {if(!grepl("^ai$", input$id_strategy)){left_join(., libraryR()$metadata, by = c("sample_name"))} else{.}} %>%
           .[, !sapply(., OpenSpecy::is_empty_vector), with = F] %>%
-          select(file_name, material_class, match_val, signal_to_noise, everything())
+          select(file_name, col_id, material_class, spectrum_identity, match_val, signal_to_noise, everything())
   })
   
   #Metadata for all the matches for a single unknown spectrum
@@ -398,20 +398,14 @@ observeEvent(input$file, {
       req(!grepl("^ai$", input$id_strategy))
       if(is.null(preprocessed$data)){
           libraryR()$metadata %>%
-              mutate("Pearson's r" = NA) %>%
-              rename("Material" = "spectrum_identity",
-                     "Plastic Pollution Category" = "material_class",
-                     "library_id" = "sample_name")
+              mutate("match_val" = NA) 
       }
       else{
           data.table(object_id = names(DataR()$spectra)[data_click$data], 
-                     library_id = names(libraryR()$spectra),
+                     sample_name = names(libraryR()$spectra),
                      match_val = c(correlation()[,data_click$data]))[order(-match_val),] %>%
-              left_join(libraryR()$metadata, by = c("library_id" = "sample_name")) %>%
-              mutate(match_val = signif(match_val, 2)) %>%
-              rename("Material" = "spectrum_identity",
-              "Pearson's r" = "match_val",
-              "Plastic Pollution Category" = "material_class")
+              left_join(libraryR()$metadata, by = c("sample_name")) %>%
+              mutate(match_val = signif(match_val, 2)) 
       }
   })
 
@@ -426,8 +420,8 @@ observeEvent(input$file, {
       else{
          #need to make reactive
           id_select <-  ifelse(is.null(input$event_rows_selected),
-                              matches_to_single()[[1,"library_id"]],
-                              matches_to_single()[[input$event_rows_selected,"library_id"]])#"00087f78d45c571524fce483ef10752e"	#matches_to_single[[1,column_name]]
+                              matches_to_single()[[1,"sample_name"]],
+                              matches_to_single()[[input$event_rows_selected,"sample_name"]])#"00087f78d45c571524fce483ef10752e"	#matches_to_single[[1,column_name]]
               
           # Get data from filter_spec
           filter_spec(libraryR(), logic = id_select)
@@ -441,18 +435,18 @@ observeEvent(input$file, {
       req(!grepl("^ai$", input$id_strategy))
       if(is.null(preprocessed$data)){
           matches_to_single() %>%
-              dplyr::select("Material",
-                            "Plastic Pollution Category", 
+              dplyr::select("material_class",
+                            "spectrum_identity", 
                             "organization",
-                            "library_id")
+                            "sample_name")
       }
       else{
           matches_to_single() %>%
-              dplyr::select("Pearson's r",
-                            "Material",
-                            "Plastic Pollution Category", 
+              dplyr::select("match_val",
+                            "material_class",
+                            "spectrum_identity", 
                             "organization",
-                            "library_id")
+                            "sample_name")
       }
   })
 
@@ -462,17 +456,18 @@ match_metadata <- reactive({
     if(input$active_identification & !grepl("^ai$", input$id_strategy)){
         selected_match <- matches_to_single()[input$event_rows_selected, ]
         dataR_metadata <- DataR()$metadata
-        
+        dataR_metadata$signal_to_noise <- signal_to_noise()
         setkey(dataR_metadata, col_id)
         setkey(selected_match, object_id)
         
         result <- dataR_metadata[selected_match, on = c(col_id = "object_id")]
-        result <- result[, !sapply(result, OpenSpecy::is_empty_vector), with = FALSE]
+        result <- result[, !sapply(result, OpenSpecy::is_empty_vector), with = FALSE] %>%
+            select(file_name, col_id, material_class, spectrum_identity, match_val, signal_to_noise, everything())
         result
     }
     else{
         DataR()$metadata[data_click$data,] %>%
-            .[, !sapply(., OpenSpecy::is_empty_vector), with = F]
+            .[, !sapply(., OpenSpecy::is_empty_vector), with = F]  
     }
 })
 
@@ -510,7 +505,7 @@ output$event <- DT::renderDataTable({
     req(!grepl("^ai$", input$id_strategy))
     datatable(top_matches() %>%
                   mutate(organization = as.factor(organization),
-                         `Plastic Pollution Category` = as.factor(`Plastic Pollution Category`)),
+                         material_class = as.factor(material_class)),
               options = list(searchHighlight = TRUE,
                              scrollX = TRUE,
                              sDom  = '<"top">lrt<"bottom">ip',

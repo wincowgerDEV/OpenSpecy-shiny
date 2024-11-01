@@ -66,14 +66,15 @@ if(isTruthy(conf$log)) {
   }
 }
 
-if(is(tryCatch(check_lib(),error=function(e) e, warning=function(w) w), "warning") & !all(file.exists("data/mediod.rds"), file.exists("data/model.rds"), file.exists("data/nobaseline.rds"), file.exists("data/derivative.rds"))){
-    get_lib(type = c("derivative", "nobaseline", "mediod", "model"))
+if(is(tryCatch(check_lib(c("derivative", "nobaseline", "medoid", "model")),error=function(e) e, warning=function(w) w), "warning") & !all(file.exists("data/mediod.rds"), file.exists("data/model.rds"), file.exists("data/nobaseline.rds"), file.exists("data/derivative.rds"))){
+    get_lib(type = c("derivative", "nobaseline", "medoid", "model"))
 }
 
 # Load all data ----
 load_data <- function() {
   data("raman_hdpe")
-  
+ 
+    
   testdata <-  data.table(wavenumber = raman_hdpe$wavenumber, 
                  intensity = raman_hdpe$spectra$intensity)
 
