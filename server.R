@@ -347,10 +347,14 @@ observeEvent(input$file, {
       req(input$active_identification)
       req(grepl("^model$", input$lib_type))
       
-      rn <- runif(n = length(unique(libraryR()$variables_in)))
-      fill <- as_OpenSpecy(as.numeric(unique(libraryR()$variables_in)),
+      rn <- runif(n = length(unique(libraryR()$all_variables)))
+      fill <- as_OpenSpecy(as.numeric(unique(libraryR()$all_variables)),
                            spectra = data.frame(rn))
-      match_spec(DataR(), library = libraryR(), conform = T, na.rm = T, fill = fill)
+      
+      data <- conform_spec(DataR(), range = fill$wavenumber,
+                           res = NULL)
+      
+      match_spec(data, library = libraryR(), na.rm = T, fill = fill)
   })
   
   #The maximum correlation or AI value. 
@@ -392,24 +396,7 @@ observeEvent(input$file, {
           labs(x = "Correlation")
   })
   
-  #Metadata for all the top correlations.
-  top_correlation <- reactive({
-      req(!is.null(preprocessed$data))
-      req(input$active_identification)
-      data.table(object_id = names(DataR()$spectra), 
-                 sample_name = names(max_cor()),
-                 match_val = max_cor(), 
-                 match_threshold = MinCor(),
-                 good_correlations = max_cor() > MinCor(),
-                 signal_to_noise = signal_to_noise(), 
-                 signal_threshold = MinSNR(),
-                 good_signal = signal_to_noise() > MinSNR(), 
-                 good_matches = max_cor() > MinCor() & signal_to_noise() > MinSNR()) %>%
-          {if(!grepl("^model$", input$lib_type)){bind_cols(., DataR()$metadata)} else{.}} %>%
-          {if(!grepl("^model$", input$lib_type)){left_join(., libraryR()$metadata %>% select(-file_name, -col_id), by = c("sample_name"))} else{.}} %>%
-          .[, !sapply(., OpenSpecy::is_empty_vector), with = F] %>%
-          select(file_name, col_id, material_class, spectrum_identity, match_val, signal_to_noise, everything())
-  })
+
   
   #Metadata for all the matches for a single unknown spectrum
   matches_to_single <- reactive({
@@ -663,9 +650,25 @@ output$progress_bars <- renderUI({
   
   output$material_plot <- renderPlot({
       req(!is.null(preprocessed$data))
-      req(top_correlation())
+      
+      #Metadata for all the top correlations.
+      top_correlation <- data.table(object_id = names(DataR()$spectra), 
+                     sample_name = names(max_cor()),
+                     match_val = max_cor(), 
+                     match_threshold = MinCor(),
+                     good_correlations = max_cor() > MinCor(),
+                     signal_to_noise = signal_to_noise(), 
+                     signal_threshold = MinSNR(),
+                     good_signal = signal_to_noise() > MinSNR(), 
+                     good_matches = max_cor() > MinCor() & signal_to_noise() > MinSNR()) %>%
+              {if(!grepl("^model$", input$lib_type)){bind_cols(., DataR()$metadata)} else{.}} %>%
+              {if(!grepl("^model$", input$lib_type)){left_join(., libraryR()$metadata %>% select(-file_name, -col_id), by = c("sample_name"))} else{.}} %>%
+              .[, !sapply(., OpenSpecy::is_empty_vector), with = F] %>%
+              select(file_name, col_id, material_class, spectrum_identity, match_val, signal_to_noise, everything())
+      
+      
       ggplot() +
-          geom_bar(aes(y = top_correlation()$material_class), 
+          geom_bar(aes(y = top_correlation$material_class), 
                    fill = "white") +
           #scale_x_continuous(trans =  scales::modulus_trans(p = 0, offset = 1)) +
           #geom_vline(xintercept = MinCor(), color = "red") +
