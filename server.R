@@ -688,7 +688,10 @@ output$progress_bars <- renderUI({
               min = 1,
               max = ncol(libraryR()$spectra),
               step = 1
-          )
+          ),
+          selectInput(inputId = "columns_selected", 
+                      label = "Columns to save", 
+                      choices = c("All", "Simple"))
       )
   })
   output$download_data <- downloadHandler(
@@ -725,7 +728,8 @@ output$progress_bars <- renderUI({
                                good_matches = match_val > match_threshold & signal_to_noise > signal_threshold) %>%
                         .[, !sapply(., OpenSpecy::is_empty_vector), with = F] %>%
                         select(file_name, col_id, material_class, spectrum_identity, match_val, signal_to_noise, everything()) %>%
-                        .[order(-match_val), .SD[1:input$top_n_input], by = col_id]    
+                        .[order(-match_val), .SD[1:input$top_n_input], by = col_id] %>%
+                        {if(grepl("Simple", input$columns_selected)){select(., file_name, col_id, material_class, match_val, signal_to_noise)} else{.}}
 
                     fwrite(all_matches, file) 
                 }
