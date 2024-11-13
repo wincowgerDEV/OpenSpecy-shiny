@@ -24,6 +24,7 @@ library(OpenSpecy)
 library(bs4Dash)
 #library(glmnet)
 library(ggplot2)
+library(reshape2)
 
 if(droptoken) library(aws.s3)
 
@@ -66,8 +67,24 @@ if(isTruthy(conf$log)) {
   }
 }
 
-if(is(tryCatch(check_lib(c("derivative", "nobaseline", "medoid", "model")),error=function(e) e, warning=function(w) w), "warning") & !all(file.exists("data/mediod.rds"), file.exists("data/model.rds"), file.exists("data/nobaseline.rds"), file.exists("data/derivative.rds"))){
-    get_lib(type = c("derivative", "nobaseline", "medoid", "model"))
+if(is(tryCatch(check_lib(c("derivative", 
+                           "nobaseline", 
+                           "medoid_derivative", 
+                           "medoid_nobaseline", 
+                           "model_derivative", 
+                           "model_nobaseline")),error=function(e) e, warning=function(w) w), "warning") &
+   !all(file.exists("data/mediod_derivative.rds"), 
+        file.exists("data/model_derivative.rds"), 
+        file.exists("data/mediod_nobaseline.rds"), 
+        file.exists("data/model_nobaseline.rds"),
+        file.exists("data/nobaseline.rds"), 
+        file.exists("data/derivative.rds"))){
+    get_lib(type = c("derivative", 
+                     "nobaseline", 
+                     "medoid_derivative", 
+                     "medoid_nobaseline", 
+                     "model_derivative", 
+                     "model_nobaseline"))
 }
 
 # Load all data ----

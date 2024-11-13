@@ -125,22 +125,40 @@ observeEvent(input$file, {
   #The matching library to use. 
   libraryR <- reactive({
       req(input$active_identification)
-      if(input$id_strategy == "medoid"){
-          if(file.exists("data/medoid.rds")){
-              library <- read_any("data/medoid.rds")
+      if(input$id_strategy == "deriv" & input$lib_type == "medoid"){
+          if(file.exists("data/medoid_derivative.rds")){
+              library <- read_any("data/medoid_derivative.rds")
           }
           else{
-              library <- load_lib("medoid")
+              library <- load_lib("medoid_derivative")
               }
           #return(library)
       }
-      else if(grepl("ai$", input$id_strategy)) {
-          if(file.exists("data/model.rds")){
-              library <- read_any("data/model.rds")
+      else if(input$id_strategy == "nobaseline" & input$lib_type == "medoid"){
+          if(file.exists("data/medoid_nobaseline.rds")){
+              library <- read_any("data/medoid_nobaseline.rds")
           }
           else{
-              library <- load_lib("model")
+              library <- load_lib("medoid_nobaseline")
+          }
+          #return(library)
+      }
+      else if(input$id_strategy == "deriv" & input$lib_type == "model") {
+          if(file.exists("data/model_derivative.rds")){
+              library <- read_any("data/model_derivative.rds")
+          }
+          else{
+              library <- load_lib("model_derivative")
               }
+          return(library)
+      }
+      else if(input$id_strategy == "nobaseline" & input$lib_type == "model") {
+          if(file.exists("data/model_nobaseline.rds")){
+              library <- read_any("data/model_nobaseline.rds")
+          }
+          else{
+              library <- load_lib("model_nobaseline")
+          }
           return(library)
       }
       else if(grepl("nobaseline$", input$id_strategy)) {
@@ -228,7 +246,7 @@ observeEvent(input$file, {
             baseline_data()
     }
     else {
-        data()
+            data()
     }
   })
 
@@ -314,7 +332,7 @@ observeEvent(input$file, {
   correlation <- reactive({
       req(!is.null(preprocessed$data))
       req(input$active_identification)
-      req(!grepl("^ai$", input$id_strategy))
+      req(!grepl("^model$", input$lib_type))
       withProgress(message = 'Analyzing Spectrum', value = 1/3, {
       cor_spec(x = DataR(), 
                library = libraryR(),
@@ -327,11 +345,12 @@ observeEvent(input$file, {
   ai_output <- reactive({ #tested working. 
       req(!is.null(preprocessed$data))
       req(input$active_identification)
-      req(input$id_strategy == "ai")
+      req(grepl("^model$", input$lib_type))
+      
       rn <- runif(n = length(unique(libraryR()$variables_in)))
       fill <- as_OpenSpecy(as.numeric(unique(libraryR()$variables_in)),
                            spectra = data.frame(rn))
-      match_spec(DataR(), library = libraryR(), na.rm = T, fill = fill)
+      match_spec(DataR(), library = libraryR(), conform = T, na.rm = T, fill = fill)
   })
   
   #The maximum correlation or AI value. 
@@ -339,10 +358,10 @@ observeEvent(input$file, {
       req(!is.null(preprocessed$data))
       #req(input$active_identification)
       if(isTruthy(input$active_identification)){
-          if(!grepl("^ai$", input$id_strategy)){
+          if(!grepl("^model$", input$lib_type)){
           max_cor_named(correlation())
       }
-      else if(input$id_strategy == "ai"){
+      else if(input$lib_type == "model"){
           ai <- signif(ai_output()[["value"]], 2)
           names(ai) <- ai_output()[["name"]]
           ai
@@ -386,8 +405,8 @@ observeEvent(input$file, {
                  signal_threshold = MinSNR(),
                  good_signal = signal_to_noise() > MinSNR(), 
                  good_matches = max_cor() > MinCor() & signal_to_noise() > MinSNR()) %>%
-          {if(!grepl("^ai$", input$id_strategy)){bind_cols(., DataR()$metadata)} else{.}} %>%
-          {if(!grepl("^ai$", input$id_strategy)){left_join(., libraryR()$metadata, by = c("sample_name"))} else{.}} %>%
+          {if(!grepl("^model$", input$lib_type)){bind_cols(., DataR()$metadata)} else{.}} %>%
+          {if(!grepl("^model$", input$lib_type)){left_join(., libraryR()$metadata %>% select(-file_name, -col_id), by = c("sample_name"))} else{.}} %>%
           .[, !sapply(., OpenSpecy::is_empty_vector), with = F] %>%
           select(file_name, col_id, material_class, spectrum_identity, match_val, signal_to_noise, everything())
   })
@@ -395,7 +414,7 @@ observeEvent(input$file, {
   #Metadata for all the matches for a single unknown spectrum
   matches_to_single <- reactive({
       req(input$active_identification)
-      req(!grepl("^ai$", input$id_strategy))
+      req(!grepl("^model$", input$lib_type))
       if(is.null(preprocessed$data)){
           libraryR()$metadata %>%
               mutate("match_val" = NA) 
@@ -413,7 +432,7 @@ observeEvent(input$file, {
   match_selected <- reactive({# Default to first row if not yet clicked
       #req(input$file)
       #req(input$active_identification)
-      req(!grepl("^ai$", input$id_strategy))
+      req(!grepl("^model$", input$lib_type))
       if(!input$active_identification) {
           as_OpenSpecy(x = numeric(), spectra = data.table(empty = numeric()))
       }
@@ -432,7 +451,7 @@ observeEvent(input$file, {
   top_matches <- reactive({
       #req(input$file)
       req(input$active_identification)
-      req(!grepl("^ai$", input$id_strategy))
+      req(!grepl("^model$", input$lib_type))
       if(is.null(preprocessed$data)){
           matches_to_single() %>%
               dplyr::select("material_class",
@@ -453,7 +472,7 @@ observeEvent(input$file, {
   #Create the data table that goes below the plot which provides extra metadata. 
 match_metadata <- reactive({
     req(!is.null(preprocessed$data))
-    if(input$active_identification & !grepl("^ai$", input$id_strategy)){
+    if(input$active_identification & !grepl("^model$", input$lib_type)){
         selected_match <- matches_to_single()[input$event_rows_selected, ]
         dataR_metadata <- DataR()$metadata
         dataR_metadata$signal_to_noise <- signal_to_noise()
@@ -502,7 +521,7 @@ output$eventmetadata <- DT::renderDataTable({
 # Create the data tables for all matches
 output$event <- DT::renderDataTable({
     req(input$active_identification)
-    req(!grepl("^ai$", input$id_strategy))
+    req(!grepl("^model$", input$lib_type))
     datatable(top_matches() %>%
                   mutate(organization = as.factor(organization),
                          material_class = as.factor(material_class)),
@@ -571,7 +590,7 @@ output$progress_bars <- renderUI({
       #req(input$id_strategy == "correlation")
       #req(preprocessed$data)
       plotly_spec(x = if(!is.null(preprocessed$data)){DataR_plot()} else{match_selected()},
-                  x2 = if(!is.null(preprocessed$data) & !grepl("^ai$", input$id_strategy)) {match_selected()} else{NULL}, 
+                  x2 = if(!is.null(preprocessed$data) & !grepl("^model$", input$lib_type)) {match_selected()} else{NULL}, 
                   make_rel = input$make_rel_decision,
                   source = "B") %>%
         config(modeBarButtonsToAdd = list("drawopenpath", "eraseshape"))
@@ -667,6 +686,30 @@ output$progress_bars <- renderUI({
                 write_spec(your_spec, file)}
             if(input$download_selection == "Library Spectra") {write_spec(libraryR(), file)}
             if(input$download_selection == "Top Matches") {fwrite(top_correlation(), file)}
+            if(input$download_selection == "All Matches") {
+
+                dataR_metadata <- data.table(match_threshold = MinCor(),
+                           signal_to_noise = signal_to_noise(), 
+                           signal_threshold = MinSNR(),
+                           good_signal = signal_to_noise() > MinSNR()) %>%
+                    {if(!grepl("^model$", input$lib_type)){bind_cols(., DataR()$metadata)} else{.}}
+
+               all_matches <- reshape2::melt(correlation()) %>%
+                   as.data.table() %>%
+                   left_join(libraryR()$metadata %>% select(-col_id, -file_name), 
+                             by = c("Var1" = "sample_name")) %>%
+                   left_join(dataR_metadata, 
+                             by = c("Var2" = "col_id")) %>%
+                   rename("sample_name" = "Var1", 
+                          "col_id" = "Var2",
+                          "match_val" = "value") %>%
+                   mutate(good_correlations = match_val > match_threshold,
+                          good_matches = match_val > match_threshold & signal_to_noise > signal_threshold) %>%
+                   .[, !sapply(., OpenSpecy::is_empty_vector), with = F] %>%
+                   select(file_name, col_id, material_class, spectrum_identity, match_val, signal_to_noise, everything())
+                
+                fwrite(all_matches, file)
+            }
             if(input$download_selection == "Thresholded Particles") {write_spec(thresholded_particles(), file = file)}
             })
 

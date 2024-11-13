@@ -441,15 +441,17 @@ dashboardPage(dark = T,
                                                                                                     value = F,
                                                                                                     status = "success",
                                                                                                     fill = T),
-                                                                                            pickerInput(inputId = "id_strategy", label =  "ID Library",
-                                                                                                        choices =  c("Derivative" = "deriv",
-                                                                                                                     "No Baseline" = "nobaseline",
-                                                                                                                     "Multinomial" = "ai", 
-                                                                                                                     "Medoid" = "medoid")),
                                                                                     pickerInput(inputId = "id_spec_type", label =  "Spectrum Type",
                                                                                                 choices =  c("Both" = "both",
                                                                                                              "FTIR" = "ftir",
                                                                                                              "Raman" = "raman")),
+                                                                                    pickerInput(inputId = "id_strategy", label =  "Library Transformation",
+                                                                                                        choices =  c("Derivative" = "deriv",
+                                                                                                                     "No Baseline" = "nobaseline")),
+                                                                                    pickerInput(inputId = "lib_type", label =  "Library Type",
+                                                                                                choices =  c("Full" = "full",
+                                                                                                             "Medoid" = "medoid",
+                                                                                                             "Multinomial" = "model")),
                                                                                     fluidRow(
                                                                                         box(width = 12, 
                                                                                             collapsed = T,
@@ -484,13 +486,14 @@ dashboardPage(dark = T,
                                                           "Your Spectra",
                                                           "Library Spectra",
                                                           "Top Matches",
+                                                          "All Matches",
                                                           "Thresholded Particles")) %>%
                                       popover(
                                           title = "Options for downloading spectra and metadata from the analysis.
                                           Test Data is a Raman HDPE spectrum in csv format. Test Map is an FTIR ENVI file of a CA particle.
                                           Your Spectra will download your data with whatever processing options are active. Library Spectra
                                           will download the current library selected. Top Matches downloads the top identifications in the
-                                          active analysis. Thresholded Particles will download a version of your spectra using the active
+                                          active analysis. All Matches will download all identifications with the library. Thresholded Particles will download a version of your spectra using the active
                                           thresholds selected to infer where particles are in spectral maps, particle spectra are collapsed
                                           to their medians and locations to their centroids.",
                                           content = "Download Options", placement = "left"
