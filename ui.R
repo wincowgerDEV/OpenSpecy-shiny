@@ -486,7 +486,6 @@ dashboardPage(dark = T,
                                                           "Your Spectra",
                                                           "Library Spectra",
                                                           "Top Matches",
-                                                          "All Matches",
                                                           "Thresholded Particles")) %>%
                                       popover(
                                           title = "Options for downloading spectra and metadata from the analysis.
@@ -497,7 +496,8 @@ dashboardPage(dark = T,
                                           thresholds selected to infer where particles are in spectral maps, particle spectra are collapsed
                                           to their medians and locations to their centroids.",
                                           content = "Download Options", placement = "left"
-                                      )
+                                      ),
+                                  uiOutput("top_n")
                            )
                            ),
                           ## Plot ----

@@ -675,6 +675,22 @@ output$progress_bars <- renderUI({
   
   
   # Data Download options ----
+  
+  output$top_n <- renderUI({
+      req(ncol(preprocessed$data$spectra) >= 1)
+      req(input$active_identification)
+      req(input$download_selection == "Top Matches")
+      tagList(
+          numericInput(
+              "top_n_input",
+              "Top N",
+              value = 1,
+              min = 1,
+              max = ncol(libraryR()$spectra),
+              step = 1
+          )
+      )
+  })
   output$download_data <- downloadHandler(
        filename = function() {if(input$download_selection == "Test Map") {paste0(input$download_selection, human_ts(), ".zip")} else{paste0(input$download_selection, human_ts(), ".csv")}},
         content = function(file) {
@@ -685,31 +701,35 @@ output$progress_bars <- renderUI({
                 your_spec$metadata$signal_to_noise <- signal_to_noise()
                 write_spec(your_spec, file)}
             if(input$download_selection == "Library Spectra") {write_spec(libraryR(), file)}
-            if(input$download_selection == "Top Matches") {fwrite(top_correlation(), file)}
-            if(input$download_selection == "All Matches") {
+            if(input$download_selection == "Top Matches") {
+                if(input$top_n_input == 1){
+                    fwrite(top_correlation(), file)
+                }
+                else{
+                    dataR_metadata <- data.table(match_threshold = MinCor(),
+                                                 signal_to_noise = signal_to_noise(), 
+                                                 signal_threshold = MinSNR(),
+                                                 good_signal = signal_to_noise() > MinSNR()) %>%
+                        {if(!grepl("^model$", input$lib_type)){bind_cols(., DataR()$metadata)} else{.}}
+                    
+                    all_matches <- reshape2::melt(correlation()) %>%
+                        as.data.table() %>%
+                        left_join(libraryR()$metadata %>% select(-col_id, -file_name), 
+                                  by = c("Var1" = "sample_name")) %>%
+                        left_join(dataR_metadata, 
+                                  by = c("Var2" = "col_id")) %>%
+                        rename("sample_name" = "Var1", 
+                               "col_id" = "Var2",
+                               "match_val" = "value") %>%
+                        mutate(good_correlations = match_val > match_threshold,
+                               good_matches = match_val > match_threshold & signal_to_noise > signal_threshold) %>%
+                        .[, !sapply(., OpenSpecy::is_empty_vector), with = F] %>%
+                        select(file_name, col_id, material_class, spectrum_identity, match_val, signal_to_noise, everything()) %>%
+                        .[order(-match_val), .SD[1:input$top_n_input], by = col_id]    
 
-                dataR_metadata <- data.table(match_threshold = MinCor(),
-                           signal_to_noise = signal_to_noise(), 
-                           signal_threshold = MinSNR(),
-                           good_signal = signal_to_noise() > MinSNR()) %>%
-                    {if(!grepl("^model$", input$lib_type)){bind_cols(., DataR()$metadata)} else{.}}
-
-               all_matches <- reshape2::melt(correlation()) %>%
-                   as.data.table() %>%
-                   left_join(libraryR()$metadata %>% select(-col_id, -file_name), 
-                             by = c("Var1" = "sample_name")) %>%
-                   left_join(dataR_metadata, 
-                             by = c("Var2" = "col_id")) %>%
-                   rename("sample_name" = "Var1", 
-                          "col_id" = "Var2",
-                          "match_val" = "value") %>%
-                   mutate(good_correlations = match_val > match_threshold,
-                          good_matches = match_val > match_threshold & signal_to_noise > signal_threshold) %>%
-                   .[, !sapply(., OpenSpecy::is_empty_vector), with = F] %>%
-                   select(file_name, col_id, material_class, spectrum_identity, match_val, signal_to_noise, everything())
-                
-                fwrite(all_matches, file)
-            }
+                    fwrite(all_matches, file) 
+                }
+                }
             if(input$download_selection == "Thresholded Particles") {write_spec(thresholded_particles(), file = file)}
             })
 
