@@ -705,10 +705,6 @@ output$progress_bars <- renderUI({
                 write_spec(your_spec, file)}
             if(input$download_selection == "Library Spectra") {write_spec(libraryR(), file)}
             if(input$download_selection == "Top Matches") {
-                if(input$top_n_input == 1){
-                    fwrite(top_correlation(), file)
-                }
-                else{
                     dataR_metadata <- data.table(match_threshold = MinCor(),
                                                  signal_to_noise = signal_to_noise(), 
                                                  signal_threshold = MinSNR(),
@@ -732,7 +728,6 @@ output$progress_bars <- renderUI({
                         {if(grepl("Simple", input$columns_selected)){select(., file_name, col_id, material_class, match_val, signal_to_noise)} else{.}}
 
                     fwrite(all_matches, file) 
-                }
                 }
             if(input$download_selection == "Thresholded Particles") {write_spec(thresholded_particles(), file = file)}
             })
