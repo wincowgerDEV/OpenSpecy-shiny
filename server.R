@@ -477,7 +477,7 @@ match_metadata <- reactive({
     }
     else if(input$active_identification & grepl("^model$", input$lib_type)){
         result <- bind_cols(DataR()$metadata[data_click$data,], matches_to_single()[data_click$data,])
-        result$signal_to_noise <- signal_to_noise()
+        result$signal_to_noise <- signal_to_noise()[data_click$data]
         result <- result[, !sapply(result, OpenSpecy::is_empty_vector), with = FALSE] %>%
             mutate(match_val = signif(match_val, 2)) %>%
             select(file_name, col_id, material_class, match_val, signal_to_noise, everything())
@@ -726,7 +726,7 @@ output$progress_bars <- renderUI({
                                                  signal_to_noise = signal_to_noise(), 
                                                  signal_threshold = MinSNR(),
                                                  good_signal = signal_to_noise() > MinSNR()) %>%
-                        {if(!grepl("^model$", input$lib_type)){bind_cols(., DataR()$metadata)} else{.}}
+                        bind_cols(DataR()$metadata)
                     
                     all_matches <- reshape2::melt(correlation()) %>%
                         as.data.table() %>%
@@ -747,18 +747,12 @@ output$progress_bars <- renderUI({
                     fwrite(all_matches, file) 
                 }
                 else{
-                    selected_match <- data.table(object_id = names(DataR()$spectra), 
-                                                 material_class = ai_output()$name,
-                                                 match_val = ai_output()$value)
-                    dataR_metadata <- DataR()$metadata
-                    dataR_metadata$signal_to_noise <- signal_to_noise()
-                    setkey(dataR_metadata, col_id)
-                    setkey(selected_match, object_id)
-                    
-                    result <- dataR_metadata[selected_match, on = c(col_id = "object_id")]
+                    result <- bind_cols(DataR()$metadata, matches_to_single())
+                    result$signal_to_noise <- signal_to_noise()
                     result <- result[, !sapply(result, OpenSpecy::is_empty_vector), with = FALSE] %>%
-                        mutate(match_val = signif(match_val, 2))
-                    select(file_name, col_id, material_class, match_val, signal_to_noise, everything())
+                        select(file_name, col_id, material_class, match_val, signal_to_noise, everything())
+                    
+                    fwrite(result, file) 
                     
                     
                 }
