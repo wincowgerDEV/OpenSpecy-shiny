@@ -832,22 +832,14 @@ ui <- dashboardPage(
                 ),
                 style = "padding: 50px"
             ))
-        )
+    ),
+    tags$footer(
+        citation,
+        style = "
+            background-color: #363e45;
+            color: white;
+            padding: 10px;
+            "
     )
-    
-    #Footer ----
-    # footer = bs4Dash::dashboardFooter(
-    #     left = p(citation),
-    #     right = HTML(paste0(uiOutput("translate"),
-    #                         a(href = "TOS.txt", "Terms And Conditions", class = "lead"),
-    #                         br(),
-    #                         a(href = "privacy_policy.txt", "Privacy Policy", class = "lead")
-    #     ),
-    #     #Ethical Ads
-    #     HTML('<div class = "dark raised" data-ea-publisher="openanalysisorg" data-ea-type="text" data-ea-style="fixedfooter"></div>')
-    #     )
-    # )
-    
-    
-    
-)    
+    )
+)
