@@ -401,10 +401,14 @@ observeEvent(input$file, {
   #Metadata for all the matches for a single unknown spectrum
   matches_to_single <- reactive({
       req(input$active_identification)
-      req(!grepl("^model$", input$lib_type))
       if(is.null(preprocessed$data)){
           libraryR()$metadata %>%
               mutate("match_val" = NA) 
+      }
+      else if(grepl("^model$", input$lib_type)){
+          data.table(object_id = names(DataR()$spectra), 
+                     material_class = ai_output()$name,
+                     match_val = ai_output()$value)
       }
       else{
           data.table(object_id = names(DataR()$spectra)[data_click$data], 
@@ -471,13 +475,21 @@ match_metadata <- reactive({
             select(file_name, col_id, material_class, spectrum_identity, match_val, signal_to_noise, everything())
         result
     }
+    else if(input$active_identification & grepl("^model$", input$lib_type)){
+        result <- bind_cols(DataR()$metadata[data_click$data,], matches_to_single()[data_click$data,])
+        result$signal_to_noise <- signal_to_noise()
+        result <- result[, !sapply(result, OpenSpecy::is_empty_vector), with = FALSE] %>%
+            mutate(match_val = signif(match_val, 2)) %>%
+            select(file_name, col_id, material_class, match_val, signal_to_noise, everything())
+        result
+    }
     else{
         DataR()$metadata[data_click$data,] %>%
             .[, !sapply(., OpenSpecy::is_empty_vector), with = F]  
     }
 })
 
-  # Display ----
+# Display ----
 
 #Histogram of SNR
 output$snr_plot <- renderPlot({
@@ -648,34 +660,34 @@ output$progress_bars <- renderUI({
           labs(x = "Nominal Particle Size (√pixels)", y = "Count")
   })
   
-  output$material_plot <- renderPlot({
-      req(!is.null(preprocessed$data))
-      
-      #Metadata for all the top correlations.
-      top_correlation <- data.table(object_id = names(DataR()$spectra), 
-                     sample_name = names(max_cor()),
-                     match_val = max_cor(), 
-                     match_threshold = MinCor(),
-                     good_correlations = max_cor() > MinCor(),
-                     signal_to_noise = signal_to_noise(), 
-                     signal_threshold = MinSNR(),
-                     good_signal = signal_to_noise() > MinSNR(), 
-                     good_matches = max_cor() > MinCor() & signal_to_noise() > MinSNR()) %>%
-              {if(!grepl("^model$", input$lib_type)){bind_cols(., DataR()$metadata)} else{.}} %>%
-              {if(!grepl("^model$", input$lib_type)){left_join(., libraryR()$metadata %>% select(-file_name, -col_id), by = c("sample_name"))} else{.}} %>%
-              .[, !sapply(., OpenSpecy::is_empty_vector), with = F] %>%
-              select(file_name, col_id, material_class, spectrum_identity, match_val, signal_to_noise, everything())
-      
-      
-      ggplot() +
-          geom_bar(aes(y = top_correlation$material_class), 
-                   fill = "white") +
-          #scale_x_continuous(trans =  scales::modulus_trans(p = 0, offset = 1)) +
-          #geom_vline(xintercept = MinCor(), color = "red") +
-          theme_black_minimal() +
-          labs(x = "Count", y = "Material Class")
-  })
-  
+  # output$material_plot <- renderPlot({
+  #     req(!is.null(preprocessed$data))
+  #     
+  #     #Metadata for all the top correlations.
+  #     top_correlation <- data.table(object_id = names(DataR()$spectra), 
+  #                    sample_name = names(max_cor()),
+  #                    match_val = max_cor(), 
+  #                    match_threshold = MinCor(),
+  #                    good_correlations = max_cor() > MinCor(),
+  #                    signal_to_noise = signal_to_noise(), 
+  #                    signal_threshold = MinSNR(),
+  #                    good_signal = signal_to_noise() > MinSNR(), 
+  #                    good_matches = max_cor() > MinCor() & signal_to_noise() > MinSNR()) %>%
+  #             {if(!grepl("^model$", input$lib_type)){bind_cols(., DataR()$metadata)} else{.}} %>%
+  #             {if(!grepl("^model$", input$lib_type)){left_join(., libraryR()$metadata %>% select(-file_name, -col_id), by = c("sample_name"))} else{.}} %>%
+  #             .[, !sapply(., OpenSpecy::is_empty_vector), with = F] %>%
+  #             select(file_name, col_id, material_class, spectrum_identity, match_val, signal_to_noise, everything())
+  #     
+  #     
+  #     ggplot() +
+  #         geom_bar(aes(y = top_correlation$material_class), 
+  #                  fill = "white") +
+  #         #scale_x_continuous(trans =  scales::modulus_trans(p = 0, offset = 1)) +
+  #         #geom_vline(xintercept = MinCor(), color = "red") +
+  #         theme_black_minimal() +
+  #         labs(x = "Count", y = "Material Class")
+  # })
+  # 
   
   # Data Download options ----
   
@@ -683,6 +695,7 @@ output$progress_bars <- renderUI({
       req(ncol(preprocessed$data$spectra) >= 1)
       req(input$active_identification)
       req(input$download_selection == "Top Matches")
+      req(!grepl("^model$", input$lib_type))
       tagList(
           numericInput(
               "top_n_input",
@@ -708,6 +721,7 @@ output$progress_bars <- renderUI({
                 write_spec(your_spec, file)}
             if(input$download_selection == "Library Spectra") {write_spec(libraryR(), file)}
             if(input$download_selection == "Top Matches") {
+                if(!grepl("^model$", input$lib_type)){
                     dataR_metadata <- data.table(match_threshold = MinCor(),
                                                  signal_to_noise = signal_to_noise(), 
                                                  signal_threshold = MinSNR(),
@@ -729,8 +743,26 @@ output$progress_bars <- renderUI({
                         select(file_name, col_id, material_class, spectrum_identity, match_val, signal_to_noise, everything()) %>%
                         .[order(-match_val), .SD[1:input$top_n_input], by = col_id] %>%
                         {if(grepl("Simple", input$columns_selected)){select(., file_name, col_id, material_class, match_val, signal_to_noise)} else{.}}
-
+                    
                     fwrite(all_matches, file) 
+                }
+                else{
+                    selected_match <- data.table(object_id = names(DataR()$spectra), 
+                                                 material_class = ai_output()$name,
+                                                 match_val = ai_output()$value)
+                    dataR_metadata <- DataR()$metadata
+                    dataR_metadata$signal_to_noise <- signal_to_noise()
+                    setkey(dataR_metadata, col_id)
+                    setkey(selected_match, object_id)
+                    
+                    result <- dataR_metadata[selected_match, on = c(col_id = "object_id")]
+                    result <- result[, !sapply(result, OpenSpecy::is_empty_vector), with = FALSE] %>%
+                        mutate(match_val = signif(match_val, 2))
+                    select(file_name, col_id, material_class, match_val, signal_to_noise, everything())
+                    
+                    
+                }
+                    
                 }
             if(input$download_selection == "Thresholded Particles") {write_spec(thresholded_particles(), file = file)}
             })
