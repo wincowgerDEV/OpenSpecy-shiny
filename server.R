@@ -616,7 +616,7 @@ output$progress_bars <- renderUI({
                        signal_to_noise()
                    }
                    else if(!is.null(max_cor()) & input$map_color == "Match ID"){
-                       names(max_cor())
+                       if(!grepl("^model$", input$lib_type)) names(max_cor()) else max_cor()
                    }
                    else if(!is.null(max_cor()) & input$map_color == "Correlation"){
                        max_cor()
@@ -625,7 +625,7 @@ output$progress_bars <- renderUI({
                        signal_to_noise()
                    }
                    else if(!is.null(max_cor()) & input$map_color == "Match Name"){
-                       libraryR()$metadata$material_class[match(names(max_cor()), libraryR()$metadata$sample_name)]
+                       if(grepl("^model$", input$lib_type)) names(max_cor()) else libraryR()$metadata$material_class[match(names(max_cor()), libraryR()$metadata$sample_name)]
                    }
                    else if(isTruthy(particles_logi()) & input$map_color == "Feature ID"){
                        test$metadata$feature_id
@@ -753,10 +753,7 @@ output$progress_bars <- renderUI({
                         select(file_name, col_id, material_class, match_val, signal_to_noise, everything())
                     
                     fwrite(result, file) 
-                    
-                    
-                }
-                    
+                    }
                 }
             if(input$download_selection == "Thresholded Particles") {write_spec(thresholded_particles(), file = file)}
             })
