@@ -77,7 +77,7 @@ read_envi <- function(file, header = NULL, spectral_smooth = F, sigma = c(1,1,1)
       paste0(".hdr")
 
   hdr <- .read_envi_header(header)
-  arr <- read.ENVI(file, header)
+  arr <- caTools::read.ENVI(file, header)
 
   if(spectral_smooth) {
     dt <- arr |>

@@ -1,9 +1,9 @@
 #' @rdname read_multi
 #' @title Read spectral data from multiple files
-#'
+#' 
 #' @description
 #' Wrapper functions for reading files in batch.
-#'
+#' 
 #' @details
 #' \code{read_any()} provides a single function to quickly read in any of the
 #' supported formats, it assumes that the file extension will tell it how to
@@ -13,38 +13,41 @@
 #' files, spectra are concatenated.
 #' \code{read_many()} provides functionality for reading multiple files
 #' in a character vector and will return a list.
-#'
+#' 
 #' @param file file to be read from or written to.
 #' @param \ldots further arguments passed to the submethods.
-#'
+#' 
 #' @return
 #' All \code{read_*()} functions return \code{OpenSpecy} objects if a single
 #' spectrum or map is provided, otherwise the provide a list of \code{OpenSpecy} objects.
-#'
+#' 
 #' @examples
 #' \dontshow{data.table::setDTthreads(2)}
 #' read_extdata("raman_hdpe.csv") |> read_any()
 #' read_extdata("ftir_ldpe_soil.asp") |> read_any()
 #' read_extdata("testdata_zipped.zip") |> read_many()
 #' read_extdata("CA_tiny_map.zip") |> read_many()
-#'
+#' 
 #' @author
 #' Zacharias Steinmetz, Win Cowger
-#'
+#' 
 #' @seealso
 #' \code{\link{read_spec}()} for submethods.
 #' \code{\link{c_spec}()} for combining lists of Open Specys.
-#'
+#' 
 #' @importFrom utils unzip
 #' @importFrom data.table transpose
-#'
+#' 
 #' @export
 read_any <- function(file, ...) {
-  if(length(file) == 2 & any(grepl("(\\.dat$)", ignore.case = T, file)) & any(grepl("(\\.hdr$)", ignore.case = T, file))){
-    os <- read_envi(file = file[grepl("(\\.dat$)", ignore.case = T, file)], header = file[grepl("(\\.hdr$)", ignore.case = T, file)], ...)
+  if(length(file) == 2 & any(grepl("(\\.dat$)|(\\.img$)", ignore.case = T, file)) & any(grepl("(\\.hdr$)", ignore.case = T, file))){
+    os <- read_envi(file = file[grepl("(\\.dat$)|(\\.img$)", ignore.case = T, file)], header = file[grepl("(\\.hdr$)", ignore.case = T, file)], ...)
   }
   else if(length(file) > 1){
     os <- read_many(file = file, ...)
+  }
+  else if(any(grepl("(\\.dat$)|(\\.img$)", ignore.case = T, file))){
+    os <- read_envi(file = file[grepl("(\\.dat$)|(\\.img$)", ignore.case = T, file)], ...)
   }
   else if (grepl("(\\.zip$)", ignore.case = T, file)) {
     os <- read_zip(file = file, ...)
@@ -64,8 +67,8 @@ read_any <- function(file, ...) {
   }  else {
     os <- read_spec(file = file, ...)
   }
-
   return(os)
+  
 }
 
 #' @rdname read_multi
@@ -88,10 +91,15 @@ read_zip <- function(file, ...) {
 
   flst <- file.path(tmp, flst)
 
-  if(length(flst) == 2 & any(grepl("\\.dat$", ignore.case = T, flst)) &
-     any(grepl("\\.hdr$", ignore.case = T, flst))) {
+  if (length(flst) == 2 && any(grepl("\\.dat$", ignore.case = TRUE, flst)) && any(grepl("\\.hdr$", ignore.case = TRUE, flst))) {
+    # Correctly combined checks with &&
+    #print(length(flst))
+  
     dat <- flst[grepl("\\.dat$", ignore.case = T, flst)]
     hdr <- flst[grepl("\\.hdr$", ignore.case = T, flst)]
+
+    # Find error
+    #browser()
 
     os <- read_envi(dat, hdr, ...)
   } else {
