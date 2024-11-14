@@ -12,7 +12,7 @@ ui <- dashboardPage(
     ),
     #
     dashboardSidebar(
-        sidebarUserPanel(name = "Welcome"),
+        sidebarUserPanel(name = "Welcome!"),
         sidebarMenu(
             id = "sidebarmenu",
             menuItem(
