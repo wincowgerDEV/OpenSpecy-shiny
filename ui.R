@@ -8,13 +8,13 @@ ui <- dashboardPage(
         title = tags$a(
             href = "https://www.openanalysis.org",
             target = "_blank",
-            tags$img(src = "logo.png", style = 'width: 15vw; padding:1rem;'),
+            tags$img(src = "logo.avif", style = 'width: 15vw; padding:1rem;'),
             tags$head(HTML('<div class = "dark raised" data-ea-publisher="openanalysisorg" data-ea-type="text" data-ea-style="fixedfooter"></div>'))
         )
     ),
     #
     dashboardSidebar(
-        sidebarUserPanel(name = "Welcome"),
+        sidebarUserPanel(name = "Welcome!"),
         sidebarMenu(
             id = "sidebarmenu",
             menuItem(
@@ -56,7 +56,7 @@ ui <- dashboardPage(
             HTML(
                 '<script async src="https://media.ethicalads.io/media/client/ethicalads.min.js"></script>'
             ),
-            tags$link(rel = "icon", type = "image/png", href = "favicon.png")
+            tags$link(rel = "icon", type = "image/png", href = "favicon.avif")
             #This is for the error messages.
         ),
         
@@ -326,10 +326,8 @@ ui <- dashboardPage(
                                 fluidRow(
                                     box(
                                         width = 12,
-                                        footer = tags$small(
-                                            "Min-Max normalization improves comparability, for many applications, between spectra except in cases
-                                                                                                where raw intensity values are necessary for interpreation. For example raw values can be useful for thresholding.
-                                                                                                Min-Max normalization rescales spectral intensity values between 0-1"
+                                        footer = tags$small( 
+                                            includeMarkdown("text/min_max_normalize.md")
                                         ),
                                         title = prettySwitch(
                                             "make_rel_decision",
@@ -346,12 +344,7 @@ ui <- dashboardPage(
                                     box(
                                         width = 12,
                                         collapsed = TRUE,
-                                        footer = tags$small(
-                                            "Smoothing can enhance signal to noise and uses the SG filter with the polynomial order specified, 3 default usually works well.
-                                                                            Derivative transformation uses the order specified.
-                                                                            If doing identification with a derivative library, 1 is required, 0 should be used if no derivative transformation is desired.
-                                                                            Smoothing uses the SG filter on an window of points, specifying the wavenumber window larger will make the spectra more smooth.
-                                                                            The absolute value does something similar to intensity correction to make the spectra more absorbance-like."
+                                        footer = tags$small(includeMarkdown("text/smoothing_decision.md")
                                         ),
                                         title =  prettySwitch(
                                             inputId = "smooth_decision",
@@ -361,8 +354,6 @@ ui <- dashboardPage(
                                             status = "success",
                                             fill = TRUE
                                         ),
-                                        
-                                        
                                         sliderInput(
                                             "smoother",
                                             "Polynomial",
@@ -399,12 +390,7 @@ ui <- dashboardPage(
                                     box(
                                         width = 12,
                                         footer = tags$small(
-                                            "Options for conforming spectra to a new wavenumber resolution.
-                                                                                                Conformation technique specifies the strategy for performing the conformation.
-                                                                                                Nearest will use the nearest value to the wavenumber resolution specified, this is
-                                                                                                faster but less accurate. Linear Interpolation will perform a linear regression between
-                                                                                                the nearest points to identify the intensity values at the new wavenumbers. Wavenumber Resolution
-                                                                                                will set the step size in wavenumbers for the new wavenumber values."
+                                            includeMarkdown("text/conform_wavenumbers.md")
                                         ),
                                         title = prettySwitch(
                                             "conform_decision",
@@ -437,12 +423,7 @@ ui <- dashboardPage(
                                         width = 12,
                                         collapsed = TRUE,
                                         footer = tags$small(
-                                            "Open Specy assumes spectra are in Absorbance units. If the uploaded spectrum is not in absorbance units,
-                                                                    use this input to specify the units to convert from.The transmittance adjustment uses the log10(1/T) calculation
-                                                                    which does not correct for system and particle characteristics. The reflectance adjustment uses the Kubelka-Munk
-                                                                    equation (1-R)2/(2*R). We assume that the reflectance is formatted as a percent from 1-100 and first correct the
-                                                                    intensity by dividing by 100 so that it fits the form expected by the equation. If none is selected, Open Specy
-                                                                    assumes that the uploaded data is an absorbance spectrum."
+                                            includeMarkdown("text/intensity_adjustment.md")
                                         ),
                                         title =  prettySwitch(
                                             inputId = "intensity_decision",
@@ -529,10 +510,7 @@ ui <- dashboardPage(
                                         width = 12,
                                         collapsed = TRUE,
                                         footer = tags$small(
-                                            "Sometimes peaks are undersireable.
-                                                                                     These options will replace peak regions with the mean of their edges.
-                                                                                     Specify the edge locations of the peaks minimum and maximum wavenumbers to use for flattening.
-                                                                                     Defaults are set to flatten the CO2 region in infrared spectra."
+                                            includeMarkdown("text/flatten_region.md")
                                         ),
                                         title = prettySwitch(
                                             "co2_decision",
@@ -568,14 +546,7 @@ ui <- dashboardPage(
                                 width = 12,
                                 collapsed = TRUE,
                                 footer = tags$small(
-                                    "These options define the strategy for identification.
-                                                                                    The ID Library will inform which library is used. Both (default) will search both
-                                                                                    FTIR and Raman libraries. Deriv will search against a derivative transformed library.
-                                                                                    No Baseline will search against a baseline corrected library. This should be in line
-                                                                                    with how you choose to process your spectra. Cor options use a simple Pearson correlation
-                                                                                    search algorithm. AI is uses either a multinomial model (experimental) or
-                                                                                    correlation on mediod (default) spectra from the library. Correlation thresholding will set the minimum
-                                                                                    value from matching to use as a 'positive identification'"
+                                    includeMarkdown("text/identification.md")
                                 ),
                                 title = prettySwitch(
                                     inputId = "active_identification",
@@ -589,13 +560,13 @@ ui <- dashboardPage(
                                     inputId = "id_strategy",
                                     label =  "ID Library",
                                     choices =  c(
-                                        "Cor: Both Deriv" = "both_deriv",
-                                        "Cor: Both No Baseline" = "both_nobaseline",
-                                        "Cor: FTIR Deriv" = "ftir_deriv",
-                                        "Cor: Raman Deriv" = "raman_deriv",
-                                        "Cor: FTIR No Baseline" = "ftir_nobaseline",
-                                        "Cor: Raman No Baseline" = "raman_nobaseline",
-                                        "AI: FTIR Deriv Multinomial" = "ai",
+                                        #"Cor: Both Deriv" = "both_deriv",
+                                        #"Cor: Both No Baseline" = "both_nobaseline",
+                                        #"Cor: FTIR Deriv" = "ftir_deriv",
+                                        #"Cor: Raman Deriv" = "raman_deriv",
+                                        #"Cor: FTIR No Baseline" = "ftir_nobaseline",
+                                        #"Cor: Raman No Baseline" = "raman_nobaseline",
+                                        #"AI: FTIR Deriv Multinomial" = "ai",
                                         "AI: Both Deriv Mediod" = "mediod"
                                     )
                                 ),
@@ -829,13 +800,7 @@ ui <- dashboardPage(
                         collapsed = TRUE,
                         p(
                             class = "lead",
-                            "To share spectra upload a file to the upload file tab.
-                             If you selected Share a copy of your spectra will be sent to the Community
-                             Data Warehouse on Open Science Framework. To add additional metadata,
-                             fill in the avaliable metadata fields and click -Share Data-. The
-                             spectra file that you uploaded along with your responses will be copied
-                             to the a -With Metadata- subfolder at the link below. All shared data holds
-                             a Creative Commons Attribution License 4.0."
+                            includeMarkdown("text/contribute_spectra.md")
                         ),
                         div(
                             a(
@@ -867,15 +832,22 @@ ui <- dashboardPage(
                 ),
                 style = "padding: 50px"
             ))
-        ),
-        tags$footer(
-            citation,
-            style = "
-            padding: 10px;
-            background-color: #363e45;
-            color: white;
-            "
         )
     )
+    
+    #Footer ----
+    # footer = bs4Dash::dashboardFooter(
+    #     left = p(citation),
+    #     right = HTML(paste0(uiOutput("translate"),
+    #                         a(href = "TOS.txt", "Terms And Conditions", class = "lead"),
+    #                         br(),
+    #                         a(href = "privacy_policy.txt", "Privacy Policy", class = "lead")
+    #     ),
+    #     #Ethical Ads
+    #     HTML('<div class = "dark raised" data-ea-publisher="openanalysisorg" data-ea-type="text" data-ea-style="fixedfooter"></div>')
+    #     )
+    # )
+    
+    
     
 )    
