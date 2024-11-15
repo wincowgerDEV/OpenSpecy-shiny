@@ -695,6 +695,33 @@ output$progress_bars <- renderUI({
 
   
   # Data Download options ----
+  # Progress Bars
+  output$download_ui <- renderUI({
+      choice_names = c("Test Data",
+                       "Test Map",
+                       if(input$active_identification) c("Library Spectra", "Top Matches")
+                       else NA,
+                       if(isTruthy(ncol(preprocessed$data$spectra) >= 1)) "Your Spectra"
+                       else NA,
+                       if(input$collapse_decision) "Thresholded Particles"
+                       else NA)
+
+      choice_names = choice_names[!is.na(choice_names)]
+      tagList(selectInput(inputId = "download_selection",
+                          label = downloadButton("download_data",
+                                                 style = "background-color: rgb(0,0,0); color: rgb(255,255,255);"),
+                          choices = choice_names) %>%
+                  popover(
+                      title = "Options for downloading spectra and metadata from the analysis.
+                                          Test Data is a Raman HDPE spectrum in csv format. Test Map is an FTIR ENVI file of a CA particle.
+                                          Your Spectra will download your data with whatever processing options are active. Library Spectra
+                                          will download the current library selected. Top Matches downloads the top identifications in the
+                                          active analysis. All Matches will download all identifications with the library. Thresholded Particles will download a version of your spectra using the active
+                                          thresholds selected to infer where particles are in spectral maps, particle spectra are collapsed
+                                          to their medians and locations to their centroids.",
+                      content = "Download Options", placement = "left"
+                  ))
+  })  
   
   output$top_n <- renderUI({
       req(ncol(preprocessed$data$spectra) >= 1)
