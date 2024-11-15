@@ -22,9 +22,7 @@ function(input, output, session) {
         }
         
     })
-  #Set upload size
-  if(isTruthy(conf$share) && conf$share != "system"){options(shiny.maxRequestSize = 1000*1024^2)} else{options(shiny.maxRequestSize = 10000*1024^2)}
-    
+
   #create a random session id
   session_id <- digest(runif(10))
 
@@ -53,12 +51,6 @@ observeEvent(input$file, {
                       check tooltips and 'About' tab for details."),
       type = "warning")
     return(NULL)
-  }
-
-  if (input$share_decision & curl::has_internet()) {
-    progm <- "Sharing Spectrum to Community Library"
-  } else {
-    progm <- "Reading Spectrum"
   }
 
   withProgress(message = progm, value = 3/3, {
@@ -107,15 +99,6 @@ observeEvent(input$file, {
     }
       
     else {
-        if(length(input$file$datapath) == 1){
-            if(droptoken & input$share_decision & input$file$size < 10^7 & curl::has_internet()){
-                put_object(
-                    file = file.path(as.character(input$file$datapath)),
-                    object = paste0("users/", session_id, "/", digest(rout), "/", gsub(".*/", "", as.character(input$file$name))),
-                    bucket = "openspecy"
-                )
-            }
-        }
         preprocessed$data <- rout 
         #print(preprocessed$data)
     }
@@ -820,43 +803,6 @@ output$progress_bars <- renderUI({
 
   # Log events ----
   
-  observeEvent(input$bad_spec, {
-      if(droptoken & input$share_decision & curl::has_internet() & !is.null(preprocessed$data)){
-          file_name <- tempfile(pattern = "issue_report_", fileext = ".rds")
-          report_inputs = list(lib_spec = match_selected(),
-                               raw_user_spec = preprocessed$data,
-                               proc_user_spec = DataR_plot(),
-                               user_metadata = user_metadata())
-          saveRDS(report_inputs,
-                  file = file_name)
-          put_object(
-              file = file_name,
-              object = paste0("issues/", gsub(".*\\\\", "", as.character(file_name))),
-              bucket = "openspecy"
-          )
-          toast(
-              title = "Report Successful",
-              body = "Sorry for the issue, we are on it.", 
-              options = list(
-                  autohide = FALSE,
-                  class = "bg-pink",
-                  position = "topRight"
-              )
-          )
-      }
-      else{
-          toast(
-              title = "Not Submitted",
-              body = "Submitting issues outside of the web app or without uploading data or without selecting to share data is not currently supported.", 
-              options = list(
-                  autohide = FALSE,
-                  class = "bg-black",
-                  position = "topRight"
-              )
-          )    
-      }
-  })
-  
   user_metadata <- reactive({
     list(
              #user_name = input$fingerprint,
@@ -891,16 +837,8 @@ output$progress_bars <- renderUI({
 
   observe({
     req(!is.null(preprocessed$data))
-    req(input$share_decision)
-    if(isTruthy(conf$log)) {
-      if(db) {
-        database$insert(user_metadata())
-      } else {
         loggit("INFO", "trigger",
                user_metadata())
-      }
-    }
-
   })
   
   #output$event_test <- renderPrint({

@@ -178,16 +178,6 @@ dashboardPage(dark = T,
                                                  bs4Dash::popover(
                                                      title = "Upload Raman or FTIR spectrum files as a csv, tsv, dx, hdr, dat, rds, json, yml, zip, asp, jdx, spc, 0, or spa. A csv file is preferred. If a csv, the file must contain one column labeled wavenumber in units of (1/cm) and another column labeled intensity in absorbance units. If jdx, spc, spa, or 0 the file should be a single absorbance spectrum with wavenumber in (1/cm). If zip, batch upload using a zip file with multiple spectral files that all have the same wavenumbers or a map file formatted as .hdr and .dat. Hit the Download button to download a sample Raman spectrum.",
                                                      content = "File Upload", placement = "right"
-                                                 ),
-                                             prettySwitch("share_decision",
-                                                          label = "Share Your Data?",
-                                                          inline = T,
-                                                          value = T,
-                                                          status = "success",
-                                                          fill = T) %>%
-                                                 popover(
-                                                     title = "If you like, we share your uploaded spectra and settings with the spectroscopy community. By default, all data will be licensed under Creative Commons Attribution 4.0 International (CC BY 4.0). Uploaded spectra will appear here: https://osf.io/rjg3c. If you have spectra of known identities you can share, please upload a JDX file titled with the name of the material it is.",
-                                                     content = "Share Decision", placement = "right"
                                                  )
                                   )
                             )
@@ -500,9 +490,6 @@ dashboardPage(dark = T,
                                       div(style = "overflow-x: scroll",
                                           DT::dataTableOutput("eventmetadata")   
                                       )),
-                                  dropdownMenu = boxDropdown(
-                                      boxDropdownItem("Bad Processing or Library Spectra", id = "bad_spec", icon = icon("face-sad-tear"))
-                                  ),
                                   sidebar = boxSidebar(
                                       id = "mycardsidebar",
                                       fluidRow(style = "padding:1rem; overflow-x: scroll",
