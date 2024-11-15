@@ -53,7 +53,7 @@ observeEvent(input$file, {
     return(NULL)
   }
 
-  withProgress(message = progm, value = 3/3, {
+  withProgress(message = "Reading data", value = 2/3, {
       
       rout <- tryCatch(expr = {
           read_any(file = as.character(input$file$datapath)) |>
@@ -688,9 +688,9 @@ output$progress_bars <- renderUI({
   output$download_ui <- renderUI({
       choice_names = c("Test Data",
                        "Test Map",
-                       if(input$active_identification) c("Library Spectra", "Top Matches")
-                       else NA,
                        if(isTruthy(ncol(preprocessed$data$spectra) >= 1)) "Your Spectra"
+                       else NA,
+                       if(input$active_identification) c("Library Spectra", "Top Matches")
                        else NA,
                        if(input$collapse_decision) "Thresholded Particles"
                        else NA)
@@ -835,11 +835,11 @@ output$progress_bars <- renderUI({
              )
   })
 
-  observe({
-    req(!is.null(preprocessed$data))
-        loggit("INFO", "trigger",
-               user_metadata())
-  })
+  # observe({
+  #   req(!is.null(preprocessed$data))
+  #       loggit("INFO", "trigger",
+  #              user_metadata())
+  # })
   
   #output$event_test <- renderPrint({
   #    list(
