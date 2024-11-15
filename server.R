@@ -537,10 +537,14 @@ output$event <- DT::renderDataTable({
 # Progress Bars
 output$choice_names <- renderUI({
     req(ncol(preprocessed$data$spectra) > 1)
-    req(input$threshold_decision | (input$cor_threshold_decision & input$active_identification))
-    choice_names = c(if(input$cor_threshold_decision & input$active_identification) c("Match Name", "Correlation", "Match ID") 
-                    else NA, 
-                    if(input$threshold_decision) "Signal/Noise"
+    #req(input$threshold_decision | input$active_identification)
+    choice_names = c(if(input$active_identification) "Match Name"
+                     else NA,
+                    if(input$active_identification & input$lib_type != "model") "Match ID" 
+                    else NA,
+                    if(!is.null(max_cor())) "Match Value"
+                    else NA,
+                    if(!is.null(signal_to_noise())) "Signal/Noise"
                     else NA,
                     if(isTruthy(particles_logi())) "Feature ID"
                     else NA)
@@ -569,7 +573,7 @@ output$progress_bars <- renderUI({
                        else NULL
                 ),
                 column(4,
-                       if(input$cor_threshold_decision & input$active_identification) shinyWidgets::progressBar(id = "correlation_progress", value = sum(max_cor() > MinCor())/length(max_cor()) * 100, status = "success", title = "Good Correlations", display_pct = TRUE)
+                       if(input$cor_threshold_decision & input$active_identification) shinyWidgets::progressBar(id = "correlation_progress", value = sum(max_cor() > MinCor())/length(max_cor()) * 100, status = "success", title = "Good Match Values", display_pct = TRUE)
                        else NULL
                 ),
                 column(4,
@@ -610,19 +614,19 @@ output$progress_bars <- renderUI({
 
       heatmap_spec(x = test, 
                         z = if(!is.null(max_cor()) & !isTruthy(input$map_color)){
-                                max_cor()
+                            signif(max_cor(),2)
                         }
                    else if(!is.null(signal_to_noise()) & !isTruthy(input$map_color)){
-                       signal_to_noise()
+                       signif(signal_to_noise(),2)
                    }
                    else if(!is.null(max_cor()) & input$map_color == "Match ID"){
                        if(!grepl("^model$", input$lib_type)) names(max_cor()) else max_cor()
                    }
-                   else if(!is.null(max_cor()) & input$map_color == "Correlation"){
-                       max_cor()
+                   else if(!is.null(max_cor()) & input$map_color == "Match Value"){
+                       signif(max_cor(),2)
                    }
                    else if(!is.null(signal_to_noise()) & input$map_color == "Signal/Noise"){
-                       signal_to_noise()
+                       signif(signal_to_noise(),2)
                    }
                    else if(!is.null(max_cor()) & input$map_color == "Match Name"){
                        if(grepl("^model$", input$lib_type)) names(max_cor()) else libraryR()$metadata$material_class[match(names(max_cor()), libraryR()$metadata$sample_name)]
@@ -656,38 +660,39 @@ output$progress_bars <- renderUI({
                          fill = "white") +
           #scale_x_continuous(trans =  scales::modulus_trans(p = 0, offset = 1)) +
           #geom_vline(xintercept = MinCor(), color = "red") +
-          theme_black_minimal() +
+          theme_black_minimal(base_size = 15) +
           labs(x = "Nominal Particle Size (√pixels)", y = "Count")
   })
   
-  # output$material_plot <- renderPlot({
-  #     req(!is.null(preprocessed$data))
-  #     
-  #     #Metadata for all the top correlations.
-  #     top_correlation <- data.table(object_id = names(DataR()$spectra), 
-  #                    sample_name = names(max_cor()),
-  #                    match_val = max_cor(), 
-  #                    match_threshold = MinCor(),
-  #                    good_correlations = max_cor() > MinCor(),
-  #                    signal_to_noise = signal_to_noise(), 
-  #                    signal_threshold = MinSNR(),
-  #                    good_signal = signal_to_noise() > MinSNR(), 
-  #                    good_matches = max_cor() > MinCor() & signal_to_noise() > MinSNR()) %>%
-  #             {if(!grepl("^model$", input$lib_type)){bind_cols(., DataR()$metadata)} else{.}} %>%
-  #             {if(!grepl("^model$", input$lib_type)){left_join(., libraryR()$metadata %>% select(-file_name, -col_id), by = c("sample_name"))} else{.}} %>%
-  #             .[, !sapply(., OpenSpecy::is_empty_vector), with = F] %>%
-  #             select(file_name, col_id, material_class, spectrum_identity, match_val, signal_to_noise, everything())
-  #     
-  #     
-  #     ggplot() +
-  #         geom_bar(aes(y = top_correlation$material_class), 
-  #                  fill = "white") +
-  #         #scale_x_continuous(trans =  scales::modulus_trans(p = 0, offset = 1)) +
-  #         #geom_vline(xintercept = MinCor(), color = "red") +
-  #         theme_black_minimal() +
-  #         labs(x = "Count", y = "Material Class")
-  # })
-  # 
+  output$material_plot <- renderPlot({
+      req(!is.null(preprocessed$data))
+      req(names(max_cor()))
+      #Metadata for all the top correlations.
+      # top_correlation <- data.table(object_id = names(DataR()$spectra),
+      #                sample_name = names(max_cor()),
+      #                match_val = max_cor(),
+      #                match_threshold = MinCor(),
+      #                good_match_vals = max_cor() > MinCor(),
+      #                signal_to_noise = signal_to_noise(),
+      #                signal_threshold = MinSNR(),
+      #                good_signal = signal_to_noise() > MinSNR(),
+      #                good_matches = max_cor() > MinCor() & signal_to_noise() > MinSNR()) %>%
+      #         {if(!grepl("^model$", input$lib_type)){bind_cols(., DataR()$metadata)} else{.}} %>%
+      #         {if(!grepl("^model$", input$lib_type)){left_join(., libraryR()$metadata %>% select(-file_name, -col_id), by = c("sample_name"))} else{.}} %>%
+      #         .[, !sapply(., OpenSpecy::is_empty_vector), with = F] %>%
+      #         select(file_name, col_id, material_class, spectrum_identity, match_val, signal_to_noise, everything())
+
+      if(input$lib_type == "model") materials = names(max_cor()) else materials = libraryR()$metadata$material_class[match(names(max_cor()), libraryR()$metadata$sample_name)]
+      
+      ggplot() +
+          geom_bar(aes(y = materials, fill = materials)) +
+          #scale_x_continuous(trans =  scales::modulus_trans(p = 0, offset = 1)) +
+          #geom_vline(xintercept = MinCor(), color = "red") +
+          theme_black_minimal(base_size = 15) +
+          theme(legend.position = "none") +
+          labs(x = "Count", y = "Material Class")
+  })
+
   
   # Data Download options ----
   
@@ -737,7 +742,7 @@ output$progress_bars <- renderUI({
                         rename("sample_name" = "Var1", 
                                "col_id" = "Var2",
                                "match_val" = "value") %>%
-                        mutate(good_correlations = match_val > match_threshold,
+                        mutate(good_match_vals = match_val > match_threshold,
                                good_matches = match_val > match_threshold & signal_to_noise > signal_threshold) %>%
                         .[, !sapply(., OpenSpecy::is_empty_vector), with = F] %>%
                         select(file_name, col_id, material_class, spectrum_identity, match_val, signal_to_noise, everything()) %>%
