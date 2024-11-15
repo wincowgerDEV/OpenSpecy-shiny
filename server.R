@@ -293,8 +293,8 @@ observeEvent(input$file, {
   
   #Identification ----
   output$correlation_head <- renderUI({
-      req(!is.null(preprocessed$data), (input$threshold_decision | input$cor_threshold_decision))
-      
+      req(!is.null(preprocessed$data))
+      req((input$threshold_decision | input$cor_threshold_decision))
       good_cor <- max_cor()[[data_click$data]] > MinCor() & signal_to_noise()[[data_click$data]] > MinSNR()
       good_sig <- signal_to_noise()[[data_click$data]] > MinSNR()
       good_match <- good_cor & good_sig
