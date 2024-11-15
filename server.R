@@ -645,23 +645,29 @@ output$progress_bars <- renderUI({
   })
 
   thresholded_particles <- reactive({
+      collapse_fun <- function(x, type = input$collapse_type) {
+          switch(type,
+                 "Mean" = mean(x),
+                 "Median" = median(x),
+                 "Geometric Mean" = exp(mean(log(x))))
+      }
       collapse_spec(
-          def_features(DataR(), features = particles_logi())
+          def_features(DataR(), features = particles_logi()), fun = collapse_fun
       ) %>%
           filter_spec(., logic = .$metadata$feature_id != "-88")
   })
   
-  #Thresholded Map Options ----
+  #Summary Plots ----
   output$particle_plot <- renderPlot({
       req(!is.null(preprocessed$data))
-      req(particles_logi(), input$collapse_decision)
+      req(thresholded_particles()$metadata$area)
       ggplot() +
           geom_histogram(aes(x = sqrt(thresholded_particles()$metadata$area)), 
                          fill = "white") +
           #scale_x_continuous(trans =  scales::modulus_trans(p = 0, offset = 1)) +
           #geom_vline(xintercept = MinCor(), color = "red") +
           theme_black_minimal(base_size = 15) +
-          labs(x = "Nominal Particle Size (√pixels)", y = "Count")
+          labs(x = "Nominal Particle Size (√area)", y = "Count")
   })
   
   output$material_plot <- renderPlot({

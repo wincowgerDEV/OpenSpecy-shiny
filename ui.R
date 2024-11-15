@@ -395,7 +395,9 @@ dashboardPage(dark = T,
                                                                                              inline = T,
                                                                                              value = F,
                                                                                              status = "success",
-                                                                                             fill = T)
+                                                                                             fill = T),
+                                                                        pickerInput(inputId = "collapse_type", label =  "Collapse Function",
+                                                                                    choices =  c("Median", "Mean", "Geometric Mean"))
                                                                         
                                                                         )), 
                                                                 fluidRow(
