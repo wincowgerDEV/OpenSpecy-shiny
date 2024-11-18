@@ -227,8 +227,7 @@ ui <- dashboardPage(
                     )
                 )
             )
-        )
-    ),
+        ),
                 #Analyze Spectra Tab ----
                 tabItem("analyze", br(), fluidRow(
                     column(
@@ -861,7 +860,7 @@ ui <- dashboardPage(
                 )
             )
         )
-    ),
+    ), 
 
     tabItem("contract", div(
         h2(
@@ -881,11 +880,12 @@ ui <- dashboardPage(
         ),
         style = "padding: 50px"
     ))
-# ), tags$footer(citation,
-#                style = "
-#             padding: 10px;
-#             background-color: #363e45;
-#             color: white;
-#             ")
+        ),
+    tags$footer(citation,
+               style = "
+            padding: 10px;
+            background-color: #363e45;
+            color: white;
+            ")
 )
 )
