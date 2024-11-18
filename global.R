@@ -66,6 +66,7 @@ if(is(tryCatch(check_lib(c("derivative",
                      "model_nobaseline"))
 }
 
+
 # Load all data ----
 load_data <- function() {
   data("raman_hdpe")

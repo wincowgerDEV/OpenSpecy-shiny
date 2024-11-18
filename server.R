@@ -1,6 +1,7 @@
 function(input, output, session) {
     
   #Setup ----
+    options(shiny.maxRequestSize=10000*1024^2)
     
     #URL Query
     observe({
