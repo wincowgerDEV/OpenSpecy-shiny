@@ -15,14 +15,14 @@ library(dplyr)
 library(shinyBS)
 library(OpenSpecy)
 
+lapply(list.files("R", full.names = TRUE), source)
+
 # Workaround for Chromium Issue 468227
 downloadButton <- function(...) {
   tag <- shiny::downloadButton(...)
   tag$attribs$download <- NULL
   tag
 }
-
-lapply(list.files("R", full.names = TRUE), source)
 
 # Define the custom theme
 theme_black_minimal <- function(base_size = 11, base_family = "") {

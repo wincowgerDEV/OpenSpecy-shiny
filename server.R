@@ -1,5 +1,4 @@
 function(input, output, session) {
-  
   #Setup ----
   options(shiny.maxRequestSize=10000*1024^2)
   
@@ -107,6 +106,55 @@ function(input, output, session) {
   })
   
   #The matching library to use. 
+  # libraryR <- reactive({
+  #   req(input$active_identification)
+  #   if(input$id_strategy == "deriv" & input$lib_type == "medoid"){
+  #     if(file.exists("data/medoid_derivative.rds")){
+  #       library <- read_any("data/medoid_derivative.rds")
+  #     }
+  #     return(library)
+  #     }
+  #   else if(input$id_strategy == "nobaseline" & input$lib_type == "medoid"){
+  #     if(file.exists("data/medoid_nobaseline.rds")){
+  #       library <- read_any("data/medoid_nobaseline.rds")
+  #     }
+  #     return(library)
+  #   }
+  #   else if(input$id_strategy == "deriv" & input$lib_type == "model") {
+  #     if(file.exists("data/model_derivative.rds")){
+  #       library <- read_any("data/model_derivative.rds")
+  #     }
+  #     return(library)
+  #   }
+  #   else if(input$id_strategy == "nobaseline" & input$lib_type == "model") {
+  #     if(file.exists("data/model_nobaseline.rds")){
+  #       library <- read_any("data/model_nobaseline.rds")
+  #     }
+  #     return(library)
+  #   }
+  #   else if(grepl("nobaseline$", input$id_strategy)) {
+  #     if(file.exists("data/nobaseline.rds")){
+  #       library <- read_any("data/nobaseline.rds")
+  #     }
+  #     return(library)
+  #   }
+  #   else if(grepl("deriv$", input$id_strategy)){
+  #     if(file.exists("data/derivative.rds")){
+  #       library <- read_any("data/derivative.rds")
+  #     }
+  #     return(library)
+  #   }
+  #   if(grepl("^both", input$id_spec_type)) {
+  #     library
+  #   }
+  #   else if (grepl("^ftir", input$id_spec_type)){
+  #     filter_spec(library, logic = library$metadata$spectrum_type == "ftir")
+  #   }
+  #   else if (grepl("^raman", input$id_spec_type)){
+  #     filter_spec(library, logic = library$metadata$spectrum_type == "raman")
+  #   }
+  # })
+  #The matching library to use. 
   libraryR <- reactive({
     req(input$active_identification)
     if(input$id_strategy == "deriv" & input$lib_type == "medoid"){
@@ -114,11 +162,12 @@ function(input, output, session) {
         library <- read_any("data/medoid_derivative.rds")
       }
       return(library)
-      }
+    }
     else if(input$id_strategy == "nobaseline" & input$lib_type == "medoid"){
       if(file.exists("data/medoid_nobaseline.rds")){
         library <- read_any("data/medoid_nobaseline.rds")
       }
+      
       return(library)
     }
     else if(input$id_strategy == "deriv" & input$lib_type == "model") {
@@ -137,16 +186,14 @@ function(input, output, session) {
       if(file.exists("data/nobaseline.rds")){
         library <- read_any("data/nobaseline.rds")
       }
-      return(library)
     }
     else if(grepl("deriv$", input$id_strategy)){
       if(file.exists("data/derivative.rds")){
         library <- read_any("data/derivative.rds")
       }
-      return(library)
     }
     if(grepl("^both", input$id_spec_type)) {
-      library
+      return(library)
     }
     else if (grepl("^ftir", input$id_spec_type)){
       filter_spec(library, logic = library$metadata$spectrum_type == "ftir")
@@ -155,7 +202,6 @@ function(input, output, session) {
       filter_spec(library, logic = library$metadata$spectrum_type == "raman")
     }
   })
-  
   # Corrects spectral intensity units using the user specified correction
   
   # Redirecting preprocessed data to be a reactive variable. Not totally sure why this is happening in addition to the other. 
@@ -776,13 +822,6 @@ function(input, output, session) {
     }
     else{
       data_click$data <- event_data("plotly_click", source = "heat_plot")[["pointNumber"]] + 1
-    }
-  })
-  
-  #Google translate. 
-  output$translate <- renderUI({
-    if(translate & curl::has_internet()) {
-      includeHTML("www/googletranslate.html")
     }
   })
   
