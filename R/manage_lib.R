@@ -20,23 +20,14 @@
 #' \code{rm_lib()} removes the libraries from your computer.
 #'
 #' @param type library type to check/retrieve; defaults to
-#' \code{c("derivative", "nobaseline", "raw", "mediod", "model")} which reads
+#' \code{c("derivative", "nobaseline", "raw", "medoid_derivative", "medoid_nobaseline", "model_derivative", "model_nobaseline")} which reads
 #' everything.
-#' @param node the OSF node to be retrieved; should be \code{"x7dpz"} unless you
-#' maintain your own OSF node with spectral libraries.
 #' @param path where to save or look for local library files; defaults to
 #' \code{"system"} pointing to
 #' \code{system.file("extdata", package = "OpenSpecy")}.
-#' @param conflicts determines what happens when a file with the same name
-#' exists at the specified destination. Can be one of the following (see
-#' \code{\link[osfr]{osf_download}()} for details):
-#' \describe{
-#'   \item{"error"}{throw an error and abort the file transfer operation.}
-#'   \item{"skip"}{skip the conflicting file(s) and continue transferring the
-#'   remaining files.}
-#'   \item{"overwrite" (default)}{ replace the existing file with the
-#'   transferred copy.}
-#' }
+#' @param revision revision number to use for libraries, revision numbers can be found 
+#' at the osf repo (https://osf.io/x7dpz/) by clicking the library then history, 
+#' if NULL defaults to most recent. This allows exact version control. 
 #' @param condition determines if \code{check_lib()} should warn
 #' (\code{"warning"}, the default) or throw and error (\code{"error"}).
 #' @param \ldots further arguments passed to \code{\link[osfr]{osf_download}()}.
@@ -147,7 +138,7 @@
 #' estuary and the German North Sea.” *PANGAEA*. \doi{10.1594/PANGAEA.938143}.
 #'
 #' “Handbook of Raman Spectra for geology” (2023).
-#' \url{http://www.geologie-lyon.fr/Raman/}.
+#' \url{https://www.geologie-lyon.fr/Raman/}.
 #'
 #' “Scientific Workgroup for the Analysis of Seized Drugs.” (2023).
 #' https://swgdrug.org/ir.htm.
@@ -167,18 +158,68 @@
 #' Israel).
 #'
 #' @export
-check_lib <- function(type = c("derivative", "nobaseline", "raw", "mediod",
-                               "model"),
+check_lib <- function(type = c("derivative", "nobaseline", "raw", "medoid_derivative",
+                               "medoid_nobaseline", "model_derivative", "model_nobaseline"),
                       path = "system", condition = "warning") {
-
+  
   lp <- ifelse(path == "system",
                system.file("extdata", package = "OpenSpecy"),
                path)
-
+  
   .chkf(type, path = lp, condition = condition)
-
+  
   invisible()
 }
+
+#' @rdname manage_lib
+#'
+#' @importFrom utils read.csv download.file sessionInfo
+#'
+#' @export
+
+get_lib <- function(type = c("derivative", "nobaseline", "raw", "medoid_derivative",
+                             "medoid_nobaseline", "model_derivative", "model_nobaseline"),
+                    path = "system",
+                    revision = NULL,
+                    ...) {
+  
+  lp <- ifelse(path == "system",
+               system.file("extdata", package = "OpenSpecy"),
+               path)
+  
+  message("Fetching Open Specy reference libraries from OSF ...")
+  
+  # Mapping from types to URLs and filenames
+  library_info <- list(
+    derivative = list(url = "https://osf.io/download/2qbkt/", filename = "derivative.rds", msg = "Fetching derivative library..."),
+    nobaseline = list(url = "https://osf.io/download/jy7zk/", filename = "nobaseline.rds", msg = "Fetching nobaseline library..."),
+    raw = list(url = "https://osf.io/download/kzv3n/", filename = "raw.rds", msg = "Fetching raw library..."),
+    medoid_derivative = list(url = "https://osf.io/download/2dmwu/", filename = "medoid_derivative.rds", msg = "Fetching medoid derivative library..."),
+    medoid_nobaseline = list(url = "https://osf.io/download/8f3sg/", filename = "medoid_nobaseline.rds", msg = "Fetching medoid nobaseline library..."),
+    model_derivative = list(url = "https://osf.io/download/s5bmh/", filename = "model_derivative.rds", msg = "Fetching model derivative library..."),
+    model_nobaseline = list(url = "https://osf.io/download/v4abf/", filename = "model_nobaseline.rds", msg = "Fetching model nobaseline library...")
+  )
+  
+  # Loop over the types requested
+  for (t in type) {
+    if (t %in% names(library_info)) {
+      info <- library_info[[t]]
+      message(info$msg)
+      url <- info$url
+      if (!is.null(revision)) {
+        url <- paste0(url, "?revision=", revision)
+      }
+      destfile <- file.path(lp, info$filename)
+      download.file(url, destfile = destfile, mode = "wb", ...)
+    } else {
+      warning("Unknown library type: ", t)
+    }
+  }
+  
+  message("Use 'load_lib()' to load the library")
+}
+
+
 
 #' @rdname manage_lib
 #'
@@ -187,44 +228,45 @@ load_lib <- function(type, path = "system") {
   lp <- ifelse(path == "system",
                system.file("extdata", package = "OpenSpecy"),
                path)
-
+  
   chk <- .chkf(type, path = lp, condition = "stop")
-
+  
   fp <- file.path(lp, paste0(type, ".rds"))
+  
   rds <- readRDS(fp)
-
+  
   return(rds)
 }
 
 #' @rdname manage_lib
 #'
 #' @export
-rm_lib <- function(type = c("derivative", "nobaseline", "raw", "mediod",
-                            "model"),
+rm_lib <- function(type = c("derivative", "nobaseline", "raw", "medoid_derivative",
+                            "medoid_nobaseline", "model_derivative", "model_nobaseline"),
                    path = "system") {
   lp <- ifelse(path == "system",
                system.file("extdata", package = "OpenSpecy"),
                path)
-
+  
   fp <- file.path(lp, paste0(type, ".rds"))
   file.remove(fp)
-
+  
   invisible()
 }
 
 # Auxiliary function for library checks
 .chkf <- function(type, path = "system", condition = "warning") {
   fn <- paste0(type, ".rds")
-
+  
   lp <- ifelse(path == "system", system.file("extdata", package = "OpenSpecy"),
                path)
-
+  
   chk <- file.path(lp, fn) |> file.exists()
-
+  
   names(chk) <- type
-
+  
   out <- paste(type[!chk], collapse = ", ")
-
+  
   if (!all(chk))
     do.call(condition, list("Library missing or incomplete: ", out, "; ",
                             "use 'get_lib()' to download a current version",
