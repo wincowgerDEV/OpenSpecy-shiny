@@ -149,7 +149,7 @@
 #'
 #' @importFrom data.table as.data.table
 #' @importFrom digest digest
-#' @export
+#' @importFrom utils sessionInfo
 as_OpenSpecy <- function(x, ...) {
   UseMethod("as_OpenSpecy")
 }

@@ -106,81 +106,27 @@ function(input, output, session) {
   })
   
   #The matching library to use. 
-  # libraryR <- reactive({
-  #   req(input$active_identification)
-  #   if(input$id_strategy == "deriv" & input$lib_type == "medoid"){
-  #     if(file.exists("data/medoid_derivative.rds")){
-  #       library <- read_any("data/medoid_derivative.rds")
-  #     }
-  #     return(library)
-  #     }
-  #   else if(input$id_strategy == "nobaseline" & input$lib_type == "medoid"){
-  #     if(file.exists("data/medoid_nobaseline.rds")){
-  #       library <- read_any("data/medoid_nobaseline.rds")
-  #     }
-  #     return(library)
-  #   }
-  #   else if(input$id_strategy == "deriv" & input$lib_type == "model") {
-  #     if(file.exists("data/model_derivative.rds")){
-  #       library <- read_any("data/model_derivative.rds")
-  #     }
-  #     return(library)
-  #   }
-  #   else if(input$id_strategy == "nobaseline" & input$lib_type == "model") {
-  #     if(file.exists("data/model_nobaseline.rds")){
-  #       library <- read_any("data/model_nobaseline.rds")
-  #     }
-  #     return(library)
-  #   }
-  #   else if(grepl("nobaseline$", input$id_strategy)) {
-  #     if(file.exists("data/nobaseline.rds")){
-  #       library <- read_any("data/nobaseline.rds")
-  #     }
-  #     return(library)
-  #   }
-  #   else if(grepl("deriv$", input$id_strategy)){
-  #     if(file.exists("data/derivative.rds")){
-  #       library <- read_any("data/derivative.rds")
-  #     }
-  #     return(library)
-  #   }
-  #   if(grepl("^both", input$id_spec_type)) {
-  #     library
-  #   }
-  #   else if (grepl("^ftir", input$id_spec_type)){
-  #     filter_spec(library, logic = library$metadata$spectrum_type == "ftir")
-  #   }
-  #   else if (grepl("^raman", input$id_spec_type)){
-  #     filter_spec(library, logic = library$metadata$spectrum_type == "raman")
-  #   }
-  # })
-  #The matching library to use. 
   libraryR <- reactive({
     req(input$active_identification)
     if(input$id_strategy == "deriv" & input$lib_type == "medoid"){
       if(file.exists("data/medoid_derivative.rds")){
         library <- read_any("data/medoid_derivative.rds")
       }
-      return(library)
     }
     else if(input$id_strategy == "nobaseline" & input$lib_type == "medoid"){
       if(file.exists("data/medoid_nobaseline.rds")){
         library <- read_any("data/medoid_nobaseline.rds")
       }
-      
-      return(library)
-    }
+      }
     else if(input$id_strategy == "deriv" & input$lib_type == "model") {
       if(file.exists("data/model_derivative.rds")){
         library <- read_any("data/model_derivative.rds")
       }
-      return(library)
     }
     else if(input$id_strategy == "nobaseline" & input$lib_type == "model") {
       if(file.exists("data/model_nobaseline.rds")){
         library <- read_any("data/model_nobaseline.rds")
       }
-      return(library)
     }
     else if(grepl("nobaseline$", input$id_strategy)) {
       if(file.exists("data/nobaseline.rds")){
@@ -193,7 +139,6 @@ function(input, output, session) {
       }
     }
     if(grepl("^both", input$id_spec_type)) {
-      return(library)
     }
     else if (grepl("^ftir", input$id_spec_type)){
       filter_spec(library, logic = library$metadata$spectrum_type == "ftir")
@@ -201,9 +146,9 @@ function(input, output, session) {
     else if (grepl("^raman", input$id_spec_type)){
       filter_spec(library, logic = library$metadata$spectrum_type == "raman")
     }
-  })
-  # Corrects spectral intensity units using the user specified correction
+  })  
   
+  # Corrects spectral intensity units using the user specified correction
   # Redirecting preprocessed data to be a reactive variable. Not totally sure why this is happening in addition to the other. 
   data <- reactive({
     req(input$file)
@@ -410,8 +355,6 @@ function(input, output, session) {
       labs(x = "Correlation")
   })
   
-  
-  
   #Metadata for all the matches for a single unknown spectrum
   matches_to_single <- reactive({
     req(input$active_identification)
@@ -485,21 +428,21 @@ function(input, output, session) {
       setkey(selected_match, object_id)
       
       result <- dataR_metadata[selected_match, on = c(col_id = "object_id")]
-      result <- result[, !sapply(result, OpenSpecy::is_empty_vector), with = FALSE] %>%
+      result <- result[, !sapply(result, is_empty_vector), with = FALSE] %>%
         select(file_name, col_id, material_class, spectrum_identity, match_val, signal_to_noise, everything())
       result
     }
     else if(input$active_identification & grepl("^model$", input$lib_type)){
       result <- bind_cols(DataR()$metadata[data_click$data,], matches_to_single()[data_click$data,])
       result$signal_to_noise <- signal_to_noise()[data_click$data]
-      result <- result[, !sapply(result, OpenSpecy::is_empty_vector), with = FALSE] %>%
+      result <- result[, !sapply(result, is_empty_vector), with = FALSE] %>%
         mutate(match_val = signif(match_val, 2)) %>%
         select(file_name, col_id, material_class, match_val, signal_to_noise, everything())
       result
     }
     else{
       DataR()$metadata[data_click$data,] %>%
-        .[, !sapply(., OpenSpecy::is_empty_vector), with = F]  
+        .[, !sapply(., is_empty_vector), with = F]  
     }
   })
   
@@ -791,7 +734,7 @@ function(input, output, session) {
                    "match_val" = "value") %>%
             mutate(good_match_vals = match_val > match_threshold,
                    good_matches = match_val > match_threshold & signal_to_noise > signal_threshold) %>%
-            .[, !sapply(., OpenSpecy::is_empty_vector), with = F] %>%
+            .[, !sapply(., is_empty_vector), with = F] %>%
             select(file_name, col_id, material_class, spectrum_identity, match_val, signal_to_noise, everything()) %>%
             .[order(-match_val), .SD[1:input$top_n_input], by = col_id] %>%
             {if(grepl("Simple", input$columns_selected)){select(., file_name, col_id, material_class, match_val, signal_to_noise)} else{.}}
@@ -801,7 +744,7 @@ function(input, output, session) {
         else{
           result <- bind_cols(DataR()$metadata, matches_to_single())
           result$signal_to_noise <- signal_to_noise()
-          result <- result[, !sapply(result, OpenSpecy::is_empty_vector), with = FALSE] %>%
+          result <- result[, !sapply(result, is_empty_vector), with = FALSE] %>%
             select(file_name, col_id, material_class, match_val, signal_to_noise, everything())
           
           fwrite(result, file) 

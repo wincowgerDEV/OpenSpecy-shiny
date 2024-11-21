@@ -52,7 +52,7 @@ read_any <- function(file, ...) {
   else if (grepl("(\\.zip$)", ignore.case = T, file)) {
     os <- read_zip(file = file, ...)
   }
-  else if (grepl("(\\.csv$)|(\\.tsv$)|(\\.txt$)", ignore.case = T, file)) {
+  else if (grepl("(\\.xyz$)|(\\.csv$)|(\\.tsv$)|(\\.txt$)", ignore.case = T, file)) {
     os <- read_text(file = file, ...)
   } else if (grepl("\\.[0-999]$", ignore.case = T, file)) {
     os <- read_opus(file = file, ...)
@@ -91,7 +91,8 @@ read_zip <- function(file, ...) {
 
   flst <- file.path(tmp, flst)
 
-  if (length(flst) == 2 && any(grepl("\\.dat$", ignore.case = TRUE, flst)) && any(grepl("\\.hdr$", ignore.case = TRUE, flst))) {
+  if (length(flst) == 2 && any(grepl("\\.dat$", ignore.case = TRUE, flst)) && 
+      any(grepl("\\.hdr$", ignore.case = TRUE, flst))) {
     # Correctly combined checks with &&
     #print(length(flst))
   
