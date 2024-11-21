@@ -13,9 +13,19 @@ library(digest)
 library(shinyjs)
 library(dplyr)
 library(shinyBS)
-library(OpenSpecy)
 
 lapply(list.files("R", full.names = TRUE), source)
+
+
+load_data <- function() {
+  data("raman_hdpe")
+  testdata <- data.table(wavenumber = raman_hdpe$wavenumber,
+                         intensity = raman_hdpe$spectra$intensity)
+  
+  # Inject variables into the parent environment
+  invisible(list2env(as.list(environment()), parent.frame()))
+}
+
 
 # Workaround for Chromium Issue 468227
 downloadButton <- function(...) {
@@ -49,35 +59,28 @@ theme_black_minimal <- function(base_size = 11, base_family = "") {
 }
 
 # Logging ----
-if(is(tryCatch(check_lib(c("derivative",
-                           "nobaseline",
-                           "medoid_derivative",
-                           "medoid_nobaseline",
-                           "model_derivative",
-                           "model_nobaseline")),error=function(e) e, warning=function(w) w), "warning") &
-   !all(file.exists("data/mediod_derivative.rds"),
-        file.exists("data/model_derivative.rds"),
-        file.exists("data/mediod_nobaseline.rds"),
-        file.exists("data/model_nobaseline.rds"),
-        file.exists("data/nobaseline.rds"),
-        file.exists("data/derivative.rds"))){
-    get_lib(type = c("derivative",
-                     "nobaseline",
-                     "medoid_derivative",
-                     "medoid_nobaseline",
-                     "model_derivative",
-                     "model_nobaseline"))
-}
+# if(is(tryCatch(check_lib(c("derivative",
+#                            "nobaseline",
+#                            "medoid_derivative",
+#                            "medoid_nobaseline",
+#                            "model_derivative",
+#                            "model_nobaseline")),error=function(e) e, warning=function(w) w), "warning") &
+#    !all(file.exists("data/mediod_derivative.rds"),
+#         file.exists("data/model_derivative.rds"),
+#         file.exists("data/mediod_nobaseline.rds"),
+#         file.exists("data/model_nobaseline.rds"),
+#         file.exists("data/nobaseline.rds"),
+#         file.exists("data/derivative.rds"))){
+#     get_lib(type = c("derivative",
+#                      "nobaseline",
+#                      "medoid_derivative",
+#                      "medoid_nobaseline",
+#                      "model_derivative",
+#                      "model_nobaseline"))
+# }
 
  #Load all data ----
 
-load_data <- function() {
-  data("raman_hdpe")
-  testdata <- data.table(wavenumber = raman_hdpe$wavenumber,
-                         intensity = raman_hdpe$spectra$intensity)
-
-  return(testdata)
-}
 # 
 # # Name keys for human readable column names ----
 citation <- 
