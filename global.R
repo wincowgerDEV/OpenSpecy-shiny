@@ -13,6 +13,7 @@ library(digest)
 library(shinyjs)
 library(dplyr)
 library(shinyBS)
+library(jsonlite)
 
 lapply(list.files("R", full.names = TRUE), source)
 
@@ -71,15 +72,15 @@ theme_black_minimal <- function(base_size = 11, base_family = "") {
 #         file.exists("data/model_nobaseline.rds"),
 #         file.exists("data/nobaseline.rds"),
 #         file.exists("data/derivative.rds"))){
-#     get_lib(type = c("derivative",
-#                      "nobaseline",
-#                      "medoid_derivative",
-#                      "medoid_nobaseline",
-#                      "model_derivative",
-#                      "model_nobaseline"))
-# }
+    # get_lib(type = c("derivative",
+    #                  "nobaseline",
+    #                  "medoid_derivative",
+    #                  "medoid_nobaseline"))
+    #                  # "model_derivative",
+    #                  # "model_nobaseline"))
 
- #Load all data ----
+
+
 
 # 
 # # Name keys for human readable column names ----

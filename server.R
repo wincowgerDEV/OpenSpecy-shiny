@@ -106,47 +106,124 @@ function(input, output, session) {
   })
   
   #The matching library to use. 
+  # libraryR <- reactive({
+  #   req(input$active_identification)
+  #   if(input$id_strategy == "deriv" & input$lib_type == "medoid"){
+  #     if(file.exists("data/medoid_derivative.rds")){
+  #       library <- read_any("data/medoid_derivative.rds")
+  #     }
+  #   }
+  #   else if(input$id_strategy == "nobaseline" & input$lib_type == "medoid"){
+  #     if(file.exists("data/medoid_nobaseline.rds")){
+  #       library <- read_any("data/medoid_nobaseline.rds")
+  #     }
+  #     }
+  #   else if(input$id_strategy == "deriv" & input$lib_type == "model") {
+  #     if(file.exists("data/model_derivative.rds")){
+  #       library <- read_any("data/model_derivative.rds")
+  #     }
+  #   }
+  #   else if(input$id_strategy == "nobaseline" & input$lib_type == "model") {
+  #     if(file.exists("data/model_nobaseline.rds")){
+  #       library <- read_any("data/model_nobaseline.rds")
+  #     }
+  #   }
+  #   else if(grepl("nobaseline$", input$id_strategy)) {
+  #     if(file.exists("data/nobaseline.rds")){
+  #       library <- read_any("data/nobaseline.rds")
+  #     }
+  #   }
+  #   else if(grepl("deriv$", input$id_strategy)){
+  #     if(file.exists("data/derivative.rds")){
+  #       library <- read_any("data/derivative.rds")
+  #     }
+  #   }
+  #   if(grepl("^both", input$id_spec_type)) {
+  #   }
+  #   else if (grepl("^ftir", input$id_spec_type)){
+  #     filter_spec(library, logic = library$metadata$spectrum_type == "ftir")
+  #   }
+  #   else if (grepl("^raman", input$id_spec_type)){
+  #     filter_spec(library, logic = library$metadata$spectrum_type == "raman")
+  #   }
+  # })  
+  # 
+  
+  #The matching library to use.
   libraryR <- reactive({
     req(input$active_identification)
-    if(input$id_strategy == "deriv" & input$lib_type == "medoid"){
-      if(file.exists("data/medoid_derivative.rds")){
-        library <- read_any("data/medoid_derivative.rds")
+    if (input$id_strategy == "deriv" & input$lib_type == "medoid") {
+      if (!file.exists("data/medoid_derivative.rds")) {
+        library <- read_any("https://d2jrxerjcsjhs7.cloudfront.net/medoid_derivative.json") 
+      }
+      else{
+        library <- get_lib("medoid_derivative")
+      }
+      #return(library)
+    }
+    else if (input$id_strategy == "nobaseline" &
+             input$lib_type == "medoid") {
+      if (file.exists("data/medoid_nobaseline.rds")) {
+        library <- read_any("https://d2jrxerjcsjhs7.cloudfront.net/medoid_nobaseline.json") |>
+          transform_library()
+      }
+      else{
+        library <- get_lib("medoid_nobaseline")
+      }
+      #return(library)
+    }
+    else if (input$id_strategy == "deriv" &
+             input$lib_type == "model") {
+      if (file.exists("data/model_derivative.rds")) {
+        library <- read_any("https://d2jrxerjcsjhs7.cloudfront.net/model_derivative.json") |>
+          transform_library()
+      }
+      else{
+        library <- get_lib("model_derivative")
+      }
+      return(library)
+    }
+    else if (input$id_strategy == "nobaseline" &
+             input$lib_type == "model") {
+      if (file.exists("data/model_nobaseline.rds")) {
+        library <- read_any("https://d2jrxerjcsjhs7.cloudfront.net/model_nobaseline.json") |>
+          transform_library()
+      }
+      else{
+        library <- get_lib("model_nobaseline")
+      }
+      return(library)
+    }
+    else if (grepl("nobaseline$", input$id_strategy)) {
+      if (file.exists("data/nobaseline.rds")) {
+        library <- read_any("https://d2jrxerjcsjhs7.cloudfront.net/nobaseline.json") |>
+          transform_library()
+      }
+      else{
+        library <- get_lib("nobaseline")
       }
     }
-    else if(input$id_strategy == "nobaseline" & input$lib_type == "medoid"){
-      if(file.exists("data/medoid_nobaseline.rds")){
-        library <- read_any("data/medoid_nobaseline.rds")
-      }
-      }
-    else if(input$id_strategy == "deriv" & input$lib_type == "model") {
-      if(file.exists("data/model_derivative.rds")){
-        library <- read_any("data/model_derivative.rds")
-      }
+    # else if(grepl("deriv$", input$id_strategy)){
+    #   if(file.exists("data/derivative.rds")){
+    #     library <- read_any("data/derivative.rds")
+    #   }
+    # else{
+    #   library <- get_lib("derivative")
+    # }
+    #}
+    if (grepl("^both", input$id_spec_type)) {
+      library
     }
-    else if(input$id_strategy == "nobaseline" & input$lib_type == "model") {
-      if(file.exists("data/model_nobaseline.rds")){
-        library <- read_any("data/model_nobaseline.rds")
-      }
-    }
-    else if(grepl("nobaseline$", input$id_strategy)) {
-      if(file.exists("data/nobaseline.rds")){
-        library <- read_any("data/nobaseline.rds")
-      }
-    }
-    else if(grepl("deriv$", input$id_strategy)){
-      if(file.exists("data/derivative.rds")){
-        library <- read_any("data/derivative.rds")
-      }
-    }
-    if(grepl("^both", input$id_spec_type)) {
-    }
-    else if (grepl("^ftir", input$id_spec_type)){
+    else if (grepl("^ftir", input$id_spec_type)) {
       filter_spec(library, logic = library$metadata$spectrum_type == "ftir")
     }
-    else if (grepl("^raman", input$id_spec_type)){
+    else if (grepl("^raman", input$id_spec_type)) {
       filter_spec(library, logic = library$metadata$spectrum_type == "raman")
     }
-  })  
+    
+  })
+  
+  
   
   # Corrects spectral intensity units using the user specified correction
   # Redirecting preprocessed data to be a reactive variable. Not totally sure why this is happening in addition to the other. 
