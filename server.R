@@ -1,7 +1,6 @@
 function(input, output, session) {
   #Setup ----
   options(shiny.maxRequestSize=10000*1024^2)
-  
   #URL Query
   observe({
     query <- parseQueryString(session$clientData$url_search)
@@ -105,50 +104,6 @@ function(input, output, session) {
     })
   })
   
-  #The matching library to use. 
-  # libraryR <- reactive({
-  #   req(input$active_identification)
-  #   if(input$id_strategy == "deriv" & input$lib_type == "medoid"){
-  #     if(file.exists("data/medoid_derivative.rds")){
-  #       library <- read_any("data/medoid_derivative.rds")
-  #     }
-  #   }
-  #   else if(input$id_strategy == "nobaseline" & input$lib_type == "medoid"){
-  #     if(file.exists("data/medoid_nobaseline.rds")){
-  #       library <- read_any("data/medoid_nobaseline.rds")
-  #     }
-  #     }
-  #   else if(input$id_strategy == "deriv" & input$lib_type == "model") {
-  #     if(file.exists("data/model_derivative.rds")){
-  #       library <- read_any("data/model_derivative.rds")
-  #     }
-  #   }
-  #   else if(input$id_strategy == "nobaseline" & input$lib_type == "model") {
-  #     if(file.exists("data/model_nobaseline.rds")){
-  #       library <- read_any("data/model_nobaseline.rds")
-  #     }
-  #   }
-  #   else if(grepl("nobaseline$", input$id_strategy)) {
-  #     if(file.exists("data/nobaseline.rds")){
-  #       library <- read_any("data/nobaseline.rds")
-  #     }
-  #   }
-  #   else if(grepl("deriv$", input$id_strategy)){
-  #     if(file.exists("data/derivative.rds")){
-  #       library <- read_any("data/derivative.rds")
-  #     }
-  #   }
-  #   if(grepl("^both", input$id_spec_type)) {
-  #   }
-  #   else if (grepl("^ftir", input$id_spec_type)){
-  #     filter_spec(library, logic = library$metadata$spectrum_type == "ftir")
-  #   }
-  #   else if (grepl("^raman", input$id_spec_type)){
-  #     filter_spec(library, logic = library$metadata$spectrum_type == "raman")
-  #   }
-  # })  
-  # 
-  
   #The matching library to use.
   libraryR <- reactive({
     req(input$active_identification)
@@ -163,20 +118,18 @@ function(input, output, session) {
     }
     else if (input$id_strategy == "nobaseline" &
              input$lib_type == "medoid") {
-      if (file.exists("data/medoid_nobaseline.rds")) {
-        library <- read_any("https://d2jrxerjcsjhs7.cloudfront.net/medoid_nobaseline.json") |>
-          transform_library()
+      if (!file.exists("data/medoid_nobaseline.rds")) {
+        library <- read_any("https://d2jrxerjcsjhs7.cloudfront.net/medoid_nobaseline.json") 
       }
       else{
-        library <- get_lib("medoid_nobaseline")
+         library <- get_lib("medoid_nobaseline")
       }
       #return(library)
     }
     else if (input$id_strategy == "deriv" &
              input$lib_type == "model") {
-      if (file.exists("data/model_derivative.rds")) {
-        library <- read_any("https://d2jrxerjcsjhs7.cloudfront.net/model_derivative.json") |>
-          transform_library()
+      if (!file.exists("data/model_derivative.rds")) {
+        library <- fromJSON("https://d2jrxerjcsjhs7.cloudfront.net/model_derivative.json") 
       }
       else{
         library <- get_lib("model_derivative")
@@ -185,9 +138,11 @@ function(input, output, session) {
     }
     else if (input$id_strategy == "nobaseline" &
              input$lib_type == "model") {
-      if (file.exists("data/model_nobaseline.rds")) {
-        library <- read_any("https://d2jrxerjcsjhs7.cloudfront.net/model_nobaseline.json") |>
-          transform_library()
+      if (!file.exists("data/model_nobaseline.rds")) {
+        library <- fromJSON("model_nobaseline.json")
+        class(library$model) = library$class
+        #library <- OpenSpecy::load_lib("medoid_nobaseline")
+
       }
       else{
         library <- get_lib("model_nobaseline")
@@ -195,22 +150,13 @@ function(input, output, session) {
       return(library)
     }
     else if (grepl("nobaseline$", input$id_strategy)) {
-      if (file.exists("data/nobaseline.rds")) {
-        library <- read_any("https://d2jrxerjcsjhs7.cloudfront.net/nobaseline.json") |>
-          transform_library()
+      if (!file.exists("data/nobaseline.rds")) {
+        library <- read_any("https://d2jrxerjcsjhs7.cloudfront.net/nobaseline.json") 
       }
       else{
         library <- get_lib("nobaseline")
       }
     }
-    # else if(grepl("deriv$", input$id_strategy)){
-    #   if(file.exists("data/derivative.rds")){
-    #     library <- read_any("data/derivative.rds")
-    #   }
-    # else{
-    #   library <- get_lib("derivative")
-    # }
-    #}
     if (grepl("^both", input$id_spec_type)) {
       library
     }
@@ -222,9 +168,7 @@ function(input, output, session) {
     }
     
   })
-  
-  
-  
+
   # Corrects spectral intensity units using the user specified correction
   # Redirecting preprocessed data to be a reactive variable. Not totally sure why this is happening in addition to the other. 
   data <- reactive({
@@ -377,6 +321,7 @@ function(input, output, session) {
     })
   })
   
+  
   #The output from the AI classification algorithm. 
   ai_output <- reactive({ #tested working. 
     req(!is.null(preprocessed$data))
@@ -392,6 +337,8 @@ function(input, output, session) {
     
     match_spec(data, library = libraryR(), na.rm = T, fill = fill)
   })
+  
+  print(ai_output)
   
   #The maximum correlation or AI value. 
   max_cor <- reactive({
@@ -436,7 +383,7 @@ function(input, output, session) {
   matches_to_single <- reactive({
     req(input$active_identification)
     if(is.null(preprocessed$data)){
-      libraryR()$metadata %>%
+      libraryR()$metadata |> 
         mutate("match_val" = NA) 
     }
     else if(grepl("^model$", input$lib_type)){
@@ -745,7 +692,7 @@ function(input, output, session) {
                      else NA,
                      if(input$collapse_decision) "Thresholded Particles"
                      else NA)
-    
+
     choice_names = choice_names[!is.na(choice_names)]
     tagList(selectInput(inputId = "download_selection",
                         label = downloadButton("download_data",
@@ -761,8 +708,8 @@ function(input, output, session) {
                                           to their medians and locations to their centroids.",
                 content = "Download Options", placement = "left"
               ))
-  })  
-  
+  })
+
   output$top_n <- renderUI({
     req(ncol(preprocessed$data$spectra) >= 1)
     req(input$active_identification)
@@ -777,8 +724,8 @@ function(input, output, session) {
         max = ncol(libraryR()$spectra),
         step = 1
       ),
-      selectInput(inputId = "columns_selected", 
-                  label = "Columns to save", 
+      selectInput(inputId = "columns_selected",
+                  label = "Columns to save",
                   choices = c("All", "Simple"))
     )
   })
@@ -795,18 +742,18 @@ function(input, output, session) {
       if(input$download_selection == "Top Matches") {
         if(!grepl("^model$", input$lib_type)){
           dataR_metadata <- data.table(match_threshold = MinCor(),
-                                       signal_to_noise = signal_to_noise(), 
+                                       signal_to_noise = signal_to_noise(),
                                        signal_threshold = MinSNR(),
                                        good_signal = signal_to_noise() > MinSNR()) %>%
             bind_cols(DataR()$metadata)
-          
+
           all_matches <- reshape2::melt(correlation()) %>%
             as.data.table() %>%
-            left_join(libraryR()$metadata %>% select(-col_id, -file_name), 
+            left_join(libraryR()$metadata %>% select(-col_id, -file_name),
                       by = c("Var1" = "sample_name")) %>%
-            left_join(dataR_metadata, 
+            left_join(dataR_metadata,
                       by = c("Var2" = "col_id")) %>%
-            rename("sample_name" = "Var1", 
+            rename("sample_name" = "Var1",
                    "col_id" = "Var2",
                    "match_val" = "value") %>%
             mutate(good_match_vals = match_val > match_threshold,
@@ -815,22 +762,22 @@ function(input, output, session) {
             select(file_name, col_id, material_class, spectrum_identity, match_val, signal_to_noise, everything()) %>%
             .[order(-match_val), .SD[1:input$top_n_input], by = col_id] %>%
             {if(grepl("Simple", input$columns_selected)){select(., file_name, col_id, material_class, match_val, signal_to_noise)} else{.}}
-          
-          fwrite(all_matches, file) 
+
+          fwrite(all_matches, file)
         }
         else{
           result <- bind_cols(DataR()$metadata, matches_to_single())
           result$signal_to_noise <- signal_to_noise()
           result <- result[, !sapply(result, is_empty_vector), with = FALSE] %>%
             select(file_name, col_id, material_class, match_val, signal_to_noise, everything())
-          
-          fwrite(result, file) 
+
+          fwrite(result, file)
         }
       }
       if(input$download_selection == "Thresholded Particles") {write_spec(thresholded_particles(), file = file)}
     })
-  
-  # Hide functions or objects when the shouldn't exist. 
+
+  # Hide functions or objects when the shouldn't exist.
   observe({
     toggle(id = "heatmap", condition = !is.null(preprocessed$data))
     toggle(id = "placeholder1", condition = is.null(preprocessed$data))
@@ -844,9 +791,9 @@ function(input, output, session) {
       data_click$data <- event_data("plotly_click", source = "heat_plot")[["pointNumber"]] + 1
     }
   })
-  
+
   # Log events ----
-  
+
   user_metadata <- reactive({
     list(
       #user_name = input$fingerprint,
@@ -854,26 +801,26 @@ function(input, output, session) {
       session_name = session_id,
       data_id = digest::digest(preprocessed$data, algo = "md5"),
       active = input$active_preprocessing,
-      adj_intens = input$intensity_decision, 
+      adj_intens = input$intensity_decision,
       type = input$intensity_corr,
       restric_range = input$range_decision,
-      restric_range_min = input$MinRange, 
+      restric_range_min = input$MinRange,
       restric_range_max = input$MaxRange,
       flatten_range = input$co2_decision,
-      flatten_range_min = input$MinFlat, 
+      flatten_range_min = input$MinFlat,
       flatten_range_max = input$MaxFlat,
-      baseline_decision = input$baseline_decision, 
+      baseline_decision = input$baseline_decision,
       subtr_baseline = input$baseline,
-      smooth_intens = input$smooth_decision, 
-      polynomial = input$smoother, 
-      window = input$smoother_window, 
-      derivative = input$derivative_order, 
+      smooth_intens = input$smooth_decision,
+      polynomial = input$smoother,
+      window = input$smoother_window,
+      derivative = input$derivative_order,
       abs = input$derivative_abs,
       download_selection = input$download_selection,
       id_strategy = input$id_strategy,
       cor_threshold_decision = input$cor_threshold_decision,
       min_cor = input$MinCor,
-      threshold_decision = input$threshold_decision, 
+      threshold_decision = input$threshold_decision,
       min_sn = input$MinSNR,
       signal_selection = input$signal_selection
     )
