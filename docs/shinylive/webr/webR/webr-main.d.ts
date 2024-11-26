@@ -15,6 +15,7 @@ import { EvalROptions, InstallPackagesOptions } from './webr-chan';
 export { Console, ConsoleCallbacks } from './console';
 export * from './robj-main';
 export * from './error';
+export * from './webr-chan';
 export { ChannelType } from './chan/channel-common';
 /**
  * The webR FS API for interacting with the Emscripten Virtual File System.
@@ -84,13 +85,24 @@ export type FSMountOptions<T extends FSType = FSType> = T extends 'NODEFS' ? {
 } : {
     blobs?: Array<{
         name: string;
-        data: Blob;
+        data: Blob | ArrayBufferLike;
     }>;
     files?: Array<File | FileList>;
     packages?: Array<{
-        metadata: any;
-        blob: Blob;
+        metadata: FSMetaData;
+        blob: Blob | ArrayBufferLike;
     }>;
+};
+/**
+ * Emscripten filesystem image metadata
+ */
+export type FSMetaData = {
+    files: {
+        filename: string;
+        start: number;
+        end: number;
+    }[];
+    gzip?: boolean;
 };
 /**
  * The configuration settings to be used when starting webR.

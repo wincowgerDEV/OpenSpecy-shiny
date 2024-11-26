@@ -108,53 +108,56 @@ function(input, output, session) {
   libraryR <- reactive({
     req(input$active_identification)
     if (input$id_strategy == "deriv" & input$lib_type == "medoid") {
-      if (!file.exists("data/medoid_derivative.rds")) {
-        library <- read_any("https://d2jrxerjcsjhs7.cloudfront.net/medoid_derivative.json") 
+      if (file.exists("data/medoid_derivative.rds")) {
+        library <- read_any("data/medoid_derivative.rds") 
       }
       else{
-        library <- get_lib("medoid_derivative")
+        get_lib("medoid_derivative")
+        library <- read_any("data/medoid_derivative.rds")
       }
       #return(library)
     }
     else if (input$id_strategy == "nobaseline" &
              input$lib_type == "medoid") {
-      if (!file.exists("data/medoid_nobaseline.rds")) {
-        library <- read_any("https://d2jrxerjcsjhs7.cloudfront.net/medoid_nobaseline.json") 
+      if (file.exists("data/medoid_nobaseline.rds")) {
+        library <- read_any("data/medoid_nobaseline.rds") 
       }
       else{
-         library <- get_lib("medoid_nobaseline")
+         get_lib("medoid_nobaseline")
+         library <- read_any("data/medoid_nobaseline.rds")
       }
-      #return(library)
     }
     else if (input$id_strategy == "deriv" &
              input$lib_type == "model") {
-      if (!file.exists("data/model_derivative.rds")) {
-        library <- fromJSON("https://d2jrxerjcsjhs7.cloudfront.net/model_derivative.json") 
+      if (file.exists("data/model_derivative.rds")) {
+        library <- read_any("data/model_derivative.rds")
       }
       else{
-        library <- get_lib("model_derivative")
+       get_lib("model_derivative")
+       library <- read_any("data/model_derivative.rds")
+        
       }
       return(library)
     }
     else if (input$id_strategy == "nobaseline" &
              input$lib_type == "model") {
-      if (!file.exists("data/model_nobaseline.rds")) {
-        library <- fromJSON("model_nobaseline.json")
-        class(library$model) = library$class
-        #library <- OpenSpecy::load_lib("medoid_nobaseline")
+      if (file.exists("data/model_nobaseline.rds")) {
+        library <- read_any("data/model_nobaseline.rds")
 
       }
       else{
-        library <- get_lib("model_nobaseline")
+        get_lib("model_nobaseline")
+        library <- read_any("data/model_nobaseline.rds")
       }
       return(library)
     }
     else if (grepl("nobaseline$", input$id_strategy)) {
       if (!file.exists("data/nobaseline.rds")) {
-        library <- read_any("https://d2jrxerjcsjhs7.cloudfront.net/nobaseline.json") 
+        library <- read_any("data/nobaseline.rds") 
       }
       else{
-        library <- get_lib("nobaseline")
+        get_lib("nobaseline")
+        library <- load_lib("data/nobaseline.rds")
       }
     }
     if (grepl("^both", input$id_spec_type)) {

@@ -1,11 +1,17 @@
-/* Shinylive 0.6.0
+/* Shinylive 0.9.1
 // Copyright 2024 Posit, PBC */
 /* src/Components/App.css */
+@font-face {
+  font-family: "Source Sans Pro";
+  src: url(./SourceSansPro-Regular.otf-PVQ5ZP77.woff2) format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
 :root {
   --colors-grey: grey;
-  --colors-blue: #007BC2;
+  --colors-blue: #007bc2;
   --colors-blue-dark: hsl(207, 69%, 35%);
-  --colors-red: #C10000;
+  --colors-red: #c10000;
   --colors-white: white;
   --colors-bg: white;
   --colors-fg: #333;

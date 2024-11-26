@@ -182,11 +182,6 @@ load_lib <- function(type, path = "system") {
   
   chk <- .chkf(type, path = lp, condition = "stop")
   
-  fp <- file.path(lp, paste0(type, ".rds"))
-  
-  rds <- readRDS(fp)
-  
-  return(rds)
 }
 
 #' @rdname manage_lib
@@ -205,9 +200,73 @@ rm_lib <- function(type = c("derivative", "nobaseline", "raw", "medoid_derivativ
   invisible()
 }
 
+get_lib <- function(type = c("derivative", "nobaseline", "medoid_derivative",
+                             "medoid_nobaseline", "model_derivative", "model_nobaseline"),
+                    path = "system",
+                    revision = NULL,
+                    ...) {
+  
+  lp <- file.path("data")
+  
+  message("Fetching Open Specy reference libraries from OSF ...")
+  
+  # Mapping from types to URLs and filenames
+  library_info <- list(
+    derivative = list(
+      url = "https://d2jrxerjcsjhs7.cloudfront.net/derivative.rds",
+      filename = "derivative.rds",
+      msg = "Fetching derivative library..."
+    ),
+    nobaseline = list(
+      url = "https://d2jrxerjcsjhs7.cloudfront.net/nobaseline.rds",
+      filename = "nobaseline.rds",
+      msg = "Fetching nobaseline library..."
+    ),
+    medoid_derivative = list(
+      url = "https://d2jrxerjcsjhs7.cloudfront.net/medoid_derivative.rds",
+      filename = "medoid_derivative.rds",
+      msg = "Fetching medoid derivative library..."
+    ),
+    medoid_nobaseline = list(
+      url = "https://d2jrxerjcsjhs7.cloudfront.net/medoid_nobaseline.rds",
+      filename = "medoid_nobaseline.rds",
+      msg = "Fetching medoid nobaseline library..."
+    ),
+    model_derivative = list(
+      url = "https://d2jrxerjcsjhs7.cloudfront.net/model_derivative.rds",
+      filename = "model_derivative.rds",
+      msg = "Fetching model derivative library..."
+    ),
+    model_nobaseline = list(
+      url = "https://d2jrxerjcsjhs7.cloudfront.net/model_nobaseline.rds",
+      filename = "model_nobaseline.rds",
+      msg = "Fetching model nobaseline library..."
+    )
+  )
+  # Loop over the types requested
+  for (t in type) {
+    if (t %in% names(library_info)) {
+      info <- library_info[[t]]
+      message(info$msg)
+      url <- info$url
+      if (!is.null(revision)) {
+        url <- paste0(url, "?revision=", revision)
+      }
+      destfile <- file.path(lp, info$filename)
+      download.file(url, destfile = destfile, ...)
+    } else {
+      warning("Unknown library type: ", t)
+    }
+  }
+  
+ # message("Use 'load_lib()' to load the library")
+}
+
+
+
 #  Auxiliary function for library checks
 .chkf <- function(type, path = "system", condition = "warning") {
-  fn <- paste0(type, ".rds")
+  fn <- paste0(type, ".json")
   
   lp <- ifelse(path == "system", system.file("extdata", package = "OpenSpecy"),
                path)

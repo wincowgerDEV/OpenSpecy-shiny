@@ -1,4 +1,4 @@
-// Shinylive 0.6.0
+// Shinylive 0.9.1
 // Copyright 2024 Posit, PBC
 import {
   FCJSONtoFC,
@@ -16,14 +16,14 @@ import {
   sleep,
   stringToUint8Array,
   uint8ArrayToString
-} from "./chunk-AJTY4Q7P.js";
+} from "./chunk-PHWSSKUM.js";
 import {
   __commonJS,
   __privateAdd,
   __privateMethod,
   __require,
   __toESM
-} from "./chunk-5ORBLRID.js";
+} from "./chunk-O5P2LFOG.js";
 
 // node_modules/scheduler/cjs/scheduler.development.js
 var require_scheduler_development = __commonJS({
@@ -1479,17 +1479,17 @@ var require_react_dom_development = __commonJS({
               var sampleLines = sample.stack.split("\n");
               var controlLines = control.stack.split("\n");
               var s = sampleLines.length - 1;
-              var c2 = controlLines.length - 1;
-              while (s >= 1 && c2 >= 0 && sampleLines[s] !== controlLines[c2]) {
-                c2--;
+              var c3 = controlLines.length - 1;
+              while (s >= 1 && c3 >= 0 && sampleLines[s] !== controlLines[c3]) {
+                c3--;
               }
-              for (; s >= 1 && c2 >= 0; s--, c2--) {
-                if (sampleLines[s] !== controlLines[c2]) {
-                  if (s !== 1 || c2 !== 1) {
+              for (; s >= 1 && c3 >= 0; s--, c3--) {
+                if (sampleLines[s] !== controlLines[c3]) {
+                  if (s !== 1 || c3 !== 1) {
                     do {
                       s--;
-                      c2--;
-                      if (c2 < 0 || sampleLines[s] !== controlLines[c2]) {
+                      c3--;
+                      if (c3 < 0 || sampleLines[s] !== controlLines[c3]) {
                         var _frame = "\n" + sampleLines[s].replace(" at new ", " at ");
                         if (fn.displayName && _frame.includes("<anonymous>")) {
                           _frame = _frame.replace("<anonymous>", fn.displayName);
@@ -1501,7 +1501,7 @@ var require_react_dom_development = __commonJS({
                         }
                         return _frame;
                       }
-                    } while (s >= 1 && c2 >= 0);
+                    } while (s >= 1 && c3 >= 0);
                   }
                   break;
                 }
@@ -3660,7 +3660,7 @@ var require_react_dom_development = __commonJS({
             passiveBrowserEventsSupported = false;
           }
         }
-        function invokeGuardedCallbackProd(name, func, context, a2, b2, c2, d2, e, f2) {
+        function invokeGuardedCallbackProd(name, func, context, a2, b2, c3, d2, e, f2) {
           var funcArgs = Array.prototype.slice.call(arguments, 3);
           try {
             func.apply(context, funcArgs);
@@ -3672,7 +3672,7 @@ var require_react_dom_development = __commonJS({
         {
           if (typeof window !== "undefined" && typeof window.dispatchEvent === "function" && typeof document !== "undefined" && typeof document.createEvent === "function") {
             var fakeNode = document.createElement("react");
-            invokeGuardedCallbackImpl = function invokeGuardedCallbackDev(name, func, context, a2, b2, c2, d2, e, f2) {
+            invokeGuardedCallbackImpl = function invokeGuardedCallbackDev(name, func, context, a2, b2, c3, d2, e, f2) {
               if (typeof document === "undefined" || document === null) {
                 throw new Error("The `document` global was defined when React was initialized, but is not defined anymore. This can happen in a test environment if a component schedules an update from an asynchronous callback, but the test has already finished running. To solve this, you can either unmount the component at the end of your test (and ensure that any asynchronous operations get canceled in `componentWillUnmount`), or you can change the test itself to be asynchronous.");
               }
@@ -3747,12 +3747,12 @@ var require_react_dom_development = __commonJS({
             caughtError = error2;
           }
         };
-        function invokeGuardedCallback(name, func, context, a2, b2, c2, d2, e, f2) {
+        function invokeGuardedCallback(name, func, context, a2, b2, c3, d2, e, f2) {
           hasError = false;
           caughtError = null;
           invokeGuardedCallbackImpl$1.apply(reporter, arguments);
         }
-        function invokeGuardedCallbackAndCatchFirstError(name, func, context, a2, b2, c2, d2, e, f2) {
+        function invokeGuardedCallbackAndCatchFirstError(name, func, context, a2, b2, c3, d2, e, f2) {
           invokeGuardedCallback.apply(this, arguments);
           if (hasError) {
             var error2 = clearCaughtError();
@@ -11914,11 +11914,11 @@ var require_react_dom_development = __commonJS({
         var contextStackCursor$1 = createCursor(NO_CONTEXT);
         var contextFiberStackCursor = createCursor(NO_CONTEXT);
         var rootInstanceStackCursor = createCursor(NO_CONTEXT);
-        function requiredContext(c2) {
-          if (c2 === NO_CONTEXT) {
+        function requiredContext(c3) {
+          if (c3 === NO_CONTEXT) {
             throw new Error("Expected host context to exist. This error is likely caused by a bug in React. Please file an issue.");
           }
-          return c2;
+          return c3;
         }
         function getRootHostContainer() {
           var rootInstance = requiredContext(rootInstanceStackCursor.current);
@@ -18936,13 +18936,13 @@ var require_react_dom_development = __commonJS({
             }
           }
         }
-        function discreteUpdates(fn, a2, b2, c2, d2) {
+        function discreteUpdates(fn, a2, b2, c3, d2) {
           var previousPriority = getCurrentUpdatePriority();
           var prevTransition = ReactCurrentBatchConfig$3.transition;
           try {
             ReactCurrentBatchConfig$3.transition = null;
             setCurrentUpdatePriority(DiscreteEventPriority);
-            return fn(a2, b2, c2, d2);
+            return fn(a2, b2, c3, d2);
           } finally {
             setCurrentUpdatePriority(previousPriority);
             ReactCurrentBatchConfig$3.transition = prevTransition;
@@ -21601,18 +21601,18 @@ var require_client = __commonJS({
       exports.hydrateRoot = m2.hydrateRoot;
     } else {
       i = m2.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
-      exports.createRoot = function(c2, o) {
+      exports.createRoot = function(c3, o) {
         i.usingClientEntryPoint = true;
         try {
-          return m2.createRoot(c2, o);
+          return m2.createRoot(c3, o);
         } finally {
           i.usingClientEntryPoint = false;
         }
       };
-      exports.hydrateRoot = function(c2, h2, o) {
+      exports.hydrateRoot = function(c3, h2, o) {
         i.usingClientEntryPoint = true;
         try {
-          return m2.hydrateRoot(c2, h2, o);
+          return m2.hydrateRoot(c3, h2, o);
         } finally {
           i.usingClientEntryPoint = false;
         }
@@ -21652,7 +21652,7 @@ var require_xterm = __commonJS({
           };
         };
         Object.defineProperty(t2, "__esModule", { value: true }), t2.AccessibilityManager = void 0;
-        const n = i2(9042), o = i2(6114), a2 = i2(9924), h2 = i2(844), c2 = i2(5596), l2 = i2(4725), d2 = i2(3656);
+        const n = i2(9042), o = i2(6114), a2 = i2(9924), h2 = i2(844), c3 = i2(5596), l = i2(4725), d2 = i2(3656);
         let _2 = t2.AccessibilityManager = class extends h2.Disposable {
           constructor(e3, t3) {
             super(), this._terminal = e3, this._renderService = t3, this._liveRegionLineCount = 0, this._charsToConsume = [], this._charsToAnnounce = "", this._accessibilityContainer = document.createElement("div"), this._accessibilityContainer.classList.add("xterm-accessibility"), this._rowContainer = document.createElement("div"), this._rowContainer.setAttribute("role", "list"), this._rowContainer.classList.add("xterm-accessibility-tree"), this._rowElements = [];
@@ -21660,7 +21660,7 @@ var require_xterm = __commonJS({
               this._rowElements[e4] = this._createAccessibilityTreeNode(), this._rowContainer.appendChild(this._rowElements[e4]);
             if (this._topBoundaryFocusListener = (e4) => this._handleBoundaryFocus(e4, 0), this._bottomBoundaryFocusListener = (e4) => this._handleBoundaryFocus(e4, 1), this._rowElements[0].addEventListener("focus", this._topBoundaryFocusListener), this._rowElements[this._rowElements.length - 1].addEventListener("focus", this._bottomBoundaryFocusListener), this._refreshRowsDimensions(), this._accessibilityContainer.appendChild(this._rowContainer), this._liveRegion = document.createElement("div"), this._liveRegion.classList.add("live-region"), this._liveRegion.setAttribute("aria-live", "assertive"), this._accessibilityContainer.appendChild(this._liveRegion), this._liveRegionDebouncer = this.register(new a2.TimeBasedDebouncer(this._renderRows.bind(this))), !this._terminal.element)
               throw new Error("Cannot enable accessibility before Terminal.open");
-            this._terminal.element.insertAdjacentElement("afterbegin", this._accessibilityContainer), this.register(this._terminal.onResize((e4) => this._handleResize(e4.rows))), this.register(this._terminal.onRender((e4) => this._refreshRows(e4.start, e4.end))), this.register(this._terminal.onScroll(() => this._refreshRows())), this.register(this._terminal.onA11yChar((e4) => this._handleChar(e4))), this.register(this._terminal.onLineFeed(() => this._handleChar("\n"))), this.register(this._terminal.onA11yTab((e4) => this._handleTab(e4))), this.register(this._terminal.onKey((e4) => this._handleKey(e4.key))), this.register(this._terminal.onBlur(() => this._clearLiveRegion())), this.register(this._renderService.onDimensionsChange(() => this._refreshRowsDimensions())), this._screenDprMonitor = new c2.ScreenDprMonitor(window), this.register(this._screenDprMonitor), this._screenDprMonitor.setListener(() => this._refreshRowsDimensions()), this.register((0, d2.addDisposableDomListener)(window, "resize", () => this._refreshRowsDimensions())), this._refreshRows(), this.register((0, h2.toDisposable)(() => {
+            this._terminal.element.insertAdjacentElement("afterbegin", this._accessibilityContainer), this.register(this._terminal.onResize((e4) => this._handleResize(e4.rows))), this.register(this._terminal.onRender((e4) => this._refreshRows(e4.start, e4.end))), this.register(this._terminal.onScroll(() => this._refreshRows())), this.register(this._terminal.onA11yChar((e4) => this._handleChar(e4))), this.register(this._terminal.onLineFeed(() => this._handleChar("\n"))), this.register(this._terminal.onA11yTab((e4) => this._handleTab(e4))), this.register(this._terminal.onKey((e4) => this._handleKey(e4.key))), this.register(this._terminal.onBlur(() => this._clearLiveRegion())), this.register(this._renderService.onDimensionsChange(() => this._refreshRowsDimensions())), this._screenDprMonitor = new c3.ScreenDprMonitor(window), this.register(this._screenDprMonitor), this._screenDprMonitor.setListener(() => this._refreshRowsDimensions()), this.register((0, d2.addDisposableDomListener)(window, "resize", () => this._refreshRowsDimensions())), this._refreshRows(), this.register((0, h2.toDisposable)(() => {
               this._accessibilityContainer.remove(), this._rowElements.length = 0;
             }));
           }
@@ -21732,7 +21732,7 @@ var require_xterm = __commonJS({
             e3.style.height = `${this._renderService.dimensions.css.cell.height}px`;
           }
         };
-        t2.AccessibilityManager = _2 = s2([r(1, l2.IRenderService)], _2);
+        t2.AccessibilityManager = _2 = s2([r(1, l.IRenderService)], _2);
       }, 3614: (e2, t2) => {
         function i2(e3) {
           return e3.replace(/\r?\n/g, "\r");
@@ -21801,7 +21801,7 @@ var require_xterm = __commonJS({
         };
         Object.defineProperty(t2, "__esModule", { value: true }), t2.Linkifier2 = void 0;
         const n = i2(3656), o = i2(8460), a2 = i2(844), h2 = i2(2585);
-        let c2 = t2.Linkifier2 = class extends a2.Disposable {
+        let c3 = t2.Linkifier2 = class extends a2.Disposable {
           get currentLink() {
             return this._currentLink;
           }
@@ -21964,7 +21964,7 @@ var require_xterm = __commonJS({
             return { x1: e3, y1: t3, x2: i3, y2: s3, cols: this._bufferService.cols, fg: r2 };
           }
         };
-        t2.Linkifier2 = c2 = s2([r(0, h2.IBufferService)], c2);
+        t2.Linkifier2 = c3 = s2([r(0, h2.IBufferService)], c3);
       }, 9042: (e2, t2) => {
         Object.defineProperty(t2, "__esModule", { value: true }), t2.tooMuchOutput = t2.promptLabel = void 0, t2.promptLabel = "Terminal input", t2.tooMuchOutput = "Too much output to announce, navigate to rows manually to read";
       }, 3730: function(e2, t2, i2) {
@@ -21992,22 +21992,22 @@ var require_xterm = __commonJS({
             const s3 = this._bufferService.buffer.lines.get(e3 - 1);
             if (!s3)
               return void t3(void 0);
-            const r2 = [], o2 = this._optionsService.rawOptions.linkHandler, a3 = new n.CellData(), c2 = s3.getTrimmedLength();
-            let l2 = -1, d2 = -1, _2 = false;
-            for (let t4 = 0; t4 < c2; t4++)
+            const r2 = [], o2 = this._optionsService.rawOptions.linkHandler, a3 = new n.CellData(), c3 = s3.getTrimmedLength();
+            let l = -1, d2 = -1, _2 = false;
+            for (let t4 = 0; t4 < c3; t4++)
               if (-1 !== d2 || s3.hasContent(t4)) {
                 if (s3.loadCell(t4, a3), a3.hasExtendedAttrs() && a3.extended.urlId) {
                   if (-1 === d2) {
-                    d2 = t4, l2 = a3.extended.urlId;
+                    d2 = t4, l = a3.extended.urlId;
                     continue;
                   }
-                  _2 = a3.extended.urlId !== l2;
+                  _2 = a3.extended.urlId !== l;
                 } else
                   -1 !== d2 && (_2 = true);
-                if (_2 || -1 !== d2 && t4 === c2 - 1) {
-                  const s4 = null === (i3 = this._oscLinkService.getLinkData(l2)) || void 0 === i3 ? void 0 : i3.uri;
+                if (_2 || -1 !== d2 && t4 === c3 - 1) {
+                  const s4 = null === (i3 = this._oscLinkService.getLinkData(l)) || void 0 === i3 ? void 0 : i3.uri;
                   if (s4) {
-                    const i4 = { start: { x: d2 + 1, y: e3 }, end: { x: t4 + (_2 || t4 !== c2 - 1 ? 0 : 1), y: e3 } };
+                    const i4 = { start: { x: d2 + 1, y: e3 }, end: { x: t4 + (_2 || t4 !== c3 - 1 ? 0 : 1), y: e3 } };
                     let n2 = false;
                     if (!(null == o2 ? void 0 : o2.allowNonHttpProtocols))
                       try {
@@ -22024,7 +22024,7 @@ var require_xterm = __commonJS({
                       return null === (s5 = null == o2 ? void 0 : o2.leave) || void 0 === s5 ? void 0 : s5.call(o2, e4, t5, i4);
                     } });
                   }
-                  _2 = false, a3.hasExtendedAttrs() && a3.extended.urlId ? (d2 = t4, l2 = a3.extended.urlId) : (d2 = -1, l2 = -1);
+                  _2 = false, a3.hasExtendedAttrs() && a3.extended.urlId ? (d2 = t4, l = a3.extended.urlId) : (d2 = -1, l = -1);
                 }
               }
             t3(r2);
@@ -22097,7 +22097,7 @@ WARNING: This link could potentially be dangerous`)) {
         t2.ScreenDprMonitor = r;
       }, 3236: (e2, t2, i2) => {
         Object.defineProperty(t2, "__esModule", { value: true }), t2.Terminal = void 0;
-        const s2 = i2(3614), r = i2(3656), n = i2(6465), o = i2(9042), a2 = i2(3730), h2 = i2(1680), c2 = i2(3107), l2 = i2(5744), d2 = i2(2950), _2 = i2(1296), u2 = i2(428), f2 = i2(4269), v3 = i2(5114), p2 = i2(8934), g3 = i2(3230), m2 = i2(9312), S2 = i2(4725), C2 = i2(6731), b2 = i2(8055), y2 = i2(8969), w3 = i2(8460), E3 = i2(844), k3 = i2(6114), L3 = i2(8437), D2 = i2(2584), R3 = i2(7399), x3 = i2(5941), A3 = i2(9074), B3 = i2(2585), T3 = i2(5435), M2 = i2(4567), O3 = "undefined" != typeof window ? window.document : null;
+        const s2 = i2(3614), r = i2(3656), n = i2(6465), o = i2(9042), a2 = i2(3730), h2 = i2(1680), c3 = i2(3107), l = i2(5744), d2 = i2(2950), _2 = i2(1296), u2 = i2(428), f2 = i2(4269), v3 = i2(5114), p2 = i2(8934), g3 = i2(3230), m2 = i2(9312), S2 = i2(4725), C2 = i2(6731), b2 = i2(8055), y2 = i2(8969), w3 = i2(8460), E3 = i2(844), k3 = i2(6114), L3 = i2(8437), D2 = i2(2584), R3 = i2(7399), x3 = i2(5941), A3 = i2(9074), B3 = i2(2585), T3 = i2(5435), M2 = i2(4567), O3 = "undefined" != typeof window ? window.document : null;
         class P3 extends y2.CoreTerminal {
           get onFocus() {
             return this._onFocus.event;
@@ -22219,8 +22219,8 @@ WARNING: This link could potentially be dangerous`)) {
               this.textarea.value = e4, this.textarea.focus(), this.textarea.select();
             })), this.register(this._onScroll.event((e4) => {
               this.viewport.syncScrollArea(), this._selectionService.refresh();
-            })), this.register((0, r.addDisposableDomListener)(this._viewportElement, "scroll", () => this._selectionService.refresh())), this.linkifier2.attachToDom(this.screenElement, this._mouseService, this._renderService), this.register(this._instantiationService.createInstance(c2.BufferDecorationRenderer, this.screenElement)), this.register((0, r.addDisposableDomListener)(this.element, "mousedown", (e4) => this._selectionService.handleMouseDown(e4))), this.coreMouseService.areMouseEventsActive ? (this._selectionService.disable(), this.element.classList.add("enable-mouse-events")) : this._selectionService.enable(), this.options.screenReaderMode && (this._accessibilityManager.value = this._instantiationService.createInstance(M2.AccessibilityManager, this)), this.register(this.optionsService.onSpecificOptionChange("screenReaderMode", (e4) => this._handleScreenReaderModeOptionChange(e4))), this.options.overviewRulerWidth && (this._overviewRulerRenderer = this.register(this._instantiationService.createInstance(l2.OverviewRulerRenderer, this._viewportElement, this.screenElement))), this.optionsService.onSpecificOptionChange("overviewRulerWidth", (e4) => {
-              !this._overviewRulerRenderer && e4 && this._viewportElement && this.screenElement && (this._overviewRulerRenderer = this.register(this._instantiationService.createInstance(l2.OverviewRulerRenderer, this._viewportElement, this.screenElement)));
+            })), this.register((0, r.addDisposableDomListener)(this._viewportElement, "scroll", () => this._selectionService.refresh())), this.linkifier2.attachToDom(this.screenElement, this._mouseService, this._renderService), this.register(this._instantiationService.createInstance(c3.BufferDecorationRenderer, this.screenElement)), this.register((0, r.addDisposableDomListener)(this.element, "mousedown", (e4) => this._selectionService.handleMouseDown(e4))), this.coreMouseService.areMouseEventsActive ? (this._selectionService.disable(), this.element.classList.add("enable-mouse-events")) : this._selectionService.enable(), this.options.screenReaderMode && (this._accessibilityManager.value = this._instantiationService.createInstance(M2.AccessibilityManager, this)), this.register(this.optionsService.onSpecificOptionChange("screenReaderMode", (e4) => this._handleScreenReaderModeOptionChange(e4))), this.options.overviewRulerWidth && (this._overviewRulerRenderer = this.register(this._instantiationService.createInstance(l.OverviewRulerRenderer, this._viewportElement, this.screenElement))), this.optionsService.onSpecificOptionChange("overviewRulerWidth", (e4) => {
+              !this._overviewRulerRenderer && e4 && this._viewportElement && this.screenElement && (this._overviewRulerRenderer = this.register(this._instantiationService.createInstance(l.OverviewRulerRenderer, this._viewportElement, this.screenElement)));
             }), this._charSizeService.measure(), this.refresh(0, this.rows - 1), this._initGlobal(), this.bindMouse();
           }
           _createRenderer() {
@@ -22494,10 +22494,10 @@ WARNING: This link could potentially be dangerous`)) {
           };
         };
         Object.defineProperty(t2, "__esModule", { value: true }), t2.Viewport = void 0;
-        const n = i2(3656), o = i2(4725), a2 = i2(8460), h2 = i2(844), c2 = i2(2585);
-        let l2 = t2.Viewport = class extends h2.Disposable {
-          constructor(e3, t3, i3, s3, r2, o2, h3, c3) {
-            super(), this._viewportElement = e3, this._scrollArea = t3, this._bufferService = i3, this._optionsService = s3, this._charSizeService = r2, this._renderService = o2, this._coreBrowserService = h3, this.scrollBarWidth = 0, this._currentRowHeight = 0, this._currentDeviceCellHeight = 0, this._lastRecordedBufferLength = 0, this._lastRecordedViewportHeight = 0, this._lastRecordedBufferHeight = 0, this._lastTouchY = 0, this._lastScrollTop = 0, this._wheelPartialScroll = 0, this._refreshAnimationFrame = null, this._ignoreNextScrollEvent = false, this._smoothScrollState = { startTime: 0, origin: -1, target: -1 }, this._onRequestScrollLines = this.register(new a2.EventEmitter()), this.onRequestScrollLines = this._onRequestScrollLines.event, this.scrollBarWidth = this._viewportElement.offsetWidth - this._scrollArea.offsetWidth || 15, this.register((0, n.addDisposableDomListener)(this._viewportElement, "scroll", this._handleScroll.bind(this))), this._activeBuffer = this._bufferService.buffer, this.register(this._bufferService.buffers.onBufferActivate((e4) => this._activeBuffer = e4.activeBuffer)), this._renderDimensions = this._renderService.dimensions, this.register(this._renderService.onDimensionsChange((e4) => this._renderDimensions = e4)), this._handleThemeChange(c3.colors), this.register(c3.onChangeColors((e4) => this._handleThemeChange(e4))), this.register(this._optionsService.onSpecificOptionChange("scrollback", () => this.syncScrollArea())), setTimeout(() => this.syncScrollArea());
+        const n = i2(3656), o = i2(4725), a2 = i2(8460), h2 = i2(844), c3 = i2(2585);
+        let l = t2.Viewport = class extends h2.Disposable {
+          constructor(e3, t3, i3, s3, r2, o2, h3, c4) {
+            super(), this._viewportElement = e3, this._scrollArea = t3, this._bufferService = i3, this._optionsService = s3, this._charSizeService = r2, this._renderService = o2, this._coreBrowserService = h3, this.scrollBarWidth = 0, this._currentRowHeight = 0, this._currentDeviceCellHeight = 0, this._lastRecordedBufferLength = 0, this._lastRecordedViewportHeight = 0, this._lastRecordedBufferHeight = 0, this._lastTouchY = 0, this._lastScrollTop = 0, this._wheelPartialScroll = 0, this._refreshAnimationFrame = null, this._ignoreNextScrollEvent = false, this._smoothScrollState = { startTime: 0, origin: -1, target: -1 }, this._onRequestScrollLines = this.register(new a2.EventEmitter()), this.onRequestScrollLines = this._onRequestScrollLines.event, this.scrollBarWidth = this._viewportElement.offsetWidth - this._scrollArea.offsetWidth || 15, this.register((0, n.addDisposableDomListener)(this._viewportElement, "scroll", this._handleScroll.bind(this))), this._activeBuffer = this._bufferService.buffer, this.register(this._bufferService.buffers.onBufferActivate((e4) => this._activeBuffer = e4.activeBuffer)), this._renderDimensions = this._renderService.dimensions, this.register(this._renderService.onDimensionsChange((e4) => this._renderDimensions = e4)), this._handleThemeChange(c4.colors), this.register(c4.onChangeColors((e4) => this._handleThemeChange(e4))), this.register(this._optionsService.onSpecificOptionChange("scrollback", () => this.syncScrollArea())), setTimeout(() => this.syncScrollArea());
           }
           _handleThemeChange(e3) {
             this._viewportElement.style.backgroundColor = e3.background.css;
@@ -22600,7 +22600,7 @@ WARNING: This link could potentially be dangerous`)) {
             return this._lastTouchY = e3.touches[0].pageY, 0 !== t3 && (this._viewportElement.scrollTop += t3, this._bubbleScroll(e3, t3));
           }
         };
-        t2.Viewport = l2 = s2([r(2, c2.IBufferService), r(3, c2.IOptionsService), r(4, o.ICharSizeService), r(5, o.IRenderService), r(6, o.ICoreBrowserService), r(7, o.IThemeService)], l2);
+        t2.Viewport = l = s2([r(2, c3.IBufferService), r(3, c3.IOptionsService), r(4, o.ICharSizeService), r(5, o.IRenderService), r(6, o.ICoreBrowserService), r(7, o.IThemeService)], l);
       }, 3107: function(e2, t2, i2) {
         var s2 = this && this.__decorate || function(e3, t3, i3, s3) {
           var r2, n2 = arguments.length, o2 = n2 < 3 ? t3 : null === s3 ? s3 = Object.getOwnPropertyDescriptor(t3, i3) : s3;
@@ -22617,7 +22617,7 @@ WARNING: This link could potentially be dangerous`)) {
         };
         Object.defineProperty(t2, "__esModule", { value: true }), t2.BufferDecorationRenderer = void 0;
         const n = i2(3656), o = i2(4725), a2 = i2(844), h2 = i2(2585);
-        let c2 = t2.BufferDecorationRenderer = class extends a2.Disposable {
+        let c3 = t2.BufferDecorationRenderer = class extends a2.Disposable {
           constructor(e3, t3, i3, s3) {
             super(), this._screenElement = e3, this._bufferService = t3, this._decorationService = i3, this._renderService = s3, this._decorationElements = /* @__PURE__ */ new Map(), this._altBufferIsActive = false, this._dimensionsChanged = false, this._container = document.createElement("div"), this._container.classList.add("xterm-decoration-container"), this._screenElement.appendChild(this._container), this.register(this._renderService.onRenderedViewportChange(() => this._doRefreshDecorations())), this.register(this._renderService.onDimensionsChange(() => {
               this._dimensionsChanged = true, this._queueRefresh();
@@ -22670,7 +22670,7 @@ WARNING: This link could potentially be dangerous`)) {
             null === (t3 = this._decorationElements.get(e3)) || void 0 === t3 || t3.remove(), this._decorationElements.delete(e3), e3.dispose();
           }
         };
-        t2.BufferDecorationRenderer = c2 = s2([r(1, h2.IBufferService), r(2, h2.IDecorationService), r(3, o.IRenderService)], c2);
+        t2.BufferDecorationRenderer = c3 = s2([r(1, h2.IBufferService), r(2, h2.IDecorationService), r(3, o.IRenderService)], c3);
       }, 5871: (e2, t2) => {
         Object.defineProperty(t2, "__esModule", { value: true }), t2.ColorZoneStore = void 0, t2.ColorZoneStore = class {
           constructor() {
@@ -22724,18 +22724,18 @@ WARNING: This link could potentially be dangerous`)) {
           };
         };
         Object.defineProperty(t2, "__esModule", { value: true }), t2.OverviewRulerRenderer = void 0;
-        const n = i2(5871), o = i2(3656), a2 = i2(4725), h2 = i2(844), c2 = i2(2585), l2 = { full: 0, left: 0, center: 0, right: 0 }, d2 = { full: 0, left: 0, center: 0, right: 0 }, _2 = { full: 0, left: 0, center: 0, right: 0 };
+        const n = i2(5871), o = i2(3656), a2 = i2(4725), h2 = i2(844), c3 = i2(2585), l = { full: 0, left: 0, center: 0, right: 0 }, d2 = { full: 0, left: 0, center: 0, right: 0 }, _2 = { full: 0, left: 0, center: 0, right: 0 };
         let u2 = t2.OverviewRulerRenderer = class extends h2.Disposable {
           get _width() {
             return this._optionsService.options.overviewRulerWidth || 0;
           }
           constructor(e3, t3, i3, s3, r2, o2, a3) {
-            var c3;
-            super(), this._viewportElement = e3, this._screenElement = t3, this._bufferService = i3, this._decorationService = s3, this._renderService = r2, this._optionsService = o2, this._coreBrowseService = a3, this._colorZoneStore = new n.ColorZoneStore(), this._shouldUpdateDimensions = true, this._shouldUpdateAnchor = true, this._lastKnownBufferLength = 0, this._canvas = document.createElement("canvas"), this._canvas.classList.add("xterm-decoration-overview-ruler"), this._refreshCanvasDimensions(), null === (c3 = this._viewportElement.parentElement) || void 0 === c3 || c3.insertBefore(this._canvas, this._viewportElement);
-            const l3 = this._canvas.getContext("2d");
-            if (!l3)
+            var c4;
+            super(), this._viewportElement = e3, this._screenElement = t3, this._bufferService = i3, this._decorationService = s3, this._renderService = r2, this._optionsService = o2, this._coreBrowseService = a3, this._colorZoneStore = new n.ColorZoneStore(), this._shouldUpdateDimensions = true, this._shouldUpdateAnchor = true, this._lastKnownBufferLength = 0, this._canvas = document.createElement("canvas"), this._canvas.classList.add("xterm-decoration-overview-ruler"), this._refreshCanvasDimensions(), null === (c4 = this._viewportElement.parentElement) || void 0 === c4 || c4.insertBefore(this._canvas, this._viewportElement);
+            const l2 = this._canvas.getContext("2d");
+            if (!l2)
               throw new Error("Ctx cannot be null");
-            this._ctx = l3, this._registerDecorationListeners(), this._registerBufferChangeListeners(), this._registerDimensionChangeListeners(), this.register((0, h2.toDisposable)(() => {
+            this._ctx = l2, this._registerDecorationListeners(), this._registerBufferChangeListeners(), this._registerDimensionChangeListeners(), this.register((0, h2.toDisposable)(() => {
               var e4;
               null === (e4 = this._canvas) || void 0 === e4 || e4.remove();
             }));
@@ -22760,12 +22760,12 @@ WARNING: This link could potentially be dangerous`)) {
             d2.full = this._canvas.width, d2.left = e3, d2.center = t3, d2.right = e3, this._refreshDrawHeightConstants(), _2.full = 0, _2.left = 0, _2.center = d2.left, _2.right = d2.left + d2.center;
           }
           _refreshDrawHeightConstants() {
-            l2.full = Math.round(2 * this._coreBrowseService.dpr);
+            l.full = Math.round(2 * this._coreBrowseService.dpr);
             const e3 = this._canvas.height / this._bufferService.buffer.lines.length, t3 = Math.round(Math.max(Math.min(e3, 12), 6) * this._coreBrowseService.dpr);
-            l2.left = t3, l2.center = t3, l2.right = t3;
+            l.left = t3, l.center = t3, l.right = t3;
           }
           _refreshColorZonePadding() {
-            this._colorZoneStore.setPadding({ full: Math.floor(this._bufferService.buffers.active.lines.length / (this._canvas.height - 1) * l2.full), left: Math.floor(this._bufferService.buffers.active.lines.length / (this._canvas.height - 1) * l2.left), center: Math.floor(this._bufferService.buffers.active.lines.length / (this._canvas.height - 1) * l2.center), right: Math.floor(this._bufferService.buffers.active.lines.length / (this._canvas.height - 1) * l2.right) }), this._lastKnownBufferLength = this._bufferService.buffers.normal.lines.length;
+            this._colorZoneStore.setPadding({ full: Math.floor(this._bufferService.buffers.active.lines.length / (this._canvas.height - 1) * l.full), left: Math.floor(this._bufferService.buffers.active.lines.length / (this._canvas.height - 1) * l.left), center: Math.floor(this._bufferService.buffers.active.lines.length / (this._canvas.height - 1) * l.center), right: Math.floor(this._bufferService.buffers.active.lines.length / (this._canvas.height - 1) * l.right) }), this._lastKnownBufferLength = this._bufferService.buffers.normal.lines.length;
           }
           _refreshCanvasDimensions() {
             this._canvas.style.width = `${this._width}px`, this._canvas.width = Math.round(this._width * this._coreBrowseService.dpr), this._canvas.style.height = `${this._screenElement.clientHeight}px`, this._canvas.height = Math.round(this._screenElement.clientHeight * this._coreBrowseService.dpr), this._refreshDrawConstants(), this._refreshColorZonePadding();
@@ -22783,7 +22783,7 @@ WARNING: This link could potentially be dangerous`)) {
             this._shouldUpdateDimensions = false, this._shouldUpdateAnchor = false;
           }
           _renderColorZone(e3) {
-            this._ctx.fillStyle = e3.color, this._ctx.fillRect(_2[e3.position || "full"], Math.round((this._canvas.height - 1) * (e3.startBufferLine / this._bufferService.buffers.active.lines.length) - l2[e3.position || "full"] / 2), d2[e3.position || "full"], Math.round((this._canvas.height - 1) * ((e3.endBufferLine - e3.startBufferLine) / this._bufferService.buffers.active.lines.length) + l2[e3.position || "full"]));
+            this._ctx.fillStyle = e3.color, this._ctx.fillRect(_2[e3.position || "full"], Math.round((this._canvas.height - 1) * (e3.startBufferLine / this._bufferService.buffers.active.lines.length) - l[e3.position || "full"] / 2), d2[e3.position || "full"], Math.round((this._canvas.height - 1) * ((e3.endBufferLine - e3.startBufferLine) / this._bufferService.buffers.active.lines.length) + l[e3.position || "full"]));
           }
           _queueRefresh(e3, t3) {
             this._shouldUpdateDimensions = e3 || this._shouldUpdateDimensions, this._shouldUpdateAnchor = t3 || this._shouldUpdateAnchor, void 0 === this._animationFrame && (this._animationFrame = this._coreBrowseService.window.requestAnimationFrame(() => {
@@ -22791,7 +22791,7 @@ WARNING: This link could potentially be dangerous`)) {
             }));
           }
         };
-        t2.OverviewRulerRenderer = u2 = s2([r(2, c2.IBufferService), r(3, c2.IDecorationService), r(4, a2.IRenderService), r(5, c2.IOptionsService), r(6, a2.ICoreBrowserService)], u2);
+        t2.OverviewRulerRenderer = u2 = s2([r(2, c3.IBufferService), r(3, c3.IDecorationService), r(4, a2.IRenderService), r(5, c3.IOptionsService), r(6, a2.ICoreBrowserService)], u2);
       }, 2950: function(e2, t2, i2) {
         var s2 = this && this.__decorate || function(e3, t3, i3, s3) {
           var r2, n2 = arguments.length, o2 = n2 < 3 ? t3 : null === s3 ? s3 = Object.getOwnPropertyDescriptor(t3, i3) : s3;
@@ -22878,17 +22878,17 @@ WARNING: This link could potentially be dangerous`)) {
           const s2 = i3.getBoundingClientRect(), r = e3.getComputedStyle(i3), n = parseInt(r.getPropertyValue("padding-left")), o = parseInt(r.getPropertyValue("padding-top"));
           return [t3.clientX - s2.left - n, t3.clientY - s2.top - o];
         }
-        Object.defineProperty(t2, "__esModule", { value: true }), t2.getCoords = t2.getCoordsRelativeToElement = void 0, t2.getCoordsRelativeToElement = i2, t2.getCoords = function(e3, t3, s2, r, n, o, a2, h2, c2) {
+        Object.defineProperty(t2, "__esModule", { value: true }), t2.getCoords = t2.getCoordsRelativeToElement = void 0, t2.getCoordsRelativeToElement = i2, t2.getCoords = function(e3, t3, s2, r, n, o, a2, h2, c3) {
           if (!o)
             return;
-          const l2 = i2(e3, t3, s2);
-          return l2 ? (l2[0] = Math.ceil((l2[0] + (c2 ? a2 / 2 : 0)) / a2), l2[1] = Math.ceil(l2[1] / h2), l2[0] = Math.min(Math.max(l2[0], 1), r + (c2 ? 1 : 0)), l2[1] = Math.min(Math.max(l2[1], 1), n), l2) : void 0;
+          const l = i2(e3, t3, s2);
+          return l ? (l[0] = Math.ceil((l[0] + (c3 ? a2 / 2 : 0)) / a2), l[1] = Math.ceil(l[1] / h2), l[0] = Math.min(Math.max(l[0], 1), r + (c3 ? 1 : 0)), l[1] = Math.min(Math.max(l[1], 1), n), l) : void 0;
         };
       }, 9504: (e2, t2, i2) => {
         Object.defineProperty(t2, "__esModule", { value: true }), t2.moveToCellSequence = void 0;
         const s2 = i2(2584);
         function r(e3, t3, i3, s3) {
-          const r2 = e3 - n(e3, i3), a3 = t3 - n(t3, i3), l2 = Math.abs(r2 - a3) - function(e4, t4, i4) {
+          const r2 = e3 - n(e3, i3), a3 = t3 - n(t3, i3), l = Math.abs(r2 - a3) - function(e4, t4, i4) {
             let s4 = 0;
             const r3 = e4 - n(e4, i4), a4 = t4 - n(t4, i4);
             for (let n2 = 0; n2 < Math.abs(r3 - a4); n2++) {
@@ -22897,7 +22897,7 @@ WARNING: This link could potentially be dangerous`)) {
             }
             return s4;
           }(e3, t3, i3);
-          return c2(l2, h2(o(e3, t3), s3));
+          return c3(l, h2(o(e3, t3), s3));
         }
         function n(e3, t3) {
           let i3 = 0, s3 = t3.buffer.lines.get(e3), r2 = null == s3 ? void 0 : s3.isWrapped;
@@ -22918,7 +22918,7 @@ WARNING: This link could potentially be dangerous`)) {
           const i3 = t3 ? "O" : "[";
           return s2.C0.ESC + i3 + e3;
         }
-        function c2(e3, t3) {
+        function c3(e3, t3) {
           e3 = Math.floor(e3);
           let i3 = "";
           for (let s3 = 0; s3 < e3; s3++)
@@ -22926,27 +22926,27 @@ WARNING: This link could potentially be dangerous`)) {
           return i3;
         }
         t2.moveToCellSequence = function(e3, t3, i3, s3) {
-          const o2 = i3.buffer.x, l2 = i3.buffer.y;
+          const o2 = i3.buffer.x, l = i3.buffer.y;
           if (!i3.buffer.hasScrollback)
-            return function(e4, t4, i4, s4, o3, l3) {
-              return 0 === r(t4, s4, o3, l3).length ? "" : c2(a2(e4, t4, e4, t4 - n(t4, o3), false, o3).length, h2("D", l3));
-            }(o2, l2, 0, t3, i3, s3) + r(l2, t3, i3, s3) + function(e4, t4, i4, s4, o3, l3) {
+            return function(e4, t4, i4, s4, o3, l2) {
+              return 0 === r(t4, s4, o3, l2).length ? "" : c3(a2(e4, t4, e4, t4 - n(t4, o3), false, o3).length, h2("D", l2));
+            }(o2, l, 0, t3, i3, s3) + r(l, t3, i3, s3) + function(e4, t4, i4, s4, o3, l2) {
               let d3;
-              d3 = r(t4, s4, o3, l3).length > 0 ? s4 - n(s4, o3) : t4;
+              d3 = r(t4, s4, o3, l2).length > 0 ? s4 - n(s4, o3) : t4;
               const _3 = s4, u2 = function(e5, t5, i5, s5, o4, a3) {
                 let h3;
                 return h3 = r(i5, s5, o4, a3).length > 0 ? s5 - n(s5, o4) : t5, e5 < i5 && h3 <= s5 || e5 >= i5 && h3 < s5 ? "C" : "D";
-              }(e4, t4, i4, s4, o3, l3);
-              return c2(a2(e4, d3, i4, _3, "C" === u2, o3).length, h2(u2, l3));
-            }(o2, l2, e3, t3, i3, s3);
+              }(e4, t4, i4, s4, o3, l2);
+              return c3(a2(e4, d3, i4, _3, "C" === u2, o3).length, h2(u2, l2));
+            }(o2, l, e3, t3, i3, s3);
           let d2;
-          if (l2 === t3)
-            return d2 = o2 > e3 ? "D" : "C", c2(Math.abs(o2 - e3), h2(d2, s3));
-          d2 = l2 > t3 ? "D" : "C";
-          const _2 = Math.abs(l2 - t3);
-          return c2(function(e4, t4) {
+          if (l === t3)
+            return d2 = o2 > e3 ? "D" : "C", c3(Math.abs(o2 - e3), h2(d2, s3));
+          d2 = l > t3 ? "D" : "C";
+          const _2 = Math.abs(l - t3);
+          return c3(function(e4, t4) {
             return t4.cols - e4;
-          }(l2 > t3 ? e3 : o2, i3) + (_2 - 1) * i3.cols + 1 + ((l2 > t3 ? o2 : e3) - 1), h2(d2, s3));
+          }(l > t3 ? e3 : o2, i3) + (_2 - 1) * i3.cols + 1 + ((l > t3 ? o2 : e3) - 1), h2(d2, s3));
         };
       }, 1296: function(e2, t2, i2) {
         var s2 = this && this.__decorate || function(e3, t3, i3, s3) {
@@ -22963,10 +22963,10 @@ WARNING: This link could potentially be dangerous`)) {
           };
         };
         Object.defineProperty(t2, "__esModule", { value: true }), t2.DomRenderer = void 0;
-        const n = i2(3787), o = i2(2550), a2 = i2(2223), h2 = i2(6171), c2 = i2(4725), l2 = i2(8055), d2 = i2(8460), _2 = i2(844), u2 = i2(2585), f2 = "xterm-dom-renderer-owner-", v3 = "xterm-rows", p2 = "xterm-fg-", g3 = "xterm-bg-", m2 = "xterm-focus", S2 = "xterm-selection";
+        const n = i2(3787), o = i2(2550), a2 = i2(2223), h2 = i2(6171), c3 = i2(4725), l = i2(8055), d2 = i2(8460), _2 = i2(844), u2 = i2(2585), f2 = "xterm-dom-renderer-owner-", v3 = "xterm-rows", p2 = "xterm-fg-", g3 = "xterm-bg-", m2 = "xterm-focus", S2 = "xterm-selection";
         let C2 = 1, b2 = t2.DomRenderer = class extends _2.Disposable {
-          constructor(e3, t3, i3, s3, r2, a3, c3, l3, u3, p3) {
-            super(), this._element = e3, this._screenElement = t3, this._viewportElement = i3, this._linkifier2 = s3, this._charSizeService = a3, this._optionsService = c3, this._bufferService = l3, this._coreBrowserService = u3, this._themeService = p3, this._terminalClass = C2++, this._rowElements = [], this.onRequestRedraw = this.register(new d2.EventEmitter()).event, this._rowContainer = document.createElement("div"), this._rowContainer.classList.add(v3), this._rowContainer.style.lineHeight = "normal", this._rowContainer.setAttribute("aria-hidden", "true"), this._refreshRowElements(this._bufferService.cols, this._bufferService.rows), this._selectionContainer = document.createElement("div"), this._selectionContainer.classList.add(S2), this._selectionContainer.setAttribute("aria-hidden", "true"), this.dimensions = (0, h2.createRenderDimensions)(), this._updateDimensions(), this.register(this._optionsService.onOptionChange(() => this._handleOptionsChanged())), this.register(this._themeService.onChangeColors((e4) => this._injectCss(e4))), this._injectCss(this._themeService.colors), this._rowFactory = r2.createInstance(n.DomRendererRowFactory, document), this._element.classList.add(f2 + this._terminalClass), this._screenElement.appendChild(this._rowContainer), this._screenElement.appendChild(this._selectionContainer), this.register(this._linkifier2.onShowLinkUnderline((e4) => this._handleLinkHover(e4))), this.register(this._linkifier2.onHideLinkUnderline((e4) => this._handleLinkLeave(e4))), this.register((0, _2.toDisposable)(() => {
+          constructor(e3, t3, i3, s3, r2, a3, c4, l2, u3, p3) {
+            super(), this._element = e3, this._screenElement = t3, this._viewportElement = i3, this._linkifier2 = s3, this._charSizeService = a3, this._optionsService = c4, this._bufferService = l2, this._coreBrowserService = u3, this._themeService = p3, this._terminalClass = C2++, this._rowElements = [], this.onRequestRedraw = this.register(new d2.EventEmitter()).event, this._rowContainer = document.createElement("div"), this._rowContainer.classList.add(v3), this._rowContainer.style.lineHeight = "normal", this._rowContainer.setAttribute("aria-hidden", "true"), this._refreshRowElements(this._bufferService.cols, this._bufferService.rows), this._selectionContainer = document.createElement("div"), this._selectionContainer.classList.add(S2), this._selectionContainer.setAttribute("aria-hidden", "true"), this.dimensions = (0, h2.createRenderDimensions)(), this._updateDimensions(), this.register(this._optionsService.onOptionChange(() => this._handleOptionsChanged())), this.register(this._themeService.onChangeColors((e4) => this._injectCss(e4))), this._injectCss(this._themeService.colors), this._rowFactory = r2.createInstance(n.DomRendererRowFactory, document), this._element.classList.add(f2 + this._terminalClass), this._screenElement.appendChild(this._rowContainer), this._screenElement.appendChild(this._selectionContainer), this.register(this._linkifier2.onShowLinkUnderline((e4) => this._handleLinkHover(e4))), this.register(this._linkifier2.onHideLinkUnderline((e4) => this._handleLinkLeave(e4))), this.register((0, _2.toDisposable)(() => {
               this._element.classList.remove(f2 + this._terminalClass), this._rowContainer.remove(), this._selectionContainer.remove(), this._widthCache.dispose(), this._themeStyleElement.remove(), this._dimensionsStyleElement.remove();
             })), this._widthCache = new o.WidthCache(document), this._widthCache.setFont(this._optionsService.rawOptions.fontFamily, this._optionsService.rawOptions.fontSize, this._optionsService.rawOptions.fontWeight, this._optionsService.rawOptions.fontWeightBold), this._setDefaultSpacing();
           }
@@ -22982,10 +22982,10 @@ WARNING: This link could potentially be dangerous`)) {
           _injectCss(e3) {
             this._themeStyleElement || (this._themeStyleElement = document.createElement("style"), this._screenElement.appendChild(this._themeStyleElement));
             let t3 = `${this._terminalSelector} .${v3} { color: ${e3.foreground.css}; font-family: ${this._optionsService.rawOptions.fontFamily}; font-size: ${this._optionsService.rawOptions.fontSize}px; font-kerning: none; white-space: pre}`;
-            t3 += `${this._terminalSelector} .${v3} .xterm-dim { color: ${l2.color.multiplyOpacity(e3.foreground, 0.5).css};}`, t3 += `${this._terminalSelector} span:not(.xterm-bold) { font-weight: ${this._optionsService.rawOptions.fontWeight};}${this._terminalSelector} span.xterm-bold { font-weight: ${this._optionsService.rawOptions.fontWeightBold};}${this._terminalSelector} span.xterm-italic { font-style: italic;}`, t3 += "@keyframes blink_box_shadow_" + this._terminalClass + " { 50% {  border-bottom-style: hidden; }}", t3 += "@keyframes blink_block_" + this._terminalClass + ` { 0% {  background-color: ${e3.cursor.css};  color: ${e3.cursorAccent.css}; } 50% {  background-color: inherit;  color: ${e3.cursor.css}; }}`, t3 += `${this._terminalSelector} .${v3}.${m2} .xterm-cursor.xterm-cursor-blink:not(.xterm-cursor-block) { animation: blink_box_shadow_` + this._terminalClass + ` 1s step-end infinite;}${this._terminalSelector} .${v3}.${m2} .xterm-cursor.xterm-cursor-blink.xterm-cursor-block { animation: blink_block_` + this._terminalClass + ` 1s step-end infinite;}${this._terminalSelector} .${v3} .xterm-cursor.xterm-cursor-block { background-color: ${e3.cursor.css}; color: ${e3.cursorAccent.css};}${this._terminalSelector} .${v3} .xterm-cursor.xterm-cursor-outline { outline: 1px solid ${e3.cursor.css}; outline-offset: -1px;}${this._terminalSelector} .${v3} .xterm-cursor.xterm-cursor-bar { box-shadow: ${this._optionsService.rawOptions.cursorWidth}px 0 0 ${e3.cursor.css} inset;}${this._terminalSelector} .${v3} .xterm-cursor.xterm-cursor-underline { border-bottom: 1px ${e3.cursor.css}; border-bottom-style: solid; height: calc(100% - 1px);}`, t3 += `${this._terminalSelector} .${S2} { position: absolute; top: 0; left: 0; z-index: 1; pointer-events: none;}${this._terminalSelector}.focus .${S2} div { position: absolute; background-color: ${e3.selectionBackgroundOpaque.css};}${this._terminalSelector} .${S2} div { position: absolute; background-color: ${e3.selectionInactiveBackgroundOpaque.css};}`;
+            t3 += `${this._terminalSelector} .${v3} .xterm-dim { color: ${l.color.multiplyOpacity(e3.foreground, 0.5).css};}`, t3 += `${this._terminalSelector} span:not(.xterm-bold) { font-weight: ${this._optionsService.rawOptions.fontWeight};}${this._terminalSelector} span.xterm-bold { font-weight: ${this._optionsService.rawOptions.fontWeightBold};}${this._terminalSelector} span.xterm-italic { font-style: italic;}`, t3 += "@keyframes blink_box_shadow_" + this._terminalClass + " { 50% {  border-bottom-style: hidden; }}", t3 += "@keyframes blink_block_" + this._terminalClass + ` { 0% {  background-color: ${e3.cursor.css};  color: ${e3.cursorAccent.css}; } 50% {  background-color: inherit;  color: ${e3.cursor.css}; }}`, t3 += `${this._terminalSelector} .${v3}.${m2} .xterm-cursor.xterm-cursor-blink:not(.xterm-cursor-block) { animation: blink_box_shadow_` + this._terminalClass + ` 1s step-end infinite;}${this._terminalSelector} .${v3}.${m2} .xterm-cursor.xterm-cursor-blink.xterm-cursor-block { animation: blink_block_` + this._terminalClass + ` 1s step-end infinite;}${this._terminalSelector} .${v3} .xterm-cursor.xterm-cursor-block { background-color: ${e3.cursor.css}; color: ${e3.cursorAccent.css};}${this._terminalSelector} .${v3} .xterm-cursor.xterm-cursor-outline { outline: 1px solid ${e3.cursor.css}; outline-offset: -1px;}${this._terminalSelector} .${v3} .xterm-cursor.xterm-cursor-bar { box-shadow: ${this._optionsService.rawOptions.cursorWidth}px 0 0 ${e3.cursor.css} inset;}${this._terminalSelector} .${v3} .xterm-cursor.xterm-cursor-underline { border-bottom: 1px ${e3.cursor.css}; border-bottom-style: solid; height: calc(100% - 1px);}`, t3 += `${this._terminalSelector} .${S2} { position: absolute; top: 0; left: 0; z-index: 1; pointer-events: none;}${this._terminalSelector}.focus .${S2} div { position: absolute; background-color: ${e3.selectionBackgroundOpaque.css};}${this._terminalSelector} .${S2} div { position: absolute; background-color: ${e3.selectionInactiveBackgroundOpaque.css};}`;
             for (const [i3, s3] of e3.ansi.entries())
-              t3 += `${this._terminalSelector} .${p2}${i3} { color: ${s3.css}; }${this._terminalSelector} .${p2}${i3}.xterm-dim { color: ${l2.color.multiplyOpacity(s3, 0.5).css}; }${this._terminalSelector} .${g3}${i3} { background-color: ${s3.css}; }`;
-            t3 += `${this._terminalSelector} .${p2}${a2.INVERTED_DEFAULT_COLOR} { color: ${l2.color.opaque(e3.background).css}; }${this._terminalSelector} .${p2}${a2.INVERTED_DEFAULT_COLOR}.xterm-dim { color: ${l2.color.multiplyOpacity(l2.color.opaque(e3.background), 0.5).css}; }${this._terminalSelector} .${g3}${a2.INVERTED_DEFAULT_COLOR} { background-color: ${e3.foreground.css}; }`, this._themeStyleElement.textContent = t3;
+              t3 += `${this._terminalSelector} .${p2}${i3} { color: ${s3.css}; }${this._terminalSelector} .${p2}${i3}.xterm-dim { color: ${l.color.multiplyOpacity(s3, 0.5).css}; }${this._terminalSelector} .${g3}${i3} { background-color: ${s3.css}; }`;
+            t3 += `${this._terminalSelector} .${p2}${a2.INVERTED_DEFAULT_COLOR} { color: ${l.color.opaque(e3.background).css}; }${this._terminalSelector} .${p2}${a2.INVERTED_DEFAULT_COLOR}.xterm-dim { color: ${l.color.multiplyOpacity(l.color.opaque(e3.background), 0.5).css}; }${this._terminalSelector} .${g3}${a2.INVERTED_DEFAULT_COLOR} { background-color: ${e3.foreground.css}; }`, this._themeStyleElement.textContent = t3;
           }
           _setDefaultSpacing() {
             const e3 = this.dimensions.css.cell.width - this._widthCache.get("W", false, false);
@@ -23027,8 +23027,8 @@ WARNING: This link could potentially be dangerous`)) {
             } else {
               const i4 = s3 === n2 ? e3[0] : 0, h3 = n2 === r2 ? t3[0] : this._bufferService.cols;
               a3.appendChild(this._createSelectionElement(n2, i4, h3));
-              const c3 = o2 - n2 - 1;
-              if (a3.appendChild(this._createSelectionElement(n2 + 1, 0, this._bufferService.cols, c3)), n2 !== o2) {
+              const c4 = o2 - n2 - 1;
+              if (a3.appendChild(this._createSelectionElement(n2 + 1, 0, this._bufferService.cols, c4)), n2 !== o2) {
                 const e4 = r2 === o2 ? t3[0] : this._bufferService.cols;
                 a3.appendChild(this._createSelectionElement(o2, 0, e4));
               }
@@ -23051,10 +23051,10 @@ WARNING: This link could potentially be dangerous`)) {
           renderRows(e3, t3) {
             const i3 = this._bufferService.buffer, s3 = i3.ybase + i3.y, r2 = Math.min(i3.x, this._bufferService.cols - 1), n2 = this._optionsService.rawOptions.cursorBlink, o2 = this._optionsService.rawOptions.cursorStyle, a3 = this._optionsService.rawOptions.cursorInactiveStyle;
             for (let h3 = e3; h3 <= t3; h3++) {
-              const e4 = h3 + i3.ydisp, t4 = this._rowElements[h3], c3 = i3.lines.get(e4);
-              if (!t4 || !c3)
+              const e4 = h3 + i3.ydisp, t4 = this._rowElements[h3], c4 = i3.lines.get(e4);
+              if (!t4 || !c4)
                 break;
-              t4.replaceChildren(...this._rowFactory.createRow(c3, e4, e4 === s3, o2, a3, r2, n2, this.dimensions.css.cell.width, this._widthCache, -1, -1));
+              t4.replaceChildren(...this._rowFactory.createRow(c4, e4, e4 === s3, o2, a3, r2, n2, this.dimensions.css.cell.width, this._widthCache, -1, -1));
             }
           }
           get _terminalSelector() {
@@ -23070,16 +23070,16 @@ WARNING: This link could potentially be dangerous`)) {
             i3 < 0 && (e3 = 0), s3 < 0 && (t3 = 0);
             const o2 = this._bufferService.rows - 1;
             i3 = Math.max(Math.min(i3, o2), 0), s3 = Math.max(Math.min(s3, o2), 0), r2 = Math.min(r2, this._bufferService.cols);
-            const a3 = this._bufferService.buffer, h3 = a3.ybase + a3.y, c3 = Math.min(a3.x, r2 - 1), l3 = this._optionsService.rawOptions.cursorBlink, d3 = this._optionsService.rawOptions.cursorStyle, _3 = this._optionsService.rawOptions.cursorInactiveStyle;
+            const a3 = this._bufferService.buffer, h3 = a3.ybase + a3.y, c4 = Math.min(a3.x, r2 - 1), l2 = this._optionsService.rawOptions.cursorBlink, d3 = this._optionsService.rawOptions.cursorStyle, _3 = this._optionsService.rawOptions.cursorInactiveStyle;
             for (let o3 = i3; o3 <= s3; ++o3) {
               const u3 = o3 + a3.ydisp, f3 = this._rowElements[o3], v4 = a3.lines.get(u3);
               if (!f3 || !v4)
                 break;
-              f3.replaceChildren(...this._rowFactory.createRow(v4, u3, u3 === h3, d3, _3, c3, l3, this.dimensions.css.cell.width, this._widthCache, n2 ? o3 === i3 ? e3 : 0 : -1, n2 ? (o3 === s3 ? t3 : r2) - 1 : -1));
+              f3.replaceChildren(...this._rowFactory.createRow(v4, u3, u3 === h3, d3, _3, c4, l2, this.dimensions.css.cell.width, this._widthCache, n2 ? o3 === i3 ? e3 : 0 : -1, n2 ? (o3 === s3 ? t3 : r2) - 1 : -1));
             }
           }
         };
-        t2.DomRenderer = b2 = s2([r(4, u2.IInstantiationService), r(5, c2.ICharSizeService), r(6, u2.IOptionsService), r(7, u2.IBufferService), r(8, c2.ICoreBrowserService), r(9, c2.IThemeService)], b2);
+        t2.DomRenderer = b2 = s2([r(4, u2.IInstantiationService), r(5, c3.ICharSizeService), r(6, u2.IOptionsService), r(7, u2.IBufferService), r(8, c3.ICoreBrowserService), r(9, c3.IThemeService)], b2);
       }, 3787: function(e2, t2, i2) {
         var s2 = this && this.__decorate || function(e3, t3, i3, s3) {
           var r2, n2 = arguments.length, o2 = n2 < 3 ? t3 : null === s3 ? s3 = Object.getOwnPropertyDescriptor(t3, i3) : s3;
@@ -23095,7 +23095,7 @@ WARNING: This link could potentially be dangerous`)) {
           };
         };
         Object.defineProperty(t2, "__esModule", { value: true }), t2.DomRendererRowFactory = void 0;
-        const n = i2(2223), o = i2(643), a2 = i2(511), h2 = i2(2585), c2 = i2(8055), l2 = i2(4725), d2 = i2(4269), _2 = i2(6171), u2 = i2(3734);
+        const n = i2(2223), o = i2(643), a2 = i2(511), h2 = i2(2585), c3 = i2(8055), l = i2(4725), d2 = i2(4269), _2 = i2(6171), u2 = i2(3734);
         let f2 = t2.DomRendererRowFactory = class {
           constructor(e3, t3, i3, s3, r2, n2, o2) {
             this._document = e3, this._characterJoinerService = t3, this._optionsService = i3, this._coreBrowserService = s3, this._coreService = r2, this._decorationService = n2, this._themeService = o2, this._workCell = new a2.CellData(), this._columnSelectMode = false, this.defaultSpacing = 0;
@@ -23103,7 +23103,7 @@ WARNING: This link could potentially be dangerous`)) {
           handleSelectionChanged(e3, t3, i3) {
             this._selectionStart = e3, this._selectionEnd = t3, this._columnSelectMode = i3;
           }
-          createRow(e3, t3, i3, s3, r2, a3, h3, l3, _3, f3, p2) {
+          createRow(e3, t3, i3, s3, r2, a3, h3, l2, _3, f3, p2) {
             const g3 = [], m2 = this._characterJoinerService.getJoinedCharacters(t3), S2 = this._themeService.colors;
             let C2, b2 = e3.getNoBgTrimmedLength();
             i3 && b2 < a3 + 1 && (b2 = a3 + 1);
@@ -23126,7 +23126,7 @@ WARNING: This link could potentially be dangerous`)) {
                 U3 = true;
               });
               let N3 = I3.getChars() || o.WHITESPACE_CELL_CHAR;
-              if (" " === N3 && (I3.isUnderline() || I3.isOverline()) && (N3 = "\xA0"), A3 = b3 * l3 - _3.get(N3, I3.isBold(), I3.isItalic()), C2) {
+              if (" " === N3 && (I3.isUnderline() || I3.isOverline()) && (N3 = "\xA0"), A3 = b3 * l2 - _3.get(N3, I3.isBold(), I3.isItalic()), C2) {
                 if (y2 && (H2 && x3 || !H2 && !x3 && I3.bg === E3) && (H2 && x3 && S2.selectionForeground || I3.fg === k3) && I3.extended.ext === L3 && W3 === D2 && A3 === R3 && !F3 && !O3 && !U3) {
                   w3 += N3, y2++;
                   continue;
@@ -23177,18 +23177,18 @@ WARNING: This link could potentially be dangerous`)) {
                   X2 = S2.ansi[z2], B3.push(`xterm-bg-${z2}`);
                   break;
                 case 50331648:
-                  X2 = c2.rgba.toColor(z2 >> 16, z2 >> 8 & 255, 255 & z2), this._addStyle(C2, `background-color:#${v3((z2 >>> 0).toString(16), "0", 6)}`);
+                  X2 = c3.rgba.toColor(z2 >> 16, z2 >> 8 & 255, 255 & z2), this._addStyle(C2, `background-color:#${v3((z2 >>> 0).toString(16), "0", 6)}`);
                   break;
                 default:
                   q3 ? (X2 = S2.foreground, B3.push(`xterm-bg-${n.INVERTED_DEFAULT_COLOR}`)) : X2 = S2.background;
               }
-              switch (V3 || I3.isDim() && (V3 = c2.color.multiplyOpacity(X2, 0.5)), j2) {
+              switch (V3 || I3.isDim() && (V3 = c3.color.multiplyOpacity(X2, 0.5)), j2) {
                 case 16777216:
                 case 33554432:
                   I3.isBold() && $3 < 8 && this._optionsService.rawOptions.drawBoldTextInBrightColors && ($3 += 8), this._applyMinimumContrast(C2, X2, S2.ansi[$3], I3, V3, void 0) || B3.push(`xterm-fg-${$3}`);
                   break;
                 case 50331648:
-                  const e4 = c2.rgba.toColor($3 >> 16 & 255, $3 >> 8 & 255, 255 & $3);
+                  const e4 = c3.rgba.toColor($3 >> 16 & 255, $3 >> 8 & 255, 255 & $3);
                   this._applyMinimumContrast(C2, X2, e4, I3, V3, G3) || this._addStyle(C2, `color:#${v3($3.toString(16), "0", 6)}`);
                   break;
                 default:
@@ -23205,7 +23205,7 @@ WARNING: This link could potentially be dangerous`)) {
             let a3;
             if (r2 || n2 || (a3 = o2.getColor(t3.rgba, i3.rgba)), void 0 === a3) {
               const e4 = this._optionsService.rawOptions.minimumContrastRatio / (s3.isDim() ? 2 : 1);
-              a3 = c2.color.ensureContrastRatio(r2 || t3, n2 || i3, e4), o2.setColor((r2 || t3).rgba, (n2 || i3).rgba, null != a3 ? a3 : null);
+              a3 = c3.color.ensureContrastRatio(r2 || t3, n2 || i3, e4), o2.setColor((r2 || t3).rgba, (n2 || i3).rgba, null != a3 ? a3 : null);
             }
             return !!a3 && (this._addStyle(e3, `color:${a3.css}`), true);
           }
@@ -23225,7 +23225,7 @@ WARNING: This link could potentially be dangerous`)) {
             e3 = t3 + e3;
           return e3;
         }
-        t2.DomRendererRowFactory = f2 = s2([r(1, l2.ICharacterJoinerService), r(2, h2.IOptionsService), r(3, l2.ICoreBrowserService), r(4, h2.ICoreService), r(5, h2.IDecorationService), r(6, l2.IThemeService)], f2);
+        t2.DomRendererRowFactory = f2 = s2([r(1, l.ICharacterJoinerService), r(2, h2.IOptionsService), r(3, l.ICoreBrowserService), r(4, h2.ICoreService), r(5, h2.IDecorationService), r(6, l.IThemeService)], f2);
       }, 2550: (e2, t2) => {
         Object.defineProperty(t2, "__esModule", { value: true }), t2.WidthCache = void 0, t2.WidthCache = class {
           constructor(e3) {
@@ -23340,7 +23340,7 @@ WARNING: This link could potentially be dangerous`)) {
             return this.width > 0 && this.height > 0;
           }
           constructor(e3, t3, i3) {
-            super(), this._optionsService = i3, this.width = 0, this.height = 0, this._onCharSizeChange = this.register(new o.EventEmitter()), this.onCharSizeChange = this._onCharSizeChange.event, this._measureStrategy = new c2(e3, t3, this._optionsService), this.register(this._optionsService.onMultipleOptionChange(["fontFamily", "fontSize"], () => this.measure()));
+            super(), this._optionsService = i3, this.width = 0, this.height = 0, this._onCharSizeChange = this.register(new o.EventEmitter()), this.onCharSizeChange = this._onCharSizeChange.event, this._measureStrategy = new c3(e3, t3, this._optionsService), this.register(this._optionsService.onMultipleOptionChange(["fontFamily", "fontSize"], () => this.measure()));
           }
           measure() {
             const e3 = this._measureStrategy.measure();
@@ -23348,7 +23348,7 @@ WARNING: This link could potentially be dangerous`)) {
           }
         };
         t2.CharSizeService = h2 = s2([r(2, n.IOptionsService)], h2);
-        class c2 {
+        class c3 {
           constructor(e3, t3, i3) {
             this._document = e3, this._parentElement = t3, this._optionsService = i3, this._result = { width: 0, height: 0 }, this._measureElement = this._document.createElement("span"), this._measureElement.classList.add("xterm-char-measure-element"), this._measureElement.textContent = "W".repeat(32), this._measureElement.setAttribute("aria-hidden", "true"), this._measureElement.style.whiteSpace = "pre", this._measureElement.style.fontKerning = "none", this._parentElement.appendChild(this._measureElement);
           }
@@ -23374,7 +23374,7 @@ WARNING: This link could potentially be dangerous`)) {
         };
         Object.defineProperty(t2, "__esModule", { value: true }), t2.CharacterJoinerService = t2.JoinedCellData = void 0;
         const n = i2(3734), o = i2(643), a2 = i2(511), h2 = i2(2585);
-        class c2 extends n.AttributeData {
+        class c3 extends n.AttributeData {
           constructor(e3, t3, i3) {
             super(), this.content = 0, this.combinedData = "", this.fg = e3.fg, this.bg = e3.bg, this.combinedData = t3, this._width = i3;
           }
@@ -23397,8 +23397,8 @@ WARNING: This link could potentially be dangerous`)) {
             return [this.fg, this.getChars(), this.getWidth(), this.getCode()];
           }
         }
-        t2.JoinedCellData = c2;
-        let l2 = t2.CharacterJoinerService = class e3 {
+        t2.JoinedCellData = c3;
+        let l = t2.CharacterJoinerService = class e3 {
           constructor(e4) {
             this._bufferService = e4, this._characterJoiners = [], this._nextCharacterJoinerId = 0, this._workCell = new a2.CellData();
           }
@@ -23419,16 +23419,16 @@ WARNING: This link could potentially be dangerous`)) {
             if (!t3 || 0 === t3.length)
               return [];
             const i3 = [], s3 = t3.translateToString(true);
-            let r2 = 0, n2 = 0, a3 = 0, h3 = t3.getFg(0), c3 = t3.getBg(0);
+            let r2 = 0, n2 = 0, a3 = 0, h3 = t3.getFg(0), c4 = t3.getBg(0);
             for (let e5 = 0; e5 < t3.getTrimmedLength(); e5++)
               if (t3.loadCell(e5, this._workCell), 0 !== this._workCell.getWidth()) {
-                if (this._workCell.fg !== h3 || this._workCell.bg !== c3) {
+                if (this._workCell.fg !== h3 || this._workCell.bg !== c4) {
                   if (e5 - r2 > 1) {
                     const e6 = this._getJoinedRanges(s3, a3, n2, t3, r2);
                     for (let t4 = 0; t4 < e6.length; t4++)
                       i3.push(e6[t4]);
                   }
-                  r2 = e5, a3 = n2, h3 = this._workCell.fg, c3 = this._workCell.bg;
+                  r2 = e5, a3 = n2, h3 = this._workCell.fg, c4 = this._workCell.bg;
                 }
                 n2 += this._workCell.getChars().length || o.WHITESPACE_CELL_CHAR.length;
               }
@@ -23461,14 +23461,14 @@ WARNING: This link could potentially be dangerous`)) {
             let s3 = 0, r2 = false, n2 = 0, a3 = e4[s3];
             if (a3) {
               for (let h3 = i3; h3 < this._bufferService.cols; h3++) {
-                const i4 = t3.getWidth(h3), c3 = t3.getString(h3).length || o.WHITESPACE_CELL_CHAR.length;
+                const i4 = t3.getWidth(h3), c4 = t3.getString(h3).length || o.WHITESPACE_CELL_CHAR.length;
                 if (0 !== i4) {
                   if (!r2 && a3[0] <= n2 && (a3[0] = h3, r2 = true), a3[1] <= n2) {
                     if (a3[1] = h3, a3 = e4[++s3], !a3)
                       break;
                     a3[0] <= n2 ? (a3[0] = h3, r2 = true) : r2 = false;
                   }
-                  n2 += c3;
+                  n2 += c4;
                 }
               }
               a3 && (a3[1] = this._bufferService.cols);
@@ -23495,7 +23495,7 @@ WARNING: This link could potentially be dangerous`)) {
             return i3 ? e4[e4.length - 1][1] = t3[1] : e4.push(t3), e4;
           }
         };
-        t2.CharacterJoinerService = l2 = s2([r(0, h2.IBufferService)], l2);
+        t2.CharacterJoinerService = l = s2([r(0, h2.IBufferService)], l);
       }, 5114: (e2, t2) => {
         Object.defineProperty(t2, "__esModule", { value: true }), t2.CoreBrowserService = void 0, t2.CoreBrowserService = class {
           constructor(e3, t3) {
@@ -23553,13 +23553,13 @@ WARNING: This link could potentially be dangerous`)) {
           };
         };
         Object.defineProperty(t2, "__esModule", { value: true }), t2.RenderService = void 0;
-        const n = i2(3656), o = i2(6193), a2 = i2(5596), h2 = i2(4725), c2 = i2(8460), l2 = i2(844), d2 = i2(7226), _2 = i2(2585);
-        let u2 = t2.RenderService = class extends l2.Disposable {
+        const n = i2(3656), o = i2(6193), a2 = i2(5596), h2 = i2(4725), c3 = i2(8460), l = i2(844), d2 = i2(7226), _2 = i2(2585);
+        let u2 = t2.RenderService = class extends l.Disposable {
           get dimensions() {
             return this._renderer.value.dimensions;
           }
           constructor(e3, t3, i3, s3, r2, h3, _3, u3) {
-            if (super(), this._rowCount = e3, this._charSizeService = s3, this._renderer = this.register(new l2.MutableDisposable()), this._pausedResizeTask = new d2.DebouncedIdleTask(), this._isPaused = false, this._needsFullRefresh = false, this._isNextRenderRedrawOnly = true, this._needsSelectionRefresh = false, this._canvasWidth = 0, this._canvasHeight = 0, this._selectionState = { start: void 0, end: void 0, columnSelectMode: false }, this._onDimensionsChange = this.register(new c2.EventEmitter()), this.onDimensionsChange = this._onDimensionsChange.event, this._onRenderedViewportChange = this.register(new c2.EventEmitter()), this.onRenderedViewportChange = this._onRenderedViewportChange.event, this._onRender = this.register(new c2.EventEmitter()), this.onRender = this._onRender.event, this._onRefreshRequest = this.register(new c2.EventEmitter()), this.onRefreshRequest = this._onRefreshRequest.event, this._renderDebouncer = new o.RenderDebouncer(_3.window, (e4, t4) => this._renderRows(e4, t4)), this.register(this._renderDebouncer), this._screenDprMonitor = new a2.ScreenDprMonitor(_3.window), this._screenDprMonitor.setListener(() => this.handleDevicePixelRatioChange()), this.register(this._screenDprMonitor), this.register(h3.onResize(() => this._fullRefresh())), this.register(h3.buffers.onBufferActivate(() => {
+            if (super(), this._rowCount = e3, this._charSizeService = s3, this._renderer = this.register(new l.MutableDisposable()), this._pausedResizeTask = new d2.DebouncedIdleTask(), this._isPaused = false, this._needsFullRefresh = false, this._isNextRenderRedrawOnly = true, this._needsSelectionRefresh = false, this._canvasWidth = 0, this._canvasHeight = 0, this._selectionState = { start: void 0, end: void 0, columnSelectMode: false }, this._onDimensionsChange = this.register(new c3.EventEmitter()), this.onDimensionsChange = this._onDimensionsChange.event, this._onRenderedViewportChange = this.register(new c3.EventEmitter()), this.onRenderedViewportChange = this._onRenderedViewportChange.event, this._onRender = this.register(new c3.EventEmitter()), this.onRender = this._onRender.event, this._onRefreshRequest = this.register(new c3.EventEmitter()), this.onRefreshRequest = this._onRefreshRequest.event, this._renderDebouncer = new o.RenderDebouncer(_3.window, (e4, t4) => this._renderRows(e4, t4)), this.register(this._renderDebouncer), this._screenDprMonitor = new a2.ScreenDprMonitor(_3.window), this._screenDprMonitor.setListener(() => this.handleDevicePixelRatioChange()), this.register(this._screenDprMonitor), this.register(h3.onResize(() => this._fullRefresh())), this.register(h3.buffers.onBufferActivate(() => {
               var e4;
               return null === (e4 = this._renderer.value) || void 0 === e4 ? void 0 : e4.clear();
             })), this.register(i3.onOptionChange(() => this._handleOptionsChanged())), this.register(this._charSizeService.onCharSizeChange(() => this.handleCharSizeChanged())), this.register(r2.onDecorationRegistered(() => this._fullRefresh())), this.register(r2.onDecorationRemoved(() => this._fullRefresh())), this.register(i3.onMultipleOptionChange(["customGlyphs", "drawBoldTextInBrightColors", "letterSpacing", "lineHeight", "fontFamily", "fontSize", "fontWeight", "fontWeightBold", "minimumContrastRatio"], () => {
@@ -23650,12 +23650,12 @@ WARNING: This link could potentially be dangerous`)) {
           };
         };
         Object.defineProperty(t2, "__esModule", { value: true }), t2.SelectionService = void 0;
-        const n = i2(9806), o = i2(9504), a2 = i2(456), h2 = i2(4725), c2 = i2(8460), l2 = i2(844), d2 = i2(6114), _2 = i2(4841), u2 = i2(511), f2 = i2(2585), v3 = String.fromCharCode(160), p2 = new RegExp(v3, "g");
-        let g3 = t2.SelectionService = class extends l2.Disposable {
+        const n = i2(9806), o = i2(9504), a2 = i2(456), h2 = i2(4725), c3 = i2(8460), l = i2(844), d2 = i2(6114), _2 = i2(4841), u2 = i2(511), f2 = i2(2585), v3 = String.fromCharCode(160), p2 = new RegExp(v3, "g");
+        let g3 = t2.SelectionService = class extends l.Disposable {
           constructor(e3, t3, i3, s3, r2, n2, o2, h3, d3) {
-            super(), this._element = e3, this._screenElement = t3, this._linkifier = i3, this._bufferService = s3, this._coreService = r2, this._mouseService = n2, this._optionsService = o2, this._renderService = h3, this._coreBrowserService = d3, this._dragScrollAmount = 0, this._enabled = true, this._workCell = new u2.CellData(), this._mouseDownTimeStamp = 0, this._oldHasSelection = false, this._oldSelectionStart = void 0, this._oldSelectionEnd = void 0, this._onLinuxMouseSelection = this.register(new c2.EventEmitter()), this.onLinuxMouseSelection = this._onLinuxMouseSelection.event, this._onRedrawRequest = this.register(new c2.EventEmitter()), this.onRequestRedraw = this._onRedrawRequest.event, this._onSelectionChange = this.register(new c2.EventEmitter()), this.onSelectionChange = this._onSelectionChange.event, this._onRequestScrollLines = this.register(new c2.EventEmitter()), this.onRequestScrollLines = this._onRequestScrollLines.event, this._mouseMoveListener = (e4) => this._handleMouseMove(e4), this._mouseUpListener = (e4) => this._handleMouseUp(e4), this._coreService.onUserInput(() => {
+            super(), this._element = e3, this._screenElement = t3, this._linkifier = i3, this._bufferService = s3, this._coreService = r2, this._mouseService = n2, this._optionsService = o2, this._renderService = h3, this._coreBrowserService = d3, this._dragScrollAmount = 0, this._enabled = true, this._workCell = new u2.CellData(), this._mouseDownTimeStamp = 0, this._oldHasSelection = false, this._oldSelectionStart = void 0, this._oldSelectionEnd = void 0, this._onLinuxMouseSelection = this.register(new c3.EventEmitter()), this.onLinuxMouseSelection = this._onLinuxMouseSelection.event, this._onRedrawRequest = this.register(new c3.EventEmitter()), this.onRequestRedraw = this._onRedrawRequest.event, this._onSelectionChange = this.register(new c3.EventEmitter()), this.onSelectionChange = this._onSelectionChange.event, this._onRequestScrollLines = this.register(new c3.EventEmitter()), this.onRequestScrollLines = this._onRequestScrollLines.event, this._mouseMoveListener = (e4) => this._handleMouseMove(e4), this._mouseUpListener = (e4) => this._handleMouseUp(e4), this._coreService.onUserInput(() => {
               this.hasSelection && this.clearSelection();
-            }), this._trimListener = this._bufferService.buffer.lines.onTrim((e4) => this._handleTrim(e4)), this.register(this._bufferService.buffers.onBufferActivate((e4) => this._handleBufferActivate(e4))), this.enable(), this._model = new a2.SelectionModel(this._bufferService), this._activeSelectionMode = 0, this.register((0, l2.toDisposable)(() => {
+            }), this._trimListener = this._bufferService.buffer.lines.onTrim((e4) => this._handleTrim(e4)), this.register(this._bufferService.buffers.onBufferActivate((e4) => this._handleBufferActivate(e4))), this.enable(), this._model = new a2.SelectionModel(this._bufferService), this._activeSelectionMode = 0, this.register((0, l.toDisposable)(() => {
               this._removeMouseDownListeners();
             }));
           }
@@ -23857,8 +23857,8 @@ WARNING: This link could potentially be dangerous`)) {
               return;
             const o2 = r2.translateBufferLineToString(e3[1], false);
             let a3 = this._convertViewportColToCharacterIndex(n2, e3[0]), h3 = a3;
-            const c3 = e3[0] - a3;
-            let l3 = 0, d3 = 0, _3 = 0, u3 = 0;
+            const c4 = e3[0] - a3;
+            let l2 = 0, d3 = 0, _3 = 0, u3 = 0;
             if (" " === o2.charAt(a3)) {
               for (; a3 > 0 && " " === o2.charAt(a3 - 1); )
                 a3--;
@@ -23866,12 +23866,12 @@ WARNING: This link could potentially be dangerous`)) {
                 h3++;
             } else {
               let t4 = e3[0], i4 = e3[0];
-              0 === n2.getWidth(t4) && (l3++, t4--), 2 === n2.getWidth(i4) && (d3++, i4++);
+              0 === n2.getWidth(t4) && (l2++, t4--), 2 === n2.getWidth(i4) && (d3++, i4++);
               const s4 = n2.getString(i4).length;
               for (s4 > 1 && (u3 += s4 - 1, h3 += s4 - 1); t4 > 0 && a3 > 0 && !this._isCharWordSeparator(n2.loadCell(t4 - 1, this._workCell)); ) {
                 n2.loadCell(t4 - 1, this._workCell);
                 const e4 = this._workCell.getChars().length;
-                0 === this._workCell.getWidth() ? (l3++, t4--) : e4 > 1 && (_3 += e4 - 1, a3 -= e4 - 1), a3--, t4--;
+                0 === this._workCell.getWidth() ? (l2++, t4--) : e4 > 1 && (_3 += e4 - 1, a3 -= e4 - 1), a3--, t4--;
               }
               for (; i4 < n2.length && h3 + 1 < o2.length && !this._isCharWordSeparator(n2.loadCell(i4 + 1, this._workCell)); ) {
                 n2.loadCell(i4 + 1, this._workCell);
@@ -23880,7 +23880,7 @@ WARNING: This link could potentially be dangerous`)) {
               }
             }
             h3++;
-            let f3 = a3 + c3 - l3 + _3, v4 = Math.min(this._bufferService.cols, h3 - a3 + l3 + d3 - _3 - u3);
+            let f3 = a3 + c4 - l2 + _3, v4 = Math.min(this._bufferService.cols, h3 - a3 + l2 + d3 - _3 - u3);
             if (t3 || "" !== o2.slice(a3, h3).trim()) {
               if (i3 && 0 === f3 && 32 !== n2.getCodePoint(0)) {
                 const t4 = r2.lines.get(e3[1] - 1);
@@ -23950,7 +23950,7 @@ WARNING: This link could potentially be dangerous`)) {
           };
         };
         Object.defineProperty(t2, "__esModule", { value: true }), t2.ThemeService = t2.DEFAULT_ANSI_COLORS = void 0;
-        const n = i2(7239), o = i2(8055), a2 = i2(8460), h2 = i2(844), c2 = i2(2585), l2 = o.css.toColor("#ffffff"), d2 = o.css.toColor("#000000"), _2 = o.css.toColor("#ffffff"), u2 = o.css.toColor("#000000"), f2 = { css: "rgba(255, 255, 255, 0.3)", rgba: 4294967117 };
+        const n = i2(7239), o = i2(8055), a2 = i2(8460), h2 = i2(844), c3 = i2(2585), l = o.css.toColor("#ffffff"), d2 = o.css.toColor("#000000"), _2 = o.css.toColor("#ffffff"), u2 = o.css.toColor("#000000"), f2 = { css: "rgba(255, 255, 255, 0.3)", rgba: 4294967117 };
         t2.DEFAULT_ANSI_COLORS = Object.freeze((() => {
           const e3 = [o.css.toColor("#2e3436"), o.css.toColor("#cc0000"), o.css.toColor("#4e9a06"), o.css.toColor("#c4a000"), o.css.toColor("#3465a4"), o.css.toColor("#75507b"), o.css.toColor("#06989a"), o.css.toColor("#d3d7cf"), o.css.toColor("#555753"), o.css.toColor("#ef2929"), o.css.toColor("#8ae234"), o.css.toColor("#fce94f"), o.css.toColor("#729fcf"), o.css.toColor("#ad7fa8"), o.css.toColor("#34e2e2"), o.css.toColor("#eeeeec")], t3 = [0, 95, 135, 175, 215, 255];
           for (let i3 = 0; i3 < 216; i3++) {
@@ -23968,11 +23968,11 @@ WARNING: This link could potentially be dangerous`)) {
             return this._colors;
           }
           constructor(e3) {
-            super(), this._optionsService = e3, this._contrastCache = new n.ColorContrastCache(), this._halfContrastCache = new n.ColorContrastCache(), this._onChangeColors = this.register(new a2.EventEmitter()), this.onChangeColors = this._onChangeColors.event, this._colors = { foreground: l2, background: d2, cursor: _2, cursorAccent: u2, selectionForeground: void 0, selectionBackgroundTransparent: f2, selectionBackgroundOpaque: o.color.blend(d2, f2), selectionInactiveBackgroundTransparent: f2, selectionInactiveBackgroundOpaque: o.color.blend(d2, f2), ansi: t2.DEFAULT_ANSI_COLORS.slice(), contrastCache: this._contrastCache, halfContrastCache: this._halfContrastCache }, this._updateRestoreColors(), this._setTheme(this._optionsService.rawOptions.theme), this.register(this._optionsService.onSpecificOptionChange("minimumContrastRatio", () => this._contrastCache.clear())), this.register(this._optionsService.onSpecificOptionChange("theme", () => this._setTheme(this._optionsService.rawOptions.theme)));
+            super(), this._optionsService = e3, this._contrastCache = new n.ColorContrastCache(), this._halfContrastCache = new n.ColorContrastCache(), this._onChangeColors = this.register(new a2.EventEmitter()), this.onChangeColors = this._onChangeColors.event, this._colors = { foreground: l, background: d2, cursor: _2, cursorAccent: u2, selectionForeground: void 0, selectionBackgroundTransparent: f2, selectionBackgroundOpaque: o.color.blend(d2, f2), selectionInactiveBackgroundTransparent: f2, selectionInactiveBackgroundOpaque: o.color.blend(d2, f2), ansi: t2.DEFAULT_ANSI_COLORS.slice(), contrastCache: this._contrastCache, halfContrastCache: this._halfContrastCache }, this._updateRestoreColors(), this._setTheme(this._optionsService.rawOptions.theme), this.register(this._optionsService.onSpecificOptionChange("minimumContrastRatio", () => this._contrastCache.clear())), this.register(this._optionsService.onSpecificOptionChange("theme", () => this._setTheme(this._optionsService.rawOptions.theme)));
           }
           _setTheme(e3 = {}) {
             const i3 = this._colors;
-            if (i3.foreground = p2(e3.foreground, l2), i3.background = p2(e3.background, d2), i3.cursor = p2(e3.cursor, _2), i3.cursorAccent = p2(e3.cursorAccent, u2), i3.selectionBackgroundTransparent = p2(e3.selectionBackground, f2), i3.selectionBackgroundOpaque = o.color.blend(i3.background, i3.selectionBackgroundTransparent), i3.selectionInactiveBackgroundTransparent = p2(e3.selectionInactiveBackground, i3.selectionBackgroundTransparent), i3.selectionInactiveBackgroundOpaque = o.color.blend(i3.background, i3.selectionInactiveBackgroundTransparent), i3.selectionForeground = e3.selectionForeground ? p2(e3.selectionForeground, o.NULL_COLOR) : void 0, i3.selectionForeground === o.NULL_COLOR && (i3.selectionForeground = void 0), o.color.isOpaque(i3.selectionBackgroundTransparent)) {
+            if (i3.foreground = p2(e3.foreground, l), i3.background = p2(e3.background, d2), i3.cursor = p2(e3.cursor, _2), i3.cursorAccent = p2(e3.cursorAccent, u2), i3.selectionBackgroundTransparent = p2(e3.selectionBackground, f2), i3.selectionBackgroundOpaque = o.color.blend(i3.background, i3.selectionBackgroundTransparent), i3.selectionInactiveBackgroundTransparent = p2(e3.selectionInactiveBackground, i3.selectionBackgroundTransparent), i3.selectionInactiveBackgroundOpaque = o.color.blend(i3.background, i3.selectionInactiveBackgroundTransparent), i3.selectionForeground = e3.selectionForeground ? p2(e3.selectionForeground, o.NULL_COLOR) : void 0, i3.selectionForeground === o.NULL_COLOR && (i3.selectionForeground = void 0), o.color.isOpaque(i3.selectionBackgroundTransparent)) {
               const e4 = 0.3;
               i3.selectionBackgroundTransparent = o.color.opacity(i3.selectionBackgroundTransparent, e4);
             }
@@ -24024,7 +24024,7 @@ WARNING: This link could potentially be dangerous`)) {
             }
           return t3;
         }
-        t2.ThemeService = v3 = s2([r(0, c2.IOptionsService)], v3);
+        t2.ThemeService = v3 = s2([r(0, c3.IOptionsService)], v3);
       }, 6349: (e2, t2, i2) => {
         Object.defineProperty(t2, "__esModule", { value: true }), t2.CircularList = void 0;
         const s2 = i2(8460), r = i2(844);
@@ -24127,7 +24127,7 @@ WARNING: This link could potentially be dangerous`)) {
         Object.defineProperty(t2, "__esModule", { value: true }), t2.contrastRatio = t2.toPaddedHex = t2.rgba = t2.rgb = t2.css = t2.color = t2.channels = t2.NULL_COLOR = void 0;
         const s2 = i2(6114);
         let r = 0, n = 0, o = 0, a2 = 0;
-        var h2, c2, l2, d2, _2;
+        var h2, c3, l, d2, _2;
         function u2(e3) {
           const t3 = e3.toString(16);
           return t3.length < 2 ? "0" + t3 : t3;
@@ -24148,8 +24148,8 @@ WARNING: This link could potentially be dangerous`)) {
           e3.blend = function(e4, t4) {
             if (a2 = (255 & t4.rgba) / 255, 1 === a2)
               return { css: t4.css, rgba: t4.rgba };
-            const i3 = t4.rgba >> 24 & 255, s3 = t4.rgba >> 16 & 255, c3 = t4.rgba >> 8 & 255, l3 = e4.rgba >> 24 & 255, d3 = e4.rgba >> 16 & 255, _3 = e4.rgba >> 8 & 255;
-            return r = l3 + Math.round((i3 - l3) * a2), n = d3 + Math.round((s3 - d3) * a2), o = _3 + Math.round((c3 - _3) * a2), { css: h2.toCss(r, n, o), rgba: h2.toRgba(r, n, o) };
+            const i3 = t4.rgba >> 24 & 255, s3 = t4.rgba >> 16 & 255, c4 = t4.rgba >> 8 & 255, l2 = e4.rgba >> 24 & 255, d3 = e4.rgba >> 16 & 255, _3 = e4.rgba >> 8 & 255;
+            return r = l2 + Math.round((i3 - l2) * a2), n = d3 + Math.round((s3 - d3) * a2), o = _3 + Math.round((c4 - _3) * a2), { css: h2.toCss(r, n, o), rgba: h2.toRgba(r, n, o) };
           }, e3.isOpaque = function(e4) {
             return 255 == (255 & e4.rgba);
           }, e3.ensureContrastRatio = function(e4, t4, i3) {
@@ -24164,7 +24164,7 @@ WARNING: This link could potentially be dangerous`)) {
           }, e3.toColorRGB = function(e4) {
             return [e4.rgba >> 24 & 255, e4.rgba >> 16 & 255, e4.rgba >> 8 & 255];
           };
-        }(c2 || (t2.color = c2 = {})), function(e3) {
+        }(c3 || (t2.color = c3 = {})), function(e3) {
           let t3, i3;
           if (!s2.isNode) {
             const e4 = document.createElement("canvas");
@@ -24195,7 +24195,7 @@ WARNING: This link could potentially be dangerous`)) {
               throw new Error("css.toColor: Unsupported css format");
             return { rgba: h2.toRgba(r, n, o, a2), css: e4 };
           };
-        }(l2 || (t2.css = l2 = {})), function(e3) {
+        }(l || (t2.css = l = {})), function(e3) {
           function t3(e4, t4, i3) {
             const s3 = e4 / 255, r2 = t4 / 255, n2 = i3 / 255;
             return 0.2126 * (s3 <= 0.03928 ? s3 / 12.92 : Math.pow((s3 + 0.055) / 1.055, 2.4)) + 0.7152 * (r2 <= 0.03928 ? r2 / 12.92 : Math.pow((r2 + 0.055) / 1.055, 2.4)) + 0.0722 * (n2 <= 0.03928 ? n2 / 12.92 : Math.pow((n2 + 0.055) / 1.055, 2.4));
@@ -24206,16 +24206,16 @@ WARNING: This link could potentially be dangerous`)) {
         }(d2 || (t2.rgb = d2 = {})), function(e3) {
           function t3(e4, t4, i4) {
             const s3 = e4 >> 24 & 255, r2 = e4 >> 16 & 255, n2 = e4 >> 8 & 255;
-            let o2 = t4 >> 24 & 255, a3 = t4 >> 16 & 255, h3 = t4 >> 8 & 255, c3 = f2(d2.relativeLuminance2(o2, a3, h3), d2.relativeLuminance2(s3, r2, n2));
-            for (; c3 < i4 && (o2 > 0 || a3 > 0 || h3 > 0); )
-              o2 -= Math.max(0, Math.ceil(0.1 * o2)), a3 -= Math.max(0, Math.ceil(0.1 * a3)), h3 -= Math.max(0, Math.ceil(0.1 * h3)), c3 = f2(d2.relativeLuminance2(o2, a3, h3), d2.relativeLuminance2(s3, r2, n2));
+            let o2 = t4 >> 24 & 255, a3 = t4 >> 16 & 255, h3 = t4 >> 8 & 255, c4 = f2(d2.relativeLuminance2(o2, a3, h3), d2.relativeLuminance2(s3, r2, n2));
+            for (; c4 < i4 && (o2 > 0 || a3 > 0 || h3 > 0); )
+              o2 -= Math.max(0, Math.ceil(0.1 * o2)), a3 -= Math.max(0, Math.ceil(0.1 * a3)), h3 -= Math.max(0, Math.ceil(0.1 * h3)), c4 = f2(d2.relativeLuminance2(o2, a3, h3), d2.relativeLuminance2(s3, r2, n2));
             return (o2 << 24 | a3 << 16 | h3 << 8 | 255) >>> 0;
           }
           function i3(e4, t4, i4) {
             const s3 = e4 >> 24 & 255, r2 = e4 >> 16 & 255, n2 = e4 >> 8 & 255;
-            let o2 = t4 >> 24 & 255, a3 = t4 >> 16 & 255, h3 = t4 >> 8 & 255, c3 = f2(d2.relativeLuminance2(o2, a3, h3), d2.relativeLuminance2(s3, r2, n2));
-            for (; c3 < i4 && (o2 < 255 || a3 < 255 || h3 < 255); )
-              o2 = Math.min(255, o2 + Math.ceil(0.1 * (255 - o2))), a3 = Math.min(255, a3 + Math.ceil(0.1 * (255 - a3))), h3 = Math.min(255, h3 + Math.ceil(0.1 * (255 - h3))), c3 = f2(d2.relativeLuminance2(o2, a3, h3), d2.relativeLuminance2(s3, r2, n2));
+            let o2 = t4 >> 24 & 255, a3 = t4 >> 16 & 255, h3 = t4 >> 8 & 255, c4 = f2(d2.relativeLuminance2(o2, a3, h3), d2.relativeLuminance2(s3, r2, n2));
+            for (; c4 < i4 && (o2 < 255 || a3 < 255 || h3 < 255); )
+              o2 = Math.min(255, o2 + Math.ceil(0.1 * (255 - o2))), a3 = Math.min(255, a3 + Math.ceil(0.1 * (255 - a3))), h3 = Math.min(255, h3 + Math.ceil(0.1 * (255 - h3))), c4 = f2(d2.relativeLuminance2(o2, a3, h3), d2.relativeLuminance2(s3, r2, n2));
             return (o2 << 24 | a3 << 16 | h3 << 8 | 255) >>> 0;
           }
           e3.ensureContrastRatio = function(e4, s3, r2) {
@@ -24244,11 +24244,11 @@ WARNING: This link could potentially be dangerous`)) {
         }(_2 || (t2.rgba = _2 = {})), t2.toPaddedHex = u2, t2.contrastRatio = f2;
       }, 8969: (e2, t2, i2) => {
         Object.defineProperty(t2, "__esModule", { value: true }), t2.CoreTerminal = void 0;
-        const s2 = i2(844), r = i2(2585), n = i2(4348), o = i2(7866), a2 = i2(744), h2 = i2(7302), c2 = i2(6975), l2 = i2(8460), d2 = i2(1753), _2 = i2(1480), u2 = i2(7994), f2 = i2(9282), v3 = i2(5435), p2 = i2(5981), g3 = i2(2660);
+        const s2 = i2(844), r = i2(2585), n = i2(4348), o = i2(7866), a2 = i2(744), h2 = i2(7302), c3 = i2(6975), l = i2(8460), d2 = i2(1753), _2 = i2(1480), u2 = i2(7994), f2 = i2(9282), v3 = i2(5435), p2 = i2(5981), g3 = i2(2660);
         let m2 = false;
         class S2 extends s2.Disposable {
           get onScroll() {
-            return this._onScrollApi || (this._onScrollApi = this.register(new l2.EventEmitter()), this._onScroll.event((e3) => {
+            return this._onScrollApi || (this._onScrollApi = this.register(new l.EventEmitter()), this._onScroll.event((e3) => {
               var t3;
               null === (t3 = this._onScrollApi) || void 0 === t3 || t3.fire(e3.position);
             })), this._onScrollApi.event;
@@ -24270,11 +24270,11 @@ WARNING: This link could potentially be dangerous`)) {
               this.optionsService.options[t3] = e3[t3];
           }
           constructor(e3) {
-            super(), this._windowsWrappingHeuristics = this.register(new s2.MutableDisposable()), this._onBinary = this.register(new l2.EventEmitter()), this.onBinary = this._onBinary.event, this._onData = this.register(new l2.EventEmitter()), this.onData = this._onData.event, this._onLineFeed = this.register(new l2.EventEmitter()), this.onLineFeed = this._onLineFeed.event, this._onResize = this.register(new l2.EventEmitter()), this.onResize = this._onResize.event, this._onWriteParsed = this.register(new l2.EventEmitter()), this.onWriteParsed = this._onWriteParsed.event, this._onScroll = this.register(new l2.EventEmitter()), this._instantiationService = new n.InstantiationService(), this.optionsService = this.register(new h2.OptionsService(e3)), this._instantiationService.setService(r.IOptionsService, this.optionsService), this._bufferService = this.register(this._instantiationService.createInstance(a2.BufferService)), this._instantiationService.setService(r.IBufferService, this._bufferService), this._logService = this.register(this._instantiationService.createInstance(o.LogService)), this._instantiationService.setService(r.ILogService, this._logService), this.coreService = this.register(this._instantiationService.createInstance(c2.CoreService)), this._instantiationService.setService(r.ICoreService, this.coreService), this.coreMouseService = this.register(this._instantiationService.createInstance(d2.CoreMouseService)), this._instantiationService.setService(r.ICoreMouseService, this.coreMouseService), this.unicodeService = this.register(this._instantiationService.createInstance(_2.UnicodeService)), this._instantiationService.setService(r.IUnicodeService, this.unicodeService), this._charsetService = this._instantiationService.createInstance(u2.CharsetService), this._instantiationService.setService(r.ICharsetService, this._charsetService), this._oscLinkService = this._instantiationService.createInstance(g3.OscLinkService), this._instantiationService.setService(r.IOscLinkService, this._oscLinkService), this._inputHandler = this.register(new v3.InputHandler(this._bufferService, this._charsetService, this.coreService, this._logService, this.optionsService, this._oscLinkService, this.coreMouseService, this.unicodeService)), this.register((0, l2.forwardEvent)(this._inputHandler.onLineFeed, this._onLineFeed)), this.register(this._inputHandler), this.register((0, l2.forwardEvent)(this._bufferService.onResize, this._onResize)), this.register((0, l2.forwardEvent)(this.coreService.onData, this._onData)), this.register((0, l2.forwardEvent)(this.coreService.onBinary, this._onBinary)), this.register(this.coreService.onRequestScrollToBottom(() => this.scrollToBottom())), this.register(this.coreService.onUserInput(() => this._writeBuffer.handleUserInput())), this.register(this.optionsService.onMultipleOptionChange(["windowsMode", "windowsPty"], () => this._handleWindowsPtyOptionChange())), this.register(this._bufferService.onScroll((e4) => {
+            super(), this._windowsWrappingHeuristics = this.register(new s2.MutableDisposable()), this._onBinary = this.register(new l.EventEmitter()), this.onBinary = this._onBinary.event, this._onData = this.register(new l.EventEmitter()), this.onData = this._onData.event, this._onLineFeed = this.register(new l.EventEmitter()), this.onLineFeed = this._onLineFeed.event, this._onResize = this.register(new l.EventEmitter()), this.onResize = this._onResize.event, this._onWriteParsed = this.register(new l.EventEmitter()), this.onWriteParsed = this._onWriteParsed.event, this._onScroll = this.register(new l.EventEmitter()), this._instantiationService = new n.InstantiationService(), this.optionsService = this.register(new h2.OptionsService(e3)), this._instantiationService.setService(r.IOptionsService, this.optionsService), this._bufferService = this.register(this._instantiationService.createInstance(a2.BufferService)), this._instantiationService.setService(r.IBufferService, this._bufferService), this._logService = this.register(this._instantiationService.createInstance(o.LogService)), this._instantiationService.setService(r.ILogService, this._logService), this.coreService = this.register(this._instantiationService.createInstance(c3.CoreService)), this._instantiationService.setService(r.ICoreService, this.coreService), this.coreMouseService = this.register(this._instantiationService.createInstance(d2.CoreMouseService)), this._instantiationService.setService(r.ICoreMouseService, this.coreMouseService), this.unicodeService = this.register(this._instantiationService.createInstance(_2.UnicodeService)), this._instantiationService.setService(r.IUnicodeService, this.unicodeService), this._charsetService = this._instantiationService.createInstance(u2.CharsetService), this._instantiationService.setService(r.ICharsetService, this._charsetService), this._oscLinkService = this._instantiationService.createInstance(g3.OscLinkService), this._instantiationService.setService(r.IOscLinkService, this._oscLinkService), this._inputHandler = this.register(new v3.InputHandler(this._bufferService, this._charsetService, this.coreService, this._logService, this.optionsService, this._oscLinkService, this.coreMouseService, this.unicodeService)), this.register((0, l.forwardEvent)(this._inputHandler.onLineFeed, this._onLineFeed)), this.register(this._inputHandler), this.register((0, l.forwardEvent)(this._bufferService.onResize, this._onResize)), this.register((0, l.forwardEvent)(this.coreService.onData, this._onData)), this.register((0, l.forwardEvent)(this.coreService.onBinary, this._onBinary)), this.register(this.coreService.onRequestScrollToBottom(() => this.scrollToBottom())), this.register(this.coreService.onUserInput(() => this._writeBuffer.handleUserInput())), this.register(this.optionsService.onMultipleOptionChange(["windowsMode", "windowsPty"], () => this._handleWindowsPtyOptionChange())), this.register(this._bufferService.onScroll((e4) => {
               this._onScroll.fire({ position: this._bufferService.buffer.ydisp, source: 0 }), this._inputHandler.markRangeDirty(this._bufferService.buffer.scrollTop, this._bufferService.buffer.scrollBottom);
             })), this.register(this._inputHandler.onScroll((e4) => {
               this._onScroll.fire({ position: this._bufferService.buffer.ydisp, source: 0 }), this._inputHandler.markRangeDirty(this._bufferService.buffer.scrollTop, this._bufferService.buffer.scrollBottom);
-            })), this._writeBuffer = this.register(new p2.WriteBuffer((e4, t3) => this._inputHandler.parse(e4, t3))), this.register((0, l2.forwardEvent)(this._writeBuffer.onWriteParsed, this._onWriteParsed));
+            })), this._writeBuffer = this.register(new p2.WriteBuffer((e4, t3) => this._inputHandler.parse(e4, t3))), this.register((0, l.forwardEvent)(this._writeBuffer.onWriteParsed, this._onWriteParsed));
           }
           write(e3, t3) {
             this._writeBuffer.write(e3, t3);
@@ -24383,7 +24383,7 @@ WARNING: This link could potentially be dangerous`)) {
           };
         };
         Object.defineProperty(t2, "__esModule", { value: true }), t2.InputHandler = t2.WindowsOptionsReportType = void 0;
-        const n = i2(2584), o = i2(7116), a2 = i2(2015), h2 = i2(844), c2 = i2(482), l2 = i2(8437), d2 = i2(8460), _2 = i2(643), u2 = i2(511), f2 = i2(3734), v3 = i2(2585), p2 = i2(6242), g3 = i2(6351), m2 = i2(5941), S2 = { "(": 0, ")": 1, "*": 2, "+": 3, "-": 1, ".": 2 }, C2 = 131072;
+        const n = i2(2584), o = i2(7116), a2 = i2(2015), h2 = i2(844), c3 = i2(482), l = i2(8437), d2 = i2(8460), _2 = i2(643), u2 = i2(511), f2 = i2(3734), v3 = i2(2585), p2 = i2(6242), g3 = i2(6351), m2 = i2(5941), S2 = { "(": 0, ")": 1, "*": 2, "+": 3, "-": 1, ".": 2 }, C2 = 131072;
         function b2(e3, t3) {
           if (e3 > 24)
             return t3.setWinLines || false;
@@ -24445,7 +24445,7 @@ WARNING: This link could potentially be dangerous`)) {
             return this._curAttrData;
           }
           constructor(e3, t3, i3, s3, r2, h3, _3, f3, v4 = new a2.EscapeSequenceParser()) {
-            super(), this._bufferService = e3, this._charsetService = t3, this._coreService = i3, this._logService = s3, this._optionsService = r2, this._oscLinkService = h3, this._coreMouseService = _3, this._unicodeService = f3, this._parser = v4, this._parseBuffer = new Uint32Array(4096), this._stringDecoder = new c2.StringToUtf32(), this._utf8Decoder = new c2.Utf8ToUtf32(), this._workCell = new u2.CellData(), this._windowTitle = "", this._iconName = "", this._windowTitleStack = [], this._iconNameStack = [], this._curAttrData = l2.DEFAULT_ATTR_DATA.clone(), this._eraseAttrDataInternal = l2.DEFAULT_ATTR_DATA.clone(), this._onRequestBell = this.register(new d2.EventEmitter()), this.onRequestBell = this._onRequestBell.event, this._onRequestRefreshRows = this.register(new d2.EventEmitter()), this.onRequestRefreshRows = this._onRequestRefreshRows.event, this._onRequestReset = this.register(new d2.EventEmitter()), this.onRequestReset = this._onRequestReset.event, this._onRequestSendFocus = this.register(new d2.EventEmitter()), this.onRequestSendFocus = this._onRequestSendFocus.event, this._onRequestSyncScrollBar = this.register(new d2.EventEmitter()), this.onRequestSyncScrollBar = this._onRequestSyncScrollBar.event, this._onRequestWindowsOptionsReport = this.register(new d2.EventEmitter()), this.onRequestWindowsOptionsReport = this._onRequestWindowsOptionsReport.event, this._onA11yChar = this.register(new d2.EventEmitter()), this.onA11yChar = this._onA11yChar.event, this._onA11yTab = this.register(new d2.EventEmitter()), this.onA11yTab = this._onA11yTab.event, this._onCursorMove = this.register(new d2.EventEmitter()), this.onCursorMove = this._onCursorMove.event, this._onLineFeed = this.register(new d2.EventEmitter()), this.onLineFeed = this._onLineFeed.event, this._onScroll = this.register(new d2.EventEmitter()), this.onScroll = this._onScroll.event, this._onTitleChange = this.register(new d2.EventEmitter()), this.onTitleChange = this._onTitleChange.event, this._onColor = this.register(new d2.EventEmitter()), this.onColor = this._onColor.event, this._parseStack = { paused: false, cursorStartX: 0, cursorStartY: 0, decodedLength: 0, position: 0 }, this._specialColors = [256, 257, 258], this.register(this._parser), this._dirtyRowTracker = new k3(this._bufferService), this._activeBuffer = this._bufferService.buffer, this.register(this._bufferService.buffers.onBufferActivate((e4) => this._activeBuffer = e4.activeBuffer)), this._parser.setCsiHandlerFallback((e4, t4) => {
+            super(), this._bufferService = e3, this._charsetService = t3, this._coreService = i3, this._logService = s3, this._optionsService = r2, this._oscLinkService = h3, this._coreMouseService = _3, this._unicodeService = f3, this._parser = v4, this._parseBuffer = new Uint32Array(4096), this._stringDecoder = new c3.StringToUtf32(), this._utf8Decoder = new c3.Utf8ToUtf32(), this._workCell = new u2.CellData(), this._windowTitle = "", this._iconName = "", this._windowTitleStack = [], this._iconNameStack = [], this._curAttrData = l.DEFAULT_ATTR_DATA.clone(), this._eraseAttrDataInternal = l.DEFAULT_ATTR_DATA.clone(), this._onRequestBell = this.register(new d2.EventEmitter()), this.onRequestBell = this._onRequestBell.event, this._onRequestRefreshRows = this.register(new d2.EventEmitter()), this.onRequestRefreshRows = this._onRequestRefreshRows.event, this._onRequestReset = this.register(new d2.EventEmitter()), this.onRequestReset = this._onRequestReset.event, this._onRequestSendFocus = this.register(new d2.EventEmitter()), this.onRequestSendFocus = this._onRequestSendFocus.event, this._onRequestSyncScrollBar = this.register(new d2.EventEmitter()), this.onRequestSyncScrollBar = this._onRequestSyncScrollBar.event, this._onRequestWindowsOptionsReport = this.register(new d2.EventEmitter()), this.onRequestWindowsOptionsReport = this._onRequestWindowsOptionsReport.event, this._onA11yChar = this.register(new d2.EventEmitter()), this.onA11yChar = this._onA11yChar.event, this._onA11yTab = this.register(new d2.EventEmitter()), this.onA11yTab = this._onA11yTab.event, this._onCursorMove = this.register(new d2.EventEmitter()), this.onCursorMove = this._onCursorMove.event, this._onLineFeed = this.register(new d2.EventEmitter()), this.onLineFeed = this._onLineFeed.event, this._onScroll = this.register(new d2.EventEmitter()), this.onScroll = this._onScroll.event, this._onTitleChange = this.register(new d2.EventEmitter()), this.onTitleChange = this._onTitleChange.event, this._onColor = this.register(new d2.EventEmitter()), this.onColor = this._onColor.event, this._parseStack = { paused: false, cursorStartX: 0, cursorStartY: 0, decodedLength: 0, position: 0 }, this._specialColors = [256, 257, 258], this.register(this._parser), this._dirtyRowTracker = new k3(this._bufferService), this._activeBuffer = this._bufferService.buffer, this.register(this._bufferService.buffers.onBufferActivate((e4) => this._activeBuffer = e4.activeBuffer)), this._parser.setCsiHandlerFallback((e4, t4) => {
               this._logService.debug("Unknown CSI code: ", { identifier: this._parser.identToString(e4), params: t4.toArray() });
             }), this._parser.setEscHandlerFallback((e4) => {
               this._logService.debug("Unknown ESC code: ", { identifier: this._parser.identToString(e4) });
@@ -24496,7 +24496,7 @@ WARNING: This link could potentially be dangerous`)) {
           }
           print(e3, t3, i3) {
             let s3, r2;
-            const n2 = this._charsetService.charset, o2 = this._optionsService.rawOptions.screenReaderMode, a3 = this._bufferService.cols, h3 = this._coreService.decPrivateModes.wraparound, l3 = this._coreService.modes.insertMode, d3 = this._curAttrData;
+            const n2 = this._charsetService.charset, o2 = this._optionsService.rawOptions.screenReaderMode, a3 = this._bufferService.cols, h3 = this._coreService.decPrivateModes.wraparound, l2 = this._coreService.modes.insertMode, d3 = this._curAttrData;
             let u3 = this._activeBuffer.lines.get(this._activeBuffer.ybase + this._activeBuffer.y);
             this._dirtyRowTracker.markDirty(this._activeBuffer.y), this._activeBuffer.x && i3 - t3 > 0 && 2 === u3.getWidth(this._activeBuffer.x - 1) && u3.setCellFromCodePoint(this._activeBuffer.x - 1, 0, 1, d3.fg, d3.bg, d3.extended);
             for (let f3 = t3; f3 < i3; ++f3) {
@@ -24504,7 +24504,7 @@ WARNING: This link could potentially be dangerous`)) {
                 const e4 = n2[String.fromCharCode(s3)];
                 e4 && (s3 = e4.charCodeAt(0));
               }
-              if (o2 && this._onA11yChar.fire((0, c2.stringFromCodePoint)(s3)), this._getCurrentLinkId() && this._oscLinkService.addLineToLink(this._getCurrentLinkId(), this._activeBuffer.ybase + this._activeBuffer.y), r2 || !this._activeBuffer.x) {
+              if (o2 && this._onA11yChar.fire((0, c3.stringFromCodePoint)(s3)), this._getCurrentLinkId() && this._oscLinkService.addLineToLink(this._getCurrentLinkId(), this._activeBuffer.ybase + this._activeBuffer.y), r2 || !this._activeBuffer.x) {
                 if (this._activeBuffer.x + r2 - 1 >= a3) {
                   if (h3) {
                     for (; this._activeBuffer.x < a3; )
@@ -24513,7 +24513,7 @@ WARNING: This link could potentially be dangerous`)) {
                   } else if (this._activeBuffer.x = a3 - 1, 2 === r2)
                     continue;
                 }
-                if (l3 && (u3.insertCells(this._activeBuffer.x, r2, this._activeBuffer.getNullCell(d3), d3), 2 === u3.getWidth(a3 - 1) && u3.setCellFromCodePoint(a3 - 1, _2.NULL_CELL_CODE, _2.NULL_CELL_WIDTH, d3.fg, d3.bg, d3.extended)), u3.setCellFromCodePoint(this._activeBuffer.x++, s3, r2, d3.fg, d3.bg, d3.extended), r2 > 0)
+                if (l2 && (u3.insertCells(this._activeBuffer.x, r2, this._activeBuffer.getNullCell(d3), d3), 2 === u3.getWidth(a3 - 1) && u3.setCellFromCodePoint(a3 - 1, _2.NULL_CELL_CODE, _2.NULL_CELL_WIDTH, d3.fg, d3.bg, d3.extended)), u3.setCellFromCodePoint(this._activeBuffer.x++, s3, r2, d3.fg, d3.bg, d3.extended), r2 > 0)
                   for (; --r2; )
                     u3.setCellFromCodePoint(this._activeBuffer.x++, 0, 0, d3.fg, d3.bg, d3.extended);
               } else
@@ -24726,7 +24726,7 @@ WARNING: This link could potentially be dangerous`)) {
           scrollDown(e3) {
             let t3 = e3.params[0] || 1;
             for (; t3--; )
-              this._activeBuffer.lines.splice(this._activeBuffer.ybase + this._activeBuffer.scrollBottom, 1), this._activeBuffer.lines.splice(this._activeBuffer.ybase + this._activeBuffer.scrollTop, 0, this._activeBuffer.getBlankLine(l2.DEFAULT_ATTR_DATA));
+              this._activeBuffer.lines.splice(this._activeBuffer.ybase + this._activeBuffer.scrollBottom, 1), this._activeBuffer.lines.splice(this._activeBuffer.ybase + this._activeBuffer.scrollTop, 0, this._activeBuffer.getBlankLine(l.DEFAULT_ATTR_DATA));
             return this._dirtyRowTracker.markRangeDirty(this._activeBuffer.scrollTop, this._activeBuffer.scrollBottom), true;
           }
           scrollLeft(e3) {
@@ -24944,8 +24944,8 @@ WARNING: This link could potentially be dangerous`)) {
             return true;
           }
           requestMode(e3, t3) {
-            const i3 = this._coreService.decPrivateModes, { activeProtocol: s3, activeEncoding: r2 } = this._coreMouseService, o2 = this._coreService, { buffers: a3, cols: h3 } = this._bufferService, { active: c3, alt: l3 } = a3, d3 = this._optionsService.rawOptions, _3 = (e4) => e4 ? 1 : 2, u3 = e3.params[0];
-            return f3 = u3, v4 = t3 ? 2 === u3 ? 4 : 4 === u3 ? _3(o2.modes.insertMode) : 12 === u3 ? 3 : 20 === u3 ? _3(d3.convertEol) : 0 : 1 === u3 ? _3(i3.applicationCursorKeys) : 3 === u3 ? d3.windowOptions.setWinLines ? 80 === h3 ? 2 : 132 === h3 ? 1 : 0 : 0 : 6 === u3 ? _3(i3.origin) : 7 === u3 ? _3(i3.wraparound) : 8 === u3 ? 3 : 9 === u3 ? _3("X10" === s3) : 12 === u3 ? _3(d3.cursorBlink) : 25 === u3 ? _3(!o2.isCursorHidden) : 45 === u3 ? _3(i3.reverseWraparound) : 66 === u3 ? _3(i3.applicationKeypad) : 67 === u3 ? 4 : 1e3 === u3 ? _3("VT200" === s3) : 1002 === u3 ? _3("DRAG" === s3) : 1003 === u3 ? _3("ANY" === s3) : 1004 === u3 ? _3(i3.sendFocus) : 1005 === u3 ? 4 : 1006 === u3 ? _3("SGR" === r2) : 1015 === u3 ? 4 : 1016 === u3 ? _3("SGR_PIXELS" === r2) : 1048 === u3 ? 1 : 47 === u3 || 1047 === u3 || 1049 === u3 ? _3(c3 === l3) : 2004 === u3 ? _3(i3.bracketedPasteMode) : 0, o2.triggerDataEvent(`${n.C0.ESC}[${t3 ? "" : "?"}${f3};${v4}$y`), true;
+            const i3 = this._coreService.decPrivateModes, { activeProtocol: s3, activeEncoding: r2 } = this._coreMouseService, o2 = this._coreService, { buffers: a3, cols: h3 } = this._bufferService, { active: c4, alt: l2 } = a3, d3 = this._optionsService.rawOptions, _3 = (e4) => e4 ? 1 : 2, u3 = e3.params[0];
+            return f3 = u3, v4 = t3 ? 2 === u3 ? 4 : 4 === u3 ? _3(o2.modes.insertMode) : 12 === u3 ? 3 : 20 === u3 ? _3(d3.convertEol) : 0 : 1 === u3 ? _3(i3.applicationCursorKeys) : 3 === u3 ? d3.windowOptions.setWinLines ? 80 === h3 ? 2 : 132 === h3 ? 1 : 0 : 0 : 6 === u3 ? _3(i3.origin) : 7 === u3 ? _3(i3.wraparound) : 8 === u3 ? 3 : 9 === u3 ? _3("X10" === s3) : 12 === u3 ? _3(d3.cursorBlink) : 25 === u3 ? _3(!o2.isCursorHidden) : 45 === u3 ? _3(i3.reverseWraparound) : 66 === u3 ? _3(i3.applicationKeypad) : 67 === u3 ? 4 : 1e3 === u3 ? _3("VT200" === s3) : 1002 === u3 ? _3("DRAG" === s3) : 1003 === u3 ? _3("ANY" === s3) : 1004 === u3 ? _3(i3.sendFocus) : 1005 === u3 ? 4 : 1006 === u3 ? _3("SGR" === r2) : 1015 === u3 ? 4 : 1016 === u3 ? _3("SGR_PIXELS" === r2) : 1048 === u3 ? 1 : 47 === u3 || 1047 === u3 || 1049 === u3 ? _3(c4 === l2) : 2004 === u3 ? _3(i3.bracketedPasteMode) : 0, o2.triggerDataEvent(`${n.C0.ESC}[${t3 ? "" : "?"}${f3};${v4}$y`), true;
             var f3, v4;
           }
           _updateAttrColor(e3, t3, i3, s3, r2) {
@@ -24985,7 +24985,7 @@ WARNING: This link could potentially be dangerous`)) {
             t3.extended = t3.extended.clone(), (!~e3 || e3 > 5) && (e3 = 1), t3.extended.underlineStyle = e3, t3.fg |= 268435456, 0 === e3 && (t3.fg &= -268435457), t3.updateExtended();
           }
           _processSGR0(e3) {
-            e3.fg = l2.DEFAULT_ATTR_DATA.fg, e3.bg = l2.DEFAULT_ATTR_DATA.bg, e3.extended = e3.extended.clone(), e3.extended.underlineStyle = 0, e3.extended.underlineColor &= -67108864, e3.updateExtended();
+            e3.fg = l.DEFAULT_ATTR_DATA.fg, e3.bg = l.DEFAULT_ATTR_DATA.bg, e3.extended = e3.extended.clone(), e3.extended.underlineStyle = 0, e3.extended.underlineColor &= -67108864, e3.updateExtended();
           }
           charAttributes(e3) {
             if (1 === e3.length && 0 === e3.params[0])
@@ -24994,7 +24994,7 @@ WARNING: This link could potentially be dangerous`)) {
             let i3;
             const s3 = this._curAttrData;
             for (let r2 = 0; r2 < t3; r2++)
-              i3 = e3.params[r2], i3 >= 30 && i3 <= 37 ? (s3.fg &= -50331904, s3.fg |= 16777216 | i3 - 30) : i3 >= 40 && i3 <= 47 ? (s3.bg &= -50331904, s3.bg |= 16777216 | i3 - 40) : i3 >= 90 && i3 <= 97 ? (s3.fg &= -50331904, s3.fg |= 16777224 | i3 - 90) : i3 >= 100 && i3 <= 107 ? (s3.bg &= -50331904, s3.bg |= 16777224 | i3 - 100) : 0 === i3 ? this._processSGR0(s3) : 1 === i3 ? s3.fg |= 134217728 : 3 === i3 ? s3.bg |= 67108864 : 4 === i3 ? (s3.fg |= 268435456, this._processUnderline(e3.hasSubParams(r2) ? e3.getSubParams(r2)[0] : 1, s3)) : 5 === i3 ? s3.fg |= 536870912 : 7 === i3 ? s3.fg |= 67108864 : 8 === i3 ? s3.fg |= 1073741824 : 9 === i3 ? s3.fg |= 2147483648 : 2 === i3 ? s3.bg |= 134217728 : 21 === i3 ? this._processUnderline(2, s3) : 22 === i3 ? (s3.fg &= -134217729, s3.bg &= -134217729) : 23 === i3 ? s3.bg &= -67108865 : 24 === i3 ? (s3.fg &= -268435457, this._processUnderline(0, s3)) : 25 === i3 ? s3.fg &= -536870913 : 27 === i3 ? s3.fg &= -67108865 : 28 === i3 ? s3.fg &= -1073741825 : 29 === i3 ? s3.fg &= 2147483647 : 39 === i3 ? (s3.fg &= -67108864, s3.fg |= 16777215 & l2.DEFAULT_ATTR_DATA.fg) : 49 === i3 ? (s3.bg &= -67108864, s3.bg |= 16777215 & l2.DEFAULT_ATTR_DATA.bg) : 38 === i3 || 48 === i3 || 58 === i3 ? r2 += this._extractColor(e3, r2, s3) : 53 === i3 ? s3.bg |= 1073741824 : 55 === i3 ? s3.bg &= -1073741825 : 59 === i3 ? (s3.extended = s3.extended.clone(), s3.extended.underlineColor = -1, s3.updateExtended()) : 100 === i3 ? (s3.fg &= -67108864, s3.fg |= 16777215 & l2.DEFAULT_ATTR_DATA.fg, s3.bg &= -67108864, s3.bg |= 16777215 & l2.DEFAULT_ATTR_DATA.bg) : this._logService.debug("Unknown SGR attribute: %d.", i3);
+              i3 = e3.params[r2], i3 >= 30 && i3 <= 37 ? (s3.fg &= -50331904, s3.fg |= 16777216 | i3 - 30) : i3 >= 40 && i3 <= 47 ? (s3.bg &= -50331904, s3.bg |= 16777216 | i3 - 40) : i3 >= 90 && i3 <= 97 ? (s3.fg &= -50331904, s3.fg |= 16777224 | i3 - 90) : i3 >= 100 && i3 <= 107 ? (s3.bg &= -50331904, s3.bg |= 16777224 | i3 - 100) : 0 === i3 ? this._processSGR0(s3) : 1 === i3 ? s3.fg |= 134217728 : 3 === i3 ? s3.bg |= 67108864 : 4 === i3 ? (s3.fg |= 268435456, this._processUnderline(e3.hasSubParams(r2) ? e3.getSubParams(r2)[0] : 1, s3)) : 5 === i3 ? s3.fg |= 536870912 : 7 === i3 ? s3.fg |= 67108864 : 8 === i3 ? s3.fg |= 1073741824 : 9 === i3 ? s3.fg |= 2147483648 : 2 === i3 ? s3.bg |= 134217728 : 21 === i3 ? this._processUnderline(2, s3) : 22 === i3 ? (s3.fg &= -134217729, s3.bg &= -134217729) : 23 === i3 ? s3.bg &= -67108865 : 24 === i3 ? (s3.fg &= -268435457, this._processUnderline(0, s3)) : 25 === i3 ? s3.fg &= -536870913 : 27 === i3 ? s3.fg &= -67108865 : 28 === i3 ? s3.fg &= -1073741825 : 29 === i3 ? s3.fg &= 2147483647 : 39 === i3 ? (s3.fg &= -67108864, s3.fg |= 16777215 & l.DEFAULT_ATTR_DATA.fg) : 49 === i3 ? (s3.bg &= -67108864, s3.bg |= 16777215 & l.DEFAULT_ATTR_DATA.bg) : 38 === i3 || 48 === i3 || 58 === i3 ? r2 += this._extractColor(e3, r2, s3) : 53 === i3 ? s3.bg |= 1073741824 : 55 === i3 ? s3.bg &= -1073741825 : 59 === i3 ? (s3.extended = s3.extended.clone(), s3.extended.underlineColor = -1, s3.updateExtended()) : 100 === i3 ? (s3.fg &= -67108864, s3.fg |= 16777215 & l.DEFAULT_ATTR_DATA.fg, s3.bg &= -67108864, s3.bg |= 16777215 & l.DEFAULT_ATTR_DATA.bg) : this._logService.debug("Unknown SGR attribute: %d.", i3);
             return true;
           }
           deviceStatus(e3) {
@@ -25016,7 +25016,7 @@ WARNING: This link could potentially be dangerous`)) {
             return true;
           }
           softReset(e3) {
-            return this._coreService.isCursorHidden = false, this._onRequestSyncScrollBar.fire(), this._activeBuffer.scrollTop = 0, this._activeBuffer.scrollBottom = this._bufferService.rows - 1, this._curAttrData = l2.DEFAULT_ATTR_DATA.clone(), this._coreService.reset(), this._charsetService.reset(), this._activeBuffer.savedX = 0, this._activeBuffer.savedY = this._activeBuffer.ybase, this._activeBuffer.savedCurAttrData.fg = this._curAttrData.fg, this._activeBuffer.savedCurAttrData.bg = this._curAttrData.bg, this._activeBuffer.savedCharset = this._charsetService.charset, this._coreService.decPrivateModes.origin = false, true;
+            return this._coreService.isCursorHidden = false, this._onRequestSyncScrollBar.fire(), this._activeBuffer.scrollTop = 0, this._activeBuffer.scrollBottom = this._bufferService.rows - 1, this._curAttrData = l.DEFAULT_ATTR_DATA.clone(), this._coreService.reset(), this._charsetService.reset(), this._activeBuffer.savedX = 0, this._activeBuffer.savedY = this._activeBuffer.ybase, this._activeBuffer.savedCurAttrData.fg = this._curAttrData.fg, this._activeBuffer.savedCurAttrData.bg = this._curAttrData.bg, this._activeBuffer.savedCharset = this._charsetService.charset, this._coreService.decPrivateModes.origin = false, true;
           }
           setCursorStyle(e3) {
             const t3 = e3.params[0] || 1;
@@ -25179,7 +25179,7 @@ WARNING: This link could potentially be dangerous`)) {
             return this._parser.reset(), this._onRequestReset.fire(), true;
           }
           reset() {
-            this._curAttrData = l2.DEFAULT_ATTR_DATA.clone(), this._eraseAttrDataInternal = l2.DEFAULT_ATTR_DATA.clone();
+            this._curAttrData = l.DEFAULT_ATTR_DATA.clone(), this._eraseAttrDataInternal = l.DEFAULT_ATTR_DATA.clone();
           }
           _eraseAttrData() {
             return this._eraseAttrDataInternal.bg &= -67108864, this._eraseAttrDataInternal.bg |= 67108863 & this._curAttrData.bg, this._eraseAttrDataInternal;
@@ -25613,10 +25613,10 @@ WARNING: This link could potentially be dangerous`)) {
         t2.ExtendedAttrs = s2;
       }, 9092: (e2, t2, i2) => {
         Object.defineProperty(t2, "__esModule", { value: true }), t2.Buffer = t2.MAX_BUFFER_SIZE = void 0;
-        const s2 = i2(6349), r = i2(7226), n = i2(3734), o = i2(8437), a2 = i2(4634), h2 = i2(511), c2 = i2(643), l2 = i2(4863), d2 = i2(7116);
+        const s2 = i2(6349), r = i2(7226), n = i2(3734), o = i2(8437), a2 = i2(4634), h2 = i2(511), c3 = i2(643), l = i2(4863), d2 = i2(7116);
         t2.MAX_BUFFER_SIZE = 4294967295, t2.Buffer = class {
           constructor(e3, t3, i3) {
-            this._hasScrollback = e3, this._optionsService = t3, this._bufferService = i3, this.ydisp = 0, this.ybase = 0, this.y = 0, this.x = 0, this.tabs = {}, this.savedY = 0, this.savedX = 0, this.savedCurAttrData = o.DEFAULT_ATTR_DATA.clone(), this.savedCharset = d2.DEFAULT_CHARSET, this.markers = [], this._nullCell = h2.CellData.fromCharData([0, c2.NULL_CELL_CHAR, c2.NULL_CELL_WIDTH, c2.NULL_CELL_CODE]), this._whitespaceCell = h2.CellData.fromCharData([0, c2.WHITESPACE_CELL_CHAR, c2.WHITESPACE_CELL_WIDTH, c2.WHITESPACE_CELL_CODE]), this._isClearing = false, this._memoryCleanupQueue = new r.IdleTaskQueue(), this._memoryCleanupPosition = 0, this._cols = this._bufferService.cols, this._rows = this._bufferService.rows, this.lines = new s2.CircularList(this._getCorrectBufferLength(this._rows)), this.scrollTop = 0, this.scrollBottom = this._rows - 1, this.setupTabStops();
+            this._hasScrollback = e3, this._optionsService = t3, this._bufferService = i3, this.ydisp = 0, this.ybase = 0, this.y = 0, this.x = 0, this.tabs = {}, this.savedY = 0, this.savedX = 0, this.savedCurAttrData = o.DEFAULT_ATTR_DATA.clone(), this.savedCharset = d2.DEFAULT_CHARSET, this.markers = [], this._nullCell = h2.CellData.fromCharData([0, c3.NULL_CELL_CHAR, c3.NULL_CELL_WIDTH, c3.NULL_CELL_CODE]), this._whitespaceCell = h2.CellData.fromCharData([0, c3.WHITESPACE_CELL_CHAR, c3.WHITESPACE_CELL_WIDTH, c3.WHITESPACE_CELL_CODE]), this._isClearing = false, this._memoryCleanupQueue = new r.IdleTaskQueue(), this._memoryCleanupPosition = 0, this._cols = this._bufferService.cols, this._rows = this._bufferService.rows, this.lines = new s2.CircularList(this._getCorrectBufferLength(this._rows)), this.scrollTop = 0, this.scrollBottom = this._rows - 1, this.setupTabStops();
           }
           getNullCell(e3) {
             return e3 ? (this._nullCell.fg = e3.fg, this._nullCell.bg = e3.bg, this._nullCell.extended = e3.extended) : (this._nullCell.fg = 0, this._nullCell.bg = 0, this._nullCell.extended = new n.ExtendedAttrs()), this._nullCell;
@@ -25714,13 +25714,13 @@ WARNING: This link could potentially be dangerous`)) {
               let h3 = this.lines.get(n2);
               if (!h3 || !h3.isWrapped && h3.getTrimmedLength() <= e3)
                 continue;
-              const c3 = [h3];
+              const c4 = [h3];
               for (; h3.isWrapped && n2 > 0; )
-                h3 = this.lines.get(--n2), c3.unshift(h3);
-              const l3 = this.ybase + this.y;
-              if (l3 >= n2 && l3 < n2 + c3.length)
+                h3 = this.lines.get(--n2), c4.unshift(h3);
+              const l2 = this.ybase + this.y;
+              if (l2 >= n2 && l2 < n2 + c4.length)
                 continue;
-              const d3 = c3[c3.length - 1].getTrimmedLength(), _2 = (0, a2.reflowSmallerGetNewLineLengths)(c3, this._cols, e3), u2 = _2.length - c3.length;
+              const d3 = c4[c4.length - 1].getTrimmedLength(), _2 = (0, a2.reflowSmallerGetNewLineLengths)(c4, this._cols, e3), u2 = _2.length - c4.length;
               let f2;
               f2 = 0 === this.ybase && this.y !== this.lines.length - 1 ? Math.max(0, this.y - this.lines.maxLength + u2) : Math.max(0, this.lines.length - this.lines.maxLength + u2);
               const v3 = [];
@@ -25728,22 +25728,22 @@ WARNING: This link could potentially be dangerous`)) {
                 const e5 = this.getBlankLine(o.DEFAULT_ATTR_DATA, true);
                 v3.push(e5);
               }
-              v3.length > 0 && (s3.push({ start: n2 + c3.length + r2, newLines: v3 }), r2 += v3.length), c3.push(...v3);
+              v3.length > 0 && (s3.push({ start: n2 + c4.length + r2, newLines: v3 }), r2 += v3.length), c4.push(...v3);
               let p2 = _2.length - 1, g3 = _2[p2];
               0 === g3 && (p2--, g3 = _2[p2]);
-              let m2 = c3.length - u2 - 1, S2 = d3;
+              let m2 = c4.length - u2 - 1, S2 = d3;
               for (; m2 >= 0; ) {
                 const e4 = Math.min(S2, g3);
-                if (void 0 === c3[p2])
+                if (void 0 === c4[p2])
                   break;
-                if (c3[p2].copyCellsFrom(c3[m2], S2 - e4, g3 - e4, e4, true), g3 -= e4, 0 === g3 && (p2--, g3 = _2[p2]), S2 -= e4, 0 === S2) {
+                if (c4[p2].copyCellsFrom(c4[m2], S2 - e4, g3 - e4, e4, true), g3 -= e4, 0 === g3 && (p2--, g3 = _2[p2]), S2 -= e4, 0 === S2) {
                   m2--;
                   const e5 = Math.max(m2, 0);
-                  S2 = (0, a2.getWrappedLineTrimmedLength)(c3, e5, this._cols);
+                  S2 = (0, a2.getWrappedLineTrimmedLength)(c4, e5, this._cols);
                 }
               }
-              for (let t4 = 0; t4 < c3.length; t4++)
-                _2[t4] < e3 && c3[t4].setCell(_2[t4], i3);
+              for (let t4 = 0; t4 < c4.length; t4++)
+                _2[t4] < e3 && c4[t4].setCell(_2[t4], i3);
               let C2 = u2 - f2;
               for (; C2-- > 0; )
                 0 === this.ybase ? this.y < t3 - 1 ? (this.y++, this.lines.pop()) : (this.ybase++, this.ydisp++) : this.ybase < Math.min(this.lines.maxLength, this.lines.length + r2) - t3 && (this.ybase === this.ydisp && this.ydisp++, this.ybase++);
@@ -25757,18 +25757,18 @@ WARNING: This link could potentially be dangerous`)) {
               let n2 = i4 - 1, o2 = 0, a3 = s3[o2];
               this.lines.length = Math.min(this.lines.maxLength, this.lines.length + r2);
               let h3 = 0;
-              for (let c4 = Math.min(this.lines.maxLength - 1, i4 + r2 - 1); c4 >= 0; c4--)
+              for (let c5 = Math.min(this.lines.maxLength - 1, i4 + r2 - 1); c5 >= 0; c5--)
                 if (a3 && a3.start > n2 + h3) {
                   for (let e5 = a3.newLines.length - 1; e5 >= 0; e5--)
-                    this.lines.set(c4--, a3.newLines[e5]);
-                  c4++, e4.push({ index: n2 + 1, amount: a3.newLines.length }), h3 += a3.newLines.length, a3 = s3[++o2];
+                    this.lines.set(c5--, a3.newLines[e5]);
+                  c5++, e4.push({ index: n2 + 1, amount: a3.newLines.length }), h3 += a3.newLines.length, a3 = s3[++o2];
                 } else
-                  this.lines.set(c4, t4[n2--]);
-              let c3 = 0;
+                  this.lines.set(c5, t4[n2--]);
+              let c4 = 0;
               for (let t5 = e4.length - 1; t5 >= 0; t5--)
-                e4[t5].index += c3, this.lines.onInsertEmitter.fire(e4[t5]), c3 += e4[t5].amount;
-              const l3 = Math.max(0, i4 + r2 - this.lines.maxLength);
-              l3 > 0 && this.lines.onTrimEmitter.fire(l3);
+                e4[t5].index += c4, this.lines.onInsertEmitter.fire(e4[t5]), c4 += e4[t5].amount;
+              const l2 = Math.max(0, i4 + r2 - this.lines.maxLength);
+              l2 > 0 && this.lines.onTrimEmitter.fire(l2);
             }
           }
           translateBufferLineToString(e3, t3, i3 = 0, s3) {
@@ -25810,7 +25810,7 @@ WARNING: This link could potentially be dangerous`)) {
             this._isClearing = false;
           }
           addMarker(e3) {
-            const t3 = new l2.Marker(e3);
+            const t3 = new l.Marker(e3);
             return this.markers.push(t3), t3.register(this.lines.onTrim((e4) => {
               t3.line -= e4, t3.line < 0 && t3.dispose();
             })), t3.register(this.lines.onInsert((e4) => {
@@ -26039,26 +26039,26 @@ WARNING: This link could potentially be dangerous`)) {
         Object.defineProperty(t2, "__esModule", { value: true }), t2.getWrappedLineTrimmedLength = t2.reflowSmallerGetNewLineLengths = t2.reflowLargerApplyNewLayout = t2.reflowLargerCreateNewLayout = t2.reflowLargerGetLinesToRemove = void 0, t2.reflowLargerGetLinesToRemove = function(e3, t3, s2, r, n) {
           const o = [];
           for (let a2 = 0; a2 < e3.length - 1; a2++) {
-            let h2 = a2, c2 = e3.get(++h2);
-            if (!c2.isWrapped)
+            let h2 = a2, c3 = e3.get(++h2);
+            if (!c3.isWrapped)
               continue;
-            const l2 = [e3.get(a2)];
-            for (; h2 < e3.length && c2.isWrapped; )
-              l2.push(c2), c2 = e3.get(++h2);
+            const l = [e3.get(a2)];
+            for (; h2 < e3.length && c3.isWrapped; )
+              l.push(c3), c3 = e3.get(++h2);
             if (r >= a2 && r < h2) {
-              a2 += l2.length - 1;
+              a2 += l.length - 1;
               continue;
             }
-            let d2 = 0, _2 = i2(l2, d2, t3), u2 = 1, f2 = 0;
-            for (; u2 < l2.length; ) {
-              const e4 = i2(l2, u2, t3), r2 = e4 - f2, o2 = s2 - _2, a3 = Math.min(r2, o2);
-              l2[d2].copyCellsFrom(l2[u2], f2, _2, a3, false), _2 += a3, _2 === s2 && (d2++, _2 = 0), f2 += a3, f2 === e4 && (u2++, f2 = 0), 0 === _2 && 0 !== d2 && 2 === l2[d2 - 1].getWidth(s2 - 1) && (l2[d2].copyCellsFrom(l2[d2 - 1], s2 - 1, _2++, 1, false), l2[d2 - 1].setCell(s2 - 1, n));
+            let d2 = 0, _2 = i2(l, d2, t3), u2 = 1, f2 = 0;
+            for (; u2 < l.length; ) {
+              const e4 = i2(l, u2, t3), r2 = e4 - f2, o2 = s2 - _2, a3 = Math.min(r2, o2);
+              l[d2].copyCellsFrom(l[u2], f2, _2, a3, false), _2 += a3, _2 === s2 && (d2++, _2 = 0), f2 += a3, f2 === e4 && (u2++, f2 = 0), 0 === _2 && 0 !== d2 && 2 === l[d2 - 1].getWidth(s2 - 1) && (l[d2].copyCellsFrom(l[d2 - 1], s2 - 1, _2++, 1, false), l[d2 - 1].setCell(s2 - 1, n));
             }
-            l2[d2].replaceCells(_2, s2, n);
+            l[d2].replaceCells(_2, s2, n);
             let v3 = 0;
-            for (let e4 = l2.length - 1; e4 > 0 && (e4 > d2 || 0 === l2[e4].getTrimmedLength()); e4--)
+            for (let e4 = l.length - 1; e4 > 0 && (e4 > d2 || 0 === l[e4].getTrimmedLength()); e4--)
               v3++;
-            v3 > 0 && (o.push(a2 + l2.length - v3), o.push(v3)), a2 += l2.length - 1;
+            v3 > 0 && (o.push(a2 + l.length - v3), o.push(v3)), a2 += l.length - 1;
           }
           return o;
         }, t2.reflowLargerCreateNewLayout = function(e3, t3) {
@@ -26087,11 +26087,11 @@ WARNING: This link could potentially be dangerous`)) {
               break;
             }
             o += s2;
-            const c2 = i2(e3, a2, t3);
-            o > c2 && (o -= c2, a2++);
-            const l2 = 2 === e3[a2].getWidth(o - 1);
-            l2 && o--;
-            const d2 = l2 ? s2 - 1 : s2;
+            const c3 = i2(e3, a2, t3);
+            o > c3 && (o -= c3, a2++);
+            const l = 2 === e3[a2].getWidth(o - 1);
+            l && o--;
+            const d2 = l ? s2 - 1 : s2;
             r.push(d2), h2 += d2;
           }
           return r;
@@ -26380,29 +26380,29 @@ WARNING: This link could potentially be dangerous`)) {
             const i2 = e3.length;
             if (!i2)
               return 0;
-            let s2, r, n, o, a2 = 0, h2 = 0, c2 = 0;
+            let s2, r, n, o, a2 = 0, h2 = 0, c3 = 0;
             if (this.interim[0]) {
               let s3 = false, r2 = this.interim[0];
               r2 &= 192 == (224 & r2) ? 31 : 224 == (240 & r2) ? 15 : 7;
               let n2, o2 = 0;
               for (; (n2 = 63 & this.interim[++o2]) && o2 < 4; )
                 r2 <<= 6, r2 |= n2;
-              const h3 = 192 == (224 & this.interim[0]) ? 2 : 224 == (240 & this.interim[0]) ? 3 : 4, l3 = h3 - o2;
-              for (; c2 < l3; ) {
-                if (c2 >= i2)
+              const h3 = 192 == (224 & this.interim[0]) ? 2 : 224 == (240 & this.interim[0]) ? 3 : 4, l2 = h3 - o2;
+              for (; c3 < l2; ) {
+                if (c3 >= i2)
                   return 0;
-                if (n2 = e3[c2++], 128 != (192 & n2)) {
-                  c2--, s3 = true;
+                if (n2 = e3[c3++], 128 != (192 & n2)) {
+                  c3--, s3 = true;
                   break;
                 }
                 this.interim[o2++] = n2, r2 <<= 6, r2 |= 63 & n2;
               }
-              s3 || (2 === h3 ? r2 < 128 ? c2-- : t3[a2++] = r2 : 3 === h3 ? r2 < 2048 || r2 >= 55296 && r2 <= 57343 || 65279 === r2 || (t3[a2++] = r2) : r2 < 65536 || r2 > 1114111 || (t3[a2++] = r2)), this.interim.fill(0);
+              s3 || (2 === h3 ? r2 < 128 ? c3-- : t3[a2++] = r2 : 3 === h3 ? r2 < 2048 || r2 >= 55296 && r2 <= 57343 || 65279 === r2 || (t3[a2++] = r2) : r2 < 65536 || r2 > 1114111 || (t3[a2++] = r2)), this.interim.fill(0);
             }
-            const l2 = i2 - 4;
-            let d2 = c2;
+            const l = i2 - 4;
+            let d2 = c3;
             for (; d2 < i2; ) {
-              for (; !(!(d2 < l2) || 128 & (s2 = e3[d2]) || 128 & (r = e3[d2 + 1]) || 128 & (n = e3[d2 + 2]) || 128 & (o = e3[d2 + 3])); )
+              for (; !(!(d2 < l) || 128 & (s2 = e3[d2]) || 128 & (r = e3[d2 + 1]) || 128 & (n = e3[d2 + 2]) || 128 & (o = e3[d2 + 3])); )
                 t3[a2++] = s2, t3[a2++] = r, t3[a2++] = n, t3[a2++] = o, d2 += 4;
               if (s2 = e3[d2++], s2 < 128)
                 t3[a2++] = s2;
@@ -26694,7 +26694,7 @@ WARNING: This link could potentially be dangerous`)) {
             e3.addMany([24, 26, 153, 154], o2, 3, 0), e3.addMany(i3(128, 144), o2, 3, 0), e3.addMany(i3(144, 152), o2, 3, 0), e3.add(156, o2, 0, 0), e3.add(27, o2, 11, 1), e3.add(157, o2, 4, 8), e3.addMany([152, 158, 159], o2, 0, 7), e3.add(155, o2, 11, 3), e3.add(144, o2, 11, 9);
           return e3.addMany(r2, 0, 3, 0), e3.addMany(r2, 1, 3, 1), e3.add(127, 1, 0, 1), e3.addMany(r2, 8, 0, 8), e3.addMany(r2, 3, 3, 3), e3.add(127, 3, 0, 3), e3.addMany(r2, 4, 3, 4), e3.add(127, 4, 0, 4), e3.addMany(r2, 6, 3, 6), e3.addMany(r2, 5, 3, 5), e3.add(127, 5, 0, 5), e3.addMany(r2, 2, 3, 2), e3.add(127, 2, 0, 2), e3.add(93, 1, 4, 8), e3.addMany(s3, 8, 5, 8), e3.add(127, 8, 5, 8), e3.addMany([156, 27, 24, 26, 7], 8, 6, 0), e3.addMany(i3(28, 32), 8, 0, 8), e3.addMany([88, 94, 95], 1, 0, 7), e3.addMany(s3, 7, 0, 7), e3.addMany(r2, 7, 0, 7), e3.add(156, 7, 0, 0), e3.add(127, 7, 0, 7), e3.add(91, 1, 11, 3), e3.addMany(i3(64, 127), 3, 7, 0), e3.addMany(i3(48, 60), 3, 8, 4), e3.addMany([60, 61, 62, 63], 3, 9, 4), e3.addMany(i3(48, 60), 4, 8, 4), e3.addMany(i3(64, 127), 4, 7, 0), e3.addMany([60, 61, 62, 63], 4, 0, 6), e3.addMany(i3(32, 64), 6, 0, 6), e3.add(127, 6, 0, 6), e3.addMany(i3(64, 127), 6, 0, 0), e3.addMany(i3(32, 48), 3, 9, 5), e3.addMany(i3(32, 48), 5, 9, 5), e3.addMany(i3(48, 64), 5, 0, 6), e3.addMany(i3(64, 127), 5, 7, 0), e3.addMany(i3(32, 48), 4, 9, 5), e3.addMany(i3(32, 48), 1, 9, 2), e3.addMany(i3(32, 48), 2, 9, 2), e3.addMany(i3(48, 127), 2, 10, 0), e3.addMany(i3(48, 80), 1, 10, 0), e3.addMany(i3(81, 88), 1, 10, 0), e3.addMany([89, 90, 92], 1, 10, 0), e3.addMany(i3(96, 127), 1, 10, 0), e3.add(80, 1, 11, 9), e3.addMany(r2, 9, 0, 9), e3.add(127, 9, 0, 9), e3.addMany(i3(28, 32), 9, 0, 9), e3.addMany(i3(32, 48), 9, 9, 12), e3.addMany(i3(48, 60), 9, 8, 10), e3.addMany([60, 61, 62, 63], 9, 9, 10), e3.addMany(r2, 11, 0, 11), e3.addMany(i3(32, 128), 11, 0, 11), e3.addMany(i3(28, 32), 11, 0, 11), e3.addMany(r2, 10, 0, 10), e3.add(127, 10, 0, 10), e3.addMany(i3(28, 32), 10, 0, 10), e3.addMany(i3(48, 60), 10, 8, 10), e3.addMany([60, 61, 62, 63], 10, 0, 11), e3.addMany(i3(32, 48), 10, 9, 12), e3.addMany(r2, 12, 0, 12), e3.add(127, 12, 0, 12), e3.addMany(i3(28, 32), 12, 0, 12), e3.addMany(i3(32, 48), 12, 9, 12), e3.addMany(i3(48, 64), 12, 0, 11), e3.addMany(i3(64, 127), 12, 12, 13), e3.addMany(i3(64, 127), 10, 12, 13), e3.addMany(i3(64, 127), 9, 12, 13), e3.addMany(r2, 13, 13, 13), e3.addMany(s3, 13, 13, 13), e3.add(127, 13, 0, 13), e3.addMany([27, 156, 24, 26], 13, 14, 0), e3.add(h2, 0, 2, 0), e3.add(h2, 8, 5, 8), e3.add(h2, 6, 0, 6), e3.add(h2, 11, 0, 11), e3.add(h2, 13, 13, 13), e3;
         }();
-        class c2 extends s2.Disposable {
+        class c3 extends s2.Disposable {
           constructor(e3 = t2.VT500_TRANSITION_TABLE) {
             super(), this._transitions = e3, this._parseStack = { state: 0, handlers: [], handlerPos: 0, transition: 0, chunkPos: 0 }, this.initialState = 0, this.currentState = this.initialState, this._params = new r.Params(), this._params.addParam(0), this._collect = 0, this.precedingCodepoint = 0, this._printHandlerFb = (e4, t3, i3) => {
             }, this._executeHandlerFb = (e4) => {
@@ -26907,12 +26907,12 @@ WARNING: This link could potentially be dangerous`)) {
                   this._collect <<= 8, this._collect |= r2;
                   break;
                 case 10:
-                  const c3 = this._escHandlers[this._collect << 8 | r2];
-                  let l2 = c3 ? c3.length - 1 : -1;
-                  for (; l2 >= 0 && (s3 = c3[l2](), true !== s3); l2--)
+                  const c4 = this._escHandlers[this._collect << 8 | r2];
+                  let l = c4 ? c4.length - 1 : -1;
+                  for (; l >= 0 && (s3 = c4[l](), true !== s3); l--)
                     if (s3 instanceof Promise)
-                      return this._preserveStack(4, c3, l2, n2, i4), s3;
-                  l2 < 0 && this._escHandlerFb(this._collect << 8 | r2), this.precedingCodepoint = 0;
+                      return this._preserveStack(4, c4, l, n2, i4), s3;
+                  l < 0 && this._escHandlerFb(this._collect << 8 | r2), this.precedingCodepoint = 0;
                   break;
                 case 11:
                   this._params.reset(), this._params.addParam(0), this._collect = 0;
@@ -26951,7 +26951,7 @@ WARNING: This link could potentially be dangerous`)) {
             }
           }
         }
-        t2.EscapeSequenceParser = c2;
+        t2.EscapeSequenceParser = c3;
       }, 6242: (e2, t2, i2) => {
         Object.defineProperty(t2, "__esModule", { value: true }), t2.OscHandler = t2.OscParser = void 0;
         const s2 = i2(5770), r = i2(482), n = [];
@@ -27306,7 +27306,7 @@ WARNING: This link could potentially be dangerous`)) {
         Object.defineProperty(t2, "__esModule", { value: true }), t2.BufferService = t2.MINIMUM_ROWS = t2.MINIMUM_COLS = void 0;
         const n = i2(8460), o = i2(844), a2 = i2(5295), h2 = i2(2585);
         t2.MINIMUM_COLS = 2, t2.MINIMUM_ROWS = 1;
-        let c2 = t2.BufferService = class extends o.Disposable {
+        let c3 = t2.BufferService = class extends o.Disposable {
           get buffer() {
             return this.buffers.active;
           }
@@ -27345,7 +27345,7 @@ WARNING: This link could potentially be dangerous`)) {
             s3.ydisp = Math.max(Math.min(s3.ydisp + e3, s3.ybase), 0), r2 !== s3.ydisp && (t3 || this._onScroll.fire(s3.ydisp));
           }
         };
-        t2.BufferService = c2 = s2([r(0, h2.IOptionsService)], c2);
+        t2.BufferService = c3 = s2([r(0, h2.IOptionsService)], c3);
       }, 7994: (e2, t2) => {
         Object.defineProperty(t2, "__esModule", { value: true }), t2.CharsetService = void 0, t2.CharsetService = class {
           constructor() {
@@ -27377,19 +27377,19 @@ WARNING: This link could potentially be dangerous`)) {
         };
         Object.defineProperty(t2, "__esModule", { value: true }), t2.CoreMouseService = void 0;
         const n = i2(2585), o = i2(8460), a2 = i2(844), h2 = { NONE: { events: 0, restrict: () => false }, X10: { events: 1, restrict: (e3) => 4 !== e3.button && 1 === e3.action && (e3.ctrl = false, e3.alt = false, e3.shift = false, true) }, VT200: { events: 19, restrict: (e3) => 32 !== e3.action }, DRAG: { events: 23, restrict: (e3) => 32 !== e3.action || 3 !== e3.button }, ANY: { events: 31, restrict: (e3) => true } };
-        function c2(e3, t3) {
+        function c3(e3, t3) {
           let i3 = (e3.ctrl ? 16 : 0) | (e3.shift ? 4 : 0) | (e3.alt ? 8 : 0);
           return 4 === e3.button ? (i3 |= 64, i3 |= e3.action) : (i3 |= 3 & e3.button, 4 & e3.button && (i3 |= 64), 8 & e3.button && (i3 |= 128), 32 === e3.action ? i3 |= 32 : 0 !== e3.action || t3 || (i3 |= 3)), i3;
         }
-        const l2 = String.fromCharCode, d2 = { DEFAULT: (e3) => {
-          const t3 = [c2(e3, false) + 32, e3.col + 32, e3.row + 32];
-          return t3[0] > 255 || t3[1] > 255 || t3[2] > 255 ? "" : `\x1B[M${l2(t3[0])}${l2(t3[1])}${l2(t3[2])}`;
+        const l = String.fromCharCode, d2 = { DEFAULT: (e3) => {
+          const t3 = [c3(e3, false) + 32, e3.col + 32, e3.row + 32];
+          return t3[0] > 255 || t3[1] > 255 || t3[2] > 255 ? "" : `\x1B[M${l(t3[0])}${l(t3[1])}${l(t3[2])}`;
         }, SGR: (e3) => {
           const t3 = 0 === e3.action && 4 !== e3.button ? "m" : "M";
-          return `\x1B[<${c2(e3, true)};${e3.col};${e3.row}${t3}`;
+          return `\x1B[<${c3(e3, true)};${e3.col};${e3.row}${t3}`;
         }, SGR_PIXELS: (e3) => {
           const t3 = 0 === e3.action && 4 !== e3.button ? "m" : "M";
-          return `\x1B[<${c2(e3, true)};${e3.x};${e3.y}${t3}`;
+          return `\x1B[<${c3(e3, true)};${e3.x};${e3.y}${t3}`;
         } };
         let _2 = t2.CoreMouseService = class extends a2.Disposable {
           constructor(e3, t3) {
@@ -27478,13 +27478,13 @@ WARNING: This link could potentially be dangerous`)) {
           };
         };
         Object.defineProperty(t2, "__esModule", { value: true }), t2.CoreService = void 0;
-        const n = i2(1439), o = i2(8460), a2 = i2(844), h2 = i2(2585), c2 = Object.freeze({ insertMode: false }), l2 = Object.freeze({ applicationCursorKeys: false, applicationKeypad: false, bracketedPasteMode: false, origin: false, reverseWraparound: false, sendFocus: false, wraparound: true });
+        const n = i2(1439), o = i2(8460), a2 = i2(844), h2 = i2(2585), c3 = Object.freeze({ insertMode: false }), l = Object.freeze({ applicationCursorKeys: false, applicationKeypad: false, bracketedPasteMode: false, origin: false, reverseWraparound: false, sendFocus: false, wraparound: true });
         let d2 = t2.CoreService = class extends a2.Disposable {
           constructor(e3, t3, i3) {
-            super(), this._bufferService = e3, this._logService = t3, this._optionsService = i3, this.isCursorInitialized = false, this.isCursorHidden = false, this._onData = this.register(new o.EventEmitter()), this.onData = this._onData.event, this._onUserInput = this.register(new o.EventEmitter()), this.onUserInput = this._onUserInput.event, this._onBinary = this.register(new o.EventEmitter()), this.onBinary = this._onBinary.event, this._onRequestScrollToBottom = this.register(new o.EventEmitter()), this.onRequestScrollToBottom = this._onRequestScrollToBottom.event, this.modes = (0, n.clone)(c2), this.decPrivateModes = (0, n.clone)(l2);
+            super(), this._bufferService = e3, this._logService = t3, this._optionsService = i3, this.isCursorInitialized = false, this.isCursorHidden = false, this._onData = this.register(new o.EventEmitter()), this.onData = this._onData.event, this._onUserInput = this.register(new o.EventEmitter()), this.onUserInput = this._onUserInput.event, this._onBinary = this.register(new o.EventEmitter()), this.onBinary = this._onBinary.event, this._onRequestScrollToBottom = this.register(new o.EventEmitter()), this.onRequestScrollToBottom = this._onRequestScrollToBottom.event, this.modes = (0, n.clone)(c3), this.decPrivateModes = (0, n.clone)(l);
           }
           reset() {
-            this.modes = (0, n.clone)(c2), this.decPrivateModes = (0, n.clone)(l2);
+            this.modes = (0, n.clone)(c3), this.decPrivateModes = (0, n.clone)(l);
           }
           triggerDataEvent(e3, t3 = false) {
             if (this._optionsService.rawOptions.disableStdin)
@@ -27501,7 +27501,7 @@ WARNING: This link could potentially be dangerous`)) {
         Object.defineProperty(t2, "__esModule", { value: true }), t2.DecorationService = void 0;
         const s2 = i2(8055), r = i2(8460), n = i2(844), o = i2(6106);
         let a2 = 0, h2 = 0;
-        class c2 extends n.Disposable {
+        class c3 extends n.Disposable {
           get decorations() {
             return this._decorations.values();
           }
@@ -27511,7 +27511,7 @@ WARNING: This link could potentially be dangerous`)) {
           registerDecoration(e3) {
             if (e3.marker.isDisposed)
               return;
-            const t3 = new l2(e3);
+            const t3 = new l(e3);
             if (t3) {
               const e4 = t3.marker.onDispose(() => t3.dispose());
               t3.onDispose(() => {
@@ -27538,8 +27538,8 @@ WARNING: This link could potentially be dangerous`)) {
             });
           }
         }
-        t2.DecorationService = c2;
-        class l2 extends n.Disposable {
+        t2.DecorationService = c3;
+        class l extends n.Disposable {
           get isDisposed() {
             return this._isDisposed;
           }
@@ -27620,7 +27620,7 @@ WARNING: This link could potentially be dangerous`)) {
         };
         Object.defineProperty(t2, "__esModule", { value: true }), t2.traceCall = t2.setTraceLogger = t2.LogService = void 0;
         const n = i2(844), o = i2(2585), a2 = { trace: o.LogLevelEnum.TRACE, debug: o.LogLevelEnum.DEBUG, info: o.LogLevelEnum.INFO, warn: o.LogLevelEnum.WARN, error: o.LogLevelEnum.ERROR, off: o.LogLevelEnum.OFF };
-        let h2, c2 = t2.LogService = class extends n.Disposable {
+        let h2, c3 = t2.LogService = class extends n.Disposable {
           get logLevel() {
             return this._logLevel;
           }
@@ -27658,7 +27658,7 @@ WARNING: This link could potentially be dangerous`)) {
             this._logLevel <= o.LogLevelEnum.ERROR && this._log(null !== (s3 = null === (i3 = this._optionsService.options.logger) || void 0 === i3 ? void 0 : i3.error.bind(this._optionsService.options.logger)) && void 0 !== s3 ? s3 : console.error, e3, t3);
           }
         };
-        t2.LogService = c2 = s2([r(0, o.IOptionsService)], c2), t2.setTraceLogger = function(e3) {
+        t2.LogService = c3 = s2([r(0, o.IOptionsService)], c3), t2.setTraceLogger = function(e3) {
           h2 = e3;
         }, t2.traceCall = function(e3, t3, i3) {
           if ("function" != typeof i3.value)
@@ -27897,7 +27897,7 @@ WARNING: This link could potentially be dangerous`)) {
       return (() => {
         var e2 = s;
         Object.defineProperty(e2, "__esModule", { value: true }), e2.Terminal = void 0;
-        const t2 = i(9042), r = i(3236), n = i(844), o = i(5741), a2 = i(8285), h2 = i(7975), c2 = i(7090), l2 = ["cols", "rows"];
+        const t2 = i(9042), r = i(3236), n = i(844), o = i(5741), a2 = i(8285), h2 = i(7975), c3 = i(7090), l = ["cols", "rows"];
         class d2 extends n.Disposable {
           constructor(e3) {
             super(), this._core = this.register(new r.Terminal(e3)), this._addonManager = this.register(new o.AddonManager()), this._publicOptions = Object.assign({}, this._core.options);
@@ -27910,7 +27910,7 @@ WARNING: This link could potentially be dangerous`)) {
             }
           }
           _checkReadonlyOptions(e3) {
-            if (l2.includes(e3))
+            if (l.includes(e3))
               throw new Error(`Option "${e3}" can only be set in the constructor`);
           }
           _checkProposedApi() {
@@ -27960,7 +27960,7 @@ WARNING: This link could potentially be dangerous`)) {
             return this._parser || (this._parser = new h2.ParserApi(this._core)), this._parser;
           }
           get unicode() {
-            return this._checkProposedApi(), new c2.UnicodeApi(this._core);
+            return this._checkProposedApi(), new c3.UnicodeApi(this._core);
           }
           get textarea() {
             return this._core.textarea;
@@ -28150,8 +28150,8 @@ var require_xterm_addon_fit = __commonJS({
               const e2 = this._terminal._core, t2 = e2._renderService.dimensions;
               if (0 === t2.css.cell.width || 0 === t2.css.cell.height)
                 return;
-              const r = 0 === this._terminal.options.scrollback ? 0 : e2.viewport.scrollBarWidth, i = window.getComputedStyle(this._terminal.element.parentElement), o = parseInt(i.getPropertyValue("height")), s = Math.max(0, parseInt(i.getPropertyValue("width"))), n = window.getComputedStyle(this._terminal.element), l2 = o - (parseInt(n.getPropertyValue("padding-top")) + parseInt(n.getPropertyValue("padding-bottom"))), a2 = s - (parseInt(n.getPropertyValue("padding-right")) + parseInt(n.getPropertyValue("padding-left"))) - r;
-              return { cols: Math.max(2, Math.floor(a2 / t2.css.cell.width)), rows: Math.max(1, Math.floor(l2 / t2.css.cell.height)) };
+              const r = 0 === this._terminal.options.scrollback ? 0 : e2.viewport.scrollBarWidth, i = window.getComputedStyle(this._terminal.element.parentElement), o = parseInt(i.getPropertyValue("height")), s = Math.max(0, parseInt(i.getPropertyValue("width"))), n = window.getComputedStyle(this._terminal.element), l = o - (parseInt(n.getPropertyValue("padding-top")) + parseInt(n.getPropertyValue("padding-bottom"))), a2 = s - (parseInt(n.getPropertyValue("padding-right")) + parseInt(n.getPropertyValue("padding-left"))) - r;
+              return { cols: Math.max(2, Math.floor(a2 / t2.css.cell.width)), rows: Math.max(1, Math.floor(l / t2.css.cell.height)) };
             }
           };
         })(), e;
@@ -28200,12 +28200,12 @@ var require_keymap = __commonJS({
       let text = [];
       const it2 = data[Symbol.iterator]();
       for (let next = it2.next(); !next.done; next = it2.next()) {
-        const c2 = next.value;
-        if (c2.length > 1) {
-          text.push(c2);
+        const c3 = next.value;
+        if (c3.length > 1) {
+          text.push(c3);
           continue;
         }
-        const val = c2.charCodeAt(0);
+        const val = c3.charCodeAt(0);
         if (text.length > 0 && (val < 32 || val === 127)) {
           yield {
             inputType: InputType.Text,
@@ -28326,11 +28326,11 @@ var require_keymap = __commonJS({
           }
           yield {
             inputType,
-            data: [c2]
+            data: [c3]
           };
           continue;
         }
-        text.push(c2);
+        text.push(c3);
       }
       if (text.length > 0) {
         yield {
@@ -28461,7 +28461,7 @@ var require_line = __commonJS({
         const slice = [...this.buf.slice(destStart, destEnd)].slice(0, column);
         let gIdx = off;
         if (slice.length > 0) {
-          gIdx = slice.map((c2) => c2.length).reduce((acc, m2) => acc + m2, 0);
+          gIdx = slice.map((c3) => c3.length).reduce((acc, m2) => acc + m2, 0);
           gIdx = destStart + gIdx;
         }
         this.pos = gIdx;
@@ -28500,7 +28500,7 @@ var require_line = __commonJS({
         }
         const slice = [...this.buf.slice(destStart, destEnd)];
         if (column < slice.length) {
-          this.pos = slice.slice(0, column).map((c2) => c2.length).reduce((acc, m2) => acc + m2, 0) + destStart;
+          this.pos = slice.slice(0, column).map((c3) => c3.length).reduce((acc, m2) => acc + m2, 0) + destStart;
         } else {
           this.pos = destEnd;
         }
@@ -28517,7 +28517,7 @@ var require_line = __commonJS({
           return void 0;
         }
         const buf = this.buf.slice(0, this.pos);
-        return this.pos - [...buf].slice(-n).map((c2) => c2.length).reduce((acc, m2) => acc + m2, 0);
+        return this.pos - [...buf].slice(-n).map((c3) => c3.length).reduce((acc, m2) => acc + m2, 0);
       }
       // Return the position of the character following the
       // current pos
@@ -28526,7 +28526,7 @@ var require_line = __commonJS({
           return void 0;
         }
         const buf = this.buf.slice(this.pos);
-        return this.pos + [...buf].slice(0, n).map((c2) => c2.length).reduce((acc, m2) => acc + m2, 0);
+        return this.pos + [...buf].slice(0, n).map((c3) => c3.length).reduce((acc, m2) => acc + m2, 0);
       }
       backspace(n) {
         const newPos = this.prevPos(n);
@@ -28962,18 +28962,18 @@ var require_tty = __commonJS({
       calculatePosition(text, orig) {
         const pos = Object.assign({}, orig);
         let escSeq = 0;
-        [...text].forEach((c2) => {
-          if (c2 === "\n") {
+        [...text].forEach((c3) => {
+          if (c3 === "\n") {
             pos.row += 1;
             pos.col = 0;
             return;
           }
           let cw = 0;
-          if (c2 === "	") {
+          if (c3 === "	") {
             cw = this.tabWidth - pos.col % this.tabWidth;
           } else {
             let size;
-            [size, escSeq] = width(c2, escSeq);
+            [size, escSeq] = width(c3, escSeq);
             cw = size;
           }
           pos.col += cw;
@@ -29510,25 +29510,25 @@ var AwaitableQueue = class {
 };
 
 // node_modules/webr/dist/webr.mjs
-var rn = Object.create;
+var sn = Object.create;
 var Zr = Object.defineProperty;
-var sn = Object.getOwnPropertyDescriptor;
-var nn = Object.getOwnPropertyNames;
-var on = Object.getPrototypeOf;
-var an = Object.prototype.hasOwnProperty;
+var nn = Object.getOwnPropertyDescriptor;
+var on = Object.getOwnPropertyNames;
+var an = Object.getPrototypeOf;
+var ln = Object.prototype.hasOwnProperty;
 var B = ((s) => typeof __require < "u" ? __require : typeof Proxy < "u" ? new Proxy(s, { get: (e, t) => (typeof __require < "u" ? __require : e)[t] }) : s)(function(s) {
   if (typeof __require < "u")
     return __require.apply(this, arguments);
   throw new Error('Dynamic require of "' + s + '" is not supported');
 });
 var S = (s, e) => () => (e || s((e = { exports: {} }).exports, e), e.exports);
-var ln = (s, e, t, r) => {
+var cn = (s, e, t, r) => {
   if (e && typeof e == "object" || typeof e == "function")
-    for (let n of nn(e))
-      !an.call(s, n) && n !== t && Zr(s, n, { get: () => e[n], enumerable: !(r = sn(e, n)) || r.enumerable });
+    for (let n of on(e))
+      !ln.call(s, n) && n !== t && Zr(s, n, { get: () => e[n], enumerable: !(r = nn(e, n)) || r.enumerable });
   return s;
 };
-var oe = (s, e, t) => (t = s != null ? rn(on(s)) : {}, ln(e || !s || !s.__esModule ? Zr(t, "default", { value: s, enumerable: true }) : t, s));
+var oe = (s, e, t) => (t = s != null ? sn(an(s)) : {}, cn(e || !s || !s.__esModule ? Zr(t, "default", { value: s, enumerable: true }) : t, s));
 var fr = (s, e, t) => {
   if (!e.has(s))
     throw TypeError("Cannot " + t);
@@ -29541,7 +29541,7 @@ var u = (s, e, t) => {
 };
 var d = (s, e, t, r) => (fr(s, e, "write to private field"), r ? r.call(s, t) : e.set(s, t), t);
 var E = (s, e, t) => (fr(s, e, "access private method"), t);
-var Je = S((C2) => {
+var He = S((C2) => {
   "use strict";
   Object.defineProperty(C2, "__esModule", { value: true });
   C2.getUint64 = C2.getInt64 = C2.setInt64 = C2.setUint64 = C2.UINT32_MAX = void 0;
@@ -29567,12 +29567,12 @@ var Je = S((C2) => {
   }
   C2.getUint64 = gn;
 });
-var At = S((M2) => {
+var Ot = S((M2) => {
   "use strict";
   var _r, Sr, kr;
   Object.defineProperty(M2, "__esModule", { value: true });
   M2.utf8DecodeTD = M2.TEXT_DECODER_THRESHOLD = M2.utf8DecodeJs = M2.utf8EncodeTE = M2.TEXT_ENCODER_THRESHOLD = M2.utf8EncodeJs = M2.utf8Count = void 0;
-  var us = Je(), Ot = (typeof process > "u" || ((_r = process == null ? void 0 : process.env) === null || _r === void 0 ? void 0 : _r.TEXT_ENCODING) !== "never") && typeof TextEncoder < "u" && typeof TextDecoder < "u";
+  var ps = He(), At = (typeof process > "u" || ((_r = process == null ? void 0 : process.env) === null || _r === void 0 ? void 0 : _r.TEXT_ENCODING) !== "never") && typeof TextEncoder < "u" && typeof TextDecoder < "u";
   function bn(s) {
     let e = s.length, t = 0, r = 0;
     for (; r < e; ) {
@@ -29604,8 +29604,8 @@ var At = S((M2) => {
           e[n++] = i >> 6 & 31 | 192;
         else {
           if (i >= 55296 && i <= 56319 && o < r) {
-            let c2 = s.charCodeAt(o);
-            (c2 & 64512) === 56320 && (++o, i = ((i & 1023) << 10) + (c2 & 1023) + 65536);
+            let l = s.charCodeAt(o);
+            (l & 64512) === 56320 && (++o, i = ((i & 1023) << 10) + (l & 1023) + 65536);
           }
           i & 4294901760 ? (e[n++] = i >> 18 & 7 | 240, e[n++] = i >> 12 & 63 | 128, e[n++] = i >> 6 & 63 | 128) : (e[n++] = i >> 12 & 15 | 224, e[n++] = i >> 6 & 63 | 128);
         }
@@ -29617,43 +29617,43 @@ var At = S((M2) => {
     }
   }
   M2.utf8EncodeJs = wn;
-  var He = Ot ? new TextEncoder() : void 0;
-  M2.TEXT_ENCODER_THRESHOLD = Ot ? typeof process < "u" && ((Sr = process == null ? void 0 : process.env) === null || Sr === void 0 ? void 0 : Sr.TEXT_ENCODING) !== "force" ? 200 : 0 : us.UINT32_MAX;
+  var ze = At ? new TextEncoder() : void 0;
+  M2.TEXT_ENCODER_THRESHOLD = At ? typeof process < "u" && ((Sr = process == null ? void 0 : process.env) === null || Sr === void 0 ? void 0 : Sr.TEXT_ENCODING) !== "force" ? 200 : 0 : ps.UINT32_MAX;
   function xn(s, e, t) {
-    e.set(He.encode(s), t);
+    e.set(ze.encode(s), t);
   }
   function vn(s, e, t) {
-    He.encodeInto(s, e.subarray(t));
+    ze.encodeInto(s, e.subarray(t));
   }
-  M2.utf8EncodeTE = He != null && He.encodeInto ? vn : xn;
+  M2.utf8EncodeTE = ze != null && ze.encodeInto ? vn : xn;
   var En = 4096;
-  function Tn(s, e, t) {
+  function Pn(s, e, t) {
     let r = e, n = r + t, o = [], i = "";
     for (; r < n; ) {
-      let c2 = s[r++];
-      if (!(c2 & 128))
-        o.push(c2);
-      else if ((c2 & 224) === 192) {
+      let l = s[r++];
+      if (!(l & 128))
+        o.push(l);
+      else if ((l & 224) === 192) {
         let p2 = s[r++] & 63;
-        o.push((c2 & 31) << 6 | p2);
-      } else if ((c2 & 240) === 224) {
+        o.push((l & 31) << 6 | p2);
+      } else if ((l & 240) === 224) {
         let p2 = s[r++] & 63, D2 = s[r++] & 63;
-        o.push((c2 & 31) << 12 | p2 << 6 | D2);
-      } else if ((c2 & 248) === 240) {
-        let p2 = s[r++] & 63, D2 = s[r++] & 63, b2 = s[r++] & 63, j2 = (c2 & 7) << 18 | p2 << 12 | D2 << 6 | b2;
+        o.push((l & 31) << 12 | p2 << 6 | D2);
+      } else if ((l & 248) === 240) {
+        let p2 = s[r++] & 63, D2 = s[r++] & 63, b2 = s[r++] & 63, j2 = (l & 7) << 18 | p2 << 12 | D2 << 6 | b2;
         j2 > 65535 && (j2 -= 65536, o.push(j2 >>> 10 & 1023 | 55296), j2 = 56320 | j2 & 1023), o.push(j2);
       } else
-        o.push(c2);
+        o.push(l);
       o.length >= En && (i += String.fromCharCode(...o), o.length = 0);
     }
     return o.length > 0 && (i += String.fromCharCode(...o)), i;
   }
-  M2.utf8DecodeJs = Tn;
-  var Pn = Ot ? new TextDecoder() : null;
-  M2.TEXT_DECODER_THRESHOLD = Ot ? typeof process < "u" && ((kr = process == null ? void 0 : process.env) === null || kr === void 0 ? void 0 : kr.TEXT_DECODER) !== "force" ? 200 : 0 : us.UINT32_MAX;
+  M2.utf8DecodeJs = Pn;
+  var Tn = At ? new TextDecoder() : null;
+  M2.TEXT_DECODER_THRESHOLD = At ? typeof process < "u" && ((kr = process == null ? void 0 : process.env) === null || kr === void 0 ? void 0 : kr.TEXT_DECODER) !== "force" ? 200 : 0 : ps.UINT32_MAX;
   function _n(s, e, t) {
     let r = s.subarray(e, e + t);
-    return Pn.decode(r);
+    return Tn.decode(r);
   }
   M2.utf8DecodeTD = _n;
 });
@@ -29685,10 +29685,10 @@ var Wr = S((_2) => {
   "use strict";
   Object.defineProperty(_2, "__esModule", { value: true });
   _2.timestampExtension = _2.decodeTimestampExtension = _2.decodeTimestampToTimeSpec = _2.encodeTimestampExtension = _2.encodeDateToTimeSpec = _2.encodeTimeSpecToTimestamp = _2.EXT_TIMESTAMP = void 0;
-  var Sn = Ct(), ps = Je();
+  var Sn = Ct(), ds = He();
   _2.EXT_TIMESTAMP = -1;
   var kn = 4294967296 - 1, Mn = 17179869184 - 1;
-  function ds({ sec: s, nsec: e }) {
+  function hs({ sec: s, nsec: e }) {
     if (s >= 0 && e >= 0 && s <= Mn)
       if (e === 0 && s <= kn) {
         let t = new Uint8Array(4);
@@ -29699,24 +29699,24 @@ var Wr = S((_2) => {
       }
     else {
       let t = new Uint8Array(12), r = new DataView(t.buffer);
-      return r.setUint32(0, e), (0, ps.setInt64)(r, 4, s), t;
+      return r.setUint32(0, e), (0, ds.setInt64)(r, 4, s), t;
     }
   }
-  _2.encodeTimeSpecToTimestamp = ds;
-  function hs(s) {
+  _2.encodeTimeSpecToTimestamp = hs;
+  function ys(s) {
     let e = s.getTime(), t = Math.floor(e / 1e3), r = (e - t * 1e3) * 1e6, n = Math.floor(r / 1e9);
     return { sec: t + n, nsec: r - n * 1e9 };
   }
-  _2.encodeDateToTimeSpec = hs;
-  function ys(s) {
+  _2.encodeDateToTimeSpec = ys;
+  function fs(s) {
     if (s instanceof Date) {
-      let e = hs(s);
-      return ds(e);
+      let e = ys(s);
+      return hs(e);
     } else
       return null;
   }
-  _2.encodeTimestampExtension = ys;
-  function fs(s) {
+  _2.encodeTimestampExtension = fs;
+  function Rs(s) {
     let e = new DataView(s.buffer, s.byteOffset, s.byteLength);
     switch (s.byteLength) {
       case 4:
@@ -29726,26 +29726,26 @@ var Wr = S((_2) => {
         return { sec: n, nsec: o };
       }
       case 12: {
-        let t = (0, ps.getInt64)(e, 4), r = e.getUint32(0);
+        let t = (0, ds.getInt64)(e, 4), r = e.getUint32(0);
         return { sec: t, nsec: r };
       }
       default:
         throw new Sn.DecodeError(`Unrecognized data size for timestamp (expected 4, 8, or 12): ${s.length}`);
     }
   }
-  _2.decodeTimestampToTimeSpec = fs;
-  function Rs(s) {
-    let e = fs(s);
+  _2.decodeTimestampToTimeSpec = Rs;
+  function ms(s) {
+    let e = Rs(s);
     return new Date(e.sec * 1e3 + e.nsec / 1e6);
   }
-  _2.decodeTimestampExtension = Rs;
-  _2.timestampExtension = { type: _2.EXT_TIMESTAMP, encode: ys, decode: Rs };
+  _2.decodeTimestampExtension = ms;
+  _2.timestampExtension = { type: _2.EXT_TIMESTAMP, encode: fs, decode: ms };
 });
 var Bt = S((Nt) => {
   "use strict";
   Object.defineProperty(Nt, "__esModule", { value: true });
   Nt.ExtensionCodec = void 0;
-  var jt = Dr(), Dn = Wr(), ze = class {
+  var jt = Dr(), Dn = Wr(), Xe = class {
     constructor() {
       this.builtInEncoders = [], this.builtInDecoders = [], this.encoders = [], this.decoders = [], this.register(Dn.timestampExtension);
     }
@@ -29785,21 +29785,21 @@ var Bt = S((Nt) => {
       return n ? n(e, t, r) : new jt.ExtData(t, e);
     }
   };
-  Nt.ExtensionCodec = ze;
-  ze.defaultCodec = new ze();
+  Nt.ExtensionCodec = Xe;
+  Xe.defaultCodec = new Xe();
 });
-var Or = S((xe) => {
+var Ar = S((xe) => {
   "use strict";
   Object.defineProperty(xe, "__esModule", { value: true });
   xe.createDataView = xe.ensureUint8Array = void 0;
-  function ms(s) {
+  function gs(s) {
     return s instanceof Uint8Array ? s : ArrayBuffer.isView(s) ? new Uint8Array(s.buffer, s.byteOffset, s.byteLength) : s instanceof ArrayBuffer ? new Uint8Array(s) : Uint8Array.from(s);
   }
-  xe.ensureUint8Array = ms;
+  xe.ensureUint8Array = gs;
   function Wn(s) {
     if (s instanceof ArrayBuffer)
       return new DataView(s);
-    let e = ms(s);
+    let e = gs(s);
     return new DataView(e.buffer, e.byteOffset, e.byteLength);
   }
   xe.createDataView = Wn;
@@ -29808,12 +29808,12 @@ var Ir = S((J2) => {
   "use strict";
   Object.defineProperty(J2, "__esModule", { value: true });
   J2.Encoder = J2.DEFAULT_INITIAL_BUFFER_SIZE = J2.DEFAULT_MAX_DEPTH = void 0;
-  var Xe = At(), On = Bt(), gs = Je(), An = Or();
+  var Ge = Ot(), An = Bt(), bs = He(), On = Ar();
   J2.DEFAULT_MAX_DEPTH = 100;
   J2.DEFAULT_INITIAL_BUFFER_SIZE = 2048;
-  var Ar = class {
-    constructor(e = On.ExtensionCodec.defaultCodec, t = void 0, r = J2.DEFAULT_MAX_DEPTH, n = J2.DEFAULT_INITIAL_BUFFER_SIZE, o = false, i = false, c2 = false, p2 = false) {
-      this.extensionCodec = e, this.context = t, this.maxDepth = r, this.initialBufferSize = n, this.sortKeys = o, this.forceFloat32 = i, this.ignoreUndefined = c2, this.forceIntegerToFloat = p2, this.pos = 0, this.view = new DataView(new ArrayBuffer(this.initialBufferSize)), this.bytes = new Uint8Array(this.view.buffer);
+  var Or = class {
+    constructor(e = An.ExtensionCodec.defaultCodec, t = void 0, r = J2.DEFAULT_MAX_DEPTH, n = J2.DEFAULT_INITIAL_BUFFER_SIZE, o = false, i = false, l = false, p2 = false) {
+      this.extensionCodec = e, this.context = t, this.maxDepth = r, this.initialBufferSize = n, this.sortKeys = o, this.forceFloat32 = i, this.ignoreUndefined = l, this.forceIntegerToFloat = p2, this.pos = 0, this.view = new DataView(new ArrayBuffer(this.initialBufferSize)), this.bytes = new Uint8Array(this.view.buffer);
     }
     reinitializeState() {
       this.pos = 0;
@@ -29859,12 +29859,12 @@ var Ir = S((J2) => {
         throw new Error(`Too long string: ${e} bytes in UTF-8`);
     }
     encodeString(e) {
-      if (e.length > Xe.TEXT_ENCODER_THRESHOLD) {
-        let n = (0, Xe.utf8Count)(e);
-        this.ensureBufferSizeToWrite(5 + n), this.writeStringHeader(n), (0, Xe.utf8EncodeTE)(e, this.bytes, this.pos), this.pos += n;
+      if (e.length > Ge.TEXT_ENCODER_THRESHOLD) {
+        let n = (0, Ge.utf8Count)(e);
+        this.ensureBufferSizeToWrite(5 + n), this.writeStringHeader(n), (0, Ge.utf8EncodeTE)(e, this.bytes, this.pos), this.pos += n;
       } else {
-        let n = (0, Xe.utf8Count)(e);
-        this.ensureBufferSizeToWrite(5 + n), this.writeStringHeader(n), (0, Xe.utf8EncodeJs)(e, this.bytes, this.pos), this.pos += n;
+        let n = (0, Ge.utf8Count)(e);
+        this.ensureBufferSizeToWrite(5 + n), this.writeStringHeader(n), (0, Ge.utf8EncodeJs)(e, this.bytes, this.pos), this.pos += n;
       }
     }
     encodeObject(e, t) {
@@ -29890,7 +29890,7 @@ var Ir = S((J2) => {
         this.writeU8(198), this.writeU32(t);
       else
         throw new Error(`Too large binary: ${t}`);
-      let r = (0, An.ensureUint8Array)(e);
+      let r = (0, On.ensureUint8Array)(e);
       this.writeU8a(r);
     }
     encodeArray(e, t) {
@@ -29980,15 +29980,15 @@ var Ir = S((J2) => {
       this.ensureBufferSizeToWrite(8), this.view.setFloat64(this.pos, e), this.pos += 8;
     }
     writeU64(e) {
-      this.ensureBufferSizeToWrite(8), (0, gs.setUint64)(this.view, this.pos, e), this.pos += 8;
+      this.ensureBufferSizeToWrite(8), (0, bs.setUint64)(this.view, this.pos, e), this.pos += 8;
     }
     writeI64(e) {
-      this.ensureBufferSizeToWrite(8), (0, gs.setInt64)(this.view, this.pos, e), this.pos += 8;
+      this.ensureBufferSizeToWrite(8), (0, bs.setInt64)(this.view, this.pos, e), this.pos += 8;
     }
   };
-  J2.Encoder = Ar;
+  J2.Encoder = Or;
 });
-var bs = S((Lt) => {
+var ws = S((Lt) => {
   "use strict";
   Object.defineProperty(Lt, "__esModule", { value: true });
   Lt.encode = void 0;
@@ -29998,7 +29998,7 @@ var bs = S((Lt) => {
   }
   Lt.encode = Cn;
 });
-var ws = S((Ft) => {
+var xs = S((Ft) => {
   "use strict";
   Object.defineProperty(Ft, "__esModule", { value: true });
   Ft.prettyByte = void 0;
@@ -30007,11 +30007,11 @@ var ws = S((Ft) => {
   }
   Ft.prettyByte = jn;
 });
-var xs = S((qt) => {
+var vs = S((qt) => {
   "use strict";
   Object.defineProperty(qt, "__esModule", { value: true });
   qt.CachedKeyDecoder = void 0;
-  var Nn = At(), Bn = 16, Ln = 16, Ur = class {
+  var Nn = Ot(), Bn = 16, Ln = 16, Ur = class {
     constructor(e = Bn, t = Ln) {
       this.maxKeyLength = e, this.maxLengthPerKey = t, this.hit = 0, this.miss = 0, this.caches = [];
       for (let r = 0; r < this.maxKeyLength; r++)
@@ -30025,8 +30025,8 @@ var xs = S((qt) => {
       e:
         for (let o of n) {
           let i = o.bytes;
-          for (let c2 = 0; c2 < r; c2++)
-            if (i[c2] !== e[t + c2])
+          for (let l = 0; l < r; l++)
+            if (i[l] !== e[t + l])
               continue e;
           return o.str;
         }
@@ -30051,10 +30051,10 @@ var Vt = S((Q2) => {
   "use strict";
   Object.defineProperty(Q2, "__esModule", { value: true });
   Q2.Decoder = Q2.DataViewIndexOutOfBoundsError = void 0;
-  var Cr = ws(), Fn = Bt(), ce2 = Je(), jr = At(), Nr = Or(), qn = xs(), K2 = Ct(), Vn = (s) => {
+  var Cr = xs(), Fn = Bt(), ce2 = He(), jr = Ot(), Nr = Ar(), qn = vs(), K2 = Ct(), Vn = (s) => {
     let e = typeof s;
     return e === "string" || e === "number";
-  }, Ge = -1, Lr = new DataView(new ArrayBuffer(0)), Jn = new Uint8Array(Lr.buffer);
+  }, $e2 = -1, Lr = new DataView(new ArrayBuffer(0)), Jn = new Uint8Array(Lr.buffer);
   Q2.DataViewIndexOutOfBoundsError = (() => {
     try {
       Lr.getInt8(0);
@@ -30063,18 +30063,18 @@ var Vt = S((Q2) => {
     }
     throw new Error("never reached");
   })();
-  var vs = new Q2.DataViewIndexOutOfBoundsError("Insufficient data"), Hn = new qn.CachedKeyDecoder(), Br = class {
-    constructor(e = Fn.ExtensionCodec.defaultCodec, t = void 0, r = ce2.UINT32_MAX, n = ce2.UINT32_MAX, o = ce2.UINT32_MAX, i = ce2.UINT32_MAX, c2 = ce2.UINT32_MAX, p2 = Hn) {
-      this.extensionCodec = e, this.context = t, this.maxStrLength = r, this.maxBinLength = n, this.maxArrayLength = o, this.maxMapLength = i, this.maxExtLength = c2, this.keyDecoder = p2, this.totalPos = 0, this.pos = 0, this.view = Lr, this.bytes = Jn, this.headByte = Ge, this.stack = [];
+  var Es = new Q2.DataViewIndexOutOfBoundsError("Insufficient data"), Hn = new qn.CachedKeyDecoder(), Br = class {
+    constructor(e = Fn.ExtensionCodec.defaultCodec, t = void 0, r = ce2.UINT32_MAX, n = ce2.UINT32_MAX, o = ce2.UINT32_MAX, i = ce2.UINT32_MAX, l = ce2.UINT32_MAX, p2 = Hn) {
+      this.extensionCodec = e, this.context = t, this.maxStrLength = r, this.maxBinLength = n, this.maxArrayLength = o, this.maxMapLength = i, this.maxExtLength = l, this.keyDecoder = p2, this.totalPos = 0, this.pos = 0, this.view = Lr, this.bytes = Jn, this.headByte = $e2, this.stack = [];
     }
     reinitializeState() {
-      this.totalPos = 0, this.headByte = Ge, this.stack.length = 0;
+      this.totalPos = 0, this.headByte = $e2, this.stack.length = 0;
     }
     setBuffer(e) {
       this.bytes = (0, Nr.ensureUint8Array)(e), this.view = (0, Nr.createDataView)(this.bytes), this.pos = 0;
     }
     appendBuffer(e) {
-      if (this.headByte === Ge && !this.hasRemaining(1))
+      if (this.headByte === $e2 && !this.hasRemaining(1))
         this.setBuffer(e);
       else {
         let t = this.bytes.subarray(this.pos), r = (0, Nr.ensureUint8Array)(e), n = new Uint8Array(t.length + r.length);
@@ -30101,10 +30101,10 @@ var Vt = S((Q2) => {
     }
     async decodeAsync(e) {
       let t = false, r;
-      for await (let c2 of e) {
+      for await (let l of e) {
         if (t)
           throw this.createExtraByteError(this.totalPos);
-        this.appendBuffer(c2);
+        this.appendBuffer(l);
         try {
           r = this.doDecodeSync(), t = true;
         } catch (p2) {
@@ -30290,10 +30290,10 @@ var Vt = S((Q2) => {
         }
     }
     readHeadByte() {
-      return this.headByte === Ge && (this.headByte = this.readU8()), this.headByte;
+      return this.headByte === $e2 && (this.headByte = this.readU8()), this.headByte;
     }
     complete() {
-      this.headByte = Ge;
+      this.headByte = $e2;
     }
     readArraySize() {
       let e = this.readHeadByte();
@@ -30324,7 +30324,7 @@ var Vt = S((Q2) => {
       if (e > this.maxStrLength)
         throw new K2.DecodeError(`Max length exceeded: UTF-8 byte length (${e}) > maxStrLength (${this.maxStrLength})`);
       if (this.bytes.byteLength < this.pos + t + e)
-        throw vs;
+        throw Es;
       let n = this.pos + t, o;
       return this.stateIsMapKey() && (!((r = this.keyDecoder) === null || r === void 0) && r.canBeCached(e)) ? o = this.keyDecoder.decode(this.bytes, n, e) : e > jr.TEXT_DECODER_THRESHOLD ? o = (0, jr.utf8DecodeTD)(this.bytes, n, e) : o = (0, jr.utf8DecodeJs)(this.bytes, n, e), this.pos += t + e, o;
     }
@@ -30335,7 +30335,7 @@ var Vt = S((Q2) => {
       if (e > this.maxBinLength)
         throw new K2.DecodeError(`Max length exceeded: bin length (${e}) > maxBinLength (${this.maxBinLength})`);
       if (!this.hasRemaining(e + t))
-        throw vs;
+        throw Es;
       let r = this.pos + t, n = this.bytes.subarray(r, r + e);
       return this.pos += t + e, n;
     }
@@ -30401,18 +30401,18 @@ var Fr = S((H2) => {
   "use strict";
   Object.defineProperty(H2, "__esModule", { value: true });
   H2.decodeMulti = H2.decode = H2.defaultDecodeOptions = void 0;
-  var Es = Vt();
+  var Ps = Vt();
   H2.defaultDecodeOptions = {};
   function zn(s, e = H2.defaultDecodeOptions) {
-    return new Es.Decoder(e.extensionCodec, e.context, e.maxStrLength, e.maxBinLength, e.maxArrayLength, e.maxMapLength, e.maxExtLength).decode(s);
+    return new Ps.Decoder(e.extensionCodec, e.context, e.maxStrLength, e.maxBinLength, e.maxArrayLength, e.maxMapLength, e.maxExtLength).decode(s);
   }
   H2.decode = zn;
   function Xn(s, e = H2.defaultDecodeOptions) {
-    return new Es.Decoder(e.extensionCodec, e.context, e.maxStrLength, e.maxBinLength, e.maxArrayLength, e.maxMapLength, e.maxExtLength).decodeMulti(s);
+    return new Ps.Decoder(e.extensionCodec, e.context, e.maxStrLength, e.maxBinLength, e.maxArrayLength, e.maxMapLength, e.maxExtLength).decodeMulti(s);
   }
   H2.decodeMulti = Xn;
 });
-var _s = S((re2) => {
+var Ss = S((re2) => {
   "use strict";
   Object.defineProperty(re2, "__esModule", { value: true });
   re2.ensureAsyncIterable = re2.asyncIterableFromStream = re2.isAsyncIterable = void 0;
@@ -30424,7 +30424,7 @@ var _s = S((re2) => {
     if (s == null)
       throw new Error("Assertion Failure: value must not be null nor undefined");
   }
-  async function* Ps(s) {
+  async function* _s(s) {
     let e = s.getReader();
     try {
       for (; ; ) {
@@ -30437,17 +30437,17 @@ var _s = S((re2) => {
       e.releaseLock();
     }
   }
-  re2.asyncIterableFromStream = Ps;
+  re2.asyncIterableFromStream = _s;
   function $n(s) {
-    return Ts(s) ? s : Ps(s);
+    return Ts(s) ? s : _s(s);
   }
   re2.ensureAsyncIterable = $n;
 });
-var ks = S((z2) => {
+var Ms = S((z2) => {
   "use strict";
   Object.defineProperty(z2, "__esModule", { value: true });
   z2.decodeStream = z2.decodeMultiStream = z2.decodeArrayStream = z2.decodeAsync = void 0;
-  var qr = Vt(), Vr = _s(), Jt = Fr();
+  var qr = Vt(), Vr = Ss(), Jt = Fr();
   async function Kn(s, e = Jt.defaultDecodeOptions) {
     let t = (0, Vr.ensureAsyncIterable)(s);
     return new qr.Decoder(e.extensionCodec, e.context, e.maxStrLength, e.maxBinLength, e.maxArrayLength, e.maxMapLength, e.maxExtLength).decodeAsync(t);
@@ -30458,13 +30458,13 @@ var ks = S((z2) => {
     return new qr.Decoder(e.extensionCodec, e.context, e.maxStrLength, e.maxBinLength, e.maxArrayLength, e.maxMapLength, e.maxExtLength).decodeArrayStream(t);
   }
   z2.decodeArrayStream = Qn;
-  function Ss(s, e = Jt.defaultDecodeOptions) {
+  function ks(s, e = Jt.defaultDecodeOptions) {
     let t = (0, Vr.ensureAsyncIterable)(s);
     return new qr.Decoder(e.extensionCodec, e.context, e.maxStrLength, e.maxBinLength, e.maxArrayLength, e.maxMapLength, e.maxExtLength).decodeStream(t);
   }
-  z2.decodeMultiStream = Ss;
+  z2.decodeMultiStream = ks;
   function Zn(s, e = Jt.defaultDecodeOptions) {
-    return Ss(s, e);
+    return ks(s, e);
   }
   z2.decodeStream = Zn;
 });
@@ -30472,18 +30472,18 @@ var zt = S((h2) => {
   "use strict";
   Object.defineProperty(h2, "__esModule", { value: true });
   h2.decodeTimestampExtension = h2.encodeTimestampExtension = h2.decodeTimestampToTimeSpec = h2.encodeTimeSpecToTimestamp = h2.encodeDateToTimeSpec = h2.EXT_TIMESTAMP = h2.ExtData = h2.ExtensionCodec = h2.Encoder = h2.DataViewIndexOutOfBoundsError = h2.DecodeError = h2.Decoder = h2.decodeStream = h2.decodeMultiStream = h2.decodeArrayStream = h2.decodeAsync = h2.decodeMulti = h2.decode = h2.encode = void 0;
-  var Yn = bs();
+  var Yn = ws();
   Object.defineProperty(h2, "encode", { enumerable: true, get: function() {
     return Yn.encode;
   } });
-  var Ms = Fr();
+  var Ds = Fr();
   Object.defineProperty(h2, "decode", { enumerable: true, get: function() {
-    return Ms.decode;
+    return Ds.decode;
   } });
   Object.defineProperty(h2, "decodeMulti", { enumerable: true, get: function() {
-    return Ms.decodeMulti;
+    return Ds.decodeMulti;
   } });
-  var Ht = ks();
+  var Ht = Ms();
   Object.defineProperty(h2, "decodeAsync", { enumerable: true, get: function() {
     return Ht.decodeAsync;
   } });
@@ -30496,12 +30496,12 @@ var zt = S((h2) => {
   Object.defineProperty(h2, "decodeStream", { enumerable: true, get: function() {
     return Ht.decodeStream;
   } });
-  var Ds = Vt();
+  var Ws = Vt();
   Object.defineProperty(h2, "Decoder", { enumerable: true, get: function() {
-    return Ds.Decoder;
+    return Ws.Decoder;
   } });
   Object.defineProperty(h2, "DataViewIndexOutOfBoundsError", { enumerable: true, get: function() {
-    return Ds.DataViewIndexOutOfBoundsError;
+    return Ws.DataViewIndexOutOfBoundsError;
   } });
   var eo = Ct();
   Object.defineProperty(h2, "DecodeError", { enumerable: true, get: function() {
@@ -30544,9 +30544,9 @@ var I = class extends Error {
     super(e), this.name = this.constructor.name, Object.setPrototypeOf(this, new.target.prototype);
   }
 };
-var O = class extends I {
+var A = class extends I {
 };
-var T = class extends I {
+var P = class extends I {
 };
 var Z = class extends I {
 };
@@ -30575,9 +30575,9 @@ else if (m)
   };
 else
   throw new I("Cannot determine runtime environment");
-var l = {};
+var c = {};
 function es(s) {
-  Object.keys(s).forEach((e) => l._free(s[e]));
+  Object.keys(s).forEach((e) => c._free(s[e]));
 }
 var N = { null: 0, symbol: 1, pairlist: 2, closure: 3, environment: 4, promise: 5, call: 6, special: 7, builtin: 8, string: 9, logical: 10, integer: 13, double: 14, complex: 15, character: 16, dots: 17, any: 18, list: 19, expression: 20, bytecode: 21, pointer: 22, weakref: 23, raw: 24, s4: 25, new: 30, free: 31, function: 99 };
 function mr(s) {
@@ -30587,68 +30587,68 @@ function Ce(s) {
   return !!s && typeof s == "object" && "re" in s && "im" in s;
 }
 function je(s) {
-  return l._Rf_protect(L(s)), s;
+  return c._Rf_protect(L(s)), s;
 }
 function w(s, e) {
-  return l._Rf_protect(L(s)), ++e.n, s;
+  return c._Rf_protect(L(s)), ++e.n, s;
 }
 function ts(s) {
-  let e = l._malloc(4);
-  return l._R_ProtectWithIndex(L(s), e), { loc: l.getValue(e, "i32"), ptr: e };
+  let e = c._malloc(4);
+  return c._R_ProtectWithIndex(L(s), e), { loc: c.getValue(e, "i32"), ptr: e };
 }
 function rs(s) {
-  l._Rf_unprotect(1), l._free(s.ptr);
+  c._Rf_unprotect(1), c._free(s.ptr);
 }
 function ss(s, e) {
-  return l._R_Reprotect(L(s), e.loc), s;
+  return c._R_Reprotect(L(s), e.loc), s;
 }
-function P(s) {
-  l._Rf_unprotect(s);
+function T(s) {
+  c._Rf_unprotect(s);
 }
 function gr(s, e, t) {
-  l._Rf_defineVar(L(e), L(t), L(s));
+  c._Rf_defineVar(L(e), L(t), L(s));
 }
 function br(s, e) {
   let t = {}, r = { n: 0 };
   try {
     let n = new Be(e);
-    w(n, r), t.code = l.allocateUTF8(s);
-    let o = l._R_ParseEvalString(t.code, n.ptr);
+    w(n, r), t.code = c.allocateUTF8(s);
+    let o = c._R_ParseEvalString(t.code, n.ptr);
     return y.wrap(o);
   } finally {
-    es(t), P(r.n);
+    es(t), T(r.n);
   }
 }
 function Ne(s, e) {
-  return l.getWasmTableEntry(l.GOT.ffi_safe_eval.value)(L(s), L(e));
+  return c.getWasmTableEntry(c.GOT.ffi_safe_eval.value)(L(s), L(e));
 }
-var cn = /* @__PURE__ */ new WeakMap();
+var un = /* @__PURE__ */ new WeakMap();
 function ns(s, e) {
-  return cn.set(s, e), s;
+  return un.set(s, e), s;
 }
-var wt = 63;
+var Le = 63;
 function xt() {
-  let s = Array.from({ length: 4 }, un).join("-");
-  if (s.length !== wt)
+  let s = Array.from({ length: 4 }, pn).join("-");
+  if (s.length !== Le)
     throw new Error("comlink internal error: UUID has the wrong length");
   return s;
 }
-function un() {
+function pn() {
   let s = Math.floor(Math.random() * Number.MAX_SAFE_INTEGER).toString(16), e = 15 - s.length;
   return e > 0 && (s = Array.from({ length: e }, () => 0).join("") + s), s;
 }
 function L(s) {
-  return Pt(s) ? s.ptr : s;
+  return Tt(s) ? s.ptr : s;
 }
 function le(s, e) {
-  if (l._TYPEOF(s.ptr) !== N[e])
+  if (c._TYPEOF(s.ptr) !== N[e])
     throw new Error(`Unexpected object type "${s.type()}" when expecting type "${e}"`);
 }
-function os(s) {
+function as(s) {
   if (mr(s))
-    return new (as(s.type))(s);
+    return new (is(s.type))(s);
   if (s && typeof s == "object" && "type" in s && s.type === "null")
-    return new Tt();
+    return new Pt();
   if (s === null)
     return new Y({ type: "logical", names: null, values: [null] });
   if (typeof s == "boolean")
@@ -30658,9 +30658,9 @@ function os(s) {
   if (typeof s == "string")
     return new F(s);
   if (Ce(s))
-    return new Le(s);
-  if (ArrayBuffer.isView(s) || s instanceof ArrayBuffer)
     return new Fe(s);
+  if (ArrayBuffer.isView(s) || s instanceof ArrayBuffer)
+    return new qe(s);
   if (Array.isArray(s))
     return dn(s);
   if (typeof s == "object")
@@ -30669,8 +30669,8 @@ function os(s) {
 }
 function dn(s) {
   let e = { n: 0 };
-  if (s.every((r) => r && typeof r == "object" && !Pt(r) && !Ce(r))) {
-    let r = s, n = r.every((i) => Object.keys(i).filter((c2) => !Object.keys(r[0]).includes(c2)).length === 0 && Object.keys(r[0]).filter((c2) => !Object.keys(i).includes(c2)).length === 0), o = r.every((i) => Object.values(i).every((c2) => ls(c2) || is(c2)));
+  if (s.every((r) => r && typeof r == "object" && !Tt(r) && !Ce(r))) {
+    let r = s, n = r.every((i) => Object.keys(i).filter((l) => !Object.keys(r[0]).includes(l)).length === 0 && Object.keys(r[0]).filter((l) => !Object.keys(i).includes(l)).length === 0), o = r.every((i) => Object.values(i).every((l) => cs(l) || ls(l)));
     if (n && o)
       return ee.fromD3(r);
   }
@@ -30684,7 +30684,7 @@ function dn(s) {
     let r = new q([new U("c"), ...s]);
     return w(r, e), r.eval();
   } finally {
-    P(e.n);
+    T(e.n);
   }
 }
 var x = class {
@@ -30692,7 +30692,7 @@ var x = class {
     this.ptr = e;
   }
   type() {
-    let e = l._TYPEOF(this.ptr);
+    let e = c._TYPEOF(this.ptr);
     return Object.keys(N).find((r) => N[r] === e);
   }
 };
@@ -30701,13 +30701,13 @@ var vt;
 var ae = class extends x {
   constructor(t) {
     if (!(t instanceof x))
-      return os(t);
+      return as(t);
     super(t.ptr);
     u(this, Re);
   }
   static wrap(t) {
-    let r = l._TYPEOF(t), n = Object.keys(N)[Object.values(N).indexOf(r)];
-    return new (as(n))(new x(t));
+    let r = c._TYPEOF(t), n = Object.keys(N)[Object.values(N).indexOf(r)];
+    return new (is(n))(new x(t));
   }
   get [Symbol.toStringTag]() {
     return `RObject:${this.type()}`;
@@ -30722,21 +30722,21 @@ var ae = class extends x {
     br(".Internal(inspect(x))", { x: this });
   }
   isNull() {
-    return l._TYPEOF(this.ptr) === N.null;
+    return c._TYPEOF(this.ptr) === N.null;
   }
   isNa() {
     try {
       let t = br("is.na(x)", { x: this });
       return je(t), t.toBoolean();
     } finally {
-      P(1);
+      T(1);
     }
   }
   isUnbound() {
     return this.ptr === k.unboundValue.ptr;
   }
   attrs() {
-    return ie.wrap(l._ATTRIB(this.ptr));
+    return ie.wrap(c._ATTRIB(this.ptr));
   }
   class() {
     let t = { n: 0 }, r = new q([new U("class"), this]);
@@ -30744,7 +30744,7 @@ var ae = class extends x {
     try {
       return r.eval();
     } finally {
-      P(t.n);
+      T(t.n);
     }
   }
   setNames(t) {
@@ -30755,10 +30755,10 @@ var ae = class extends x {
       r = new F(t);
     else
       throw new Error("Argument to setNames must be null or an Array of strings or null");
-    return l._Rf_setAttrib(this.ptr, k.namesSymbol.ptr, r.ptr), this;
+    return c._Rf_setAttrib(this.ptr, k.namesSymbol.ptr, r.ptr), this;
   }
   names() {
-    let t = F.wrap(l._Rf_getAttrib(this.ptr, k.namesSymbol.ptr));
+    let t = F.wrap(c._Rf_getAttrib(this.ptr, k.namesSymbol.ptr));
     return t.isNull() ? null : t.toArray();
   }
   includes(t) {
@@ -30780,8 +30780,8 @@ var ae = class extends x {
   pluck(...t) {
     let r = ts(k.null);
     try {
-      let n = (i, c2) => {
-        let p2 = i.get(c2);
+      let n = (i, l) => {
+        let p2 = i.get(l);
         return ss(p2, r);
       }, o = t.reduce(n, this);
       return o.isNull() ? void 0 : o;
@@ -30796,10 +30796,10 @@ var ae = class extends x {
       w(o, n);
       let i = new ae(r);
       w(i, n);
-      let c2 = new U("[[<-"), p2 = l._Rf_lang4(c2.ptr, this.ptr, o.ptr, i.ptr);
+      let l = new U("[[<-"), p2 = c._Rf_lang4(l.ptr, this.ptr, o.ptr, i.ptr);
       return w(p2, n), ae.wrap(Ne(p2, k.baseEnv));
     } finally {
-      P(n.n);
+      T(n.n);
     }
   }
   static getMethods(t) {
@@ -30816,15 +30816,15 @@ Re = /* @__PURE__ */ new WeakSet(), vt = function(t, r) {
   try {
     let o = new ae(t);
     w(o, n);
-    let i = l._Rf_lang3(r, this.ptr, o.ptr);
+    let i = c._Rf_lang3(r, this.ptr, o.ptr);
     return w(i, n), ae.wrap(Ne(i, k.baseEnv));
   } finally {
-    P(n.n);
+    T(n.n);
   }
 };
-var Tt = class extends y {
+var Pt = class extends y {
   constructor() {
-    return super(new x(l.getValue(l._R_NilValue, "*"))), this;
+    return super(new x(c.getValue(c._R_NilValue, "*"))), this;
   }
   toJs() {
     return { type: "null" };
@@ -30836,11 +30836,11 @@ var U = class extends y {
       le(e, "symbol"), super(e);
       return;
     }
-    let t = l.allocateUTF8(e);
+    let t = c.allocateUTF8(e);
     try {
-      super(new x(l._Rf_install(t)));
+      super(new x(c._Rf_install(t)));
     } finally {
-      l._free(t);
+      c._free(t);
     }
   }
   toJs() {
@@ -30854,13 +30854,13 @@ var U = class extends y {
     return this.printname().toString();
   }
   printname() {
-    return Ve.wrap(l._PRINTNAME(this.ptr));
+    return Je.wrap(c._PRINTNAME(this.ptr));
   }
   symvalue() {
-    return y.wrap(l._SYMVALUE(this.ptr));
+    return y.wrap(c._SYMVALUE(this.ptr));
   }
   internal() {
-    return y.wrap(l._INTERNAL(this.ptr));
+    return y.wrap(c._INTERNAL(this.ptr));
   }
 };
 var ie = class extends y {
@@ -30869,13 +30869,13 @@ var ie = class extends y {
       return le(e, "pairlist"), super(e), this;
     let t = { n: 0 };
     try {
-      let { names: r, values: n } = me(e), o = ie.wrap(l._Rf_allocList(n.length));
+      let { names: r, values: n } = me(e), o = ie.wrap(c._Rf_allocList(n.length));
       w(o, t);
-      for (let [i, c2] = [0, o]; !c2.isNull(); [i, c2] = [i + 1, c2.cdr()])
-        c2.setcar(new y(n[i]));
+      for (let [i, l] = [0, o]; !l.isNull(); [i, l] = [i + 1, l.cdr()])
+        l.setcar(new y(n[i]));
       o.setNames(r), super(o);
     } finally {
-      P(t.n);
+      T(t.n);
     }
   }
   get length() {
@@ -30890,7 +30890,7 @@ var ie = class extends y {
       throw new Error("Duplicate key when converting pairlist without allowDuplicateKey enabled");
     if (!t && o.some((i) => !i))
       throw new Error("Empty or null key when converting pairlist without allowEmptyKey enabled");
-    return Object.fromEntries(n.filter((i, c2) => n.findIndex((p2) => p2[0] === i[0]) === c2));
+    return Object.fromEntries(n.filter((i, l) => n.findIndex((p2) => p2[0] === i[0]) === l));
   }
   entries(e = { depth: 1 }) {
     let t = this.toJs(e);
@@ -30898,9 +30898,9 @@ var ie = class extends y {
   }
   toJs(e = { depth: 0 }, t = 1) {
     let r = [], n = false, o = [];
-    for (let c2 = this; !c2.isNull(); c2 = c2.cdr()) {
-      let p2 = c2.tag();
-      p2.isNull() ? r.push("") : (n = true, r.push(p2.toString())), e.depth && t >= e.depth ? o.push(c2.car()) : o.push(c2.car().toJs(e, t + 1));
+    for (let l = this; !l.isNull(); l = l.cdr()) {
+      let p2 = l.tag();
+      p2.isNull() ? r.push("") : (n = true, r.push(p2.toString())), e.depth && t >= e.depth ? o.push(l.car()) : o.push(l.car().toJs(e, t + 1));
     }
     return { type: "pairlist", names: n ? r : null, values: o };
   }
@@ -30908,16 +30908,16 @@ var ie = class extends y {
     return e in this.toObject();
   }
   setcar(e) {
-    l._SETCAR(this.ptr, e.ptr);
+    c._SETCAR(this.ptr, e.ptr);
   }
   car() {
-    return y.wrap(l._CAR(this.ptr));
+    return y.wrap(c._CAR(this.ptr));
   }
   cdr() {
-    return y.wrap(l._CDR(this.ptr));
+    return y.wrap(c._CDR(this.ptr));
   }
   tag() {
-    return y.wrap(l._TAG(this.ptr));
+    return y.wrap(c._TAG(this.ptr));
   }
 };
 var q = class extends y {
@@ -30926,43 +30926,43 @@ var q = class extends y {
       return le(e, "call"), super(e), this;
     let t = { n: 0 };
     try {
-      let { values: r } = me(e), n = r.map((i) => w(new y(i), t)), o = q.wrap(l._Rf_allocVector(N.call, r.length));
+      let { values: r } = me(e), n = r.map((i) => w(new y(i), t)), o = q.wrap(c._Rf_allocVector(N.call, r.length));
       w(o, t);
-      for (let [i, c2] = [0, o]; !c2.isNull(); [i, c2] = [i + 1, c2.cdr()])
-        c2.setcar(n[i]);
+      for (let [i, l] = [0, o]; !l.isNull(); [i, l] = [i + 1, l.cdr()])
+        l.setcar(n[i]);
       super(o);
     } finally {
-      P(t.n);
+      T(t.n);
     }
   }
   setcar(e) {
-    l._SETCAR(this.ptr, e.ptr);
+    c._SETCAR(this.ptr, e.ptr);
   }
   car() {
-    return y.wrap(l._CAR(this.ptr));
+    return y.wrap(c._CAR(this.ptr));
   }
   cdr() {
-    return y.wrap(l._CDR(this.ptr));
+    return y.wrap(c._CDR(this.ptr));
   }
   eval() {
-    return l.webr.evalR(this, { env: k.baseEnv });
+    return c.webr.evalR(this, { env: k.baseEnv });
   }
   capture(e = {}) {
-    return l.webr.captureR(this, e);
+    return c.webr.captureR(this, e);
   }
   deparse() {
     let e = { n: 0 };
     try {
-      let t = l._Rf_lang2(new U("deparse1").ptr, l._Rf_lang2(new U("quote").ptr, this.ptr));
+      let t = c._Rf_lang2(new U("deparse1").ptr, c._Rf_lang2(new U("quote").ptr, this.ptr));
       w(t, e);
       let r = F.wrap(Ne(t, k.baseEnv));
       return w(r, e), r.toString();
     } finally {
-      P(e.n);
+      T(e.n);
     }
   }
 };
-var qe = class extends y {
+var Ve = class extends y {
   constructor(e, t = null) {
     if (e instanceof x) {
       if (le(e, "list"), super(e), t) {
@@ -30974,23 +30974,23 @@ var qe = class extends y {
     }
     let r = { n: 0 };
     try {
-      let n = me(e), o = l._Rf_allocVector(N.list, n.values.length);
-      w(o, r), n.values.forEach((c2, p2) => {
-        l._SET_VECTOR_ELT(o, p2, new y(c2).ptr);
+      let n = me(e), o = c._Rf_allocVector(N.list, n.values.length);
+      w(o, r), n.values.forEach((l, p2) => {
+        c._SET_VECTOR_ELT(o, p2, new y(l).ptr);
       });
       let i = t || n.names;
       if (i && i.length !== n.values.length)
         throw new Error("Can't construct named `RList`. Supplied `names` must be the same length as the list.");
       y.wrap(o).setNames(i), super(new x(o));
     } finally {
-      P(r.n);
+      T(r.n);
     }
   }
   get length() {
-    return l._LENGTH(this.ptr);
+    return c._LENGTH(this.ptr);
   }
   isDataFrame() {
-    let e = ie.wrap(l._ATTRIB(this.ptr)).get("class");
+    let e = ie.wrap(c._ATTRIB(this.ptr)).get("class");
     return !e.isNull() && e.toArray().includes("data.frame");
   }
   toArray(e = { depth: 1 }) {
@@ -31002,7 +31002,7 @@ var qe = class extends y {
       throw new Error("Duplicate key when converting list without allowDuplicateKey enabled");
     if (!t && o.some((i) => !i))
       throw new Error("Empty or null key when converting list without allowEmptyKey enabled");
-    return Object.fromEntries(n.filter((i, c2) => n.findIndex((p2) => p2[0] === i[0]) === c2));
+    return Object.fromEntries(n.filter((i, l) => n.findIndex((p2) => p2[0] === i[0]) === l));
   }
   toD3() {
     if (!this.isDataFrame())
@@ -31017,7 +31017,7 @@ var qe = class extends y {
     return { type: "list", names: this.names(), values: [...Array(this.length).keys()].map((r) => e.depth && t >= e.depth ? this.get(r + 1) : this.get(r + 1).toJs(e, t + 1)) };
   }
 };
-var ee = class extends qe {
+var ee = class extends Ve {
   constructor(e) {
     if (e instanceof x) {
       if (super(e), !this.isDataFrame())
@@ -31029,18 +31029,18 @@ var ee = class extends qe {
   static fromObject(e) {
     let { names: t, values: r } = me(e), n = { n: 0 };
     try {
-      let o = !!t && t.length > 0 && t.every((c2) => c2), i = r.length > 0 && r.every((c2) => Array.isArray(c2) || ArrayBuffer.isView(c2) || c2 instanceof ArrayBuffer);
+      let o = !!t && t.length > 0 && t.every((l) => l), i = r.length > 0 && r.every((l) => Array.isArray(l) || ArrayBuffer.isView(l) || l instanceof ArrayBuffer);
       if (o && i) {
-        let c2 = r, p2 = c2.every((b2) => b2.length === c2[0].length), D2 = c2.every((b2) => ls(b2[0]) || is(b2[0]));
+        let l = r, p2 = l.every((b2) => b2.length === l[0].length), D2 = l.every((b2) => cs(b2[0]) || ls(b2[0]));
         if (p2 && D2) {
-          let b2 = new qe({ type: "list", names: t, values: c2.map((tn) => os(tn)) });
+          let b2 = new Ve({ type: "list", names: t, values: l.map((rn) => as(rn)) });
           w(b2, n);
           let j2 = new q([new U("as.data.frame"), b2]);
           return w(j2, n), new ee(j2.eval());
         }
       }
     } finally {
-      P(n.n);
+      T(n.n);
     }
     throw new Error("Can't construct `data.frame`. Source object is not eligible.");
   }
@@ -31055,7 +31055,7 @@ var ye = class extends y {
       let r = new q([this, ...e]);
       return w(r, t), r.eval();
     } finally {
-      P(t.n);
+      T(t.n);
     }
   }
   capture(e = {}, ...t) {
@@ -31064,25 +31064,25 @@ var ye = class extends y {
       let n = new q([this, ...t]);
       return w(n, r), n.capture(e);
     } finally {
-      P(r.n);
+      T(r.n);
     }
   }
 };
-var Ve = class extends y {
+var Je = class extends y {
   constructor(e) {
     if (e instanceof x) {
       le(e, "string"), super(e);
       return;
     }
-    let t = l.allocateUTF8(e);
+    let t = c.allocateUTF8(e);
     try {
-      super(new x(l._Rf_mkChar(t)));
+      super(new x(c._Rf_mkChar(t)));
     } finally {
-      l._free(t);
+      c._free(t);
     }
   }
   toString() {
-    return l.UTF8ToString(l._R_CHAR(this.ptr));
+    return c.UTF8ToString(c._R_CHAR(this.ptr));
   }
   toJs() {
     return { type: "string", value: this.toString() };
@@ -31094,38 +31094,38 @@ var Be = class extends y {
       return le(e, "environment"), super(e), this;
     let t = 0;
     try {
-      let { names: r, values: n } = me(e), o = je(l._R_NewEnv(k.globalEnv.ptr, 0, 0));
-      ++t, n.forEach((i, c2) => {
-        let p2 = r ? r[c2] : null;
+      let { names: r, values: n } = me(e), o = je(c._R_NewEnv(k.globalEnv.ptr, 0, 0));
+      ++t, n.forEach((i, l) => {
+        let p2 = r ? r[l] : null;
         if (!p2)
           throw new Error("Can't create object in new environment with empty symbol name");
         let D2 = new U(p2), b2 = je(new y(i));
         try {
           gr(o, D2, b2);
         } finally {
-          P(1);
+          T(1);
         }
       }), super(new x(o));
     } finally {
-      P(t);
+      T(t);
     }
   }
   ls(e = false, t = true) {
-    return F.wrap(l._R_lsInternal3(this.ptr, Number(e), Number(t))).toArray();
+    return F.wrap(c._R_lsInternal3(this.ptr, Number(e), Number(t))).toArray();
   }
   bind(e, t) {
     let r = new U(e), n = je(new y(t));
     try {
       gr(this, r, n);
     } finally {
-      P(1);
+      T(1);
     }
   }
   names() {
     return this.ls(true, true);
   }
   frame() {
-    return y.wrap(l._FRAME(this.ptr));
+    return y.wrap(c._FRAME(this.ptr));
   }
   subset(e) {
     if (typeof e == "number")
@@ -31150,14 +31150,14 @@ var te = class extends y {
       return le(e, t), super(e), this;
     let n = { n: 0 };
     try {
-      let { names: o, values: i } = me(e), c2 = l._Rf_allocVector(N[t], i.length);
-      w(c2, n), i.forEach(r(c2)), y.wrap(c2).setNames(o), super(new x(c2));
+      let { names: o, values: i } = me(e), l = c._Rf_allocVector(N[t], i.length);
+      w(l, n), i.forEach(r(l)), y.wrap(l).setNames(o), super(new x(l));
     } finally {
-      P(n.n);
+      T(n.n);
     }
   }
   get length() {
-    return l._LENGTH(this.ptr);
+    return c._LENGTH(this.ptr);
   }
   get(e) {
     return super.get(e);
@@ -31171,14 +31171,14 @@ var te = class extends y {
   detectMissing() {
     let e = { n: 0 };
     try {
-      let t = l._Rf_lang2(new U("is.na").ptr, this.ptr);
+      let t = c._Rf_lang2(new U("is.na").ptr, this.ptr);
       w(t, e);
       let r = Y.wrap(Ne(t, k.baseEnv));
       w(r, e);
       let n = r.toTypedArray();
       return Array.from(n).map((o) => !!o);
     } finally {
-      P(e.n);
+      T(e.n);
     }
   }
   toArray() {
@@ -31191,7 +31191,7 @@ var te = class extends y {
       throw new Error("Duplicate key when converting atomic vector without allowDuplicateKey enabled");
     if (!t && n.some((o) => !o))
       throw new Error("Empty or null key when converting atomic vector without allowEmptyKey enabled");
-    return Object.fromEntries(r.filter((o, i) => r.findIndex((c2) => c2[0] === o[0]) === i));
+    return Object.fromEntries(r.filter((o, i) => r.findIndex((l) => l[0] === o[0]) === i));
   }
   entries() {
     let e = this.toArray(), t = this.names();
@@ -31218,7 +31218,7 @@ var wr = class extends te {
     return e;
   }
   toTypedArray() {
-    return new Int32Array(l.HEAP32.subarray(l._LOGICAL(this.ptr) / 4, l._LOGICAL(this.ptr) / 4 + this.length));
+    return new Int32Array(c.HEAP32.subarray(c._LOGICAL(this.ptr) / 4, c._LOGICAL(this.ptr) / 4 + this.length));
   }
   toArray() {
     let e = this.toTypedArray();
@@ -31227,9 +31227,9 @@ var wr = class extends te {
 };
 var Y = wr;
 _t = /* @__PURE__ */ new WeakMap(), u(Y, _t, (e) => {
-  let t = l._LOGICAL(e), r = l.getValue(l._R_NaInt, "i32");
+  let t = c._LOGICAL(e), r = c.getValue(c._R_NaInt, "i32");
   return (n, o) => {
-    l.setValue(t + 4 * o, n === null ? r : !!n, "i32");
+    c.setValue(t + 4 * o, n === null ? r : !!n, "i32");
   };
 });
 var St;
@@ -31249,14 +31249,14 @@ var xr = class extends te {
     return e;
   }
   toTypedArray() {
-    return new Int32Array(l.HEAP32.subarray(l._INTEGER(this.ptr) / 4, l._INTEGER(this.ptr) / 4 + this.length));
+    return new Int32Array(c.HEAP32.subarray(c._INTEGER(this.ptr) / 4, c._INTEGER(this.ptr) / 4 + this.length));
   }
 };
 var Et = xr;
 St = /* @__PURE__ */ new WeakMap(), u(Et, St, (e) => {
-  let t = l._INTEGER(e), r = l.getValue(l._R_NaInt, "i32");
+  let t = c._INTEGER(e), r = c.getValue(c._R_NaInt, "i32");
   return (n, o) => {
-    l.setValue(t + 4 * o, n === null ? r : Math.round(Number(n)), "i32");
+    c.setValue(t + 4 * o, n === null ? r : Math.round(Number(n)), "i32");
   };
 });
 var kt;
@@ -31276,14 +31276,14 @@ var vr = class extends te {
     return e;
   }
   toTypedArray() {
-    return new Float64Array(l.HEAPF64.subarray(l._REAL(this.ptr) / 8, l._REAL(this.ptr) / 8 + this.length));
+    return new Float64Array(c.HEAPF64.subarray(c._REAL(this.ptr) / 8, c._REAL(this.ptr) / 8 + this.length));
   }
 };
 var fe = vr;
 kt = /* @__PURE__ */ new WeakMap(), u(fe, kt, (e) => {
-  let t = l._REAL(e), r = l.getValue(l._R_NaReal, "double");
+  let t = c._REAL(e), r = c.getValue(c._R_NaReal, "double");
   return (n, o) => {
-    l.setValue(t + 8 * o, n === null ? r : n, "double");
+    c.setValue(t + 8 * o, n === null ? r : n, "double");
   };
 });
 var Mt;
@@ -31303,24 +31303,24 @@ var Er = class extends te {
     return e;
   }
   toTypedArray() {
-    return new Float64Array(l.HEAPF64.subarray(l._COMPLEX(this.ptr) / 8, l._COMPLEX(this.ptr) / 8 + 2 * this.length));
+    return new Float64Array(c.HEAPF64.subarray(c._COMPLEX(this.ptr) / 8, c._COMPLEX(this.ptr) / 8 + 2 * this.length));
   }
   toArray() {
     let e = this.toTypedArray();
     return this.detectMissing().map((t, r) => t ? null : { re: e[2 * r], im: e[2 * r + 1] });
   }
 };
-var Le = Er;
-Mt = /* @__PURE__ */ new WeakMap(), u(Le, Mt, (e) => {
-  let t = l._COMPLEX(e), r = l.getValue(l._R_NaReal, "double");
+var Fe = Er;
+Mt = /* @__PURE__ */ new WeakMap(), u(Fe, Mt, (e) => {
+  let t = c._COMPLEX(e), r = c.getValue(c._R_NaReal, "double");
   return (n, o) => {
-    l.setValue(t + 8 * (2 * o), n === null ? r : n.re, "double"), l.setValue(t + 8 * (2 * o + 1), n === null ? r : n.im, "double");
+    c.setValue(t + 8 * (2 * o), n === null ? r : n.re, "double"), c.setValue(t + 8 * (2 * o + 1), n === null ? r : n.im, "double");
   };
 });
 var Dt;
-var Tr = class extends te {
+var Pr = class extends te {
   constructor(e) {
-    super(e, "character", a(Tr, Dt));
+    super(e, "character", a(Pr, Dt));
   }
   getString(e) {
     return this.get(e).toArray()[0];
@@ -31334,20 +31334,20 @@ var Tr = class extends te {
     return e;
   }
   toTypedArray() {
-    return new Uint32Array(l.HEAPU32.subarray(l._STRING_PTR(this.ptr) / 4, l._STRING_PTR(this.ptr) / 4 + this.length));
+    return new Uint32Array(c.HEAPU32.subarray(c._STRING_PTR(this.ptr) / 4, c._STRING_PTR(this.ptr) / 4 + this.length));
   }
   toArray() {
-    return this.detectMissing().map((e, t) => e ? null : l.UTF8ToString(l._R_CHAR(l._STRING_ELT(this.ptr, t))));
+    return this.detectMissing().map((e, t) => e ? null : c.UTF8ToString(c._R_CHAR(c._STRING_ELT(this.ptr, t))));
   }
 };
-var F = Tr;
+var F = Pr;
 Dt = /* @__PURE__ */ new WeakMap(), u(F, Dt, (e) => (t, r) => {
-  t === null ? l._SET_STRING_ELT(e, r, k.naString.ptr) : l._SET_STRING_ELT(e, r, new Ve(t).ptr);
+  t === null ? c._SET_STRING_ELT(e, r, k.naString.ptr) : c._SET_STRING_ELT(e, r, new Je(t).ptr);
 });
 var Wt;
-var Pr = class extends te {
+var Tr = class extends te {
   constructor(e) {
-    e instanceof ArrayBuffer && (e = new Uint8Array(e)), super(e, "raw", a(Pr, Wt));
+    e instanceof ArrayBuffer && (e = new Uint8Array(e)), super(e, "raw", a(Tr, Wt));
   }
   getNumber(e) {
     return this.get(e).toArray()[0];
@@ -31361,31 +31361,31 @@ var Pr = class extends te {
     return e;
   }
   toTypedArray() {
-    return new Uint8Array(l.HEAPU8.subarray(l._RAW(this.ptr), l._RAW(this.ptr) + this.length));
+    return new Uint8Array(c.HEAPU8.subarray(c._RAW(this.ptr), c._RAW(this.ptr) + this.length));
   }
 };
-var Fe = Pr;
-Wt = /* @__PURE__ */ new WeakMap(), u(Fe, Wt, (e) => {
-  let t = l._RAW(e);
+var qe = Tr;
+Wt = /* @__PURE__ */ new WeakMap(), u(qe, Wt, (e) => {
+  let t = c._RAW(e);
   return (r, n) => {
-    l.setValue(t + n, Number(r), "i8");
+    c.setValue(t + n, Number(r), "i8");
   };
 });
 function me(s) {
   return mr(s) ? s : Array.isArray(s) || ArrayBuffer.isView(s) ? { names: null, values: s } : s && typeof s == "object" && !Ce(s) ? { names: Object.keys(s), values: Object.values(s) } : { names: null, values: [s] };
 }
-function as(s) {
-  let e = { object: y, null: Tt, symbol: U, pairlist: ie, closure: ye, environment: Be, call: q, special: ye, builtin: ye, string: Ve, logical: Y, integer: Et, double: fe, complex: Le, character: F, list: qe, raw: Fe, function: ye, dataframe: ee };
+function is(s) {
+  let e = { object: y, null: Pt, symbol: U, pairlist: ie, closure: ye, environment: Be, call: q, special: ye, builtin: ye, string: Je, logical: Y, integer: Et, double: fe, complex: Fe, character: F, list: Ve, raw: qe, function: ye, dataframe: ee };
   return s in e ? e[s] : y;
 }
-function Pt(s) {
+function Tt(s) {
   return s instanceof y;
 }
-function is(s) {
-  let e = ["logical", "integer", "double", "complex", "character"];
-  return Pt(s) && e.includes(s.type()) || Pt(s) && s.isNa();
-}
 function ls(s) {
+  let e = ["logical", "integer", "double", "complex", "character"];
+  return Tt(s) && e.includes(s.type()) || Tt(s) && s.isNa();
+}
+function cs(s) {
   return s === null || typeof s == "number" || typeof s == "boolean" || typeof s == "string" || Ce(s);
 }
 var k;
@@ -31397,7 +31397,7 @@ function $() {
   });
   return s.promise = e, s;
 }
-function cs(s) {
+function us(s) {
   return new Promise((e) => setTimeout(e, s));
 }
 function V(s, e, t, ...r) {
@@ -31421,14 +31421,14 @@ function yn(s) {
 }
 var Os = oe(zt());
 var no = new TextEncoder();
-async function As(s, e, t) {
+async function Is(s, e, t) {
   try {
-    let { taskId: r, sizeBuffer: n, dataBuffer: o, signalBuffer: i } = e, c2 = (0, Os.encode)(t), p2 = c2.length <= o.length;
-    if (Atomics.store(n, 0, c2.length), Atomics.store(n, 1, +p2), !p2) {
+    let { taskId: r, sizeBuffer: n, dataBuffer: o, signalBuffer: i } = e, l = (0, Os.encode)(t), p2 = l.length <= o.length;
+    if (Atomics.store(n, 0, l.length), Atomics.store(n, 1, +p2), !p2) {
       let [D2, b2] = oo(s);
-      o.set(no.encode(D2)), await Ws(i, r), o = (await b2).dataBuffer;
+      o.set(no.encode(D2)), await As(i, r), o = (await b2).dataBuffer;
     }
-    o.set(c2), Atomics.store(n, 1, 1), await Ws(i, r);
+    o.set(l), Atomics.store(n, 1, 1), await As(i, r);
   } catch (r) {
     console.warn(r);
   }
@@ -31443,19 +31443,19 @@ function oo(s) {
     }), s.start && s.start();
   })];
 }
-async function Ws(s, e) {
+async function As(s, e) {
   let t = (e >> 1) % 32, r = 1;
   for (; Atomics.compareExchange(s, t + 1, 0, e) !== 0; )
-    await cs(r), r < 32 && (r *= 2);
+    await us(r), r < 32 && (r *= 2);
   Atomics.or(s, 0, 1 << t), Atomics.notify(s, 0);
 }
 var X;
 var G;
-var $e;
+var Ke;
 var Jr;
 var Ee = class {
   constructor() {
-    u(this, $e);
+    u(this, Ke);
     u(this, X, void 0);
     u(this, G, void 0);
     d(this, G, []), d(this, X, []);
@@ -31464,10 +31464,10 @@ var Ee = class {
     d(this, G, []), d(this, X, []);
   }
   put(e) {
-    a(this, G).length || E(this, $e, Jr).call(this), a(this, G).shift()(e);
+    a(this, G).length || E(this, Ke, Jr).call(this), a(this, G).shift()(e);
   }
   async get() {
-    return a(this, X).length || E(this, $e, Jr).call(this), a(this, X).shift();
+    return a(this, X).length || E(this, Ke, Jr).call(this), a(this, X).shift();
   }
   isEmpty() {
     return !a(this, X).length;
@@ -31479,22 +31479,22 @@ var Ee = class {
     return a(this, X).length - a(this, G).length;
   }
 };
-X = /* @__PURE__ */ new WeakMap(), G = /* @__PURE__ */ new WeakMap(), $e = /* @__PURE__ */ new WeakSet(), Jr = function() {
+X = /* @__PURE__ */ new WeakMap(), G = /* @__PURE__ */ new WeakMap(), Ke = /* @__PURE__ */ new WeakSet(), Jr = function() {
   a(this, X).push(new Promise((e) => {
     a(this, G).push(e);
   }));
 };
-function Te(s, e) {
-  return Is({ type: "request", data: { uuid: xt(), msg: s } }, e);
+function Pe(s, e) {
+  return Us({ type: "request", data: { uuid: xt(), msg: s } }, e);
 }
-function Ke(s, e, t) {
-  return Is({ type: "response", data: { uuid: s, resp: e } }, t);
+function Qe(s, e, t) {
+  return Us({ type: "response", data: { uuid: s, resp: e } }, t);
 }
-function Is(s, e) {
+function Us(s, e) {
   return e && ns(s, e), s;
 }
-function Cs(s) {
-  let e = new O(s.obj.message);
+function js(s) {
+  let e = new A(s.obj.message);
   return s.obj.name !== "Error" && (e.name = s.obj.name), e.stack = s.obj.stack, e;
 }
 function ao(s) {
@@ -31503,15 +31503,15 @@ function ao(s) {
 function $t(s) {
   return ao(s) && s.payloadType === "ptr";
 }
-var Pe;
-var Qe;
+var Te;
+var Ze;
 var se = class {
   constructor() {
     this.inputQueue = new Ee();
     this.outputQueue = new Ee();
     this.systemQueue = new Ee();
-    u(this, Pe, /* @__PURE__ */ new Map());
-    u(this, Qe, false);
+    u(this, Te, /* @__PURE__ */ new Map());
+    u(this, Ze, false);
   }
   async read() {
     return await this.outputQueue.get();
@@ -31526,49 +31526,49 @@ var se = class {
     return await this.systemQueue.get();
   }
   write(e) {
-    if (a(this, Qe))
-      throw new T("The webR communication channel has been closed.");
+    if (a(this, Ze))
+      throw new P("The webR communication channel has been closed.");
     this.inputQueue.put(e);
   }
   async request(e, t) {
-    let r = Te(e, t), { resolve: n, reject: o, promise: i } = $();
-    return a(this, Pe).set(r.data.uuid, { resolve: n, reject: o }), this.write(r), i;
+    let r = Pe(e, t), { resolve: n, reject: o, promise: i } = $();
+    return a(this, Te).set(r.data.uuid, { resolve: n, reject: o }), this.write(r), i;
   }
   putClosedMessage() {
-    d(this, Qe, true), this.outputQueue.put({ type: "closed" });
+    d(this, Ze, true), this.outputQueue.put({ type: "closed" });
   }
   resolveResponse(e) {
-    let t = e.data.uuid, r = a(this, Pe).get(t);
+    let t = e.data.uuid, r = a(this, Te).get(t);
     if (r) {
       let n = e.data.resp;
-      a(this, Pe).delete(t), n.payloadType === "err" ? r.reject(Cs(n)) : r.resolve(n);
+      a(this, Te).delete(t), n.payloadType === "err" ? r.reject(js(n)) : r.resolve(n);
     } else
       console.warn("Can't find request.");
   }
 };
-Pe = /* @__PURE__ */ new WeakMap(), Qe = /* @__PURE__ */ new WeakMap();
-var Ns = oe(zt());
+Te = /* @__PURE__ */ new WeakMap(), Ze = /* @__PURE__ */ new WeakMap();
+var Bs = oe(zt());
 var lo = new TextDecoder("utf-8");
 var _e;
 var Se;
-var Ze;
 var Ye;
+var et;
 var ke;
-_e = /* @__PURE__ */ new WeakMap(), Se = /* @__PURE__ */ new WeakMap(), Ze = /* @__PURE__ */ new WeakMap(), Ye = /* @__PURE__ */ new WeakMap(), ke = /* @__PURE__ */ new WeakMap();
+_e = /* @__PURE__ */ new WeakMap(), Se = /* @__PURE__ */ new WeakMap(), Ye = /* @__PURE__ */ new WeakMap(), et = /* @__PURE__ */ new WeakMap(), ke = /* @__PURE__ */ new WeakMap();
 var zr = new Int32Array(new ArrayBuffer(4));
 m && (globalThis.Worker = B("worker_threads").Worker);
 var Me;
 var Zt;
-var qs;
-var tt;
-var et = class extends se {
+var Vs;
+var rt;
+var tt = class extends se {
   constructor(t) {
     super();
     u(this, Zt);
     u(this, Me, void 0);
     this.close = () => {
     };
-    u(this, tt, async (t2, r2) => {
+    u(this, rt, async (t2, r2) => {
       if (!(!r2 || !r2.type))
         switch (r2.type) {
           case "resolve":
@@ -31587,25 +31587,25 @@ var et = class extends se {
             let n = r2, o = n.data.msg, i = n.data.reqData;
             switch (o.type) {
               case "read": {
-                let c2 = await this.inputQueue.get();
-                await As(t2, i, c2);
+                let l = await this.inputQueue.get();
+                await Is(t2, i, l);
                 break;
               }
               default:
-                throw new T(`Unsupported request type '${o.type}'.`);
+                throw new P(`Unsupported request type '${o.type}'.`);
             }
             return;
           }
           case "request":
-            throw new T("Can't send messages of type 'request' from a worker. Please Use 'sync-request' instead.");
+            throw new P("Can't send messages of type 'request' from a worker. Please Use 'sync-request' instead.");
         }
     });
     ({ resolve: this.resolve, reject: this.reject, promise: this.initialised } = $());
     let r = (n) => {
-      E(this, Zt, qs).call(this, n), this.close = () => {
+      E(this, Zt, Vs).call(this, n), this.close = () => {
         n.terminate(), this.putClosedMessage();
       };
-      let o = { type: "init", data: { config: t, channelType: A.SharedArrayBuffer } };
+      let o = { type: "init", data: { config: t, channelType: O.SharedArrayBuffer } };
       n.postMessage(o);
     };
     if (be(t.baseUrl))
@@ -31617,36 +31617,36 @@ var et = class extends se {
   }
   interrupt() {
     if (!a(this, Me))
-      throw new T("Failed attempt to interrupt before initialising interruptBuffer");
+      throw new P("Failed attempt to interrupt before initialising interruptBuffer");
     this.inputQueue.reset(), a(this, Me)[0] = 1;
   }
 };
-Me = /* @__PURE__ */ new WeakMap(), Zt = /* @__PURE__ */ new WeakSet(), qs = function(t) {
+Me = /* @__PURE__ */ new WeakMap(), Zt = /* @__PURE__ */ new WeakSet(), Vs = function(t) {
   m ? (t.on("message", (r) => {
-    a(this, tt).call(this, t, r);
+    a(this, rt).call(this, t, r);
   }), t.on("error", (r) => {
-    console.error(r), this.reject(new O("An error occurred initialising the webR SharedBufferChannel worker."));
-  })) : (t.onmessage = (r) => a(this, tt).call(this, t, r.data), t.onerror = (r) => {
-    console.error(r), this.reject(new O("An error occurred initialising the webR SharedBufferChannel worker."));
+    console.error(r), this.reject(new A("An error occurred initialising the webR SharedBufferChannel worker."));
+  })) : (t.onmessage = (r) => a(this, rt).call(this, t, r.data), t.onerror = (r) => {
+    console.error(r), this.reject(new A("An error occurred initialising the webR SharedBufferChannel worker."));
   });
-}, tt = /* @__PURE__ */ new WeakMap();
+}, rt = /* @__PURE__ */ new WeakMap();
 var ue;
-var rt;
-var pe;
 var st;
-ue = /* @__PURE__ */ new WeakMap(), rt = /* @__PURE__ */ new WeakMap(), pe = /* @__PURE__ */ new WeakMap(), st = /* @__PURE__ */ new WeakMap();
+var pe;
+var nt;
+ue = /* @__PURE__ */ new WeakMap(), st = /* @__PURE__ */ new WeakMap(), pe = /* @__PURE__ */ new WeakMap(), nt = /* @__PURE__ */ new WeakMap();
 var sr = oe(zt());
 m && (globalThis.Worker = B("worker_threads").Worker);
 var De;
 var de;
 var We;
 var er;
-var Vs;
-var tr;
 var Js;
-var rr;
+var tr;
 var Hs;
-var nt;
+var rr;
+var zs;
+var ot;
 var Yt = class extends se {
   constructor(t) {
     super();
@@ -31658,7 +31658,7 @@ var Yt = class extends se {
     u(this, De, /* @__PURE__ */ new Map());
     u(this, de, void 0);
     u(this, We, false);
-    u(this, nt, (t2, r2) => {
+    u(this, ot, (t2, r2) => {
       if (!(!r2 || !r2.type))
         switch (r2.type) {
           case "resolve":
@@ -31679,15 +31679,15 @@ var Yt = class extends se {
             return;
           }
           case "request":
-            throw new T("Can't send messages of type 'request' from a worker.Use service worker fetch request instead.");
+            throw new P("Can't send messages of type 'request' from a worker.Use service worker fetch request instead.");
         }
     });
     ({ resolve: this.resolve, reject: this.reject, promise: this.initialised } = $()), console.warn("The ServiceWorker communication channel is deprecated and will be removed in a future version of webR. Consider using the PostMessage channel instead. If blocking input is required (for example, `browser()`) the SharedArrayBuffer channel should be used. See https://docs.r-wasm.org/webr/latest/serving.html for further information.");
     let r = (n) => {
-      E(this, rr, Hs).call(this, n), this.close = () => {
+      E(this, rr, zs).call(this, n), this.close = () => {
         n.terminate(), this.putClosedMessage();
-      }, E(this, er, Vs).call(this, `${t.serviceWorkerUrl}webr-serviceworker.js`).then((o) => {
-        let i = { type: "init", data: { config: t, channelType: A.ServiceWorker, clientId: o, location: window.location.href } };
+      }, E(this, er, Js).call(this, `${t.serviceWorkerUrl}webr-serviceworker.js`).then((o) => {
+        let i = { type: "init", data: { config: t, channelType: O.ServiceWorker, clientId: o, location: window.location.href } };
         n.postMessage(i);
       });
     };
@@ -31701,14 +31701,14 @@ var Yt = class extends se {
   activeRegistration() {
     var t;
     if (!((t = a(this, de)) != null && t.active))
-      throw new T("Attempted to obtain a non-existent active registration.");
+      throw new P("Attempted to obtain a non-existent active registration.");
     return a(this, de).active;
   }
   interrupt() {
     d(this, We, true);
   }
 };
-De = /* @__PURE__ */ new WeakMap(), de = /* @__PURE__ */ new WeakMap(), We = /* @__PURE__ */ new WeakMap(), er = /* @__PURE__ */ new WeakSet(), Vs = async function(t) {
+De = /* @__PURE__ */ new WeakMap(), de = /* @__PURE__ */ new WeakMap(), We = /* @__PURE__ */ new WeakMap(), er = /* @__PURE__ */ new WeakSet(), Js = async function(t) {
   d(this, de, await navigator.serviceWorker.register(t)), await navigator.serviceWorker.ready, window.addEventListener("beforeunload", () => {
     var n;
     (n = a(this, de)) == null || n.unregister();
@@ -31719,58 +31719,58 @@ De = /* @__PURE__ */ new WeakMap(), de = /* @__PURE__ */ new WeakMap(), We = /* 
     }), this.activeRegistration().postMessage({ type: "register-client-main" });
   });
   return navigator.serviceWorker.addEventListener("message", (n) => {
-    E(this, tr, Js).call(this, n);
+    E(this, tr, Hs).call(this, n);
   }), r;
-}, tr = /* @__PURE__ */ new WeakSet(), Js = async function(t) {
+}, tr = /* @__PURE__ */ new WeakSet(), Hs = async function(t) {
   if (t.data.type === "request") {
     let r = t.data.data, n = a(this, De).get(r);
     if (!n)
-      throw new T("Request not found during service worker XHR request");
+      throw new P("Request not found during service worker XHR request");
     switch (a(this, De).delete(r), n.type) {
       case "read": {
         let o = await this.inputQueue.get();
-        this.activeRegistration().postMessage({ type: "wasm-webr-fetch-response", uuid: r, response: Ke(r, o) });
+        this.activeRegistration().postMessage({ type: "wasm-webr-fetch-response", uuid: r, response: Qe(r, o) });
         break;
       }
       case "interrupt": {
         let o = a(this, We);
-        this.activeRegistration().postMessage({ type: "wasm-webr-fetch-response", uuid: r, response: Ke(r, o) }), this.inputQueue.reset(), d(this, We, false);
+        this.activeRegistration().postMessage({ type: "wasm-webr-fetch-response", uuid: r, response: Qe(r, o) }), this.inputQueue.reset(), d(this, We, false);
         break;
       }
       default:
-        throw new T(`Unsupported request type '${n.type}'.`);
+        throw new P(`Unsupported request type '${n.type}'.`);
     }
     return;
   }
-}, rr = /* @__PURE__ */ new WeakSet(), Hs = function(t) {
+}, rr = /* @__PURE__ */ new WeakSet(), zs = function(t) {
   m ? (t.on("message", (r) => {
-    a(this, nt).call(this, t, r);
+    a(this, ot).call(this, t, r);
   }), t.on("error", (r) => {
-    console.error(r), this.reject(new O("An error occurred initialising the webR ServiceWorkerChannel worker."));
-  })) : (t.onmessage = (r) => a(this, nt).call(this, t, r.data), t.onerror = (r) => {
-    console.error(r), this.reject(new O("An error occurred initialising the webR ServiceWorkerChannel worker."));
+    console.error(r), this.reject(new A("An error occurred initialising the webR ServiceWorkerChannel worker."));
+  })) : (t.onmessage = (r) => a(this, ot).call(this, t, r.data), t.onerror = (r) => {
+    console.error(r), this.reject(new A("An error occurred initialising the webR ServiceWorkerChannel worker."));
   });
-}, nt = /* @__PURE__ */ new WeakMap();
-var Oe;
-var ot;
+}, ot = /* @__PURE__ */ new WeakMap();
+var Ae;
 var at;
 var it;
 var lt;
 var ct;
-Oe = /* @__PURE__ */ new WeakMap(), ot = /* @__PURE__ */ new WeakMap(), at = /* @__PURE__ */ new WeakMap(), it = /* @__PURE__ */ new WeakMap(), lt = /* @__PURE__ */ new WeakMap(), ct = /* @__PURE__ */ new WeakMap();
+var ut;
+Ae = /* @__PURE__ */ new WeakMap(), at = /* @__PURE__ */ new WeakMap(), it = /* @__PURE__ */ new WeakMap(), lt = /* @__PURE__ */ new WeakMap(), ct = /* @__PURE__ */ new WeakMap(), ut = /* @__PURE__ */ new WeakMap();
 m && (globalThis.Worker = B("worker_threads").Worker);
-var Ae;
+var Oe;
 var nr;
-var zs;
-var pt;
-var ut = class extends se {
+var Xs;
+var dt;
+var pt = class extends se {
   constructor(t) {
     super();
     u(this, nr);
     this.close = () => {
     };
-    u(this, Ae, void 0);
-    u(this, pt, async (t2, r2) => {
+    u(this, Oe, void 0);
+    u(this, dt, async (t2, r2) => {
       if (!(!r2 || !r2.type))
         switch (r2.type) {
           case "resolve":
@@ -31790,27 +31790,27 @@ var ut = class extends se {
             switch (o.type) {
               case "read": {
                 let i = await this.inputQueue.get();
-                if (a(this, Ae)) {
-                  let c2 = Ke(n.data.uuid, i);
-                  a(this, Ae).postMessage(c2);
+                if (a(this, Oe)) {
+                  let l = Qe(n.data.uuid, i);
+                  a(this, Oe).postMessage(l);
                 }
                 break;
               }
               default:
-                throw new T(`Unsupported request type '${o.type}'.`);
+                throw new P(`Unsupported request type '${o.type}'.`);
             }
             return;
           }
           case "sync-request":
-            throw new T("Can't send messages of type 'sync-request' in PostMessage mode. Use 'request' instead.");
+            throw new P("Can't send messages of type 'sync-request' in PostMessage mode. Use 'request' instead.");
         }
     });
     ({ resolve: this.resolve, reject: this.reject, promise: this.initialised } = $());
     let r = (n) => {
-      d(this, Ae, n), E(this, nr, zs).call(this, n), this.close = () => {
+      d(this, Oe, n), E(this, nr, Xs).call(this, n), this.close = () => {
         n.terminate(), this.putClosedMessage();
       };
-      let o = { type: "init", data: { config: t, channelType: A.PostMessage } };
+      let o = { type: "init", data: { config: t, channelType: O.PostMessage } };
       n.postMessage(o);
     };
     if (be(t.baseUrl))
@@ -31824,45 +31824,45 @@ var ut = class extends se {
     console.error("Interrupting R execution is not available when using the PostMessage channel");
   }
 };
-Ae = /* @__PURE__ */ new WeakMap(), nr = /* @__PURE__ */ new WeakSet(), zs = function(t) {
+Oe = /* @__PURE__ */ new WeakMap(), nr = /* @__PURE__ */ new WeakSet(), Xs = function(t) {
   m ? (t.on("message", (r) => {
-    a(this, pt).call(this, t, r);
+    a(this, dt).call(this, t, r);
   }), t.on("error", (r) => {
-    console.error(r), this.reject(new O("An error occurred initialising the webR PostMessageChannel worker."));
-  })) : (t.onmessage = (r) => a(this, pt).call(this, t, r.data), t.onerror = (r) => {
-    console.error(r), this.reject(new O("An error occurred initialising the webR PostMessageChannel worker."));
+    console.error(r), this.reject(new A("An error occurred initialising the webR PostMessageChannel worker."));
+  })) : (t.onmessage = (r) => a(this, dt).call(this, t, r.data), t.onerror = (r) => {
+    console.error(r), this.reject(new A("An error occurred initialising the webR PostMessageChannel worker."));
   });
-}, pt = /* @__PURE__ */ new WeakMap();
+}, dt = /* @__PURE__ */ new WeakMap();
 var Ie;
 var Ue;
-var dt;
+var ht;
 var he;
 var or;
-Ie = /* @__PURE__ */ new WeakMap(), Ue = /* @__PURE__ */ new WeakMap(), dt = /* @__PURE__ */ new WeakMap(), he = /* @__PURE__ */ new WeakMap(), or = /* @__PURE__ */ new WeakMap();
-var A = { Automatic: 0, SharedArrayBuffer: 1, ServiceWorker: 2, PostMessage: 3 };
-function Xs(s) {
+Ie = /* @__PURE__ */ new WeakMap(), Ue = /* @__PURE__ */ new WeakMap(), ht = /* @__PURE__ */ new WeakMap(), he = /* @__PURE__ */ new WeakMap(), or = /* @__PURE__ */ new WeakMap();
+var O = { Automatic: 0, SharedArrayBuffer: 1, ServiceWorker: 2, PostMessage: 3 };
+function Gs(s) {
   switch (s.channelType) {
-    case A.SharedArrayBuffer:
-      return new et(s);
-    case A.ServiceWorker:
+    case O.SharedArrayBuffer:
+      return new tt(s);
+    case O.ServiceWorker:
       return new Yt(s);
-    case A.PostMessage:
-      return new ut(s);
-    case A.Automatic:
+    case O.PostMessage:
+      return new pt(s);
+    case O.Automatic:
     default:
-      return typeof SharedArrayBuffer < "u" ? new et(s) : new ut(s);
+      return typeof SharedArrayBuffer < "u" ? new tt(s) : new pt(s);
   }
 }
-var Gs = m ? __dirname + "/" : "https://webr.r-wasm.org/v0.4.1/";
-var $s = "https://repo.r-wasm.org";
-var Kr = "0.4.1";
+var $s = m ? __dirname + "/" : "https://webr.r-wasm.org/v0.4.2/";
+var Ks = "https://repo.r-wasm.org";
+var Kr = "0.4.2";
 function v(s) {
   return !!s && (typeof s == "object" || typeof s == "function") && "payloadType" in s && $t(s._payload);
 }
 function Zi(s) {
   return v(s) && s._payload.obj.type === "list";
 }
-function Ks(s) {
+function Qs(s) {
   var e;
   return !!(v(s) && ((e = s._payload.obj.methods) != null && e.includes("exec")));
 }
@@ -31877,9 +31877,9 @@ function po(s, e) {
       yield e.get(n);
   };
 }
-function Qs(s, e, t) {
+function Zs(s, e, t) {
   return async (...r) => {
-    let n = r.map((c2) => v(c2) ? c2._payload : { obj: V(c2, v, (p2) => p2._payload), payloadType: "raw" }), o = { type: "callRObjectMethod", data: { payload: t, prop: e, args: n } }, i = await s.request(o);
+    let n = r.map((l) => v(l) ? l._payload : { obj: V(l, v, (p2) => p2._payload), payloadType: "raw" }), o = { type: "callRObjectMethod", data: { payload: t, prop: e, args: n } }, i = await s.request(o);
     switch (i.payloadType) {
       case "ptr":
         return ne(s, i);
@@ -31906,43 +31906,43 @@ function ne(s, e) {
     if (o === Symbol.asyncIterator)
       return po(s, t);
     if ((i = e.obj.methods) != null && i.includes(o.toString()))
-      return Qs(s, o.toString(), e);
+      return Zs(s, o.toString(), e);
   }, apply: async (n, o, i) => {
-    let c2 = await ne(s, e).exec(...i);
-    return Ks(c2) ? c2 : c2.toJs();
+    let l = await ne(s, e).exec(...i);
+    return Qs(l) ? l : l.toJs();
   } });
   return t;
 }
 function W(s, e, t) {
-  return new Proxy(y, { construct: (r, n) => ho(s, t, e, ...n), get: (r, n) => Qs(s, n.toString()) });
+  return new Proxy(y, { construct: (r, n) => ho(s, t, e, ...n), get: (r, n) => Zs(s, n.toString()) });
 }
-var ht;
 var yt;
 var ft;
 var Rt;
 var mt;
+var gt;
 var ar;
 var ir;
 var lr;
 var cr;
 var ur;
 var pr;
-var Zs;
-ht = /* @__PURE__ */ new WeakMap(), yt = /* @__PURE__ */ new WeakMap(), ft = /* @__PURE__ */ new WeakMap(), Rt = /* @__PURE__ */ new WeakMap(), mt = /* @__PURE__ */ new WeakMap(), ar = /* @__PURE__ */ new WeakMap(), ir = /* @__PURE__ */ new WeakMap(), lr = /* @__PURE__ */ new WeakMap(), cr = /* @__PURE__ */ new WeakMap(), ur = /* @__PURE__ */ new WeakMap(), pr = /* @__PURE__ */ new WeakSet(), Zs = async function() {
+var Ys;
+yt = /* @__PURE__ */ new WeakMap(), ft = /* @__PURE__ */ new WeakMap(), Rt = /* @__PURE__ */ new WeakMap(), mt = /* @__PURE__ */ new WeakMap(), gt = /* @__PURE__ */ new WeakMap(), ar = /* @__PURE__ */ new WeakMap(), ir = /* @__PURE__ */ new WeakMap(), lr = /* @__PURE__ */ new WeakMap(), cr = /* @__PURE__ */ new WeakMap(), ur = /* @__PURE__ */ new WeakMap(), pr = /* @__PURE__ */ new WeakSet(), Ys = async function() {
   for (; ; ) {
     let e = await this.webR.read();
     switch (e.type) {
       case "stdout":
-        a(this, ht).call(this, e.data);
-        break;
-      case "stderr":
         a(this, yt).call(this, e.data);
         break;
-      case "prompt":
+      case "stderr":
         a(this, ft).call(this, e.data);
         break;
+      case "prompt":
+        a(this, Rt).call(this, e.data);
+        break;
       case "canvas":
-        e.data.event === "canvasImage" ? a(this, Rt).call(this, e.data.image) : e.data.event === "canvasNewPage" && a(this, mt).call(this);
+        e.data.event === "canvasImage" ? a(this, mt).call(this, e.data.image) : e.data.event === "canvasNewPage" && a(this, gt).call(this);
         break;
       case "closed":
         return;
@@ -31952,16 +31952,16 @@ ht = /* @__PURE__ */ new WeakMap(), yt = /* @__PURE__ */ new WeakMap(), ft = /* 
   }
 };
 var yo = { FONTCONFIG_PATH: "/etc/fonts", R_HOME: "/usr/lib/R", R_ENABLE_JIT: "0", WEBR: "1", WEBR_VERSION: Kr };
-var Ys = { RArgs: [], REnv: yo, baseUrl: Gs, serviceWorkerUrl: "", repoUrl: $s, homedir: "/home/web_user", interactive: true, channelType: A.Automatic, createLazyFilesystem: true };
+var en = { RArgs: [], REnv: yo, baseUrl: $s, serviceWorkerUrl: "", repoUrl: Ks, homedir: "/home/web_user", interactive: true, channelType: O.Automatic, createLazyFilesystem: true };
 var R;
-var gt;
+var bt;
 var yr;
-var en;
+var tn;
 var dr = class {
   constructor(e = {}) {
     u(this, yr);
     u(this, R, void 0);
-    u(this, gt, void 0);
+    u(this, bt, void 0);
     this.version = Kr;
     this.FS = { lookupPath: async (e2) => {
       let t2 = { type: "lookupPath", data: { path: e2 } };
@@ -31970,8 +31970,14 @@ var dr = class {
       let t2 = { type: "mkdir", data: { path: e2 } };
       return (await a(this, R).request(t2)).obj;
     }, mount: async (e2, t2, r) => {
-      let n = { type: "mount", data: { type: e2, options: t2, mountpoint: r } };
-      await a(this, R).request(n);
+      let n = [];
+      "blobs" in t2 && t2.blobs && (n = [...n, ...t2.blobs.map((i) => i.data instanceof Blob ? i.data.arrayBuffer().then((l) => {
+        i.data = new Uint8Array(l);
+      }) : Promise.resolve())]), "packages" in t2 && t2.packages && (n = [...n, ...t2.packages.map((i) => i.blob instanceof Blob ? i.blob.arrayBuffer().then((l) => {
+        i.blob = new Uint8Array(l);
+      }) : Promise.resolve())]), await Promise.all(n);
+      let o = { type: "mount", data: { type: e2, options: t2, mountpoint: r } };
+      await a(this, R).request(o);
     }, syncfs: async (e2) => {
       let t2 = { type: "syncfs", data: { populate: e2 } };
       await a(this, R).request(t2);
@@ -31991,13 +31997,13 @@ var dr = class {
       let t2 = { type: "unmount", data: { path: e2 } };
       await a(this, R).request(t2);
     } };
-    let t = { ...Ys, ...e, REnv: { ...Ys.REnv, ...e.REnv } };
-    d(this, R, Xs(t)), this.objs = {}, this.Shelter = fo(a(this, R)), d(this, gt, a(this, R).initialised.then(async () => {
-      this.globalShelter = await new this.Shelter(), this.RObject = this.globalShelter.RObject, this.RLogical = this.globalShelter.RLogical, this.RInteger = this.globalShelter.RInteger, this.RDouble = this.globalShelter.RDouble, this.RComplex = this.globalShelter.RComplex, this.RCharacter = this.globalShelter.RCharacter, this.RRaw = this.globalShelter.RRaw, this.RList = this.globalShelter.RList, this.RDataFrame = this.globalShelter.RDataFrame, this.RPairlist = this.globalShelter.RPairlist, this.REnvironment = this.globalShelter.REnvironment, this.RSymbol = this.globalShelter.RSymbol, this.RString = this.globalShelter.RString, this.RCall = this.globalShelter.RCall, this.objs = { baseEnv: await this.RObject.getPersistentObject("baseEnv"), globalEnv: await this.RObject.getPersistentObject("globalEnv"), null: await this.RObject.getPersistentObject("null"), true: await this.RObject.getPersistentObject("true"), false: await this.RObject.getPersistentObject("false"), na: await this.RObject.getPersistentObject("na") }, E(this, yr, en).call(this);
+    let t = { ...en, ...e, REnv: { ...en.REnv, ...e.REnv } };
+    d(this, R, Gs(t)), this.objs = {}, this.Shelter = fo(a(this, R)), d(this, bt, a(this, R).initialised.then(async () => {
+      this.globalShelter = await new this.Shelter(), this.RObject = this.globalShelter.RObject, this.RLogical = this.globalShelter.RLogical, this.RInteger = this.globalShelter.RInteger, this.RDouble = this.globalShelter.RDouble, this.RComplex = this.globalShelter.RComplex, this.RCharacter = this.globalShelter.RCharacter, this.RRaw = this.globalShelter.RRaw, this.RList = this.globalShelter.RList, this.RDataFrame = this.globalShelter.RDataFrame, this.RPairlist = this.globalShelter.RPairlist, this.REnvironment = this.globalShelter.REnvironment, this.RSymbol = this.globalShelter.RSymbol, this.RString = this.globalShelter.RString, this.RCall = this.globalShelter.RCall, this.objs = { baseEnv: await this.RObject.getPersistentObject("baseEnv"), globalEnv: await this.RObject.getPersistentObject("globalEnv"), null: await this.RObject.getPersistentObject("null"), true: await this.RObject.getPersistentObject("true"), false: await this.RObject.getPersistentObject("false"), na: await this.RObject.getPersistentObject("na") }, E(this, yr, tn).call(this);
     }));
   }
   async init() {
-    return a(this, gt);
+    return a(this, bt);
   }
   close() {
     a(this, R).close();
@@ -32041,7 +32047,7 @@ var dr = class {
     return this.evalRRaw(e, "string", t);
   }
   async evalRRaw(e, t, r = {}) {
-    let n = V(r, v, (c2) => c2._payload), o = { type: "evalRRaw", data: { code: e, options: n, outputType: t } }, i = await a(this, R).request(o);
+    let n = V(r, v, (l) => l._payload), o = { type: "evalRRaw", data: { code: e, options: n, outputType: t } }, i = await a(this, R).request(o);
     switch (i.payloadType) {
       case "raw":
         return i.obj;
@@ -32054,7 +32060,7 @@ var dr = class {
     return (await a(this, R).request(r)).obj;
   }
 };
-R = /* @__PURE__ */ new WeakMap(), gt = /* @__PURE__ */ new WeakMap(), yr = /* @__PURE__ */ new WeakSet(), en = async function() {
+R = /* @__PURE__ */ new WeakMap(), bt = /* @__PURE__ */ new WeakMap(), yr = /* @__PURE__ */ new WeakSet(), tn = async function() {
   for (; ; ) {
     let e = await a(this, R).readSystem();
     switch (e.type) {
@@ -32082,19 +32088,19 @@ R = /* @__PURE__ */ new WeakMap(), gt = /* @__PURE__ */ new WeakMap(), yr = /* @
 };
 var g;
 var f;
-var bt;
+var wt;
 var hr = class {
   constructor(e) {
     u(this, g, "");
     u(this, f, void 0);
-    u(this, bt, false);
+    u(this, wt, false);
     d(this, f, e);
   }
   async init() {
-    if (a(this, bt))
+    if (a(this, wt))
       return;
     let e = { type: "newShelter" }, t = await a(this, f).request(e);
-    d(this, g, t.obj), this.RObject = W(a(this, f), a(this, g), "object"), this.RLogical = W(a(this, f), a(this, g), "logical"), this.RInteger = W(a(this, f), a(this, g), "integer"), this.RDouble = W(a(this, f), a(this, g), "double"), this.RComplex = W(a(this, f), a(this, g), "complex"), this.RCharacter = W(a(this, f), a(this, g), "character"), this.RRaw = W(a(this, f), a(this, g), "raw"), this.RList = W(a(this, f), a(this, g), "list"), this.RDataFrame = W(a(this, f), a(this, g), "dataframe"), this.RPairlist = W(a(this, f), a(this, g), "pairlist"), this.REnvironment = W(a(this, f), a(this, g), "environment"), this.RSymbol = W(a(this, f), a(this, g), "symbol"), this.RString = W(a(this, f), a(this, g), "string"), this.RCall = W(a(this, f), a(this, g), "call"), d(this, bt, true);
+    d(this, g, t.obj), this.RObject = W(a(this, f), a(this, g), "object"), this.RLogical = W(a(this, f), a(this, g), "logical"), this.RInteger = W(a(this, f), a(this, g), "integer"), this.RDouble = W(a(this, f), a(this, g), "double"), this.RComplex = W(a(this, f), a(this, g), "complex"), this.RCharacter = W(a(this, f), a(this, g), "character"), this.RRaw = W(a(this, f), a(this, g), "raw"), this.RList = W(a(this, f), a(this, g), "list"), this.RDataFrame = W(a(this, f), a(this, g), "dataframe"), this.RPairlist = W(a(this, f), a(this, g), "pairlist"), this.REnvironment = W(a(this, f), a(this, g), "environment"), this.RSymbol = W(a(this, f), a(this, g), "symbol"), this.RString = W(a(this, f), a(this, g), "string"), this.RCall = W(a(this, f), a(this, g), "call"), d(this, wt, true);
   }
   async purge() {
     let e = { type: "shelterPurge", data: a(this, g) };
@@ -32123,15 +32129,15 @@ var hr = class {
       case "ptr":
         throw new Z("Unexpected payload type returned from evalR");
       case "raw": {
-        let i = o.obj, c2 = ne(a(this, f), i.result), p2 = i.output, D2 = i.images;
+        let i = o.obj, l = ne(a(this, f), i.result), p2 = i.output, D2 = i.images;
         for (let b2 = 0; b2 < p2.length; ++b2)
           p2[b2].type !== "stdout" && p2[b2].type !== "stderr" && (p2[b2].data = ne(a(this, f), p2[b2].data));
-        return { result: c2, output: p2, images: D2 };
+        return { result: l, output: p2, images: D2 };
       }
     }
   }
 };
-g = /* @__PURE__ */ new WeakMap(), f = /* @__PURE__ */ new WeakMap(), bt = /* @__PURE__ */ new WeakMap();
+g = /* @__PURE__ */ new WeakMap(), f = /* @__PURE__ */ new WeakMap(), wt = /* @__PURE__ */ new WeakMap();
 function fo(s) {
   return new Proxy(hr, { construct: async () => {
     let e = new hr(s);
@@ -32559,7 +32565,7 @@ function postableErrorObjectToError(errObj) {
 
 // src/pyodide/pyodide.js
 var Q = Object.defineProperty;
-var c = (e, t) => Q(e, "name", { value: t, configurable: true });
+var c2 = (e, t) => Q(e, "name", { value: t, configurable: true });
 var O2 = ((e) => typeof __require < "u" ? __require : typeof Proxy < "u" ? new Proxy(e, { get: (t, i) => (typeof __require < "u" ? __require : t)[i] }) : e)(function(e) {
   if (typeof __require < "u")
     return __require.apply(this, arguments);
@@ -32568,17 +32574,17 @@ var O2 = ((e) => typeof __require < "u" ? __require : typeof Proxy < "u" ? new P
 function Z2(e) {
   return !isNaN(parseFloat(e)) && isFinite(e);
 }
-c(Z2, "_isNumber");
+c2(Z2, "_isNumber");
 function E2(e) {
   return e.charAt(0).toUpperCase() + e.substring(1);
 }
-c(E2, "_capitalize");
+c2(E2, "_capitalize");
 function P2(e) {
   return function() {
     return this[e];
   };
 }
-c(P2, "_getter");
+c2(P2, "_getter");
 var w2 = ["isConstructor", "isEval", "isNative", "isToplevel"];
 var N2 = ["columnNumber", "lineNumber"];
 var _ = ["fileName", "functionName", "source"];
@@ -32590,7 +32596,7 @@ function p(e) {
     for (var t = 0; t < I2.length; t++)
       e[I2[t]] !== void 0 && this["set" + E2(I2[t])](e[I2[t]]);
 }
-c(p, "StackFrame");
+c2(p, "StackFrame");
 p.prototype = { getArgs: function() {
   return this.args;
 }, setArgs: function(e) {
@@ -32610,11 +32616,11 @@ p.prototype = { getArgs: function() {
   var e = this.getFileName() || "", t = this.getLineNumber() || "", i = this.getColumnNumber() || "", r = this.getFunctionName() || "";
   return this.getIsEval() ? e ? "[eval] (" + e + ":" + t + ":" + i + ")" : "[eval]:" + t + ":" + i : r ? r + " (" + e + ":" + t + ":" + i + ")" : e + ":" + t + ":" + i;
 } };
-p.fromString = c(function(t) {
+p.fromString = c2(function(t) {
   var i = t.indexOf("("), r = t.lastIndexOf(")"), a2 = t.substring(0, i), n = t.substring(i + 1, r).split(","), o = t.substring(r + 1);
   if (o.indexOf("@") === 0)
-    var s = /@(.+?)(?::(\d+))?(?::(\d+))?$/.exec(o, ""), l2 = s[1], d2 = s[2], u2 = s[3];
-  return new p({ functionName: a2, args: n || void 0, fileName: l2, lineNumber: d2 || void 0, columnNumber: u2 || void 0 });
+    var s = /@(.+?)(?::(\d+))?(?::(\d+))?$/.exec(o, ""), l = s[1], d2 = s[2], u2 = s[3];
+  return new p({ functionName: a2, args: n || void 0, fileName: l, lineNumber: d2 || void 0, columnNumber: u2 || void 0 });
 }, "StackFrame$$fromString");
 for (b = 0; b < w2.length; b++)
   p.prototype["get" + E2(w2[b])] = P2(w2[b]), p.prototype["set" + E2(w2[b])] = function(e) {
@@ -32642,18 +32648,18 @@ var h;
 var x2 = p;
 function ne2() {
   var e = /^\s*at .*(\S+:\d+|\(native\))/m, t = /^(eval@)?(\[native code])?$/;
-  return { parse: c(function(r) {
+  return { parse: c2(function(r) {
     if (r.stack && r.stack.match(e))
       return this.parseV8OrIE(r);
     if (r.stack)
       return this.parseFFOrSafari(r);
     throw new Error("Cannot parse given Error object");
-  }, "ErrorStackParser$$parse"), extractLocation: c(function(r) {
+  }, "ErrorStackParser$$parse"), extractLocation: c2(function(r) {
     if (r.indexOf(":") === -1)
       return [r];
     var a2 = /(.+?)(?::(\d+))?(?::(\d+))?$/, n = a2.exec(r.replace(/[()]/g, ""));
     return [n[1], n[2] || void 0, n[3] || void 0];
-  }, "ErrorStackParser$$extractLocation"), parseV8OrIE: c(function(r) {
+  }, "ErrorStackParser$$extractLocation"), parseV8OrIE: c2(function(r) {
     var a2 = r.stack.split(`
 `).filter(function(n) {
       return !!n.match(e);
@@ -32662,10 +32668,10 @@ function ne2() {
       n.indexOf("(eval ") > -1 && (n = n.replace(/eval code/g, "eval").replace(/(\(eval at [^()]*)|(,.*$)/g, ""));
       var o = n.replace(/^\s+/, "").replace(/\(eval code/g, "(").replace(/^.*?\s+/, ""), s = o.match(/ (\(.+\)$)/);
       o = s ? o.replace(s[0], "") : o;
-      var l2 = this.extractLocation(s ? s[1] : o), d2 = s && o || void 0, u2 = ["eval", "<anonymous>"].indexOf(l2[0]) > -1 ? void 0 : l2[0];
-      return new x2({ functionName: d2, fileName: u2, lineNumber: l2[1], columnNumber: l2[2], source: n });
+      var l = this.extractLocation(s ? s[1] : o), d2 = s && o || void 0, u2 = ["eval", "<anonymous>"].indexOf(l[0]) > -1 ? void 0 : l[0];
+      return new x2({ functionName: d2, fileName: u2, lineNumber: l[1], columnNumber: l[2], source: n });
     }, this);
-  }, "ErrorStackParser$$parseV8OrIE"), parseFFOrSafari: c(function(r) {
+  }, "ErrorStackParser$$parseV8OrIE"), parseFFOrSafari: c2(function(r) {
     var a2 = r.stack.split(`
 `).filter(function(n) {
       return !n.match(t);
@@ -32673,12 +32679,12 @@ function ne2() {
     return a2.map(function(n) {
       if (n.indexOf(" > eval") > -1 && (n = n.replace(/ line (\d+)(?: > eval line \d+)* > eval:\d+:\d+/g, ":$1")), n.indexOf("@") === -1 && n.indexOf(":") === -1)
         return new x2({ functionName: n });
-      var o = /((.*".+"[^@]*)?[^@]*)(?:@)/, s = n.match(o), l2 = s && s[1] ? s[1] : void 0, d2 = this.extractLocation(n.replace(o, ""));
-      return new x2({ functionName: l2, fileName: d2[0], lineNumber: d2[1], columnNumber: d2[2], source: n });
+      var o = /((.*".+"[^@]*)?[^@]*)(?:@)/, s = n.match(o), l = s && s[1] ? s[1] : void 0, d2 = this.extractLocation(n.replace(o, ""));
+      return new x2({ functionName: l, fileName: d2[0], lineNumber: d2[1], columnNumber: d2[2], source: n });
     }, this);
   }, "ErrorStackParser$$parseFFOrSafari") };
 }
-c(ne2, "ErrorStackParser");
+c2(ne2, "ErrorStackParser");
 var re = new ne2();
 var M = re;
 var g2 = typeof process == "object" && typeof process.versions == "object" && typeof process.versions.node == "string" && !process.browser;
@@ -32698,20 +32704,20 @@ var D;
 async function T2() {
   if (!g2 || (V2 = (await import("node:url")).default, H = await import("node:fs"), D = await import("node:fs/promises"), z = (await import("node:vm")).default, L2 = await import("node:path"), U2 = L2.sep, typeof O2 < "u"))
     return;
-  let e = H, t = await import("node:crypto"), i = await import("./browser-PEHGED23.js"), r = await import("node:child_process"), a2 = { fs: e, crypto: t, ws: i, child_process: r };
+  let e = H, t = await import("node:crypto"), i = await import("./browser-OYYBATHK.js"), r = await import("node:child_process"), a2 = { fs: e, crypto: t, ws: i, child_process: r };
   globalThis.require = function(n) {
     return a2[n];
   };
 }
-c(T2, "initNodeModules");
+c2(T2, "initNodeModules");
 function ie2(e, t) {
   return L2.resolve(t || ".", e);
 }
-c(ie2, "node_resolvePath");
+c2(ie2, "node_resolvePath");
 function ae2(e, t) {
   return t === void 0 && (t = location), new URL(e, t).toString();
 }
-c(ae2, "browser_resolvePath");
+c2(ae2, "browser_resolvePath");
 var k2;
 g2 ? k2 = ie2 : k2 = ae2;
 var U2;
@@ -32719,12 +32725,12 @@ g2 || (U2 = "/");
 function se2(e, t) {
   return e.startsWith("file://") && (e = e.slice(7)), e.includes("://") ? { response: fetch(e) } : { binary: D.readFile(e).then((i) => new Uint8Array(i.buffer, i.byteOffset, i.byteLength)) };
 }
-c(se2, "node_getBinaryResponse");
+c2(se2, "node_getBinaryResponse");
 function ce(e, t) {
   let i = new URL(e, location);
   return { response: fetch(i, t ? { integrity: t } : {}) };
 }
-c(ce, "browser_getBinaryResponse");
+c2(ce, "browser_getBinaryResponse");
 var R2;
 g2 ? R2 = se2 : R2 = ce;
 async function q2(e, t) {
@@ -32736,12 +32742,12 @@ async function q2(e, t) {
     throw new Error(`Failed to load '${e}': request failed.`);
   return new Uint8Array(await a2.arrayBuffer());
 }
-c(q2, "loadBinaryFile");
+c2(q2, "loadBinaryFile");
 var F2;
 if ($2)
-  F2 = c(async (e) => await import(e), "loadScript");
+  F2 = c2(async (e) => await import(e), "loadScript");
 else if (j)
-  F2 = c(async (e) => {
+  F2 = c2(async (e) => {
     try {
       globalThis.importScripts(e);
     } catch (t) {
@@ -32758,7 +32764,7 @@ else
 async function le2(e) {
   e.startsWith("file://") && (e = e.slice(7)), e.includes("://") ? z.runInThisContext(await (await fetch(e)).text()) : await import(V2.pathToFileURL(e).href);
 }
-c(le2, "nodeLoadScript");
+c2(le2, "nodeLoadScript");
 async function J(e) {
   if (g2) {
     await T2();
@@ -32767,7 +32773,7 @@ async function J(e) {
   } else
     return await (await fetch(e)).json();
 }
-c(J, "loadLockFile");
+c2(J, "loadLockFile");
 async function K() {
   if (A2)
     return __dirname;
@@ -32787,7 +32793,7 @@ async function K() {
     throw new Error("Could not extract indexURL path from pyodide module location");
   return t.slice(0, i);
 }
-c(K, "calculateDirname");
+c2(K, "calculateDirname");
 function Y2(e) {
   let t = e.FS, i = e.FS.filesystems.MEMFS, r = e.PATH, a2 = { DIR_MODE: 16895, FILE_MODE: 33279, mount: function(n) {
     if (!n.opts.fileSystemHandle)
@@ -32795,38 +32801,38 @@ function Y2(e) {
     return i.mount.apply(null, arguments);
   }, syncfs: async (n, o, s) => {
     try {
-      let l2 = a2.getLocalSet(n), d2 = await a2.getRemoteSet(n), u2 = o ? d2 : l2, m2 = o ? l2 : d2;
+      let l = a2.getLocalSet(n), d2 = await a2.getRemoteSet(n), u2 = o ? d2 : l, m2 = o ? l : d2;
       await a2.reconcile(n, u2, m2), s(null);
-    } catch (l2) {
-      s(l2);
+    } catch (l) {
+      s(l);
     }
   }, getLocalSet: (n) => {
     let o = /* @__PURE__ */ Object.create(null);
     function s(u2) {
       return u2 !== "." && u2 !== "..";
     }
-    c(s, "isRealDir");
-    function l2(u2) {
+    c2(s, "isRealDir");
+    function l(u2) {
       return (m2) => r.join2(u2, m2);
     }
-    c(l2, "toAbsolute");
-    let d2 = t.readdir(n.mountpoint).filter(s).map(l2(n.mountpoint));
+    c2(l, "toAbsolute");
+    let d2 = t.readdir(n.mountpoint).filter(s).map(l(n.mountpoint));
     for (; d2.length; ) {
       let u2 = d2.pop(), m2 = t.stat(u2);
-      t.isDir(m2.mode) && d2.push.apply(d2, t.readdir(u2).filter(s).map(l2(u2))), o[u2] = { timestamp: m2.mtime, mode: m2.mode };
+      t.isDir(m2.mode) && d2.push.apply(d2, t.readdir(u2).filter(s).map(l(u2))), o[u2] = { timestamp: m2.mtime, mode: m2.mode };
     }
     return { type: "local", entries: o };
   }, getRemoteSet: async (n) => {
     let o = /* @__PURE__ */ Object.create(null), s = await de2(n.opts.fileSystemHandle);
-    for (let [l2, d2] of s)
-      l2 !== "." && (o[r.join2(n.mountpoint, l2)] = { timestamp: d2.kind === "file" ? (await d2.getFile()).lastModifiedDate : /* @__PURE__ */ new Date(), mode: d2.kind === "file" ? a2.FILE_MODE : a2.DIR_MODE });
+    for (let [l, d2] of s)
+      l !== "." && (o[r.join2(n.mountpoint, l)] = { timestamp: d2.kind === "file" ? (await d2.getFile()).lastModifiedDate : /* @__PURE__ */ new Date(), mode: d2.kind === "file" ? a2.FILE_MODE : a2.DIR_MODE });
     return { type: "remote", entries: o, handles: s };
   }, loadLocalEntry: (n) => {
-    let s = t.lookupPath(n).node, l2 = t.stat(n);
-    if (t.isDir(l2.mode))
-      return { timestamp: l2.mtime, mode: l2.mode };
-    if (t.isFile(l2.mode))
-      return s.contents = i.getFileDataAsTypedArray(s), { timestamp: l2.mtime, mode: l2.mode, contents: s.contents };
+    let s = t.lookupPath(n).node, l = t.stat(n);
+    if (t.isDir(l.mode))
+      return { timestamp: l.mtime, mode: l.mode };
+    if (t.isFile(l.mode))
+      return s.contents = i.getFileDataAsTypedArray(s), { timestamp: l.mtime, mode: l.mode, contents: s.contents };
     throw new Error("node type not supported");
   }, storeLocalEntry: (n, o) => {
     if (t.isDir(o.mode))
@@ -32849,7 +32855,7 @@ function Y2(e) {
       throw new Error("unknown kind: " + n.kind);
     }
   }, storeRemoteEntry: async (n, o, s) => {
-    let l2 = n.get(r.dirname(o)), d2 = t.isFile(s.mode) ? await l2.getFileHandle(r.basename(o), { create: true }) : await l2.getDirectoryHandle(r.basename(o), { create: true });
+    let l = n.get(r.dirname(o)), d2 = t.isFile(s.mode) ? await l.getFileHandle(r.basename(o), { create: true }) : await l.getDirectoryHandle(r.basename(o), { create: true });
     if (d2.kind === "file") {
       let u2 = await d2.createWritable();
       await u2.write(s.contents), await u2.close();
@@ -32858,15 +32864,15 @@ function Y2(e) {
   }, removeRemoteEntry: async (n, o) => {
     await n.get(r.dirname(o)).removeEntry(r.basename(o)), n.delete(o);
   }, reconcile: async (n, o, s) => {
-    let l2 = 0, d2 = [];
+    let l = 0, d2 = [];
     Object.keys(o.entries).forEach(function(f2) {
       let y2 = o.entries[f2], S2 = s.entries[f2];
-      (!S2 || t.isFile(y2.mode) && y2.timestamp.getTime() > S2.timestamp.getTime()) && (d2.push(f2), l2++);
+      (!S2 || t.isFile(y2.mode) && y2.timestamp.getTime() > S2.timestamp.getTime()) && (d2.push(f2), l++);
     }), d2.sort();
     let u2 = [];
     if (Object.keys(s.entries).forEach(function(f2) {
-      o.entries[f2] || (u2.push(f2), l2++);
-    }), u2.sort().reverse(), !l2)
+      o.entries[f2] || (u2.push(f2), l++);
+    }), u2.sort().reverse(), !l)
       return;
     let m2 = o.type === "remote" ? o.handles : s.handles;
     for (let f2 of d2) {
@@ -32889,14 +32895,14 @@ function Y2(e) {
   } };
   e.FS.filesystems.NATIVEFS_ASYNC = a2;
 }
-c(Y2, "initializeNativeFS");
-var de2 = c(async (e) => {
+c2(Y2, "initializeNativeFS");
+var de2 = c2(async (e) => {
   let t = [];
   async function i(a2) {
     for await (let n of a2.values())
       t.push(n), n.kind === "directory" && await i(n);
   }
-  c(i, "collect"), await i(e);
+  c2(i, "collect"), await i(e);
   let r = /* @__PURE__ */ new Map();
   r.set(".", e);
   for (let a2 of t) {
@@ -32911,7 +32917,7 @@ function G2(e) {
   }, print: e.stdout, printErr: e.stderr, arguments: e.args, API: { config: e }, locateFile: (i) => e.indexURL + i, instantiateWasm: ye2(e.indexURL) };
   return t;
 }
-c(G2, "createSettings");
+c2(G2, "createSettings");
 function ue2(e) {
   return function(t) {
     let i = "/";
@@ -32923,20 +32929,20 @@ function ue2(e) {
     t.FS.chdir(e);
   };
 }
-c(ue2, "createHomeDirectory");
+c2(ue2, "createHomeDirectory");
 function fe2(e) {
   return function(t) {
     Object.assign(t.ENV, e);
   };
 }
-c(fe2, "setEnvironment");
+c2(fe2, "setEnvironment");
 function me2(e) {
   return (t) => {
     for (let i of e)
       t.FS.mkdirTree(i), t.FS.mount(t.FS.filesystems.NODEFS, { root: i }, i);
   };
 }
-c(me2, "mountLocalDirectories");
+c2(me2, "mountLocalDirectories");
 function pe2(e) {
   let t = q2(e);
   return (i) => {
@@ -32950,12 +32956,12 @@ function pe2(e) {
     });
   };
 }
-c(pe2, "installStdlib");
+c2(pe2, "installStdlib");
 function ge2(e) {
   let t;
   return e.stdLibURL != null ? t = e.stdLibURL : t = e.indexURL + "python_stdlib.zip", [pe2(t), ue2(e.env.HOME), fe2(e.env), me2(e._node_mounts), Y2];
 }
-c(ge2, "getFileSystemInitializationFuncs");
+c2(ge2, "getFileSystemInitializationFuncs");
 function ye2(e) {
   let { binary: t, response: i } = R2(e + "pyodide.asm.wasm");
   return function(r, a2) {
@@ -32971,9 +32977,9 @@ function ye2(e) {
     }(), {};
   };
 }
-c(ye2, "getInstantiateWasmFunc");
-var C = "0.26.2";
-async function $e2(e = {}) {
+c2(ye2, "getInstantiateWasmFunc");
+var C = "0.26.3";
+async function $e(e = {}) {
   var u2, m2;
   await T2();
   let t = e.indexURL || await K();
@@ -32998,12 +33004,12 @@ async function $e2(e = {}) {
   s.locateFile = (f2) => {
     throw new Error("Didn't expect to load any more file_packager files!");
   };
-  let l2;
-  o && (l2 = n.restoreSnapshot(o));
-  let d2 = n.finalizeBootstrap(l2);
+  let l;
+  o && (l = n.restoreSnapshot(o));
+  let d2 = n.finalizeBootstrap(l);
   return n.sys.path.insert(0, n.config.env.HOME), d2.version.includes("dev") || n.setCdnUrl(`https://cdn.jsdelivr.net/pyodide/v${d2.version}/full/`), n._pyodide.set_excepthook(), await n.packageIndexReady, n.initializeStreams(r.stdin, r.stdout, r.stderr), d2;
 }
-c($e2, "loadPyodide");
+c2($e, "loadPyodide");
 
 // src/pyodide-proxy.ts
 async function setupPythonEnv(pyodide, callJS) {
@@ -33048,7 +33054,7 @@ var NormalPyodideProxy = class _NormalPyodideProxy {
     this.stderrCallback = stderrCallback;
   }
   async init(config) {
-    this.pyodide = await $e2(config);
+    this.pyodide = await $e(config);
     this.pyUtils = await setupPythonEnv(this.pyodide, this.callJS);
   }
   loadPackagesFromImports(code) {
@@ -33661,6 +33667,7 @@ async def _install_requirements_from_dir(dir: str) -> None:
     import re
     import micropip
     import sys
+    import importlib.metadata
 
     files = os.listdir(dir)
     if "requirements.txt" not in files:
@@ -33670,6 +33677,8 @@ async def _install_requirements_from_dir(dir: str) -> None:
 
     for req in reqs:
         req = req.strip()
+        extras = set()
+
         if req == "" or req.startswith("#"):
             continue
         # If it's a URL, then it must be a wheel file.
@@ -33677,13 +33686,54 @@ async def _install_requirements_from_dir(dir: str) -> None:
             pkg_name = re.sub(r"^.+/(.*)-\\d.*$", r"\\1", req)
         else:
             # If we got here, it's a package specification.
+            # https://peps.python.org/pep-0508/#examples
             # Remove any trailing version info: "my-package (>= 1.0.0)" -> "my-package"
-            pkg_name = re.sub(r"([a-zA-Z0-9._-]+)(.*)", r"\\1", req).strip()
+            # or "shiny [theme] == 1.2.0" -> "shiny[theme]"
+            pkg_name = re.sub(r" \\[", "[", req)
+            pkg_name = re.sub(r"([a-zA-Z0-9._,\\[\\]-]+)(.*)", r"\\1", pkg_name).strip()
 
-        if pkg_name in micropip.list():
+            match_extras = re.match(r"([^\\[]+)(?:\\[(.*)\\])?", pkg_name)
+            if match_extras and match_extras.group(2):
+                pkg_name = match_extras.group(1)
+                extras.update({e.strip() for e in match_extras.group(2).split(",")})
+
+        if pkg_name not in micropip.list():
+            print(f"Installing {pkg_name} ...")
+            await micropip.install(pkg_name)
+
+        if len(extras) == 0:
             continue
-        print(f"Installing {req} ...")
-        await micropip.install(req)
+        else:
+            # Because micropip.install() doesn't install extras, we have to
+            # find the package requirements of each extra and install them
+            # if they aren't already installed.
+            dist = importlib.metadata.distribution(pkg_name)
+
+            provided_extras = set(dist.metadata.get_all("Provides-Extra") or [])
+            valid_extras = extras & provided_extras
+            invalid_extras = extras - valid_extras
+            if len(invalid_extras):
+                raise ValueError(
+                    f"Invalid extras for package {pkg_name}: {','.join(invalid_extras)}. "
+                    f"Found in '{req}' in requirements.txt."
+                )
+
+            pkg_reqs = dist.requires or []
+
+            for extra in valid_extras:
+                # Convert requires records  : 'libsass>=0.23.0; extra == "theme"'
+                # into just the package name: 'libsass'
+                extra_reqs = [
+                    r for r in pkg_reqs
+                    if f'extra == "{extra}"' in str(r)
+                    or f"extra == '{extra}'" in str(r)
+                ]
+
+                for extra_req in extra_reqs:
+                    extra_req_name = re.sub(r"([a-zA-Z0-9._,-]+)(.*)", r"\\1", extra_req).strip()
+                    if extra_req_name not in micropip.list():
+                        print(f"Installing {extra_req_name} for {pkg_name}[{extra}]")
+                        await micropip.install(extra_req_name)
 
 
 async def _load_packages_from_dir(dir: str) -> None:
@@ -33936,7 +33986,7 @@ async function initWebR({
     stdout = (x3) => console.log("webR echo:" + x3);
   if (!stderr)
     stderr = (x3) => console.error("webR error:" + x3);
-  const channelType = crossOriginIsolated ? A.Automatic : A.PostMessage;
+  const channelType = crossOriginIsolated ? O.Automatic : O.PostMessage;
   const baseUrl = currentScriptDir() + "/webr/";
   const webRProxy = await loadWebRProxy(
     {
@@ -34139,6 +34189,19 @@ webr::shim_install()
 
 .webr_pkg_cache <- list()
 
+.install_pkg_tgz <- function(path, lib) {
+  tmp <- tempfile()
+  on.exit(unlink(tmp, recursive = TRUE))
+
+  utils::download.file(path, tmp, quiet = TRUE)
+  utils::untar(
+    tmp,
+    exdir = lib,
+    tar = "internal",
+    extras = "--no-same-permissions"
+  )
+}
+
 .mount_vfs_images <- function() {
   metadata_url <- glue::glue("{.base_url}packages/metadata.rds")
   metadata_path <- glue::glue("/shinylive/webr/packages/metadata.rds")
@@ -34165,7 +34228,16 @@ webr::shim_install()
       try({
         # Mount the virtual filesystem image, unless we already have done so
         if (available && !file.exists(mountpoint)) {
-          webr::mount(mountpoint, glue::glue("{.base_url}{path}"))
+          tryCatch({
+            webr::mount(mountpoint, glue::glue("{.base_url}{path}"))
+          }, error = function(cnd) {
+            # File extraction fallback for .tgz with no filesystem metadata
+            if (grepl(".tgz$", path)) {
+              .install_pkg_tgz(path, "/shinylive/webr/packages/")
+            } else {
+              stop(cnd)
+            }
+          })
         }
 
         # If this is a full library, add it to .libPaths()
@@ -34320,9 +34392,6 @@ function buildUrlForExample(title) {
   return window.location.origin + window.location.pathname + "#" + sanitizeTitleForUrl(title);
 }
 
-// src/assets/shiny-for-python.svg
-var shiny_for_python_default = 'data:image/svg+xml,<?xml version="1.0" encoding="utf-8"?>%0A<!-- Generator: Adobe Illustrator 27.1.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->%0A<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"%0A%09 viewBox="0 0 318.9 58.1" style="enable-background:new 0 0 318.9 58.1;" xml:space="preserve">%0A<style type="text/css">%0A%09.st0{fill:%23007BC2;}%0A%09.st1{fill:%23F8F8F8;}%0A%09.st2{fill:%23007BC1;}%0A%09.st3{opacity:3.000000e-02;fill:url(%23SVGID_1_);}%0A%09.st4{fill:%230088DA;}%0A%09.st5{opacity:0.5;fill:none;stroke:%23FFFFFF;stroke-width:0.3436;stroke-miterlimit:10;}%0A%09.st6{fill:%23E3B061;}%0A%09.st7{opacity:0.9;fill:%23FFFFFF;}%0A%09.st8{opacity:0.25;fill:url(%23SVGID_00000062890845597404697740000002567374690307773069_);enable-background:new    ;}%0A%09.st9{opacity:0.7;fill:url(%23SVGID_00000117653277675818804050000004613785110562981792_);}%0A%09.st10{opacity:0.25;fill:url(%23SVGID_00000109024760873814890990000000033129034029738662_);enable-background:new    ;}%0A%09.st11{fill:%23FFFFFF;}%0A%09.st12{opacity:0.7;fill:%23FFFFFF;}%0A%09.st13{opacity:0.7;fill:url(%23SVGID_00000139983219339483814630000005254680771827834263_);}%0A%09.st14{fill:%23FFFFFF;enable-background:new    ;}%0A%09.st15{opacity:4.000000e-02;fill:url(%23SVGID_00000130632266760883054660000002228431866286590143_);}%0A%09.st16{fill:%234189C8;}%0A%09.st17{opacity:0.25;fill:url(%23SVGID_00000058577780002537468530000016373266062356130438_);enable-background:new    ;}%0A%09.st18{fill:%233875A7;}%0A%09.st19{fill:%23E2B058;}%0A%09.st20{opacity:0.9;fill:%23FFFFFF;enable-background:new    ;}%0A%09.st21{opacity:0.25;fill:url(%23SVGID_00000039114990909304009530000012926441817174788539_);enable-background:new    ;}%0A%09.st22{fill:%230078BE;}%0A%09.st23{opacity:0.95;fill:%23FFFFFF;enable-background:new    ;}%0A%09.st24{fill:%234189CB;}%0A%09.st25{opacity:0.14;fill:url(%23SVGID_00000143612544159209155680000002483579818725933487_);}%0A%09.st26{fill:%23468AC6;}%0A%09.st27{opacity:0.9;clip-path:url(%23SVGID_00000089549041185167452760000015988838166177090990_);}%0A%09.st28{opacity:0.25;fill:url(%23SVGID_00000080898099493742819360000012969674392930713263_);}%0A%09.st29{opacity:0.5;fill:none;stroke:%23FFFFFF;stroke-width:2;stroke-miterlimit:10;}%0A%09.st30{fill:%230196F5;}%0A%09.st31{fill:%234B00C0;}%0A%09.st32{fill:%2374149B;}%0A%09.st33{fill:%23BE007F;}%0A%09.st34{fill:%23C00000;}%0A%09.st35{fill:%23F35100;}%0A%09.st36{fill:%23F8B828;}%0A%09.st37{fill:%2300881A;}%0A%09.st38{fill:%2300BE7F;}%0A%09.st39{fill:%2303C6E7;}%0A%09.st40{fill:%23FFFFFF;stroke:%23B2B1B2;stroke-width:2.013;stroke-miterlimit:10;}%0A%09.st41{fill:%23606060;}%0A%09.st42{fill:%23303030;}%0A%09.st43{fill:%23F7F7F7;}%0A%09.st44{fill:%23EEEEF2;}%0A%09.st45{fill:%23DDE0E6;}%0A%09.st46{fill:%23CDD4DA;}%0A%09.st47{fill:%238D959E;}%0A%09.st48{fill:%23707782;}%0A%09.st49{fill:%2348505F;}%0A%09.st50{fill:%23343A46;}%0A%09.st51{fill:%231D1F21;}%0A%09.st52{fill:%23DCE1E5;}%0A%09.st53{fill:%23404040;}%0A%09.st54{fill:%23202020;}%0A%09.st55{fill:%23F6ADF7;}%0A%09.st56{fill:%23E92B1F;}%0A%09.st57{fill:%23FFE64C;}%0A%09.st58{fill:%231CE5FB;}%0A%09.st59{fill:%23E6F1F7;}%0A%09.st60{fill:%23ECE7F7;}%0A%09.st61{fill:%23F0E7F4;}%0A%09.st62{fill:%23F7E6F1;}%0A%09.st63{fill:%23F7E5E6;}%0A%09.st64{fill:%23FDECE7;}%0A%09.st65{fill:%23FDF7EA;}%0A%09.st66{fill:%23E6F2E8;}%0A%09.st67{fill:%23E7F7F1;}%0A%09.st68{fill:%23E7F8FB;}%0A%09.st69{opacity:4.000000e-02;fill:url(%23SVGID_00000173879744948930459970000015959663358578446232_);}%0A%09.st70{opacity:0.14;fill:url(%23SVGID_00000080186321027384662000000001033574728202994069_);}%0A%09.st71{opacity:3.000000e-02;fill:url(%23SVGID_00000164508869431471439510000007502325794965023881_);}%0A%09.st72{opacity:0.25;fill:url(%23SVGID_00000157275545443706783380000016876820805712853130_);enable-background:new    ;}%0A%09.st73{opacity:0.25;fill:url(%23SVGID_00000134929222640531317420000009979737418987508408_);enable-background:new    ;}%0A%09.st74{fill:none;}%0A%09.st75{opacity:0.25;fill:url(%23SVGID_00000003079896418390689470000008180949246440207748_);enable-background:new    ;}%0A%09.st76{fill:%230D6EFC;}%0A%09.st77{fill:%235D2BE2;}%0A%09.st78{fill:%236A48B6;}%0A%09.st79{fill:%23C14681;}%0A%09.st80{fill:%23C8464E;}%0A%09.st81{fill:%23EA8441;}%0A%09.st82{fill:%23F4C150;}%0A%09.st83{fill:%2343825B;}%0A%09.st84{fill:%2362C499;}%0A%09.st85{fill:%2362C6E7;}%0A%09.st86{fill:%23FFFFFF;stroke:%23B2B1B2;stroke-width:6.3504;stroke-miterlimit:10;}%0A%09.st87{fill:%236E757C;}%0A%09.st88{fill:%23353A3F;}%0A%09.st89{opacity:0.25;fill:url(%23SVGID_00000013911575411688682110000007200871399313389965_);enable-background:new    ;}%0A%09.st90{opacity:0.7;fill:url(%23SVGID_00000158719657197352095380000004407285517381559936_);}%0A%09.st91{opacity:0.7;fill:url(%23SVGID_00000091701434907043937850000013416876554977017747_);}%0A%09.st92{opacity:0.7;fill:url(%23SVGID_00000049906463371638145840000012661586987986386091_);}%0A%09.st93{fill:%23F5F5F5;}%0A%09.st94{opacity:0.5;fill:%23FFFFFF;}%0A%09.st95{clip-path:url(%23SVGID_00000141444080588319561470000016902007851871056817_);}%0A%09.st96{fill:%23B6B6B6;}%0A%09.st97{fill:%23F6F6F6;}%0A%09.st98{fill:%23E5E5E5;}%0A%09.st99{clip-path:url(%23SVGID_00000064355708922344013080000011373511208333879691_);}%0A%09.st100{opacity:3.000000e-02;fill:url(%23SVGID_00000109725041932130259050000000945573083422059409_);}%0A%09.st101{opacity:0.5;fill:none;stroke:%23FFFFFF;stroke-width:4.1229;stroke-miterlimit:10;}%0A%09.st102{opacity:0.25;fill:url(%23SVGID_00000016067945615771040000000013693127875553283744_);enable-background:new    ;}%0A%09.st103{opacity:0.25;fill:url(%23SVGID_00000068643156036815804640000006532162527500205729_);enable-background:new    ;}%0A%09.st104{opacity:0.5;fill:none;stroke:%23FFFFFF;stroke-width:2.971;stroke-miterlimit:10;}%0A%09.st105{opacity:0.25;fill:url(%23SVGID_00000078017300052106270050000009625528678634657196_);enable-background:new    ;}%0A%09.st106{opacity:3.000000e-02;fill:url(%23SVGID_00000173870564607142668800000016832036121160416172_);}%0A%09.st107{opacity:0.25;fill:url(%23SVGID_00000008827864634808362620000006777047640542672525_);enable-background:new    ;}%0A%09.st108{opacity:0.25;fill:url(%23SVGID_00000176002865321500107590000005404138354098027415_);enable-background:new    ;}%0A%09.st109{opacity:3.000000e-02;fill:url(%23SVGID_00000101084623146919938800000004239883371070752402_);}%0A%09.st110{opacity:0.7;}%0A%09.st111{opacity:0.25;fill:url(%23SVGID_00000000209746584145283740000003281231264581853628_);enable-background:new    ;}%0A%09.st112{clip-path:url(%23SVGID_00000119826318785294414430000016532113971559763087_);}%0A%09.st113{opacity:3.000000e-02;fill:url(%23SVGID_00000080199703173278536290000005414200803493335460_);}%0A%09.st114{opacity:3.000000e-02;fill:url(%23SVGID_00000088128051486677082970000015402995378387346357_);}%0A%09.st115{opacity:0.5;fill:none;stroke:%23FFFFFF;stroke-width:2.4978;stroke-miterlimit:10;}%0A%09.st116{opacity:0.25;fill:url(%23SVGID_00000160879206783274305200000004212035629657672127_);enable-background:new    ;}%0A%09.st117{opacity:3.000000e-02;fill:url(%23SVGID_00000103260766746531481750000007576742826090277010_);}%0A%09.st118{opacity:0.8;}%0A%09.st119{opacity:3.000000e-02;fill:url(%23SVGID_00000101813779711352814300000007561575700468796056_);}%0A%09.st120{opacity:0.5;fill:none;stroke:%23FFFFFF;stroke-width:2.1382;stroke-miterlimit:10;}%0A%09.st121{opacity:0.25;fill:url(%23SVGID_00000036963715569117748630000018338771576385635214_);enable-background:new    ;}%0A%09.st122{opacity:0.5;fill:none;stroke:%23FFFFFF;stroke-width:1.7651;stroke-miterlimit:10;}%0A%09.st123{opacity:0.25;fill:url(%23SVGID_00000121275435342893186160000012102735171355931013_);enable-background:new    ;}%0A%09.st124{clip-path:url(%23SVGID_00000086682858054361674600000014691766637232345765_);}%0A%09.st125{clip-path:url(%23SVGID_00000141422647091113865560000000139278928429694112_);}%0A%09.st126{clip-path:url(%23SVGID_00000023988496104941715650000004521252890359135877_);}%0A%09.st127{opacity:0.5;fill:none;stroke:%23FFFFFF;stroke-width:2.0002;stroke-miterlimit:10;}%0A%09.st128{opacity:0.25;fill:url(%23SVGID_00000083053232654742214870000000243512644892217236_);enable-background:new    ;}%0A%09.st129{enable-background:new    ;}%0A%09.st130{opacity:0.8;fill:%23FFFFFF;}%0A%09.st131{fill:%23383838;}%0A%09.st132{fill:url(%23SVGID_00000049197140363204562840000005706646912319394199_);}%0A%09.st133{opacity:0.25;fill:url(%23SVGID_00000037681538552213839950000001187329076681417893_);enable-background:new    ;}%0A%09.st134{fill:none;stroke:%238FC1E9;stroke-width:2.8809;stroke-miterlimit:10;}%0A%09.st135{fill:url(%23path1948_00000107571427772368003920000008564810897700960676_);}%0A%09.st136{fill:url(%23path1950_00000180357363965723571520000014694004668123400633_);}%0A%09.st137{fill-rule:evenodd;clip-rule:evenodd;fill:url(%23SVGID_00000067203180522951520890000001438711410018501547_);}%0A%09.st138{fill-rule:evenodd;clip-rule:evenodd;fill:url(%23SVGID_00000031181101863174119500000014542122765093877929_);}%0A%09.st139{opacity:0.7;fill-rule:evenodd;clip-rule:evenodd;fill:%23FFFFFF;}%0A%09.st140{fill-rule:evenodd;clip-rule:evenodd;fill:%23FFFFFF;}%0A%09.st141{opacity:0.9;fill:%23202020;}%0A%09.st142{opacity:0.7;fill:%23202020;}%0A%09.st143{opacity:0.7;fill-rule:evenodd;clip-rule:evenodd;fill:%23202020;}%0A%09.st144{fill-rule:evenodd;clip-rule:evenodd;fill:%23202020;}%0A%09.st145{fill:%23151515;}%0A%09.st146{opacity:0.6;}%0A%09.st147{fill:url(%23SVGID_00000110443355104091079090000004170693292899312822_);}%0A%09.st148{fill:url(%23SVGID_00000177483504619938808800000013933959484244162688_);}%0A%09.st149{fill:url(%23SVGID_00000017481593312060248540000005301043586270551729_);}%0A%09.st150{fill:url(%23SVGID_00000069386152788058020170000005271626713341217927_);}%0A%09.st151{fill:url(%23SVGID_00000028325475566083250450000010107574497167120305_);}%0A%09.st152{fill:url(%23SVGID_00000117656121226381934090000006744023142485630080_);}%0A%09.st153{fill:url(%23SVGID_00000168082575201019071360000014754740562970929328_);}%0A%09.st154{fill:url(%23SVGID_00000127741234663349097110000001528098829686764434_);}%0A%09.st155{fill:url(%23SVGID_00000034060950658671862920000001397907526570235569_);}%0A%09.st156{fill:url(%23SVGID_00000029037343976600481720000008870383085712797871_);}%0A%09.st157{fill:url(%23SVGID_00000053517553719418669070000003042206307506520251_);}%0A%09.st158{fill:url(%23SVGID_00000181048759616530933830000010194414063769397945_);}%0A%09.st159{fill:url(%23SVGID_00000026158439111011706170000014176033020405491338_);}%0A%09.st160{fill:url(%23SVGID_00000024720974559610770560000015546213897730449844_);}%0A%09.st161{fill:url(%23SVGID_00000183243236180380773650000002059437397641076123_);}%0A%09.st162{fill:url(%23SVGID_00000123415748674890958220000002526925971779012761_);}%0A%09.st163{fill:url(%23SVGID_00000160904663755400051230000012126809631458397119_);}%0A%09.st164{fill:url(%23SVGID_00000071520722380689217860000014822934165281870755_);}%0A%09.st165{fill:url(%23SVGID_00000041296441263500525070000001975872625737256851_);}%0A%09.st166{fill:url(%23SVGID_00000091722320157948223600000011732562480068863365_);}%0A%09.st167{fill:url(%23SVGID_00000112598958452132544480000007645170598479933315_);}%0A%09.st168{fill:url(%23SVGID_00000090981211352270342910000015269785526678630826_);}%0A%09.st169{fill:url(%23SVGID_00000118370484827851101950000012982409707334243775_);}%0A%09.st170{fill:url(%23SVGID_00000010284905328042099790000003744403543751197081_);}%0A%09.st171{fill:url(%23SVGID_00000038375076892984943810000005399608180174870933_);}%0A%09.st172{fill:url(%23SVGID_00000179614159083096307990000010487228365891102098_);}%0A%09.st173{fill:url(%23SVGID_00000014600905532807413520000006865478824768245904_);}%0A%09.st174{fill:url(%23SVGID_00000061444386009083416530000009038987981059668117_);}%0A%09.st175{fill:url(%23SVGID_00000162315302032896698560000006394040303915401102_);}%0A%09.st176{fill:url(%23SVGID_00000018217665546842622190000009608175295192086190_);}%0A%09.st177{fill:url(%23SVGID_00000080929268104429348180000007471076861625678471_);}%0A%09.st178{fill:url(%23SVGID_00000044900451492258315240000005764062887646829208_);}%0A%09.st179{fill:url(%23SVGID_00000136406253508767895700000001770652564823995282_);}%0A%09.st180{fill:url(%23SVGID_00000019673471116099523210000004661188583555242396_);}%0A%09.st181{fill:url(%23SVGID_00000178187571947607850390000018020070102189938314_);}%0A%09.st182{fill:url(%23SVGID_00000119077257173720542230000016106733188312045498_);}%0A%09.st183{fill:url(%23SVGID_00000061447768562750616400000006371619032045834660_);}%0A%09.st184{fill:url(%23SVGID_00000060749866133888134190000008234522254691778968_);}%0A%09.st185{fill:url(%23SVGID_00000143585941202079184330000003421895239333183110_);}%0A%09.st186{fill:url(%23SVGID_00000119825840319646034620000008263535863478988207_);}%0A%09.st187{fill:url(%23SVGID_00000129201117001962099070000016948399022708821930_);}%0A%09.st188{fill:url(%23SVGID_00000098941809612638221280000008667020729283798458_);}%0A%09.st189{fill:url(%23SVGID_00000085937959854397826450000014449798410758788512_);}%0A%09.st190{fill:url(%23SVGID_00000119803722170546169830000006754772335463704490_);}%0A%09.st191{fill:url(%23SVGID_00000035504941708173182970000017440925928597284018_);}%0A%09.st192{fill:url(%23SVGID_00000140735691985904165590000016032227344171071404_);}%0A%09.st193{fill:url(%23SVGID_00000030484900097264321520000014091444334710246282_);}%0A%09.st194{fill:url(%23SVGID_00000063616330807621163860000017336918169460845447_);}%0A%09.st195{fill:url(%23SVGID_00000153700895877066227230000015421026867518444183_);}%0A%09.st196{fill:url(%23SVGID_00000160187448158529068320000013176172845350121142_);}%0A%09.st197{fill:url(%23SVGID_00000023996140192249642720000017735743486236701056_);}%0A%09.st198{fill:url(%23SVGID_00000031928493407895192810000017667784415207674531_);}%0A%09.st199{fill:url(%23SVGID_00000084520673138550654450000005476120299058304903_);}%0A%09.st200{fill:url(%23SVGID_00000065063929428695901900000011092830657262940069_);}%0A%09.st201{fill:url(%23SVGID_00000072282479975612486490000005649904685960146067_);}%0A%09.st202{fill:url(%23SVGID_00000058578658437808277020000011791313088789901465_);}%0A%09.st203{fill:url(%23SVGID_00000125594020723556557930000000070165096089021113_);}%0A%09.st204{fill:url(%23SVGID_00000079466556111501546420000013209244580244670384_);}%0A%09.st205{fill:url(%23SVGID_00000134246142389802075220000006470161391724029871_);}%0A%09.st206{fill:url(%23SVGID_00000021113576054959959310000006786197543696659336_);}%0A%09.st207{fill:url(%23SVGID_00000155126580525082440030000003245939654579797376_);}%0A%09.st208{fill:url(%23SVGID_00000166672943000755880550000008422738376949743504_);}%0A%09.st209{fill:url(%23SVGID_00000176028543210453805560000015530133318836644009_);}%0A%09.st210{fill:url(%23SVGID_00000146492827448221205710000009010115423360066991_);}%0A%09.st211{fill:url(%23SVGID_00000144319106589871431540000010348115902117471661_);}%0A%09.st212{fill:url(%23SVGID_00000069373730936977307260000010752483091186488708_);}%0A%09.st213{fill:url(%23SVGID_00000147918928550472103100000014503061964549210248_);}%0A%09.st214{fill:url(%23SVGID_00000147201422586732180450000001556306597208060831_);}%0A%09.st215{fill:url(%23SVGID_00000031180141283669193490000015817271658390995614_);}%0A%09.st216{fill:url(%23SVGID_00000169550400316036015880000015302840617059511198_);}%0A%09.st217{fill:url(%23SVGID_00000176004276859279330420000007942688126574258585_);}%0A%09.st218{fill:url(%23SVGID_00000010299670082676381850000003554821190629077902_);}%0A%09.st219{fill:url(%23SVGID_00000060026618533019484150000016844140324759132346_);}%0A%09.st220{fill:url(%23SVGID_00000075862050709438729830000000940753547377821596_);}%0A%09.st221{fill:url(%23SVGID_00000027603182118282038860000005739292781706352788_);}%0A%09.st222{fill:url(%23SVGID_00000119825898305326484080000016404926572864281764_);}%0A%09.st223{fill:url(%23SVGID_00000047768298762479750160000002832059137678893989_);}%0A%09.st224{fill:url(%23SVGID_00000020390056315229707400000006317057557465644985_);}%0A%09.st225{fill:url(%23SVGID_00000108280339289070734700000012300159364327663515_);}%0A%09.st226{fill:url(%23SVGID_00000013885527168994260950000001723865425903435711_);}%0A%09.st227{fill:url(%23SVGID_00000169543248362552254260000015404377480371351702_);}%0A%09.st228{fill:url(%23SVGID_00000107577932777512522490000003115869791514689723_);}%0A%09.st229{fill:url(%23SVGID_00000112627030509494823140000016938810915882688667_);}%0A%09.st230{fill:url(%23SVGID_00000083775076206536782430000014881999305080613551_);}%0A%09.st231{fill:url(%23SVGID_00000178916307534562175280000007154837677718310282_);}%0A%09.st232{fill:url(%23SVGID_00000073720560912747552540000017997107450145021847_);}%0A%09.st233{fill:url(%23SVGID_00000139256666623813746210000010111212786848043151_);}%0A%09.st234{fill:url(%23SVGID_00000174598138529533695100000002384834722409290658_);}%0A%09.st235{fill:url(%23SVGID_00000134238716000703498210000007345410476308569022_);}%0A%09.st236{fill:url(%23SVGID_00000097463238269581970950000015069012261289936571_);}%0A%09.st237{fill:url(%23SVGID_00000061430006649259869450000005110394093022560942_);}%0A%09.st238{fill:url(%23SVGID_00000036252866246606732140000015274324986591789463_);}%0A%09.st239{fill:url(%23SVGID_00000103232682290748692240000005164809632463632010_);}%0A%09.st240{fill:url(%23SVGID_00000049182475551380150530000009731315271305215386_);}%0A%09.st241{fill:url(%23SVGID_00000098930705176817636920000011776574124488356995_);}%0A%09.st242{fill:url(%23SVGID_00000126299502089415054540000016922899883241236376_);}%0A%09.st243{fill:url(%23SVGID_00000093876603616663210750000013947160106886071481_);}%0A%09.st244{fill:url(%23SVGID_00000181793314975017077760000014423013164032508076_);}%0A%09.st245{fill:url(%23SVGID_00000039135340011161723160000013310729678683653288_);}%0A%09.st246{fill:url(%23SVGID_00000088837260470886924210000007536129632482748092_);}%0A%09.st247{fill:url(%23SVGID_00000023275773061400011760000016138215536616486309_);}%0A%09.st248{fill:url(%23SVGID_00000003790862433168934280000016095504916432154550_);}%0A%09.st249{fill:url(%23SVGID_00000175314177530022377570000016446064611270339208_);}%0A%09.st250{fill:url(%23SVGID_00000104665914012478554740000010308696881919305601_);}%0A%09.st251{fill:url(%23SVGID_00000038412376126705706200000011707987160410656142_);}%0A%09.st252{fill:url(%23SVGID_00000055686790609318851760000006722074349757314973_);}%0A%09.st253{fill:url(%23SVGID_00000167361954814066768360000011654405637151208323_);}%0A%09.st254{fill:url(%23SVGID_00000018231377677283326180000016170751120149662614_);}%0A%09.st255{fill:url(%23SVGID_00000066496734270636208710000015926593129845160611_);}%0A%09.st256{fill:url(%23SVGID_00000100347708643200068360000015214405039975810212_);}%0A%09.st257{fill:url(%23SVGID_00000162325414279174959840000014648168374369126296_);}%0A%09.st258{fill:url(%23SVGID_00000004546135286760044460000015218924414741555629_);}%0A%09.st259{fill:url(%23SVGID_00000047746106622210337930000013490701850746543037_);}%0A%09.st260{fill:url(%23SVGID_00000178176864147943830920000011794363510951029666_);}%0A%09.st261{fill:url(%23SVGID_00000068635885903176712270000018333969375079813025_);}%0A%09.st262{fill:url(%23SVGID_00000039113253796763013400000009993541218408604298_);}%0A%09.st263{fill:url(%23SVGID_00000150806562756000540140000008508246806907462287_);}%0A%09.st264{fill:url(%23SVGID_00000129171257806010404390000016609109864206065281_);}%0A%09.st265{fill:url(%23SVGID_00000103252683525140977980000007945643609605572756_);}%0A%09.st266{fill:url(%23SVGID_00000165945982650673823210000014226554627737812874_);}%0A%09.st267{fill:url(%23SVGID_00000004529461356320545790000017946503070570107035_);}%0A%09.st268{fill:url(%23SVGID_00000083090662457126724410000008133151816177825977_);}%0A%09.st269{fill:url(%23SVGID_00000050657834661532794410000004904741620051825289_);}%0A%09.st270{fill:url(%23SVGID_00000068651243249598579450000017655432346510274461_);}%0A%09.st271{fill:url(%23SVGID_00000011720837514705047310000016106366142631713444_);}%0A%09.st272{fill:url(%23SVGID_00000022521632042857228840000008150689548062850946_);}%0A%09.st273{fill:url(%23SVGID_00000164515645835779470500000006029978100224301185_);}%0A%09.st274{fill:url(%23SVGID_00000010294916139349768250000010384742406679871914_);}%0A%09.st275{fill:url(%23SVGID_00000112628658016751011580000000393679998045630886_);}%0A%09.st276{fill:url(%23SVGID_00000173162109876331158820000002424671596436679068_);}%0A%09.st277{fill:url(%23SVGID_00000081641260608597426100000009563169260744741253_);}%0A%09.st278{fill:url(%23SVGID_00000161623363145645319140000005390892695785328023_);}%0A%09.st279{fill:url(%23SVGID_00000110453664811865434430000015878031967803449217_);}%0A%09.st280{fill:url(%23SVGID_00000019664276290283497450000008951733478191791530_);}%0A%09.st281{fill:url(%23SVGID_00000011735795897316225440000012114472316689371051_);}%0A%09.st282{fill:url(%23SVGID_00000075874600978776678390000004678716772079799710_);}%0A%09.st283{fill:url(%23SVGID_00000080897019297331000730000004944118568981964423_);}%0A%09.st284{fill:url(%23SVGID_00000099657153732221950350000002924190178298789524_);}%0A%09.st285{fill:url(%23SVGID_00000081647366032414574690000005746807948329468602_);}%0A%09.st286{fill:url(%23SVGID_00000149357166347022346660000008012772519444003262_);}%0A%09.st287{fill:url(%23SVGID_00000080900838278259725490000016211691145188015269_);}%0A%09.st288{fill:url(%23SVGID_00000004536689044929864920000014447301974904846223_);}%0A%09.st289{fill:url(%23SVGID_00000038377056023507284730000011606449857102791831_);}%0A%09.st290{fill:url(%23SVGID_00000096040918722201456520000000105225685175361944_);}%0A%09.st291{fill:url(%23SVGID_00000000906172016896839470000001383252251413169311_);}%0A%09.st292{fill:url(%23SVGID_00000010293597894667121890000005383105693469951420_);}%0A%09.st293{fill:url(%23SVGID_00000177455024217807107680000018400843041972901812_);}%0A%09.st294{fill:url(%23SVGID_00000021093963607602177530000012684742076166765441_);}%0A%09.st295{fill:url(%23SVGID_00000045579806848890370830000007748013357711631783_);}%0A%09.st296{fill:url(%23SVGID_00000111888145606836820300000015186045977364553890_);}%0A%09.st297{fill:url(%23SVGID_00000119097785049930816880000011293822528595223434_);}%0A%09.st298{fill:url(%23SVGID_00000136397607166935235570000009798083187339692434_);}%0A%09.st299{fill:url(%23SVGID_00000160192106873728460940000015353116803731847320_);}%0A%09.st300{fill:url(%23SVGID_00000171689405040294818400000016560072617702066613_);}%0A%09.st301{fill:url(%23SVGID_00000099625438937634753240000017173862565081894079_);}%0A%09.st302{fill:url(%23SVGID_00000064330856544680897220000004854766652344263096_);}%0A%09.st303{fill:url(%23SVGID_00000014635863391824765490000016467048599156329644_);}%0A%09.st304{fill:url(%23SVGID_00000047764263471050095160000006907629565321240199_);}%0A%09.st305{fill:url(%23SVGID_00000048490962312865698750000004906035800477754815_);}%0A%09.st306{fill:url(%23SVGID_00000072968159082224531280000002354524327430968203_);}%0A%09.st307{fill:url(%23SVGID_00000174602129481327449430000002366273344276690348_);}%0A%09.st308{fill:url(%23SVGID_00000137831714109468798360000001852123570831041923_);}%0A%09.st309{fill:url(%23SVGID_00000081642477761131090830000002815600739963660713_);}%0A%09.st310{fill:url(%23SVGID_00000003098965381799805850000001629380470165999787_);}%0A%09.st311{fill:url(%23SVGID_00000179639446886263634430000003148081604259294132_);}%0A%09.st312{fill:url(%23SVGID_00000151510714154176101470000017642998803562276790_);}%0A%09.st313{fill:url(%23SVGID_00000160885809752561740600000009919206739209772428_);}%0A%09.st314{fill:url(%23SVGID_00000092457970348087527890000012510635864137271998_);}%0A%09.st315{fill:url(%23SVGID_00000111890427102981025730000010626141730546734727_);}%0A%09.st316{fill:url(%23SVGID_00000134932555930600821270000005169788393614686895_);}%0A%09.st317{fill:url(%23SVGID_00000174584914932091006770000003315163976381872556_);}%0A%09.st318{fill:url(%23SVGID_00000176038246716740215640000010032883082050864777_);}%0A%09.st319{fill:url(%23SVGID_00000060720643693627205830000003880922356222063784_);}%0A%09.st320{fill:url(%23SVGID_00000034087069520171566820000007878680048888230331_);}%0A%09.st321{fill:url(%23SVGID_00000121259939478615624530000012616359584278266281_);}%0A%09.st322{fill:url(%23SVGID_00000047053851940569625880000010838205280581964700_);}%0A%09.st323{fill:url(%23SVGID_00000044152127031022404630000012180633830988203707_);}%0A%09.st324{fill:url(%23SVGID_00000113348862196946235790000013957779846216255105_);}%0A%09.st325{fill:url(%23SVGID_00000096038644217984046540000004799247170262918040_);}%0A%09.st326{fill:url(%23SVGID_00000023984919894679746110000017585188185645437599_);}%0A%09.st327{fill:url(%23SVGID_00000034809714517016927330000018229495420476478344_);}%0A%09.st328{fill:url(%23SVGID_00000157274989130828962470000007736919061219620793_);}%0A%09.st329{fill:url(%23SVGID_00000146491059537689067620000007856461939976747967_);}%0A%09.st330{fill:url(%23SVGID_00000079474562493894474040000007263266742187569537_);}%0A%09.st331{fill:url(%23SVGID_00000093894142815640752900000005373179425838129800_);}%0A%09.st332{fill:url(%23SVGID_00000047023781245933125910000004098548045278771123_);}%0A%09.st333{fill:url(%23SVGID_00000098923726990597866160000017850623332303677606_);}%0A%09.st334{fill:url(%23SVGID_00000125602915353007665800000016585658655755349376_);}%0A%09.st335{fill:url(%23SVGID_00000099635815349981268740000008068230276276133007_);}%0A%09.st336{fill:url(%23SVGID_00000101071136090258242200000005939531639348630933_);}%0A%09.st337{fill:url(%23SVGID_00000045583711160732522850000005435225877472914858_);}%0A%09.st338{fill:url(%23SVGID_00000124143153583382640580000016589853857402984363_);}%0A%09.st339{fill:url(%23SVGID_00000119106037691058094150000009880892886039568021_);}%0A%09.st340{fill:url(%23SVGID_00000157987761813788610130000014269743429958130111_);}%0A%09.st341{fill:url(%23SVGID_00000018194551512025012450000003748474701039013009_);}%0A%09.st342{fill:url(%23SVGID_00000044893031572363280820000013014116228076532354_);}%0A%09.st343{fill:url(%23SVGID_00000055686519311625779530000013807973356507005573_);}%0A%09.st344{fill:url(%23SVGID_00000114068940748035631320000000122481748995005368_);}%0A%09.st345{fill:url(%23SVGID_00000051342365934840951610000006405545453554528417_);}%0A%09.st346{fill:url(%23SVGID_00000127736188218943767780000009164321246666800570_);}%0A%09.st347{fill:url(%23SVGID_00000136394569514302956320000000240409041794712223_);}%0A%09.st348{fill:url(%23SVGID_00000071551076002127696230000003933545822804117130_);}%0A%09.st349{fill:url(%23SVGID_00000124150120777136908350000001883173872844562335_);}%0A%09.st350{fill:url(%23SVGID_00000170251214246184949920000004062739969326481027_);}%0A%09.st351{fill:url(%23SVGID_00000075126051855337151580000013272894882599827631_);}%0A%09.st352{fill:url(%23SVGID_00000030481403853905151870000015206696137816333485_);}%0A%09.st353{fill:url(%23SVGID_00000136392437360287047590000008282201806659899806_);}%0A%09.st354{fill:url(%23SVGID_00000049941030955222808550000001058560983648044974_);}%0A%09.st355{fill:url(%23SVGID_00000095326929684170834150000013805136471452546737_);}%0A%09.st356{fill:url(%23SVGID_00000077297184462019603050000014203352203333721220_);}%0A%09.st357{fill:url(%23SVGID_00000168832211256806246710000006354159691524958369_);}%0A%09.st358{fill:url(%23SVGID_00000005979993459771752350000017973540940754154169_);}%0A%09.st359{fill:url(%23SVGID_00000142176616879938273650000017853724519008762283_);}%0A%09.st360{fill:url(%23SVGID_00000057841824254941195130000000041187002454415244_);}%0A%09.st361{fill:url(%23SVGID_00000018957383819000046690000013840506961910608265_);}%0A%09.st362{fill:url(%23SVGID_00000150100347640297329820000017708067373474059448_);}%0A%09.st363{fill:url(%23SVGID_00000110446910803519536820000004037579479305423285_);}%0A%09.st364{fill:url(%23SVGID_00000026859439841738818730000003879986964604222136_);}%0A%09.st365{fill:url(%23SVGID_00000101065616062650540090000011862218375148542882_);}%0A%09.st366{fill:url(%23SVGID_00000157268191132984971780000008042184582462724794_);}%0A%09.st367{fill:url(%23SVGID_00000013887451684067354100000007891327656857693619_);}%0A%09.st368{fill:url(%23SVGID_00000037680811099735676250000017551948752052704445_);}%0A%09.st369{fill:url(%23SVGID_00000033371619270561890770000016166668743787070143_);}%0A%09.st370{fill:url(%23SVGID_00000136380931956876419000000002124755778774184595_);}%0A%09.st371{fill:url(%23SVGID_00000018215177866507349390000005012023975927389110_);}%0A%09.st372{fill:url(%23SVGID_00000075156847250873186800000008727054286075554468_);}%0A%09.st373{fill:url(%23SVGID_00000173872860967792812600000002391312492511490691_);}%0A%09.st374{fill:url(%23SVGID_00000054255906414126378210000013065102416663084470_);}%0A%09.st375{fill:url(%23SVGID_00000152264506865771828160000000945803999269221286_);}%0A%09.st376{fill:url(%23SVGID_00000139270540168846084870000017982244049098155682_);}%0A%09.st377{fill:url(%23SVGID_00000047046896045490572660000008539621030269069443_);}%0A%09.st378{fill:url(%23SVGID_00000004513671357123219120000013816486565475894196_);}%0A%09.st379{fill:url(%23SVGID_00000173136572715651548610000011762791269598109603_);}%0A%09.st380{fill:url(%23SVGID_00000072968165090412864850000017508516326666481851_);}%0A%09.st381{fill:url(%23SVGID_00000134963518183317150680000012187777488076313781_);}%0A%09.st382{fill:url(%23SVGID_00000113335863758152679450000013526567302881264291_);}%0A%09.st383{fill:url(%23SVGID_00000014617027197522431310000012254194503672848827_);}%0A%09.st384{fill:url(%23SVGID_00000077312054934136307630000007628161026788409223_);}%0A%09.st385{fill:url(%23SVGID_00000026163022491944224390000000318049095328073402_);}%0A%09.st386{fill:url(%23SVGID_00000080174916066327222300000009347446023217102518_);}%0A%09.st387{fill:url(%23SVGID_00000164510199346640018370000006119008420053132963_);}%0A%09.st388{fill:url(%23SVGID_00000018226410702405206770000008750683775161551022_);}%0A%09.st389{fill:url(%23SVGID_00000044171305718380618520000011054193487906910365_);}%0A%09.st390{fill:url(%23SVGID_00000091710491781048673520000007949738852754089618_);}%0A%09.st391{fill:url(%23SVGID_00000031907279968321219250000014234380444216192434_);}%0A%09.st392{fill:url(%23SVGID_00000106835748263026892740000006512343549126822838_);}%0A%09.st393{fill:url(%23SVGID_00000028302142107430431050000011229729115020180870_);}%0A%09.st394{fill:url(%23SVGID_00000101821282183702796200000006674777808921002912_);}%0A%09.st395{fill:url(%23SVGID_00000012462132184943945310000012438252993439203001_);}%0A%09.st396{fill:url(%23SVGID_00000057856757566556475610000006957432684505794725_);}%0A%09.st397{fill:url(%23SVGID_00000145770004898910821730000010010620625623181731_);}%0A%09.st398{fill:url(%23SVGID_00000039095546878738321000000015895596668801081506_);}%0A%09.st399{fill:url(%23SVGID_00000054224826894808806200000010882043716472844991_);}%0A%09.st400{fill:url(%23SVGID_00000085234795253246836360000015517235660744423088_);}%0A%09.st401{fill:url(%23SVGID_00000126301445673899618340000017429410843638988464_);}%0A%09.st402{fill:url(%23SVGID_00000073681248904459234340000010095775487611509126_);}%0A%09.st403{fill:url(%23SVGID_00000169518493145387036700000009669494801582549417_);}%0A%09.st404{fill:url(%23SVGID_00000153695901495316629620000001663868342650823074_);}%0A%09.st405{fill:url(%23SVGID_00000102518267927210477550000017525591673440816270_);}%0A%09.st406{fill:url(%23SVGID_00000005985537308656799700000001053358050180577209_);}%0A%09.st407{fill:url(%23SVGID_00000070798553211734235140000011532348069492886165_);}%0A%09.st408{fill:url(%23SVGID_00000101810227372802104090000003537426123931412657_);}%0A%09.st409{fill:url(%23SVGID_00000077301633388036475200000007367331904496480171_);}%0A%09.st410{fill:url(%23SVGID_00000166643936762155483790000001916441146944306874_);}%0A%09.st411{fill:url(%23SVGID_00000006695522097295039810000016684910029618296981_);}%0A%09.st412{fill:url(%23SVGID_00000096034258518289438350000000337840821438619779_);}%0A%09.st413{fill:url(%23SVGID_00000168816224256939034800000003794856828868240544_);}%0A%09.st414{fill:url(%23SVGID_00000128461252767712142090000017972906022352589702_);}%0A%09.st415{fill:url(%23SVGID_00000157280398879512731590000006379359027831848841_);}%0A%09.st416{fill:url(%23SVGID_00000132780284585894677940000006494087702628302757_);}%0A%09.st417{fill:url(%23SVGID_00000075120683609513828980000001313956948169576595_);}%0A%09.st418{fill:url(%23SVGID_00000061463378120590387110000003461590088064382096_);}%0A%09.st419{fill:url(%23SVGID_00000092450906415343155100000013571368642583469247_);}%0A%09.st420{fill:url(%23SVGID_00000097463679039425968480000017118192117788462478_);}%0A%09.st421{fill:url(%23SVGID_00000000911841918044711390000004135262126586459274_);}%0A%09.st422{fill:url(%23SVGID_00000029012772423372869350000008711242830970177192_);}%0A%09.st423{fill:url(%23SVGID_00000021799791519990094560000015641043015977136290_);}%0A%09.st424{fill:url(%23SVGID_00000067952465751579573570000018130690996540634292_);}%0A%09.st425{fill:url(%23SVGID_00000109748282133728382510000011053296897533129148_);}%0A%09.st426{fill:url(%23SVGID_00000114062480426884032430000004373282643560934066_);}%0A%09.st427{fill:url(%23SVGID_00000132082133921805937170000013721382027045855672_);}%0A%09.st428{fill:url(%23SVGID_00000163058765217534456140000011407329430205243300_);}%0A%09.st429{fill:url(%23SVGID_00000021106943686840256630000000112052839506472872_);}%0A%09.st430{fill:url(%23SVGID_00000034772527909058227700000006771325804416357008_);}%0A%09.st431{fill:url(%23SVGID_00000082332165722886975480000012416026536652896922_);}%0A%09.st432{fill:url(%23SVGID_00000169519265908965074180000013523677540673457072_);}%0A%09.st433{fill:url(%23SVGID_00000072272248448497139100000001747076468266302651_);}%0A%09.st434{fill:url(%23SVGID_00000134226880983537725450000012964012219244868255_);}%0A%09.st435{fill:url(%23SVGID_00000136386903825449539470000010003231753692893336_);}%0A%09.st436{fill:url(%23SVGID_00000180360443903397034880000012540126719204004791_);}%0A%09.st437{fill:url(%23SVGID_00000054955973286302861540000014082363071064812943_);}%0A%09.st438{fill:url(%23SVGID_00000049931238923021579610000017808715929555400321_);}%0A%09.st439{fill:url(%23SVGID_00000170246161078415113020000012466831430525511332_);}%0A%09.st440{fill:url(%23SVGID_00000014592490110426596950000005873564482359318926_);}%0A%09.st441{fill:url(%23SVGID_00000079458992330275677710000006201955336995619487_);}%0A%09.st442{fill:url(%23SVGID_00000125574951100574038290000009625966229268710565_);}%0A%09.st443{fill:url(%23SVGID_00000090987342944179278000000001010888868825924491_);}%0A%09.st444{fill:url(%23SVGID_00000181049069100042188480000001568705239798665360_);}%0A%09.st445{fill:url(%23SVGID_00000026877410826759352690000005038089330967488644_);}%0A%09.st446{fill:url(%23SVGID_00000011015973365543025720000005283773466235143603_);}%0A%09.st447{fill:url(%23SVGID_00000041975407784663115960000009260738324202399393_);}%0A%09.st448{fill:url(%23SVGID_00000013901475784549428720000014905022892447465872_);}%0A%09.st449{fill:url(%23SVGID_00000164484893416043615220000012318516009721648288_);}%0A%09.st450{fill:url(%23SVGID_00000034794440830139415940000004819176823571818916_);}%0A%09.st451{fill:url(%23SVGID_00000037663744231392610030000009542036872530215837_);}%0A%09.st452{fill:url(%23SVGID_00000024699816218073382860000001427892097356199585_);}%0A%09.st453{fill:url(%23SVGID_00000110460380360022856110000011233752704232587454_);}%0A%09.st454{fill:url(%23SVGID_00000067924238016286929540000003787163700892455842_);}%0A%09.st455{fill:url(%23SVGID_00000085231478409013987890000001395481012203078311_);}%0A%09.st456{fill:url(%23SVGID_00000119834152157566355610000009789934215968656029_);}%0A%09.st457{fill:url(%23SVGID_00000134956733336606469840000008324928463162858381_);}%0A%09.st458{fill:url(%23SVGID_00000065055983834972455610000015923562210661855145_);}%0A%09.st459{fill:url(%23SVGID_00000024694749853266704530000007802683605277411765_);}%0A%09.st460{fill:url(%23SVGID_00000083051245242698173020000006372606659214867381_);}%0A%09.st461{fill:url(%23SVGID_00000004521483455359882840000013191041044164460981_);}%0A%09.st462{fill:url(%23SVGID_00000008125935582001761440000005952904577929351078_);}%0A%09.st463{fill:url(%23SVGID_00000144315681940805010770000013011166700639372693_);}%0A%09.st464{fill:url(%23SVGID_00000003819224944729877370000016907310086466295191_);}%0A%09.st465{fill:url(%23SVGID_00000015348425564366141480000004178827671790839970_);}%0A%09.st466{fill:url(%23SVGID_00000152258545024023390050000006611472777111535031_);}%0A%09.st467{fill:url(%23SVGID_00000082347071683215032550000004194338713358791330_);}%0A%09.st468{fill:url(%23SVGID_00000067235452303435556910000004176628311417392015_);}%0A%09.st469{fill:url(%23SVGID_00000046329604255502702520000011784885070755104682_);}%0A%09.st470{fill:url(%23SVGID_00000080180984651233388610000014781091710968449443_);}%0A%09.st471{fill:url(%23SVGID_00000147208007212545734940000003157337840355941518_);}%0A%09.st472{fill:url(%23SVGID_00000062912260814218164980000015979271907709576365_);}%0A%09.st473{fill:url(%23SVGID_00000014615212709348215520000010112280141548417673_);}%0A%09.st474{fill:url(%23SVGID_00000053521546260604417260000001817767281007164313_);}%0A%09.st475{fill:url(%23SVGID_00000034795783307940576280000012834080496640335253_);}%0A%09.st476{fill:url(%23SVGID_00000080198987401313746140000008018732487424319629_);}%0A%09.st477{fill:url(%23SVGID_00000129171164882395973600000002719004418110894003_);}%0A%09.st478{fill:url(%23SVGID_00000096774507830993815340000004822034213908160191_);}%0A%09.st479{fill:url(%23SVGID_00000032650460221837528370000004800382482209625788_);}%0A%09.st480{fill:url(%23SVGID_00000104687672798834731630000017722367148246673553_);}%0A%09.st481{fill:url(%23SVGID_00000160192294127778233650000016223632023791345281_);}%0A%09.st482{fill:url(%23SVGID_00000059299737973615937360000007667480846650120341_);}%0A%09.st483{fill:url(%23SVGID_00000147197909907313027440000002465484719483953820_);}%0A%09.st484{fill:url(%23SVGID_00000159459767775409078260000003158678070032886206_);}%0A%09.st485{fill:url(%23SVGID_00000176727484672404997660000016248496326948695989_);}%0A%09.st486{fill:url(%23SVGID_00000118397626499892538290000013682112396216245414_);}%0A%09.st487{fill:url(%23SVGID_00000108289612446495459310000017749415439281617540_);}%0A%09.st488{fill:url(%23SVGID_00000120552435705834015400000006538712809254756737_);}%0A%09.st489{fill:url(%23SVGID_00000165953407890585025590000014642147007090551701_);}%0A%09.st490{fill:url(%23SVGID_00000116231303962448017480000012085863110522349197_);}%0A%09.st491{fill:url(%23SVGID_00000075856675326012801000000018441910475498966442_);}%0A%09.st492{fill:url(%23SVGID_00000023990229497162408620000012921369128802299308_);}%0A%09.st493{fill:url(%23SVGID_00000028322484878002437570000008233526503201141658_);}%0A%09.st494{fill:url(%23SVGID_00000163049598356002821480000000260676589548896942_);}%0A%09.st495{fill:url(%23SVGID_00000060020584479502448320000013955495483771669923_);}%0A%09.st496{fill:url(%23SVGID_00000148627373329241468020000001293546218356514434_);}%0A%09.st497{fill:url(%23SVGID_00000023987250480984908870000007335193734893407669_);}%0A%09.st498{fill:url(%23SVGID_00000010995621239798464700000013617729908868762033_);}%0A%09.st499{fill:url(%23SVGID_00000097482619012125441120000006362944244714577283_);}%0A%09.st500{fill:url(%23SVGID_00000067235185065625466890000002067834743487543184_);}%0A%09.st501{fill:url(%23SVGID_00000183933687588899977420000003022030121279052174_);}%0A%09.st502{fill:url(%23SVGID_00000181773718647019514390000016473408548714120894_);}%0A%09.st503{fill:url(%23SVGID_00000022521732256907058200000017582459811521519533_);}%0A%09.st504{fill:url(%23SVGID_00000093141112083980802350000014914382185691875751_);}%0A%09.st505{fill:url(%23SVGID_00000176008807464479732060000012164439810065258134_);}%0A%09.st506{fill:url(%23SVGID_00000065794016597266892350000018403083204125092247_);}%0A%09.st507{fill:url(%23SVGID_00000183229263722727456010000003850004569057825454_);}%0A%09.st508{fill:url(%23SVGID_00000008844481813796348280000014012721238585786261_);}%0A%09.st509{fill:url(%23SVGID_00000140707136649074949350000016273931550796289421_);}%0A%09.st510{fill:url(%23SVGID_00000124155314996134737600000008173026528373495486_);}%0A%09.st511{fill:url(%23SVGID_00000052819118237553212490000003033208177529996936_);}%0A%09.st512{fill:url(%23SVGID_00000052062026644832203030000002735701265550305947_);}%0A%09.st513{fill:url(%23SVGID_00000180356022628803337810000017050785140800840064_);}%0A%09.st514{fill:url(%23SVGID_00000147906444547996298810000008287431309514844076_);}%0A%09.st515{fill:url(%23SVGID_00000028319517544092908970000010568596937963851179_);}%0A%09.st516{fill:url(%23SVGID_00000097491149644292795700000000449425225451440823_);}%0A%09.st517{fill:url(%23SVGID_00000160184212615336862520000011299051417147989920_);}%0A%09.st518{fill:url(%23SVGID_00000161606807650223847860000017316732071596141188_);}%0A%09.st519{fill:url(%23SVGID_00000172409092192712952260000003263782909558908546_);}%0A%09.st520{fill:url(%23SVGID_00000095334290515375528750000001526407808190585514_);}%0A%09.st521{fill:url(%23SVGID_00000055688194724352064890000010035102687577526682_);}%0A%09.st522{fill:url(%23SVGID_00000152250274589477187910000008780233975061440169_);}%0A%09.st523{fill:url(%23SVGID_00000103225442901109298430000000286691470036724642_);}%0A%09.st524{fill:url(%23SVGID_00000180361246499456042720000003119202178476451718_);}%0A%09.st525{fill:url(%23SVGID_00000049185132542652025270000012288294523223324071_);}%0A%09.st526{fill:url(%23SVGID_00000092433699372361086060000012783285963233080499_);}%0A%09.st527{fill:url(%23SVGID_00000170964959854478224270000013797274634735883173_);}%0A%09.st528{fill:url(%23SVGID_00000174581170923017118330000005461290320863462294_);}%0A%09.st529{fill:url(%23SVGID_00000120543661069459809780000003331369646980216766_);}%0A%09.st530{fill:url(%23SVGID_00000097481454176715247110000012029266079343164335_);}%0A%09.st531{fill:url(%23SVGID_00000062194265276689034170000004113507972057451707_);}%0A%09.st532{fill:url(%23SVGID_00000178892316463993146300000000022975572008066981_);}%0A%09.st533{fill:url(%23SVGID_00000152972207716284524010000005232320582826880151_);}%0A%09.st534{fill:url(%23SVGID_00000023968981445514874300000002071821584764166532_);}%0A%09.st535{fill:url(%23SVGID_00000121973296323061341040000002759679564358941099_);}%0A%09.st536{fill:url(%23SVGID_00000173134320050565884380000005116773865172150925_);}%0A%09.st537{fill:url(%23SVGID_00000052815819279313432740000000544806244941827767_);}%0A%09.st538{fill:url(%23SVGID_00000069367242592369472460000001591456782280203949_);}%0A%09.st539{fill:url(%23SVGID_00000148620421566039277750000008350535052620182404_);}%0A%09.st540{fill:url(%23SVGID_00000078723137627809595080000005457017985496150458_);}%0A%09.st541{fill:url(%23SVGID_00000179647786112505782130000010646401840882208161_);}%0A%09.st542{fill:url(%23SVGID_00000089571723290547867860000006059186684765947277_);}%0A%09.st543{fill:url(%23SVGID_00000155140891906069869620000011920919118492296879_);}%0A%09.st544{fill:url(%23SVGID_00000144296107208015503680000009322188726937263028_);}%0A%09.st545{fill:url(%23SVGID_00000086684089323693842300000014053906586401136315_);}%0A%09.st546{fill:url(%23SVGID_00000062905973036221812220000003206653170176995473_);}%0A%09.st547{fill:url(%23SVGID_00000093170621935233466680000001795856663929627311_);}%0A%09.st548{fill:url(%23SVGID_00000171678253319419014340000015630309093562774434_);}%0A%09.st549{fill:url(%23SVGID_00000177483975625811736090000009558256050015149722_);}%0A%09.st550{fill:url(%23SVGID_00000133515299773785388630000015768668620307485591_);}%0A%09.st551{fill:url(%23SVGID_00000034055938048177182290000014500773316576514702_);}%0A%09.st552{fill:url(%23SVGID_00000176022946482670496170000005105721776713082510_);}%0A%09.st553{fill:url(%23SVGID_00000067929897846192627210000000648440480617841541_);}%0A%09.st554{fill:url(%23SVGID_00000160174025601260709690000005630408451635499415_);}%0A%09.st555{fill:url(%23SVGID_00000111912869707731356190000015854160094718250666_);}%0A%09.st556{fill:url(%23SVGID_00000000906331003395441170000005381781176386626485_);}%0A%09.st557{fill:url(%23SVGID_00000094620035641130179870000012668433051664259969_);}%0A%09.st558{fill:url(%23SVGID_00000060716171210416832210000007824991794467536556_);}%0A%09.st559{fill:url(%23SVGID_00000088839084437027407630000015153738694671893151_);}%0A%09.st560{fill:url(%23SVGID_00000145058342942233401940000004473558607369400209_);}%0A%09.st561{fill:url(%23SVGID_00000126285757301857559140000015361462034697472904_);}%0A%09.st562{fill:url(%23SVGID_00000010998774672516156610000006758104289755050894_);}%0A%09.st563{fill:url(%23SVGID_00000109013519372178338240000008246873041707547308_);}%0A%09.st564{fill:url(%23SVGID_00000109748183616614576230000012594094633503855267_);}%0A%09.st565{fill:url(%23SVGID_00000172435263829486054980000004670070911350227634_);}%0A%09.st566{fill:url(%23SVGID_00000031898952841995863720000003859977170692482698_);}%0A%09.st567{fill:url(%23SVGID_00000119116865443544563020000015469383641271310006_);}%0A%09.st568{fill:url(%23SVGID_00000008834661273892024520000017129543558488605327_);}%0A%09.st569{fill:url(%23SVGID_00000170974277822608062390000014299812997571546030_);}%0A%09.st570{fill:url(%23SVGID_00000026154695650660861600000017188086674790461111_);}%0A%09.st571{fill:url(%23SVGID_00000108285420939422926950000009523678179007058317_);}%0A%09.st572{fill:url(%23SVGID_00000085219033983143748590000016349709029538384559_);}%0A%09.st573{fill:url(%23SVGID_00000117652205932098034720000005455803425733028000_);}%0A%09.st574{fill:url(%23SVGID_00000100346761518856361500000009650362945727909010_);}%0A%09.st575{fill:url(%23SVGID_00000119824284761977092560000017873459466789683604_);}%0A%09.st576{fill:url(%23SVGID_00000020365154516670639010000008248536696304341687_);}%0A%09.st577{fill:url(%23SVGID_00000010995019644283372590000014914731511049574825_);}%0A%09.st578{fill:url(%23SVGID_00000029738495222934213490000014812505925844453791_);}%0A%09.st579{fill:url(%23SVGID_00000032647762630500529820000009072337002699374244_);}%0A%09.st580{fill:url(%23SVGID_00000177470704019613037960000013273162940329886862_);}%0A%09.st581{fill:url(%23SVGID_00000150103693423656419130000009146163011341296055_);}%0A%09.st582{fill:url(%23SVGID_00000041997588284490965660000017332629475577783697_);}%0A%09.st583{fill:url(%23SVGID_00000095300623256720052470000016813132067975747252_);}%0A%09.st584{fill:url(%23SVGID_00000142171151656269390020000003666608709195417219_);}%0A%09.st585{fill:url(%23SVGID_00000081637486658608601870000003373901512653981626_);}%0A%09.st586{fill:url(%23SVGID_00000109751031384822626160000016510233527368578952_);}%0A%09.st587{fill:url(%23SVGID_00000117637035743535370820000004413946452729235896_);}%0A%09.st588{fill:url(%23SVGID_00000149355921360680743930000013426149408260742053_);}%0A%09.st589{fill:url(%23SVGID_00000116228515172615063400000011224700077575759749_);}%0A%09.st590{fill:url(%23SVGID_00000166668129267030359740000018006202022664574354_);}%0A%09.st591{fill:url(%23SVGID_00000094599252845675854380000007212263132451351220_);}%0A%09.st592{fill:url(%23SVGID_00000115489349178085113220000017070192833901197978_);}%0A%09.st593{fill:url(%23SVGID_00000085936446674703893520000000894259116405830318_);}%0A%09.st594{fill:url(%23SVGID_00000083063512623008479170000002675051008716036228_);}%0A%09.st595{fill:url(%23SVGID_00000071521365245152761730000006320916801901084592_);}%0A%09.st596{fill:url(%23SVGID_00000101824303226637971950000001698053122379737233_);}%0A%09.st597{fill:url(%23SVGID_00000162339599111443211300000003842436390062437539_);}%0A%09.st598{fill:url(%23SVGID_00000144311995180486483170000013264161501429620411_);}%0A%09.st599{fill:url(%23SVGID_00000010277128547584118360000015935508792532439192_);}%0A%09.st600{fill:url(%23SVGID_00000127021507546604623850000000616756679003099304_);}%0A%09.st601{fill:url(%23SVGID_00000141421149062548821190000011491258799945567898_);}%0A%09.st602{fill:url(%23SVGID_00000003093197868197513500000007345037732283355291_);}%0A%09.st603{fill:url(%23SVGID_00000164483367021944979760000002764850018260206721_);}%0A%09.st604{fill:url(%23SVGID_00000032630391728575378540000006138999334363216564_);}%0A%09.st605{fill:url(%23SVGID_00000183227040005195628670000005287282183631308699_);}%0A%09.st606{fill:url(%23SVGID_00000091696401196531962470000009927440572756993190_);}%0A%09.st607{fill:url(%23SVGID_00000164497603891415297170000006986213691188727470_);}%0A%09.st608{fill:url(%23SVGID_00000182485940174344815750000014534230874593568652_);}%0A%09.st609{fill:url(%23SVGID_00000000940466315005871870000009542006573848286872_);}%0A%09.st610{fill:url(%23SVGID_00000015326709257895996830000015712941936569463717_);}%0A%09.st611{fill:url(%23SVGID_00000046320732786358245730000000191288212746330285_);}%0A%09.st612{fill:url(%23SVGID_00000002364329768025955330000004089567079064997043_);}%0A%09.st613{fill:url(%23SVGID_00000091720160884932122250000000823273511298540705_);}%0A%09.st614{fill:url(%23SVGID_00000152238360359781464390000015381658474345196217_);}%0A%09.st615{fill:url(%23SVGID_00000127026097320199228690000016194377228204179368_);}%0A%09.st616{fill:url(%23SVGID_00000080180429191344201710000005876502939647423669_);}%0A%09.st617{fill:url(%23SVGID_00000052801702936287166650000005691356105559549591_);}%0A%09.st618{fill:url(%23SVGID_00000026852369321330234770000006912667194296673158_);}%0A%09.st619{fill:url(%23SVGID_00000009577146015541529410000013973581204452252843_);}%0A%09.st620{fill:url(%23SVGID_00000044156931373961441450000000891711582544568470_);}%0A%09.st621{fill:url(%23SVGID_00000002380324769010138770000012522143514807840689_);}%0A%09.st622{fill:url(%23SVGID_00000157267766056800945980000012165476401764720809_);}%0A%09.st623{fill:url(%23SVGID_00000164493305843159729790000010401030849257564050_);}%0A%09.st624{fill:url(%23SVGID_00000111168154459973999970000007821715051556096651_);}%0A%09.st625{fill:url(%23SVGID_00000085948677767276444600000018437321695210840254_);}%0A%09.st626{fill:url(%23SVGID_00000118369581757057702250000017434145687929584273_);}%0A%09.st627{fill:url(%23SVGID_00000137109028583692111680000011364703736242100662_);}%0A%09.st628{fill:url(%23SVGID_00000136394147166643545310000017204794979036647061_);}%0A%09.st629{fill:url(%23SVGID_00000023243727907349386870000007897603871371169688_);}%0A%09.st630{fill:url(%23SVGID_00000038379223780270748930000000414794378906807975_);}%0A%09.st631{fill:url(%23SVGID_00000114772294967282368060000003253753171137554599_);}%0A%09.st632{fill:url(%23SVGID_00000027562636569158686140000011625977110202087101_);}%0A%09.st633{fill:url(%23SVGID_00000030483034174994658060000017128950575644132240_);}%0A%09.st634{fill:url(%23SVGID_00000063620592134625188190000013659882710995986077_);}%0A%09.st635{fill:url(%23SVGID_00000084526423019538169860000008863474914299973820_);}%0A%09.st636{fill:url(%23SVGID_00000099640877242469525000000000913949360114735541_);}%0A%09.st637{fill:url(%23SVGID_00000170250986798182036330000006045185701739149472_);}%0A%09.st638{fill:url(%23SVGID_00000091709795037974764580000013688160670081547679_);}%0A%09.st639{fill:url(%23SVGID_00000047058027115613674930000016332722520484552086_);}%0A%09.st640{fill:url(%23SVGID_00000036931758236205474370000010622318302658686905_);}%0A%09.st641{fill:url(%23SVGID_00000003078502951147683190000005198748846874284416_);}%0A%09.st642{fill:url(%23SVGID_00000159471233944092101160000016080421135495220912_);}%0A%09.st643{fill:url(%23SVGID_00000150090978582345583950000000198392662823575444_);}%0A%09.st644{fill:url(%23SVGID_00000107560767257234519490000006139882858559432071_);}%0A%09.st645{fill:url(%23SVGID_00000166642839448578240400000009835742810136551861_);}%0A%09.st646{fill:url(%23SVGID_00000022537650582783367510000009257551115693747862_);}%0A%09.st647{fill:url(%23SVGID_00000110444662686701508200000004189659330744695184_);}%0A%09.st648{fill:url(%23SVGID_00000080904157868408646550000000924269205042527632_);}%0A%09.st649{fill:url(%23SVGID_00000134928311979638529610000014319208280648462762_);}%0A%09.st650{fill:url(%23SVGID_00000171705167694658508310000008717695655073161393_);}%0A%09.st651{fill:url(%23SVGID_00000018926112522558793090000002319511717102960280_);}%0A%09.st652{fill:url(%23SVGID_00000117672977890121487050000017092498468101193601_);}%0A%09.st653{fill:url(%23SVGID_00000089559676761742348330000010725049693316580746_);}%0A%09.st654{fill:url(%23SVGID_00000050622276664761842650000002594138056751425958_);}%0A%09.st655{fill:url(%23SVGID_00000151527070865422945630000013010807248788105654_);}%0A%09.st656{fill:url(%23SVGID_00000106861787875096560620000010329468028597497011_);}%0A%09.st657{fill:url(%23SVGID_00000015316603778844828220000005617979497291397538_);}%0A%09.st658{fill:url(%23SVGID_00000130630497115033703300000014038374740941229476_);}%0A%09.st659{fill:url(%23SVGID_00000081630279069243479830000009159455588113431190_);}%0A%09.st660{fill:url(%23SVGID_00000159468454620203442070000010739377157678793915_);}%0A%09.st661{fill:url(%23SVGID_00000104680874644785971890000000076272073957925505_);}%0A%09.st662{fill:url(%23SVGID_00000043458928439131888630000006547399703966335674_);}%0A%09.st663{fill:url(%23SVGID_00000160161909690851941250000016735918881131672213_);}%0A%09.st664{fill:url(%23SVGID_00000039114418664837186790000002367399727383604653_);}%0A%09.st665{fill:url(%23SVGID_00000002352916585649187930000016104688063676066212_);}%0A%09.st666{fill:url(%23SVGID_00000166667486509956990830000014268013842815864972_);}%0A%09.st667{fill:url(%23SVGID_00000034058979769458384930000015615240150490045856_);}%0A%09.st668{fill:url(%23SVGID_00000137130367446595301110000016735991454878708361_);}%0A%09.st669{fill:url(%23SVGID_00000113342100339542814330000005811717926683690905_);}%0A%09.st670{fill:url(%23SVGID_00000001655971990814739270000010542781222218190260_);}%0A%09.st671{fill:url(%23SVGID_00000082346779236500885600000010248224178119112340_);}%0A%09.st672{fill:url(%23SVGID_00000114034463387226115640000017166035909247029657_);}%0A%09.st673{fill:url(%23SVGID_00000044173033441951569120000009221145369682114199_);}%0A%09.st674{fill:url(%23SVGID_00000022535646928207351950000005478814515534322840_);}%0A%09.st675{fill:url(%23SVGID_00000029016378929356697300000000783849130722669232_);}%0A%09.st676{fill:url(%23SVGID_00000066477829611921560990000010276358586409303740_);}%0A%09.st677{fill:url(%23SVGID_00000140695126273413058390000012902478718512634785_);}%0A%09.st678{fill:url(%23SVGID_00000013166646636448496260000017518798478207950475_);}%0A%09.st679{fill:url(%23SVGID_00000023960454283889657690000013220974218140095679_);}%0A%09.st680{fill:url(%23SVGID_00000024704102096674162910000002077199962223397772_);}%0A%09.st681{fill:url(%23SVGID_00000017507766440482764320000003019716945860065971_);}%0A%09.st682{fill:url(%23SVGID_00000005250510976671185020000005026215740622587304_);}%0A%09.st683{fill:url(%23SVGID_00000134938565584920430720000004163264709997224104_);}%0A%09.st684{fill:url(%23SVGID_00000141437323521579991530000017163207409259790507_);}%0A%09.st685{fill:url(%23SVGID_00000037688019103186491400000008676454490044223401_);}%0A%09.st686{fill:url(%23SVGID_00000031191995318565918930000008163627261685052606_);}%0A%09.st687{fill:url(%23SVGID_00000030472254371470604980000013385883995807862973_);}%0A%09.st688{fill:url(%23SVGID_00000057827036498862588340000018407907794340952200_);}%0A%09.st689{fill:url(%23SVGID_00000017490650202580161290000016069129585566471358_);}%0A%09.st690{fill:url(%23SVGID_00000008132225186007609530000003173805613995377579_);}%0A%09.st691{fill:url(%23SVGID_00000130634008195872681540000017423089622457554865_);}%0A%09.st692{fill:url(%23SVGID_00000178917846664338571170000001172397598193263781_);}%0A%09.st693{fill:url(%23SVGID_00000163781082506217032380000000047197726134119333_);}%0A%09.st694{fill:url(%23SVGID_00000124130598916641792760000011342299472364703889_);}%0A%09.st695{fill:url(%23SVGID_00000103248061581036398030000010431315355827216522_);}%0A%09.st696{fill:url(%23SVGID_00000098213095143254067850000001562525875048093081_);}%0A%09.st697{fill:url(%23SVGID_00000008871618147422971170000015021006008335318190_);}%0A%09.st698{fill:url(%23SVGID_00000160171803294949282700000007774723957581388687_);}%0A%09.st699{fill:url(%23SVGID_00000082347757276644132930000017029334296553980559_);}%0A%09.st700{fill:url(%23SVGID_00000023255092157370529840000002729497827828344511_);}%0A%09.st701{fill:url(%23SVGID_00000084519104834836954000000016256854893412191374_);}%0A%09.st702{fill:url(%23SVGID_00000165924623041529024190000008515517170631612330_);}%0A%09.st703{fill:url(%23SVGID_00000019677227650129681820000002296194794760641965_);}%0A%09.st704{fill:url(%23SVGID_00000086689440836324552750000013418995548660659631_);}%0A%09.st705{fill:url(%23SVGID_00000122714894212372766140000001624751669974273168_);}%0A%09.st706{fill:url(%23SVGID_00000090293706312959073480000003628245915095245198_);}%0A%09.st707{fill:url(%23SVGID_00000025403356976099812510000001871526310756765353_);}%0A%09.st708{fill:url(%23SVGID_00000011020974829660354810000008886236004330166400_);}%0A%09.st709{fill:url(%23SVGID_00000103236874032973835510000003024539746769501073_);}%0A%09.st710{fill:url(%23SVGID_00000094589668459197616580000011816081318546488728_);}%0A%09.st711{fill:url(%23SVGID_00000137103432342012391880000010586151681499525003_);}%0A%09.st712{fill:url(%23SVGID_00000047022229841475745130000009531709109296261566_);}%0A%09.st713{fill:url(%23SVGID_00000125593036415581879530000002451432217534976929_);}%0A%09.st714{fill:url(%23SVGID_00000168825628796547149100000017392458403748503954_);}%0A%09.st715{fill:url(%23SVGID_00000043450150234534126010000001175049846201208228_);}%0A%09.st716{fill:url(%23SVGID_00000095319874817709110160000005308687954053136534_);}%0A%09.st717{fill:url(%23SVGID_00000019654854965593391280000002459553022131904684_);}%0A%09.st718{fill:url(%23SVGID_00000098911393942159057190000013069713320172809658_);}%0A%09.st719{fill:url(%23SVGID_00000075859906861225818170000001459457345860137641_);}%0A%09.st720{fill:url(%23SVGID_00000082367755860826157070000018140155169249780148_);}%0A%09.st721{fill:url(%23SVGID_00000144297602377100076270000014451233242723906698_);}%0A%09.st722{fill:url(%23SVGID_00000083084062284834049740000009295217210958686113_);}%0A%09.st723{fill:url(%23SVGID_00000161628389601880735120000006887704255488697779_);}%0A%09.st724{fill:url(%23SVGID_00000152947093856046512330000005134110051987608716_);}%0A%09.st725{fill:url(%23SVGID_00000161617862738729210030000000788075752095453373_);}%0A%09.st726{fill:url(%23SVGID_00000029757374309638309540000013715181631554514820_);}%0A%09.st727{fill:url(%23SVGID_00000075164755402454769580000000958339820541613988_);}%0A%09.st728{fill:url(%23SVGID_00000041273111301360395690000007338976625612278192_);}%0A%09.st729{fill:url(%23SVGID_00000082347761636308388060000001175956335649340831_);}%0A%09.st730{fill:url(%23SVGID_00000142138749968891866650000018125133474535244721_);}%0A%09.st731{fill:url(%23SVGID_00000155851704500177276490000011578221786364619929_);}%0A%09.st732{fill:url(%23SVGID_00000127725346615251506150000009737003507757403298_);}%0A%09.st733{fill:url(%23SVGID_00000029746290782079786320000003387104054901788855_);}%0A%09.st734{fill:url(%23SVGID_00000062151882614010833280000011623951159100467082_);}%0A%09.st735{fill:url(%23SVGID_00000100381925844101970480000015542237743363459760_);}%0A%09.st736{fill:url(%23SVGID_00000042697564364665001010000000192148489972921495_);}%0A%09.st737{fill:url(%23SVGID_00000083796141157487858190000004106606220121973385_);}%0A%09.st738{fill:url(%23SVGID_00000173134952946238667790000017845233315360967604_);}%0A%09.st739{fill:url(%23SVGID_00000091700787217929781880000013629118805108548020_);}%0A%09.st740{fill:url(%23SVGID_00000044160317478758465670000005446139609601546881_);}%0A%09.st741{fill:url(%23SVGID_00000120559140997226248900000012846756609411072933_);}%0A%09.st742{fill:url(%23SVGID_00000147928251454419420860000014676279667475232692_);}%0A%09.st743{fill:url(%23SVGID_00000023959841446026491290000003626132072829178755_);}%0A%09.st744{fill:url(%23SVGID_00000067230505872846988520000007583071434648444563_);}%0A%09.st745{fill:url(%23SVGID_00000036211473795123425640000018268448747222253471_);}%0A%09.st746{fill:url(%23SVGID_00000083783521550859460650000012837238482039186328_);}%0A%09.st747{fill:url(%23SVGID_00000153670129226277941370000002172626048421100213_);}%0A%09.st748{fill:url(%23SVGID_00000034089877278995035870000008326559686275030913_);}%0A%09.st749{fill:url(%23SVGID_00000152981068061781806230000016590783625283190203_);}%0A%09.st750{fill:url(%23SVGID_00000104687716197919703890000005721599491366876072_);}%0A%09.st751{fill:url(%23SVGID_00000119109907049735705210000003597218554123027843_);}%0A%09.st752{fill:url(%23SVGID_00000121262571559277922900000017629387989086347150_);}%0A%09.st753{fill:url(%23SVGID_00000038381943580824627090000001557250016733331121_);}%0A%09.st754{fill:url(%23SVGID_00000161618967809554027570000014557807017066636988_);}%0A%09.st755{fill:url(%23SVGID_00000085238533925560584720000018308013646784761766_);}%0A%09.st756{fill:url(%23SVGID_00000125565343963029933110000014487529443507808413_);}%0A%09.st757{fill:url(%23SVGID_00000082345359003340077940000016376801048822415500_);}%0A%09.st758{fill:url(%23SVGID_00000129185362805012670580000016378627269466531988_);}%0A%09.st759{fill:url(%23SVGID_00000081623138425807317490000012307867579212618118_);}%0A%09.st760{fill:url(%23SVGID_00000109019037304363762750000004012746127000766358_);}%0A%09.st761{fill:url(%23SVGID_00000036211343477193991080000002397390229989921980_);}%0A%09.st762{fill:url(%23SVGID_00000028291594637158803230000015614079139613674387_);}%0A%09.st763{fill:url(%23SVGID_00000004506329113142566930000015796041520890405286_);}%0A%09.st764{fill:url(%23SVGID_00000052090933555897059420000002661029557911002497_);}%0A%09.st765{fill:url(%23SVGID_00000111172855429002951280000018327914757794718862_);}%0A%09.st766{fill:url(%23SVGID_00000034781961029758848540000001763963511593955719_);}%0A%09.st767{fill:url(%23SVGID_00000068643814514788900040000013276448482981910439_);}%0A%09.st768{fill:url(%23SVGID_00000029040746847730744990000009194345262719811721_);}%0A%09.st769{fill:url(%23SVGID_00000181792850395364642170000016789778540690293675_);}%0A%09.st770{fill:url(%23SVGID_00000046311661461010280980000005401212301795744687_);}%0A%09.st771{fill:url(%23SVGID_00000152955192337283037980000013843434372091847843_);}%0A%09.st772{fill:url(%23SVGID_00000018223116997833081510000009207667334926350237_);}%0A%09.st773{fill:url(%23SVGID_00000081620652669293893930000014347119559411864993_);}%0A%09.st774{fill:url(%23SVGID_00000181050819414937920290000009055311771388488338_);}%0A%09.st775{fill:url(%23SVGID_00000010312754843186937740000010631814460114160562_);}%0A%09.st776{fill:url(%23SVGID_00000105385222233551710160000004468737896166664877_);}%0A%09.st777{fill:url(%23SVGID_00000104675225132687872670000003330470680145534371_);}%0A%09.st778{fill:url(%23SVGID_00000096767564499772022770000004240909450815577755_);}%0A%09.st779{fill:url(%23SVGID_00000008857097627530143070000001029672250813103247_);}%0A%09.st780{fill:url(%23SVGID_00000110434138856230714050000000827260293324361116_);}%0A%09.st781{fill:url(%23SVGID_00000058571480689879138120000005927572932501874853_);}%0A%09.st782{fill:url(%23SVGID_00000175312779620499121230000003613770828125949607_);}%0A%09.st783{fill:url(%23SVGID_00000114756497721358190520000007898986333091550383_);}%0A%09.st784{fill:url(%23SVGID_00000061450006541760860770000002021976175796686522_);}%0A%09.st785{fill:url(%23SVGID_00000096757341835496062430000016452277999802212245_);}%0A%09.st786{fill:url(%23SVGID_00000075851334888904011460000009348598071117045177_);}%0A%09.st787{fill:url(%23SVGID_00000106832098735498894140000010360147839374506897_);}%0A%09.st788{fill:url(%23SVGID_00000024694539485168457820000005278569275455769492_);}%0A%09.st789{fill:url(%23SVGID_00000073681984695538562490000016251472688929751707_);}%0A%09.st790{fill:url(%23SVGID_00000143618709939671576950000000833024485840807308_);}%0A%09.st791{fill:url(%23SVGID_00000012449382484546081470000013130014796787729557_);}%0A%09.st792{fill:url(%23SVGID_00000008112623196528882160000007999304456070308516_);}%0A%09.st793{fill:url(%23SVGID_00000130633254412457665950000007573976352222961297_);}%0A%09.st794{fill:url(%23SVGID_00000153699508084674052020000015411590829228115107_);}%0A%09.st795{fill:url(%23SVGID_00000038381709393729826220000004507164164210762942_);}%0A%09.st796{fill:url(%23SVGID_00000096774129588485865070000004573413993570167699_);}%0A%09.st797{fill:url(%23SVGID_00000098213455046511093740000007164678636974851490_);}%0A%09.st798{fill:url(%23SVGID_00000048468026155943904360000003000460692530931894_);}%0A%09.st799{fill:url(%23SVGID_00000107570001171566991610000010135168090279973510_);}%0A%09.st800{fill:url(%23SVGID_00000034773753691030536820000014419616652162332321_);}%0A%09.st801{fill:url(%23SVGID_00000093136649710909926600000011512842154548356536_);}%0A%09.st802{fill:url(%23SVGID_00000118380012946462882710000006806589190614868389_);}%0A%09.st803{fill:url(%23SVGID_00000088112533527950374970000013034751672099805354_);}%0A%09.st804{fill:url(%23SVGID_00000138567481993696199110000016462320592882366340_);}%0A%09.st805{fill:url(%23SVGID_00000039849289334247434990000009065622634458536333_);}%0A%09.st806{fill:url(%23SVGID_00000054977816099551133370000003078392405354462341_);}%0A%09.st807{fill:url(%23SVGID_00000181082214126554838960000011812705092108174229_);}%0A%09.st808{fill:url(%23SVGID_00000042735310507227318460000017854467965134042030_);}%0A%09.st809{fill:url(%23SVGID_00000033332247381096875880000012655046202436539803_);}%0A%09.st810{fill:url(%23SVGID_00000015326632484611790000000014350512295688024224_);}%0A%09.st811{fill:url(%23SVGID_00000144302239088482059990000017116311574919475866_);}%0A%09.st812{fill:url(%23SVGID_00000024001307587816521230000018011014135179929234_);}%0A%09.st813{fill:url(%23SVGID_00000134958839759697215550000012521506746134646691_);}%0A%09.st814{fill:url(%23SVGID_00000165225251389060151600000018381325206360256139_);}%0A%09.st815{fill:url(%23SVGID_00000102543190061411108770000013744927882904257444_);}%0A%09.st816{fill:url(%23SVGID_00000047054223057909442710000003866099506576592008_);}%0A%09.st817{fill:url(%23SVGID_00000170256207767787179310000011827118715996159144_);}%0A%09.st818{fill:url(%23SVGID_00000091718290158965731420000018205015430623384720_);}%0A%09.st819{fill:url(%23SVGID_00000115514538081464747860000000607381565481935535_);}%0A%09.st820{fill:url(%23SVGID_00000023970727433237114180000008180106376746854071_);}%0A%09.st821{fill:url(%23SVGID_00000000223141506904920170000003564104874597331081_);}%0A%09.st822{fill:url(%23SVGID_00000086689211008465087260000010445545626353870249_);}%0A%09.st823{fill:url(%23SVGID_00000178203053672471374280000002098017136051313816_);}%0A%09.st824{fill:url(%23SVGID_00000046327691364677126970000015174092297630702511_);}%0A%09.st825{fill:url(%23SVGID_00000025424490931224718990000011612126809272649866_);}%0A%09.st826{fill:url(%23SVGID_00000000222034730937264860000003204178750976024711_);}%0A%09.st827{fill:url(%23SVGID_00000173157768055294885230000011286791195816765887_);}%0A%09.st828{fill:url(%23SVGID_00000071536623827545157390000003555100202686544048_);}%0A%09.st829{fill:url(%23SVGID_00000060741932972507325940000016727595507118809225_);}%0A%09.st830{fill:url(%23SVGID_00000176750264856816337630000015715359613402429114_);}%0A%09.st831{fill:url(%23SVGID_00000106853120291852547120000012344653845244213891_);}%0A%09.st832{fill:url(%23SVGID_00000057830157496169666640000013120606875013659552_);}%0A%09.st833{fill:url(%23SVGID_00000101098860382442641690000010954791852560611984_);}%0A%09.st834{fill:url(%23SVGID_00000132794793893586905330000013217333435111936691_);}%0A%09.st835{fill:url(%23SVGID_00000140007451868281073860000014630479345611122079_);}%0A%09.st836{fill:url(%23SVGID_00000163030881767924794850000017285874919330958238_);}%0A%09.st837{fill:url(%23SVGID_00000183931921076236803930000004357161359432813464_);}%0A%09.st838{fill:url(%23SVGID_00000070103893361243326650000005311313159419933328_);}%0A%09.st839{fill:url(%23SVGID_00000075132692100204418090000003042571412460042139_);}%0A%09.st840{fill:url(%23SVGID_00000147915941619274196550000000092533979592589709_);}%0A%09.st841{fill:url(%23SVGID_00000087409366259436268640000017294928012874215585_);}%0A%09.st842{fill:url(%23SVGID_00000183952054341590409080000007092614896963822751_);}%0A%09.st843{fill:url(%23SVGID_00000104676231823890852050000017063006639348416929_);}%0A%09.st844{fill:url(%23SVGID_00000140001222635112642190000014092878132035635134_);}%0A%09.st845{fill:url(%23SVGID_00000165922367174436912260000010090532306572507582_);}%0A%09.st846{fill:url(%23SVGID_00000016074665434654295050000013860815473992160945_);}%0A%09.st847{fill:url(%23SVGID_00000160887936640468545580000006989153388371102080_);}%0A%09.st848{fill:url(%23SVGID_00000094592360254370797110000015445330533661274762_);}%0A%09.st849{fill:url(%23SVGID_00000076576141612032720920000016852792532749676683_);}%0A%09.st850{fill:url(%23SVGID_00000047755122480134503140000001325587330472646036_);}%0A%09.st851{fill:url(%23SVGID_00000074407227692497600120000013765958501352842420_);}%0A%09.st852{fill:url(%23SVGID_00000054976655567903782440000014591808923023913369_);}%0A%09.st853{fill:url(%23SVGID_00000147190828817288686880000016455844476925799605_);}%0A%09.st854{fill:url(%23SVGID_00000129916885795101931180000010838288607195200135_);}%0A%09.st855{fill:url(%23SVGID_00000152986042276069061610000010813181921110726320_);}%0A%09.st856{fill:url(%23SVGID_00000118389338996350961800000015072145547899661197_);}%0A%09.st857{fill:url(%23SVGID_00000039843317479382055490000008205198356476980921_);}%0A%09.st858{fill:url(%23SVGID_00000041979287438231459580000007649936519819966908_);}%0A%09.st859{fill:url(%23SVGID_00000098216900296304461740000007883013490794111380_);}%0A%09.st860{fill:url(%23SVGID_00000152959404305239616100000004841048795332013501_);}%0A%09.st861{fill:url(%23SVGID_00000160895194423138548240000001319531462734003612_);}%0A%09.st862{fill:url(%23SVGID_00000104670753629983186220000014075411899972668827_);}%0A%09.st863{fill:url(%23SVGID_00000000940750872227316680000010913206740643782046_);}%0A%09.st864{fill:url(%23SVGID_00000127739411421782988940000002190434056605634472_);}%0A%09.st865{fill:url(%23SVGID_00000107567160606557458110000017155736544919661464_);}%0A%09.st866{fill:url(%23SVGID_00000000933329937886446230000006602317953958634394_);}%0A%09.st867{fill:url(%23SVGID_00000049210364426532576950000012133231351099314099_);}%0A%09.st868{fill:url(%23SVGID_00000151514948688191491020000015549003518739658940_);}%0A%09.st869{fill:url(%23SVGID_00000008135541266545328070000013560419333657495171_);}%0A%09.st870{fill:url(%23SVGID_00000098900827271776796690000015023963666110300325_);}%0A%09.st871{fill:url(%23SVGID_00000101805143521445443380000008193654191374395809_);}%0A%09.st872{fill:url(%23SVGID_00000021090911128299372150000011707006930483632265_);}%0A%09.st873{fill:url(%23SVGID_00000183222050140477602640000016246976295134909098_);}%0A%09.st874{fill:url(%23SVGID_00000111187739304600936910000000916714487413556918_);}%0A%09.st875{fill:url(%23SVGID_00000080898462416290772900000015083793649525520302_);}%0A%09.st876{fill:url(%23SVGID_00000032622420310872092630000011563393398182992810_);}%0A%09.st877{fill:url(%23SVGID_00000166673345565661700530000017865313076945574555_);}%0A%09.st878{fill:url(%23SVGID_00000000913835678238982390000009077041405805417108_);}%0A%09.st879{fill:url(%23SVGID_00000025424664273131948690000001602544504106022533_);}%0A%09.st880{fill:url(%23SVGID_00000040558328939940164360000004202998127059948726_);}%0A%09.st881{fill:url(%23SVGID_00000085962381688647588520000000246756808376977855_);}%0A%09.st882{fill:url(%23SVGID_00000024720643521888285680000016204237820780038019_);}%0A%09.st883{fill:url(%23SVGID_00000067953102642176401600000016489006209937401263_);}%0A%09.st884{fill:url(%23SVGID_00000024000660813330402030000003729588056550835099_);}%0A%09.st885{fill:url(%23SVGID_00000167382565683054012770000003072972474304940442_);}%0A%09.st886{fill:url(%23SVGID_00000132808094388357339020000003114813860074865040_);}%0A%09.st887{fill:url(%23SVGID_00000107546795588906640110000009689860642117366708_);}%0A%09.st888{fill:url(%23SVGID_00000112630308521822762410000009115093195829325477_);}%0A%09.st889{fill:url(%23SVGID_00000116914469227595444320000014155434412824012472_);}%0A%09.st890{fill:url(%23SVGID_00000110471793445812552280000012131357871058128048_);}%0A%09.st891{fill:url(%23SVGID_00000109000031382317861200000008232474126898977690_);}%0A%09.st892{fill:url(%23SVGID_00000073703129503637945260000001763530017495293092_);}%0A%09.st893{fill:url(%23SVGID_00000012454582604224890490000014689402063950087810_);}%0A%09.st894{fill:url(%23SVGID_00000131337418656393928880000007091976106652007308_);}%0A%09.st895{fill:url(%23SVGID_00000000220019195962791560000011882514703106153652_);}%0A%09.st896{fill:url(%23SVGID_00000056427124729160206130000000200132498070397316_);}%0A%09.st897{fill:url(%23SVGID_00000060006724492894882730000016189083736108660406_);}%0A%09.st898{fill:url(%23SVGID_00000166657616192775644180000015593729490312243084_);}%0A%09.st899{fill:url(%23SVGID_00000012434625647039380340000017606002980959542438_);}%0A%09.st900{fill:url(%23SVGID_00000075147555670929129900000008522280914263193785_);}%0A%09.st901{fill:url(%23SVGID_00000085215632931417411350000018430087532005909898_);}%0A%09.st902{fill:url(%23SVGID_00000074430391331879395690000006263394797216615557_);}%0A%09.st903{fill:url(%23SVGID_00000037658492167809579590000005815397911753973167_);}%0A%09.st904{fill:url(%23SVGID_00000101785760672135697270000002093827305716495488_);}%0A%09.st905{fill:url(%23SVGID_00000143600262158931114530000002175739576078763177_);}%0A%09.st906{fill:url(%23SVGID_00000101805236666073046190000016223295432820969365_);}%0A%09.st907{fill:url(%23SVGID_00000032616599884177951650000011042911564795608470_);}%0A%09.st908{fill:url(%23SVGID_00000118370898442960651480000016962940734876606363_);}%0A%09.st909{fill:url(%23SVGID_00000069392961495007702720000007081302024236243855_);}%0A%09.st910{fill:url(%23SVGID_00000172418894166301332280000008533942895676089506_);}%0A%09.st911{fill:url(%23SVGID_00000036218384526377610690000015480451431811486108_);}%0A%09.st912{fill:url(%23SVGID_00000083069823260198195850000004385909380354126212_);}%0A%09.st913{fill:url(%23SVGID_00000109718668941026454200000003517179700975933864_);}%0A%09.st914{fill:url(%23SVGID_00000077286526576001254390000004993538879377978027_);}%0A%09.st915{fill:url(%23SVGID_00000021107480964261179370000006029019758384591798_);}%0A%09.st916{fill:url(%23SVGID_00000072994312778708818800000010063919960197055917_);}%0A%09.st917{fill:url(%23SVGID_00000081619227981931338030000006851064056943338941_);}%0A%09.st918{fill:url(%23SVGID_00000119829889005390985960000008770963813928598707_);}%0A%09.st919{fill:url(%23SVGID_00000098200862711537112000000011562813616881070728_);}%0A%09.st920{fill:url(%23SVGID_00000112605175153899197140000013189808200496598924_);}%0A%09.st921{fill:url(%23SVGID_00000045594740246836630030000005721398286199972257_);}%0A%09.st922{fill:url(%23SVGID_00000000944677756782020450000018048855976542409640_);}%0A%09.st923{fill:url(%23SVGID_00000049194916160839325130000015072491291112493456_);}%0A%09.st924{fill:url(%23SVGID_00000162334036371983007610000002575595562031759033_);}%0A%09.st925{fill:url(%23SVGID_00000086685865669333709210000005467283576614724755_);}%0A%09.st926{fill:url(%23SVGID_00000003824365821797231010000012889974189419042971_);}%0A%09.st927{fill:url(%23SVGID_00000158002515793643401910000000442273131839698571_);}%0A%09.st928{fill:url(%23SVGID_00000088854491498406191990000003167986272226427830_);}%0A%09.st929{fill:url(%23SVGID_00000050652093014749204320000000318789639462456997_);}%0A%09.st930{fill:url(%23SVGID_00000103239034836649767330000013641174275525077900_);}%0A%09.st931{fill:url(%23SVGID_00000006694086177127158160000006930672206173003696_);}%0A%09.st932{fill:url(%23SVGID_00000163053539230885111480000005077426559270411945_);}%0A%09.st933{fill:url(%23SVGID_00000069369420894579712170000009994253235202902956_);}%0A%09.st934{fill:url(%23SVGID_00000166649769545312475790000008425575942555824771_);}%0A%09.st935{fill:url(%23SVGID_00000079482807474831516670000000832283225493698479_);}%0A%09.st936{fill:url(%23SVGID_00000055695834591778809340000001426577040842469817_);}%0A%09.st937{fill:url(%23SVGID_00000148631201422368956670000007466040148749306550_);}%0A%09.st938{fill:url(%23SVGID_00000055676721461914273490000015167495985638062264_);}%0A%09.st939{fill:url(%23SVGID_00000065757273304599858870000011897450781714113429_);}%0A%09.st940{fill:url(%23SVGID_00000166666320781266045190000010200422108211695005_);}%0A%09.st941{fill:url(%23SVGID_00000038374736308439411690000007337671946689113273_);}%0A%09.st942{fill:url(%23SVGID_00000054970196861861269340000008986147795931055252_);}%0A%09.st943{fill:url(%23SVGID_00000063601207042647118100000002514518113561987729_);}%0A%09.st944{fill:url(%23SVGID_00000088112680465139194400000011433065354032445316_);}%0A%09.st945{fill:url(%23SVGID_00000124149710897964819190000007354197821332992671_);}%0A%09.st946{fill:url(%23SVGID_00000160182371828700237370000003557895675407182999_);}%0A%09.st947{fill:url(%23SVGID_00000072238779429466657210000000325536801562043529_);}%0A%09.st948{fill:url(%23SVGID_00000008130048473881196340000013992399012507738763_);}%0A%09.st949{fill:url(%23SVGID_00000109004010716928717890000011670553603273632153_);}%0A%09.st950{fill:url(%23SVGID_00000160167987425699744830000006187694578654060681_);}%0A%09.st951{fill:url(%23SVGID_00000049910595440552254300000003705539836622367915_);}%0A%09.st952{fill:url(%23SVGID_00000106851001357233680550000011767383755013103747_);}%0A%09.st953{fill:url(%23SVGID_00000016789500814739612830000003224496438520057004_);}%0A%09.st954{fill:url(%23SVGID_00000154414353737819258910000013193309066002562239_);}%0A%09.st955{fill:url(%23SVGID_00000164482446849530517410000009218722574776715423_);}%0A%09.st956{fill:url(%23SVGID_00000002368385390587586250000008628137515223278217_);}%0A%09.st957{fill:url(%23SVGID_00000056414614377240285670000013833640692267715215_);}%0A%09.st958{fill:url(%23SVGID_00000009566037906501122100000008794338814698276794_);}%0A%09.st959{fill:url(%23SVGID_00000071542739258513999810000012705559580799169471_);}%0A%09.st960{fill:url(%23SVGID_00000130609157624418575530000001205153096509542570_);}%0A%09.st961{fill:url(%23SVGID_00000029739195659123649570000002716825009910353826_);}%0A%09.st962{fill:url(%23SVGID_00000170977279567530965690000008975623321296967078_);}%0A%09.st963{fill:url(%23SVGID_00000040547256324515737400000013008051425896001180_);}%0A%09.st964{fill:url(%23SVGID_00000023258233356178064410000001621986193122485427_);}%0A%09.st965{fill:url(%23SVGID_00000145775595561423431490000010991444794175511693_);}%0A%09.st966{fill:url(%23SVGID_00000081631769089575019940000009465418117489519757_);}%0A%09.st967{fill:url(%23SVGID_00000106109060655424137930000003314923394183029423_);}%0A%09.st968{fill:url(%23SVGID_00000048470981974934686420000000260055458787330214_);}%0A%09.st969{fill:url(%23SVGID_00000062878678597864781630000015478585488868502933_);}%0A%09.st970{fill:url(%23SVGID_00000072271767802802925140000015261591864419281035_);}%0A%09.st971{fill:url(%23SVGID_00000171712625276664884890000016330803770380088253_);}%0A%09.st972{fill:url(%23SVGID_00000013164423347319174610000008744589186777060511_);}%0A%09.st973{fill:url(%23SVGID_00000022545743988017646720000011747388015522764733_);}%0A%09.st974{fill:url(%23SVGID_00000111890570366085691380000007264038459135770034_);}%0A%09.st975{fill:url(%23SVGID_00000054978438375053981520000009003758073879274641_);}%0A%09.st976{fill:url(%23SVGID_00000127733949069736621460000007738586113195526030_);}%0A%09.st977{fill:url(%23SVGID_00000005981737474739073010000011812474646645917370_);}%0A%09.st978{fill:url(%23SVGID_00000145044108746662793810000017401420931586998160_);}%0A%09.st979{fill:url(%23SVGID_00000153685828873385244250000003429026862616068529_);}%0A%09.st980{fill:url(%23SVGID_00000092450246525169552390000003999506498177990054_);}%0A%09.st981{fill:url(%23SVGID_00000010281170413383811670000018128661083870825623_);}%0A%09.st982{fill:url(%23SVGID_00000161601726038408984810000003682449187959182992_);}%0A%09.st983{fill:url(%23SVGID_00000144316974754481052170000013538881896552331143_);}%0A%09.st984{fill:url(%23SVGID_00000081628833809119331830000004594960597397159301_);}%0A%09.st985{fill:url(%23SVGID_00000054264692020508309420000018409470485880595084_);}%0A%09.st986{fill:url(%23SVGID_00000123424694890022875030000010008282167583807412_);}%0A%09.st987{fill:url(%23SVGID_00000130633296080242742840000009990243151827005119_);}%0A%09.st988{fill:url(%23SVGID_00000179638343142219393470000000308394624506387882_);}%0A%09.st989{fill:url(%23SVGID_00000067205865410152362000000001958796805306781067_);}%0A%09.st990{fill:url(%23SVGID_00000082339247211896639570000014804409633014692001_);}%0A%09.st991{fill:url(%23SVGID_00000051363995062541962660000005236906832967080065_);}%0A%09.st992{fill:url(%23SVGID_00000084516248660143287200000009107683811761358994_);}%0A%09.st993{fill:url(%23SVGID_00000065066170653732236860000012496909590205299360_);}%0A%09.st994{fill:url(%23SVGID_00000012470312639561851620000006364393044050000804_);}%0A%09.st995{fill:url(%23SVGID_00000112632925748807392970000010377243714307776390_);}%0A%09.st996{fill:url(%23SVGID_00000034066186325322810030000001643573325869649024_);}%0A%09.st997{fill:url(%23SVGID_00000127033046754747521380000012514904791435081399_);}%0A%09.st998{fill:url(%23SVGID_00000157995642249560797170000015245360523608442774_);}%0A%09.st999{fill:url(%23SVGID_00000096743078642093356530000009246858141646480512_);}%0A%09.st1000{fill:url(%23SVGID_00000092450878679345089620000016629609907430867366_);}%0A%09.st1001{fill:url(%23SVGID_00000140000634203767801140000010064343796912940436_);}%0A%09.st1002{fill:url(%23SVGID_00000116941564575723911160000010491966576704817806_);}%0A%09.st1003{fill:url(%23SVGID_00000152243724384796695400000016689619571739808437_);}%0A%09.st1004{fill:url(%23SVGID_00000008125261160050375330000010371250255049797292_);}%0A%09.st1005{fill:url(%23SVGID_00000079469609698048939950000005934208927000008873_);}%0A%09.st1006{fill:url(%23SVGID_00000155116855314481901600000000793875380905519276_);}%0A%09.st1007{fill:url(%23SVGID_00000047749533123740847330000000712754861832875170_);}%0A%09.st1008{fill:url(%23SVGID_00000128463477395535951060000016895626588011062929_);}%0A%09.st1009{fill:url(%23SVGID_00000007416635386591265820000005877332298301308070_);}%0A%09.st1010{fill:url(%23SVGID_00000139991017009436336350000016933016006891834798_);}%0A%09.st1011{fill:url(%23SVGID_00000078737301403750672580000011287843078836522429_);}%0A%09.st1012{fill:url(%23SVGID_00000067921714977679755080000004559245463950913934_);}%0A%09.st1013{fill:url(%23SVGID_00000006671244218680027910000007401034490989752746_);}%0A%09.st1014{fill:url(%23SVGID_00000126284422537050405110000015871309749963641736_);}%0A%09.st1015{fill:url(%23SVGID_00000075152724946434639560000011658622710772372114_);}%0A%09.st1016{fill:url(%23SVGID_00000165946214577956253710000000573957951989755044_);}%0A%09.st1017{fill:url(%23SVGID_00000142881921314727165080000007520996201571157167_);}%0A%09.st1018{fill:url(%23SVGID_00000137816462005946215000000004512390778171861946_);}%0A%09.st1019{fill:url(%23SVGID_00000017514843965476710840000014435425223246417804_);}%0A%09.st1020{fill:url(%23SVGID_00000040567043393596528540000011205639235296490377_);}%0A%09.st1021{fill:url(%23SVGID_00000057112465443662432360000010912936972766715285_);}%0A%09.st1022{fill:url(%23SVGID_00000169554894581271569140000017984765673833634435_);}%0A%09.st1023{fill:url(%23SVGID_00000046298731067571741080000015119713240918019232_);}%0A%09.st1024{fill:url(%23SVGID_00000173155434116653500270000009487451376506850738_);}%0A%09.st1025{fill:url(%23SVGID_00000146470520796718461910000002052529931982819518_);}%0A%09.st1026{fill:url(%23SVGID_00000132082815562369001570000001591423547485909162_);}%0A%09.st1027{fill:url(%23SVGID_00000135672734198658168360000012247820708337026225_);}%0A%09.st1028{fill:url(%23SVGID_00000006689009499267517970000017203902343273829255_);}%0A%09.st1029{fill:url(%23SVGID_00000175296137786901667430000008489505223348726445_);}%0A%09.st1030{fill:url(%23SVGID_00000160192954368772666530000007948559730969069980_);}%0A%09.st1031{fill:url(%23SVGID_00000133502107869447373180000008460284946967241905_);}%0A%09.st1032{fill:url(%23SVGID_00000162343765007263579270000018321565781535191703_);}%0A%09.st1033{fill:url(%23SVGID_00000061460166624762609650000006185821605838178493_);}%0A%09.st1034{fill:url(%23SVGID_00000014624183585863078030000011166613443862066564_);}%0A%09.st1035{fill:url(%23SVGID_00000076573676667038632820000018434819627648216767_);}%0A%09.st1036{fill:url(%23SVGID_00000131335206940365817390000008370220386461824938_);}%0A%09.st1037{fill:url(%23SVGID_00000040567748906310419720000009181582516479480986_);}%0A%09.st1038{fill:url(%23SVGID_00000018199254291172066720000015852106164661360003_);}%0A%09.st1039{fill:url(%23SVGID_00000062904714304070952520000002476732852054077630_);}%0A%09.st1040{fill:url(%23SVGID_00000060737426049512517240000011333644448338607519_);}%0A%09.st1041{fill:url(%23SVGID_00000035526546777338012480000007449338003638815137_);}%0A%09.st1042{fill:url(%23SVGID_00000170236466112466280540000000818787473163581627_);}%0A%09.st1043{fill:url(%23SVGID_00000028286325417425560200000006046722027437504922_);}%0A%09.st1044{fill:url(%23SVGID_00000005971318064445929020000017580785873658577854_);}%0A%09.st1045{fill:url(%23SVGID_00000089575362250849656940000006335500636939254923_);}%0A%09.st1046{fill:url(%23SVGID_00000173843570531091361380000005250590471505467815_);}%0A%09.st1047{fill:url(%23SVGID_00000116203446058221637300000008679538428763746710_);}%0A%09.st1048{fill:url(%23SVGID_00000009570952906229456360000015044538172210300559_);}%0A%09.st1049{fill:url(%23SVGID_00000044180014338500503660000011220269137447113387_);}%0A%09.st1050{fill:url(%23SVGID_00000063594086511950496900000000065734518406106271_);}%0A%09.st1051{fill:url(%23SVGID_00000078035131771354594830000015444352999312092349_);}%0A%09.st1052{fill:url(%23SVGID_00000109027042799874867540000004802964444998794117_);}%0A%09.st1053{fill:url(%23SVGID_00000007426035086093559830000006887821595082149311_);}%0A%09.st1054{fill:url(%23SVGID_00000078725965054319137520000011735893553061702282_);}%0A%09.st1055{fill:url(%23SVGID_00000009547843501781852900000003999996887002201275_);}%0A%09.st1056{fill:url(%23SVGID_00000099621123380717816280000012324782306735956136_);}%0A%09.st1057{fill:url(%23SVGID_00000116225785724629114940000011965737756898475670_);}%0A%09.st1058{fill:url(%23SVGID_00000086674391800821558670000002333313176278234044_);}%0A%09.st1059{fill:url(%23SVGID_00000059991556277010840840000013643748856660147638_);}%0A%09.st1060{fill:url(%23SVGID_00000049902713208892302430000008207799180081424541_);}%0A%09.st1061{fill:url(%23SVGID_00000060730192111300637070000009832798977932380825_);}%0A%09.st1062{fill:url(%23SVGID_00000121961634997512860830000014133479947410399123_);}%0A%09.st1063{fill:url(%23SVGID_00000164474809477591805700000006101615248465642915_);}%0A%09.st1064{fill:url(%23SVGID_00000038379101005310177200000015588760540482765206_);}%0A%09.st1065{fill:url(%23SVGID_00000134931148049471586190000004595393137449298315_);}%0A%09.st1066{fill:url(%23SVGID_00000136411856483306409640000005245768785030193594_);}%0A%09.st1067{fill:url(%23SVGID_00000080176918923120595200000010717316222612969377_);}%0A%09.st1068{fill:url(%23SVGID_00000183971335454491726400000007177220911068522934_);}%0A%09.st1069{fill:url(%23SVGID_00000183950825209399444240000017770322581836459398_);}%0A%09.st1070{fill:url(%23SVGID_00000090984156240728493670000010893148785989836178_);}%0A%09.st1071{fill:url(%23SVGID_00000132063498578464172270000015907331606389781932_);}%0A%09.st1072{fill:url(%23SVGID_00000137113381966751647470000011205864978221894327_);}%0A%09.st1073{fill:url(%23SVGID_00000155825964513844171050000006081193085565831834_);}%0A%09.st1074{fill:url(%23SVGID_00000043453818695437003290000017858040956438707334_);}%0A%09.st1075{fill:url(%23SVGID_00000116217034606265648230000017093095117989108883_);}%0A%09.st1076{fill:url(%23SVGID_00000028310016482612910310000010503834772871806869_);}%0A%09.st1077{fill:url(%23SVGID_00000081621360473920585850000010503919591584568755_);}%0A%09.st1078{fill:url(%23SVGID_00000127014092704821348110000017777234325945091731_);}%0A%09.st1079{fill:url(%23SVGID_00000156559053406587823260000014959083652593388161_);}%0A%09.st1080{fill:url(%23SVGID_00000013887750960908104350000009901767033613391253_);}%0A%09.st1081{fill:url(%23SVGID_00000054958081727804701630000011064968587641969810_);}%0A%09.st1082{fill:url(%23SVGID_00000092433122200078415370000016835786422300066203_);}%0A%09.st1083{fill:url(%23SVGID_00000174580142002534754280000002181218748500705944_);}%0A%09.st1084{fill:url(%23SVGID_00000021079327335061850300000014102802996892287149_);}%0A%09.st1085{fill:url(%23SVGID_00000036951325294829775710000006593166659928146331_);}%0A%09.st1086{fill:url(%23SVGID_00000137113093010752059720000008399789180614560936_);}%0A%09.st1087{fill:url(%23SVGID_00000041293691718326323040000012596016655836179866_);}%0A%09.st1088{fill:url(%23SVGID_00000015314218864921673650000018439884686500479156_);}%0A%09.st1089{fill:url(%23SVGID_00000034066306369056085390000014399213567264942493_);}%0A%09.st1090{fill:url(%23SVGID_00000115488136004493934440000005689291668063482018_);}%0A%09.st1091{fill:url(%23SVGID_00000069366482155667117150000008309835918847786163_);}%0A%09.st1092{fill:url(%23SVGID_00000145751979389442284650000004273743681550675851_);}%0A%09.st1093{fill:url(%23SVGID_00000182518018162334037390000016861878762543603087_);}%0A%09.st1094{fill:url(%23SVGID_00000075141756571045204640000016981478374932260744_);}%0A%09.st1095{fill:url(%23SVGID_00000159442342926871423150000013362998349677100207_);}%0A%09.st1096{fill:url(%23SVGID_00000134236981751964594210000007335932788467575210_);}%0A%09.st1097{fill:url(%23SVGID_00000043416387330853063080000010901363797424775586_);}%0A%09.st1098{fill:url(%23SVGID_00000176044834504516263160000006822058584025859488_);}%0A%09.st1099{fill:url(%23SVGID_00000070841518531717256560000007937037316777947563_);}%0A%09.st1100{fill:url(%23SVGID_00000072248840870567781120000007323214383718730119_);}%0A%09.st1101{fill:url(%23SVGID_00000013873552964334211370000001656061304192794259_);}%0A%09.st1102{fill:url(%23SVGID_00000143575744091304546340000011720631048746885819_);}%0A%09.st1103{fill:url(%23SVGID_00000157308832761678089110000004818203379657594813_);}%0A%09.st1104{fill:url(%23SVGID_00000105387942340604228480000007868523474989415565_);}%0A%09.st1105{fill:url(%23SVGID_00000106147141626617802540000008408846344906135184_);}%0A%09.st1106{fill:url(%23SVGID_00000105410830077728993160000018267889217346475938_);}%0A%09.st1107{fill:url(%23SVGID_00000080889121267388395590000017133913596157398442_);}%0A%09.st1108{fill:url(%23SVGID_00000046304693014925802270000002084538779469373599_);}%0A%09.st1109{fill:url(%23SVGID_00000076604632391826671150000008468175474049199539_);}%0A%09.st1110{fill:url(%23SVGID_00000127020117921456069030000007293479938028828062_);}%0A%09.st1111{fill:url(%23SVGID_00000139256774064056495530000002681760416256859581_);}%0A%09.st1112{fill:url(%23SVGID_00000091013014178658334730000001372243271199646612_);}%0A%09.st1113{fill:url(%23SVGID_00000118384596905426463390000011335435211494705822_);}%0A%09.st1114{fill:url(%23SVGID_00000029015869587988156410000014324794590641402528_);}%0A%09.st1115{fill:url(%23SVGID_00000103257272701837118740000005420519934432017829_);}%0A%09.st1116{fill:url(%23SVGID_00000062914530260547403540000007803174740632924291_);}%0A%09.st1117{fill:url(%23SVGID_00000180335733854799982780000010570286871711488139_);}%0A%09.st1118{fill:url(%23SVGID_00000040534878837151553700000004913518972299638695_);}%0A%09.st1119{fill:url(%23SVGID_00000057833629133572241940000015270079916279998121_);}%0A%09.st1120{fill:url(%23SVGID_00000123416891201474187860000001282459500757760141_);}%0A%09.st1121{fill:url(%23SVGID_00000068661298192934103960000009892288378293662342_);}%0A%09.st1122{fill:url(%23SVGID_00000059296619277954200360000011421606352882116786_);}%0A%09.st1123{fill:url(%23SVGID_00000169526658787238779550000018350950532796948635_);}%0A%09.st1124{fill:url(%23SVGID_00000013883590398564882580000003025332424578789538_);}%0A%09.st1125{fill:url(%23SVGID_00000073002590973589302650000012539441507615332793_);}%0A%09.st1126{fill:url(%23SVGID_00000183956967904744123680000016490596730829174702_);}%0A%09.st1127{fill:url(%23SVGID_00000078038478791660870610000015510423650632882866_);}%0A%09.st1128{fill:url(%23SVGID_00000054242013080360693400000015558479426880101303_);}%0A%09.st1129{fill:url(%23SVGID_00000061463010406573985530000006881133967399527835_);}%0A%09.st1130{fill:url(%23SVGID_00000041291425924916759780000002081122118687053978_);}%0A%09.st1131{fill:url(%23SVGID_00000157282121860929198320000010108218753151457414_);}%0A%09.st1132{fill:url(%23SVGID_00000106148279329924845330000007935806229011872388_);}%0A%09.st1133{fill:url(%23SVGID_00000141457036318950371110000004314465117247320737_);}%0A%09.st1134{fill:url(%23SVGID_00000072969763572766236270000011873681784710142369_);}%0A%09.st1135{fill:url(%23SVGID_00000139261472640486251710000003410359649596183727_);}%0A%09.st1136{fill:url(%23SVGID_00000096779801224723923100000002675809303473387190_);}%0A%09.st1137{fill:url(%23SVGID_00000082336430751990916700000006082121054397640834_);}%0A%09.st1138{fill:url(%23SVGID_00000147193570988319189070000018016578138297073801_);}%0A%09.st1139{fill:url(%23SVGID_00000112628461833932998230000009341647150838014132_);}%0A%09.st1140{fill:url(%23SVGID_00000000192306587793501430000018188339204109575809_);}%0A%09.st1141{fill:url(%23SVGID_00000074404623528512707640000018129597695394105222_);}%0A%09.st1142{fill:url(%23SVGID_00000127035800790164924100000017130520503919124361_);}%0A%09.st1143{fill:url(%23SVGID_00000078764209076663454170000016671941298563657866_);}%0A%09.st1144{fill:url(%23SVGID_00000072999761527669659590000004078013701575649934_);}%0A%09.st1145{fill:url(%23SVGID_00000059996245348823011240000012004649987056273549_);}%0A%09.st1146{fill:url(%23SVGID_00000178893408947046310840000005256687417214293890_);}%0A%09.st1147{fill:url(%23SVGID_00000003826390714074670320000003260679058460062360_);}%0A%09.st1148{fill:url(%23SVGID_00000080911206852240648870000016261670100138331572_);}%0A%09.st1149{fill:url(%23SVGID_00000158019234430096881890000004579719196063486102_);}%0A%09.st1150{fill:url(%23SVGID_00000107550833958371743770000002887668793702354353_);}%0A%09.st1151{fill:url(%23SVGID_00000137836538145118578580000001744304008347238022_);}%0A%09.st1152{fill:url(%23SVGID_00000096041950491868103240000014418546812709042103_);}%0A%09.st1153{fill:url(%23SVGID_00000072968209107394466340000015089997205153274814_);}%0A%09.st1154{fill:url(%23SVGID_00000045585255535112323710000015118715322741871292_);}%0A%09.st1155{fill:url(%23SVGID_00000119798231132178190440000009906216037926293402_);}%0A%09.st1156{fill:url(%23SVGID_00000078750368976092789890000007081276242067712183_);}%0A%09.st1157{fill:url(%23SVGID_00000038401614766867403350000011415616183279811990_);}%0A%09.st1158{fill:url(%23SVGID_00000052070337091493605620000005080366010804158884_);}%0A%09.st1159{fill:url(%23SVGID_00000141420152225686070170000007099159460083988150_);}%0A%09.st1160{fill:url(%23SVGID_00000086670740733731342630000012690258092917492125_);}%0A%09.st1161{fill:url(%23SVGID_00000148652023754880912070000014255912960063936924_);}%0A%09.st1162{fill:url(%23SVGID_00000090981533201061439130000008610202804189389247_);}%0A%09.st1163{fill:url(%23SVGID_00000019648910884268443050000009081327160812082843_);}%0A%09.st1164{fill:url(%23SVGID_00000016067195618958618930000010960514027530940085_);}%0A%09.st1165{fill:url(%23SVGID_00000039098173833269967070000006459742223289492376_);}%0A%09.st1166{fill:url(%23SVGID_00000013190946459470080630000011634617538768580505_);}%0A%09.st1167{fill:url(%23SVGID_00000037689971019952694860000009184986523843234716_);}%0A%09.st1168{fill:url(%23SVGID_00000134232038275286607270000003964867632738045115_);}%0A%09.st1169{fill:url(%23SVGID_00000143600991053487294030000008509074036911770549_);}%0A%09.st1170{fill:url(%23SVGID_00000109014895716100311110000013579310725554538657_);}%0A%09.st1171{fill:url(%23SVGID_00000105392458939943420430000003200426447650874244_);}%0A%09.st1172{fill:url(%23SVGID_00000026863719387116096720000007058792997100647319_);}%0A%09.st1173{fill:url(%23SVGID_00000011027040082539173470000015105529858415832470_);}%0A%09.st1174{fill:url(%23SVGID_00000044873802652617261790000017183857118875177644_);}%0A%09.st1175{fill:url(%23SVGID_00000077287169021732498470000002559421484357346211_);}%0A%09.st1176{fill:url(%23SVGID_00000011742624664285861270000016602845385445053600_);}%0A%09.st1177{fill:url(%23SVGID_00000039128059278445832170000001966973362061513389_);}%0A%09.st1178{fill:url(%23SVGID_00000023266780999613133450000004716814699213759157_);}%0A%09.st1179{fill:url(%23SVGID_00000012442364840332656960000005929279058742416314_);}%0A%09.st1180{fill:url(%23SVGID_00000183224907431037019090000016828200511212498320_);}%0A%09.st1181{fill:url(%23SVGID_00000168838144863513025140000001365309184181583279_);}%0A%09.st1182{fill:url(%23SVGID_00000044149505869493466360000000888326593555426478_);}%0A%09.st1183{fill:url(%23SVGID_00000093898686598016162340000013529844748917462719_);}%0A%09.st1184{fill:url(%23SVGID_00000177486220888381405580000008191895687115864502_);}%0A%09.st1185{fill:url(%23SVGID_00000052065616223035115270000008381396913994869387_);}%0A%09.st1186{fill:url(%23SVGID_00000132080337550472964140000005105879848698612407_);}%0A%09.st1187{fill:url(%23SVGID_00000110455119299253576610000011587854905296976827_);}%0A%09.st1188{fill:url(%23SVGID_00000168819432918519094810000015063689534674915758_);}%0A%09.st1189{fill:url(%23SVGID_00000114785505806884948270000015587258031721564588_);}%0A%09.st1190{fill:url(%23SVGID_00000138572081410248002730000010015591238815980724_);}%0A%09.st1191{fill:url(%23SVGID_00000072979431511079046460000002056302498825860243_);}%0A%09.st1192{fill:url(%23SVGID_00000171680468591275476660000007086102176972057226_);}%0A%09.st1193{fill:url(%23SVGID_00000044176907123350497770000014419200987102885815_);}%0A%09.st1194{fill:url(%23SVGID_00000029765948587798065530000000465372097461599159_);}%0A%09.st1195{fill:url(%23SVGID_00000049911572531587678590000000753430450580746172_);}%0A%09.st1196{fill:url(%23SVGID_00000150078050950484445080000009586656549432778914_);}%0A%09.st1197{fill:url(%23SVGID_00000134970895375600104440000001095472788246916785_);}%0A%09.st1198{fill:url(%23SVGID_00000171694103105349849360000001366638079495070598_);}%0A%09.st1199{fill:url(%23SVGID_00000155120560485014920810000010642777434031777956_);}%0A%09.st1200{fill:url(%23SVGID_00000168114543954133063310000012148032444174402985_);}%0A%09.st1201{fill:url(%23SVGID_00000056386300153857666790000001936055875089918623_);}%0A%09.st1202{fill:url(%23SVGID_00000001634189303604979060000012758820130852004240_);}%0A%09.st1203{fill:url(%23SVGID_00000013167483108921665890000004781745037691128496_);}%0A%09.st1204{fill:url(%23SVGID_00000160150859611882330380000007833696114853079474_);}%0A%09.st1205{fill:url(%23SVGID_00000125584973371240302670000016945323691550158242_);}%0A%09.st1206{fill:url(%23SVGID_00000022557961458122641050000007656792111219948432_);}%0A%09.st1207{fill:url(%23SVGID_00000125598453716422113610000008625028704335589560_);}%0A%09.st1208{fill:url(%23SVGID_00000104674173201461083720000000741763042593568398_);}%0A%09.st1209{fill:url(%23SVGID_00000145740766650440317160000003568026255393648515_);}%0A%09.st1210{fill:url(%23SVGID_00000077283238262220019720000001047711221295701153_);}%0A%09.st1211{fill:url(%23SVGID_00000142861244561681519100000005932084362993591741_);}%0A%09.st1212{fill:url(%23SVGID_00000008127874000189734920000016722632079803186620_);}%0A%09.st1213{fill:url(%23SVGID_00000173140901272455791470000005148741750165423503_);}%0A%09.st1214{fill:url(%23SVGID_00000142151344669897448080000008258407478359769220_);}%0A%09.st1215{fill:url(%23SVGID_00000013904532705080303250000005777255093941211277_);}%0A%09.st1216{fill:url(%23SVGID_00000115472464364738780350000007151233149996769950_);}%0A%09.st1217{fill:url(%23SVGID_00000042012822002166497730000008310826260582519460_);}%0A%09.st1218{fill:url(%23SVGID_00000120553145654874349670000009748524002915198364_);}%0A%09.st1219{fill:url(%23SVGID_00000160909551577760403850000017262381966725443253_);}%0A%09.st1220{fill:url(%23SVGID_00000124852131963490523880000017111516978113210020_);}%0A%09.st1221{fill:url(%23SVGID_00000087408141589815364960000003587512681139921569_);}%0A%09.st1222{fill:url(%23SVGID_00000136405166516733134830000012553895185967701690_);}%0A%09.st1223{fill:url(%23SVGID_00000121276960617606256530000011694697050039183761_);}%0A%09.st1224{fill:url(%23SVGID_00000067930959534383389060000009115216629437346694_);}%0A%09.st1225{fill:url(%23SVGID_00000028291390060275528800000009127954553995470253_);}%0A%09.st1226{fill:url(%23SVGID_00000016033112256501200520000016439705775346774165_);}%0A%09.st1227{fill:url(%23SVGID_00000016793666913223928940000001004958236015935916_);}%0A%09.st1228{fill:url(%23SVGID_00000121962494928961929190000015716479033027593350_);}%0A%09.st1229{fill:url(%23SVGID_00000033370341198623022060000011146409637983645848_);}%0A%09.st1230{fill:url(%23SVGID_00000097491432529990394600000001655696820166382224_);}%0A%09.st1231{fill:url(%23SVGID_00000088827559199283626640000017613293104055491749_);}%0A%09.st1232{fill:url(%23SVGID_00000085220497649670789980000012234285454584420786_);}%0A%09.st1233{fill:url(%23SVGID_00000098922848894116555630000002780570840174455208_);}%0A%09.st1234{fill:url(%23SVGID_00000064356006058168547660000009300291269588872107_);}%0A%09.st1235{fill:url(%23SVGID_00000111904668553393844570000003890954760891164092_);}%0A%09.st1236{fill:url(%23SVGID_00000092438036059293346920000003870123268820794787_);}%0A%09.st1237{fill:url(%23SVGID_00000056395237862175296350000014881374163001669769_);}%0A%09.st1238{fill:url(%23SVGID_00000177462991074743344360000000562310689929764024_);}%0A%09.st1239{fill:url(%23SVGID_00000181796985713061810260000004813562326130881927_);}%0A%09.st1240{fill:url(%23SVGID_00000147934622334311310800000000729644112475269251_);}%0A%09.st1241{fill:url(%23SVGID_00000121982426199269246470000010423774243090923933_);}%0A%09.st1242{fill:url(%23SVGID_00000108275411348341839830000015261455774586748556_);}%0A%09.st1243{fill:url(%23SVGID_00000110447390936649163770000007002171499852452261_);}%0A%09.st1244{fill:url(%23SVGID_00000134957731168544906090000000066221228256463758_);}%0A%09.st1245{fill:url(%23SVGID_00000070114916376217069780000012276448340719933362_);}%0A%09.st1246{fill:url(%23SVGID_00000067930786074326272350000001883883259392654225_);}%0A%09.st1247{fill:url(%23SVGID_00000038377150398222708080000011297368906154534538_);}%0A%09.st1248{fill:url(%23SVGID_00000044868180630594179130000017429228612677176505_);}%0A%09.st1249{fill:url(%23SVGID_00000129169989836547359710000016979739615866876091_);}%0A%09.st1250{fill:url(%23SVGID_00000057827934571589885920000008050026631621038777_);}%0A%09.st1251{fill:url(%23SVGID_00000122691191586188622430000009017683646506496413_);}%0A%09.st1252{fill:url(%23SVGID_00000156584276939496892260000016857924914429185695_);}%0A%09.st1253{fill:url(%23SVGID_00000070830016530276211250000000164755772147338371_);}%0A%09.st1254{fill:url(%23SVGID_00000115489285119819555770000001997722710477809583_);}%0A%09.st1255{fill:url(%23SVGID_00000013171508283059201120000004238399389825236667_);}%0A%09.st1256{fill:url(%23SVGID_00000072252844910624799750000011229879129869070732_);}%0A%09.st1257{fill:url(%23SVGID_00000063610943790010662470000000956603750525474718_);}%0A%09.st1258{fill:url(%23SVGID_00000071542467445256706510000006286598738005662350_);}%0A%09.st1259{fill:url(%23SVGID_00000003097874158697867220000013419157961581646514_);}%0A%09.st1260{fill:url(%23SVGID_00000052104182699205821300000005667730192681162939_);}%0A%09.st1261{fill:url(%23SVGID_00000153678492987706654660000002928474043903387050_);}%0A%09.st1262{fill:url(%23SVGID_00000021817819367110706530000007663389120340501126_);}%0A%09.st1263{fill:url(%23SVGID_00000162349339334437020650000016289278937167539376_);}%0A%09.st1264{fill:url(%23SVGID_00000032629472001683668040000012225444602237729715_);}%0A%09.st1265{fill:url(%23SVGID_00000164506964398590372110000010765046393756885932_);}%0A%09.st1266{fill:url(%23SVGID_00000170997217378645925440000004500852992754298015_);}%0A%09.st1267{fill:url(%23SVGID_00000150077537105401612300000012929079290379034787_);}%0A%09.st1268{fill:url(%23SVGID_00000162335344189772423100000015231542564501811633_);}%0A%09.st1269{fill:url(%23SVGID_00000087395412779175308620000003719579700849530768_);}%0A%09.st1270{fill:url(%23SVGID_00000030488474264691154560000002727707549569050501_);}%0A%09.st1271{fill:url(%23SVGID_00000145745245243181396230000013051122806247236774_);}%0A%09.st1272{fill:url(%23SVGID_00000068638019129147934680000002388058470392807311_);}%0A%09.st1273{fill:url(%23SVGID_00000157273305185075841120000013193950305812373929_);}%0A%09.st1274{fill:url(%23SVGID_00000000214918119849933830000008216853841160472243_);}%0A%09.st1275{fill:url(%23SVGID_00000139276726408379935070000002730881005275855021_);}%0A%09.st1276{fill:url(%23SVGID_00000109731766302345952780000000737519477717227967_);}%0A%09.st1277{fill:url(%23SVGID_00000054971586014827160340000016442644673234389402_);}%0A%09.st1278{fill:url(%23SVGID_00000018940367478382121160000000556400455739473337_);}%0A%09.st1279{fill:url(%23SVGID_00000078037271411442723060000016025116260323932091_);}%0A%09.st1280{fill:url(%23SVGID_00000117638135536336830680000002084887681026206390_);}%0A%09.st1281{fill:url(%23SVGID_00000124844552726973988950000000516309255889644457_);}%0A%09.st1282{fill:url(%23SVGID_00000123410567575475819280000004280251156989960582_);}%0A%09.st1283{fill:url(%23SVGID_00000044160575540515955560000007058113357865863593_);}%0A%09.st1284{fill:url(%23SVGID_00000081611084497307506860000009163234537180150700_);}%0A%09.st1285{fill:url(%23SVGID_00000149352995343667892250000008543928187062308543_);}%0A%09.st1286{fill:url(%23SVGID_00000020379564909934941040000005394915879888823454_);}%0A%09.st1287{fill:url(%23SVGID_00000028310644131170732810000017697758708662530432_);}%0A%09.st1288{fill:url(%23SVGID_00000042699037637816736440000014461312398781816448_);}%0A%09.st1289{fill:url(%23SVGID_00000106135259313964926880000013629777444209067690_);}%0A%09.st1290{fill:url(%23SVGID_00000003087478810653603640000000895817109653130118_);}%0A%09.st1291{fill:url(%23SVGID_00000110462276736171977810000002435241221503041961_);}%0A%09.st1292{fill:url(%23SVGID_00000056415471079328072720000005152096233013492668_);}%0A%09.st1293{fill:url(%23SVGID_00000067940931296853972320000018123282085809116052_);}%0A%09.st1294{fill:url(%23SVGID_00000078016457005706181780000006228937120107877036_);}%0A%09.st1295{fill:url(%23SVGID_00000016040829083373760180000002689277391523761594_);}%0A%09.st1296{fill:url(%23SVGID_00000050664618270122311780000004048890851928570528_);}%0A%09.st1297{fill:url(%23SVGID_00000023969534773874828780000009560022152120027796_);}%0A%09.st1298{fill:url(%23SVGID_00000154415115990137337320000013230444513198838927_);}%0A%09.st1299{fill:url(%23SVGID_00000020380127834701006040000009186700028092429203_);}%0A%09.st1300{fill:url(%23SVGID_00000080913703079165214750000002760028743968248753_);}%0A%09.st1301{fill:url(%23SVGID_00000152966233963620212290000000207534438935054510_);}%0A%09.st1302{fill:url(%23SVGID_00000021802108749689947510000007432224150312933772_);}%0A%09.st1303{fill:url(%23SVGID_00000165939523459596471760000008859497394234719666_);}%0A%09.st1304{fill:url(%23SVGID_00000169558232738296206970000012459419422776537022_);}%0A%09.st1305{fill:url(%23SVGID_00000157267915167846916250000015929623067887174790_);}%0A%09.st1306{fill:url(%23SVGID_00000070089937705623368890000014549879614225752754_);}%0A%09.st1307{fill:url(%23SVGID_00000163779519849123170500000008884985258299926452_);}%0A%09.st1308{fill:url(%23SVGID_00000101070652016145199740000007829854010339342004_);}%0A%09.st1309{fill:url(%23SVGID_00000158708473418746156370000006878570009438399894_);}%0A%09.st1310{fill:url(%23SVGID_00000023254331790797986140000016692186505237948808_);}%0A%09.st1311{fill:url(%23SVGID_00000002367977439094761020000017573368952923823807_);}%0A%09.st1312{fill:url(%23SVGID_00000003069365287836086120000007625960411338992775_);}%0A%09.st1313{fill:url(%23SVGID_00000136374848378697277520000006393458342342567334_);}%0A%09.st1314{fill:url(%23SVGID_00000168819966263409628880000012746813201382271872_);}%0A%09.st1315{fill:url(%23SVGID_00000080912020586287489260000000449022895271234472_);}%0A%09.st1316{fill:url(%23SVGID_00000177455765360768342690000010607994141846942911_);}%0A%09.st1317{fill:url(%23SVGID_00000103225897343763598400000004531121973937565085_);}%0A%09.st1318{fill:url(%23SVGID_00000034789652013392609100000017076013431666103979_);}%0A%09.st1319{fill:url(%23SVGID_00000114037559596150483660000010015035830481784713_);}%0A%09.st1320{fill:url(%23SVGID_00000167391747520321364640000001195536113157274250_);}%0A%09.st1321{fill:url(%23SVGID_00000099633099055973138700000015221432549269026188_);}%0A%09.st1322{fill:url(%23SVGID_00000116914518681548073520000004019248992887656368_);}%0A%09.st1323{fill:url(%23SVGID_00000111911810175446369270000016746962892064422307_);}%0A%09.st1324{fill:url(%23SVGID_00000103244378927585786570000010116503765192700842_);}%0A%09.st1325{fill:url(%23SVGID_00000140721188049688024050000013447026280582638511_);}%0A%09.st1326{fill:url(%23SVGID_00000017479744522611554500000016156527422356698520_);}%0A%09.st1327{fill:url(%23SVGID_00000046321220246091175670000016097034865216488118_);}%0A%09.st1328{fill:url(%23SVGID_00000039107052816328099470000016787664462106267293_);}%0A%09.st1329{fill:url(%23SVGID_00000123419608599876318780000002045361132864956859_);}%0A%09.st1330{fill:url(%23SVGID_00000099631857999610882180000013823900890831552398_);}%0A%09.st1331{fill:url(%23SVGID_00000165210770324623609550000015251743021823577259_);}%0A%09.st1332{fill:url(%23SVGID_00000035508740227006263460000012667096495713813429_);}%0A%09.st1333{fill:url(%23SVGID_00000137833541091962904840000015687888164503825069_);}%0A%09.st1334{fill:url(%23SVGID_00000077290311138190966880000013511207843856200381_);}%0A%09.st1335{fill:url(%23SVGID_00000003798386633965866300000001715464649275871389_);}%0A%09.st1336{fill:url(%23SVGID_00000011007781827654234280000013496676642670835093_);}%0A%09.st1337{fill:url(%23SVGID_00000073703911379712675470000006812561040773082548_);}%0A%09.st1338{fill:url(%23SVGID_00000140011353401172205620000007283171239845417116_);}%0A%09.st1339{fill:url(%23SVGID_00000127746802253221286150000007543719503733658794_);}%0A%09.st1340{fill:url(%23SVGID_00000152247091811511694990000007843341741355343272_);}%0A%09.st1341{fill:url(%23SVGID_00000095297520459630996790000002174565659264273583_);}%0A%09.st1342{fill:url(%23SVGID_00000176750694593587032750000004300399523463468672_);}%0A%09.st1343{fill:url(%23SVGID_00000148632690729852213010000014858649610891344548_);}%0A%09.st1344{fill:url(%23SVGID_00000129195441120946914740000010024305409518179764_);}%0A%09.st1345{fill:url(%23SVGID_00000029765772255436136600000001213510720185256620_);}%0A%09.st1346{fill:url(%23SVGID_00000099623621521374841050000000514586007448444310_);}%0A%09.st1347{fill:url(%23SVGID_00000052812768600925670950000006028203350005493910_);}%0A%09.st1348{fill:url(%23SVGID_00000155143083228115793260000009265651075640359574_);}%0A%09.st1349{fill:url(%23SVGID_00000053543275496629796720000012380320425390440101_);}%0A%09.st1350{fill:url(%23SVGID_00000090999220797451602010000001249946840107485631_);}%0A%09.st1351{fill:url(%23SVGID_00000088097967474361051130000011518231491418896517_);}%0A%09.st1352{fill:url(%23SVGID_00000039827943735426212310000015670769165639156889_);}%0A%09.st1353{fill:url(%23SVGID_00000106122129351411123230000011945993593237090998_);}%0A%09.st1354{fill:url(%23SVGID_00000104687208177879276030000012821706005626110092_);}%0A%09.st1355{fill:url(%23SVGID_00000003096711537752129820000011700378628265992322_);}%0A%09.st1356{fill:url(%23SVGID_00000166670296413642415790000012046227568464071566_);}%0A%09.st1357{fill:url(%23SVGID_00000103225680090994277440000003135511427674377896_);}%0A%09.st1358{fill:url(%23SVGID_00000147177795506710539030000018134997986053998515_);}%0A%09.st1359{fill:url(%23SVGID_00000061470815896622467120000009097763871941617817_);}%0A%09.st1360{fill:url(%23SVGID_00000125578237145046403200000006344806222053973635_);}%0A%09.st1361{fill:url(%23SVGID_00000103230226226654910140000009633076817097106315_);}%0A%09.st1362{fill:url(%23SVGID_00000156560722720711403400000014336185185647958410_);}%0A%09.st1363{fill:url(%23SVGID_00000155119932790726526930000016223275960577675694_);}%0A%09.st1364{fill:url(%23SVGID_00000036931218097388538280000014682880265719483788_);}%0A%09.st1365{fill:url(%23SVGID_00000152248831434500715010000006615403021326822804_);}%0A%09.st1366{fill:url(%23SVGID_00000066505434395175344210000000660131285533071785_);}%0A%09.st1367{fill:url(%23SVGID_00000007401947619323184230000007021999861700464809_);}%0A%09.st1368{fill:url(%23SVGID_00000073002481936698876770000000528308470957162662_);}%0A%09.st1369{fill:url(%23SVGID_00000060031889060437481410000000346411675936154556_);}%0A%09.st1370{fill:url(%23SVGID_00000150064528681625063040000015487281237064275330_);}%0A%09.st1371{fill:url(%23SVGID_00000066502442238905483850000009020333922949808557_);}%0A%09.st1372{fill:url(%23SVGID_00000109009368261883781650000012470874183738403480_);}%0A%09.st1373{fill:url(%23SVGID_00000179617031846665009280000004774624817145118379_);}%0A%09.st1374{fill:url(%23SVGID_00000140723409757915621230000011279109269422086837_);}%0A%09.st1375{fill:url(%23SVGID_00000011750574386120647180000014427783847371734949_);}%0A%09.st1376{fill:url(%23SVGID_00000155110413487820625580000005098057481952888488_);}%0A%09.st1377{fill:url(%23SVGID_00000010996553847119078080000012877738946240085389_);}%0A%09.st1378{fill:url(%23SVGID_00000107550792001186639000000009572198940770884267_);}%0A%09.st1379{fill:url(%23SVGID_00000094601699615617451080000000468281890877174706_);}%0A%09.st1380{fill:url(%23SVGID_00000005959147999026481150000015680074121659671473_);}%0A%09.st1381{fill:url(%23SVGID_00000017486171055765101110000003057061141576016829_);}%0A%09.st1382{fill:url(%23SVGID_00000012464755274324079720000003304632239372333227_);}%0A%09.st1383{fill:url(%23SVGID_00000039111788188912349440000008143559847485689759_);}%0A%09.st1384{fill:url(%23SVGID_00000108999902873160941030000017675766064326878865_);}%0A%09.st1385{fill:url(%23SVGID_00000077323465806427822560000014048687268326846622_);}%0A%09.st1386{fill:url(%23SVGID_00000068667443542419584120000013404564183312668840_);}%0A%09.st1387{fill:url(%23SVGID_00000088120530400632934950000012981462118063910795_);}%0A%09.st1388{fill:url(%23SVGID_00000147934187734847099680000007197088257698949032_);}%0A%09.st1389{fill:url(%23SVGID_00000168825307118843716290000013405760415154287280_);}%0A%09.st1390{fill:url(%23SVGID_00000143613069668021505780000016593302353081680282_);}%0A%09.st1391{fill:url(%23SVGID_00000081628429503826957040000017947011768517645475_);}%0A%09.st1392{fill:url(%23SVGID_00000117655588534985574200000010553740419418078892_);}%0A%09.st1393{fill:url(%23SVGID_00000013166571941729701770000009870551102581750942_);}%0A%09.st1394{fill:url(%23SVGID_00000035492853674767701860000001841622434077293485_);}%0A%09.st1395{fill:url(%23SVGID_00000067953634042198162210000010827981231897695127_);}%0A%09.st1396{fill:url(%23SVGID_00000096058012553934851490000004748447919654520995_);}%0A%09.st1397{fill:url(%23SVGID_00000091009543604250622140000012683120099151747226_);}%0A%09.st1398{fill:url(%23SVGID_00000029045715583282886850000012721911347414436793_);}%0A%09.st1399{fill:url(%23SVGID_00000060005348954550902480000005249999468593303993_);}%0A%09.st1400{fill:url(%23SVGID_00000115509230408012345610000002246538217584828301_);}%0A%09.st1401{fill:url(%23SVGID_00000079455125869536470880000006883470235387356333_);}%0A%09.st1402{fill:url(%23SVGID_00000090283682113678321170000006236770858061096887_);}%0A%09.st1403{fill:url(%23SVGID_00000002343374662240832390000017967147331533640631_);}%0A%09.st1404{fill:url(%23SVGID_00000116951055669999218050000004901879508784704440_);}%0A%09.st1405{fill:url(%23SVGID_00000002353384759266632820000003318369085467112082_);}%0A%09.st1406{fill:url(%23SVGID_00000169548130150193494560000008598865502208689809_);}%0A%09.st1407{fill:url(%23SVGID_00000157298604847442561710000008318071349599303836_);}%0A%09.st1408{fill:url(%23SVGID_00000086650234636859624720000007037993980621994410_);}%0A%09.st1409{fill:url(%23SVGID_00000016760379477971008180000008604328399160172685_);}%0A%09.st1410{fill:url(%23SVGID_00000104694794191291021660000013887887129045324701_);}%0A%09.st1411{fill:url(%23SVGID_00000181798090479383587810000002300909154909272744_);}%0A%09.st1412{fill:url(%23SVGID_00000054951316777028336380000005757723498972384394_);}%0A%09.st1413{fill:url(%23SVGID_00000093137280125729405800000004829525214184590012_);}%0A%09.st1414{fill:url(%23SVGID_00000036958385675186541960000003213156156954364593_);}%0A%09.st1415{fill:url(%23SVGID_00000109012083576520753740000002396057554032935614_);}%0A%09.st1416{fill:url(%23SVGID_00000155849915418895289050000016075296559926426029_);}%0A%09.st1417{fill:url(%23SVGID_00000151534543590978658460000005469434888974529923_);}%0A%09.st1418{fill:url(%23SVGID_00000179647396722278314600000018363644790529855370_);}%0A%09.st1419{fill:url(%23SVGID_00000102527963034196062430000010059417829753325703_);}%0A%09.st1420{fill:url(%23SVGID_00000039817407624838535090000009107928322370997420_);}%0A%09.st1421{fill:url(%23SVGID_00000127743326876013260880000001908820105436300474_);}%0A%09.st1422{fill:url(%23SVGID_00000051365201097324571330000003642690255739922820_);}%0A%09.st1423{fill:url(%23SVGID_00000012441641497439464980000009861080048584668295_);}%0A%09.st1424{fill:url(%23SVGID_00000028287862841347262890000009888712487334121915_);}%0A%09.st1425{fill:url(%23SVGID_00000134971673176767701200000016729721421863489408_);}%0A%09.st1426{fill:url(%23SVGID_00000104699119781777979290000013541970780777570456_);}%0A%09.st1427{fill:url(%23SVGID_00000137103553124522119710000014330592916373342894_);}%0A%09.st1428{fill:url(%23SVGID_00000018950112255019458900000017521367083157079703_);}%0A%09.st1429{fill:url(%23SVGID_00000165938525043998813030000006670142664773996732_);}%0A%09.st1430{fill:url(%23SVGID_00000065778216935419526710000014673791441076505533_);}%0A%09.st1431{fill:url(%23SVGID_00000046299181536133253860000010631810927964776881_);}%0A%09.st1432{fill:url(%23SVGID_00000153698547873043280270000009799923949258252677_);}%0A%09.st1433{fill:url(%23SVGID_00000012454489939635928140000010802174594318962342_);}%0A%09.st1434{fill:url(%23SVGID_00000110468342237989849050000001518279088224720514_);}%0A%09.st1435{fill:url(%23SVGID_00000089551604140047972620000009931144824988542608_);}%0A%09.st1436{fill:url(%23SVGID_00000078016209643932393070000009256988821664513962_);}%0A%09.st1437{fill:url(%23SVGID_00000047755828642437935890000005432729257922320545_);}%0A%09.st1438{fill:url(%23SVGID_00000022557585991116929100000013240099782405232259_);}%0A%09.st1439{fill:url(%23SVGID_00000103231433842238589880000016927921125146818229_);}%0A%09.st1440{fill:url(%23SVGID_00000178183013855921428040000008029191514485794182_);}%0A%09.st1441{fill:url(%23SVGID_00000121996574787303957150000016988303195914997411_);}%0A%09.st1442{fill:url(%23SVGID_00000121244656263042207210000002035824708997494692_);}%0A%09.st1443{fill:url(%23SVGID_00000030465559073981455010000015210093240004724916_);}%0A%09.st1444{fill:url(%23SVGID_00000072267023638450501470000007425189993675287471_);}%0A%09.st1445{fill:url(%23SVGID_00000005251535667318148400000016062451997058900138_);}%0A%09.st1446{fill:url(%23SVGID_00000009549337919700420990000006435979732025069482_);}%0A%09.st1447{fill:url(%23SVGID_00000130644999623653639460000009401635189245657787_);}%0A%09.st1448{fill:url(%23SVGID_00000168818689921757791860000003074702224566369710_);}%0A%09.st1449{fill:url(%23SVGID_00000013910180954952506880000005931733049136568498_);}%0A%09.st1450{fill:url(%23SVGID_00000170985451004300125380000010511726236574028683_);}%0A%09.st1451{fill:url(%23SVGID_00000072278027047535054800000006746393137782747311_);}%0A%09.st1452{fill:url(%23SVGID_00000050629343083049740310000016026988865968968610_);}%0A%09.st1453{fill:url(%23SVGID_00000026873315319825385780000012115709029668691630_);}%0A%09.st1454{fill:url(%23SVGID_00000021814080743092200510000000230245637781194681_);}%0A%09.st1455{fill:url(%23SVGID_00000016054527573776276130000009208974586847258264_);}%0A%09.st1456{fill:url(%23SVGID_00000079486369821048726530000000504401107359250817_);}%0A%09.st1457{fill:url(%23SVGID_00000167386515228353862760000000000892963359037089_);}%0A%09.st1458{fill:url(%23SVGID_00000168093251517394637890000004617772399459410317_);}%0A%09.st1459{fill:url(%23SVGID_00000146457757202305703560000003209015937190868398_);}%0A%09.st1460{fill:url(%23SVGID_00000140014474095438200090000003628864199126762402_);}%0A%09.st1461{fill:url(%23SVGID_00000176743945702896078980000007243026380188902823_);}%0A%09.st1462{fill:url(%23SVGID_00000067956567872810884200000009453211081078767550_);}%0A%09.st1463{fill:url(%23SVGID_00000160873455469024502870000013472868927077580719_);}%0A%09.st1464{fill:url(%23SVGID_00000075859720644023344800000008025140132588006297_);}%0A%09.st1465{fill:url(%23SVGID_00000044176644047511083870000016412182888985295236_);}%0A%09.st1466{fill:url(%23SVGID_00000181047965820158789270000001519255878313669525_);}%0A%09.st1467{fill:url(%23SVGID_00000027578843040788521700000014377618438858823595_);}%0A%09.st1468{fill:url(%23SVGID_00000082342977148223851170000013934295318499799214_);}%0A%09.st1469{fill:url(%23SVGID_00000126297308010195226120000000946029830632966069_);}%0A%09.st1470{fill:url(%23SVGID_00000022551871420036324560000000713451697292347809_);}%0A%09.st1471{fill:url(%23SVGID_00000044173454543606004450000006335643031644787624_);}%0A%09.st1472{fill:url(%23SVGID_00000111183509772339455030000011233802518159050646_);}%0A%09.st1473{fill:url(%23SVGID_00000167397200670922834260000017782542947572609718_);}%0A%09.st1474{fill:url(%23SVGID_00000154424455159194375890000001488292295087179415_);}%0A%09.st1475{fill:url(%23SVGID_00000120534105890856371750000008273486444456261045_);}%0A%09.st1476{fill:url(%23SVGID_00000180339351897922418960000018175184822632763812_);}%0A%09.st1477{fill:url(%23SVGID_00000134213134397751283230000013981228356545509805_);}%0A%09.st1478{fill:url(%23SVGID_00000160158918144237864430000016983247489048876220_);}%0A%09.st1479{fill:url(%23SVGID_00000088841230735311726430000007507406744062041985_);}%0A%09.st1480{fill:url(%23SVGID_00000093868830141932502040000015414951331572752271_);}%0A%09.st1481{fill:url(%23SVGID_00000070115766461931423960000010870075612123703987_);}%0A%09.st1482{fill:url(%23SVGID_00000155109604421391006680000014059390108353219256_);}%0A%09.st1483{fill:url(%23SVGID_00000183953831167342280400000011591700846783176860_);}%0A%09.st1484{fill:url(%23SVGID_00000118384363826722692290000002697417913917108654_);}%0A%09.st1485{fill:url(%23SVGID_00000054258695911534177850000006152823502678393763_);}%0A%09.st1486{fill:url(%23SVGID_00000097494962987152022260000006146647508421564078_);}%0A%09.st1487{fill:url(%23SVGID_00000128448505551639738910000014814185881790362784_);}%0A%09.st1488{fill:url(%23SVGID_00000074410392198436186820000002440784021723018154_);}%0A%09.st1489{fill:url(%23SVGID_00000158746219331059118860000009368375924307974587_);}%0A%09.st1490{fill:url(%23SVGID_00000109707895759926090520000017871131643373352354_);}%0A%09.st1491{fill:url(%23SVGID_00000169515618406759579980000014087590092412288163_);}%0A%09.st1492{fill:url(%23SVGID_00000058565184826651509770000014546798963789613954_);}%0A%09.st1493{fill:url(%23SVGID_00000096781317664628433880000017110144051114089382_);}%0A%09.st1494{fill:url(%23SVGID_00000012460639141305509420000005941292717784332190_);}%0A%09.st1495{fill:url(%23SVGID_00000182486937641575020390000007864993431726288276_);}%0A%09.st1496{fill:url(%23SVGID_00000107578867002683859910000013440841518099700659_);}%0A%09.st1497{fill:url(%23SVGID_00000093136882063950111470000015335978889067744655_);}%0A%09.st1498{fill:url(%23SVGID_00000161589638635485070300000009853657201373343621_);}%0A%09.st1499{fill:url(%23SVGID_00000183929231128483134510000016304544352819629980_);}%0A%09.st1500{fill:url(%23SVGID_00000172425398693387141450000010924409392819217555_);}%0A%09.st1501{fill:url(%23SVGID_00000164512836063697973910000006668167543251436678_);}%0A%09.st1502{fill:url(%23SVGID_00000070810955641823341120000014182284508986382759_);}%0A%09.st1503{fill:url(%23SVGID_00000055670483347413400560000001160039813870152592_);}%0A%09.st1504{fill:url(%23SVGID_00000086659185788034895130000009429959458095018680_);}%0A%09.st1505{fill:url(%23SVGID_00000124877588366446270800000014761865652072739968_);}%0A%09.st1506{fill:url(%23SVGID_00000069389117903405594950000003532918165742855583_);}%0A%09.st1507{fill:url(%23SVGID_00000070839278882393211670000004148970245506375580_);}%0A%09.st1508{fill:url(%23SVGID_00000124865527160971886210000000063727040525361545_);}%0A%09.st1509{fill:url(%23SVGID_00000103951122678756603670000001727252819401741702_);}%0A%09.st1510{fill:url(%23SVGID_00000154403532809682305880000015581491481669965707_);}%0A%09.st1511{fill:url(%23SVGID_00000060726030854684547430000004823480632505511566_);}%0A%09.st1512{fill:url(%23SVGID_00000098929195073476297800000002170718192727073943_);}%0A%09.st1513{fill:url(%23SVGID_00000053536362789264000300000014429372786107073961_);}%0A%09.st1514{fill:url(%23SVGID_00000104677983301056153760000007044619611495062967_);}%0A%09.st1515{fill:url(%23SVGID_00000001645344359075656260000015049001543899689870_);}%0A%09.st1516{fill:url(%23SVGID_00000051354694732929738080000005916653310754379150_);}%0A%09.st1517{fill:url(%23SVGID_00000134232278220537027640000008776502715964034480_);}%0A%09.st1518{fill:url(%23SVGID_00000168118755580895635910000008960886743098879377_);}%0A%09.st1519{fill:url(%23SVGID_00000142170563112603603780000005974260838958834875_);}%0A%09.st1520{fill:url(%23SVGID_00000008131137583133599020000015978828890171787197_);}%0A%09.st1521{fill:url(%23SVGID_00000161620557413086810370000006618775412446313649_);}%0A%09.st1522{fill:url(%23SVGID_00000182486891556061855110000013133319024339982728_);}%0A%09.st1523{fill:url(%23SVGID_00000036948888053829556130000003376715407884371118_);}%0A%09.st1524{fill:url(%23SVGID_00000093879113870338536590000010702463842772889485_);}%0A%09.st1525{fill:url(%23SVGID_00000139986170735162606290000014656146027342533003_);}%0A%09.st1526{fill:url(%23SVGID_00000145034066956355539200000007394948544802382522_);}%0A%09.st1527{fill:url(%23SVGID_00000060003684703905410350000011423956012840992915_);}%0A%09.st1528{fill:url(%23SVGID_00000089568732355521698640000004529288388274499725_);}%0A%09.st1529{fill:url(%23SVGID_00000137123625476837801780000014108536429051435178_);}%0A%09.st1530{fill:url(%23SVGID_00000119835075271666197290000005061348770271814054_);}%0A%09.st1531{fill:url(%23SVGID_00000140718606719412104890000004945043747705054130_);}%0A%09.st1532{fill:url(%23SVGID_00000173134705495350300480000003291062494575028648_);}%0A%09.st1533{fill:url(%23SVGID_00000095308118091188565510000014779375990461999254_);}%0A%09.st1534{fill:url(%23SVGID_00000049928810457037845160000000563965426639546758_);}%0A%09.st1535{fill:url(%23SVGID_00000016792300673128886270000007760878188700373931_);}%0A%09.st1536{fill:url(%23SVGID_00000018233227047198397280000002532259881354460327_);}%0A%09.st1537{fill:url(%23SVGID_00000168097716622450809360000002560859255812397758_);}%0A%09.st1538{fill:url(%23SVGID_00000111151232618441574570000011205563017422811810_);}%0A%09.st1539{fill:url(%23SVGID_00000095297700495479481090000016883335961251969693_);}%0A%09.st1540{fill:url(%23SVGID_00000156557117432646112020000017444016571294384300_);}%0A%09.st1541{fill:url(%23SVGID_00000075127823028879144280000013802326970380960911_);}%0A%09.st1542{fill:url(%23SVGID_00000140717133293703070390000003850177716994225832_);}%0A%09.st1543{fill:url(%23SVGID_00000010995023390848687830000001100943572054286988_);}%0A%09.st1544{fill:url(%23SVGID_00000136398183945556356830000014127285067140210589_);}%0A%09.st1545{fill:url(%23SVGID_00000156561021278693890970000006357500303433883583_);}%0A%09.st1546{fill:url(%23SVGID_00000052075242487683588790000005118044845898125220_);}%0A%09.st1547{fill:url(%23SVGID_00000124145795222613731280000011180321259183904703_);}%0A%09.st1548{fill:url(%23SVGID_00000152230328395732449750000001784862643679990923_);}%0A%09.st1549{fill:url(%23SVGID_00000015331754550417456020000014385650137279503755_);}%0A%09.st1550{fill:url(%23SVGID_00000029734255323483010100000005632140151734448030_);}%0A%09.st1551{fill:url(%23SVGID_00000133487228648249420230000009260310202610508672_);}%0A%09.st1552{fill:url(%23SVGID_00000111905125816422936550000012317642616004221099_);}%0A%09.st1553{fill:url(%23SVGID_00000152969150043936417590000009217279426934565275_);}%0A%09.st1554{fill:url(%23SVGID_00000165231257900335247500000013033981351063495589_);}%0A%09.st1555{fill:url(%23SVGID_00000125564129503757994400000000967345449985522838_);}%0A%09.st1556{fill:url(%23SVGID_00000064313266791067334940000013022530401245450880_);}%0A%09.st1557{fill:url(%23SVGID_00000005947012094564894030000006129819025029824186_);}%0A%09.st1558{fill:url(%23SVGID_00000042715019434386043090000012808323519950686887_);}%0A%09.st1559{fill:url(%23SVGID_00000100379315848134110890000013330316971588623281_);}%0A%09.st1560{fill:url(%23SVGID_00000133490636569311299150000006081672782220859541_);}%0A%09.st1561{fill:url(%23SVGID_00000046302765540079767600000017677884408338217628_);}%0A%09.st1562{fill:url(%23SVGID_00000121990328765239072980000003594212202518463914_);}%0A%09.st1563{fill:url(%23SVGID_00000102504218732253545530000014639872861620859829_);}%0A%09.st1564{fill:url(%23SVGID_00000112624751493023345560000012888760718507678627_);}%0A%09.st1565{fill:url(%23SVGID_00000058561833505232194270000016588967732294422169_);}%0A%09.st1566{fill:url(%23SVGID_00000072281664397563579660000001612211805998707109_);}%0A%09.st1567{fill:url(%23SVGID_00000023983428388032259780000017505053416084882338_);}%0A%09.st1568{fill:url(%23SVGID_00000165212224493199940050000006465242229149798030_);}%0A%09.st1569{fill:url(%23SVGID_00000178891129907427200750000002902426108868122532_);}%0A%09.st1570{fill:url(%23SVGID_00000038381502402944562600000015027301279994754236_);}%0A%09.st1571{fill:url(%23SVGID_00000163788947708613584450000008724061255862836886_);}%0A%09.st1572{fill:url(%23SVGID_00000114772886889754645820000008093463374434830756_);}%0A%09.st1573{fill:url(%23SVGID_00000075843685034078733190000017015924632010696123_);}%0A%09.st1574{fill:url(%23SVGID_00000091733484003296008050000002182782259722042039_);}%0A%09.st1575{fill:url(%23SVGID_00000178921626701865161220000001857452307491778984_);}%0A%09.st1576{fill:url(%23SVGID_00000095334727891583525300000012784492716424746147_);}%0A%09.st1577{fill:url(%23SVGID_00000114758757045823925110000012455124295683255205_);}%0A%09.st1578{fill:url(%23SVGID_00000003088524878150991600000004175196810537885086_);}%0A%09.st1579{fill:url(%23SVGID_00000052801012115888974700000003725833988450039428_);}%0A%09.st1580{fill:url(%23SVGID_00000032618373772545270560000002346041886247268243_);}%0A%09.st1581{fill:url(%23SVGID_00000055667635263563122770000007694830869192111785_);}%0A%09.st1582{fill:url(%23SVGID_00000096017514178059525620000012363402800157573289_);}%0A%09.st1583{fill:url(%23SVGID_00000005260534076751499330000008838554236896130449_);}%0A%09.st1584{fill:url(%23SVGID_00000084505305919709089340000018327220437392018849_);}%0A%09.st1585{fill:url(%23SVGID_00000114776404053071237450000009592661519257061775_);}%0A%09.st1586{fill:url(%23SVGID_00000058563001418266947620000009823509578731071127_);}%0A%09.st1587{fill:url(%23SVGID_00000107549221849697985780000008734330480341597115_);}%0A%09.st1588{fill:url(%23SVGID_00000108988511984106569820000018177187289033512105_);}%0A%09.st1589{fill:url(%23SVGID_00000029017274951160344880000002237474863651874463_);}%0A%09.st1590{fill:url(%23SVGID_00000030485605416287266370000001811327065844767618_);}%0A%09.st1591{fill:url(%23SVGID_00000066475734931700470720000017565107689393353140_);}%0A%09.st1592{fill:url(%23SVGID_00000140712272830448649990000004385254252730693507_);}%0A%09.st1593{fill:url(%23SVGID_00000162339261681019803190000014993683505226624678_);}%0A%09.st1594{fill:url(%23SVGID_00000098212146247010659290000004107315905844253369_);}%0A%09.st1595{fill:url(%23SVGID_00000023260510827479971140000003121106268229892748_);}%0A%09.st1596{fill:url(%23SVGID_00000010273008583465932580000012675354634869607836_);}%0A%09.st1597{fill:url(%23SVGID_00000157276376522827347910000016411957862774114696_);}%0A%09.st1598{fill:url(%23SVGID_00000074441141885064117890000006081658033343293829_);}%0A%09.st1599{fill:url(%23SVGID_00000152260075273446722690000006739623401909756044_);}%0A%09.st1600{fill:url(%23SVGID_00000133530995499069960770000004811011732218947980_);}%0A%09.st1601{fill:url(%23SVGID_00000119810354411674798570000004088186747794089911_);}%0A%09.st1602{fill:url(%23SVGID_00000175309241639212266730000011442315387701359288_);}%0A%09.st1603{fill:url(%23SVGID_00000026140950774993789470000005239286533715575218_);}%0A%09.st1604{fill:url(%23SVGID_00000160910346349716739300000014903901893299045008_);}%0A%09.st1605{fill:url(%23SVGID_00000003070563796008472080000000511017053852622238_);}%0A%09.st1606{fill:url(%23SVGID_00000126317191303156200880000011789166106379305606_);}%0A%09.st1607{fill:url(%23SVGID_00000123406520114114515170000009954487572615904175_);}%0A%09.st1608{fill:url(%23SVGID_00000150812732959931250260000002823438876372431031_);}%0A%09.st1609{fill:url(%23SVGID_00000010289420111211689630000016051313682977975684_);}%0A%09.st1610{fill:url(%23SVGID_00000028286612683472787140000001479086913244635028_);}%0A%09.st1611{fill:url(%23SVGID_00000048466784523855601300000010804573124690870422_);}%0A%09.st1612{fill:url(%23SVGID_00000010274090922933653520000010393554777232213145_);}%0A%09.st1613{fill:url(%23SVGID_00000124123751601726212440000013479275692220202427_);}%0A%09.st1614{fill:url(%23SVGID_00000164516009324575074840000003533776942957411749_);}%0A%09.st1615{fill:url(%23SVGID_00000110462699946777608610000011832903911603234716_);}%0A%09.st1616{fill:url(%23SVGID_00000070084174454963699510000015542866295617532800_);}%0A%09.st1617{fill:url(%23SVGID_00000044148941466082716950000018032348056391576761_);}%0A%09.st1618{fill:url(%23SVGID_00000114759049410833973660000003867338642048363696_);}%0A%09.st1619{fill:url(%23SVGID_00000024002783306254373240000017611642101580703618_);}%0A%09.st1620{fill:url(%23SVGID_00000047023539610050335530000005312513757991138987_);}%0A%09.st1621{fill:url(%23SVGID_00000090992979235155529650000012969065063493032627_);}%0A%09.st1622{fill:url(%23SVGID_00000049187625694909708860000016420544804398640280_);}%0A%09.st1623{fill:url(%23SVGID_00000135660509646891403130000000727445525538267530_);}%0A%09.st1624{fill:url(%23SVGID_00000036250198170633534200000001199331079883400077_);}%0A%09.st1625{fill:url(%23SVGID_00000114037142633121907170000016223454163553686674_);}%0A%09.st1626{fill:url(%23SVGID_00000093877709498458129960000013151474250086954931_);}%0A%09.st1627{fill:url(%23SVGID_00000094580852818510730180000007183164039558756266_);}%0A%09.st1628{fill:url(%23SVGID_00000098917382716171952060000003644379277063725483_);}%0A%09.st1629{fill:url(%23SVGID_00000183954168059439333070000013428933292414444962_);}%0A%09.st1630{fill:url(%23SVGID_00000119800171128477532600000017043070238754543280_);}%0A%09.st1631{fill:url(%23SVGID_00000142868885950273578070000006778047030449522613_);}%0A%09.st1632{fill:url(%23SVGID_00000158022782660421525060000017964422519244409277_);}%0A%09.st1633{fill:url(%23SVGID_00000095332838373053876660000009845928279374273965_);}%0A%09.st1634{fill:url(%23SVGID_00000182498852531997155810000010889003695918709899_);}%0A%09.st1635{fill:url(%23SVGID_00000162353371290654933080000004068026066858119327_);}%0A%09.st1636{fill:url(%23SVGID_00000003081940427207253520000017278882724911213441_);}%0A%09.st1637{fill:url(%23SVGID_00000126301210283088255710000001655303030857301381_);}%0A%09.st1638{fill:url(%23SVGID_00000006701307709170576430000014721617134251506605_);}%0A%09.st1639{fill:url(%23SVGID_00000139274059620234383270000015023679637551178624_);}%0A%09.st1640{fill:url(%23SVGID_00000048502904935675565520000001691516433547935164_);}%0A%09.st1641{fill:url(%23SVGID_00000022562263509037015440000009956335116830386832_);}%0A%09.st1642{fill:url(%23SVGID_00000062883344065685973910000017062045863870501531_);}%0A%09.st1643{fill:url(%23SVGID_00000062180934599295495580000013689961198398681488_);}%0A%09.st1644{fill:url(%23SVGID_00000004523318915212296560000007746913131595415952_);}%0A%09.st1645{fill:url(%23SVGID_00000108305002626867502190000014011156156138626969_);}%0A%09.st1646{fill:url(%23SVGID_00000109738324730535847630000003068379881602901888_);}%0A%09.st1647{fill:url(%23SVGID_00000060027474451585877960000008832570400261239731_);}%0A%09.st1648{fill:url(%23SVGID_00000106121112201600044570000010542428274871603595_);}%0A%09.st1649{fill:url(%23SVGID_00000183219759085742129530000008072947412403531194_);}%0A%09.st1650{fill:url(%23SVGID_00000108311137244782346770000007036264414635402377_);}%0A%09.st1651{fill:url(%23SVGID_00000075147290733287083300000012498188463717175217_);}%0A%09.st1652{fill:url(%23SVGID_00000091733151897863239900000016973627400277534650_);}%0A%09.st1653{fill:url(%23SVGID_00000168078041365044287950000012577274424917404819_);}%0A%09.st1654{fill:url(%23SVGID_00000181787469468972296560000011675563713452732590_);}%0A%09.st1655{fill:url(%23SVGID_00000129919320881779178520000004823361310150647480_);}%0A%09.st1656{fill:url(%23SVGID_00000097466096979885195640000002345193521142902407_);}%0A%09.st1657{fill:url(%23SVGID_00000003067441060586871620000002403002818526095233_);}%0A%09.st1658{fill:url(%23SVGID_00000093162173115445905450000012102236658019021724_);}%0A%09.st1659{fill:url(%23SVGID_00000104698545053814656230000013656941874008727950_);}%0A%09.st1660{fill:url(%23SVGID_00000136377481737213899700000016000848174560011918_);}%0A%09.st1661{fill:url(%23SVGID_00000154422676369439728940000002646340292453131919_);}%0A%09.st1662{fill:url(%23SVGID_00000156572797847607953280000010206415791790079931_);}%0A%09.st1663{fill:url(%23SVGID_00000035491329738207485410000002987225090748834966_);}%0A%09.st1664{fill:url(%23SVGID_00000068670525071962360120000007106810939402327178_);}%0A%09.st1665{fill:url(%23SVGID_00000052062945471734922810000017831823665926954368_);}%0A%09.st1666{fill:url(%23SVGID_00000018198264384447315720000018434209203540062372_);}%0A%09.st1667{fill:url(%23SVGID_00000176034719475484148430000010784309802934831293_);}%0A%09.st1668{fill:url(%23SVGID_00000075848303545302551860000006969218620279909284_);}%0A%09.st1669{fill:url(%23SVGID_00000093861631323627112220000002096858481514712451_);}%0A%09.st1670{fill:url(%23SVGID_00000101804923875303893510000010412236341689572510_);}%0A%09.st1671{fill:url(%23SVGID_00000024701738600530089400000015723320955677552299_);}%0A%09.st1672{fill:url(%23SVGID_00000025403408510912712910000000110206235737189803_);}%0A%09.st1673{fill:url(%23SVGID_00000129905301164350696120000011793937619271165843_);}%0A%09.st1674{fill:url(%23SVGID_00000127725461954929777100000012886954456985649847_);}%0A%09.st1675{fill:url(%23SVGID_00000134948702303540538750000012524284610273913743_);}%0A%09.st1676{fill:url(%23SVGID_00000103973272545473829830000007590236818204591801_);}%0A%09.st1677{fill:url(%23SVGID_00000000215883001671389410000016870048343085319318_);}%0A%09.st1678{fill:url(%23SVGID_00000041269886900326258930000009972378326289431483_);}%0A%09.st1679{fill:url(%23SVGID_00000134211022197053879830000013308252118489864619_);}%0A%09.st1680{fill:url(%23SVGID_00000098196765061678628500000009574979472170805174_);}%0A%09.st1681{fill:url(%23SVGID_00000016047698604716621370000011350930134072271789_);}%0A%09.st1682{fill:url(%23SVGID_00000168822775569839924020000016370934505009531040_);}%0A%09.st1683{fill:url(%23SVGID_00000030464036785669496640000007982229408128620704_);}%0A%09.st1684{fill:url(%23SVGID_00000039834387256447512740000015285378737978933414_);}%0A%09.st1685{fill:url(%23SVGID_00000070085411021332053320000002375479974153917573_);}%0A%09.st1686{fill:url(%23SVGID_00000132086834434306729040000016100104518657212035_);}%0A%09.st1687{fill:url(%23SVGID_00000070809177015623562230000009657170674258543784_);}%0A%09.st1688{fill:url(%23SVGID_00000048493580247982838660000012699437353136830131_);}%0A%09.st1689{fill:url(%23SVGID_00000088818793157087432330000011128505042836101551_);}%0A%09.st1690{fill:url(%23SVGID_00000019669932415830187890000018078984138268624042_);}%0A%09.st1691{fill:url(%23SVGID_00000062911810019709805940000016941963936325267131_);}%0A%09.st1692{fill:url(%23SVGID_00000062170058115367924360000000123344273802131885_);}%0A%09.st1693{fill:url(%23SVGID_00000148662806595345151860000018252016902846039197_);}%0A%09.st1694{fill:url(%23SVGID_00000132064630719751881110000012915212915691434921_);}%0A%09.st1695{fill:url(%23SVGID_00000018220351947773606130000003212615034035437220_);}%0A%09.st1696{fill:url(%23SVGID_00000021811725644490423600000015981750457829097897_);}%0A%09.st1697{fill:url(%23SVGID_00000100379469980069316690000016475793030697624491_);}%0A%09.st1698{fill:url(%23SVGID_00000146470785113475733260000002193476195166131115_);}%0A%09.st1699{fill:url(%23SVGID_00000062187174452543281070000008667034818844093354_);}%0A%09.st1700{fill:url(%23SVGID_00000000194558254993035640000017778310651204148364_);}%0A%09.st1701{fill:url(%23SVGID_00000071521870590197136230000016990419511538206137_);}%0A%09.st1702{fill:url(%23SVGID_00000076572023091755309280000017836069347409384876_);}%0A%09.st1703{fill:url(%23SVGID_00000126301580097358483970000002112471307226289299_);}%0A%09.st1704{fill:url(%23SVGID_00000005239173328648306820000018377749822699425447_);}%0A%09.st1705{fill:url(%23SVGID_00000026871561688031553020000014136546535178162573_);}%0A%09.st1706{fill:url(%23SVGID_00000096775260113632224400000007068830964798977683_);}%0A%09.st1707{fill:url(%23SVGID_00000176000884980023456460000001050363240715389571_);}%0A%09.st1708{fill:url(%23SVGID_00000089538835444306854230000004852821061481397422_);}%0A%09.st1709{fill:url(%23SVGID_00000176023766292053720390000002501466604902848426_);}%0A%09.st1710{fill:url(%23SVGID_00000098931674953948825600000012150304937945610674_);}%0A%09.st1711{fill:url(%23SVGID_00000041280933500627397360000010388264193468851608_);}%0A%09.st1712{fill:url(%23SVGID_00000170254213540435135120000009375400184742775705_);}%0A%09.st1713{fill:url(%23SVGID_00000118358532086748458690000017455509381292490658_);}%0A%09.st1714{fill:url(%23SVGID_00000005232117671482356670000002556105344162657715_);}%0A%09.st1715{fill:url(%23SVGID_00000173122509275743337870000013444160067310270108_);}%0A%09.st1716{fill:url(%23SVGID_00000093155765259117538420000012718742437379568039_);}%0A%09.st1717{fill:url(%23SVGID_00000108303225700933598070000013683992771738599813_);}%0A%09.st1718{fill:url(%23SVGID_00000103253935033386610410000017326083825265507208_);}%0A%09.st1719{fill:url(%23SVGID_00000098223143356215353770000006617260822604085183_);}%0A%09.st1720{fill:url(%23SVGID_00000092435145862650108470000016878093708127075502_);}%0A%09.st1721{fill:url(%23SVGID_00000137811289233026812270000000302250464218650509_);}%0A%09.st1722{fill:url(%23SVGID_00000077302718914905768130000001104552717895276673_);}%0A%09.st1723{fill:url(%23SVGID_00000045611190447491326230000007933759597304716680_);}%0A%09.st1724{fill:url(%23SVGID_00000182528370671318209070000006066909525838282671_);}%0A%09.st1725{fill:url(%23SVGID_00000021092307428022416570000002780909716610853036_);}%0A%09.st1726{fill:url(%23SVGID_00000152973871955365153230000009044789185022622634_);}%0A%09.st1727{fill:url(%23SVGID_00000012450110077489948340000013754677010501647752_);}%0A%09.st1728{fill:url(%23SVGID_00000057121203828739159740000017761618306534123658_);}%0A%09.st1729{fill:url(%23SVGID_00000129902887156566054170000012074885715249013912_);}%0A%09.st1730{fill:url(%23SVGID_00000145770542370213182920000013168481752626993797_);}%0A%09.st1731{fill:url(%23SVGID_00000031185223241611745910000010745068261611917991_);}%0A%09.st1732{fill:url(%23SVGID_00000104668842912227061740000000055551984848009890_);}%0A%09.st1733{fill:url(%23SVGID_00000169517584317509528870000006201375084027153590_);}%0A%09.st1734{fill:url(%23SVGID_00000138545406434373879350000006485452213124179584_);}%0A%09.st1735{fill:url(%23SVGID_00000150780675624380715030000005769129786323668893_);}%0A%09.st1736{fill:url(%23SVGID_00000060004540630916576910000013463923524301642428_);}%0A%09.st1737{fill:url(%23SVGID_00000016037942859625516700000008012789526155011767_);}%0A%09.st1738{fill:url(%23SVGID_00000127036701976576831410000001603018504906767516_);}%0A%09.st1739{fill:url(%23SVGID_00000177478271249107673650000016519369493884607137_);}%0A%09.st1740{fill:url(%23SVGID_00000087391927254660556600000013856452218591406978_);}%0A%09.st1741{fill:url(%23SVGID_00000160902873733867573410000008149761547005491090_);}%0A%09.st1742{fill:url(%23SVGID_00000142893190992286157770000012094710064710153601_);}%0A%09.st1743{fill:url(%23SVGID_00000010271547296461623830000010922297409342613645_);}%0A%09.st1744{fill:url(%23SVGID_00000023272588029568570690000003232914931915276976_);}%0A%09.st1745{fill:url(%23SVGID_00000181045278819905928910000009799587263953981849_);}%0A%09.st1746{fill:url(%23SVGID_00000115494585583487797620000017768335621462523577_);}%0A%09.st1747{fill:url(%23SVGID_00000049935468339089158490000002959924301614264735_);}%0A%09.st1748{fill:url(%23SVGID_00000008859468564735513350000009361807162838083514_);}%0A%09.st1749{fill:url(%23SVGID_00000063611077257326368960000017831205554726937517_);}%0A%09.st1750{fill:url(%23SVGID_00000169556644227103849770000014678825153934642870_);}%0A%09.st1751{fill:url(%23SVGID_00000067950760919050763160000017524967427354812069_);}%0A%09.st1752{fill:url(%23SVGID_00000046317407736117317280000012797290745259937437_);}%0A%09.st1753{fill:url(%23SVGID_00000077324249836994851060000002923192356406456215_);}%0A%09.st1754{fill:url(%23SVGID_00000176012845334438455750000016416039634513483197_);}%0A%09.st1755{fill:url(%23SVGID_00000083783290591799640260000006862767399595351985_);}%0A%09.st1756{fill:url(%23SVGID_00000023271384107185851420000004303551453145143717_);}%0A%09.st1757{fill:url(%23SVGID_00000116212903319230103440000012329492894279138495_);}%0A%09.st1758{fill:url(%23SVGID_00000089576415150976026120000015852191774859083907_);}%0A%09.st1759{fill:url(%23SVGID_00000167394490378677964500000014871481907942655910_);}%0A%09.st1760{fill:url(%23SVGID_00000007387728941618299990000011061435085991581358_);}%0A%09.st1761{fill:url(%23SVGID_00000039855766891146150750000008867628891023441287_);}%0A%09.st1762{fill:url(%23SVGID_00000127725133090920049770000000239754420681527183_);}%0A%09.st1763{fill:url(%23SVGID_00000059988710388197477920000004429473352197205156_);}%0A%09.st1764{fill:url(%23SVGID_00000119117722796258712390000005966102634717881231_);}%0A%09.st1765{fill:url(%23SVGID_00000075870838628939907830000006212719524482712999_);}%0A%09.st1766{fill:url(%23SVGID_00000132046094842227409280000010743896719446723771_);}%0A%09.st1767{fill:url(%23SVGID_00000157276825584915037820000000533739260351566995_);}%0A%09.st1768{fill:url(%23SVGID_00000028311079592918447160000003810908136315770288_);}%0A%09.st1769{fill:url(%23SVGID_00000010283066816424770490000004507952197811961742_);}%0A%09.st1770{fill:url(%23SVGID_00000011005327484463972920000010266804545640310403_);}%0A%09.st1771{fill:url(%23SVGID_00000175310930996477038100000002052987853983453838_);}%0A%09.st1772{fill:url(%23SVGID_00000168819781521632750540000017626258414027508867_);}%0A%09.st1773{fill:url(%23SVGID_00000034083688932815978920000005745449589883960721_);}%0A%09.st1774{fill:url(%23SVGID_00000160885076899077110020000015463860290059699647_);}%0A%09.st1775{fill:url(%23SVGID_00000073689358067244555890000016990209667313611446_);}%0A%09.st1776{fill:url(%23SVGID_00000158018196571525804910000000271056001226618002_);}%0A%09.st1777{fill:url(%23SVGID_00000176006438237756300360000000400874418979261630_);}%0A%09.st1778{fill:url(%23SVGID_00000021800470771468631220000008838323707422749350_);}%0A%09.st1779{fill:url(%23SVGID_00000036228201460113584640000008991509146949275544_);}%0A%09.st1780{fill:url(%23SVGID_00000170962815321413241640000007996922792286910394_);}%0A%09.st1781{fill:url(%23SVGID_00000062167902330314520500000018180050533226566836_);}%0A%09.st1782{fill:url(%23SVGID_00000180359607673443880970000016585459774672244907_);}%0A%09.st1783{fill:url(%23SVGID_00000106111330544704197390000000295337752538007484_);}%0A%09.st1784{fill:url(%23SVGID_00000067926034580034143060000002655337511047991187_);}%0A%09.st1785{fill:url(%23SVGID_00000109003219768387054720000015558523790766569629_);}%0A%09.st1786{fill:url(%23SVGID_00000043457520762073659790000014058670365705176247_);}%0A%09.st1787{fill:url(%23SVGID_00000071551137464655394770000010023975787789034413_);}%0A%09.st1788{fill:url(%23SVGID_00000042710382155357595110000012047131355720009874_);}%0A%09.st1789{fill:url(%23SVGID_00000123425007803343674690000009047298745567196300_);}%0A%09.st1790{fill:url(%23SVGID_00000120548755918291994740000014799647236818305461_);}%0A%09.st1791{fill:url(%23SVGID_00000155132108387624319150000016885402600684759198_);}%0A%09.st1792{fill:url(%23SVGID_00000084523090529990970640000004253212749674502045_);}%0A%09.st1793{fill:url(%23SVGID_00000037652274288201516760000006973852545459828127_);}%0A%09.st1794{fill:url(%23SVGID_00000065033646225437395110000014728297403742701185_);}%0A%09.st1795{fill:url(%23SVGID_00000057829854136052268050000016850911230305986180_);}%0A%09.st1796{fill:url(%23SVGID_00000034053291500941112480000009185862766627767428_);}%0A%09.st1797{fill:url(%23SVGID_00000181084449612870640670000001584204864151886761_);}%0A%09.st1798{fill:url(%23SVGID_00000109708232058711503600000003149969720280642202_);}%0A%09.st1799{fill:url(%23SVGID_00000063605222759868311380000014184835513181483428_);}%0A%09.st1800{fill:url(%23SVGID_00000066509453887171625040000001649704256647949498_);}%0A%09.st1801{fill:url(%23SVGID_00000166671462837282308220000008789712911548352666_);}%0A%09.st1802{fill:url(%23SVGID_00000138552654145290005870000000336809175173903545_);}%0A%09.st1803{fill:url(%23SVGID_00000054236588520669041460000007591145092753693836_);}%0A%09.st1804{fill:url(%23SVGID_00000060022730215212131990000011325102183285235330_);}%0A%09.st1805{fill:url(%23SVGID_00000155145054087124379820000015437146914066726306_);}%0A%09.st1806{fill:url(%23SVGID_00000031202331572479461660000011938505876033103795_);}%0A%09.st1807{fill:url(%23SVGID_00000089536459717256158870000009815692886864716205_);}%0A%09.st1808{fill:url(%23SVGID_00000081645890508147142900000003703269583548554128_);}%0A%09.st1809{fill:url(%23SVGID_00000099663706838587411770000004771173399753443234_);}%0A%09.st1810{fill:url(%23SVGID_00000119797267045410299750000017132684802232182702_);}%0A%09.st1811{fill:url(%23SVGID_00000156571946532507143910000003560155667074996617_);}%0A%09.st1812{fill:url(%23SVGID_00000183222982929441813300000010567015221633383552_);}%0A%09.st1813{fill:url(%23SVGID_00000069390845667323419870000003765483301412367277_);}%0A%09.st1814{fill:url(%23SVGID_00000034805813459200423470000004638457043896721546_);}%0A%09.st1815{fill:url(%23SVGID_00000111890675199882573000000012477566579037500848_);}%0A%09.st1816{fill:url(%23SVGID_00000165214534646698629170000010639525860329780159_);}%0A%09.st1817{fill:url(%23SVGID_00000026861968410886381030000012055863574995899542_);}%0A%09.st1818{fill:url(%23SVGID_00000004527212468421196520000003447314356540327350_);}%0A%09.st1819{fill:url(%23SVGID_00000032632977171981989490000005492139159324658335_);}%0A%09.st1820{fill:url(%23SVGID_00000158743345036373325680000017023737718059567500_);}%0A%09.st1821{fill:url(%23SVGID_00000048487402371881578060000001184644849980269247_);}%0A%09.st1822{fill:url(%23SVGID_00000030446115037665084700000013817800996101826218_);}%0A%09.st1823{fill:url(%23SVGID_00000074415528837832081740000011629741707772102075_);}%0A%09.st1824{fill:url(%23SVGID_00000145057839046801591520000004554168843633787531_);}%0A%09.st1825{fill:url(%23SVGID_00000115500858876374984160000005419184122150959534_);}%0A%09.st1826{fill:url(%23SVGID_00000181067456275953822110000010954304483590009760_);}%0A%09.st1827{fill:url(%23SVGID_00000098902448599885671610000015396880372368843396_);}%0A%09.st1828{fill:url(%23SVGID_00000011741217407616947320000014269934860388574597_);}%0A%09.st1829{fill:url(%23SVGID_00000005954954451687654070000017413159517314028465_);}%0A%09.st1830{fill:url(%23SVGID_00000083084128885922626900000007060137738252244155_);}%0A%09.st1831{fill:url(%23SVGID_00000093891222544802406550000012072510392771319196_);}%0A%09.st1832{fill:url(%23SVGID_00000136391451480089189470000001138342201391263656_);}%0A%09.st1833{fill:url(%23SVGID_00000017514307760790731280000003574439067952890043_);}%0A%09.st1834{fill:url(%23SVGID_00000139980960496983544160000004616167700378230151_);}%0A%09.st1835{fill:url(%23SVGID_00000019655684196484470030000003510093925399854513_);}%0A%09.st1836{fill:url(%23SVGID_00000101785229341217766780000004089325684161026473_);}%0A%09.st1837{fill:url(%23SVGID_00000050627746282189227980000010409996888456131261_);}%0A%09.st1838{fill:url(%23SVGID_00000127730377697280391520000013895145842213696187_);}%0A%09.st1839{fill:url(%23SVGID_00000178910067151908458190000013679235526530763660_);}%0A%09.st1840{fill:url(%23SVGID_00000137824679556453729340000001444940945623514524_);}%0A%09.st1841{fill:url(%23SVGID_00000119076770778198052420000015214922197577658273_);}%0A%09.st1842{fill:url(%23SVGID_00000099625589542349748010000012292929180099982237_);}%0A%09.st1843{fill:url(%23SVGID_00000176730220598505441970000007198338111821522562_);}%0A%09.st1844{fill:url(%23SVGID_00000139275598715570686590000013959562113580289974_);}%0A%09.st1845{fill:url(%23SVGID_00000093871593256883004730000004214107613144615081_);}%0A%09.st1846{fill:url(%23SVGID_00000118365961165742258890000010317398841136384956_);}%0A%09.st1847{fill:url(%23SVGID_00000129918381684371437100000014219186512515299742_);}%0A%09.st1848{fill:url(%23SVGID_00000158011298997972849880000017000631995090962354_);}%0A%09.st1849{fill:url(%23SVGID_00000165201927019498995920000014302704682687470512_);}%0A%09.st1850{fill:url(%23SVGID_00000018935816888404002230000010306331052243846331_);}%0A%09.st1851{fill:url(%23SVGID_00000060740154326101877770000002301145201359051925_);}%0A%09.st1852{fill:url(%23SVGID_00000049913411829169714940000016331706449118957999_);}%0A%09.st1853{fill:url(%23SVGID_00000116920397242081150080000000026993772243174836_);}%0A%09.st1854{fill:url(%23SVGID_00000033335119099625869490000005636754294541296308_);}%0A%09.st1855{fill:url(%23SVGID_00000088134413315938329770000017122675499061722533_);}%0A%09.st1856{fill:url(%23SVGID_00000058587702418617541000000000520826422715314059_);}%0A%09.st1857{fill:url(%23SVGID_00000028284577021570732970000006128625916501176962_);}%0A%09.st1858{fill:url(%23SVGID_00000154420857143053531190000011483635530050738618_);}%0A%09.st1859{fill:url(%23SVGID_00000181777665894519637740000016197587187118127234_);}%0A%09.st1860{fill:url(%23SVGID_00000162312208237378495560000000794492781362614660_);}%0A%09.st1861{fill:url(%23SVGID_00000048500932693891309880000014349858530799372971_);}%0A%09.st1862{fill:url(%23SVGID_00000170244106121758377190000012525544274000565917_);}%0A%09.st1863{fill:url(%23SVGID_00000060029774351251372680000002577505020621946772_);}%0A%09.st1864{fill:url(%23SVGID_00000000219000655933732290000008480772580540768441_);}%0A%09.st1865{fill:url(%23SVGID_00000101088920582098915080000003734712420554961575_);}%0A%09.st1866{fill:url(%23SVGID_00000073714007619299610360000006082206684332589701_);}%0A%09.st1867{fill:url(%23SVGID_00000125597942776861133580000001095864239975072177_);}%0A%09.st1868{fill:url(%23SVGID_00000097467923340637058960000014496185106163753113_);}%0A%09.st1869{fill:url(%23SVGID_00000040550357981943848940000006965278908049604244_);}%0A%09.st1870{fill:url(%23SVGID_00000065759510140071386730000000306278908241169848_);}%0A%09.st1871{fill:url(%23SVGID_00000026162538625277768910000013620100563166545031_);}%0A%09.st1872{fill:url(%23SVGID_00000049209281109529882660000002060858419175179675_);}%0A%09.st1873{fill:url(%23SVGID_00000017510677410683020920000013473056570965229220_);}%0A%09.st1874{fill:url(%23SVGID_00000125573081056323248910000000275150079595840957_);}%0A%09.st1875{fill:url(%23SVGID_00000060719646835740572930000018361249221505215933_);}%0A%09.st1876{fill:url(%23SVGID_00000015345451471723136160000014079259049877873317_);}%0A%09.st1877{fill:url(%23SVGID_00000178910632412066973690000012124532999948476801_);}%0A%09.st1878{fill:url(%23SVGID_00000135671343966310027910000007336410714755516071_);}%0A%09.st1879{fill:url(%23SVGID_00000134950781680201099420000007428393670420049301_);}%0A%09.st1880{fill:url(%23SVGID_00000067196764165346735070000003349909611356311482_);}%0A%09.st1881{fill:url(%23SVGID_00000049201022348330077540000007146787063302476933_);}%0A%09.st1882{fill:url(%23SVGID_00000164499281937639596580000016864694524920835254_);}%0A%09.st1883{fill:url(%23SVGID_00000104679668267609531630000008164464453057741195_);}%0A%09.st1884{fill:url(%23SVGID_00000141449225474782452730000005994667228808344487_);}%0A%09.st1885{fill:url(%23SVGID_00000155113671969857082420000017717664159921908653_);}%0A%09.st1886{fill:url(%23SVGID_00000178925186712523676010000016895450686245216157_);}%0A%09.st1887{fill:url(%23SVGID_00000119087368955437426540000005131611133082750899_);}%0A%09.st1888{fill:url(%23SVGID_00000118365877985650790510000011511396153084665240_);}%0A%09.st1889{fill:url(%23SVGID_00000152945247359674706820000013319629377319379337_);}%0A%09.st1890{fill:url(%23SVGID_00000144319548457095019410000010904048999431199910_);}%0A%09.st1891{fill:url(%23SVGID_00000074410837915248585380000016325074583291301305_);}%0A%09.st1892{fill:url(%23SVGID_00000135654585067759862580000010992153123324949907_);}%0A%09.st1893{fill:url(%23SVGID_00000183932761953030692670000013334690345414480779_);}%0A%09.st1894{fill:url(%23SVGID_00000160896133720481060960000002485308922356044950_);}%0A%09.st1895{fill:url(%23SVGID_00000133525728055366969700000012640945460929806210_);}%0A%09.st1896{fill:url(%23SVGID_00000033358217609761830150000006911881241062050958_);}%0A%09.st1897{fill:url(%23SVGID_00000169539906811025317650000001046114201207795891_);}%0A%09.st1898{fill:url(%23SVGID_00000137107227953714571640000013510988349138065318_);}%0A%09.st1899{fill:url(%23SVGID_00000140016533931358085280000010662800471356308393_);}%0A%09.st1900{fill:url(%23SVGID_00000095323031187753081480000003425511018625571517_);}%0A%09.st1901{fill:url(%23SVGID_00000088848542045768596690000016492013133270717355_);}%0A%09.st1902{fill:url(%23SVGID_00000018221291500665251080000005074749636787582385_);}%0A%09.st1903{fill:url(%23SVGID_00000045608178821156025250000005362245978031784064_);}%0A%09.st1904{fill:url(%23SVGID_00000134954646617410642790000015891885735831505028_);}%0A%09.st1905{fill:url(%23SVGID_00000026147525710825087310000012448348826863905926_);}%0A%09.st1906{fill:url(%23SVGID_00000178193911516999433640000017200984776625993612_);}%0A%09.st1907{fill:url(%23SVGID_00000153701621357763987680000012528981869840194236_);}%0A%09.st1908{fill:url(%23SVGID_00000111167989401973897000000013568902138531576242_);}%0A%09.st1909{fill:url(%23SVGID_00000106130394273382910500000003186183702786939028_);}%0A%09.st1910{fill:url(%23SVGID_00000101093933645347338740000015484542386575902111_);}%0A%09.st1911{fill:url(%23SVGID_00000000197421172537883440000014230953817798290583_);}%0A%09.st1912{fill:url(%23SVGID_00000049184516361591340070000016057897941837929147_);}%0A%09.st1913{fill:url(%23SVGID_00000002356999768548381800000003943784867624422590_);}%0A%09.st1914{fill:url(%23SVGID_00000132072414526153871430000007586765431254090894_);}%0A%09.st1915{fill:url(%23SVGID_00000150808126127981108980000006082471559062841763_);}%0A%09.st1916{fill:url(%23SVGID_00000164489463926940320140000013774187844334714773_);}%0A%09.st1917{fill:url(%23SVGID_00000068637645170031130930000001377824714496405157_);}%0A%09.st1918{fill:url(%23SVGID_00000153703448957015972330000011412221435677711288_);}%0A%09.st1919{fill:url(%23SVGID_00000057828249114107605740000003666395198373261474_);}%0A%09.st1920{fill:url(%23SVGID_00000123404126996376595840000007283942322136883588_);}%0A%09.st1921{fill:url(%23SVGID_00000149362215023517688490000013575460454793334674_);}%0A%09.st1922{fill:url(%23SVGID_00000158722209883142943060000004392498520176168610_);}%0A%09.st1923{fill:url(%23SVGID_00000107587905899234943150000007603064892477022372_);}%0A%09.st1924{fill:url(%23SVGID_00000003071215279444513650000010065540730683982485_);}%0A%09.st1925{fill:url(%23SVGID_00000127040115250788165870000006194366430010900914_);}%0A%09.st1926{fill:url(%23SVGID_00000042698340360118999350000003681044416187953313_);}%0A%09.st1927{fill:url(%23SVGID_00000084508407225050633320000016465752521961936778_);}%0A%09.st1928{fill:url(%23SVGID_00000026843647404002232940000005789859126741905072_);}%0A%09.st1929{fill:url(%23SVGID_00000044860959487061099040000015036794431879538090_);}%0A%09.st1930{fill:url(%23SVGID_00000007423760849917475800000012007476611023135648_);}%0A%09.st1931{fill:url(%23SVGID_00000093895138254962318720000005088813675849559445_);}%0A%09.st1932{fill:url(%23SVGID_00000156553920905082183350000003269074871025721022_);}%0A%09.st1933{fill:url(%23SVGID_00000065794150902949295460000015867285330484724635_);}%0A%09.st1934{fill:url(%23SVGID_00000027563919932471335340000012381403517738339513_);}%0A%09.st1935{fill:url(%23SVGID_00000139987974225018373590000002783275526602179762_);}%0A%09.st1936{fill:url(%23SVGID_00000166644350720879613760000006243253169598388876_);}%0A%09.st1937{fill:url(%23SVGID_00000092429859559118250950000014930951449403101103_);}%0A%09.st1938{fill:url(%23SVGID_00000146487305245439045320000017334221258350346158_);}%0A%09.st1939{fill:url(%23SVGID_00000112596165172077066990000001554370721267132821_);}%0A%09.st1940{fill:url(%23SVGID_00000072969800106272127650000010177388905107299484_);}%0A%09.st1941{fill:url(%23SVGID_00000157287053816876351920000012216991082906369441_);}%0A%09.st1942{fill:url(%23SVGID_00000032614800475059718120000011264265172994363557_);}%0A%09.st1943{fill:url(%23SVGID_00000112620788512590304840000000521665325802770057_);}%0A%09.st1944{fill:url(%23SVGID_00000047747296693131450990000018364863754707513772_);}%0A%09.st1945{fill:url(%23SVGID_00000098933134042790579660000018315244408740262845_);}%0A%09.st1946{fill:url(%23SVGID_00000036959289562242238400000001604278074322995902_);}%0A%09.st1947{fill:url(%23SVGID_00000062194544996000230900000008278772362914097573_);}%0A%09.st1948{fill:url(%23SVGID_00000075127579551709567980000000306565382507734941_);}%0A%09.st1949{fill:url(%23SVGID_00000078750561893358803890000000525735166346494604_);}%0A%09.st1950{fill:url(%23SVGID_00000164510754894803126570000015606960012008382389_);}%0A%09.st1951{fill:url(%23SVGID_00000050629822882108226170000003012484372539308928_);}%0A%09.st1952{fill:url(%23SVGID_00000137814099947765852880000014080498730048187057_);}%0A%09.st1953{fill:url(%23SVGID_00000174560967457978280790000013110839327089595550_);}%0A%09.st1954{fill:url(%23SVGID_00000018927848627211573320000013384813463577361848_);}%0A%09.st1955{fill:url(%23SVGID_00000049191163400907451370000000394982702858077082_);}%0A%09.st1956{fill:url(%23SVGID_00000123419206903980531520000011939830929757815427_);}%0A%09.st1957{fill:url(%23SVGID_00000102506395374445720820000000335499849727457965_);}%0A%09.st1958{fill:url(%23SVGID_00000123434658869923944450000001102510547329277104_);}%0A%09.st1959{fill:url(%23SVGID_00000023992412285124754200000012008489916986155950_);}%0A%09.st1960{fill:url(%23SVGID_00000004533071757160293810000018191512715284501408_);}%0A%09.st1961{fill:url(%23SVGID_00000124152706668593708400000002672795227593705605_);}%0A%09.st1962{fill:url(%23SVGID_00000042004567913647963850000015202234686844872576_);}%0A%09.st1963{fill:url(%23SVGID_00000057845663555018672110000000585737482098189460_);}%0A%09.st1964{fill:url(%23SVGID_00000081642913500639462790000013095499156981520036_);}%0A%09.st1965{fill:url(%23SVGID_00000062168715471856391640000014071786706942096534_);}%0A%09.st1966{fill:url(%23SVGID_00000042698358992223653990000008333710814654236071_);}%0A%09.st1967{fill:url(%23SVGID_00000023964077730960419910000017479997171817364626_);}%0A%09.st1968{fill:url(%23SVGID_00000129192972713992611230000005104089541508091010_);}%0A%09.st1969{fill:url(%23SVGID_00000147215287207970004470000007492683105275430588_);}%0A%09.st1970{fill:url(%23SVGID_00000068664580724702947250000002123652468431238538_);}%0A%09.st1971{fill:url(%23SVGID_00000060024955733182463740000014607380378213106604_);}%0A%09.st1972{fill:url(%23SVGID_00000176009008671039628290000011884769823102309509_);}%0A%09.st1973{fill:url(%23SVGID_00000083803210562302033350000007704179658011977606_);}%0A%09.st1974{fill:url(%23SVGID_00000039851850098914293860000015494527601469163444_);}%0A%09.st1975{fill:url(%23SVGID_00000021812912330856370910000003588131689736305037_);}%0A%09.st1976{fill:url(%23SVGID_00000092448547560852784350000008456112997457494919_);}%0A%09.st1977{fill:url(%23SVGID_00000127045744746100776050000017403138056484657809_);}%0A%09.st1978{fill:url(%23SVGID_00000173133990115284848810000018336892531269994914_);}%0A%09.st1979{fill:url(%23SVGID_00000023997369999605402000000018381184069758243506_);}%0A%09.st1980{fill:url(%23SVGID_00000041278702679980515830000013829799671437160837_);}%0A%09.st1981{fill:url(%23SVGID_00000114791623983709348550000000371855263986210176_);}%0A%09.st1982{fill:url(%23SVGID_00000144339112358090560350000010443757082402198151_);}%0A%09.st1983{fill:url(%23SVGID_00000055680714869696813710000015273445427995079577_);}%0A%09.st1984{fill:url(%23SVGID_00000072248294527501190230000012865931306079052932_);}%0A%09.st1985{fill:url(%23SVGID_00000150796719530676482470000003273167920911352243_);}%0A%09.st1986{fill:url(%23SVGID_00000107562969664386089560000014674887497099686532_);}%0A%09.st1987{fill:url(%23SVGID_00000147913120675323009450000008117195794479548549_);}%0A%09.st1988{fill:url(%23SVGID_00000109749976607058683240000000978720756454507685_);}%0A%09.st1989{fill:url(%23SVGID_00000057850038081548778190000009519957086961733286_);}%0A%09.st1990{fill:url(%23SVGID_00000005981723855141008410000010985344544914829455_);}%0A%09.st1991{fill:url(%23SVGID_00000163778013180749194360000015722089409039519384_);}%0A%09.st1992{fill:url(%23SVGID_00000048499576497878068090000016592391577704482460_);}%0A%09.st1993{fill:url(%23SVGID_00000038390792883001480850000007153866097068820920_);}%0A%09.st1994{fill:url(%23SVGID_00000026883421983882668350000014075835115115704494_);}%0A%09.st1995{fill:url(%23SVGID_00000088125506895002613030000014117751316263040411_);}%0A%09.st1996{fill:url(%23SVGID_00000171717587691177669350000010619023416780486020_);}%0A%09.st1997{fill:url(%23SVGID_00000014628007657178645420000014545810792535794111_);}%0A%09.st1998{fill:url(%23SVGID_00000158728779594240561770000011072464493106419117_);}%0A%09.st1999{fill:url(%23SVGID_00000157990517516992109750000002973091027391179908_);}%0A%09.st2000{fill:url(%23SVGID_00000130609994876144824620000013930034371720524178_);}%0A%09.st2001{fill:url(%23SVGID_00000024717872683691180500000015467808357168922275_);}%0A%09.st2002{fill:url(%23SVGID_00000144318885548003022150000007032770360928764846_);}%0A%09.st2003{fill:url(%23SVGID_00000170968394236761412350000000800825889498046383_);}%0A%09.st2004{fill:url(%23SVGID_00000081633499902069010550000001574837585542939803_);}%0A%09.st2005{fill:url(%23SVGID_00000079476098315757992370000014191664598826984099_);}%0A%09.st2006{fill:url(%23SVGID_00000151504400183498361110000007957652239355159722_);}%0A%09.st2007{fill:%23151515;stroke:%23B3E4FF;stroke-width:2;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:1;}%0A%09.st2008{fill:%23B3E4FF;}%0A%09.st2009{fill:none;stroke:%23B3E4FF;stroke-width:7;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}%0A%09.st2010{fill:%232580C3;}%0A%09.st2011{opacity:0.25;fill:url(%23SVGID_00000057828535479387589320000007969777828420533392_);enable-background:new    ;}%0A%09.st2012{fill:none;stroke:%238EBBDF;stroke-width:1.5241;stroke-miterlimit:10;}%0A%09.st2013{fill:%23DBAC5B;}%0A%09.st2014{fill:%23F39A1F;}%0A%09.st2015{fill-rule:evenodd;clip-rule:evenodd;fill:%23F5CB33;}%0A%09.st2016{fill-rule:evenodd;clip-rule:evenodd;fill:%2332343C;}%0A%09.st2017{fill:%23EE3A3F;}%0A%09.st2018{fill-rule:evenodd;clip-rule:evenodd;fill:%23F4A921;}%0A%09.st2019{opacity:0.85;}%0A%09.st2020{opacity:0.25;fill:url(%23SVGID_00000012441477220694672230000016229378876582179519_);enable-background:new    ;}%0A%09.st2021{fill:%2316445B;}%0A</style>%0A<g>%0A%09<g>%0A%09%09<path class="st11" d="M155.8,30.4H152v13.1h-2.2V30.4h-2.6v-1l2.6-0.8v-0.8c0-3.6,1.6-5.5,4.8-5.5c0.8,0,1.7,0.2,2.8,0.5l-0.6,1.8%0A%09%09%09c-0.9-0.3-1.6-0.4-2.2-0.4c-0.8,0-1.5,0.3-1.9,0.8c-0.4,0.6-0.6,1.5-0.6,2.7v1h3.8V30.4z"/>%0A%09%09<path class="st11" d="M171.2,36.1c0,2.4-0.6,4.3-1.8,5.7c-1.2,1.4-2.9,2-5,2c-1.3,0-2.5-0.3-3.5-0.9c-1-0.6-1.8-1.5-2.4-2.7%0A%09%09%09c-0.6-1.2-0.8-2.5-0.8-4.1c0-2.4,0.6-4.3,1.8-5.6c1.2-1.3,2.9-2,5-2c2.1,0,3.7,0.7,4.9,2.1C170.5,31.9,171.2,33.7,171.2,36.1z%0A%09%09%09 M159.9,36.1c0,1.9,0.4,3.3,1.1,4.3c0.8,1,1.9,1.5,3.3,1.5c1.5,0,2.6-0.5,3.3-1.5c0.8-1,1.1-2.4,1.1-4.3c0-1.9-0.4-3.3-1.1-4.3%0A%09%09%09c-0.8-1-1.9-1.5-3.4-1.5c-1.5,0-2.6,0.5-3.3,1.4C160.2,32.7,159.9,34.2,159.9,36.1z"/>%0A%09%09<path class="st11" d="M181.7,28.4c0.7,0,1.2,0.1,1.8,0.2l-0.3,2.1c-0.6-0.1-1.2-0.2-1.6-0.2c-1.2,0-2.2,0.5-3.1,1.5%0A%09%09%09c-0.9,1-1.3,2.2-1.3,3.6v7.9H175V28.7h1.9l0.3,2.7h0.1c0.5-1,1.2-1.7,2-2.2C180,28.7,180.8,28.4,181.7,28.4z"/>%0A%09%09<path class="st11" d="M214.7,23.8c0,2.8-1,5-2.9,6.5s-4.7,2.3-8.2,2.3h-3.3v10.9h-3.2V15.7h7.2C211.3,15.7,214.7,18.4,214.7,23.8z%0A%09%09%09 M200.4,29.8h2.9c2.9,0,4.9-0.5,6.2-1.4c1.3-0.9,1.9-2.4,1.9-4.4c0-1.8-0.6-3.2-1.8-4.1c-1.2-0.9-3.1-1.3-5.6-1.3h-3.6V29.8z"/>%0A%09%09<path class="st11" d="M217.6,22.7h3.4l4.6,11.9c1,2.7,1.6,4.7,1.9,5.9h0.2c0.2-0.6,0.5-1.7,1-3.3c0.5-1.6,2.2-6.4,5.2-14.4h3.4%0A%09%09%09l-8.9,23.7c-0.9,2.3-1.9,4-3.1,5c-1.2,1-2.6,1.5-4.4,1.5c-1,0-1.9-0.1-2.8-0.3V50c0.7,0.2,1.5,0.2,2.3,0.2c2.2,0,3.7-1.2,4.6-3.6%0A%09%09%09l1.2-3L217.6,22.7z"/>%0A%09%09<path class="st11" d="M248.6,41.3c0.6,0,1.1,0,1.6-0.1c0.5-0.1,0.9-0.2,1.2-0.3v2.4c-0.3,0.2-0.8,0.3-1.5,0.4%0A%09%09%09c-0.7,0.1-1.3,0.2-1.8,0.2c-4,0-6-2.1-6-6.4V25.1h-3v-1.5l3-1.3l1.3-4.4h1.8v4.8h6v2.4h-6v12.2c0,1.3,0.3,2.2,0.9,2.9%0A%09%09%09C246.8,40.9,247.6,41.3,248.6,41.3z"/>%0A%09%09<path class="st11" d="M269.6,43.5V30c0-1.7-0.4-3-1.2-3.8c-0.8-0.8-2-1.3-3.6-1.3c-2.2,0-3.8,0.6-4.8,1.8c-1,1.2-1.5,3.1-1.5,5.8%0A%09%09%09v10.9h-3.1V14h3.1v8.9c0,1.1-0.1,2-0.2,2.7h0.2c0.6-1,1.5-1.8,2.6-2.4c1.1-0.6,2.5-0.9,3.9-0.9c2.5,0,4.4,0.6,5.7,1.8%0A%09%09%09c1.3,1.2,1.9,3.1,1.9,5.8v13.6H269.6z"/>%0A%09%09<path class="st11" d="M296.6,33.1c0,3.4-0.9,6-2.6,7.9s-4.1,2.9-7.1,2.9c-1.9,0-3.5-0.4-5-1.3c-1.4-0.9-2.6-2.1-3.3-3.8%0A%09%09%09c-0.8-1.6-1.2-3.5-1.2-5.7c0-3.4,0.8-6,2.5-7.9c1.7-1.9,4-2.8,7.1-2.8c2.9,0,5.2,1,6.9,2.9C295.8,27.1,296.6,29.8,296.6,33.1z%0A%09%09%09 M280.8,33.1c0,2.7,0.5,4.7,1.6,6.1c1.1,1.4,2.6,2.1,4.7,2.1c2.1,0,3.6-0.7,4.7-2.1c1.1-1.4,1.6-3.4,1.6-6.1c0-2.6-0.5-4.7-1.6-6%0A%09%09%09c-1.1-1.4-2.6-2.1-4.7-2.1c-2.1,0-3.6,0.7-4.7,2C281.3,28.4,280.8,30.4,280.8,33.1z"/>%0A%09%09<path class="st11" d="M315.8,43.5V30c0-1.7-0.4-3-1.2-3.8c-0.8-0.8-2-1.3-3.6-1.3c-2.2,0-3.8,0.6-4.8,1.8c-1,1.2-1.5,3.1-1.5,5.8%0A%09%09%09v10.9h-3.1V22.7h2.6l0.5,2.8h0.2c0.6-1,1.5-1.8,2.7-2.4c1.2-0.6,2.5-0.8,3.9-0.8c2.5,0,4.4,0.6,5.7,1.8c1.3,1.2,1.9,3.1,1.9,5.8%0A%09%09%09v13.6H315.8z"/>%0A%09</g>%0A%09<g id="Layer_1_00000088096514940250906280000012562000029141802941_" class="st129">%0A%09%09<g>%0A%09%09%09<path class="st11" d="M133.8,29.7c-2.9,1.7-6.5,5.5-7.2,6.2c-2.1,2.1-4.5,3.9-7.1,5.5c-0.1,0.1-0.2,0.1-0.2,0.1%0A%09%09%09%09c-0.1-0.1-0.2-0.2-0.1-0.3c0.3-1,0.6-2.2,0.9-3.6c0.5-1.9,0.8-3.2,0.9-3.7c0.1-0.5,0.5-2,1.1-4.4s1.3-5.1,2.3-8%0A%09%09%09%09c1.1-3.4,2.3-5.6,3.4-6.5l0.1-0.1c0.1-0.1,0.2-0.2,0.1-0.3c-0.1-0.1-0.2-0.2-0.3-0.1l-2.6,0.2c-1.2,0.1-2.3,0.3-3.4,0.6%0A%09%09%09%09c-0.4,0.1-0.8,0.4-1.2,0.8c-0.3,0.3-0.6,0.6-0.8,0.8c0,0,0,0,0,0.1c-0.3,0.4-0.5,0.8-0.7,1.3c-0.2,0.6-0.4,1.1-0.5,1.4%0A%09%09%09%09c-0.1,0.3-0.3,0.9-0.5,1.8c-0.3,0.9-0.4,1.6-0.6,2c-1.1,3.6-2.7,7-4.7,10.1c-2.1,3.3-3.8,5.1-5.2,5.1h-0.1c-0.6,0-0.9-0.7-1-2%0A%09%09%09%09c-0.2-2.9,0.5-6.5,2-10.8c1.5-4.3,3-7.3,4.6-9.1c0.3-0.4,0.4-0.6,0.4-0.9c0,0,0,0,0-0.1c0-0.3-0.3-0.5-0.5-0.4%0A%09%09%09%09c-2.3,0.1-4,0.5-5.3,1.3c-1.3,0.7-2.5,2.1-3.5,4.3c-0.9,1.8-1.7,4.2-2.4,7.1c0,0,0,0,0,0.1c-0.1,0.2-0.3,0.5-0.4,0.9%0A%09%09%09%09c-0.5,1-1.1,2.3-1.8,3.6c-0.6,1.2-1.2,2.3-1.9,3.4c-0.6,1-1.4,1.9-2.2,2.7c-1.1,1-1.7,1.3-2,1.3h-0.1c-0.4,0-0.8-0.1-0.9-1.3%0A%09%09%09%09c-0.1-1.7,0.6-5.2,2.1-10.3c0.7-2.4,1.1-4,1.3-4.8c0.2-0.8,0.2-1.6,0.2-2.4c-0.1-2.5-1.5-3.7-4-3.6c-3.2,0.2-6.2,1.8-9.2,4.9%0A%09%09%09%09c-0.1,0.1-0.1,0.1-0.2,0.1c-0.1,0-0.2-0.1-0.2-0.3c0.1-0.6,0.2-1.2,0.2-1.7c0-0.6-0.3-1.1-0.8-1.4c-0.5-0.3-1.5-0.4-3-0.3%0A%09%09%09%09L75.8,19c-0.1,0-0.1,0-0.1,0.1c-0.1,0.1-0.1,0.2-0.1,0.3c0.1,0.3,0.2,0.6,0.2,0.9c0.1,1.8-0.4,5.1-1.6,9.8l-0.3,0.6%0A%09%09%09%09c-0.1,0.1-0.4,0.5-0.9,1.6c-0.5,1-1.1,2.3-1.8,3.7c-0.7,1.4-1.3,2.6-1.9,3.5c-0.6,1-1.3,1.8-2.2,2.6c-1.1,1-1.7,1.3-2.1,1.3h-0.1%0A%09%09%09%09c-0.2,0-0.9,0-1-1.7c-0.1-1.3,0.1-3,0.7-5.1c0.5-2.1,1.1-3.8,1.5-5.1c0.4-1.2,1.1-3,2.1-5.6c0.9-2.4,1.7-3.9,2.3-4.5%0A%09%09%09%09c0.1-0.1,0.1-0.1,0.1-0.2c0-0.1-0.1-0.2-0.3-0.2l-3.8,0.2c-1.9,0.1-3.5,1.7-4.8,4.6c-1.1,2.5-2,5.1-2.8,7.8c0,0.1,0,0.1-0.1,0.1%0A%09%09%09%09c-3.2,8-6,12.2-8.4,12.3h-0.1c-0.2,0-0.8,0-0.9-1.4c-0.1-1.1,0.1-2.6,0.5-4.6c0.1-0.8,0.4-1.7,0.7-2.8c0.3-1.1,0.5-2,0.7-2.6%0A%09%09%09%09c0.2-0.6,0.4-1.5,0.7-2.5c0.3-1,0.6-1.9,0.8-2.7c0.3-0.9,0.4-1.8,0.3-2.6c-0.2-2.4-1.5-3.6-4-3.4c-1.3,0.1-2.6,0.5-3.8,1.1%0A%09%09%09%09c-0.8,0.4-1.6,0.9-2.3,1.4c-0.1,0.1-0.3,0.1-0.4,0c-0.1-0.1-0.1-0.3,0-0.4c4.1-5.9,7-11.3,8.8-15.8c1-2.6,1.4-4.6,1.3-6.2%0A%09%09%09%09C53,1,51.8-0.1,49.6,0c-2.1,0.1-4.1,1.2-5.9,3.2c-1.9,2.1-3.4,4.6-4.5,7.2c-1.5,3.3-2.7,6.8-3.8,10.3c-1.2,4-2.7,9.6-4.4,16.6%0A%09%09%09%09c-1.7,7-2.9,12.2-3.9,15.4v0.1c0,0.1,0.1,0.2,0.3,0.2l6.2-0.4l0.1-0.2c0.3-1.4,0.6-2.7,0.9-3.8c0.3-1.1,0.6-2.6,0.9-4.3%0A%09%09%09%09s0.7-3.2,1.1-4.4s0.9-2.6,1.5-4.3c0.6-1.6,1.4-3.1,2.4-4.4c0.9-1.2,1.9-2.1,3.2-2.9c1.4-0.9,2.1-1.1,2.4-1.1h0.1%0A%09%09%09%09c0.4,0,0.8,0.1,0.9,1.1c0.1,0.6-0.2,1.8-0.6,3.4c-2.2,6.8-3.2,12.1-2.9,15.7c0.2,3.3,1.6,4.8,4.3,4.7c3-0.2,6.2-3.5,9.8-10%0A%09%09%09%09c0.1-0.1,0.2-0.2,0.3-0.2c0.1,0.1,0.2,0.2,0.2,0.3c0,0.7,0,1.4,0.1,2.1c0.2,3.5,1.5,5.3,3.8,5.3h0.3c1.4-0.1,2.9-0.9,4.5-2.5%0A%09%09%09%09c0.7-0.7,1.4-1.4,2-2.2c0.9-1.3,1.4-1.9,2.6-4c-0.1,0.7-1.4,5.1-1.3,6.2c0.1,0,6.5-0.4,6.5-0.4l0.1-0.2c0.1-0.2,0.3-1.4,0.4-2.4%0A%09%09%09%09c0.3-1.4,0.5-2.8,0.8-4.1c0.3-1.3,0.7-2.9,1.1-4.8c0.4-1.7,1-3.4,1.6-5.1c0.6-1.5,1.3-2.9,2.1-4.4c0.6-1.3,1.5-2.4,2.6-3.3%0A%09%09%09%09c0.9-0.7,1.9-1.2,3.1-1.3c1-0.1,1.4,0.3,1.5,1.1c0,0.4,0,0.8-0.2,1.2c-2.6,9.1-3.7,15.2-3.5,18.2c0.2,3.1,1.6,4.6,4.2,4.4%0A%09%09%09%09c1.4-0.1,2.9-0.9,4.5-2.5c1.6-1.6,3-3.4,4.1-5.3c0.4-0.6,0.8-1.3,1.1-2c0.1-0.1,0.2-0.2,0.3-0.2c0.1,0.1,0.2,0.2,0.2,0.3%0A%09%09%09%09c0,0.4,0,0.7,0,1c0.1,1.9,0.5,3.4,1.3,4.4c0.8,1,1.8,1.5,3,1.4c1-0.1,2-0.3,2.9-0.6c0.8-0.3,1.9-1.2,3.3-2.7%0A%09%09%09%09c1.1-1.2,2.1-2.4,2.9-3.8c0.1-0.1,0.2-0.1,0.3-0.1c0.1,0.1,0.2,0.2,0.2,0.3l-2.2,7.2c0,0.1-0.1,0.1-0.2,0.2%0A%09%09%09%09c-39.1,5.7-5.8,28.2,6.2,0.9c0-0.1,0.1-0.1,0.1-0.2c0.2-0.1,0.4-0.2,0.6-0.3c3.3-1.6,5-2.8,9-6.5%0A%09%09%09%09C131.8,34.1,132.1,32.7,133.8,29.7z M40.4,25c-0.1,0.1-0.2,0.1-0.3,0.1c-0.1-0.1-0.2-0.2-0.2-0.3c1.6-5.5,3.2-10.5,4.9-14.9%0A%09%09%09%09c2.5-6.3,4.1-7.8,5-7.8l0.1,0c0.1,0,0.5,0,0.6,1c0.1,0.9-0.4,2.8-1.4,5.6C47.6,13,44.6,18.5,40.4,25z M99,53.4%0A%09%09%09%09c-1.2-2.7,10.9-5.8,11.9-6C108.6,52.5,100.4,56.4,99,53.4z"/>%0A%09%09%09<path class="st11" d="M69,16.2c1.5-0.1,3.4-0.6,3.9-2.9c0.2-1-0.4-2.2-0.8-2.5c-0.4-0.3-0.9-0.5-1.6-0.4%0A%09%09%09%09c-0.7,0.1-1.5,0.5-2.3,1.2c-1,1-1,2.4-0.7,3.3C67.8,15.7,68.4,16.2,69,16.2z"/>%0A%09%09%09<path class="st11" d="M6.5,54.2c1,0.1,16.2,3.4,20.4-11.5c1.6-6.3-6-14.7-6.6-15.5c0,0,0,0,0,0C11,17.7,15.8,8.3,22.2,9.4%0A%09%09%09%09c4.6,0.8,2.2,7.5,4.7,8.2h0.1c1.5,0.1,4.4-3.4,4.8-4.6c1.6-4.7-7.9-7.5-10.8-7.4c-5.8,0.4-9.7,3.5-12,8.7%0A%09%09%09%09c-4.3,9.6,3.7,16,8.6,22.6c3.7,5,3.5,9.4-1,13.7c-5,4.7-10-2-10.7-6.5c-0.6-4.2-1.3-6.9-4.8-1.6C-2.1,47.5,2.4,53.5,6.5,54.2z"/>%0A%09%09</g>%0A%09</g>%0A</g>%0A</svg>%0A';
-
 // src/assets/shiny-logo.svg
 var shiny_logo_default = 'data:image/svg+xml,<?xml version="1.0" encoding="utf-8"?>%0A<!-- Generator: Adobe Illustrator 27.7.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->%0A<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"%0A%09 viewBox="0 0 167.7 72.4" style="enable-background:new 0 0 167.7 72.4;" xml:space="preserve">%0A<style type="text/css">%0A%09.st0{fill:%23FFFFFF;}%0A</style>%0A<g>%0A%09<path class="st0" d="M167.7,37.2c-3.6,2.1-8.1,6.9-9,7.8c-2.6,2.6-5.6,4.9-8.9,6.9c-0.1,0.1-0.3,0.1-0.3,0.1%0A%09%09c-0.1-0.1-0.3-0.3-0.1-0.4c0.4-1.3,0.8-2.8,1.1-4.5c0.6-2.4,1-4,1.1-4.6c0.1-0.6,0.6-2.5,1.4-5.5c0.8-3,1.6-6.4,2.9-10%0A%09%09c1.4-4.3,2.9-7,4.3-8.1l0.1-0.1c0.1-0.1,0.3-0.3,0.1-0.4c-0.1-0.1-0.3-0.3-0.4-0.1l-3.3,0.3c-1.5,0.1-2.9,0.4-4.3,0.8%0A%09%09c-0.5,0.1-1,0.5-1.5,1c-0.4,0.4-0.8,0.8-1,1c0,0,0,0,0,0.1c-0.4,0.5-0.6,1-0.9,1.6c-0.3,0.8-0.5,1.4-0.6,1.8%0A%09%09c-0.1,0.4-0.4,1.1-0.6,2.3c-0.4,1.1-0.5,2-0.8,2.5c-1.4,4.5-3.4,8.8-5.9,12.7c-2.6,4.1-4.8,6.4-6.5,6.4h-0.1%0A%09%09c-0.8,0-1.1-0.9-1.3-2.5c-0.3-3.6,0.6-8.1,2.5-13.5s3.8-9.1,5.8-11.4c0.4-0.5,0.5-0.8,0.5-1.1c0,0,0,0,0-0.1c0-0.4-0.4-0.6-0.6-0.5%0A%09%09c-2.9,0.1-5,0.6-6.6,1.6c-1.6,0.9-3.1,2.6-4.4,5.4c-1.1,2.3-2.1,5.3-3,8.9c0,0,0,0,0,0.1c-0.1,0.3-0.4,0.6-0.5,1.1%0A%09%09c-0.6,1.3-1.4,2.9-2.3,4.5c-0.8,1.5-1.5,2.9-2.4,4.3c-0.8,1.3-1.8,2.4-2.8,3.4c-1.4,1.3-2.1,1.6-2.5,1.6h-0.1c-0.5,0-1-0.1-1.1-1.6%0A%09%09c-0.1-2.1,0.8-6.5,2.6-12.9c0.9-3,1.4-5,1.6-6c0.3-1,0.3-2,0.3-3c-0.1-3.1-1.9-4.6-5-4.5c-4,0.3-7.8,2.3-11.5,6.1%0A%09%09c-0.1,0.1-0.1,0.1-0.3,0.1s-0.3-0.1-0.3-0.4c0.1-0.8,0.3-1.5,0.3-2.1c0-0.8-0.4-1.4-1-1.8c-0.6-0.4-1.9-0.5-3.8-0.4l-3.8,0%0A%09%09c-0.1,0-0.1,0-0.1,0.1c-0.1,0.1-0.1,0.3-0.1,0.4c0.1,0.4,0.3,0.8,0.3,1.1c0.1,2.3-0.5,6.4-2,12.3l-0.4,0.8c-0.1,0.1-0.5,0.6-1.1,2%0A%09%09c-0.6,1.3-1.4,2.9-2.3,4.6c-0.9,1.8-1.6,3.3-2.4,4.4c-0.8,1.3-1.6,2.3-2.8,3.3c-1.4,1.3-2.1,1.6-2.6,1.6h-0.1c-0.3,0-1.1,0-1.3-2.1%0A%09%09c-0.1-1.6,0.1-3.8,0.9-6.4c0.6-2.6,1.4-4.8,1.9-6.4c0.5-1.5,1.4-3.8,2.6-7c1.1-3,2.1-4.9,2.9-5.6c0.1-0.1,0.1-0.1,0.1-0.3%0A%09%09c0-0.1-0.1-0.3-0.4-0.3l-4.8,0.3c-2.4,0.1-4.4,2.1-6,5.8c-1.4,3.1-2.5,6.4-3.5,9.8c0,0.1,0,0.1-0.1,0.1c-4,10-7.5,15.3-10.5,15.4%0A%09%09H63c-0.3,0-1,0-1.1-1.8c-0.1-1.4,0.1-3.3,0.6-5.8c0.1-1,0.5-2.1,0.9-3.5c0.4-1.4,0.6-2.5,0.9-3.3s0.5-1.9,0.9-3.1s0.8-2.4,1-3.4%0A%09%09c0.4-1.1,0.5-2.3,0.4-3.3c-0.3-3-1.9-4.5-5-4.3c-1.6,0.1-3.3,0.6-4.8,1.4c-1,0.5-2,1.1-2.9,1.8c-0.1,0.1-0.4,0.1-0.5,0%0A%09%09c-0.1-0.1-0.1-0.4,0-0.5c5.1-7.4,8.8-14.2,11-19.8c1.3-3.3,1.8-5.8,1.6-7.8c0.4-3.1-1.1-4.5-3.9-4.4c-2.6,0.1-5.1,1.5-7.4,4%0A%09%09c-2.4,2.6-4.3,5.8-5.6,9c-1.9,4.1-3.4,8.5-4.8,12.9c-1.5,5-3.4,12-5.5,20.8C36.7,55.5,35.2,62,33.9,66v0.1c0,0.1,0.1,0.3,0.4,0.3%0A%09%09l7.8-0.5l0.1-0.3c0.4-1.8,0.8-3.4,1.1-4.8c0.4-1.4,0.8-3.3,1.1-5.4c0.4-2.1,0.9-4,1.4-5.5c0.5-1.5,1.1-3.3,1.9-5.4%0A%09%09c0.8-2,1.8-3.9,3-5.5c1.1-1.5,2.4-2.6,4-3.6c1.8-1.1,2.6-1.4,3-1.4h0.1c0.5,0,1,0.1,1.1,1.4c0.1,0.8-0.3,2.3-0.8,4.3%0A%09%09c-2.8,8.5-4,15.2-3.6,19.7c0.3,4.1,2,6,5.4,5.9c3.8-0.3,7.8-4.4,12.3-12.5c0.1-0.1,0.3-0.3,0.4-0.3c0.1,0.1,0.3,0.3,0.3,0.4%0A%09%09c0,0.9,0,1.8,0.1,2.6c0.3,4.4,1.9,6.6,4.8,6.6h0.4c1.8-0.1,3.6-1.1,5.6-3.1c0.9-0.9,1.8-1.8,2.5-2.8c1.1-1.6,1.8-2.4,3.3-5%0A%09%09c-0.1,0.9-1.8,6.4-1.6,7.8c0.1,0,8.1-0.5,8.1-0.5l0.1-0.3c0.1-0.3,0.4-1.8,0.5-3c0.4-1.8,0.6-3.5,1-5.1c0.4-1.6,0.9-3.6,1.4-6%0A%09%09c0.5-2.1,1.3-4.3,2-6.4c0.8-1.9,1.6-3.6,2.6-5.5c0.8-1.6,1.9-3,3.3-4.1c1.1-0.9,2.4-1.5,3.9-1.6c1.3-0.1,1.8,0.4,1.9,1.4%0A%09%09c0,0.5,0,1-0.3,1.5c-3.3,11.4-4.6,19-4.4,22.8c0.3,3.9,2,5.8,5.3,5.5c1.8-0.1,3.6-1.1,5.6-3.1c2-2,3.8-4.3,5.1-6.6%0A%09%09c0.5-0.8,1-1.6,1.4-2.5c0.1-0.1,0.3-0.3,0.4-0.3c0.1,0.1,0.3,0.3,0.3,0.4c0,0.5,0,0.9,0,1.3c0.1,2.4,0.6,4.3,1.6,5.5%0A%09%09s2.3,1.9,3.8,1.8c1.3-0.1,2.5-0.4,3.6-0.8c1-0.4,2.4-1.5,4.1-3.4c1.4-1.5,2.6-3,3.6-4.8c0.1-0.1,0.3-0.1,0.4-0.1%0A%09%09c0.1,0.1,0.3,0.3,0.3,0.4l-2.8,9c0,0.1-0.1,0.1-0.3,0.3c-49,7.1-7.3,35.3,7.8,1.1c0-0.1,0.1-0.1,0.1-0.3c0.3-0.1,0.5-0.3,0.8-0.4%0A%09%09c4.1-2,6.3-3.5,11.3-8.1C165.1,42.7,165.5,41,167.7,37.2z M50.6,31.3c-0.1,0.1-0.3,0.1-0.4,0.1c-0.1-0.1-0.3-0.3-0.3-0.4%0A%09%09c2-6.9,4-13.2,6.1-18.7c3.1-7.9,5.1-9.8,6.3-9.8h0.1c0.1,0,0.6,0,0.8,1.3c0.1,1.1-0.5,3.5-1.8,7C59.6,16.3,55.9,23.2,50.6,31.3z%0A%09%09 M124,66.9c-1.5-3.4,13.7-7.3,14.9-7.5C136.1,65.8,125.8,70.7,124,66.9z"/>%0A%09<path class="st0" d="M86.4,20.3c1.9-0.1,4.3-0.8,4.9-3.6c0.3-1.3-0.5-2.8-1-3.1c-0.5-0.4-1.1-0.6-2-0.5s-1.9,0.6-2.9,1.5%0A%09%09c-1.3,1.3-1.3,3-0.9,4.1C84.9,19.7,85.7,20.3,86.4,20.3z"/>%0A%09<path class="st0" d="M8.1,67.9c1.3,0.1,20.3,4.3,25.6-14.4c2-7.9-7.5-18.4-8.3-19.4l0,0c-11.7-11.9-5.6-23.7,2.4-22.3%0A%09%09c5.8,1,2.8,9.4,5.9,10.3h0.1c1.9,0.1,5.5-4.3,6-5.8c2-5.9-9.9-9.4-13.5-9.3c-7.3,0.5-12.2,4.4-15,10.9C5.9,30,15.9,38,22,46.2%0A%09%09c4.6,6.3,4.4,11.8-1.3,17.2c-6.3,5.9-12.5-2.5-13.4-8.1c-0.8-5.3-1.6-8.6-6-2C-2.6,59.5,3,67.1,8.1,67.9z"/>%0A</g>%0A</svg>%0A';
 
@@ -34426,12 +34495,18 @@ function HeaderBar({
     python: "https://shiny.posit.co/py/",
     r: "https://shiny.posit.co/"
   };
-  const shinyLogo = engineSwitch(appEngine, shiny_logo_default, shiny_for_python_default);
   return /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", {
     className: "HeaderBar",
     // eslint-disable-next-line react/jsx-no-target-blank
     children: [
-      /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("a", { className: "page-title", href: mainUrl[appEngine], target: "_blank", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("img", { className: "shiny-logo", src: shinyLogo, alt: "Shiny" }) }),
+      /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("a", { className: "page-title", href: mainUrl[appEngine], target: "_blank", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("img", { className: "shiny-logo", src: shiny_logo_default, alt: "Shiny" }),
+        /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("span", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { style: { fontSize: "0.65em", marginLeft: "-2px" }, children: "for" }),
+          " ",
+          engineSwitch(appEngine, "R", "Python")
+        ] })
+      ] }),
       /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { children: [
         loadButton,
         saveButton,
@@ -35114,7 +35189,8 @@ async function resetRAppFrame(webRProxy, appName, appFrame) {
 function Viewer({
   proxyHandle,
   setViewerMethods,
-  devMode = false
+  devMode = false,
+  setWindowTitle = false
 }) {
   const viewerFrameRef = React9.useRef(null);
   const [appRunningState, setAppRunningState] = React9.useState("loading");
@@ -35122,6 +35198,32 @@ function Viewer({
   const [lastErrorMessage, setLastErrorMessage] = React9.useState(
     null
   );
+  React9.useEffect(() => {
+    if (!setWindowTitle || !viewerFrameRef.current)
+      return;
+    const iframe = viewerFrameRef.current;
+    const observer = new MutationObserver(() => {
+      if (iframe.contentDocument?.title) {
+        document.title = setWindowTitle.prefix + iframe.contentDocument.title;
+      } else {
+        document.title = setWindowTitle.defaultTitle;
+      }
+    });
+    const onLoad = () => {
+      if (iframe.contentDocument) {
+        observer.observe(iframe.contentDocument, {
+          subtree: true,
+          childList: true,
+          characterData: true
+        });
+      }
+    };
+    iframe.addEventListener("load", onLoad);
+    return () => {
+      observer.disconnect();
+      iframe.removeEventListener("load", onLoad);
+    };
+  }, [setWindowTitle]);
   React9.useEffect(() => {
     if (!proxyHandle.shinyReady)
       return;
@@ -35605,7 +35707,7 @@ function App({
             ["exampleselector", "terminal", "viewer"]
           ],
           rowSizes: ["2fr", "1fr"],
-          colSizes: ["180px", "1.5fr", "1fr"],
+          colSizes: ["180px", "1fr", "1fr"],
           children: [
             /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
               ExampleSelector,
@@ -35645,7 +35747,8 @@ function App({
               {
                 proxyHandle,
                 setViewerMethods,
-                devMode: true
+                devMode: true,
+                setWindowTitle: appOptions.setWindowTitle
               }
             )
           ]
@@ -35676,7 +35779,7 @@ function App({
             ["terminal", "viewer"]
           ],
           rowSizes: ["2fr", "1fr"],
-          colSizes: ["1.5fr", "1fr"],
+          colSizes: ["1fr", "1fr"],
           children: [
             /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(React10.Suspense, { fallback: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { children: "Loading..." }), children: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
               Editor,
@@ -35707,7 +35810,8 @@ function App({
               {
                 proxyHandle,
                 setViewerMethods,
-                devMode: true
+                devMode: true,
+                setWindowTitle: appOptions.setWindowTitle
               }
             )
           ]
@@ -35822,7 +35926,8 @@ function App({
             {
               proxyHandle,
               setViewerMethods,
-              devMode: true
+              devMode: true,
+              setWindowTitle: appOptions.setWindowTitle
             }
           )
         ]
@@ -35849,7 +35954,8 @@ function App({
             {
               proxyHandle,
               setViewerMethods,
-              devMode: false
+              devMode: false,
+              setWindowTitle: appOptions.setWindowTitle
             }
           )
         }

@@ -8597,6 +8597,148 @@ var { Deflate, deflate, deflateRaw, gzip } = deflate_1$1;
 var { Inflate, inflate, inflateRaw, ungzip } = inflate_1$1;
 var ungzip_1 = ungzip;
 
+// webR/mount.ts
+function mountImageUrl(url, mountpoint) {
+  if (/\.tgz$|\.tar\.gz$|\.tar$/.test(url)) {
+    const dataResp = Module2.downloadFileContent(url);
+    if (dataResp.status < 200 || dataResp.status >= 300) {
+      throw new Error("Can't download Emscripten filesystem image.");
+    }
+    const { data, metadata } = decodeVFSArchive(dataResp.response);
+    mountImageData(data, metadata, mountpoint);
+  } else {
+    const urlBase = url.replace(/\.data\.gz$|\.data$|\.js.metadata$/, "");
+    const metaResp = Module2.downloadFileContent(`${urlBase}.js.metadata`);
+    if (metaResp.status < 200 || metaResp.status >= 300) {
+      throw new Error("Can't download Emscripten filesystem image metadata.");
+    }
+    const metadata = JSON.parse(
+      new TextDecoder().decode(metaResp.response)
+    );
+    const ext = metadata.gzip ? ".data.gz" : ".data";
+    const dataResp = Module2.downloadFileContent(`${urlBase}${ext}`);
+    if (dataResp.status < 200 || dataResp.status >= 300) {
+      throw new Error("Can't download Emscripten filesystem image data.");
+    }
+    let data = dataResp.response;
+    if (metadata.gzip) {
+      data = ungzip_1(data).buffer;
+    }
+    mountImageData(data, metadata, mountpoint);
+  }
+}
+function mountImagePath(path, mountpoint) {
+  const fs = require("fs");
+  if (/\.tgz$|\.tar\.gz$|\.tar$/.test(path)) {
+    const buffer = fs.readFileSync(path);
+    const { data, metadata } = decodeVFSArchive(buffer);
+    mountImageData(data, metadata, mountpoint);
+  } else {
+    const pathBase = path.replace(/\.data\.gz$|\.data$|\.js.metadata$/, "");
+    const metadata = JSON.parse(
+      fs.readFileSync(`${pathBase}.js.metadata`, "utf8")
+    );
+    const ext = metadata.gzip ? ".data.gz" : ".data";
+    let data = fs.readFileSync(`${pathBase}${ext}`);
+    if (metadata.gzip) {
+      data = ungzip_1(data).buffer;
+    }
+    mountImageData(data, metadata, mountpoint);
+  }
+}
+function mountFSNode(type, opts, mountpoint) {
+  if (!IN_NODE || type !== Module2.FS.filesystems.WORKERFS) {
+    return Module2.FS._mount(type, opts, mountpoint);
+  }
+  if ("packages" in opts && opts.packages) {
+    opts.packages.forEach((pkg) => {
+      mountImageData(pkg.blob, pkg.metadata, mountpoint);
+    });
+  } else {
+    throw new Error(
+      "Can't mount data under Node. Mounting with `WORKERFS` under Node must use the `packages` key."
+    );
+  }
+}
+function mountImageData(data, metadata, mountpoint) {
+  if (IN_NODE) {
+    const buf = Buffer.from(data);
+    const WORKERFS = Module2.FS.filesystems.WORKERFS;
+    if (!WORKERFS.reader)
+      WORKERFS.reader = {
+        readAsArrayBuffer: (chunk) => new Uint8Array(chunk)
+      };
+    metadata.files.forEach((f) => {
+      const contents = buf.subarray(f.start, f.end);
+      contents.size = contents.byteLength;
+      contents.slice = (start, end) => {
+        const sub = contents.subarray(start, end);
+        sub.size = sub.byteLength;
+        return sub;
+      };
+      const parts = (mountpoint + f.filename).split("/");
+      const file = parts.pop();
+      if (!file) {
+        throw new Error(`Invalid mount path "${mountpoint}${f.filename}".`);
+      }
+      const dir = parts.join("/");
+      Module2.FS.mkdirTree(dir);
+      const dirNode = Module2.FS.lookupPath(dir, {}).node;
+      WORKERFS.createNode(dirNode, file, WORKERFS.FILE_MODE, 0, contents);
+    });
+  } else {
+    Module2.FS.mount(Module2.FS.filesystems.WORKERFS, {
+      packages: [{
+        blob: new Blob([data]),
+        metadata
+      }]
+    }, mountpoint);
+  }
+}
+function decodeVFSArchive(data) {
+  const buffer = ungzip_1(data).buffer;
+  const index = getArchiveMetadata(buffer) || findArchiveMetadata(buffer);
+  if (!index) {
+    throw new Error("Can't mount archive, no VFS metadata found.");
+  }
+  const bytes = new DataView(buffer, 512 * index.block, index.len);
+  const metadata = JSON.parse(new TextDecoder().decode(bytes));
+  return { data: buffer, metadata };
+}
+function getArchiveMetadata(buffer) {
+  const view = new DataView(buffer);
+  const magic = view.getInt32(view.byteLength - 16);
+  const block = view.getInt32(view.byteLength - 8);
+  const len = view.getInt32(view.byteLength - 4);
+  if (magic !== 2003133010 || block === 0 || len === 0) {
+    return null;
+  } else {
+    return { block, len };
+  }
+}
+function findArchiveMetadata(buffer) {
+  const decoder2 = new TextDecoder();
+  let offset = 0;
+  while (offset < buffer.byteLength) {
+    const header = buffer.slice(offset, offset + 512);
+    offset += 512;
+    if (new Uint8Array(header).every((byte) => byte === 0)) {
+      return null;
+    }
+    const type = decoder2.decode(header.slice(156, 157));
+    if (/5|g|[A-Z]/.test(type)) {
+      continue;
+    }
+    const filename = decoder2.decode(header.slice(0, 100)).replace(/\0+$/, "");
+    const len = parseInt(decoder2.decode(header.slice(124, 136)), 8);
+    if (filename == ".vfs-index.json") {
+      return { block: offset / 512, len };
+    }
+    offset += 512 * Math.ceil(len / 512);
+  }
+  return null;
+}
+
 // webR/webr-worker.ts
 var initialised = false;
 var chan;
@@ -9036,80 +9178,6 @@ function downloadFileContent(URL2, headers = []) {
     return { status: 400, response: "An error occurred in XMLHttpRequest" };
   }
 }
-function mountImageData(data, metadata, mountpoint) {
-  if (IN_NODE) {
-    const buf = data;
-    const WORKERFS = Module2.FS.filesystems.WORKERFS;
-    if (!WORKERFS.reader)
-      WORKERFS.reader = {
-        readAsArrayBuffer: (chunk) => new Uint8Array(chunk)
-      };
-    metadata.files.forEach((f) => {
-      const contents = buf.subarray(f.start, f.end);
-      contents.size = contents.byteLength;
-      contents.slice = (start, end) => {
-        const sub = contents.subarray(start, end);
-        sub.size = sub.byteLength;
-        return sub;
-      };
-      const parts = (mountpoint + f.filename).split("/");
-      const file = parts.pop();
-      if (!file) {
-        throw new Error(`Invalid mount path "${mountpoint}${f.filename}".`);
-      }
-      const dir = parts.join("/");
-      Module2.FS.mkdirTree(dir);
-      const dirNode = Module2.FS.lookupPath(dir, {}).node;
-      WORKERFS.createNode(dirNode, file, WORKERFS.FILE_MODE, 0, contents);
-    });
-  } else {
-    Module2.FS.mount(Module2.FS.filesystems.WORKERFS, {
-      packages: [{
-        blob: new Blob([data]),
-        metadata
-      }]
-    }, mountpoint);
-  }
-}
-function mountImageUrl(url, mountpoint) {
-  const dataUrlBase = url.replace(/\.data\.gz$/, "").replace(/\.data$/, "").replace(/\.js.metadata$/, "");
-  const metaResp = downloadFileContent(`${dataUrlBase}.js.metadata`);
-  if (metaResp.status < 200 || metaResp.status >= 300) {
-    throw new Error("Can't download Emscripten filesystem image metadata.");
-  }
-  const metadata = JSON.parse(
-    new TextDecoder().decode(metaResp.response)
-  );
-  const dataResp = downloadFileContent(
-    metadata.gzip ? `${dataUrlBase}.data.gz` : `${dataUrlBase}.data`
-  );
-  if (dataResp.status < 200 || dataResp.status >= 300) {
-    throw new Error("Can't download Emscripten filesystem image data.");
-  }
-  if (metadata.gzip) {
-    const compressed = dataResp.response;
-    dataResp.response = ungzip_1(compressed).buffer;
-  }
-  mountImageData(
-    dataResp.response,
-    JSON.parse(new TextDecoder().decode(metaResp.response)),
-    mountpoint
-  );
-}
-function mountImagePath(path, mountpoint) {
-  const fs = require("fs");
-  const dataPathBase = path.replace(/\.data\.gz$/, "").replace(/\.data$/, "").replace(/\.js.metadata$/, "");
-  const metadata = JSON.parse(
-    fs.readFileSync(`${dataPathBase}.js.metadata`, "utf8")
-  );
-  let buf = fs.readFileSync(
-    metadata.gzip ? `${dataPathBase}.data.gz` : `${dataPathBase}.data`
-  );
-  if (metadata.gzip) {
-    buf = ungzip_1(buf);
-  }
-  mountImageData(buf, metadata, mountpoint);
-}
 function newRObject(args, objType) {
   const RClass = getRWorkerClass(objType);
   const _args = replaceInObject(
@@ -9321,6 +9389,8 @@ function init(config) {
   Module2.noWasmDecoding = true;
   Module2.preRun.push(() => {
     if (IN_NODE) {
+      Module2.FS._mount = Module2.FS.mount;
+      Module2.FS.mount = mountFSNode;
       globalThis.FS = Module2.FS;
       globalThis.chan = chan;
     }

@@ -52,3 +52,5 @@ rsconnect/
 .db_url
 loggit.log
 mongo.txt
+
+docs

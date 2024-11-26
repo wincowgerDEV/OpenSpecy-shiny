@@ -150,6 +150,7 @@
 #' @importFrom data.table as.data.table
 #' @importFrom digest digest
 #' @importFrom utils sessionInfo
+#' @export
 as_OpenSpecy <- function(x, ...) {
   UseMethod("as_OpenSpecy")
 }
@@ -164,7 +165,7 @@ as_OpenSpecy.OpenSpecy <- function(x, session_id = FALSE, ...) {
                                    sep = "/")
   if(!c("file_id") %in% names(x$metadata))
     x$metadata$file_id = digest(x[c("wavenumber", "spectra")])
-
+  
   return(x)
 }
 
@@ -189,7 +190,7 @@ as_OpenSpecy.hyperSpec <- function(x, ...) {
 as_OpenSpecy.data.frame <- function(x, colnames = list(wavenumber = NULL,
                                                        spectra = NULL), ...) {
   x <- as.data.table(x)
-
+  
   # Try to find spectral data
   if (is.null(colnames$wavenumber)) {
     if (any(grepl("wav", ignore.case = T, names(x)))) {
@@ -210,7 +211,7 @@ as_OpenSpecy.data.frame <- function(x, colnames = list(wavenumber = NULL,
     wavenumber <- x[[colnames$wavenumber]]
     wn <- colnames$wavenumber
   }
-
+  
   if (is.null(colnames$spectra)) {
     if (any(grep("(transmit.*)|(reflect.*)|(abs.*)|(intens.*)", ignore.case = T,
                  names(x)))) {
@@ -225,7 +226,7 @@ as_OpenSpecy.data.frame <- function(x, colnames = list(wavenumber = NULL,
   } else {
     spectra <- x[, colnames$spectra, with = F]
   }
-
+  
   do.call("as_OpenSpecy",
           list(x = wavenumber, spectra = spectra, ...))
 }
@@ -283,7 +284,7 @@ as_OpenSpecy.default <- function(x, spectra,
     stop("column names in 'spectra' must be unique", call. = F)
   if (length(x) != nrow(spectra))
     stop("'x' and 'spectra' must be of equal length", call. = F)
-
+  
   obj <- structure(list(),
                    class = c("OpenSpecy", "list"),
                    intensity_unit = attributes$intensity_unit,
@@ -291,16 +292,16 @@ as_OpenSpecy.default <- function(x, spectra,
                    baseline = attributes$baseline,
                    spectra_type = attributes$spectra_type
   )
-
+  
   obj$wavenumber <- x[order(x)]
-
+  
   obj$spectra <- as.data.table(spectra)[order(x)]
-
+  
   if (inherits(coords, "character") && !any(is.element(c("x", "y"),
                                                        names(metadata)))) {
     obj$metadata <- do.call(coords, list(ncol(obj$spectra)))
   } else if(inherits(coords, c("data.frame", "list")) &&
-             all(is.element(c("x", "y"), names(coords)))) {
+            all(is.element(c("x", "y"), names(coords)))) {
     obj$metadata <- as.data.table(coords)
   } else {
     if(!all(is.element(c("x", "y"), names(metadata))))
@@ -321,7 +322,22 @@ as_OpenSpecy.default <- function(x, spectra,
       stop("inconsistent input for 'metadata'", call. = F)
     }
   }
-
+  
+  if(any(duplicated(names(obj$metadata)))){
+    message("Duplicate column names found, adding a unique numeric ID to the end.")
+    nms <- names(obj$metadata)
+    # Identify all names that are duplicated
+    dups <- duplicated(nms) | duplicated(nms, fromLast = TRUE)
+    # Initialize a vector to hold the counts
+    counts <- rep(NA, length(nms))
+    # For duplicated names, generate sequence numbers starting from 0
+    counts[dups] <- ave(seq_along(nms)[dups], nms[dups], FUN = function(x) seq_along(x) - 0)
+    # Create new names by appending counts to duplicated names
+    new_nms <- nms
+    new_nms[dups] <- paste0(nms[dups], "_", counts[dups] - 1)
+    # Update the names in os$metadata
+    names(obj$metadata) <- new_nms
+  }
   return(obj)
 }
 
@@ -368,9 +384,9 @@ check_OpenSpecy <- function(x) {
        identical(order(x$wavenumber), length(x$wavenumber):1)))
     warning("Wavenumbers should be a continuous sequence for all OpenSpecy ",
             "functions to run smoothly", call. = F)
-
+  
   chk <- all(cw, cs, cm, cr, cl, cu, cv, co, csz, csn, cwn, cln, cos)
-
+  
   return(chk)
 }
 
@@ -390,7 +406,7 @@ OpenSpecy <- function(x, ...) {
 #' @export
 gen_grid <- function(n) {
   base <- sqrt(n)
-
+  
   expand.grid(x = 1:ceiling(base), y = 1:ceiling(base))[1:n,] |>
     as.data.table()
 }
