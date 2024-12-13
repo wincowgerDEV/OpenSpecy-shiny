@@ -251,6 +251,7 @@ observeEvent(input$file, {
       sig_noise(x = DataR(), step = 10, metric = input$signal_selection, abs = F)
   })
   
+  
   MinSNR <- reactive({
       req(!is.null(preprocessed$data))
       if(!input$threshold_decision){
@@ -331,14 +332,16 @@ observeEvent(input$file, {
       req(input$active_identification)
       req(grepl("^model$", input$lib_type))
       
-      rn <- runif(n = length(unique(libraryR()$all_variables)))
+      #rn <- runif(n = length(unique(libraryR()$all_variables)))
+      mean <- rep.int(mean(unlist(DataR()$spectra)), times = length(unique(libraryR()$all_variables)))
+      
       fill <- as_OpenSpecy(as.numeric(unique(libraryR()$all_variables)),
-                           spectra = data.frame(rn))
+                           spectra = data.frame(mean))
       
       data <- conform_spec(DataR(), range = fill$wavenumber,
                            res = NULL)
       
-      match_spec(data, library = libraryR(), na.rm = T, fill = fill)
+      match_spec(data, library = libraryR(), na.rm = T, fill = fill) 
   })
   
   #The maximum correlation or AI value. 
@@ -348,12 +351,28 @@ observeEvent(input$file, {
       if(isTruthy(input$active_identification)){
           if(!grepl("^model$", input$lib_type)){
           max_cor_named(correlation())
-      }
-      else if(input$lib_type == "model"){
+        }
+      else {
           ai <- signif(ai_output()[["value"]], 2)
           names(ai) <- ai_output()[["name"]]
           ai
         }
+      }
+      else{
+          NULL
+      }
+  })
+  
+  #The maximum correlation or AI value. 
+  max_cor_identity <- reactive({
+      req(!is.null(preprocessed$data))
+      if(isTruthy(input$active_identification)){
+          if(!grepl("^model$", input$lib_type)){
+              fifelse(max_cor() < MinCor(), rep.int("Unknown", length(max_cor())), libraryR()$metadata$material_class[match(names(max_cor()), libraryR()$metadata$sample_name)])
+          }
+          else{
+              fifelse(max_cor() < MinCor(), rep.int("Unknown", length(max_cor())), names(max_cor()))
+          }
       }
       else{
           NULL
@@ -391,15 +410,17 @@ observeEvent(input$file, {
       }
       else if(grepl("^model$", input$lib_type)){
           data.table(object_id = names(DataR()$spectra), 
-                     material_class = ai_output()$name,
-                     match_val = ai_output()$value)
+                     material_class = max_cor_identity(),
+                     match_val = ai_output()$value) 
       }
       else{
           data.table(object_id = names(DataR()$spectra)[data_click$data], 
                      sample_name = names(libraryR()$spectra),
                      match_val = c(correlation()[,data_click$data]))[order(-match_val),] %>%
               left_join(libraryR()$metadata, by = c("sample_name")) %>%
-              mutate(match_val = signif(match_val, 2)) 
+              mutate(match_val = signif(match_val, 2)) %>%
+              {if(input$cor_threshold_decision){mutate(., name = ifelse(match_val < input$MinCor, rep.int("Unknown", nrow(.)), material_class))}else{.}}
+          
       }
   })
 
@@ -604,7 +625,7 @@ output$progress_bars <- renderUI({
                        signif(signal_to_noise(),2)
                    }
                    else if(!is.null(max_cor()) & input$map_color == "Match ID"){
-                       if(!grepl("^model$", input$lib_type)) names(max_cor()) else max_cor()
+                        names(max_cor())
                    }
                    else if(!is.null(max_cor()) & input$map_color == "Match Value"){
                        signif(max_cor(),2)
@@ -613,7 +634,7 @@ output$progress_bars <- renderUI({
                        signif(signal_to_noise(),2)
                    }
                    else if(!is.null(max_cor()) & input$map_color == "Match Name"){
-                       if(grepl("^model$", input$lib_type)) names(max_cor()) else libraryR()$metadata$material_class[match(names(max_cor()), libraryR()$metadata$sample_name)]
+                       max_cor_identity()
                    }
                    else if(isTruthy(particles_logi()) & input$map_color == "Feature ID"){
                        test$metadata$feature_id
@@ -656,7 +677,7 @@ output$progress_bars <- renderUI({
   
   output$material_plot <- renderPlot({
       req(!is.null(preprocessed$data))
-      req(names(max_cor()))
+      req(max_cor_identity())
       #Metadata for all the top correlations.
       # top_correlation <- data.table(object_id = names(DataR()$spectra),
       #                sample_name = names(max_cor()),
@@ -671,11 +692,8 @@ output$progress_bars <- renderUI({
       #         {if(!grepl("^model$", input$lib_type)){left_join(., libraryR()$metadata %>% select(-file_name, -col_id), by = c("sample_name"))} else{.}} %>%
       #         .[, !sapply(., OpenSpecy::is_empty_vector), with = F] %>%
       #         select(file_name, col_id, material_class, spectrum_identity, match_val, signal_to_noise, everything())
-
-      if(input$lib_type == "model") materials = names(max_cor()) else materials = libraryR()$metadata$material_class[match(names(max_cor()), libraryR()$metadata$sample_name)]
-      
       ggplot() +
-          geom_bar(aes(y = materials, fill = materials)) +
+          geom_bar(aes(y = max_cor_identity(), fill = max_cor_identity())) +
           #scale_x_continuous(trans =  scales::modulus_trans(p = 0, offset = 1)) +
           #geom_vline(xintercept = MinCor(), color = "red") +
           theme_black_minimal(base_size = 15) +
@@ -729,7 +747,7 @@ output$progress_bars <- renderUI({
           ),
           selectInput(inputId = "columns_selected", 
                       label = "Columns to save", 
-                      choices = c("All", "Simple"))
+                      choices = c("Simple", "All"))
       )
   })
   output$download_data <- downloadHandler(
@@ -764,7 +782,8 @@ output$progress_bars <- renderUI({
                         .[, !sapply(., OpenSpecy::is_empty_vector), with = F] %>%
                         select(file_name, col_id, material_class, spectrum_identity, match_val, signal_to_noise, everything()) %>%
                         .[order(-match_val), .SD[1:input$top_n_input], by = col_id] %>%
-                        {if(grepl("Simple", input$columns_selected)){select(., file_name, col_id, material_class, match_val, signal_to_noise)} else{.}}
+                        {if(grepl("Simple", input$columns_selected)){select(., file_name, col_id, material_class, match_val, signal_to_noise)} else{.}} %>%
+                        mutate(material_class = ifelse(match_val < MinCor(), rep.int("Unknown", nrow(.)), material_class))
                     
                     fwrite(all_matches, file) 
                 }
@@ -772,7 +791,8 @@ output$progress_bars <- renderUI({
                     result <- bind_cols(DataR()$metadata, matches_to_single())
                     result$signal_to_noise <- signal_to_noise()
                     result <- result[, !sapply(result, OpenSpecy::is_empty_vector), with = FALSE] %>%
-                        select(file_name, col_id, material_class, match_val, signal_to_noise, everything())
+                        select(file_name, col_id, material_class, match_val, signal_to_noise, everything()) %>%
+                        mutate(material_class = ifelse(match_val < MinCor(), rep.int("Unknown", nrow(.)), material_class))
                     
                     fwrite(result, file) 
                     }
