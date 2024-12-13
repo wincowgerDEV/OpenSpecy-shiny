@@ -1,185 +1,185 @@
 function(input, output, session) {
-    
   #Setup ----
-    options(shiny.maxRequestSize=10000*1024^2)
-    
-    #URL Query
-    observe({
-        query <- parseQueryString(session$clientData$url_search)
-        
-        for (i in 1:(length(reactiveValuesToList(input)))) {
-            nameval = names(reactiveValuesToList(input)[i])
-            valuetoupdate = query[[nameval]]
-            
-            if (!is.null(query[[nameval]])) {
-                if (is.na(as.numeric(valuetoupdate))) {
-                    updateTextInput(session, nameval, value = valuetoupdate)
-                }
-                else {
-                    updateTextInput(session, nameval, value = as.numeric(valuetoupdate))
-                }
-            }
-            
-        }
-        
-    })
 
+  options(shiny.maxRequestSize=10000*1024^2)
+  #URL Query
+  observe({
+    query <- parseQueryString(session$clientData$url_search)
+    
+    for (i in 1:(length(reactiveValuesToList(input)))) {
+      nameval = names(reactiveValuesToList(input)[i])
+      valuetoupdate = query[[nameval]]
+      
+      if (!is.null(query[[nameval]])) {
+        if (is.na(as.numeric(valuetoupdate))) {
+          updateTextInput(session, nameval, value = valuetoupdate)
+        }
+        else {
+          updateTextInput(session, nameval, value = as.numeric(valuetoupdate))
+        }
+      }
+      
+    }
+    
+  })
+  
   #create a random session id
   session_id <- digest(runif(10))
-
+  
   # Loading overlay
   load_data()
   hide(id = "loading_overlay", anim = TRUE, animType = "fade")
   show("app_content")
-
+  
   preprocessed <- reactiveValues(data = NULL)
   data_click <- reactiveValues(data = NULL)
-
-
+  
+  
   #Read Data ----
   #Sending data to a remote repo. 
-observeEvent(input$file, {
-  # Read in data when uploaded based on the file type
-  req(input$file)
-  data_click$data <- 1
-  preprocessed$data <- NULL
-
-  if (!all(grepl("(\\.tsv$)|(\\.dat$)|(\\.hdr$)|(\\.json$)|(\\.rds$)|(\\.yml$)|(\\.csv$)|(\\.asp$)|(\\.spa$)|(\\.spc$)|(\\.jdx$)|(\\.dx$)|(\\.RData$)|(\\.zip$)|(\\.[0-9]$)",
-             ignore.case = T, as.character(input$file$datapath)))) {
-    show_alert(
-      title = "Data type not supported!",
-      text = paste0("Uploaded data type is not currently supported; please
+  observeEvent(input$file, {
+    # Read in data when uploaded based on the file type
+    req(input$file)
+    data_click$data <- 1
+    preprocessed$data <- NULL
+    
+    if (!all(grepl("(\\.tsv$)|(\\.dat$)|(\\.hdr$)|(\\.json$)|(\\.rds$)|(\\.yml$)|(\\.csv$)|(\\.asp$)|(\\.spa$)|(\\.spc$)|(\\.jdx$)|(\\.dx$)|(\\.RData$)|(\\.zip$)|(\\.[0-9]$)",
+                   ignore.case = T, as.character(input$file$datapath)))) {
+      show_alert(
+        title = "Data type not supported!",
+        text = paste0("Uploaded data type is not currently supported; please
                       check tooltips and 'About' tab for details."),
-      type = "warning")
-    return(NULL)
-  }
-
-  withProgress(message = "Reading data", value = 2/3, {
+        type = "warning")
+      return(NULL)
+    }
+    
+    withProgress(message = "Reading data", value = 2/3, {
       
       rout <- tryCatch(expr = {
-          read_any(file = as.character(input$file$datapath)) |>
-              c_spec(range = "common", res = if(input$conform_decision){input$conform_res} else{8}) |>
-              manage_na(ig = c(NA, 0), type = "remove")},
-          error = function(e){
-              class(e$message) <- "simpleWarning"
-              e$message
-          }#,
-          #warning = function(w){
-          #class(w$message) <- "simpleWarning"
-          #    w$message
-          #}
+        read_any(file = as.character(input$file$datapath)) |>
+          c_spec(range = "common", res = if(input$conform_decision){input$conform_res} else{8}) |>
+          manage_na(ig = c(NA, 0), type = "remove")},
+        error = function(e){
+          class(e$message) <- "simpleWarning"
+          e$message
+        }#,
+        #warning = function(w){
+        #class(w$message) <- "simpleWarning"
+        #    w$message
+        #}
       )
       #print(rout)
       
       if(all(!grepl("(\\.hdr$)|(\\.dat$)|(\\.zip$)", input$file$datapath))){
-          rout$metadata$file_name <- input$file$name
+        rout$metadata$file_name <- input$file$name
       }
       
       checkit <- tryCatch(expr = {check_OpenSpecy(rout)},
                           error = function(e){
-                              class(e$message) <- "simpleWarning"
-                              e$message
+                            class(e$message) <- "simpleWarning"
+                            e$message
                           },
                           warning = function(w){
-                              class(w$message) <- "simpleWarning"
-                              w$message
+                            class(w$message) <- "simpleWarning"
+                            w$message
                           })
-    #print(checkit)
-    if (inherits(rout, "simpleWarning") | inherits(checkit, "simpleWarning")) {
-      show_alert(
-        title = "Something went wrong with reading the data :-(",
-        text =  paste0(if(inherits(rout, "simpleWarning")){paste0("There was an error during data loading that said ", 
-                                                                  rout, ".")} else{""},
-                       if(inherits(checkit, "simpleWarning")){paste0(" There was an error during data checking that said ", 
-                                                                  checkit, ".")} else{""},
-                       ". If you uploaded a text/csv file, make sure that the columns are numeric and named 'wavenumber' and 'intensity'."),
-        type =  "error"
-      )
-      reset("file")
-      preprocessed$data <- NULL
-    }
+      #print(checkit)
+      if (inherits(rout, "simpleWarning") | inherits(checkit, "simpleWarning")) {
+        show_alert(
+          title = "Something went wrong with reading the data :-(",
+          text =  paste0(if(inherits(rout, "simpleWarning")){paste0("There was an error during data loading that said ", 
+                                                                    rout, ".")} else{""},
+                         if(inherits(checkit, "simpleWarning")){paste0(" There was an error during data checking that said ", 
+                                                                       checkit, ".")} else{""},
+                         ". If you uploaded a text/csv file, make sure that the columns are numeric and named 'wavenumber' and 'intensity'."),
+          type =  "error"
+        )
+        reset("file")
+        preprocessed$data <- NULL
+      }
       
-    else {
+      else {
         preprocessed$data <- rout 
         #print(preprocessed$data)
-    }
-})
-})
+      }
+    })
+  })
   
-  #The matching library to use. 
+  #The matching library to use.
   libraryR <- reactive({
-      req(input$active_identification)
-      if(input$id_strategy == "deriv" & input$lib_type == "medoid"){
-          if(file.exists("data/medoid_derivative.rds")){
-              library <- read_any("data/medoid_derivative.rds")
-          }
-          else{
-              library <- load_lib("medoid_derivative")
-              }
-          #return(library)
+    req(input$active_identification)
+    if (input$id_strategy == "deriv" & input$lib_type == "medoid") {
+      if (file.exists("data/medoid_derivative.rds")) {
+        library <- read_any("data/medoid_derivative.rds") 
       }
-      else if(input$id_strategy == "nobaseline" & input$lib_type == "medoid"){
-          if(file.exists("data/medoid_nobaseline.rds")){
-              library <- read_any("data/medoid_nobaseline.rds")
-          }
-          else{
-              library <- load_lib("medoid_nobaseline")
-          }
-          #return(library)
+      else{
+        get_lib("medoid_derivative")
+        library <- read_any("data/medoid_derivative.rds")
       }
-      else if(input$id_strategy == "deriv" & input$lib_type == "model") {
-          if(file.exists("data/model_derivative.rds")){
-              library <- read_any("data/model_derivative.rds")
-          }
-          else{
-              library <- load_lib("model_derivative")
-              }
-          return(library)
+      #return(library)
+    }
+    else if (input$id_strategy == "nobaseline" &
+             input$lib_type == "medoid") {
+      if (file.exists("data/medoid_nobaseline.rds")) {
+        library <- read_any("data/medoid_nobaseline.rds") 
       }
-      else if(input$id_strategy == "nobaseline" & input$lib_type == "model") {
-          if(file.exists("data/model_nobaseline.rds")){
-              library <- read_any("data/model_nobaseline.rds")
-          }
-          else{
-              library <- load_lib("model_nobaseline")
-          }
-          return(library)
+      else{
+         get_lib("medoid_nobaseline")
+         library <- read_any("data/medoid_nobaseline.rds")
       }
-      else if(grepl("nobaseline$", input$id_strategy)) {
-          if(file.exists("data/nobaseline.rds")){
-              library <- read_any("data/nobaseline.rds")
-          }
-          else{
-               library <- load_lib("nobaseline")
-          }
+    }
+    else if (input$id_strategy == "deriv" &
+             input$lib_type == "model") {
+      if (file.exists("data/model_derivative.rds")) {
+        library <- read_any("data/model_derivative.rds")
       }
-      else if(grepl("deriv$", input$id_strategy)){
-          if(file.exists("data/derivative.rds")){
-              library <- read_any("data/derivative.rds")
-          }
-          else{
-              library <- load_lib("derivative")
-          }
+      else{
+       get_lib("model_derivative")
+       library <- read_any("data/model_derivative.rds")
+        
       }
-      if(grepl("^both", input$id_spec_type)) {
-          library
+      return(library)
+    }
+    else if (input$id_strategy == "nobaseline" &
+             input$lib_type == "model") {
+      if (file.exists("data/model_nobaseline.rds")) {
+        library <- read_any("data/model_nobaseline.rds")
+
       }
-      else if (grepl("^ftir", input$id_spec_type)){
-          filter_spec(library, logic = library$metadata$spectrum_type == "ftir")
+      else{
+        get_lib("model_nobaseline")
+        library <- read_any("data/model_nobaseline.rds")
       }
-      else if (grepl("^raman", input$id_spec_type)){
-          filter_spec(library, logic = library$metadata$spectrum_type == "raman")
+      return(library)
+    }
+    else if (grepl("nobaseline$", input$id_strategy)) {
+      if (!file.exists("data/nobaseline.rds")) {
+        library <- read_any("data/nobaseline.rds") 
       }
+      else{
+        get_lib("nobaseline")
+        library <- load_lib("data/nobaseline.rds")
+      }
+    }
+    if (grepl("^both", input$id_spec_type)) {
+      library
+    }
+    else if (grepl("^ftir", input$id_spec_type)) {
+      filter_spec(library, logic = library$metadata$spectrum_type == "ftir")
+    }
+    else if (grepl("^raman", input$id_spec_type)) {
+      filter_spec(library, logic = library$metadata$spectrum_type == "raman")
+    }
+    
   })
 
   # Corrects spectral intensity units using the user specified correction
-
- # Redirecting preprocessed data to be a reactive variable. Not totally sure why this is happening in addition to the other. 
- data <- reactive({
+  # Redirecting preprocessed data to be a reactive variable. Not totally sure why this is happening in addition to the other. 
+  data <- reactive({
     req(input$file)
-      preprocessed$data
-    })
-
+    preprocessed$data
+  })
+  
   #Preprocess ----
   
   # All cleaning of the data happens here. Range selection, Smoothing, and Baseline removing
@@ -187,145 +187,146 @@ observeEvent(input$file, {
     req(!is.null(preprocessed$data))
     req(input$active_preprocessing)
     processed = process_spec(x = data(),
-                    active = input$active_preprocessing,
-                    adj_intens = input$intensity_decision, 
-                    adj_intens_args = list(type = input$intensity_corr),
-                    conform_spec = input$conform_decision, 
-                    conform_spec_args = list(range = NULL, 
-                                             res = input$conform_res, 
-                                             type = input$conform_selection),
-                    restrict_range = input$range_decision,
-                    restrict_range_args = list(min = input$MinRange, 
-                                               max = input$MaxRange),
-                    flatten_range = input$co2_decision,
-                    flatten_range_args = list(min = input$MinFlat, 
-                                              max = input$MaxFlat),
-                    subtr_baseline = input$baseline_decision, 
-                    subtr_baseline_args = list(type = "polynomial", 
-                                               degree = input$baseline, 
-                                               raw = FALSE, 
-                                               baseline = NULL),
-                    smooth_intens = input$smooth_decision, 
-                    smooth_intens_args = list(polynomial = input$smoother, 
-                                              window = calc_window_points(if(input$conform_decision){seq(100, 
-                                                                                                         4000, 
-                                                                                                         by = input$conform_res)} 
-                                                                          else{data()}, 
-                                                                          input$smoother_window), 
-                                              derivative = input$derivative_order, 
-                                              abs = input$derivative_abs),
-                    make_rel = input$make_rel_decision)
+                             active = input$active_preprocessing,
+                             adj_intens = input$intensity_decision, 
+                             adj_intens_args = list(type = input$intensity_corr),
+                             conform_spec = input$conform_decision, 
+                             conform_spec_args = list(range = NULL, 
+                                                      res = input$conform_res, 
+                                                      type = input$conform_selection),
+                             restrict_range = input$range_decision,
+                             restrict_range_args = list(min = input$MinRange, 
+                                                        max = input$MaxRange),
+                             flatten_range = input$co2_decision,
+                             flatten_range_args = list(min = input$MinFlat, 
+                                                       max = input$MaxFlat),
+                             subtr_baseline = input$baseline_decision, 
+                             subtr_baseline_args = list(type = "polynomial", 
+                                                        degree = input$baseline, 
+                                                        raw = FALSE, 
+                                                        baseline = NULL),
+                             smooth_intens = input$smooth_decision, 
+                             smooth_intens_args = list(polynomial = input$smoother, 
+                                                       window = calc_window_points(if(input$conform_decision){seq(100, 
+                                                                                                                  4000, 
+                                                                                                                  by = input$conform_res)} 
+                                                                                   else{data()}, 
+                                                                                   input$smoother_window), 
+                                                       derivative = input$derivative_order, 
+                                                       abs = input$derivative_abs),
+                             make_rel = input$make_rel_decision)
     
     if(input$spatial_decision){
-        processed = spatial_smooth(processed, sigma = c(input$sigma, input$sigma, input$sigma))
+      processed = spatial_smooth(processed, sigma = c(input$sigma, input$sigma, input$sigma))
     }
     processed
   })
-
-
+  
+  
   # Choose which spectra to use for matching and plotting. 
   DataR <- reactive({
     req(!is.null(preprocessed$data))
     if(input$active_preprocessing) {
-            baseline_data()
+      baseline_data()
     }
     else {
-            data()
+      data()
     }
   })
-
+  
   #The data to use in the plot. 
   DataR_plot <- reactive({
-      if(is.null(preprocessed$data)){
-          list(wavenumber = numeric(), spectra = data.table(empty = numeric()))
-      }
-      else{
-          filter_spec(DataR(), logic = 1:ncol(DataR()$spectra) == data_click$data)
-      }
+    if(is.null(preprocessed$data)){
+      list(wavenumber = numeric(), spectra = data.table(empty = numeric()))
+    }
+    else{
+      filter_spec(DataR(), logic = 1:ncol(DataR()$spectra) == data_click$data)
+    }
   })
   
   # SNR ----
   #The signal to noise ratio
   signal_to_noise <- reactive({
-      req(!is.null(preprocessed$data))
-      sig_noise(x = DataR(), step = 10, metric = input$signal_selection, abs = F)
+    req(!is.null(preprocessed$data))
+    sig_noise(x = DataR(), step = 10, metric = input$signal_selection, abs = F)
   })
   
   
   MinSNR <- reactive({
-      req(!is.null(preprocessed$data))
-      if(!input$threshold_decision){
-          -Inf
-      }
-      else{
-          input$MinSNR
-      }
+    req(!is.null(preprocessed$data))
+    if(!input$threshold_decision){
+      -Inf
+    }
+    else{
+      input$MinSNR
+    }
   })
   
   particles_logi <- reactive({
-      if(input$active_identification & input$threshold_decision & input$cor_threshold_decision){
-          return(signal_to_noise() > MinSNR() & max_cor() > MinCor())
-      }
-      if(input$threshold_decision){
-          return(signal_to_noise() > MinSNR())
-      }
-      if(input$active_identification & input$cor_threshold_decision){
-          return(max_cor() > MinCor())
-      }
-      return(NULL)
+    if(input$active_identification & input$threshold_decision & input$cor_threshold_decision){
+      return(signal_to_noise() > MinSNR() & max_cor() > MinCor())
+    }
+    if(input$threshold_decision){
+      return(signal_to_noise() > MinSNR())
+    }
+    if(input$active_identification & input$cor_threshold_decision){
+      return(max_cor() > MinCor())
+    }
+    return(NULL)
   })
   
   
   #Identification ----
   output$correlation_head <- renderUI({
-      req(!is.null(preprocessed$data))
-      req((input$threshold_decision | input$cor_threshold_decision))
-      good_cor <- max_cor()[[data_click$data]] > MinCor() & signal_to_noise()[[data_click$data]] > MinSNR()
-      good_sig <- signal_to_noise()[[data_click$data]] > MinSNR()
-      good_match <- good_cor & good_sig
-      
-      boxLabel(text = if(input$cor_threshold_decision & input$threshold_decision & input$active_identification) {"Match"} else if(input$cor_threshold_decision & input$active_identification) {"Cor"} else if (input$threshold_decision){"SNR"} else{""}, 
-               status = if(input$cor_threshold_decision & input$threshold_decision & input$active_identification) {
-                   if(good_match){
-                       "success"
-                       } 
-                   else{
-                       "error"
-                       }
-                   }
-               else if(input$cor_threshold_decision & input$active_identification){
-                   if(good_cor){
-                       "success"
-                   } 
-                   else {
-                       "error"
-                   }
+    req(!is.null(preprocessed$data))
+    req((input$threshold_decision | input$cor_threshold_decision))
+    good_cor <- max_cor()[[data_click$data]] > MinCor() & signal_to_noise()[[data_click$data]] > MinSNR()
+    good_sig <- signal_to_noise()[[data_click$data]] > MinSNR()
+    good_match <- good_cor & good_sig
+    
+    boxLabel(text = if(input$cor_threshold_decision & input$threshold_decision & input$active_identification) {"Match"} else if(input$cor_threshold_decision & input$active_identification) {"Cor"} else if (input$threshold_decision){"SNR"} else{""}, 
+             status = if(input$cor_threshold_decision & input$threshold_decision & input$active_identification) {
+               if(good_match){
+                 "success"
+               } 
+               else{
+                 "error"
                }
-               else if(input$threshold_decision){
-                       if(good_sig){
-                           "success"
-                           } 
-                       else{
-                           "error"
-                           }
-                       }
-               else{NULL}, 
-               tooltip = "This tells you whether the signal to noise ratio or the match observed is above or below the thresholds.")
+             }
+             else if(input$cor_threshold_decision & input$active_identification){
+               if(good_cor){
+                 "success"
+               } 
+               else {
+                 "error"
+               }
+             }
+             else if(input$threshold_decision){
+               if(good_sig){
+                 "success"
+               } 
+               else{
+                 "error"
+               }
+             }
+             else{NULL}, 
+             tooltip = "This tells you whether the signal to noise ratio or the match observed is above or below the thresholds.")
   })
   
   #The correlation matrix between the unknowns and the library. 
   correlation <- reactive({
-      req(!is.null(preprocessed$data))
-      req(input$active_identification)
-      req(!grepl("^model$", input$lib_type))
-      withProgress(message = 'Analyzing Spectrum', value = 1/3, {
+    req(!is.null(preprocessed$data))
+    req(input$active_identification)
+    req(!grepl("^model$", input$lib_type))
+    withProgress(message = 'Analyzing Spectrum', value = 1/3, {
       cor_spec(x = DataR(), 
                library = libraryR(),
                conform = T, 
                type = "roll")
-      })
+    })
   })
-
+  
+  
   #The output from the AI classification algorithm. 
   ai_output <- reactive({ #tested working. 
       req(!is.null(preprocessed$data))
@@ -342,7 +343,10 @@ observeEvent(input$file, {
                            res = NULL)
       
       match_spec(data, library = libraryR(), na.rm = T, fill = fill) 
+
   })
+  
+  print(ai_output)
   
   #The maximum correlation or AI value. 
   max_cor <- reactive({
@@ -358,9 +362,9 @@ observeEvent(input$file, {
           ai
         }
       }
-      else{
-          NULL
-      }
+    else{
+      NULL
+    }
   })
   
   #The maximum correlation or AI value. 
@@ -380,26 +384,24 @@ observeEvent(input$file, {
   })
   
   MinCor <- reactive({
-      req(!is.null(preprocessed$data))
-      if(!input$cor_threshold_decision){
-          -Inf
-      }
-      else{
-          input$MinCor
-      }
+    req(!is.null(preprocessed$data))
+    if(!input$cor_threshold_decision){
+      -Inf
+    }
+    else{
+      input$MinCor
+    }
   })
   
   output$cor_plot <- renderPlot({
-      req(!is.null(preprocessed$data))
-      ggplot() +
-          geom_histogram(aes(x = max_cor()), fill = "white") +
-          scale_x_continuous(trans =  scales::modulus_trans(p = 0, offset = 1)) +
-          geom_vline(xintercept = MinCor(), color = "red") +
-          theme_black_minimal() +
-          labs(x = "Correlation")
+    req(!is.null(preprocessed$data))
+    ggplot() +
+      geom_histogram(aes(x = max_cor()), fill = "white") +
+      scale_x_continuous(trans =  scales::modulus_trans(p = 0, offset = 1)) +
+      geom_vline(xintercept = MinCor(), color = "red") +
+      theme_black_minimal() +
+      labs(x = "Correlation")
   })
-  
-
   
   #Metadata for all the matches for a single unknown spectrum
   matches_to_single <- reactive({
@@ -422,96 +424,97 @@ observeEvent(input$file, {
               {if(input$cor_threshold_decision){mutate(., name = ifelse(match_val < input$MinCor, rep.int("Unknown", nrow(.)), material_class))}else{.}}
           
       }
-  })
 
+  })
+  
   #Spectral data for the selected match. 
   match_selected <- reactive({# Default to first row if not yet clicked
-      #req(input$file)
-      #req(input$active_identification)
-      req(!grepl("^model$", input$lib_type))
-      if(!input$active_identification) {
-          as_OpenSpecy(x = numeric(), spectra = data.table(empty = numeric()))
-      }
-      else{
-         #need to make reactive
-          id_select <-  ifelse(is.null(input$event_rows_selected),
-                              matches_to_single()[[1,"sample_name"]],
-                              matches_to_single()[[input$event_rows_selected,"sample_name"]])#"00087f78d45c571524fce483ef10752e"	#matches_to_single[[1,column_name]]
-              
-          # Get data from filter_spec
-          filter_spec(libraryR(), logic = id_select)
-      }
-  })
-
-  #All matches table for the current selection
-  top_matches <- reactive({
-      #req(input$file)
-      req(input$active_identification)
-      req(!grepl("^model$", input$lib_type))
-      if(is.null(preprocessed$data)){
-          matches_to_single() %>%
-              dplyr::select("material_class",
-                            "spectrum_identity", 
-                            "organization",
-                            "sample_name")
-      }
-      else{
-          matches_to_single() %>%
-              dplyr::select("match_val",
-                            "material_class",
-                            "spectrum_identity", 
-                            "organization",
-                            "sample_name")
-      }
-  })
-
-  #Create the data table that goes below the plot which provides extra metadata. 
-match_metadata <- reactive({
-    req(!is.null(preprocessed$data))
-    if(input$active_identification & !grepl("^model$", input$lib_type)){
-        selected_match <- matches_to_single()[input$event_rows_selected, ]
-        dataR_metadata <- DataR()$metadata
-        dataR_metadata$signal_to_noise <- signal_to_noise()
-        setkey(dataR_metadata, col_id)
-        setkey(selected_match, object_id)
-        
-        result <- dataR_metadata[selected_match, on = c(col_id = "object_id")]
-        result <- result[, !sapply(result, OpenSpecy::is_empty_vector), with = FALSE] %>%
-            select(file_name, col_id, material_class, spectrum_identity, match_val, signal_to_noise, everything())
-        result
-    }
-    else if(input$active_identification & grepl("^model$", input$lib_type)){
-        result <- bind_cols(DataR()$metadata[data_click$data,], matches_to_single()[data_click$data,])
-        result$signal_to_noise <- signal_to_noise()[data_click$data]
-        result <- result[, !sapply(result, OpenSpecy::is_empty_vector), with = FALSE] %>%
-            mutate(match_val = signif(match_val, 2)) %>%
-            select(file_name, col_id, material_class, match_val, signal_to_noise, everything())
-        result
+    #req(input$file)
+    #req(input$active_identification)
+    req(!grepl("^model$", input$lib_type))
+    if(!input$active_identification) {
+      as_OpenSpecy(x = numeric(), spectra = data.table(empty = numeric()))
     }
     else{
-        DataR()$metadata[data_click$data,] %>%
-            .[, !sapply(., OpenSpecy::is_empty_vector), with = F]  
+      #need to make reactive
+      id_select <-  ifelse(is.null(input$event_rows_selected),
+                           matches_to_single()[[1,"sample_name"]],
+                           matches_to_single()[[input$event_rows_selected,"sample_name"]])#"00087f78d45c571524fce483ef10752e"	#matches_to_single[[1,column_name]]
+      
+      # Get data from filter_spec
+      filter_spec(libraryR(), logic = id_select)
     }
-})
-
-# Display ----
-
-#Histogram of SNR
-output$snr_plot <- renderPlot({
+  })
+  
+  #All matches table for the current selection
+  top_matches <- reactive({
+    #req(input$file)
+    req(input$active_identification)
+    req(!grepl("^model$", input$lib_type))
+    if(is.null(preprocessed$data)){
+      matches_to_single() %>%
+        dplyr::select("material_class",
+                      "spectrum_identity", 
+                      "organization",
+                      "sample_name")
+    }
+    else{
+      matches_to_single() %>%
+        dplyr::select("match_val",
+                      "material_class",
+                      "spectrum_identity", 
+                      "organization",
+                      "sample_name")
+    }
+  })
+  
+  #Create the data table that goes below the plot which provides extra metadata. 
+  match_metadata <- reactive({
+    req(!is.null(preprocessed$data))
+    if(input$active_identification & !grepl("^model$", input$lib_type)){
+      selected_match <- matches_to_single()[input$event_rows_selected, ]
+      dataR_metadata <- DataR()$metadata
+      dataR_metadata$signal_to_noise <- signal_to_noise()
+      setkey(dataR_metadata, col_id)
+      setkey(selected_match, object_id)
+      
+      result <- dataR_metadata[selected_match, on = c(col_id = "object_id")]
+      result <- result[, !sapply(result, is_empty_vector), with = FALSE] %>%
+        select(file_name, col_id, material_class, spectrum_identity, match_val, signal_to_noise, everything())
+      result
+    }
+    else if(input$active_identification & grepl("^model$", input$lib_type)){
+      result <- bind_cols(DataR()$metadata[data_click$data,], matches_to_single()[data_click$data,])
+      result$signal_to_noise <- signal_to_noise()[data_click$data]
+      result <- result[, !sapply(result, is_empty_vector), with = FALSE] %>%
+        mutate(match_val = signif(match_val, 2)) %>%
+        select(file_name, col_id, material_class, match_val, signal_to_noise, everything())
+      result
+    }
+    else{
+      DataR()$metadata[data_click$data,] %>%
+        .[, !sapply(., is_empty_vector), with = F]  
+    }
+  })
+  
+  # Display ----
+  
+  #Histogram of SNR
+  output$snr_plot <- renderPlot({
     req(!is.null(preprocessed$data))
     ggplot() +
-        geom_histogram(aes(x = signal_to_noise()), fill = "white") +
-        scale_x_continuous(trans =  scales::modulus_trans(p = 0, offset = 1)) +
-        geom_vline(xintercept = MinSNR(), color = "red") +
-        theme_black_minimal() +
-        labs(x = "Signal/Noise")
-})
-
-#Table of metadata for the selected library value
-output$eventmetadata <- DT::renderDataTable({
+      geom_histogram(aes(x = signal_to_noise()), fill = "white") +
+      scale_x_continuous(trans =  scales::modulus_trans(p = 0, offset = 1)) +
+      geom_vline(xintercept = MinSNR(), color = "red") +
+      theme_black_minimal() +
+      labs(x = "Signal/Noise")
+  })
+  
+  #Table of metadata for the selected library value
+  output$eventmetadata <- DT::renderDataTable({
     req(!is.null(preprocessed$data))
     #req(!grepl("^ai$", input$id_strategy))
-    datatable(match_metadata(),
+    DT::datatable(match_metadata(),
               escape = FALSE,
               options = list(dom = 't', bSort = F,
                              scrollX = TRUE,
@@ -520,15 +523,15 @@ output$eventmetadata <- DT::renderDataTable({
               rownames = FALSE,
               style = 'bootstrap', caption = "Selection Metadata",
               selection = list(mode = 'none'))
-})
-
-# Create the data tables for all matches
-output$event <- DT::renderDataTable({
+  })
+  
+  # Create the data tables for all matches
+  output$event <- DT::renderDataTable({
     req(input$active_identification)
     req(!grepl("^model$", input$lib_type))
-    datatable(top_matches() %>%
-                  mutate(organization = as.factor(organization),
-                         material_class = as.factor(material_class)),
+    DT::datatable(top_matches() %>%
+                mutate(organization = as.factor(organization),
+                       material_class = as.factor(material_class)),
               options = list(searchHighlight = TRUE,
                              scrollX = TRUE,
                              sDom  = '<"top">lrt<"bottom">ip',
@@ -537,75 +540,75 @@ output$event <- DT::renderDataTable({
               filter = "top", caption = "Selectable Matches",
               style = "bootstrap",
               selection = list(mode = "single", selected = c(1)))
-})
-
-# Progress Bars
-output$choice_names <- renderUI({
+  })
+  
+  # Progress Bars
+  output$choice_names <- renderUI({
     req(ncol(preprocessed$data$spectra) > 1)
     #req(input$threshold_decision | input$active_identification)
     choice_names = c(if(input$active_identification) "Match Name"
                      else NA,
-                    if(input$active_identification & input$lib_type != "model") "Match ID" 
-                    else NA,
-                    if(!is.null(max_cor())) "Match Value"
-                    else NA,
-                    if(!is.null(signal_to_noise())) "Signal/Noise"
-                    else NA,
-                    if(isTruthy(particles_logi())) "Feature ID"
-                    else NA)
+                     if(input$active_identification & input$lib_type != "model") "Match ID" 
+                     else NA,
+                     if(!is.null(max_cor())) "Match Value"
+                     else NA,
+                     if(!is.null(signal_to_noise())) "Signal/Noise"
+                     else NA,
+                     if(isTruthy(particles_logi())) "Feature ID"
+                     else NA)
     choice_names = choice_names[!is.na(choice_names)]
-        tagList(
-            fluidRow(
-                column(6, selectInput(inputId = "map_color", 
-                                      label = "Map Color", 
-                                      choices = choice_names)
-            )
-            )
-                )
-})
-
-output$progress_bars <- renderUI({
+    tagList(
+      fluidRow(
+        column(6, selectInput(inputId = "map_color", 
+                              label = "Map Color", 
+                              choices = choice_names)
+        )
+      )
+    )
+  })
+  
+  output$progress_bars <- renderUI({
     req(ncol(preprocessed$data$spectra) > 1)
     req(input$threshold_decision | (input$cor_threshold_decision & input$active_identification))
     tagList(
-        box(title = "Summary", 
-            maximizable = T,
-            width = 12,
-            fluidRow(
-                column(4, 
-                       if(input$threshold_decision)
-                           shinyWidgets::progressBar(id = "signal_progress", value = sum(signal_to_noise() > MinSNR())/length(signal_to_noise()) * 100, status = "success", title = "Good Signal", display_pct = TRUE)
-                       else NULL
-                ),
-                column(4,
-                       if(input$cor_threshold_decision & input$active_identification) shinyWidgets::progressBar(id = "correlation_progress", value = sum(max_cor() > MinCor())/length(max_cor()) * 100, status = "success", title = "Good Match Values", display_pct = TRUE)
-                       else NULL
-                ),
-                column(4,
-                       if(input$cor_threshold_decision & input$active_identification & input$threshold_decision)
-                           shinyWidgets::progressBar(id = "match_progress", value = sum(signal_to_noise() > MinSNR() & max_cor() > MinCor())/length(signal_to_noise()) * 100, status = "success", title = "Good Identifications", display_pct = TRUE)
-                       else NULL
-                )
+      box(title = "Summary", 
+          maximizable = T,
+          width = 12,
+          fluidRow(
+            column(4, 
+                   if(input$threshold_decision)
+                     shinyWidgets::progressBar(id = "signal_progress", value = sum(signal_to_noise() > MinSNR())/length(signal_to_noise()) * 100, status = "success", title = "Good Signal", display_pct = TRUE)
+                   else NULL
             ),
-            fluidRow(column(6, 
-                            plotOutput("particle_plot", height = "25vh")),
-                     column(6,
-                            plotOutput("material_plot", height = "25vh"))))    
+            column(4,
+                   if(input$cor_threshold_decision & input$active_identification) shinyWidgets::progressBar(id = "correlation_progress", value = sum(max_cor() > MinCor())/length(max_cor()) * 100, status = "success", title = "Good Match Values", display_pct = TRUE)
+                   else NULL
+            ),
+            column(4,
+                   if(input$cor_threshold_decision & input$active_identification & input$threshold_decision)
+                     shinyWidgets::progressBar(id = "match_progress", value = sum(signal_to_noise() > MinSNR() & max_cor() > MinCor())/length(signal_to_noise()) * 100, status = "success", title = "Good Identifications", display_pct = TRUE)
+                   else NULL
+            )
+          ),
+          fluidRow(column(6, 
+                          plotOutput("particle_plot", height = "25vh")),
+                   column(6,
+                          plotOutput("material_plot", height = "25vh"))))    
     )
-})
-
- output$MyPlotC <- renderPlotly({
-      #req(input$id_strategy == "correlation")
-      #req(preprocessed$data)
-      plotly_spec(x = if(!is.null(preprocessed$data)){DataR_plot()} else{match_selected()},
-                  x2 = if(!is.null(preprocessed$data) & !grepl("^model$", input$lib_type)) {match_selected()} else{NULL}, 
-                  make_rel = input$make_rel_decision,
-                  source = "B") %>%
-        config(modeBarButtonsToAdd = list("drawopenpath", "eraseshape"))
-    })
-
- #Heatmap ----
- #Display the map or batch data in a selectable heatmap. 
+  })
+  
+  output$MyPlotC <- renderPlotly({
+    #req(input$id_strategy == "correlation")
+    #req(preprocessed$data)
+    plotly_spec(x = if(!is.null(preprocessed$data)){DataR_plot()} else{match_selected()},
+                x2 = if(!is.null(preprocessed$data) & !grepl("^model$", input$lib_type)) {match_selected()} else{NULL}, 
+                make_rel = input$make_rel_decision,
+                source = "B") %>%
+      config(modeBarButtonsToAdd = list("drawopenpath", "eraseshape"))
+  })
+  
+  #Heatmap ----
+  #Display the map or batch data in a selectable heatmap. 
   output$heatmap <- renderPlotly({
       req(!is.null(preprocessed$data))
       req(ncol(preprocessed$data$spectra) > 1)
@@ -648,31 +651,31 @@ output$progress_bars <- renderUI({
                         source = "heat_plot") %>%
           event_register("plotly_click")
   })
-
+  
   thresholded_particles <- reactive({
-      collapse_fun <- function(x, type = input$collapse_type) {
-          switch(type,
-                 "Mean" = mean(x),
-                 "Median" = median(x),
-                 "Geometric Mean" = exp(mean(log(x))))
-      }
-      collapse_spec(
-          def_features(DataR(), features = particles_logi()), fun = collapse_fun
-      ) %>%
-          filter_spec(., logic = .$metadata$feature_id != "-88")
+    collapse_fun <- function(x, type = input$collapse_type) {
+      switch(type,
+             "Mean" = mean(x),
+             "Median" = median(x),
+             "Geometric Mean" = exp(mean(log(x))))
+    }
+    collapse_spec(
+      def_features(DataR(), features = particles_logi()), fun = collapse_fun
+    ) %>%
+      filter_spec(., logic = .$metadata$feature_id != "-88")
   })
   
   #Summary Plots ----
   output$particle_plot <- renderPlot({
-      req(!is.null(preprocessed$data))
-      req(thresholded_particles()$metadata$area)
-      ggplot() +
-          geom_histogram(aes(x = sqrt(thresholded_particles()$metadata$area)), 
-                         fill = "white") +
-          #scale_x_continuous(trans =  scales::modulus_trans(p = 0, offset = 1)) +
-          #geom_vline(xintercept = MinCor(), color = "red") +
-          theme_black_minimal(base_size = 15) +
-          labs(x = "Nominal Particle Size (√area)", y = "Count")
+    req(!is.null(preprocessed$data))
+    req(thresholded_particles()$metadata$area)
+    ggplot() +
+      geom_histogram(aes(x = sqrt(thresholded_particles()$metadata$area)), 
+                     fill = "white") +
+      #scale_x_continuous(trans =  scales::modulus_trans(p = 0, offset = 1)) +
+      #geom_vline(xintercept = MinCor(), color = "red") +
+      theme_black_minimal(base_size = 15) +
+      labs(x = "Nominal Particle Size (√area)", y = "Count")
   })
   
   output$material_plot <- renderPlot({
@@ -699,38 +702,39 @@ output$progress_bars <- renderUI({
           theme_black_minimal(base_size = 15) +
           theme(legend.position = "none") +
           labs(x = "Count", y = "Material Class")
-  })
 
+  })
+  
   
   # Data Download options ----
   # Progress Bars
   output$download_ui <- renderUI({
-      choice_names = c("Test Data",
-                       "Test Map",
-                       if(isTruthy(ncol(preprocessed$data$spectra) >= 1)) "Your Spectra"
-                       else NA,
-                       if(input$active_identification) c("Library Spectra", "Top Matches")
-                       else NA,
-                       if(input$collapse_decision) "Thresholded Particles"
-                       else NA)
+    choice_names = c("Test Data",
+                     "Test Map",
+                     if(isTruthy(ncol(preprocessed$data$spectra) >= 1)) "Your Spectra"
+                     else NA,
+                     if(input$active_identification) c("Library Spectra", "Top Matches")
+                     else NA,
+                     if(input$collapse_decision) "Thresholded Particles"
+                     else NA)
 
-      choice_names = choice_names[!is.na(choice_names)]
-      tagList(selectInput(inputId = "download_selection",
-                          label = downloadButton("download_data",
-                                                 style = "background-color: rgb(0,0,0); color: rgb(255,255,255);"),
-                          choices = choice_names) %>%
-                  popover(
-                      title = "Options for downloading spectra and metadata from the analysis.
+    choice_names = choice_names[!is.na(choice_names)]
+    tagList(selectInput(inputId = "download_selection",
+                        label = downloadButton("download_data",
+                                               style = "background-color: rgb(0,0,0); color: rgb(255,255,255);"),
+                        choices = choice_names) %>%
+              popover(
+                title = "Options for downloading spectra and metadata from the analysis.
                                           Test Data is a Raman HDPE spectrum in csv format. Test Map is an FTIR ENVI file of a CA particle.
                                           Your Spectra will download your data with whatever processing options are active. Library Spectra
                                           will download the current library selected. Top Matches downloads the top identifications in the
                                           active analysis. All Matches will download all identifications with the library. Thresholded Particles will download a version of your spectra using the active
                                           thresholds selected to infer where particles are in spectral maps, particle spectra are collapsed
                                           to their medians and locations to their centroids.",
-                      content = "Download Options", placement = "left"
-                  ))
-  })  
-  
+                content = "Download Options", placement = "left"
+              ))
+  })
+
   output$top_n <- renderUI({
       req(ncol(preprocessed$data$spectra) >= 1)
       req(input$active_identification)
@@ -800,62 +804,55 @@ output$progress_bars <- renderUI({
             if(input$download_selection == "Thresholded Particles") {write_spec(thresholded_particles(), file = file)}
             })
 
-  # Hide functions or objects when the shouldn't exist. 
+  # Hide functions or objects when the shouldn't exist.
   observe({
     toggle(id = "heatmap", condition = !is.null(preprocessed$data))
     toggle(id = "placeholder1", condition = is.null(preprocessed$data))
     if(!is.null(preprocessed$data)){
-        toggle(id = "heatmap", condition = ncol(preprocessed$data$spectra) > 1)
+      toggle(id = "heatmap", condition = ncol(preprocessed$data$spectra) > 1)
     }
     if(is.null(event_data("plotly_click", source = "heat_plot"))){
-        data_click$data <- 1
+      data_click$data <- 1
     }
     else{
-        data_click$data <- event_data("plotly_click", source = "heat_plot")[["pointNumber"]] + 1
-    }
-    })
-
-  #Google translate. 
-  output$translate <- renderUI({
-    if(translate & curl::has_internet()) {
-      includeHTML("www/googletranslate.html")
+      data_click$data <- event_data("plotly_click", source = "heat_plot")[["pointNumber"]] + 1
     }
   })
 
   # Log events ----
-  
+
   user_metadata <- reactive({
     list(
-             #user_name = input$fingerprint,
-             time = human_ts(),
-             session_name = session_id,
-             data_id = digest::digest(preprocessed$data, algo = "md5"),
-             active = input$active_preprocessing,
-             adj_intens = input$intensity_decision, 
-             type = input$intensity_corr,
-             restric_range = input$range_decision,
-             restric_range_min = input$MinRange, 
-             restric_range_max = input$MaxRange,
-             flatten_range = input$co2_decision,
-             flatten_range_min = input$MinFlat, 
-             flatten_range_max = input$MaxFlat,
-             baseline_decision = input$baseline_decision, 
-             subtr_baseline = input$baseline,
-             smooth_intens = input$smooth_decision, 
-             polynomial = input$smoother, 
-             window = input$smoother_window, 
-             derivative = input$derivative_order, 
-             abs = input$derivative_abs,
-             download_selection = input$download_selection,
-             id_strategy = input$id_strategy,
-             cor_threshold_decision = input$cor_threshold_decision,
-             min_cor = input$MinCor,
-             threshold_decision = input$threshold_decision, 
-             min_sn = input$MinSNR,
-             signal_selection = input$signal_selection
-             )
+      #user_name = input$fingerprint,
+      time = human_ts(),
+      session_name = session_id,
+      data_id = digest::digest(preprocessed$data, algo = "md5"),
+      active = input$active_preprocessing,
+      adj_intens = input$intensity_decision,
+      type = input$intensity_corr,
+      restric_range = input$range_decision,
+      restric_range_min = input$MinRange,
+      restric_range_max = input$MaxRange,
+      flatten_range = input$co2_decision,
+      flatten_range_min = input$MinFlat,
+      flatten_range_max = input$MaxFlat,
+      baseline_decision = input$baseline_decision,
+      subtr_baseline = input$baseline,
+      smooth_intens = input$smooth_decision,
+      polynomial = input$smoother,
+      window = input$smoother_window,
+      derivative = input$derivative_order,
+      abs = input$derivative_abs,
+      download_selection = input$download_selection,
+      id_strategy = input$id_strategy,
+      cor_threshold_decision = input$cor_threshold_decision,
+      min_cor = input$MinCor,
+      threshold_decision = input$threshold_decision,
+      min_sn = input$MinSNR,
+      signal_selection = input$signal_selection
+    )
   })
-
+  
   # observe({
   #   req(!is.null(preprocessed$data))
   #       loggit("INFO", "trigger",
@@ -870,4 +867,5 @@ output$progress_bars <- renderUI({
   #})
   
 }
+
 
