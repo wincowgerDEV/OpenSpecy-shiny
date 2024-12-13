@@ -1,5 +1,6 @@
 function(input, output, session) {
   #Setup ----
+
   options(shiny.maxRequestSize=10000*1024^2)
   #URL Query
   observe({
@@ -250,6 +251,7 @@ function(input, output, session) {
     sig_noise(x = DataR(), step = 10, metric = input$signal_selection, abs = F)
   })
   
+  
   MinSNR <- reactive({
     req(!is.null(preprocessed$data))
     if(!input$threshold_decision){
@@ -327,39 +329,58 @@ function(input, output, session) {
   
   #The output from the AI classification algorithm. 
   ai_output <- reactive({ #tested working. 
-    req(!is.null(preprocessed$data))
-    req(input$active_identification)
-    req(grepl("^model$", input$lib_type))
-    
-    rn <- runif(n = length(unique(libraryR()$all_variables)))
-    fill <- as_OpenSpecy(as.numeric(unique(libraryR()$all_variables)),
-                         spectra = data.frame(rn))
-    
-    data <- conform_spec(DataR(), range = fill$wavenumber,
-                         res = NULL)
-    
-    match_spec(data, library = libraryR(), na.rm = T, fill = fill)
+      req(!is.null(preprocessed$data))
+      req(input$active_identification)
+      req(grepl("^model$", input$lib_type))
+      
+      #rn <- runif(n = length(unique(libraryR()$all_variables)))
+      mean <- rep.int(mean(unlist(DataR()$spectra)), times = length(unique(libraryR()$all_variables)))
+      
+      fill <- as_OpenSpecy(as.numeric(unique(libraryR()$all_variables)),
+                           spectra = data.frame(mean))
+      
+      data <- conform_spec(DataR(), range = fill$wavenumber,
+                           res = NULL)
+      
+      match_spec(data, library = libraryR(), na.rm = T, fill = fill) 
+
   })
   
   print(ai_output)
   
   #The maximum correlation or AI value. 
   max_cor <- reactive({
-    req(!is.null(preprocessed$data))
-    #req(input$active_identification)
-    if(isTruthy(input$active_identification)){
-      if(!grepl("^model$", input$lib_type)){
-        max_cor_named(correlation())
+      req(!is.null(preprocessed$data))
+      #req(input$active_identification)
+      if(isTruthy(input$active_identification)){
+          if(!grepl("^model$", input$lib_type)){
+          max_cor_named(correlation())
+        }
+      else {
+          ai <- signif(ai_output()[["value"]], 2)
+          names(ai) <- ai_output()[["name"]]
+          ai
+        }
       }
-      else if(input$lib_type == "model"){
-        ai <- signif(ai_output()[["value"]], 2)
-        names(ai) <- ai_output()[["name"]]
-        ai
-      }
-    }
     else{
       NULL
     }
+  })
+  
+  #The maximum correlation or AI value. 
+  max_cor_identity <- reactive({
+      req(!is.null(preprocessed$data))
+      if(isTruthy(input$active_identification)){
+          if(!grepl("^model$", input$lib_type)){
+              fifelse(max_cor() < MinCor(), rep.int("Unknown", length(max_cor())), libraryR()$metadata$material_class[match(names(max_cor()), libraryR()$metadata$sample_name)])
+          }
+          else{
+              fifelse(max_cor() < MinCor(), rep.int("Unknown", length(max_cor())), names(max_cor()))
+          }
+      }
+      else{
+          NULL
+      }
   })
   
   MinCor <- reactive({
@@ -384,23 +405,26 @@ function(input, output, session) {
   
   #Metadata for all the matches for a single unknown spectrum
   matches_to_single <- reactive({
-    req(input$active_identification)
-    if(is.null(preprocessed$data)){
-      libraryR()$metadata |> 
-        mutate("match_val" = NA) 
-    }
-    else if(grepl("^model$", input$lib_type)){
-      data.table(object_id = names(DataR()$spectra), 
-                 material_class = ai_output()$name,
-                 match_val = ai_output()$value)
-    }
-    else{
-      data.table(object_id = names(DataR()$spectra)[data_click$data], 
-                 sample_name = names(libraryR()$spectra),
-                 match_val = c(correlation()[,data_click$data]))[order(-match_val),] %>%
-        left_join(libraryR()$metadata, by = c("sample_name")) %>%
-        mutate(match_val = signif(match_val, 2)) 
-    }
+      req(input$active_identification)
+      if(is.null(preprocessed$data)){
+          libraryR()$metadata %>%
+              mutate("match_val" = NA) 
+      }
+      else if(grepl("^model$", input$lib_type)){
+          data.table(object_id = names(DataR()$spectra), 
+                     material_class = max_cor_identity(),
+                     match_val = ai_output()$value) 
+      }
+      else{
+          data.table(object_id = names(DataR()$spectra)[data_click$data], 
+                     sample_name = names(libraryR()$spectra),
+                     match_val = c(correlation()[,data_click$data]))[order(-match_val),] %>%
+              left_join(libraryR()$metadata, by = c("sample_name")) %>%
+              mutate(match_val = signif(match_val, 2)) %>%
+              {if(input$cor_threshold_decision){mutate(., name = ifelse(match_val < input$MinCor, rep.int("Unknown", nrow(.)), material_class))}else{.}}
+          
+      }
+
   })
   
   #Spectral data for the selected match. 
@@ -586,46 +610,46 @@ function(input, output, session) {
   #Heatmap ----
   #Display the map or batch data in a selectable heatmap. 
   output$heatmap <- renderPlotly({
-    req(!is.null(preprocessed$data))
-    req(ncol(preprocessed$data$spectra) > 1)
-    #req(input$map_color)
-    if(isTruthy(particles_logi())){
-      test = def_features(DataR(), features = particles_logi())
-    }
-    else{
-      test = DataR()
-    }
-    
-    heatmap_spec(x = test, 
-                 z = if(!is.null(max_cor()) & !isTruthy(input$map_color)){
-                   signif(max_cor(),2)
-                 }
-                 else if(!is.null(signal_to_noise()) & !isTruthy(input$map_color)){
-                   signif(signal_to_noise(),2)
-                 }
-                 else if(!is.null(max_cor()) & input$map_color == "Match ID"){
-                   if(!grepl("^model$", input$lib_type)) names(max_cor()) else max_cor()
-                 }
-                 else if(!is.null(max_cor()) & input$map_color == "Match Value"){
-                   signif(max_cor(),2)
-                 }
-                 else if(!is.null(signal_to_noise()) & input$map_color == "Signal/Noise"){
-                   signif(signal_to_noise(),2)
-                 }
-                 else if(!is.null(max_cor()) & input$map_color == "Match Name"){
-                   if(grepl("^model$", input$lib_type)) names(max_cor()) else libraryR()$metadata$material_class[match(names(max_cor()), libraryR()$metadata$sample_name)]
-                 }
-                 else if(isTruthy(particles_logi()) & input$map_color == "Feature ID"){
-                   test$metadata$feature_id
-                 }
-                 else{NULL},
-                 sn = signif(signal_to_noise(), 2), 
-                 cor = if(is.null(max_cor())){max_cor()} else{signif(max_cor(), 2)}, 
-                 min_sn = MinSNR(),
-                 min_cor = MinCor(),
-                 select = data_click$data,
-                 source = "heat_plot") %>%
-      event_register("plotly_click")
+      req(!is.null(preprocessed$data))
+      req(ncol(preprocessed$data$spectra) > 1)
+      #req(input$map_color)
+      if(isTruthy(particles_logi())){
+          test = def_features(DataR(), features = particles_logi())
+      }
+      else{
+          test = DataR()
+      }
+
+      heatmap_spec(x = test, 
+                        z = if(!is.null(max_cor()) & !isTruthy(input$map_color)){
+                            signif(max_cor(),2)
+                        }
+                   else if(!is.null(signal_to_noise()) & !isTruthy(input$map_color)){
+                       signif(signal_to_noise(),2)
+                   }
+                   else if(!is.null(max_cor()) & input$map_color == "Match ID"){
+                        names(max_cor())
+                   }
+                   else if(!is.null(max_cor()) & input$map_color == "Match Value"){
+                       signif(max_cor(),2)
+                   }
+                   else if(!is.null(signal_to_noise()) & input$map_color == "Signal/Noise"){
+                       signif(signal_to_noise(),2)
+                   }
+                   else if(!is.null(max_cor()) & input$map_color == "Match Name"){
+                       max_cor_identity()
+                   }
+                   else if(isTruthy(particles_logi()) & input$map_color == "Feature ID"){
+                       test$metadata$feature_id
+                   }
+                   else{NULL},
+                        sn = signif(signal_to_noise(), 2), 
+                        cor = if(is.null(max_cor())){max_cor()} else{signif(max_cor(), 2)}, 
+                        min_sn = MinSNR(),
+                        min_cor = MinCor(),
+                        select = data_click$data,
+                        source = "heat_plot") %>%
+          event_register("plotly_click")
   })
   
   thresholded_particles <- reactive({
@@ -655,32 +679,30 @@ function(input, output, session) {
   })
   
   output$material_plot <- renderPlot({
-    req(!is.null(preprocessed$data))
-    req(names(max_cor()))
-    #Metadata for all the top correlations.
-    # top_correlation <- data.table(object_id = names(DataR()$spectra),
-    #                sample_name = names(max_cor()),
-    #                match_val = max_cor(),
-    #                match_threshold = MinCor(),
-    #                good_match_vals = max_cor() > MinCor(),
-    #                signal_to_noise = signal_to_noise(),
-    #                signal_threshold = MinSNR(),
-    #                good_signal = signal_to_noise() > MinSNR(),
-    #                good_matches = max_cor() > MinCor() & signal_to_noise() > MinSNR()) %>%
-    #         {if(!grepl("^model$", input$lib_type)){bind_cols(., DataR()$metadata)} else{.}} %>%
-    #         {if(!grepl("^model$", input$lib_type)){left_join(., libraryR()$metadata %>% select(-file_name, -col_id), by = c("sample_name"))} else{.}} %>%
-    #         .[, !sapply(., OpenSpecy::is_empty_vector), with = F] %>%
-    #         select(file_name, col_id, material_class, spectrum_identity, match_val, signal_to_noise, everything())
-    
-    if(input$lib_type == "model") materials = names(max_cor()) else materials = libraryR()$metadata$material_class[match(names(max_cor()), libraryR()$metadata$sample_name)]
-    
-    ggplot() +
-      geom_bar(aes(y = materials, fill = materials)) +
-      #scale_x_continuous(trans =  scales::modulus_trans(p = 0, offset = 1)) +
-      #geom_vline(xintercept = MinCor(), color = "red") +
-      theme_black_minimal(base_size = 15) +
-      theme(legend.position = "none") +
-      labs(x = "Count", y = "Material Class")
+      req(!is.null(preprocessed$data))
+      req(max_cor_identity())
+      #Metadata for all the top correlations.
+      # top_correlation <- data.table(object_id = names(DataR()$spectra),
+      #                sample_name = names(max_cor()),
+      #                match_val = max_cor(),
+      #                match_threshold = MinCor(),
+      #                good_match_vals = max_cor() > MinCor(),
+      #                signal_to_noise = signal_to_noise(),
+      #                signal_threshold = MinSNR(),
+      #                good_signal = signal_to_noise() > MinSNR(),
+      #                good_matches = max_cor() > MinCor() & signal_to_noise() > MinSNR()) %>%
+      #         {if(!grepl("^model$", input$lib_type)){bind_cols(., DataR()$metadata)} else{.}} %>%
+      #         {if(!grepl("^model$", input$lib_type)){left_join(., libraryR()$metadata %>% select(-file_name, -col_id), by = c("sample_name"))} else{.}} %>%
+      #         .[, !sapply(., OpenSpecy::is_empty_vector), with = F] %>%
+      #         select(file_name, col_id, material_class, spectrum_identity, match_val, signal_to_noise, everything())
+      ggplot() +
+          geom_bar(aes(y = max_cor_identity(), fill = max_cor_identity())) +
+          #scale_x_continuous(trans =  scales::modulus_trans(p = 0, offset = 1)) +
+          #geom_vline(xintercept = MinCor(), color = "red") +
+          theme_black_minimal(base_size = 15) +
+          theme(legend.position = "none") +
+          labs(x = "Count", y = "Material Class")
+
   })
   
   
@@ -714,71 +736,73 @@ function(input, output, session) {
   })
 
   output$top_n <- renderUI({
-    req(ncol(preprocessed$data$spectra) >= 1)
-    req(input$active_identification)
-    req(input$download_selection == "Top Matches")
-    req(!grepl("^model$", input$lib_type))
-    tagList(
-      numericInput(
-        "top_n_input",
-        "Top N",
-        value = 1,
-        min = 1,
-        max = ncol(libraryR()$spectra),
-        step = 1
-      ),
-      selectInput(inputId = "columns_selected",
-                  label = "Columns to save",
-                  choices = c("All", "Simple"))
-    )
+      req(ncol(preprocessed$data$spectra) >= 1)
+      req(input$active_identification)
+      req(input$download_selection == "Top Matches")
+      req(!grepl("^model$", input$lib_type))
+      tagList(
+          numericInput(
+              "top_n_input",
+              "Top N",
+              value = 1,
+              min = 1,
+              max = ncol(libraryR()$spectra),
+              step = 1
+          ),
+          selectInput(inputId = "columns_selected", 
+                      label = "Columns to save", 
+                      choices = c("Simple", "All"))
+      )
   })
   output$download_data <- downloadHandler(
-    filename = function() {if(input$download_selection == "Test Map") {paste0(input$download_selection, human_ts(), ".zip")} else{paste0(input$download_selection, human_ts(), ".csv")}},
-    content = function(file) {
-      if(input$download_selection == "Test Data") {fwrite(testdata, file)}
-      if(input$download_selection == "Test Map") {file.copy(read_extdata("CA_tiny_map.zip"), file)}
-      if(input$download_selection == "Your Spectra") {
-        your_spec <- DataR()
-        your_spec$metadata$signal_to_noise <- signal_to_noise()
-        write_spec(your_spec, file)}
-      if(input$download_selection == "Library Spectra") {write_spec(libraryR(), file)}
-      if(input$download_selection == "Top Matches") {
-        if(!grepl("^model$", input$lib_type)){
-          dataR_metadata <- data.table(match_threshold = MinCor(),
-                                       signal_to_noise = signal_to_noise(),
-                                       signal_threshold = MinSNR(),
-                                       good_signal = signal_to_noise() > MinSNR()) %>%
-            bind_cols(DataR()$metadata)
-
-          all_matches <- reshape2::melt(correlation()) %>%
-            as.data.table() %>%
-            left_join(libraryR()$metadata %>% select(-col_id, -file_name),
-                      by = c("Var1" = "sample_name")) %>%
-            left_join(dataR_metadata,
-                      by = c("Var2" = "col_id")) %>%
-            rename("sample_name" = "Var1",
-                   "col_id" = "Var2",
-                   "match_val" = "value") %>%
-            mutate(good_match_vals = match_val > match_threshold,
-                   good_matches = match_val > match_threshold & signal_to_noise > signal_threshold) %>%
-            .[, !sapply(., is_empty_vector), with = F] %>%
-            select(file_name, col_id, material_class, spectrum_identity, match_val, signal_to_noise, everything()) %>%
-            .[order(-match_val), .SD[1:input$top_n_input], by = col_id] %>%
-            {if(grepl("Simple", input$columns_selected)){select(., file_name, col_id, material_class, match_val, signal_to_noise)} else{.}}
-
-          fwrite(all_matches, file)
-        }
-        else{
-          result <- bind_cols(DataR()$metadata, matches_to_single())
-          result$signal_to_noise <- signal_to_noise()
-          result <- result[, !sapply(result, is_empty_vector), with = FALSE] %>%
-            select(file_name, col_id, material_class, match_val, signal_to_noise, everything())
-
-          fwrite(result, file)
-        }
-      }
-      if(input$download_selection == "Thresholded Particles") {write_spec(thresholded_particles(), file = file)}
-    })
+       filename = function() {if(input$download_selection == "Test Map") {paste0(input$download_selection, human_ts(), ".zip")} else{paste0(input$download_selection, human_ts(), ".csv")}},
+        content = function(file) {
+            if(input$download_selection == "Test Data") {fwrite(testdata, file)}
+            if(input$download_selection == "Test Map") {file.copy(read_extdata("CA_tiny_map.zip"), file)}
+            if(input$download_selection == "Your Spectra") {
+                your_spec <- DataR()
+                your_spec$metadata$signal_to_noise <- signal_to_noise()
+                write_spec(your_spec, file)}
+            if(input$download_selection == "Library Spectra") {write_spec(libraryR(), file)}
+            if(input$download_selection == "Top Matches") {
+                if(!grepl("^model$", input$lib_type)){
+                    dataR_metadata <- data.table(match_threshold = MinCor(),
+                                                 signal_to_noise = signal_to_noise(), 
+                                                 signal_threshold = MinSNR(),
+                                                 good_signal = signal_to_noise() > MinSNR()) %>%
+                        bind_cols(DataR()$metadata)
+                    
+                    all_matches <- reshape2::melt(correlation()) %>%
+                        as.data.table() %>%
+                        left_join(libraryR()$metadata %>% select(-col_id, -file_name), 
+                                  by = c("Var1" = "sample_name")) %>%
+                        left_join(dataR_metadata, 
+                                  by = c("Var2" = "col_id")) %>%
+                        rename("sample_name" = "Var1", 
+                               "col_id" = "Var2",
+                               "match_val" = "value") %>%
+                        mutate(good_match_vals = match_val > match_threshold,
+                               good_matches = match_val > match_threshold & signal_to_noise > signal_threshold) %>%
+                        .[, !sapply(., OpenSpecy::is_empty_vector), with = F] %>%
+                        select(file_name, col_id, material_class, spectrum_identity, match_val, signal_to_noise, everything()) %>%
+                        .[order(-match_val), .SD[1:input$top_n_input], by = col_id] %>%
+                        {if(grepl("Simple", input$columns_selected)){select(., file_name, col_id, material_class, match_val, signal_to_noise)} else{.}} %>%
+                        mutate(material_class = ifelse(match_val < MinCor(), rep.int("Unknown", nrow(.)), material_class))
+                    
+                    fwrite(all_matches, file) 
+                }
+                else{
+                    result <- bind_cols(DataR()$metadata, matches_to_single())
+                    result$signal_to_noise <- signal_to_noise()
+                    result <- result[, !sapply(result, OpenSpecy::is_empty_vector), with = FALSE] %>%
+                        select(file_name, col_id, material_class, match_val, signal_to_noise, everything()) %>%
+                        mutate(material_class = ifelse(match_val < MinCor(), rep.int("Unknown", nrow(.)), material_class))
+                    
+                    fwrite(result, file) 
+                    }
+                }
+            if(input$download_selection == "Thresholded Particles") {write_spec(thresholded_particles(), file = file)}
+            })
 
   # Hide functions or objects when the shouldn't exist.
   observe({
