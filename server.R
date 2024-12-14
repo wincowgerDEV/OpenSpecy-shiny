@@ -4,25 +4,25 @@ function(input, output, session) {
     options(shiny.maxRequestSize=10000*1024^2)
     
     #URL Query
-    observe({
-        query <- parseQueryString(session$clientData$url_search)
-        
-        for (i in 1:(length(reactiveValuesToList(input)))) {
-            nameval = names(reactiveValuesToList(input)[i])
-            valuetoupdate = query[[nameval]]
-            
-            if (!is.null(query[[nameval]])) {
-                if (is.na(as.numeric(valuetoupdate))) {
-                    updateTextInput(session, nameval, value = valuetoupdate)
-                }
-                else {
-                    updateTextInput(session, nameval, value = as.numeric(valuetoupdate))
-                }
-            }
-            
-        }
-        
-    })
+    # observeEvent(session$clientData$url_search, {
+    #     query <- parseQueryString(session$clientData$url_search)
+    #     
+    #     for (i in 1:(length(reactiveValuesToList(input)))) {
+    #         nameval = names(reactiveValuesToList(input)[i])
+    #         valuetoupdate = query[[nameval]]
+    #         
+    #         if (!is.null(query[[nameval]])) {
+    #             if (is.na(as.numeric(valuetoupdate))) {
+    #                 updateTextInput(session, nameval, value = valuetoupdate)
+    #             }
+    #             else {
+    #                 updateTextInput(session, nameval, value = as.numeric(valuetoupdate))
+    #             }
+    #         }
+    #         
+    #     }
+    #     
+    # })
 
   #create a random session id
   session_id <- digest(runif(10))
@@ -236,11 +236,11 @@ observeEvent(input$file, {
 
   #The data to use in the plot. 
   DataR_plot <- reactive({
-      if(is.null(preprocessed$data)){
-          list(wavenumber = numeric(), spectra = data.table(empty = numeric()))
-      }
-      else{
+      if(isTruthy(DataR())){
           filter_spec(DataR(), logic = 1:ncol(DataR()$spectra) == data_click$data)
+       }
+      else {
+          list(wavenumber = numeric(), spectra = data.table(empty = numeric()))
       }
   })
   

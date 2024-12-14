@@ -14,12 +14,13 @@ library(data.table)
 library(DT)
 library(digest)
 #library(curl)
-library(loggit)
-library(OpenSpecy)
+#library(loggit)
 library(bs4Dash)
-#library(glmnet)
 library(ggplot2)
 library(reshape2)
+
+library(OpenSpecy)
+#library(glmnet)
 
 # Define the custom theme
 theme_black_minimal <- function(base_size = 11, base_family = "") {
