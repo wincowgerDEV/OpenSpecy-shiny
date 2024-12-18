@@ -40,7 +40,6 @@ function(input, output, session) {
   #Sending data to a remote repo. 
 observeEvent(input$file, {
   # Read in data when uploaded based on the file type
-  req(input$file)
   data_click$data <- 1
   preprocessed$data <- NULL
 
@@ -646,7 +645,7 @@ output$progress_bars <- renderUI({
                         min_cor = MinCor(),
                         select = data_click$data,
                         source = "heat_plot") %>%
-          event_register("plotly_click")
+          event_register(event = "plotly_click")
   })
 
   thresholded_particles <- reactive({
