@@ -9,7 +9,7 @@ ui <- dashboardPage(
             tags$img(src = "logo.png", style = 'width: 15vw; padding:1rem;'),
             tags$head(
                 HTML(
-                    '<div class = "dark raised" data-ea-publisher="openanalysisorg" data-ea-type="text" data-ea-style="fixedfooter"></div>'
+                    '<div class = "dark raised" data-ea-publisher="openanalysisorg" data-ea-type="image" data-ea-style="stickybox" id = "openspecweba"></div>'
                 )
             )
         )
