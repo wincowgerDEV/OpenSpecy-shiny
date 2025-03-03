@@ -774,7 +774,7 @@ function(input, output, session) {
                     
                     all_matches <- reshape2::melt(correlation()) %>%
                         as.data.table() %>%
-                        left_join(libraryR()$metadata %>% select(-col_id, -file_name), 
+                        left_join(libraryR()$metadata %>% select(-any_of(c("col_id", "file_name"))), 
                                   by = c("Var1" = "sample_name")) %>%
                         left_join(dataR_metadata, 
                                   by = c("Var2" = "col_id")) %>%
