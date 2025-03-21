@@ -15,6 +15,7 @@
 #' @param file file to be read from or written to.
 #' @param colnames character vector of \code{length = 2} indicating the column
 #' names for the wavenumber and intensity; if \code{NULL} columns are guessed.
+#' @param comma_decimal logical(1) whether commas may represent decimals. 
 #' @param method submethod to be used for reading text files; defaults to
 #' \code{\link[data.table]{fread}()} but \code{\link[utils]{read.csv}()} works
 #' as well.
@@ -54,6 +55,7 @@
 #' @importFrom data.table data.table as.data.table fread transpose
 #' @export
 read_text <- function(file, colnames = NULL, method = "fread",
+                      comma_decimal = TRUE,
                       metadata = list(
                         file_name = basename(file),
                         user_name = NULL,
@@ -87,35 +89,35 @@ read_text <- function(file, colnames = NULL, method = "fread",
   if (all(grepl("^X[0-9]*", names(dt))))
     stop("missing header: use 'header = FALSE' or an alternative read method",
          call. = F)
+  #This is for the siMPle csv format. 
   if(sum(c("WaveNumber", "Raw spectrum", "1st derivative", "2nd derivative") %in% names(dt)) > 2){
-    dt <- as.data.table(lapply(dt, as.numeric))
-    wavenumbers <- dt[["WaveNumber"]]
-    spectra <- dt[,-"WaveNumber"]
-    os <- as_OpenSpecy(x = as.numeric(wavenumbers), spectra = spectra,
-                       metadata = metadata)
+      dt <- as.data.table(lapply(dt, as.numeric))
+      wavenumbers <- as.numeric(dt[["WaveNumber"]])
+      spectra <- dt[,-"WaveNumber"]
   }
   else if(grepl("\\.xyz$", basename(file), ignore.case = T)){
-    wavenumbers <- as.numeric(dt[1, ])[-c(1:2)]
-    # Remove the first row
-    xy <- dt[-1,1:2]
-    colnames(xy) <- c("x", "y")
-    dt <- transpose(dt[-1, -c(1:2)])
-    os <- as_OpenSpecy(x = wavenumbers, spectra = dt, metadata = xy)
+      wavenumbers <- as.numeric(dt[1, ])[-c(1:2)]
+      # Remove the first row
+      metadata <- dt[-1,1:2]
+      colnames(xy) <- c("x", "y")
+      spectra <- transpose(dt[-1, -c(1:2)])
   }
-  else if(sum(grepl("^[0-9]{1,}$",colnames(dt))) > 4) {    
-    
+  else if(sum(grepl("^[0-9]{1,}$",colnames(dt))) > 4) {
     wavenumbers <- colnames(dt)[grepl("^[0-9]{1,}$",colnames(dt))]
     spectra <- transpose(dt[,wavenumbers, with = FALSE])
+    wavenumbers <- as.numeric(wavenumbers)
     metadata_names <- colnames(dt)[!grepl("^[0-9]{1,}$",colnames(dt))]
 
     metadata <- dt[, metadata_names, with = FALSE]
-
-    os <- as_OpenSpecy(x = as.numeric(wavenumbers), spectra = spectra,
-                       metadata = metadata)
-  } else {
-    os <- as_OpenSpecy(dt, colnames = colnames, metadata = metadata,
+  } 
+  else {
+    os <- as_OpenSpecy(dt, colnames = colnames, metadata = metadata, comma_decimal = comma_decimal,
                        session_id = T)
+    return(os)
   }
+  
+  os <- as_OpenSpecy(x = wavenumbers, spectra = spectra,
+                     metadata = metadata, comma_decimal = comma_decimal)
 
   return(os)
 }
@@ -204,36 +206,43 @@ read_spa <- function(file,
   if (!grepl("\\.spa$", ignore.case = T, file))
     stop("file type should be 'spa'", call. = F)
 
-  trb <- file.path(file) |> file(open = "rb", ...)
-
-  seek(trb, 576, origin = "start")
-  spr <- readBin(trb, "numeric", n = 2, size = 4)
-
-  if (!all(spr >= 0 & spr <= 15000 & spr[1] > spr[2]))
-    stop("unknown spectral range", call. = F)
-
-  # Read the start offset
-  seek(trb, 386, origin = "start")
-  startOffset <- readBin(trb, "int", n = 1, size = 2)
-  # Read the length
-  seek(trb, 390, origin = "start")
-  readLength <- readBin(trb, "int", n = 1, size = 2)
-
-  # seek to the start
-  seek(trb, startOffset, origin = "start")
-
-  # we'll read four byte chunks
-  floatCount <- readLength / 4
-
-  # read all our floats
-  floatData <- c(readBin(trb, "double", floatCount, size = 4))
-
-  close(trb)
-
-  x <- seq(spr[1], spr[2], length = length(floatData))
-  y <- floatData
-
-  os <- as_OpenSpecy(x, data.table(intensity = y), metadata = metadata,
+    # Read a *.spa file
+    # Returns:
+    #   A list containing Spectra, Wavelengths (nm), and Titles
+    # Converted to r from https://github.com/lerkoah/spa-on-python/blob/master/LoadSpectrum.py
+    con <- file(file, "rb", ...) # Open the file in binary mode
+    on.exit(close(con)) # Ensure the file is closed
+    
+    seek(con, where = 564, rw = "r")
+    Spectrum_Pts <- readBin(con, integer(), size = 4, n = 1, endian = "little")
+    
+    seek(con, where = 30, rw = "r")
+    SpectraTitlesRaw <- readBin(con, raw(), n = 255)
+    SpectraTitles <- rawToChar(SpectraTitlesRaw[SpectraTitlesRaw != as.raw(0)])
+    
+    seek(con, where = 576, rw = "r")
+    Max_Wavenum <- readBin(con, numeric(), size = 4, n = 1, endian = "little")
+    Min_Wavenum <- readBin(con, numeric(), size = 4, n = 1, endian = "little")
+    
+    # Generate wavenumbers
+    Wavenumbers <- rev(seq(Min_Wavenum, Max_Wavenum, length.out = Spectrum_Pts))
+    
+    seek(con, where = 288, rw = "r")
+    
+    Flag <- 0
+    while (Flag != 3) {
+        Flag <- readBin(con, integer(), size = 2, n = 1, endian = "little")
+    }
+    
+    DataPosition <- readBin(con, integer(), size = 2, n = 1, endian = "little")
+    seek(con, where = DataPosition, rw = "r")
+    
+    Spectra <- readBin(con, numeric(), size = 4, n = Spectrum_Pts, endian = "little")
+    
+    # Return the results
+    metadata$title <- SpectraTitles
+    
+    os <- as_OpenSpecy(Wavenumbers, data.table(intensity = Spectra), metadata,
                      session_id = T)
 
   return(os)
@@ -273,13 +282,33 @@ read_spc <- function(file,
                        other_info = NULL,
                        license = "CC BY-NC"),
                      ...) {
-  spc <- read.spc(file)
+    
+    con <- file(file, "rb")
+    on.exit(close(con))
+    raw_data <- readBin(con, what = "raw", n = 544)
+    fexp = readBin(raw_data[4], "integer", 1, 1, signed = TRUE)
+    
+    if(fexp == -128){
+        fnpts = readBin(raw_data[5:8], "integer", 1, 4)
+        ffirst = readBin(raw_data[9:16], "double", 1, 8)
+        flast = readBin(raw_data[17:24], "double", 1, 8)
 
-  x <- spc@wavelength
-  y <- as.numeric(unname(spc@data$spc[1,]))
-
-  os <- as_OpenSpecy(x, data.table(intensity = y), metadata = metadata,
-                     session_id = T)
+        os <- as_OpenSpecy(seq(from = ffirst, to = flast, length.out = fnpts), 
+                           data.table(intensity = readBin(con, what = "numeric", n = fnpts, size = 4, endian = "little")),
+                           metadata = metadata,
+                           session_id = T) 
+    }
+    else{
+        spc <- read.spc(file)
+        
+        x <- spc@wavelength
+        y <- as.numeric(unname(spc@data$spc[1,]))
+        
+        os <- as_OpenSpecy(x, data.table(intensity = y), metadata = metadata,
+                           session_id = T)      
+    }
+    
+  
 
   return(os)
 }
