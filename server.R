@@ -55,48 +55,55 @@ function(input, output, session) {
     
     withProgress(message = "Reading data", value = 2/3, {
       
-      rout <- tryCatch(expr = {
-        read_any(file = as.character(input$file$datapath)) |>
-          c_spec(range = "common", res = if(input$conform_decision){input$conform_res} else{8}) |>
-          manage_na(ig = c(NA, 0), type = "remove")},
-        error = function(e){
-          class(e$message) <- "simpleWarning"
-          e$message
-        }#,
-        #warning = function(w){
-        #class(w$message) <- "simpleWarning"
-        #    w$message
-        #}
-      )
-      #print(rout)
-      
-      if(all(!grepl("(\\.hdr$)|(\\.dat$)|(\\.zip$)", input$file$datapath))){
-        rout$metadata$file_name <- input$file$name
-      }
-      
-      checkit <- tryCatch(expr = {check_OpenSpecy(rout)},
-                          error = function(e){
-                            class(e$message) <- "simpleWarning"
-                            e$message
-                          },
-                          warning = function(w){
-                            class(w$message) <- "simpleWarning"
-                            w$message
-                          })
-      #print(checkit)
-      if (inherits(rout, "simpleWarning") | inherits(checkit, "simpleWarning")) {
-        show_alert(
-          title = "Something went wrong with reading the data :-(",
-          text =  paste0(if(inherits(rout, "simpleWarning")){paste0("There was an error during data loading that said ", 
-                                                                    rout, ".")} else{""},
-                         if(inherits(checkit, "simpleWarning")){paste0(" There was an error during data checking that said ", 
-                                                                       checkit, ".")} else{""},
-                         ". If you uploaded a text/csv file, make sure that the columns are numeric and named 'wavenumber' and 'intensity'."),
-          type =  "error"
+        
+        rout <- tryCatch(expr = {
+            read_any(file = as.character(input$file$datapath)) |>
+                c_spec(range = "common", res = if(input$conform_decision){input$conform_res} else{8}) |>
+                manage_na(ig = c(NA, 0), type = "remove")},
+            error = function(e){
+                class(e$message) <- "simpleWarning"
+                e$message
+            }#,
+            #warning = function(w){
+            #class(w$message) <- "simpleWarning"
+            #    w$message
+            #}
         )
-        reset("file")
-        preprocessed$data <- NULL
-      }
+        #print(rout)
+        
+        if(!inherits(rout, "simpleWarning") && all(!grepl("(\\.hdr$)|(\\.dat$)|(\\.zip$)", input$file$datapath))){
+            rout$metadata$file_name <- input$file$name
+        }
+        
+        if(!inherits(rout, "simpleWarning")){
+            checkit <- tryCatch(expr = {check_OpenSpecy(rout)},
+                                error = function(e){
+                                    class(e$message) <- "simpleWarning"
+                                    e$message
+                                },
+                                warning = function(w){
+                                    class(w$message) <- "simpleWarning"
+                                    w$message
+                                })          
+        }
+        else{
+            checkit <- NA
+        }
+        
+        #print(checkit)
+        if (inherits(rout, "simpleWarning") | inherits(checkit, "simpleWarning")) {
+            show_alert(
+                title = "Something went wrong with reading the data :-(",
+                text =  paste0(if(inherits(rout, "simpleWarning")){paste0("There was an error during data loading that said ", 
+                                                                          rout, ".")} else{""},
+                               if(inherits(checkit, "simpleWarning")){paste0(" There was an error during data checking that said ", 
+                                                                             checkit, ".")} else{""},
+                               ". If you uploaded a text/csv file, make sure that the columns are numeric and named 'wavenumber' and 'intensity'."),
+                type =  "error"
+            )
+            reset("file")
+            preprocessed$data <- NULL
+        }
       
       else {
         preprocessed$data <- rout 
