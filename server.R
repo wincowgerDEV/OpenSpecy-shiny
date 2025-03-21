@@ -70,19 +70,25 @@ observeEvent(input$file, {
       )
       #print(rout)
       
-      if(all(!grepl("(\\.hdr$)|(\\.dat$)|(\\.zip$)", input$file$datapath))){
+      if(!inherits(rout, "simpleWarning") && all(!grepl("(\\.hdr$)|(\\.dat$)|(\\.zip$)", input$file$datapath))){
           rout$metadata$file_name <- input$file$name
       }
       
-      checkit <- tryCatch(expr = {check_OpenSpecy(rout)},
-                          error = function(e){
-                              class(e$message) <- "simpleWarning"
-                              e$message
-                          },
-                          warning = function(w){
-                              class(w$message) <- "simpleWarning"
-                              w$message
-                          })
+      if(!inherits(rout, "simpleWarning")){
+          checkit <- tryCatch(expr = {check_OpenSpecy(rout)},
+                              error = function(e){
+                                  class(e$message) <- "simpleWarning"
+                                  e$message
+                              },
+                              warning = function(w){
+                                  class(w$message) <- "simpleWarning"
+                                  w$message
+                              })          
+      }
+      else{
+          checkit <- NA
+      }
+      
     #print(checkit)
     if (inherits(rout, "simpleWarning") | inherits(checkit, "simpleWarning")) {
       show_alert(
