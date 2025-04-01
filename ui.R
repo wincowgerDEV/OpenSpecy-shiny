@@ -199,7 +199,7 @@ dashboardPage(dark = T,
                                                                                        fill = T),
                                                                     fluidRow(
                                                                         box(width = 12,
-                                                                            footer = tags$small("Signal thresholding technique, value, and histogram threshold plot."),
+                                                                            footer = tags$small("Signal thresholding technique, value, and histogram threshold plot. If turned on, the threshold will be applied to any batch analysis results and values lower than the minimum will appear blacked out. 'Signal Over Noise' divides the highest peak by a low region. 'Signal Times Noise' multiplies the mean intensity by the standard deviation. 'Total Signal' is the sum of signal intensities. The line on the histogram plot is the threshold being used."),
                                                                             title = prettySwitch("threshold_decision",
                                                                                                  label = "Threshold Signal-Noise",
                                                                                                  inline = T,
@@ -244,9 +244,10 @@ dashboardPage(dark = T,
                                                                             collapsed = T,
                                                                             footer = tags$small("Smoothing can enhance signal to noise and uses the SG filter with the polynomial order specified, 3 default usually works well. 
                                                                             Derivative transformation uses the order specified. 
-                                                                            If doing identification with a derivative library, 1 is required, 0 should be used if no derivative transformation is desired. 
-                                                                            Smoothing uses the SG filter on an window of points, specifying the wavenumber window larger will make the spectra more smooth.
-                                                                            The absolute value does something similar to intensity correction to make the spectra more absorbance-like."),
+                                                                            If doing identification with a derivative library, 1 is required. 0 should be used if no derivative transformation is desired. 
+                                                                            Smoothing uses the SG filter on an window of data points with the wavenumber window determining how many points to use. 
+                                                                            Specifying the wavenumber window larger will make the spectra more smooth.
+                                                                            The absolute value does something similar to intensity correction to make the spectra more absorbance-like and is required for comparison with the derivative library."),
                                                                             title =  prettySwitch(inputId = "smooth_decision",
                                                                                                   label = "Smoothing/Derivative",
                                                                                                   inline = T,
@@ -309,14 +310,25 @@ dashboardPage(dark = T,
                                                                                  box(width = 12,
                                                                                      collapsed = T,
                                                                                      footer = tags$small("This algorithm automatically fits to the baseline by fitting 
-                                                                                     polynomials of the provided order to the whole spectrum using the iModPolyFit algorithm."),
+                                                                                     polynomials of the provided order to the whole spectrum using the iModPolyFit+ algorithm.
+                                                                                                         New options for the maximum number of iterations while finding the baseline 
+                                                                                                         (previously defaulted to 10). This option tends to impact the outcome of high noise spectra more than low noise spectra. 
+                                                                                                         Additionally an option for wether to refit a polynomial to the baseline found is provided. Turning this off can produce 
+                                                                                                         better baseline subtraction for low wavenumber resolution spectra and better maintain the features of the noise and subtle baseline shapes if that is of interest."),
                                                                                      title = prettySwitch("baseline_decision",
                                                                                                      label = "Baseline Correction",
                                                                                                      inline = T,
                                                                                                      value = F,
                                                                                                      status = "success",
                                                                                                      fill = T),
-                                                                                     sliderInput("baseline", "Baseline Correction Polynomial", min = 1, max = 20, value = 8)
+                                                                                     sliderInput("baseline", "Baseline Correction Polynomial", min = 1, max = 20, value = 8),
+                                                                                     sliderInput("iterations", "Iterations", min = 1, max = 100, value = 10),
+                                                                                     prettySwitch("refit",
+                                                                                                  label = "Refit Polynomial",
+                                                                                                  inline = T,
+                                                                                                  value = F,
+                                                                                                  status = "success",
+                                                                                                  fill = T)
                                                                              )),
                                                                              fluidRow(
                                                                                  box(width = 12,
@@ -379,21 +391,29 @@ dashboardPage(dark = T,
                                                                 fluidRow(
                                                                     box(width = 12,
                                                                         collapsed = T,
-                                                                        footer = tags$small("Options for showing collapsed versions of identification"),
+                                                                        footer = tags$small("Options for showing collapsed versions of identification. 
+                                                                                            This is only useful for hyperspectral image analysis as it 
+                                                                                            will interpret the data as an image of particles and characterize the particles in the summary data by size. 
+                                                                                            Collapse Function will determine how the multiple spectra for each particle are averaged. Logic 
+                                                                                            will determine how particle regions are determined. If Thresholds is set then any Threshold Signal-Noise or Threshold Correlation settings currently chosen will be used. 
+                                                                                            If Identities is chosen then the names of the material class matches determined by the identification routine will be used. If both is specified then both are used together."),
                                                                         title = prettySwitch("collapse_decision",
-                                                                                             label = "Collapse Spectra",
+                                                                                             label = "Collapse Particle Spectra",
                                                                                              inline = T,
                                                                                              value = F,
                                                                                              status = "success",
                                                                                              fill = T),
                                                                         pickerInput(inputId = "collapse_type", label =  "Collapse Function",
-                                                                                    choices =  c("Median", "Mean", "Geometric Mean"))
+                                                                                    choices =  c("Median", "Mean", "Geometric Mean")),
+                                                                        pickerInput(inputId = "collapse_log_type", label =  "Particle Region Logic",
+                                                                                    choices =  c("Thresholds","Identities", "Both"))
                                                                         
                                                                         )), 
                                                                 fluidRow(
                                                                     box(width = 12,
                                                                         collapsed = T,
-                                                                        footer = tags$small("Options for spatial Gaussian smoothing of hyperspectral images"),
+                                                                        footer = tags$small("Spatial Gaussian smoothing of hyperspectral images can reduce background noise and improve image analysis. 
+                                                                        Increasing this parameter will increase how smooth the image is while decreasing it does the opposite."),
                                                                         title = prettySwitch("spatial_decision",
                                                                                              label = "Spatial Smooth",
                                                                                              inline = T,
@@ -420,13 +440,15 @@ dashboardPage(dark = T,
                                                                                 box(width = 12,
                                                                                     collapsed = T,
                                                                                     footer = tags$small("These options define the strategy for identification.
-                                                                                    The ID Library will inform which library is used. Both (default) will search both
-                                                                                    FTIR and Raman libraries. Deriv will search against a derivative transformed library. 
-                                                                                    No Baseline will search against a baseline corrected library. This should be in line 
-                                                                                    with how you choose to process your spectra. Cor options use a simple Pearson correlation
-                                                                                    search algorithm. AI is uses either a multinomial model (experimental) or 
-                                                                                    correlation on mediod (default) spectra from the library. Correlation thresholding will set the minimum 
-                                                                                    value from matching to use as a 'positive identification'"),
+                                                                                    The Spectrum Type will inform which library is used. Both (default) will search both
+                                                                                    FTIR and Raman libraries while specifying FTIR or Raman will only search the spefied library.
+                                                                                    Library Transformation determines how the library is transformed and should be in line 
+                                                                                    with how you choose to process your spectra. Derivative will search against a derivative transformed library. 
+                                                                                    No Baseline will search against a baseline corrected library. Library Type will determine the approach
+                                                                                    used to identify the spectra. Full (only available through R) will search all available libraries and will be slower but more accurate. 
+                                                                                    Medoid will only search library spectra that have been identified as critical to search. Multinomial will use a multinomial regression to identify the spectra. 
+                                                                                    Correlation thresholding will set the minimum 
+                                                                                    value from matching to use as a 'confident identification' and is typically set to 0.7 but may be different depending on your needs."),
                                                                                     title = prettySwitch(inputId = "active_identification",
                                                                                                     label = "Identification",
                                                                                                     inline = T,

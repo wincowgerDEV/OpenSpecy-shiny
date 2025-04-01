@@ -209,6 +209,8 @@ observeEvent(input$file, {
                     subtr_baseline_args = list(type = "polynomial", 
                                                degree = input$baseline, 
                                                raw = FALSE, 
+                                               refit_at_end = input$refit,
+                                               iterations = input$iterations,
                                                baseline = NULL),
                     smooth_intens = input$smooth_decision, 
                     smooth_intens_args = list(polynomial = input$smoother, 
@@ -268,14 +270,34 @@ observeEvent(input$file, {
   })
   
   particles_logi <- reactive({
-      if(input$active_identification & input$threshold_decision & input$cor_threshold_decision){
-          return(signal_to_noise() > MinSNR() & max_cor() > MinCor())
+      if(input$collapse_log_type == "Thresholds"){
+          if(input$active_identification & input$threshold_decision & input$cor_threshold_decision){
+              return(signal_to_noise() > MinSNR() & max_cor() > MinCor())
+          }
+          if(input$threshold_decision){
+              return(signal_to_noise() > MinSNR())
+          }
+          if(input$active_identification & input$cor_threshold_decision){
+              return(max_cor() > MinCor())
+          }          
       }
-      if(input$threshold_decision){
-          return(signal_to_noise() > MinSNR())
+      if(input$collapse_log_type == "Identities"){
+          return(max_cor_identity())
       }
-      if(input$active_identification & input$cor_threshold_decision){
-          return(max_cor() > MinCor())
+      if(input$collapse_log_type == "Both"){
+          background_fill <- max_cor_identity()
+          if(input$active_identification & input$threshold_decision & input$cor_threshold_decision){
+              background_fill[!(signal_to_noise() > MinSNR() & max_cor() > MinCor())] <- "background"
+              return(background_fill)
+          }
+          if(input$threshold_decision){
+              background_fill[!(signal_to_noise() > MinSNR())] <- "background"
+              return(background_fill)
+          }
+          if(input$active_identification & input$cor_threshold_decision){
+              background_fill[!(max_cor() > MinCor())] <- "background"
+              return(background_fill)
+          }   
       }
       return(NULL)
   })
@@ -316,6 +338,31 @@ observeEvent(input$file, {
                        }
                else{NULL}, 
                tooltip = "This tells you whether the signal to noise ratio or the match observed is above or below the thresholds.")
+  })
+  
+  #Check that correct logic exists for matching. 
+  observe({
+      if (!is.null(preprocessed$data) & input$id_strategy == "deriv" & input$active_identification) {
+          if(!input$active_preprocessing | !input$smooth_decision | input$smoother != 3 | input$derivative_order != 1 | input$smoother_window != 90 | !input$derivative_abs){
+              show_alert(
+              title = "Best practice not followed!",
+              text = paste0("If you are using the derivative library or model the typical best practice is to preprocess the spectra with ",
+                            "Smoothing/Derivative turned on, the Polynomial set to 3, the Derivative Order set to 1, the Wavenumber Window set to 90 ",
+                            "and the Absolute Value turned on because that is the way the library was created. You could be doing something special like uploading already processed spectra and if so feel free to ignore this warning."),
+              type = "warning")
+          }
+      }
+      if (!is.null(preprocessed$data) & input$id_strategy == "nobaseline" & input$active_identification) {
+          if(!input$active_preprocessing | !input$baseline_decision | (input$smooth_decision & (input$derivative_order != 0 | input$derivative_abs))){
+              show_alert(
+                  title = "Best practice not followed!",
+                  text = paste0("If you are using the no baseline library or model the typical best practice is to preprocess the spectra with ",
+                                "Baseline Correction turned on and setting Derivative Order to 0 and turning off Absolute Value if using Smoothing/Derivative. ",
+                                "because that is the way the library was created. You could be doing something special like uploading already processed spectra and if so feel free to ignore this warning."),
+                  type = "warning")
+          }
+      }
+      
   })
   
   #The correlation matrix between the unknowns and the library. 
@@ -371,6 +418,15 @@ observeEvent(input$file, {
   #The maximum correlation or AI value. 
   max_cor_identity <- reactive({
       req(!is.null(preprocessed$data))
+      if(isTruthy(input$active_identification)){
+          if(!grepl("^model$", input$lib_type)){
+              fifelse(max_cor() < MinCor(), rep.int("Unknown", length(max_cor())), libraryR()$metadata$material_class[match(names(max_cor()), libraryR()$metadata$sample_name)])
+          }
+          else{
+              fifelse(max_cor() < MinCor(), rep.int("Unknown", length(max_cor())), names(max_cor()))
+          }
+      }
+      
       if(isTruthy(input$active_identification)){
           if(!grepl("^model$", input$lib_type)){
               fifelse(max_cor() < MinCor(), rep.int("Unknown", length(max_cor())), libraryR()$metadata$material_class[match(names(max_cor()), libraryR()$metadata$sample_name)])
@@ -655,6 +711,7 @@ output$progress_bars <- renderUI({
   })
 
   thresholded_particles <- reactive({
+      req(input$collapse_decision)
       collapse_fun <- function(x, type = input$collapse_type) {
           switch(type,
                  "Mean" = mean(x),
@@ -674,8 +731,6 @@ output$progress_bars <- renderUI({
       ggplot() +
           geom_histogram(aes(x = sqrt(thresholded_particles()$metadata$area)), 
                          fill = "white") +
-          #scale_x_continuous(trans =  scales::modulus_trans(p = 0, offset = 1)) +
-          #geom_vline(xintercept = MinCor(), color = "red") +
           theme_black_minimal(base_size = 15) +
           labs(x = "Nominal Particle Size (√area)", y = "Count")
   })
@@ -683,24 +738,16 @@ output$progress_bars <- renderUI({
   output$material_plot <- renderPlot({
       req(!is.null(preprocessed$data))
       req(max_cor_identity())
-      #Metadata for all the top correlations.
-      # top_correlation <- data.table(object_id = names(DataR()$spectra),
-      #                sample_name = names(max_cor()),
-      #                match_val = max_cor(),
-      #                match_threshold = MinCor(),
-      #                good_match_vals = max_cor() > MinCor(),
-      #                signal_to_noise = signal_to_noise(),
-      #                signal_threshold = MinSNR(),
-      #                good_signal = signal_to_noise() > MinSNR(),
-      #                good_matches = max_cor() > MinCor() & signal_to_noise() > MinSNR()) %>%
-      #         {if(!grepl("^model$", input$lib_type)){bind_cols(., DataR()$metadata)} else{.}} %>%
-      #         {if(!grepl("^model$", input$lib_type)){left_join(., libraryR()$metadata %>% select(-file_name, -col_id), by = c("sample_name"))} else{.}} %>%
-      #         .[, !sapply(., OpenSpecy::is_empty_vector), with = F] %>%
-      #         select(file_name, col_id, material_class, spectrum_identity, match_val, signal_to_noise, everything())
+      if(isTruthy(thresholded_particles())){
+          if(all(grepl("_[0-9]+", thresholded_particles()$metadata$feature_id))){
+              match_names <- gsub("_[0-9]+", "", thresholded_particles()$metadata$feature_id)
+          }
+      }  else {
+          match_names <- max_cor_identity()
+      } 
+
       ggplot() +
-          geom_bar(aes(y = max_cor_identity(), fill = max_cor_identity())) +
-          #scale_x_continuous(trans =  scales::modulus_trans(p = 0, offset = 1)) +
-          #geom_vline(xintercept = MinCor(), color = "red") +
+          geom_bar(aes(y = match_names, fill = match_names)) +
           theme_black_minimal(base_size = 15) +
           theme(legend.position = "none") +
           labs(x = "Count", y = "Material Class")
