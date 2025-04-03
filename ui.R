@@ -14,12 +14,34 @@ ui <- dashboardPage(
             )
         )
     ),
+    dashboardSidebar(
+        sidebarUserPanel(name = "Welcome!"),
+        sidebarMenu(
+            id = "sidebarmenu",
+            menuItem(
+                "Analyze Spectra",
+                tabName = "analyze",
+                icon = icon("bar-chart")
+            ),
+            menuItem("About", tabName = "about", icon = icon("sliders-h")),
+            menuItem(
+                "Partner With Us",
+                tabName = "partner",
+                icon = icon("hands-helping")
+            ),
+            menuItem(
+                "Contract Us",
+                tabName = "contract",
+                icon = icon("file-contract")
+            )
+        )
+    ),
     #Body ----
     dashboardBody(
         #Script for all pages ----
         # Required for any of the shinyjs functions.
         shinyjs::useShinyjs(),
-        
+        #tags$script(src = "https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"),
         tags$head(
             tags$script(async = T, src = "https://buttons.github.io/buttons.js"),
             tags$style(
@@ -104,7 +126,7 @@ ui <- dashboardPage(
                         ), column(
                             6,
                             HTML(
-                                "<iframe width='100%' height='100%' src='https://www.youtube-nocookie.com/embed/3RKufDxzriE' title='YouTube video player' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>"
+                                "<iframe width='100%' height='100%' src='https://www.youtube-nocookie.com/embed/3RKufDxzriE' title='YouTube video player' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen require-corp credentialless (Chrome > 96)></iframe>"
                             )
                         ))
                     )
@@ -118,10 +140,10 @@ ui <- dashboardPage(
                         fluidRow(column(
                             6,
                             HTML(
-                                "<iframe width='100%' height='50%' src='https://www.youtube-nocookie.com/embed/oWwRWwXf0sc' title='YouTube video player' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>"
+                                "<iframe width='100%' height='50%' src='https://www.youtube-nocookie.com/embed/oWwRWwXf0sc' title='YouTube video player' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen require-corp credentialless (Chrome > 96)></iframe>"
                             ),
                             HTML(
-                                "<iframe width='100%' height='50%' src='https://www.youtube-nocookie.com/embed/cZZ3hgvIcao' title='YouTube video player' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>"
+                                "<iframe width='100%' height='50%' src='https://www.youtube-nocookie.com/embed/cZZ3hgvIcao' title='YouTube video player' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen require-corp credentialless (Chrome > 96)></iframe>"
                             )
                         ), column(
                             6,
@@ -895,20 +917,15 @@ ui <- dashboardPage(
                 ),
                 style = "padding: 50px"
             ))
-        )
     ),
     
     #Footer ----
-    footer = dashboardFooter(left = p(citation), right = HTML(
-        paste0(
-            uiOutput("translate"),
-            a(href = "TOS.txt", "Terms And Conditions", class = "lead"),
-            br(),
-            a(href = "privacy_policy.txt", "Privacy Policy", class = "lead")
-        ),
-        #Ethical Ads
-        HTML(
-            '<div class = "dark raised" data-ea-publisher="openanalysisorg" data-ea-type="text" data-ea-style="fixedfooter"></div>'
-        )
-    ))
+    tags$footer(citation,
+                style = "
+            padding: 10px;
+            background-color: #363e45;
+            color: white;
+            ")
+)
+
 )
