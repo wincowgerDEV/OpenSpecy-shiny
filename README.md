@@ -37,7 +37,7 @@ shiny::runGitHub('OpenSpecy-shiny', 'wincowgerDEV')
 ```
 ## Version History
 
-Last updated on [03/21/2024]([)](https://rawcdn.githack.com/Moore-Institute-4-Plastic-Pollution-Res/openspecy/0c43f59813850ddaa6ade8c0bc41e8e4f10a3bbc/docs/index.html)
+Last updated on [03/21/2024](https://rawcdn.githack.com/Moore-Institute-4-Plastic-Pollution-Res/openspecy/0c43f59813850ddaa6ade8c0bc41e8e4f10a3bbc/docs/index.html)
 
 
 
