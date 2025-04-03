@@ -34,7 +34,6 @@ s3_cred.csv
 # R Environment Variables
 .Renviron
 # pkgdown site
-docs/
 # System files
 *.ini
 *.swp

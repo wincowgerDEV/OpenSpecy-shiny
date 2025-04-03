@@ -12,7 +12,18 @@ ui <- dashboardPage(
                     '<div class = "dark raised" data-ea-publisher="openanalysisorg" data-ea-type="image" data-ea-style="stickybox" id = "openspecweba"></div>'
                 )
             )
-        )
+        ),
+        tags$li(
+                class = "dropdown",
+                style = "list-style-type: none;",
+                tags$a(
+                    paste0("Last Updated: ",Sys.Date()),
+                    href = "https://github.com/Moore-Institute-4-Plastic-Pollution-Res/openspecy?tab=readme-ov-file#version-history",
+                    target = "_blank",
+                    title = "Click here to view older versions of this app",
+                    style = "font-size: 19px;text-decoration: none;"
+                )
+                )
     ),
     dashboardSidebar(
         sidebarUserPanel(name = "Welcome!"),
@@ -675,7 +686,7 @@ ui <- dashboardPage(
                                     inputId = "lib_type",
                                     label =  "Library Type",
                                     choices =  c(
-                                        "Full" = "full",
+                                        #"Full" = "full",
                                         "Medoid" = "medoid",
                                         "Multinomial" = "model"
                                     )

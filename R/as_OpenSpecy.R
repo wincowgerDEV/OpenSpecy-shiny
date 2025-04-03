@@ -23,6 +23,7 @@
 #' @param colnames names of the wavenumber column and spectra column, makes
 #' assumptions based on column names or placement if \code{NULL}.
 #' @param n number of spectra to generate the spatial coordinate grid with.
+#' @param comma_decimal logical(1) whether commas may represent decimals. 
 #' @param \ldots additional arguments passed to submethods.
 #'
 #' @details
@@ -150,6 +151,7 @@
 #' @importFrom data.table as.data.table
 #' @importFrom digest digest
 #' @importFrom utils sessionInfo
+#' @importFrom stats ave
 #' @export
 as_OpenSpecy <- function(x, ...) {
   UseMethod("as_OpenSpecy")
@@ -271,7 +273,20 @@ as_OpenSpecy.default <- function(x, spectra,
                                  ),
                                  coords = "gen_grid",
                                  session_id = FALSE,
+                                 comma_decimal = FALSE,
                                  ...) {
+  
+  if(comma_decimal){
+    #Check wavenumbers for comma decimal format
+    if(all(grepl("^[0-9]+,[0-9]+$", x))){
+      x <- as.numeric(gsub(",",".", x))
+    }
+    #Check the spectra for comma decimal. 
+    if(all(vapply(spectra, function(x) {
+      all(grepl(pattern = "^[0-9]+,[0-9]+$", x))}, FUN.VALUE = logical(1)))){
+      spectra[] <- lapply(spectra, function(x){as.numeric(gsub(",", ".", x))})
+    }
+  }
   if (!is.numeric(x) || !is.vector(x))
     stop("'x' must be numeric vector", call. = F)
   if (!inherits(spectra, c("data.frame", "matrix")))
@@ -384,8 +399,10 @@ check_OpenSpecy <- function(x) {
        identical(order(x$wavenumber), length(x$wavenumber):1)))
     warning("Wavenumbers should be a continuous sequence for all OpenSpecy ",
             "functions to run smoothly", call. = F)
+  if(!(du <- !any(duplicated(x$wavenumber))))
+    warning("Wavenumbers need to be unqiue values.", call. = F)
   
-  chk <- all(cw, cs, cm, cr, cl, cu, cv, co, csz, csn, cwn, cln, cos)
+  chk <- all(cw, cs, cm, cr, cl, cu, cv, co, csz, csn, cwn, cln, cos, du)
   
   return(chk)
 }

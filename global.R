@@ -15,6 +15,7 @@ library(dplyr)
 library(shinyBS)
 library(jsonlite)
 library(OpenSpecy)
+library(DT)
 
 lapply(list.files("R", full.names = TRUE), source)
 
