@@ -856,17 +856,14 @@ output$progress_bars <- renderUI({
 
   # Hide functions or objects when the shouldn't exist. 
   observe({
-    toggle(id = "heatmap", condition = !is.null(preprocessed$data))
-    toggle(id = "placeholder1", condition = is.null(preprocessed$data))
-    if(!is.null(preprocessed$data)){
-        toggle(id = "heatmap", condition = ncol(preprocessed$data$spectra) > 1)
-    }
-    if(is.null(event_data("plotly_click", source = "heat_plot"))){
-        data_click$data <- 1
-    }
-    else{
-        data_click$data <- event_data("plotly_click", source = "heat_plot")[["pointNumber"]] + 1
-    }
+      toggle(id = "heatmap", condition = isTruthy(ncol(preprocessed$data$spectra) > 1))
+      toggle(id = "placeholder1", condition = !isTruthy(preprocessed$data))
+      if(!isTruthy(event_data("plotly_click", source = "heat_plot")[["pointNumber"]])){
+          data_click$data <- 1
+      }
+      else{
+          data_click$data <- event_data("plotly_click", source = "heat_plot")[["pointNumber"]] + 1
+      }   
     })
 
   #Google translate. 
