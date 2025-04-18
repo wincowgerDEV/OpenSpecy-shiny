@@ -151,7 +151,7 @@ function(input, output, session) {
         library <- read_any("data/medoid_derivative.rds")
       }
       else{
-        get_lib("medoid_derivative")
+        get_lib("medoid_derivative", shinylive = TRUE)
         library <- read_any("data/medoid_derivative.rds")
       }
       #return(library)
@@ -162,7 +162,7 @@ function(input, output, session) {
         library <- read_any("data/medoid_nobaseline.rds")
       }
       else{
-        get_lib("medoid_nobaseline")
+        get_lib("medoid_nobaseline", shinylive = TRUE)
         library <- read_any("data/medoid_nobaseline.rds")
       }
     }
@@ -172,7 +172,7 @@ function(input, output, session) {
         library <- read_any("data/model_derivative.rds")
       }
       else{
-        get_lib("model_derivative")
+        get_lib("model_derivative", shinylive = TRUE)
         library <- read_any("data/model_derivative.rds")
         
       }
@@ -185,7 +185,7 @@ function(input, output, session) {
         
       }
       else{
-        get_lib("model_nobaseline")
+        get_lib("model_nobaseline", shinylive = T)
         library <- read_any("data/model_nobaseline.rds")
       }
       return(library)
@@ -195,7 +195,7 @@ function(input, output, session) {
         library <- read_any("data/nobaseline.rds")
       }
       else{
-        get_lib("nobaseline")
+        get_lib("nobaseline", shinylive = T)
         library <- load_lib("data/nobaseline.rds")
       }
     }
