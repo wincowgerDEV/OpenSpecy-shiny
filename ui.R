@@ -686,7 +686,7 @@ ui <- dashboardPage(
                                     inputId = "lib_type",
                                     label =  "Library Type",
                                     choices =  c(
-                                        #"Full" = "full",
+                                        "Full" = "full",
                                         "Medoid" = "medoid",
                                         "Multinomial" = "model"
                                     )

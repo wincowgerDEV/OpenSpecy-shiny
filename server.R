@@ -151,7 +151,7 @@ function(input, output, session) {
         library <- read_any("data/medoid_derivative.rds")
       }
       else{
-        get_lib("medoid_derivative", shinylive = TRUE)
+        get_lib("medoid_derivative", mode = "w", path = "data/", aws = TRUE)
         library <- read_any("data/medoid_derivative.rds")
       }
       #return(library)
@@ -162,7 +162,7 @@ function(input, output, session) {
         library <- read_any("data/medoid_nobaseline.rds")
       }
       else{
-        get_lib("medoid_nobaseline", shinylive = TRUE)
+        get_lib("medoid_nobaseline", mode = "w", path = "data/", aws = TRUE)
         library <- read_any("data/medoid_nobaseline.rds")
       }
     }
@@ -172,9 +172,8 @@ function(input, output, session) {
         library <- read_any("data/model_derivative.rds")
       }
       else{
-        get_lib("model_derivative", shinylive = TRUE)
+        get_lib("model_derivative", mode = "w", path = "data/", aws = TRUE)
         library <- read_any("data/model_derivative.rds")
-        
       }
       return(library)
     }
@@ -182,21 +181,29 @@ function(input, output, session) {
              input$lib_type == "model") {
       if (file.exists("data/model_nobaseline.rds")) {
         library <- read_any("data/model_nobaseline.rds")
-        
       }
       else{
-        get_lib("model_nobaseline", shinylive = T)
+        get_lib("model_nobaseline", mode = "w", path = "data/", aws = TRUE)
         library <- read_any("data/model_nobaseline.rds")
       }
       return(library)
     }
     else if (grepl("nobaseline$", input$id_strategy)) {
-      if (!file.exists("data/nobaseline.rds")) {
+      if (file.exists("data/nobaseline.rds")) {
         library <- read_any("data/nobaseline.rds")
       }
       else{
-        get_lib("nobaseline", shinylive = T)
-        library <- load_lib("data/nobaseline.rds")
+        get_lib("nobaseline", mode = "w", path = "data/", aws = TRUE)
+        library <- read_any("data/nobaseline.rds")
+      }
+    }
+    else if (grepl("deriv$", input$id_strategy)) {
+      if (file.exists("data/derivative.rds")) {
+        library <- read_any("data/derivative.rds")
+      }
+      else{
+        get_lib("derivative",mode = "w", path = "data/", aws = TRUE)
+        library <- read_any("data/derivative.rds")
       }
     }
     if (grepl("^both", input$id_spec_type)) {
@@ -208,7 +215,6 @@ function(input, output, session) {
     else if (grepl("^raman", input$id_spec_type)) {
       filter_spec(library, logic = library$metadata$spectrum_type == "raman")
     }
-    
   })
   
   # Corrects spectral intensity units using the user specified correction
