@@ -733,8 +733,13 @@ ui <- dashboardPage(
                         h4(id = "placeholder1", "Upload some data to get started..."),
                         uiOutput("choice_names"),
                         fluidRow(
-                            plotlyOutput("heatmap", inline = T),
-                            plotlyOutput("MyPlotC", inline = T),
+                            withSpinner(
+                                div(style = "padding-bottom: 0px; margin-bottom: 0px;background-color:black;", 
+                                    plotlyOutput("heatmap", inline = TRUE, width = "1600px"))
+                        ),
+                            withSpinner(
+                                div(style = "padding-top: 0px; margin-top: 0px; background-color:black;",
+                                plotlyOutput("MyPlotC", inline = T, width = "1600px"))),
                             div(style = "overflow-x: scroll", DT::dataTableOutput("eventmetadata"))
                         ),
                         sidebar = boxSidebar(
