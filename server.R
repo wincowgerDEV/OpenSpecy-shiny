@@ -362,7 +362,16 @@ observeEvent(input$file, {
                   type = "warning")
           }
       }
-      
+      if (!is.null(preprocessed$data) & input$lib_type == "model" & input$active_identification) {
+          if(sum(preprocessed$data$wavenumber > 800 & preprocessed$data$wavenumber < 3200) < 100){
+              show_alert(
+                  title = "Best practice not followed!",
+                  text = paste0("If you are using the multinomial model it assumes that your data encompasses the range between 800 and 3200 wavenumbers. It can work if your data partially encompasses that range
+                                but won't work at all if you have no data in that range. 
+                                You won't get this warning if you have more than 100 values in that range but the less data in the range, the worse the model will perform."),
+                  type = "warning")
+          }
+      }
   })
   
   #The correlation matrix between the unknowns and the library. 
