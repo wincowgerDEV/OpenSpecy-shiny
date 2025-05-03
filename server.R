@@ -340,7 +340,7 @@ observeEvent(input$file, {
                tooltip = "This tells you whether the signal to noise ratio or the match observed is above or below the thresholds.")
   })
   
-  #Check that correct logic exists for matching. 
+  #Warnings ----
   observe({
       if (!is.null(preprocessed$data) & input$id_strategy == "deriv" & input$active_identification) {
           if(!input$active_preprocessing | !input$smooth_decision | input$smoother != 3 | input$derivative_order != 1 | input$smoother_window != 90 | !input$derivative_abs){
@@ -372,6 +372,24 @@ observeEvent(input$file, {
                   type = "warning")
           }
       }
+      if((input$threshold_decision && all(signal_to_noise() < MinSNR())) | (input$active_identification & input$cor_threshold_decision && all(max_cor() < MinCor()))){
+              show_alert(
+                  title = "No regions passing threshold",
+                  text = paste0("The current threshold settings of the Signal-Noise and/or Correlation returned
+                                or no regions passing. This often indicates an issue with the threshold settings 
+                                or data and will return the raw data in the plots."),
+                  type = "warning")
+      }
+      
+      if (input$collapse_decision & isTruthy(particles_logi()) & length(unique(as.character(particles_logi()))) == 1) {
+              show_alert(
+                  title = "No or all regions passing threshold",
+                  text = paste0("The current threshold settings of the Signal-Noise and/or Correlation returned either all
+                                or no regions passing. This often indicates an issue with the threshold settings 
+                                or data."),
+                  type = "warning")
+      }
+      
   })
   
   #The correlation matrix between the unknowns and the library. 
@@ -680,7 +698,7 @@ output$progress_bars <- renderUI({
       req(!is.null(preprocessed$data))
       req(ncol(preprocessed$data$spectra) > 1)
       #req(input$map_color)
-      if(isTruthy(particles_logi())){
+      if(input$collapse_decision & isTruthy(particles_logi()) & length(unique(as.character(particles_logi()))) == 1){
           test = def_features(DataR(), features = particles_logi())
       }
       else{
