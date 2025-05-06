@@ -46,28 +46,6 @@ theme_black_minimal <- function(base_size = 11, base_family = "") {
         )
 }
 
-# Logging ----
-if(is(tryCatch(check_lib(c("derivative", 
-                           "nobaseline", 
-                           "medoid_derivative", 
-                           "medoid_nobaseline", 
-                           "model_derivative", 
-                           "model_nobaseline")),error=function(e) e, warning=function(w) w), "warning") &
-   !all(file.exists("data/mediod_derivative.rds"), 
-        file.exists("data/model_derivative.rds"), 
-        file.exists("data/mediod_nobaseline.rds"), 
-        file.exists("data/model_nobaseline.rds"),
-        file.exists("data/nobaseline.rds"), 
-        file.exists("data/derivative.rds"))){
-    get_lib(type = c("derivative", 
-                     "nobaseline", 
-                     "medoid_derivative", 
-                     "medoid_nobaseline", 
-                     "model_derivative", 
-                     "model_nobaseline"))
-}
-
-
 # Load all data ----
 load_data <- function() {
   data("raman_hdpe")

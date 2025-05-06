@@ -8,7 +8,24 @@ dashboardPage(dark = T,
             title = tags$a(href="https://www.openanalysis.org", 
                            target="_blank",
                         tags$img(src = "logo.png", 
-                                 style = 'width: 15vw; padding:1rem;'))),
+                                 style = 'width: 15vw; padding:1rem;'),
+                        tags$head(
+                            HTML(
+                                '<div class = "dark raised" data-ea-publisher="openanalysisorg" data-ea-type="image" data-ea-style="stickybox" id = "openspecweba"></div>'
+                            )
+                        )), 
+            tags$li(
+                class = "dropdown",
+                style = "list-style-type: none;",
+                tags$a(
+                    paste0("Last Updated: ",Sys.Date()),
+                    href = "https://github.com/Moore-Institute-4-Plastic-Pollution-Res/openspecy?tab=readme-ov-file#version-history",
+                    target = "_blank",
+                    title = "Click here to view older versions of this app",
+                    style = "font-size: 19px;text-decoration: none;"
+                     )
+                )
+            ),
         #Sidebar ----
         dashboardSidebar(
             skin = "dark",
@@ -676,9 +693,7 @@ dashboardPage(dark = T,
                        a(href = "TOS.txt", "Terms And Conditions", class = "lead"),
                        br(),
                        a(href = "privacy_policy.txt", "Privacy Policy", class = "lead")
-                       ),
-                     #Ethical Ads
-                     HTML('<div class = "dark raised" data-ea-publisher="openanalysisorg" data-ea-type="text" data-ea-style="fixedfooter"></div>')
+                       )
         )
     )
 )
