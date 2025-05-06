@@ -120,11 +120,12 @@ observeEvent(input$file, {
               library <- read_any("data/medoid_derivative.rds")
           }
           else{
-              if(!is(tryCatch(check_lib("medoid_derivative"),
+              if(is(tryCatch(check_lib("medoid_derivative"),
                               error=function(e) e, 
                               warning=function(w) w), 
                      "warning")){
                   get_lib("medoid_derivative", 
+                          revision = "V5w3YGidWIe1.cWjd57Css4456VSJPuZ",
                           #mode = "w", 
                           #path = "data/", 
                           aws = TRUE)    
@@ -140,11 +141,12 @@ observeEvent(input$file, {
               library <- read_any("data/medoid_nobaseline.rds")
           }
           else {
-              if(!is(tryCatch(check_lib("medoid_nobaseline"),
+              if(is(tryCatch(check_lib("medoid_nobaseline"),
                               error=function(e) e, 
                               warning=function(w) w), 
                      "warning")){
               get_lib("medoid_nobaseline", 
+                      revision = "aIdTm2ieXCc8nmn7gUc1j6E2jDaMFQ33",
                       #mode = "w", 
                       #path = "data/", 
                       aws = TRUE)
@@ -158,11 +160,12 @@ observeEvent(input$file, {
               library <- read_any("data/model_derivative.rds")
           }
           else {
-              if(!is(tryCatch(check_lib("model_derivative"),
+              if(is(tryCatch(check_lib("model_derivative"),
                               error=function(e) e, 
                               warning=function(w) w), 
                      "warning")){
               get_lib("model_derivative", 
+                      revision = "RhKWehbaBgtghiRqRxdwYX8i5SIhMfAM",
                       #mode = "w", 
                       #path = "data/", 
                       aws = TRUE)
@@ -177,11 +180,12 @@ observeEvent(input$file, {
               library <- read_any("data/model_nobaseline.rds")
           }
           else{
-              if(!is(tryCatch(check_lib("model_nobaseline"),
+              if(is(tryCatch(check_lib("model_nobaseline"),
                               error=function(e) e, 
                               warning=function(w) w), 
                      "warning")){
               get_lib("model_nobaseline", 
+                      revision = "d9qsJLB7L3NthSs1D829y_YYqDvjbO.F",
                       #mode = "w", 
                       #path = "data/", 
                       aws = TRUE)
@@ -195,11 +199,12 @@ observeEvent(input$file, {
               library <- read_any("data/nobaseline.rds")
           }
           else{
-              if(!is(tryCatch(check_lib("nobaseline"),
+              if(is(tryCatch(check_lib("nobaseline"),
                               error=function(e) e, 
                               warning=function(w) w), 
                      "warning")){
               get_lib("nobaseline", 
+                      revision = "4xJ7Zs5I0kdrn5Fard.W31U6PWT90Yw.",
                       #mode = "w", 
                       #path = "data/", 
                       aws = TRUE)
@@ -212,11 +217,12 @@ observeEvent(input$file, {
               library <- read_any("data/derivative.rds")
           }
           else{
-              if(!is(tryCatch(check_lib("derivative"),
+              if(is(tryCatch(check_lib("derivative"),
                               error=function(e) e, 
                               warning=function(w) w), 
                      "warning")){
               get_lib("derivative",
+                      revision = "P9C2cfW_B7TQqI5R.aukXKZ8pjf11CGi",
                       #mode = "w", 
                       #path = "data/", 
                       aws = TRUE)
