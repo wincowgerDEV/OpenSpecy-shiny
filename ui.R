@@ -507,7 +507,7 @@ dashboardPage(dark = T,
                                   h4(id = "placeholder1", "Upload some data to get started..."),
                                   uiOutput("choice_names"),
                                   fluidRow(
-                                      plotlyOutput("heatmap",inline = T),
+                                      plotlyOutput("heatmapA",inline = T),
                                       plotlyOutput("MyPlotC", inline = T),
                                       div(style = "overflow-x: scroll",
                                           DT::dataTableOutput("eventmetadata")   

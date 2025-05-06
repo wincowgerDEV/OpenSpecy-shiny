@@ -167,10 +167,9 @@ observeEvent(input$file, {
               library <- load_lib("derivative")
           }
       }
-      if(isTruthy(DataR())){
+      if(!is.null(preprocessed$data)){
           library <- restrict_range(library, min = min(DataR()$wavenumber), max = max(DataR()$wavenumber), make_rel = F) %>%
               filter_spec(!vapply(.$spectra, function(x){all(is.na(x))}, FUN.VALUE = logical(1)))
-          
       }
       
       if(grepl("^both", input$id_spec_type)) {
@@ -553,7 +552,6 @@ match_metadata <- reactive({
     req(!is.null(preprocessed$data))
     if(input$active_identification & !grepl("^model$", input$lib_type)){
         selected_match <- matches_to_single()[data_click$table, ]
-        print(names(selected_match))
         dataR_metadata <- DataR()$metadata
         dataR_metadata$signal_to_noise <- signal_to_noise()
         setkey(dataR_metadata, col_id)
@@ -690,7 +688,7 @@ output$progress_bars <- renderUI({
 
  #Heatmap ----
  #Display the map or batch data in a selectable heatmap. 
-  output$heatmap <- renderPlotly({
+  output$heatmapA <- renderPlotly({
       req(!is.null(preprocessed$data))
       req(ncol(preprocessed$data$spectra) > 1)
       #req(input$map_color)
@@ -731,6 +729,7 @@ output$progress_bars <- renderUI({
                         select = data_click$plot,
                         source = "heat_plot") %>%
           event_register(event = "plotly_click")
+
   })
 
   thresholded_particles <- reactive({
@@ -878,15 +877,19 @@ output$progress_bars <- renderUI({
             })
 
   # Hide functions or objects when the shouldn't exist. 
+ 
   observe({
-      toggle(id = "heatmap", condition = isTruthy(ncol(preprocessed$data$spectra) > 1))
+      toggle(id = "heatmapA", condition = isTruthy(ncol(preprocessed$data$spectra) > 1))
       toggle(id = "placeholder1", condition = !isTruthy(preprocessed$data))
-      if(!isTruthy(event_data("plotly_click", source = "heat_plot")[["pointNumber"]])){
-          data_click$plot <- 1
+
+      if(isTruthy(ncol(preprocessed$data$spectra) > 1)){
+          if(isTruthy(event_data("plotly_click", source = "heat_plot")[["pointNumber"]] + 1)){
+              data_click$plot <- event_data("plotly_click", source = "heat_plot")[["pointNumber"]] + 1
+          }   
       }
-      else{
-          data_click$plot <- event_data("plotly_click", source = "heat_plot")[["pointNumber"]] + 1
-      }   
+       else{
+           data_click$plot <- 1
+       }   
       if(!isTruthy(input$event_rows_selected)){
           data_click$table <- 1
       }
