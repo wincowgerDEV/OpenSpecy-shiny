@@ -172,6 +172,7 @@ observeEvent(input$file, {
               }
               library <- load_lib("model_derivative")
           }
+          library <- library[[input$id_spec_type]]
           return(library)
       }
       else if (input$id_strategy == "nobaseline" &
@@ -192,6 +193,8 @@ observeEvent(input$file, {
               }
               library <- load_lib("model_nobaseline")
           }
+
+          library <- library[[input$id_spec_type]]
           return(library)
       }
       else if (grepl("nobaseline$", input$id_strategy)) {
