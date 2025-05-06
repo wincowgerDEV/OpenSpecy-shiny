@@ -683,7 +683,7 @@ output$progress_bars <- renderUI({
       #req(preprocessed$data)
       plotly_spec(x = if(!is.null(preprocessed$data)){DataR_plot()} else{match_selected()},
                   x2 = if(!is.null(preprocessed$data) & !grepl("^model$", input$lib_type)) {match_selected()} else{NULL}, 
-                  make_rel = input$make_rel_decision,
+                  make_rel = if(!is.null(preprocessed$data)){input$make_rel_decision} else{FALSE},
                   source = "B") %>%
         config(modeBarButtonsToAdd = list("drawopenpath", "eraseshape"))
     })
