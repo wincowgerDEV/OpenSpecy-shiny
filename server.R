@@ -33,14 +33,15 @@ function(input, output, session) {
   show("app_content")
 
   preprocessed <- reactiveValues(data = NULL)
-  data_click <- reactiveValues(data = NULL)
+  data_click <- reactiveValues(plot = NULL, table = NULL)
 
 
   #Read Data ----
   #Sending data to a remote repo. 
 observeEvent(input$file, {
   # Read in data when uploaded based on the file type
-  data_click$data <- 1
+  data_click$plot <- 1
+  data_click$table <- 1
   preprocessed$data <- NULL
 
   if (!all(grepl("(\\.tsv$)|(\\.dat$)|(\\.hdr$)|(\\.json$)|(\\.rds$)|(\\.yml$)|(\\.csv$)|(\\.asp$)|(\\.spa$)|(\\.spc$)|(\\.jdx$)|(\\.dx$)|(\\.RData$)|(\\.zip$)|(\\.[0-9]$)",
@@ -166,6 +167,12 @@ observeEvent(input$file, {
               library <- load_lib("derivative")
           }
       }
+      if(isTruthy(DataR())){
+          library <- restrict_range(library, min = min(DataR()$wavenumber), max = max(DataR()$wavenumber), make_rel = F) %>%
+              filter_spec(!vapply(.$spectra, function(x){all(is.na(x))}, FUN.VALUE = logical(1)))
+          
+      }
+      
       if(grepl("^both", input$id_spec_type)) {
           library
       }
@@ -244,7 +251,7 @@ observeEvent(input$file, {
   #The data to use in the plot. 
   DataR_plot <- reactive({
       if(isTruthy(DataR())){
-          filter_spec(DataR(), logic = 1:ncol(DataR()$spectra) == data_click$data)
+          filter_spec(DataR(), logic = 1:ncol(DataR()$spectra) == data_click$plot)
        }
       else {
           list(wavenumber = numeric(), spectra = data.table(empty = numeric()))
@@ -307,8 +314,8 @@ observeEvent(input$file, {
   output$correlation_head <- renderUI({
       req(!is.null(preprocessed$data))
       req((input$threshold_decision | input$cor_threshold_decision))
-      good_cor <- max_cor()[[data_click$data]] > MinCor() & signal_to_noise()[[data_click$data]] > MinSNR()
-      good_sig <- signal_to_noise()[[data_click$data]] > MinSNR()
+      good_cor <- max_cor()[[data_click$plot]] > MinCor() & signal_to_noise()[[data_click$plot]] > MinSNR()
+      good_sig <- signal_to_noise()[[data_click$plot]] > MinSNR()
       good_match <- good_cor & good_sig
       
       boxLabel(text = if(input$cor_threshold_decision & input$threshold_decision & input$active_identification) {"Match"} else if(input$cor_threshold_decision & input$active_identification) {"Cor"} else if (input$threshold_decision){"SNR"} else{""}, 
@@ -453,15 +460,6 @@ observeEvent(input$file, {
               fifelse(max_cor() < MinCor(), rep.int("Unknown", length(max_cor())), names(max_cor()))
           }
       }
-      
-      if(isTruthy(input$active_identification)){
-          if(!grepl("^model$", input$lib_type)){
-              fifelse(max_cor() < MinCor(), rep.int("Unknown", length(max_cor())), libraryR()$metadata$material_class[match(names(max_cor()), libraryR()$metadata$sample_name)])
-          }
-          else{
-              fifelse(max_cor() < MinCor(), rep.int("Unknown", length(max_cor())), names(max_cor()))
-          }
-      }
       else{
           NULL
       }
@@ -494,7 +492,8 @@ observeEvent(input$file, {
       req(input$active_identification)
       if(is.null(preprocessed$data)){
           libraryR()$metadata %>%
-              mutate("match_val" = NA) 
+              mutate("match_val" = NA,
+                     object_id = names(libraryR()$spectra)) 
       }
       else if(grepl("^model$", input$lib_type)){
           data.table(object_id = names(DataR()$spectra), 
@@ -502,9 +501,9 @@ observeEvent(input$file, {
                      match_val = ai_output()$value) 
       }
       else{
-          data.table(object_id = names(DataR()$spectra)[data_click$data], 
+          data.table(object_id = names(DataR()$spectra)[data_click$plot], 
                      sample_name = names(libraryR()$spectra),
-                     match_val = c(correlation()[,data_click$data]))[order(-match_val),] %>%
+                     match_val = c(correlation()[,data_click$plot]))[order(-match_val),] %>%
               left_join(libraryR()$metadata, by = c("sample_name")) %>%
               mutate(match_val = signif(match_val, 2)) %>%
               {if(input$cor_threshold_decision){mutate(., name = ifelse(match_val < input$MinCor, rep.int("Unknown", nrow(.)), material_class))}else{.}}
@@ -521,13 +520,9 @@ observeEvent(input$file, {
           as_OpenSpecy(x = numeric(), spectra = data.table(empty = numeric()))
       }
       else{
-         #need to make reactive
-          id_select <-  ifelse(is.null(input$event_rows_selected),
-                              matches_to_single()[[1,"sample_name"]],
-                              matches_to_single()[[input$event_rows_selected,"sample_name"]])#"00087f78d45c571524fce483ef10752e"	#matches_to_single[[1,column_name]]
-              
           # Get data from filter_spec
-          filter_spec(libraryR(), logic = id_select)
+          filter_spec(libraryR(), logic = matches_to_single()[[data_click$table, "sample_name"]])
+          
       }
   })
 
@@ -557,7 +552,8 @@ observeEvent(input$file, {
 match_metadata <- reactive({
     req(!is.null(preprocessed$data))
     if(input$active_identification & !grepl("^model$", input$lib_type)){
-        selected_match <- matches_to_single()[input$event_rows_selected, ]
+        selected_match <- matches_to_single()[data_click$table, ]
+        print(names(selected_match))
         dataR_metadata <- DataR()$metadata
         dataR_metadata$signal_to_noise <- signal_to_noise()
         setkey(dataR_metadata, col_id)
@@ -569,15 +565,15 @@ match_metadata <- reactive({
         result
     }
     else if(input$active_identification & grepl("^model$", input$lib_type)){
-        result <- bind_cols(DataR()$metadata[data_click$data,], matches_to_single()[data_click$data,])
-        result$signal_to_noise <- signal_to_noise()[data_click$data]
+        result <- bind_cols(DataR()$metadata[data_click$plot,], matches_to_single()[data_click$plot,])
+        result$signal_to_noise <- signal_to_noise()[data_click$plot]
         result <- result[, !sapply(result, OpenSpecy::is_empty_vector), with = FALSE] %>%
             mutate(match_val = signif(match_val, 2)) %>%
             select(file_name, col_id, material_class, match_val, signal_to_noise, everything())
         result
     }
     else{
-        DataR()$metadata[data_click$data,] %>%
+        DataR()$metadata[data_click$plot,] %>%
             .[, !sapply(., OpenSpecy::is_empty_vector), with = F]  
     }
 })
@@ -732,7 +728,7 @@ output$progress_bars <- renderUI({
                         cor = if(is.null(max_cor())){max_cor()} else{signif(max_cor(), 2)}, 
                         min_sn = MinSNR(),
                         min_cor = MinCor(),
-                        select = data_click$data,
+                        select = data_click$plot,
                         source = "heat_plot") %>%
           event_register(event = "plotly_click")
   })
@@ -886,11 +882,17 @@ output$progress_bars <- renderUI({
       toggle(id = "heatmap", condition = isTruthy(ncol(preprocessed$data$spectra) > 1))
       toggle(id = "placeholder1", condition = !isTruthy(preprocessed$data))
       if(!isTruthy(event_data("plotly_click", source = "heat_plot")[["pointNumber"]])){
-          data_click$data <- 1
+          data_click$plot <- 1
       }
       else{
-          data_click$data <- event_data("plotly_click", source = "heat_plot")[["pointNumber"]] + 1
+          data_click$plot <- event_data("plotly_click", source = "heat_plot")[["pointNumber"]] + 1
       }   
+      if(!isTruthy(input$event_rows_selected)){
+          data_click$table <- 1
+      }
+      else{
+          data_click$table <- input$event_rows_selected
+      } 
     })
 
   #Google translate. 
