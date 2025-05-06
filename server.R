@@ -453,10 +453,10 @@ observeEvent(input$file, {
       req(!is.null(preprocessed$data))
       if(isTruthy(input$active_identification)){
           if(!grepl("^model$", input$lib_type)){
-              fifelse(max_cor() < MinCor(), rep.int("Unknown", length(max_cor())), libraryR()$metadata$material_class[match(names(max_cor()), libraryR()$metadata$sample_name)])
+              fifelse(max_cor() < MinCor(), rep.int("unknown", length(max_cor())), libraryR()$metadata$material_class[match(names(max_cor()), libraryR()$metadata$sample_name)])
           }
           else{
-              fifelse(max_cor() < MinCor(), rep.int("Unknown", length(max_cor())), names(max_cor()))
+              fifelse(max_cor() < MinCor(), rep.int("unknown", length(max_cor())), names(max_cor()))
           }
       }
       else{
@@ -680,7 +680,7 @@ output$progress_bars <- renderUI({
       #req(input$id_strategy == "correlation")
       #req(preprocessed$data)
       plotly_spec(x = if(!is.null(preprocessed$data)){DataR_plot()} else{match_selected()},
-                  x2 = if(!is.null(preprocessed$data) & !grepl("^model$", input$lib_type)) {match_selected()} else{NULL}, 
+                  x2 = if(!is.null(preprocessed$data) & !grepl("^model$", input$lib_type) & input$active_identification) {match_selected()} else{NULL}, 
                   make_rel = if(!is.null(preprocessed$data)){input$make_rel_decision} else{FALSE},
                   source = "B") %>%
         config(modeBarButtonsToAdd = list("drawopenpath", "eraseshape"))
@@ -760,11 +760,18 @@ output$progress_bars <- renderUI({
   output$material_plot <- renderPlot({
       req(!is.null(preprocessed$data))
       req(max_cor_identity())
-      if(isTruthy(thresholded_particles())){
-          if(all(grepl("_[0-9]+", thresholded_particles()$metadata$feature_id))){
+      if(input$collapse_decision){
+          if (isTruthy(thresholded_particles()) &&
+              all(grepl("_[0-9]+", thresholded_particles()$metadata$feature_id))) {
+              
               match_names <- gsub("_[0-9]+", "", thresholded_particles()$metadata$feature_id)
-          }
-      }  else {
+              
+          } else {
+              match_names <- thresholded_particles()$metadata$material_class
+              
+          }    
+      }
+        else {
           match_names <- max_cor_identity()
       } 
 
@@ -859,7 +866,7 @@ output$progress_bars <- renderUI({
                         select(file_name, col_id, material_class, spectrum_identity, match_val, signal_to_noise, everything()) %>%
                         .[order(-match_val), .SD[1:input$top_n_input], by = col_id] %>%
                         {if(grepl("Simple", input$columns_selected)){select(., file_name, col_id, material_class, match_val, signal_to_noise)} else{.}} %>%
-                        mutate(material_class = ifelse(match_val < MinCor(), rep.int("Unknown", nrow(.)), material_class))
+                        mutate(material_class = ifelse(match_val < MinCor(), rep.int("unknown", nrow(.)), material_class))
                     
                     fwrite(all_matches, file) 
                 }
@@ -868,7 +875,7 @@ output$progress_bars <- renderUI({
                     result$signal_to_noise <- signal_to_noise()
                     result <- result[, !sapply(result, OpenSpecy::is_empty_vector), with = FALSE] %>%
                         select(file_name, col_id, material_class, match_val, signal_to_noise, everything()) %>%
-                        mutate(material_class = ifelse(match_val < MinCor(), rep.int("Unknown", nrow(.)), material_class))
+                        mutate(material_class = ifelse(match_val < MinCor(), rep.int("unknown", nrow(.)), material_class))
                     
                     fwrite(result, file) 
                     }
