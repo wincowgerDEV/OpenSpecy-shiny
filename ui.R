@@ -147,7 +147,7 @@ dashboardPage(dark = T,
                                   tags$li("For more details click the button below for the SOP or watch the detailed instructional videos.")
                                   ),
                                   a("SOP",
-                                    onclick = "window.open('https://rawcdn.githack.com/wincowgerDEV/OpenSpecy-package/c253d6c3298c7db56fbfdceee6ff0e654a1431cd/index.html', '_blank')",
+                                    onclick = "window.open('https://raw.githack.com/wincowgerDEV/OpenSpecy-package/main/docs/index.html', '_blank')",
                                     class="btn btn-primary btn-lg", 
                                     style = "width: 100%;")
                            )
