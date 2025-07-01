@@ -13,7 +13,12 @@ dashboardPage(dark = T,
                             HTML(
                                 '<div class = "dark raised" data-ea-publisher="openanalysisorg" data-ea-type="image" data-ea-style="stickybox" id = "openspecweba"></div>'
                             )
-                        )), 
+                        ), 
+                        tags$head(
+                            tags$link(rel = "stylesheet",
+                                      href = "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css")
+                        )
+                        ), 
             tags$li(
                 class = "dropdown",
                 style = "list-style-type: none;",
@@ -90,14 +95,17 @@ dashboardPage(dark = T,
                                the Open Specy community by
                                analyzing, sharing, processing, and identifying
                                their Raman and IR spectra."),
-                               p(class = "lead",
-                                 HTML("<span style='position: relative; top:.6ex;'><a
-                                      href='https://twitter.com/OpenSpecy?ref_src=twsrc%5Etfw'
-                                      class='twitter-follow-button' data-size='large' data-dnt='true'
-                                      data-show-count='false'>
-                                      Follow @OpenSpecy</a></span>
-                                      on Twitter")
-                               ),
+                                  p(class = "lead",
+                                    tags$span(style = "position:relative; top:.8ex;",
+                                              tags$a(
+                                                  href   = "https://www.linkedin.com/in/win-cowger/",
+                                                  target = "_blank",                   # open in new tab
+                                                  class  = "linkedin-button",          # custom CSS (below)
+                                                  icon("linkedin", class = "fa-2x")    # larger icon
+                                              )
+                                    ),
+                                    "Follow Win on LinkedIn for Latest Updates"
+                                  ),
                                p(class = "lead",
                                  HTML("<span style='position: relative; top:.8ex;'><a
                                     class='github-button' href='https://github.com/wincowgerDEV/OpenSpecy/subscription'
@@ -135,8 +143,7 @@ dashboardPage(dark = T,
                            collapsed = TRUE,
                          fluidRow(
                            column(6,
-                                  HTML("<iframe width='100%' height='50%' src='https://www.youtube-nocookie.com/embed/oWwRWwXf0sc' title='YouTube video player' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>"),
-                                  HTML("<iframe width='100%' height='50%' src='https://www.youtube-nocookie.com/embed/cZZ3hgvIcao' title='YouTube video player' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>")
+                                  HTML('<iframe width="560" height="315" src="https://www.youtube.com/embed/videoseries?si=HmRLfamgtrCYg5Gm&amp;list=PLqdH8O1nalYa4a8JXQ6GbNsH3YQV_aY7g" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'),
                            ),
                            column(6,
                                   tags$ol(

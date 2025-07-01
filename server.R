@@ -125,7 +125,7 @@ observeEvent(input$file, {
                               warning=function(w) w), 
                      "warning")){
                   get_lib("medoid_derivative", 
-                          revision = "V5w3YGidWIe1.cWjd57Css4456VSJPuZ",
+                          revision = "Qzje7PothTWopStobIdw5r6gEPpXERSN",
                           #mode = "w", 
                           #path = "data/", 
                           aws = TRUE)    
@@ -146,7 +146,7 @@ observeEvent(input$file, {
                               warning=function(w) w), 
                      "warning")){
               get_lib("medoid_nobaseline", 
-                      revision = "aIdTm2ieXCc8nmn7gUc1j6E2jDaMFQ33",
+                      revision = "gcu432KN.Pqjsl5V5ZgNnLtMpuu6.Z2h",
                       #mode = "w", 
                       #path = "data/", 
                       aws = TRUE)
@@ -165,7 +165,7 @@ observeEvent(input$file, {
                               warning=function(w) w), 
                      "warning")){
               get_lib("model_derivative", 
-                      revision = "RhKWehbaBgtghiRqRxdwYX8i5SIhMfAM",
+                      revision = "A1yYLwQ.OeXQ42AvSjdeka4QZJSaGuhL",
                       #mode = "w", 
                       #path = "data/", 
                       aws = TRUE)
@@ -186,7 +186,7 @@ observeEvent(input$file, {
                               warning=function(w) w), 
                      "warning")){
               get_lib("model_nobaseline", 
-                      revision = "d9qsJLB7L3NthSs1D829y_YYqDvjbO.F",
+                      revision = "G6TCORd8Mtg_.7.vS6awdtRAyDjqOZi4",
                       #mode = "w", 
                       #path = "data/", 
                       aws = TRUE)
@@ -207,7 +207,7 @@ observeEvent(input$file, {
                               warning=function(w) w), 
                      "warning")){
               get_lib("nobaseline", 
-                      revision = "4xJ7Zs5I0kdrn5Fard.W31U6PWT90Yw.",
+                      revision = "MgyD63TzZxjz4v0npJq_ca0QIGuqdNSt",
                       #mode = "w", 
                       #path = "data/", 
                       aws = TRUE)
@@ -225,9 +225,9 @@ observeEvent(input$file, {
                               warning=function(w) w), 
                      "warning")){
               get_lib("derivative",
-                      revision = "P9C2cfW_B7TQqI5R.aukXKZ8pjf11CGi",
+                      revision = "i9Qr66zpnP7xFPQNiEYG_DwktUVy6KUn",
                       #mode = "w", 
-                      #path = "data/", 
+                      path = "data/", 
                       aws = TRUE)
               }
               library <- load_lib("derivative")
