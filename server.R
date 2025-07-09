@@ -992,17 +992,21 @@ output$progress_bars <- renderUI({
       data_click$plot <- sel
   })
 
-  observeEvent(input$next_spec, {
+  move_selection <- function(dx = 0, dy = 0) {
       req(!is.null(preprocessed$data))
-      n <- ncol(DataR()$spectra)
-      data_click$plot <- ifelse(data_click$plot < n, data_click$plot + 1, 1)
-  })
+      meta <- DataR()$metadata
+      cur <- data_click$plot
+      if (cur > nrow(meta)) return()
+      x <- meta$x[cur]
+      y <- meta$y[cur]
+      idx <- which(meta$x == x + dx & meta$y == y + dy)
+      if (length(idx)) data_click$plot <- idx[1]
+  }
 
-  observeEvent(input$prev_spec, {
-      req(!is.null(preprocessed$data))
-      n <- ncol(DataR()$spectra)
-      data_click$plot <- ifelse(data_click$plot > 1, data_click$plot - 1, n)
-  })
+  observeEvent(input$left_spec,  { move_selection(dx = -1) })
+  observeEvent(input$right_spec, { move_selection(dx =  1) })
+  observeEvent(input$up_spec,    { move_selection(dy =  1) })
+  observeEvent(input$down_spec,  { move_selection(dy = -1) })
 
   observeEvent(input$toggle_meta_rows, {
       if (meta_rows() == 1) {
@@ -1015,10 +1019,13 @@ output$progress_bars <- renderUI({
   output$nav_buttons <- renderUI({
       req(!is.null(preprocessed$data))
       if (ncol(preprocessed$data$spectra) > 1) {
-          fluidRow(
-              style = "display:flex;justify-content:space-between;",
-              actionButton("prev_spec", "Previous"),
-              actionButton("next_spec", "Next")
+          tagList(
+              div(style = "display:flex;justify-content:center;", actionButton("up_spec", label = NULL, icon = icon("arrow-up"))),
+              div(style = "display:flex;justify-content:center;gap:0.5em;", 
+                  actionButton("left_spec",  label = NULL, icon = icon("arrow-left")),
+                  actionButton("right_spec", label = NULL, icon = icon("arrow-right"))
+              ),
+              div(style = "display:flex;justify-content:center;", actionButton("down_spec", label = NULL, icon = icon("arrow-down")))
           )
       }
   })

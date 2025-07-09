@@ -530,7 +530,7 @@ dashboardPage(dark = T,
                                   label = uiOutput("correlation_head"),
                                   h4(id = "placeholder1", "Upload some data to get started..."),
                                   uiOutput("choice_names"),
-                                  uiOutput("nav_buttons"),
+                                   uiOutput("nav_buttons"),
                                   fluidRow(
                                       plotlyOutput("heatmapA",inline = T),
                                       plotlyOutput("MyPlotC", inline = T),
