@@ -34,6 +34,7 @@ function(input, output, session) {
 
   preprocessed <- reactiveValues(data = NULL)
   data_click <- reactiveValues(plot = NULL, table = NULL)
+  meta_rows <- reactiveVal(1)
 
 
   #Read Data ----
@@ -42,6 +43,7 @@ observeEvent(input$file, {
   # Read in data when uploaded based on the file type
   data_click$plot <- 1
   data_click$table <- 1
+  meta_rows(1)
   preprocessed$data <- NULL
 
   if (!all(grepl("(\\.tsv$)|(\\.dat$)|(\\.hdr$)|(\\.json$)|(\\.rds$)|(\\.yml$)|(\\.csv$)|(\\.asp$)|(\\.spa$)|(\\.spc$)|(\\.jdx$)|(\\.dx$)|(\\.RData$)|(\\.zip$)|(\\.[0-9]$)",
@@ -675,7 +677,7 @@ output$eventmetadata <- DT::renderDataTable({
               options = list(dom = 'ft',
                              bSort = TRUE,
                              scrollX = TRUE,
-                             pageLength = 3,
+                             pageLength = meta_rows(),
                              lengthChange = FALSE,
                              info = FALSE,
                              columnDefs = list(list(visible = FALSE, targets = 0))),
@@ -1001,6 +1003,33 @@ output$progress_bars <- renderUI({
       n <- ncol(DataR()$spectra)
       data_click$plot <- ifelse(data_click$plot > 1, data_click$plot - 1, n)
   })
+
+  observeEvent(input$toggle_meta_rows, {
+      if (meta_rows() == 1) {
+          meta_rows(10)
+      } else {
+          meta_rows(1)
+      }
+  })
+
+  output$nav_buttons <- renderUI({
+      req(!is.null(preprocessed$data))
+      if (ncol(preprocessed$data$spectra) > 1) {
+          fluidRow(
+              style = "display:flex;justify-content:space-between;",
+              actionButton("prev_spec", "Previous"),
+              actionButton("next_spec", "Next")
+          )
+      }
+  })
+  outputOptions(output, "nav_buttons", suspendWhenHidden = FALSE)
+
+  output$meta_toggle <- renderUI({
+      req(!is.null(preprocessed$data))
+      lbl <- if (meta_rows() == 1) "Expand Metadata" else "Collapse Metadata"
+      actionButton("toggle_meta_rows", lbl)
+  })
+  outputOptions(output, "meta_toggle", suspendWhenHidden = FALSE)
 
   #Google translate. 
   output$translate <- renderUI({

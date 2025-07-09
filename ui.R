@@ -530,16 +530,13 @@ dashboardPage(dark = T,
                                   label = uiOutput("correlation_head"),
                                   h4(id = "placeholder1", "Upload some data to get started..."),
                                   uiOutput("choice_names"),
-                                  fluidRow(
-                                      style = "display:flex;justify-content:space-between;",
-                                      actionButton("prev_spec", "Previous"),
-                                      actionButton("next_spec", "Next")
-                                  ),
+                                  uiOutput("nav_buttons"),
                                   fluidRow(
                                       plotlyOutput("heatmapA",inline = T),
                                       plotlyOutput("MyPlotC", inline = T),
                                       div(style = "overflow-x: scroll",
-                                          DT::dataTableOutput("eventmetadata")
+                                          DT::dataTableOutput("eventmetadata"),
+                                          uiOutput("meta_toggle")
                                       )),
                                   sidebar = boxSidebar(
                                       id = "mycardsidebar",
