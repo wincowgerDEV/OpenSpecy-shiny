@@ -531,8 +531,8 @@ dashboardPage(dark = T,
                                   h4(id = "placeholder1", "Upload some data to get started..."),
                                   uiOutput("choice_names"),
                                   fluidRow(
-                                      column(9, plotlyOutput("heatmapA", inline = TRUE)),
-                                      column(3, uiOutput("nav_buttons"))
+                                      column(11, plotlyOutput("heatmapA", inline = TRUE)),
+                                      column(1, uiOutput("nav_buttons"))
                                   ),
                                   plotlyOutput("MyPlotC", inline = TRUE),
                                   div(style = "overflow-x: scroll",
