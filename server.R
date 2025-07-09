@@ -35,6 +35,7 @@ function(input, output, session) {
   preprocessed <- reactiveValues(data = NULL)
   data_click <- reactiveValues(plot = NULL, table = NULL)
   meta_rows <- reactiveVal(1)
+  meta_cache <- reactiveVal(NULL)
 
 
   #Read Data ----
@@ -330,6 +331,16 @@ observeEvent(input$file, {
   signal_to_noise <- reactive({
       req(!is.null(preprocessed$data))
       sig_noise(x = DataR(), step = 10, metric = input$signal_selection, abs = F)
+  })
+
+  observeEvent(list(DataR(), input$signal_selection), {
+      req(isTruthy(DataR()))
+      meta <- DataR()$metadata
+      meta$signal_to_noise <- signal_to_noise()
+      meta <- meta[, !sapply(meta, OpenSpecy::is_empty_vector), with = FALSE]
+      meta[, coord_key := paste(x, y)]
+      meta <- data.table(Index = seq_len(nrow(meta)), meta)
+      meta_cache(meta)
   })
   
   
@@ -659,24 +670,23 @@ output$snr_plot <- renderPlot({
 
 #Table of metadata for the selected library value
 metadata_table <- reactive({
-    req(!is.null(preprocessed$data))
-    meta <- DataR()$metadata
-    meta$signal_to_noise <- signal_to_noise()
-    meta <- meta[, !sapply(meta, OpenSpecy::is_empty_vector), with = FALSE]
-    meta <- data.table(Index = seq_len(nrow(meta)), meta)
+    meta <- meta_cache()
+    req(!is.null(meta))
     if (isTruthy(data_click$plot) && data_click$plot <= nrow(meta)) {
-        meta <- rbind(meta[data_click$plot], meta[-data_click$plot])
+        rbind(meta[data_click$plot], meta[-data_click$plot])
+    } else {
+        meta
     }
-    meta
 })
 
-output$eventmetadata <- DT::renderDataTable({
+output$eventmetadata <- DT::renderDataTable(server = TRUE, {
     req(!is.null(preprocessed$data))
     datatable(metadata_table(),
               escape = FALSE,
               options = list(dom = 'ft',
                              bSort = TRUE,
                              scrollX = TRUE,
+                             deferRender = TRUE,
                              pageLength = meta_rows(),
                              lengthChange = FALSE,
                              info = FALSE,
@@ -993,14 +1003,13 @@ output$progress_bars <- renderUI({
   })
 
   move_selection <- function(dx = 0, dy = 0) {
-      req(!is.null(preprocessed$data))
-      meta <- DataR()$metadata
+      req(!is.null(meta_cache()))
+      meta <- meta_cache()
       cur <- data_click$plot
       if (cur > nrow(meta)) return()
-      x <- meta$x[cur]
-      y <- meta$y[cur]
-      idx <- which(meta$x == x + dx & meta$y == y + dy)
-      if (length(idx)) data_click$plot <- idx[1]
+      target <- paste(meta$x[cur] + dx, meta$y[cur] + dy)
+      idx <- match(target, meta$coord_key)
+      if (!is.na(idx)) data_click$plot <- idx
   }
 
   observeEvent(input$left_spec,  { move_selection(dx = -1) })
