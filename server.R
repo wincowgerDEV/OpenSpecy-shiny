@@ -672,7 +672,8 @@ output$eventmetadata <- DT::renderDataTable({
     req(!is.null(preprocessed$data))
     datatable(metadata_table(),
               escape = FALSE,
-              options = list(dom = 't', bSort = FALSE,
+              options = list(dom = 'ft',
+                             bSort = TRUE,
                              scrollX = TRUE,
                              pageLength = 3,
                              lengthChange = FALSE,
