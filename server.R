@@ -975,27 +975,28 @@ output$progress_bars <- renderUI({
             if(input$download_selection == "Thresholded Particles") {write_spec(thresholded_particles(), file = file)}
             })
 
-  # Hide functions or objects when the shouldn't exist. 
- 
-  observe({
-      toggle(id = "heatmapA", condition = isTruthy(ncol(preprocessed$data$spectra) > 1))
-      toggle(id = "placeholder1", condition = !isTruthy(preprocessed$data))
+  # Hide functions or objects when they shouldn't exist.
 
-      if(isTruthy(ncol(preprocessed$data$spectra) > 1)){
-          if(isTruthy(event_data("plotly_click", source = "heat_plot")[["pointNumber"]] + 1)){
-              data_click$plot <- event_data("plotly_click", source = "heat_plot")[["pointNumber"]] + 1
-          }   
-      }
-       else{
-           data_click$plot <- 1
-       }   
+  observe({
+      toggle(id = "heatmapA",
+             condition = isTruthy(ncol(preprocessed$data$spectra) > 1))
+      toggle(id = "placeholder1", condition = !isTruthy(preprocessed$data))
+  })
+
+  observeEvent(event_data("plotly_click", source = "heat_plot"), {
+      click <- event_data("plotly_click", source = "heat_plot")
+      if (!is.null(click$pointNumber))
+          data_click$plot <- click$pointNumber + 1
+  }, ignoreNULL = TRUE, ignoreInit = TRUE)
+
+  observe({
       if(!isTruthy(input$event_rows_selected)){
           data_click$table <- 1
       }
       else{
           data_click$table <- input$event_rows_selected
       }
-    })
+  })
 
   observeEvent(input$eventmetadata_rows_selected, ignoreInit = TRUE, {
       sel <- metadata_table()$Index[input$eventmetadata_rows_selected]
