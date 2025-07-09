@@ -34,6 +34,8 @@ function(input, output, session) {
 
   preprocessed <- reactiveValues(data = NULL)
   data_click <- reactiveValues(plot = NULL, table = NULL)
+  meta_rows <- reactiveVal(1)
+  meta_cache <- reactiveVal(NULL)
 
 
   #Read Data ----
@@ -42,6 +44,7 @@ observeEvent(input$file, {
   # Read in data when uploaded based on the file type
   data_click$plot <- 1
   data_click$table <- 1
+  meta_rows(1)
   preprocessed$data <- NULL
 
   if (!all(grepl("(\\.tsv$)|(\\.dat$)|(\\.hdr$)|(\\.json$)|(\\.rds$)|(\\.yml$)|(\\.csv$)|(\\.asp$)|(\\.spa$)|(\\.spc$)|(\\.jdx$)|(\\.dx$)|(\\.RData$)|(\\.zip$)|(\\.[0-9]$)",
@@ -328,6 +331,16 @@ observeEvent(input$file, {
   signal_to_noise <- reactive({
       req(!is.null(preprocessed$data))
       sig_noise(x = DataR(), step = 10, metric = input$signal_selection, abs = F)
+  })
+
+  observeEvent(list(DataR(), input$signal_selection), {
+      req(isTruthy(DataR()))
+      meta <- DataR()$metadata
+      meta$signal_to_noise <- signal_to_noise()
+      meta <- meta[, !sapply(meta, OpenSpecy::is_empty_vector), with = FALSE]
+      meta[, coord_key := paste(x, y)]
+      meta <- data.table(Index = seq_len(nrow(meta)), meta)
+      meta_cache(meta)
   })
   
   
@@ -656,18 +669,31 @@ output$snr_plot <- renderPlot({
 })
 
 #Table of metadata for the selected library value
-output$eventmetadata <- DT::renderDataTable({
+metadata_table <- reactive({
+    meta <- meta_cache()
+    req(!is.null(meta))
+    if (isTruthy(data_click$plot) && data_click$plot <= nrow(meta)) {
+        rbind(meta[data_click$plot], meta[-data_click$plot])
+    } else {
+        meta
+    }
+})
+
+output$eventmetadata <- DT::renderDataTable(server = TRUE, {
     req(!is.null(preprocessed$data))
-    #req(!grepl("^ai$", input$id_strategy))
-    datatable(match_metadata(),
+    datatable(metadata_table(),
               escape = FALSE,
-              options = list(dom = 't', bSort = F,
+              options = list(dom = 'ft',
+                             bSort = TRUE,
                              scrollX = TRUE,
+                             deferRender = TRUE,
+                             pageLength = meta_rows(),
                              lengthChange = FALSE,
-                             info = FALSE),
+                             info = FALSE,
+                             columnDefs = list(list(visible = FALSE, targets = 0))),
               rownames = FALSE,
               style = 'bootstrap', caption = "Selection Metadata",
-              selection = list(mode = 'none'))
+              selection = list(mode = 'single', selected = c(1)))
 })
 
 # Create the data tables for all matches
@@ -949,27 +975,78 @@ output$progress_bars <- renderUI({
             if(input$download_selection == "Thresholded Particles") {write_spec(thresholded_particles(), file = file)}
             })
 
-  # Hide functions or objects when the shouldn't exist. 
- 
-  observe({
-      toggle(id = "heatmapA", condition = isTruthy(ncol(preprocessed$data$spectra) > 1))
-      toggle(id = "placeholder1", condition = !isTruthy(preprocessed$data))
+  # Hide functions or objects when they shouldn't exist.
 
-      if(isTruthy(ncol(preprocessed$data$spectra) > 1)){
-          if(isTruthy(event_data("plotly_click", source = "heat_plot")[["pointNumber"]] + 1)){
-              data_click$plot <- event_data("plotly_click", source = "heat_plot")[["pointNumber"]] + 1
-          }   
-      }
-       else{
-           data_click$plot <- 1
-       }   
+  observe({
+      toggle(id = "heatmapA",
+             condition = isTruthy(ncol(preprocessed$data$spectra) > 1))
+      toggle(id = "placeholder1", condition = !isTruthy(preprocessed$data))
+  })
+
+  observeEvent(event_data("plotly_click", source = "heat_plot"), {
+      click <- event_data("plotly_click", source = "heat_plot")
+      if (!is.null(click$pointNumber))
+          data_click$plot <- click$pointNumber + 1
+  }, ignoreNULL = TRUE, ignoreInit = TRUE)
+
+  observe({
       if(!isTruthy(input$event_rows_selected)){
           data_click$table <- 1
       }
       else{
           data_click$table <- input$event_rows_selected
-      } 
-    })
+      }
+  })
+
+  observeEvent(input$eventmetadata_rows_selected, ignoreInit = TRUE, {
+      sel <- metadata_table()$Index[input$eventmetadata_rows_selected]
+      data_click$plot <- sel
+  })
+
+  move_selection <- function(dx = 0, dy = 0) {
+      req(!is.null(meta_cache()))
+      meta <- meta_cache()
+      cur <- data_click$plot
+      if (cur > nrow(meta)) return()
+      target <- paste(meta$x[cur] + dx, meta$y[cur] + dy)
+      idx <- match(target, meta$coord_key)
+      if (!is.na(idx)) data_click$plot <- idx
+  }
+
+  observeEvent(input$left_spec,  { move_selection(dx = -1) })
+  observeEvent(input$right_spec, { move_selection(dx =  1) })
+  observeEvent(input$up_spec,    { move_selection(dy =  1) })
+  observeEvent(input$down_spec,  { move_selection(dy = -1) })
+
+  observeEvent(input$toggle_meta_rows, {
+      if (meta_rows() == 1) {
+          meta_rows(10)
+      } else {
+          meta_rows(1)
+      }
+  })
+
+  output$nav_buttons <- renderUI({
+      req(!is.null(preprocessed$data))
+      if (ncol(preprocessed$data$spectra) > 1) {
+          tagList(
+              div(style = "display:flex;justify-content:center;", actionButton("up_spec", label = NULL, icon = icon("arrow-up"))),
+              div(style = "display:flex;justify-content:center;gap:0.5em;", 
+                  actionButton("left_spec",  label = NULL, icon = icon("arrow-left")),
+                  actionButton("right_spec", label = NULL, icon = icon("arrow-right"))
+              ),
+              div(style = "display:flex;justify-content:center;", actionButton("down_spec", label = NULL, icon = icon("arrow-down")))
+          )
+      }
+  })
+  outputOptions(output, "nav_buttons", suspendWhenHidden = FALSE)
+
+  output$meta_toggle <- renderUI({
+      req(!is.null(preprocessed$data))
+      lbl <- if (meta_rows() == 1) "Expand Metadata" else "Collapse Metadata"
+      actionButton("toggle_meta_rows", lbl)
+  })
+  outputOptions(output, "meta_toggle", suspendWhenHidden = FALSE)
 
   #Google translate. 
   output$translate <- renderUI({

@@ -531,11 +531,14 @@ dashboardPage(dark = T,
                                   h4(id = "placeholder1", "Upload some data to get started..."),
                                   uiOutput("choice_names"),
                                   fluidRow(
-                                      plotlyOutput("heatmapA",inline = T),
-                                      plotlyOutput("MyPlotC", inline = T),
-                                      div(style = "overflow-x: scroll",
-                                          DT::dataTableOutput("eventmetadata")   
-                                      )),
+                                      column(11, plotlyOutput("heatmapA", inline = TRUE)),
+                                      column(1, uiOutput("nav_buttons"))
+                                  ),
+                                  plotlyOutput("MyPlotC", inline = TRUE),
+                                  div(style = "overflow-x: scroll",
+                                      DT::dataTableOutput("eventmetadata"),
+                                      uiOutput("meta_toggle")
+                                  ),
                                   sidebar = boxSidebar(
                                       id = "mycardsidebar",
                                       fluidRow(style = "padding:1rem; overflow-x: scroll",
