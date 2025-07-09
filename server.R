@@ -656,18 +656,31 @@ output$snr_plot <- renderPlot({
 })
 
 #Table of metadata for the selected library value
+metadata_table <- reactive({
+    req(!is.null(preprocessed$data))
+    meta <- DataR()$metadata
+    meta$signal_to_noise <- signal_to_noise()
+    meta <- meta[, !sapply(meta, OpenSpecy::is_empty_vector), with = FALSE]
+    meta <- data.table(Index = seq_len(nrow(meta)), meta)
+    if (isTruthy(data_click$plot) && data_click$plot <= nrow(meta)) {
+        meta <- rbind(meta[data_click$plot], meta[-data_click$plot])
+    }
+    meta
+})
+
 output$eventmetadata <- DT::renderDataTable({
     req(!is.null(preprocessed$data))
-    #req(!grepl("^ai$", input$id_strategy))
-    datatable(match_metadata(),
+    datatable(metadata_table(),
               escape = FALSE,
-              options = list(dom = 't', bSort = F,
+              options = list(dom = 't', bSort = FALSE,
                              scrollX = TRUE,
+                             pageLength = 3,
                              lengthChange = FALSE,
-                             info = FALSE),
+                             info = FALSE,
+                             columnDefs = list(list(visible = FALSE, targets = 0))),
               rownames = FALSE,
               style = 'bootstrap', caption = "Selection Metadata",
-              selection = list(mode = 'none'))
+              selection = list(mode = 'single', selected = c(1)))
 })
 
 # Create the data tables for all matches
@@ -968,8 +981,25 @@ output$progress_bars <- renderUI({
       }
       else{
           data_click$table <- input$event_rows_selected
-      } 
+      }
     })
+
+  observeEvent(input$eventmetadata_rows_selected, ignoreInit = TRUE, {
+      sel <- metadata_table()$Index[input$eventmetadata_rows_selected]
+      data_click$plot <- sel
+  })
+
+  observeEvent(input$next_spec, {
+      req(!is.null(preprocessed$data))
+      n <- ncol(DataR()$spectra)
+      data_click$plot <- ifelse(data_click$plot < n, data_click$plot + 1, 1)
+  })
+
+  observeEvent(input$prev_spec, {
+      req(!is.null(preprocessed$data))
+      n <- ncol(DataR()$spectra)
+      data_click$plot <- ifelse(data_click$plot > 1, data_click$plot - 1, n)
+  })
 
   #Google translate. 
   output$translate <- renderUI({
