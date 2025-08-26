@@ -536,8 +536,7 @@ dashboardPage(dark = T,
                                   ),
                                   plotlyOutput("MyPlotC", inline = TRUE),
                                   div(style = "overflow-x: scroll",
-                                      DT::dataTableOutput("eventmetadata"),
-                                      uiOutput("meta_toggle")
+                                      DT::dataTableOutput("eventmetadata")
                                   ),
                                   sidebar = boxSidebar(
                                       id = "mycardsidebar",

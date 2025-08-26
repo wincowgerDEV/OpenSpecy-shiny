@@ -34,7 +34,6 @@ function(input, output, session) {
 
   preprocessed <- reactiveValues(data = NULL)
   data_click <- reactiveValues(plot = NULL, table = NULL)
-  meta_rows <- reactiveVal(1)
   meta_cache <- reactiveVal(NULL)
 
 
@@ -44,7 +43,6 @@ observeEvent(input$file, {
   # Read in data when uploaded based on the file type
   data_click$plot <- 1
   data_click$table <- 1
-  meta_rows(1)
   preprocessed$data <- NULL
 
   if (!all(grepl("(\\.tsv$)|(\\.dat$)|(\\.hdr$)|(\\.json$)|(\\.rds$)|(\\.yml$)|(\\.csv$)|(\\.asp$)|(\\.spa$)|(\\.spc$)|(\\.jdx$)|(\\.dx$)|(\\.RData$)|(\\.zip$)|(\\.[0-9]$)",
@@ -677,7 +675,6 @@ output$eventmetadata <- DT::renderDataTable(server = TRUE, {
                              bSort = TRUE,
                              scrollX = TRUE,
                              deferRender = TRUE,
-                             pageLength = meta_rows(),
                              lengthChange = FALSE,
                              info = FALSE),
               rownames = FALSE,
@@ -717,8 +714,18 @@ output$sidebar_metadata <- DT::renderDataTable(server = TRUE, {
               filter = "top",
               caption = "Uploaded Metadata",
               style = "bootstrap",
-              selection = list(mode = "single", selected = c(data_click$plot)))
+              selection = "single")
 })
+
+  sidebar_proxy <- DT::dataTableProxy("sidebar_metadata")
+
+  observe({
+      req(!is.null(meta_cache()))
+      sel <- data_click$plot
+      if (!is.null(sel) && sel <= nrow(meta_cache())) {
+          DT::selectRows(sidebar_proxy, sel)
+      }
+  })
 
 # Progress Bars
 output$choice_names <- renderUI({
@@ -1026,14 +1033,6 @@ output$progress_bars <- renderUI({
   observeEvent(input$up_spec,    { move_selection(dy =  1) })
   observeEvent(input$down_spec,  { move_selection(dy = -1) })
 
-  observeEvent(input$toggle_meta_rows, {
-      if (meta_rows() == 1) {
-          meta_rows(10)
-      } else {
-          meta_rows(1)
-      }
-  })
-
   output$nav_buttons <- renderUI({
       req(!is.null(preprocessed$data))
       if (ncol(preprocessed$data$spectra) > 1) {
@@ -1048,13 +1047,6 @@ output$progress_bars <- renderUI({
       }
   })
   outputOptions(output, "nav_buttons", suspendWhenHidden = FALSE)
-
-  output$meta_toggle <- renderUI({
-      req(!is.null(preprocessed$data))
-      lbl <- if (meta_rows() == 1) "Expand Metadata" else "Collapse Metadata"
-      actionButton("toggle_meta_rows", lbl)
-  })
-  outputOptions(output, "meta_toggle", suspendWhenHidden = FALSE)
 
   #Google translate. 
   output$translate <- renderUI({
