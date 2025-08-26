@@ -670,17 +670,20 @@ output$snr_plot <- renderPlot({
 #Table of metadata for the selected spectrum and match
 output$eventmetadata <- DT::renderDataTable(server = TRUE, {
     req(!is.null(preprocessed$data))
-    datatable(match_metadata(),
-              escape = FALSE,
-              options = list(dom = 'ft',
-                             bSort = TRUE,
-                             scrollX = TRUE,
-                             deferRender = TRUE,
-                             lengthChange = FALSE,
-                             info = FALSE),
-              rownames = FALSE,
-              style = 'bootstrap', caption = "Selection Metadata",
-              selection = 'none')
+    datatable(
+        match_metadata(),
+        escape = FALSE,
+        options = list(
+            dom = 't',
+            ordering = FALSE,
+            paging = FALSE,
+            info = FALSE
+        ),
+        rownames = FALSE,
+        style = 'bootstrap',
+        caption = "Selection Metadata",
+        selection = 'none'
+    )
 })
 
 # Create the data tables for all matches
