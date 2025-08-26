@@ -536,13 +536,19 @@ dashboardPage(dark = T,
                                   ),
                                   plotlyOutput("MyPlotC", inline = TRUE),
                                   div(style = "overflow-x: scroll",
-                                      DT::dataTableOutput("eventmetadata"),
-                                      uiOutput("meta_toggle")
+                                      DT::dataTableOutput("eventmetadata")
                                   ),
                                   sidebar = boxSidebar(
                                       id = "mycardsidebar",
-                                      fluidRow(style = "padding:1rem; overflow-x: scroll",
-                                               DT::dataTableOutput("event"))
+                                      tabsetPanel(
+                                          id = "sidebar_tables",
+                                          tabPanel("Library Matches",
+                                                   fluidRow(style = "padding:1rem; overflow-x: scroll",
+                                                            DT::dataTableOutput("event"))),
+                                          tabPanel("Uploaded Metadata",
+                                                   fluidRow(style = "padding:1rem; overflow-x: scroll",
+                                                            DT::dataTableOutput("sidebar_metadata")))
+                                      )
                                   )
                               )
                           ),

@@ -34,7 +34,6 @@ function(input, output, session) {
 
   preprocessed <- reactiveValues(data = NULL)
   data_click <- reactiveValues(plot = NULL, table = NULL)
-  meta_rows <- reactiveVal(1)
   meta_cache <- reactiveVal(NULL)
 
 
@@ -44,7 +43,6 @@ observeEvent(input$file, {
   # Read in data when uploaded based on the file type
   data_click$plot <- 1
   data_click$table <- 1
-  meta_rows(1)
   preprocessed$data <- NULL
 
   if (!all(grepl("(\\.tsv$)|(\\.dat$)|(\\.hdr$)|(\\.json$)|(\\.rds$)|(\\.yml$)|(\\.csv$)|(\\.asp$)|(\\.spa$)|(\\.spc$)|(\\.jdx$)|(\\.dx$)|(\\.RData$)|(\\.zip$)|(\\.[0-9]$)",
@@ -633,9 +631,10 @@ match_metadata <- reactive({
         selected_match <- matches_to_single()[data_click$table, ]
         dataR_metadata <- DataR()$metadata
         dataR_metadata$signal_to_noise <- signal_to_noise()
+        dataR_metadata[, material_class := NULL]
         setkey(dataR_metadata, col_id)
         setkey(selected_match, object_id)
-        
+
         result <- dataR_metadata[selected_match, on = c(col_id = "object_id")]
         result <- result[, !sapply(result, OpenSpecy::is_empty_vector), with = FALSE] %>%
             select(file_name, col_id, material_class, spectrum_identity, match_val, signal_to_noise, everything())
@@ -668,32 +667,23 @@ output$snr_plot <- renderPlot({
         labs(x = "Signal/Noise")
 })
 
-#Table of metadata for the selected library value
-metadata_table <- reactive({
-    meta <- meta_cache()
-    req(!is.null(meta))
-    if (isTruthy(data_click$plot) && data_click$plot <= nrow(meta)) {
-        rbind(meta[data_click$plot], meta[-data_click$plot])
-    } else {
-        meta
-    }
-})
-
+#Table of metadata for the selected spectrum and match
 output$eventmetadata <- DT::renderDataTable(server = TRUE, {
     req(!is.null(preprocessed$data))
-    datatable(metadata_table(),
-              escape = FALSE,
-              options = list(dom = 'ft',
-                             bSort = TRUE,
-                             scrollX = TRUE,
-                             deferRender = TRUE,
-                             pageLength = meta_rows(),
-                             lengthChange = FALSE,
-                             info = FALSE,
-                             columnDefs = list(list(visible = FALSE, targets = 0))),
-              rownames = FALSE,
-              style = 'bootstrap', caption = "Selection Metadata",
-              selection = list(mode = 'single', selected = c(1)))
+    datatable(
+        match_metadata(),
+        escape = FALSE,
+        options = list(
+            dom = 't',
+            ordering = FALSE,
+            paging = FALSE,
+            info = FALSE
+        ),
+        rownames = FALSE,
+        style = 'bootstrap',
+        caption = "Selection Metadata",
+        selection = 'none'
+    )
 })
 
 # Create the data tables for all matches
@@ -713,6 +703,34 @@ output$event <- DT::renderDataTable({
               selection = list(mode = "single", selected = c(1)))
 })
 
+#Full metadata table for uploaded spectra
+output$sidebar_metadata <- DT::renderDataTable(server = TRUE, {
+    req(!is.null(meta_cache()))
+    datatable(meta_cache(),
+              escape = FALSE,
+              options = list(searchHighlight = TRUE,
+                             scrollX = TRUE,
+                             sDom  = '<"top">lrt<"bottom">ip',
+                             lengthChange = FALSE,
+                             pageLength = 5,
+                             columnDefs = list(list(visible = FALSE, targets = 0))),
+              rownames = FALSE,
+              filter = "top",
+              caption = "Uploaded Metadata",
+              style = "bootstrap",
+              selection = "single")
+})
+
+  sidebar_proxy <- DT::dataTableProxy("sidebar_metadata")
+
+  observe({
+      req(!is.null(meta_cache()))
+      sel <- data_click$plot
+      if (!is.null(sel) && sel <= nrow(meta_cache())) {
+          DT::selectRows(sidebar_proxy, sel)
+      }
+  })
+
 # Progress Bars
 output$choice_names <- renderUI({
     req(ncol(preprocessed$data$spectra) > 1)
@@ -725,7 +743,7 @@ output$choice_names <- renderUI({
                     else NA,
                     if(!is.null(signal_to_noise())) "Signal/Noise"
                     else NA,
-                    if(isTruthy(particles_logi())) "Feature ID"
+                    if(isTruthy(particles_logi()) & input$collapse_decision) "Feature ID"
                     else NA)
     choice_names = choice_names[!is.na(choice_names)]
         tagList(
@@ -784,7 +802,7 @@ output$progress_bars <- renderUI({
       req(!is.null(preprocessed$data))
       req(ncol(preprocessed$data$spectra) > 1)
       #req(input$map_color)
-      if(input$collapse_decision & isTruthy(particles_logi()) & length(unique(as.character(particles_logi()))) == 1){
+      if(input$collapse_decision & isTruthy(particles_logi()) & length(unique(as.character(particles_logi()))) > 1){
           test = def_features(DataR(), features = particles_logi())
       }
       else{
@@ -832,10 +850,30 @@ output$progress_bars <- renderUI({
                  "Median" = median(x),
                  "Geometric Mean" = exp(mean(log(x))))
       }
-      collapse_spec(
-          def_features(DataR(), features = particles_logi()), fun = collapse_fun
-      ) %>%
+
+      spec <- DataR()
+      if (input$active_identification) {
+          spec$metadata$material_class <- max_cor_identity()
+      }
+
+      spec_feat <- def_features(spec, features = particles_logi())
+
+      collapsed <- collapse_spec(spec_feat, fun = collapse_fun) %>%
           filter_spec(., logic = .$metadata$feature_id != "-88")
+
+      if (input$active_identification) {
+          fid <- spec_feat$metadata$feature_id
+          classes <- spec_feat$metadata$material_class
+          ids <- unique(fid[fid != "-88"])
+          majority <- vapply(ids, function(id) {
+              vals <- classes[fid == id]
+              vals <- vals[!is.na(vals)]
+              if (length(vals) == 0) NA_character_ else names(sort(table(vals), decreasing = TRUE))[1]
+          }, character(1))
+          collapsed$metadata$material_class <- majority[match(collapsed$metadata$feature_id, ids)]
+      }
+
+      collapsed
   })
   
   #Summary Plots ----
@@ -998,10 +1036,13 @@ output$progress_bars <- renderUI({
       }
   })
 
-  observeEvent(input$eventmetadata_rows_selected, ignoreInit = TRUE, {
-      sel <- metadata_table()$Index[input$eventmetadata_rows_selected]
-      data_click$plot <- sel
+  observeEvent(input$sidebar_metadata_rows_selected, ignoreInit = TRUE, {
+      sel <- meta_cache()$Index[input$sidebar_metadata_rows_selected]
+      if (!is.null(sel) && !identical(sel, data_click$plot)) {
+          data_click$plot <- sel
+      }
   })
+
 
   move_selection <- function(dx = 0, dy = 0) {
       req(!is.null(meta_cache()))
@@ -1018,14 +1059,6 @@ output$progress_bars <- renderUI({
   observeEvent(input$up_spec,    { move_selection(dy =  1) })
   observeEvent(input$down_spec,  { move_selection(dy = -1) })
 
-  observeEvent(input$toggle_meta_rows, {
-      if (meta_rows() == 1) {
-          meta_rows(10)
-      } else {
-          meta_rows(1)
-      }
-  })
-
   output$nav_buttons <- renderUI({
       req(!is.null(preprocessed$data))
       if (ncol(preprocessed$data$spectra) > 1) {
@@ -1040,13 +1073,6 @@ output$progress_bars <- renderUI({
       }
   })
   outputOptions(output, "nav_buttons", suspendWhenHidden = FALSE)
-
-  output$meta_toggle <- renderUI({
-      req(!is.null(preprocessed$data))
-      lbl <- if (meta_rows() == 1) "Expand Metadata" else "Collapse Metadata"
-      actionButton("toggle_meta_rows", lbl)
-  })
-  outputOptions(output, "meta_toggle", suspendWhenHidden = FALSE)
 
   #Google translate. 
   output$translate <- renderUI({
