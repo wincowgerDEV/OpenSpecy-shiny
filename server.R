@@ -668,20 +668,10 @@ output$snr_plot <- renderPlot({
         labs(x = "Signal/Noise")
 })
 
-#Table of metadata for the selected library value
-metadata_table <- reactive({
-    meta <- meta_cache()
-    req(!is.null(meta))
-    if (isTruthy(data_click$plot) && data_click$plot <= nrow(meta)) {
-        rbind(meta[data_click$plot], meta[-data_click$plot])
-    } else {
-        meta
-    }
-})
-
+#Table of metadata for the selected spectrum and match
 output$eventmetadata <- DT::renderDataTable(server = TRUE, {
     req(!is.null(preprocessed$data))
-    datatable(metadata_table(),
+    datatable(match_metadata(),
               escape = FALSE,
               options = list(dom = 'ft',
                              bSort = TRUE,
@@ -689,11 +679,10 @@ output$eventmetadata <- DT::renderDataTable(server = TRUE, {
                              deferRender = TRUE,
                              pageLength = meta_rows(),
                              lengthChange = FALSE,
-                             info = FALSE,
-                             columnDefs = list(list(visible = FALSE, targets = 0))),
+                             info = FALSE),
               rownames = FALSE,
               style = 'bootstrap', caption = "Selection Metadata",
-              selection = list(mode = 'single', selected = c(1)))
+              selection = 'none')
 })
 
 # Create the data tables for all matches
@@ -711,6 +700,24 @@ output$event <- DT::renderDataTable({
               filter = "top", caption = "Selectable Matches",
               style = "bootstrap",
               selection = list(mode = "single", selected = c(1)))
+})
+
+#Full metadata table for uploaded spectra
+output$sidebar_metadata <- DT::renderDataTable(server = TRUE, {
+    req(!is.null(meta_cache()))
+    datatable(meta_cache(),
+              escape = FALSE,
+              options = list(searchHighlight = TRUE,
+                             scrollX = TRUE,
+                             sDom  = '<"top">lrt<"bottom">ip',
+                             lengthChange = FALSE,
+                             pageLength = 5,
+                             columnDefs = list(list(visible = FALSE, targets = 0))),
+              rownames = FALSE,
+              filter = "top",
+              caption = "Uploaded Metadata",
+              style = "bootstrap",
+              selection = list(mode = "single", selected = c(data_click$plot)))
 })
 
 # Progress Bars
@@ -998,10 +1005,11 @@ output$progress_bars <- renderUI({
       }
   })
 
-  observeEvent(input$eventmetadata_rows_selected, ignoreInit = TRUE, {
-      sel <- metadata_table()$Index[input$eventmetadata_rows_selected]
+  observeEvent(input$sidebar_metadata_rows_selected, ignoreInit = TRUE, {
+      sel <- meta_cache()$Index[input$sidebar_metadata_rows_selected]
       data_click$plot <- sel
   })
+
 
   move_selection <- function(dx = 0, dy = 0) {
       req(!is.null(meta_cache()))

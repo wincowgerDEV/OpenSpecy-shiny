@@ -541,8 +541,15 @@ dashboardPage(dark = T,
                                   ),
                                   sidebar = boxSidebar(
                                       id = "mycardsidebar",
-                                      fluidRow(style = "padding:1rem; overflow-x: scroll",
-                                               DT::dataTableOutput("event"))
+                                      tabsetPanel(
+                                          id = "sidebar_tables",
+                                          tabPanel("Library Matches",
+                                                   fluidRow(style = "padding:1rem; overflow-x: scroll",
+                                                            DT::dataTableOutput("event"))),
+                                          tabPanel("Uploaded Metadata",
+                                                   fluidRow(style = "padding:1rem; overflow-x: scroll",
+                                                            DT::dataTableOutput("sidebar_metadata")))
+                                      )
                                   )
                               )
                           ),
