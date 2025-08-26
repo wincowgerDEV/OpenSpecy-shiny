@@ -1014,7 +1014,9 @@ output$progress_bars <- renderUI({
 
   observeEvent(input$sidebar_metadata_rows_selected, ignoreInit = TRUE, {
       sel <- meta_cache()$Index[input$sidebar_metadata_rows_selected]
-      data_click$plot <- sel
+      if (!is.null(sel) && !identical(sel, data_click$plot)) {
+          data_click$plot <- sel
+      }
   })
 
 
