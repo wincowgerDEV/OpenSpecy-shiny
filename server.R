@@ -631,9 +631,10 @@ match_metadata <- reactive({
         selected_match <- matches_to_single()[data_click$table, ]
         dataR_metadata <- DataR()$metadata
         dataR_metadata$signal_to_noise <- signal_to_noise()
+        dataR_metadata[, material_class := NULL]
         setkey(dataR_metadata, col_id)
         setkey(selected_match, object_id)
-        
+
         result <- dataR_metadata[selected_match, on = c(col_id = "object_id")]
         result <- result[, !sapply(result, OpenSpecy::is_empty_vector), with = FALSE] %>%
             select(file_name, col_id, material_class, spectrum_identity, match_val, signal_to_noise, everything())
