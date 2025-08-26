@@ -670,17 +670,20 @@ output$snr_plot <- renderPlot({
 #Table of metadata for the selected spectrum and match
 output$eventmetadata <- DT::renderDataTable(server = TRUE, {
     req(!is.null(preprocessed$data))
-    datatable(match_metadata(),
-              escape = FALSE,
-              options = list(dom = 'ft',
-                             bSort = TRUE,
-                             scrollX = TRUE,
-                             deferRender = TRUE,
-                             lengthChange = FALSE,
-                             info = FALSE),
-              rownames = FALSE,
-              style = 'bootstrap', caption = "Selection Metadata",
-              selection = 'none')
+    datatable(
+        match_metadata(),
+        escape = FALSE,
+        options = list(
+            dom = 't',
+            ordering = FALSE,
+            paging = FALSE,
+            info = FALSE
+        ),
+        rownames = FALSE,
+        style = 'bootstrap',
+        caption = "Selection Metadata",
+        selection = 'none'
+    )
 })
 
 # Create the data tables for all matches
@@ -847,10 +850,30 @@ output$progress_bars <- renderUI({
                  "Median" = median(x),
                  "Geometric Mean" = exp(mean(log(x))))
       }
-      collapse_spec(
-          def_features(DataR(), features = particles_logi()), fun = collapse_fun
-      ) %>%
+
+      spec <- DataR()
+      if (input$active_identification) {
+          spec$metadata$material_class <- max_cor_identity()
+      }
+
+      spec_feat <- def_features(spec, features = particles_logi())
+
+      collapsed <- collapse_spec(spec_feat, fun = collapse_fun) %>%
           filter_spec(., logic = .$metadata$feature_id != "-88")
+
+      if (input$active_identification) {
+          fid <- spec_feat$metadata$feature_id
+          classes <- spec_feat$metadata$material_class
+          ids <- unique(fid[fid != "-88"])
+          majority <- vapply(ids, function(id) {
+              vals <- classes[fid == id]
+              vals <- vals[!is.na(vals)]
+              if (length(vals) == 0) NA_character_ else names(sort(table(vals), decreasing = TRUE))[1]
+          }, character(1))
+          collapsed$metadata$material_class <- majority[match(collapsed$metadata$feature_id, ids)]
+      }
+
+      collapsed
   })
   
   #Summary Plots ----
