@@ -740,7 +740,7 @@ output$choice_names <- renderUI({
                     else NA,
                     if(!is.null(signal_to_noise())) "Signal/Noise"
                     else NA,
-                    if(isTruthy(particles_logi())) "Feature ID"
+                    if(isTruthy(particles_logi()) & input$collapse_decision) "Feature ID"
                     else NA)
     choice_names = choice_names[!is.na(choice_names)]
         tagList(
@@ -799,7 +799,7 @@ output$progress_bars <- renderUI({
       req(!is.null(preprocessed$data))
       req(ncol(preprocessed$data$spectra) > 1)
       #req(input$map_color)
-      if(input$collapse_decision & isTruthy(particles_logi()) & length(unique(as.character(particles_logi()))) == 1){
+      if(input$collapse_decision & isTruthy(particles_logi()) & length(unique(as.character(particles_logi()))) > 1){
           test = def_features(DataR(), features = particles_logi())
       }
       else{
