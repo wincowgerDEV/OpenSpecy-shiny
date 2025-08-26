@@ -36,10 +36,11 @@ function(input, output, session) {
   data_click <- reactiveValues(plot = NULL, table = NULL)
   meta_rows <- reactiveVal(1)
   meta_cache <- reactiveVal(NULL)
+  suppress_sidebar <- reactiveVal(FALSE)
 
 
   #Read Data ----
-  #Sending data to a remote repo. 
+  #Sending data to a remote repo.
 observeEvent(input$file, {
   # Read in data when uploaded based on the file type
   data_click$plot <- 1
@@ -679,7 +680,7 @@ metadata_table <- reactive({
     }
 })
 
-output$eventmetadata <- DT::renderDataTable(server = TRUE, {
+output$sidebar_metadata <- DT::renderDataTable(server = TRUE, {
     req(!is.null(preprocessed$data))
     datatable(metadata_table(),
               escape = FALSE,
@@ -694,6 +695,14 @@ output$eventmetadata <- DT::renderDataTable(server = TRUE, {
               rownames = FALSE,
               style = 'bootstrap', caption = "Selection Metadata",
               selection = list(mode = 'single', selected = c(1)))
+})
+
+sidebar_proxy <- DT::dataTableProxy('sidebar_metadata')
+
+observeEvent(data_click$plot, {
+    req(!is.null(data_click$plot))
+    suppress_sidebar(TRUE)
+    DT::selectRows(sidebar_proxy, data_click$plot)
 })
 
 # Create the data tables for all matches
@@ -998,8 +1007,12 @@ output$progress_bars <- renderUI({
       }
   })
 
-  observeEvent(input$eventmetadata_rows_selected, ignoreInit = TRUE, {
-      sel <- metadata_table()$Index[input$eventmetadata_rows_selected]
+  observeEvent(input$sidebar_metadata_rows_selected, ignoreInit = TRUE, {
+      if (suppress_sidebar()) {
+          suppress_sidebar(FALSE)
+          return()
+      }
+      sel <- metadata_table()$Index[input$sidebar_metadata_rows_selected]
       data_click$plot <- sel
   })
 
@@ -1010,13 +1023,18 @@ output$progress_bars <- renderUI({
       if (cur > nrow(meta)) return()
       target <- paste(meta$x[cur] + dx, meta$y[cur] + dy)
       idx <- match(target, meta$coord_key)
-      if (!is.na(idx)) data_click$plot <- idx
+  if (!is.na(idx)) data_click$plot <- idx
   }
 
-  observeEvent(input$left_spec,  { move_selection(dx = -1) })
-  observeEvent(input$right_spec, { move_selection(dx =  1) })
-  observeEvent(input$up_spec,    { move_selection(dy =  1) })
-  observeEvent(input$down_spec,  { move_selection(dy = -1) })
+  left_spec_throttled  <- shiny::throttle(reactive(input$left_spec),  250)
+  right_spec_throttled <- shiny::throttle(reactive(input$right_spec), 250)
+  up_spec_throttled    <- shiny::throttle(reactive(input$up_spec),    250)
+  down_spec_throttled  <- shiny::throttle(reactive(input$down_spec),  250)
+
+  observeEvent(left_spec_throttled(),  { move_selection(dx = -1) })
+  observeEvent(right_spec_throttled(), { move_selection(dx =  1) })
+  observeEvent(up_spec_throttled(),    { move_selection(dy =  1) })
+  observeEvent(down_spec_throttled(),  { move_selection(dy = -1) })
 
   observeEvent(input$toggle_meta_rows, {
       if (meta_rows() == 1) {
