@@ -286,14 +286,19 @@ observeEvent(input$file, {
                                                iterations = input$iterations,
                                                baseline = NULL),
                     smooth_intens = input$smooth_decision, 
-                    smooth_intens_args = list(polynomial = input$smoother, 
-                                              window = calc_window_points(if(input$conform_decision){seq(100, 
-                                                                                                         4000, 
-                                                                                                         by = input$conform_res)} 
-                                                                          else{data()}, 
-                                                                          input$smoother_window), 
-                                              derivative = input$derivative_order, 
-                                              abs = input$derivative_abs),
+                    smooth_intens_args = list(
+                        polynomial = input$smoother,
+                        window = calc_window_points(
+                            if (input$conform_decision) {
+                                seq(100, 4000, by = input$conform_res)
+                            } else {
+                                data()$wavenumber
+                            },
+                            input$smoother_window
+                        ),
+                        derivative = input$derivative_order,
+                        abs = input$derivative_abs
+                    ),
                     make_rel = input$make_rel_decision)
     
     if(input$spatial_decision){
@@ -1092,9 +1097,9 @@ output$progress_bars <- renderUI({
              active = input$active_preprocessing,
              adj_intens = input$intensity_decision, 
              type = input$intensity_corr,
-             restric_range = input$range_decision,
-             restric_range_min = input$MinRange, 
-             restric_range_max = input$MaxRange,
+            restrict_range = input$range_decision,
+             restrict_range_min = input$MinRange,
+             restrict_range_max = input$MaxRange,
              flatten_range = input$co2_decision,
              flatten_range_min = input$MinFlat, 
              flatten_range_max = input$MaxFlat,
