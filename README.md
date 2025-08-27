@@ -35,12 +35,6 @@ if (!require('OpenSpecy')) install.packages('OpenSpecy'); library('OpenSpecy')
 if (!require('shiny')) install.packages('shiny'); library('shiny')
 shiny::runGitHub('OpenSpecy-shiny', 'wincowgerDEV')
 ```
-## Version History
-If you are looking for a previous version of the OpenSpecy web application, you can find past versions here:
-
-Last updated on [03/21/2024](https://rawcdn.githack.com/Moore-Institute-4-Plastic-Pollution-Res/openspecy/0c43f59813850ddaa6ade8c0bc41e8e4f10a3bbc/docs/index.html)
-
-
 
 
 
