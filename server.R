@@ -227,7 +227,7 @@ observeEvent(input$file, {
                   get_lib("derivative",
                           revision = "k9DA01hqGk0dNudCu3ddhwQX.whPGrsp",
                           #mode = "w", 
-                          path = "data/", 
+                          #path = "data/", 
                           aws = TRUE)
               }
               library <- load_lib("derivative")
