@@ -122,11 +122,11 @@ observeEvent(input$file, {
           }
           else{
               if(is(tryCatch(check_lib("medoid_derivative"),
-                              error=function(e) e, 
-                              warning=function(w) w), 
-                     "warning")){
+                             error=function(e) e, 
+                             warning=function(w) w), 
+                    "warning")){
                   get_lib("medoid_derivative", 
-                          revision = "Qzje7PothTWopStobIdw5r6gEPpXERSN",
+                          revision = "iThmNyMeUKhkWMvbBxQqpf1sESdQBFTs",
                           #mode = "w", 
                           #path = "data/", 
                           aws = TRUE)    
@@ -143,14 +143,14 @@ observeEvent(input$file, {
           }
           else {
               if(is(tryCatch(check_lib("medoid_nobaseline"),
-                              error=function(e) e, 
-                              warning=function(w) w), 
-                     "warning")){
-              get_lib("medoid_nobaseline", 
-                      revision = "gcu432KN.Pqjsl5V5ZgNnLtMpuu6.Z2h",
-                      #mode = "w", 
-                      #path = "data/", 
-                      aws = TRUE)
+                             error=function(e) e, 
+                             warning=function(w) w), 
+                    "warning")){
+                  get_lib("medoid_nobaseline", 
+                          revision = "CLJCDpeFCMZw4hFUW4Y1QFT2cj23W1Yz",
+                          #mode = "w", 
+                          #path = "data/", 
+                          aws = TRUE)
               }
               library <- load_lib("medoid_nobaseline")
           }
@@ -162,14 +162,14 @@ observeEvent(input$file, {
           }
           else {
               if(is(tryCatch(check_lib("model_derivative"),
-                              error=function(e) e, 
-                              warning=function(w) w), 
-                     "warning")){
-              get_lib("model_derivative", 
-                      revision = "A1yYLwQ.OeXQ42AvSjdeka4QZJSaGuhL",
-                      #mode = "w", 
-                      #path = "data/", 
-                      aws = TRUE)
+                             error=function(e) e, 
+                             warning=function(w) w), 
+                    "warning")){
+                  get_lib("model_derivative", 
+                          revision = "Wk7H.Zjj4coxiMGlqQlXjV5smmZou.IH",
+                          #mode = "w", 
+                          #path = "data/", 
+                          aws = TRUE)
               }
               library <- load_lib("model_derivative")
           }
@@ -183,18 +183,17 @@ observeEvent(input$file, {
           }
           else{
               if(is(tryCatch(check_lib("model_nobaseline"),
-                              error=function(e) e, 
-                              warning=function(w) w), 
-                     "warning")){
-              get_lib("model_nobaseline", 
-                      revision = "G6TCORd8Mtg_.7.vS6awdtRAyDjqOZi4",
-                      #mode = "w", 
-                      #path = "data/", 
-                      aws = TRUE)
+                             error=function(e) e, 
+                             warning=function(w) w), 
+                    "warning")){
+                  get_lib("model_nobaseline", 
+                          revision = "rtJY7zQTDzRISfGpvYrU0bcj8nnRYs26",
+                          #mode = "w", 
+                          #path = "data/", 
+                          aws = TRUE)
               }
               library <- load_lib("model_nobaseline")
           }
-
           library <- library[[input$id_spec_type]]
           return(library)
       }
@@ -204,14 +203,14 @@ observeEvent(input$file, {
           }
           else{
               if(is(tryCatch(check_lib("nobaseline"),
-                              error=function(e) e, 
-                              warning=function(w) w), 
-                     "warning")){
-              get_lib("nobaseline", 
-                      revision = "MgyD63TzZxjz4v0npJq_ca0QIGuqdNSt",
-                      #mode = "w", 
-                      #path = "data/", 
-                      aws = TRUE)
+                             error=function(e) e, 
+                             warning=function(w) w), 
+                    "warning")){
+                  get_lib("nobaseline", 
+                          revision = "XHh26IfFkVgU6O011uKpGeXGoPNsB0_t",
+                          #mode = "w", 
+                          #path = "data/", 
+                          aws = TRUE)
               }
               library <- load_lib("nobaseline")
           }
@@ -222,14 +221,14 @@ observeEvent(input$file, {
           }
           else{
               if(is(tryCatch(check_lib("derivative"),
-                              error=function(e) e, 
-                              warning=function(w) w), 
-                     "warning")){
-              get_lib("derivative",
-                      revision = "i9Qr66zpnP7xFPQNiEYG_DwktUVy6KUn",
-                      #mode = "w", 
-                      path = "data/", 
-                      aws = TRUE)
+                             error=function(e) e, 
+                             warning=function(w) w), 
+                    "warning")){
+                  get_lib("derivative",
+                          revision = "k9DA01hqGk0dNudCu3ddhwQX.whPGrsp",
+                          #mode = "w", 
+                          path = "data/", 
+                          aws = TRUE)
               }
               library <- load_lib("derivative")
           }
@@ -249,7 +248,6 @@ observeEvent(input$file, {
           filter_spec(library, logic = library$metadata$spectrum_type == "raman")
       }
   })
-
   # Corrects spectral intensity units using the user specified correction
 
  # Redirecting preprocessed data to be a reactive variable. Not totally sure why this is happening in addition to the other. 
