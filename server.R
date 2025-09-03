@@ -1049,8 +1049,8 @@ output$progress_bars <- renderUI({
       toggle(id = "placeholder1", condition = !isTruthy(preprocessed$data))
   })
 
-  observeEvent(event_data("plotly_click", source = "heat_plot"), {
-      click <- event_data("plotly_click", source = "heat_plot")
+  observeEvent(event_data("plotly_click", source = "heat_plot", shinyWarning = FALSE), {
+      click <- event_data("plotly_click", source = "heat_plot", shinyWarning = FALSE)
       if (!is.null(click$pointNumber))
           data_click$plot <- click$pointNumber + 1
   }, ignoreNULL = TRUE, ignoreInit = TRUE)
