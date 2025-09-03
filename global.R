@@ -23,9 +23,9 @@ library(OpenSpecy)
 #library(glmnet)
 
 # Define the custom theme
-theme_black_minimal <- function(base_size = 11, base_family = "") {
+  theme_black_minimal <- function(base_size = 11, base_family = "") {
     theme_minimal(base_size = base_size, base_family = base_family) +
-        theme(
+      theme(
             plot.background = element_rect(fill = "black", color = NA),
             panel.background = element_rect(fill = "black", color = NA),
             panel.grid.major = element_line(color = "white"),
@@ -42,8 +42,16 @@ theme_black_minimal <- function(base_size = 11, base_family = "") {
             legend.background = element_rect(fill = "black"),
             legend.key = element_rect(fill = "black"),
             strip.background = element_rect(fill = "black", color = NA),
-            strip.text = element_text(color = "white")
-        )
+      strip.text = element_text(color = "white")
+    )
+  }
+
+# Helper to create collapsible footnotes ----
+footnote <- function(summary, ...) {
+  tags$details(
+    tags$summary(summary),
+    tags$small(...)
+  )
 }
 
 # Load all data ----

@@ -248,6 +248,26 @@ observeEvent(input$file, {
           filter_spec(library, logic = library$metadata$spectrum_type == "raman")
       }
   })
+
+  observeEvent(list(input$id_strategy, input$lib_type, input$id_spec_type, DataR()), {
+      lib <- libraryR()
+      orgs <- sort(unique(lib$metadata$organization))
+      shinyWidgets::updatePickerInput(session, "lib_org",
+                                      choices = orgs,
+                                      selected = orgs)
+  })
+
+  library_filtered <- reactive({
+      lib <- libraryR()
+      if (input$lib_type == "model") {
+          lib
+      } else if (is.null(input$lib_org) || length(input$lib_org) == 0) {
+          lib
+      } else {
+          filter_spec(lib,
+                      logic = lib$metadata$organization %in% input$lib_org)
+      }
+  })
   # Corrects spectral intensity units using the user specified correction
 
  # Redirecting preprocessed data to be a reactive variable. Not totally sure why this is happening in addition to the other. 
@@ -484,9 +504,9 @@ observeEvent(input$file, {
       req(input$active_identification)
       req(!grepl("^model$", input$lib_type))
       withProgress(message = 'Analyzing Spectrum', value = 1/3, {
-      cor_spec(x = DataR(), 
-               library = libraryR(),
-               conform = T, 
+      cor_spec(x = DataR(),
+               library = library_filtered(),
+               conform = T,
                type = "roll")
       })
   })
@@ -533,7 +553,7 @@ observeEvent(input$file, {
       req(!is.null(preprocessed$data))
       if(isTruthy(input$active_identification)){
           if(!grepl("^model$", input$lib_type)){
-              fifelse(max_cor() < MinCor(), rep.int("unknown", length(max_cor())), libraryR()$metadata$material_class[match(names(max_cor()), libraryR()$metadata$sample_name)])
+              fifelse(max_cor() < MinCor(), rep.int("unknown", length(max_cor())), library_filtered()$metadata$material_class[match(names(max_cor()), library_filtered()$metadata$sample_name)])
           }
           else{
               fifelse(max_cor() < MinCor(), rep.int("unknown", length(max_cor())), names(max_cor()))
@@ -570,23 +590,23 @@ observeEvent(input$file, {
   matches_to_single <- reactive({
       req(input$active_identification)
       if(is.null(preprocessed$data)){
-          libraryR()$metadata %>%
+          library_filtered()$metadata %>%
               mutate("match_val" = NA,
-                     object_id = names(libraryR()$spectra)) 
+                     object_id = names(library_filtered()$spectra))
       }
       else if(grepl("^model$", input$lib_type)){
-          data.table(object_id = names(DataR()$spectra), 
+          data.table(object_id = names(DataR()$spectra),
                      material_class = max_cor_identity(),
-                     match_val = ai_output()$value) 
+                     match_val = ai_output()$value)
       }
       else{
-          data.table(object_id = names(DataR()$spectra)[data_click$plot], 
-                     sample_name = names(libraryR()$spectra),
+          data.table(object_id = names(DataR()$spectra)[data_click$plot],
+                     sample_name = names(library_filtered()$spectra),
                      match_val = c(correlation()[,data_click$plot]))[order(-match_val),] %>%
-              left_join(libraryR()$metadata, by = c("sample_name")) %>%
+              left_join(library_filtered()$metadata, by = c("sample_name")) %>%
               mutate(match_val = signif(match_val, 2)) %>%
               {if(input$cor_threshold_decision){mutate(., name = ifelse(match_val < input$MinCor, rep.int("Unknown", nrow(.)), material_class))}else{.}}
-          
+
       }
   })
 
@@ -600,8 +620,8 @@ observeEvent(input$file, {
       }
       else{
           # Get data from filter_spec
-          filter_spec(libraryR(), logic = matches_to_single()[[data_click$table, "sample_name"]])
-          
+          filter_spec(library_filtered(), logic = matches_to_single()[[data_click$table, "sample_name"]])
+
       }
   })
 
@@ -634,7 +654,9 @@ match_metadata <- reactive({
         selected_match <- matches_to_single()[data_click$table, ]
         dataR_metadata <- DataR()$metadata
         dataR_metadata$signal_to_noise <- signal_to_noise()
-        dataR_metadata[, material_class := NULL]
+        if ("material_class" %in% names(dataR_metadata)) {
+            dataR_metadata[, material_class := NULL]
+        }
         setkey(dataR_metadata, col_id)
         setkey(selected_match, object_id)
 
@@ -956,11 +978,11 @@ output$progress_bars <- renderUI({
               "Top N",
               value = 1,
               min = 1,
-              max = ncol(libraryR()$spectra),
+              max = ncol(library_filtered()$spectra),
               step = 1
           ),
-          selectInput(inputId = "columns_selected", 
-                      label = "Columns to save", 
+          selectInput(inputId = "columns_selected",
+                      label = "Columns to save",
                       choices = c("Simple", "All"))
       )
   })
@@ -973,22 +995,22 @@ output$progress_bars <- renderUI({
                 your_spec <- DataR()
                 your_spec$metadata$signal_to_noise <- signal_to_noise()
                 write_spec(your_spec, file)}
-            if(input$download_selection == "Library Spectra") {write_spec(libraryR(), file)}
+            if(input$download_selection == "Library Spectra") {write_spec(library_filtered(), file)}
             if(input$download_selection == "Top Matches") {
                 if(!grepl("^model$", input$lib_type)){
                     dataR_metadata <- data.table(match_threshold = MinCor(),
-                                                 signal_to_noise = signal_to_noise(), 
+                                                 signal_to_noise = signal_to_noise(),
                                                  signal_threshold = MinSNR(),
                                                  good_signal = signal_to_noise() > MinSNR()) %>%
                         bind_cols(DataR()$metadata)
-                    
+
                     all_matches <- reshape2::melt(correlation()) %>%
                         as.data.table() %>%
                         left_join(
-                            libraryR()$metadata %>% select(-any_of(c("col_id", "file_name"))),
+                            library_filtered()$metadata %>% select(-any_of(c("col_id", "file_name"))),
                             by = c("Var1" = "sample_name")
                         ) %>%
-                        left_join(dataR_metadata, 
+                        left_join(dataR_metadata,
                                   by = c("Var2" = "col_id")) %>%
                         rename("sample_name" = "Var1", 
                                "col_id" = "Var2",
