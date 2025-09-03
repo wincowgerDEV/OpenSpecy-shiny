@@ -249,7 +249,8 @@ observeEvent(input$file, {
       }
   })
 
-  observeEvent(list(input$id_strategy, input$lib_type, input$id_spec_type, DataR()), {
+  observe({
+      req(input$active_identification)
       lib <- libraryR()
       orgs <- sort(unique(lib$metadata$organization))
       shinyWidgets::updatePickerInput(session, "lib_org",
