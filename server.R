@@ -648,10 +648,12 @@ observeEvent(input$file, {
       }
   })
 
-  #Create the data table that goes below the plot which provides extra metadata. 
+#Create the data table that goes below the plot which provides extra metadata.
 match_metadata <- reactive({
-    req(!is.null(preprocessed$data))
-    if(input$active_identification & !grepl("^model$", input$lib_type)){
+    if (is.null(preprocessed$data) && input$active_identification) {
+        library_filtered()$metadata[data_click$table, ] %>%
+            .[, !sapply(., OpenSpecy::is_empty_vector), with = FALSE]
+    } else if (input$active_identification & !grepl("^model$", input$lib_type)) {
         selected_match <- matches_to_single()[data_click$table, ]
         dataR_metadata <- DataR()$metadata
         dataR_metadata$signal_to_noise <- signal_to_noise()
@@ -665,18 +667,18 @@ match_metadata <- reactive({
         result <- result[, !sapply(result, OpenSpecy::is_empty_vector), with = FALSE] %>%
             select(file_name, col_id, material_class, spectrum_identity, match_val, signal_to_noise, everything())
         result
-    }
-    else if(input$active_identification & grepl("^model$", input$lib_type)){
+    } else if (input$active_identification & grepl("^model$", input$lib_type)) {
         result <- bind_cols(DataR()$metadata[data_click$plot,], matches_to_single()[data_click$plot,])
         result$signal_to_noise <- signal_to_noise()[data_click$plot]
         result <- result[, !sapply(result, OpenSpecy::is_empty_vector), with = FALSE] %>%
             mutate(match_val = signif(match_val, 2)) %>%
             select(file_name, col_id, material_class, match_val, signal_to_noise, everything())
         result
-    }
-    else{
+    } else if (!is.null(preprocessed$data)) {
         DataR()$metadata[data_click$plot,] %>%
-            .[, !sapply(., OpenSpecy::is_empty_vector), with = F]  
+            .[, !sapply(., OpenSpecy::is_empty_vector), with = FALSE]
+    } else {
+        NULL
     }
 })
 
@@ -695,7 +697,7 @@ output$snr_plot <- renderPlot({
 
 #Table of metadata for the selected spectrum and match
 output$eventmetadata <- DT::renderDataTable(server = TRUE, {
-    req(!is.null(preprocessed$data))
+    req(!is.null(match_metadata()))
     datatable(
         match_metadata(),
         escape = FALSE,
