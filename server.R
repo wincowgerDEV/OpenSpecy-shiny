@@ -249,22 +249,23 @@ observeEvent(input$file, {
       }
   })
 
-  observeEvent(libraryR(), {
-      orgs <- sort(unique(libraryR()$metadata$organization))
+  observeEvent(list(input$id_strategy, input$lib_type, input$id_spec_type, DataR()), {
+      lib <- libraryR()
+      orgs <- sort(unique(lib$metadata$organization))
       shinyWidgets::updatePickerInput(session, "lib_org",
                                       choices = orgs,
                                       selected = orgs)
   })
 
   library_filtered <- reactive({
-      req(libraryR())
+      lib <- libraryR()
       if (input$lib_type == "model") {
-          libraryR()
+          lib
       } else if (is.null(input$lib_org) || length(input$lib_org) == 0) {
-          libraryR()
+          lib
       } else {
-          filter_spec(libraryR(),
-                      logic = libraryR()$metadata$organization %in% input$lib_org)
+          filter_spec(lib,
+                      logic = lib$metadata$organization %in% input$lib_org)
       }
   })
   # Corrects spectral intensity units using the user specified correction
