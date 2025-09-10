@@ -113,49 +113,38 @@ observeEvent(input$file, {
 })
 })
   
-  #The matching library to use. Load once per relevant change and
-  #update available organizations at the same time.
-  libraryR <- eventReactive(
+  #The matching library to use. Load once per relevant change.
+  library_raw <- eventReactive(
       list(input$active_identification,
            input$id_strategy,
-           input$lib_type,
-           input$id_spec_type,
-           preprocessed$data), {
+           input$lib_type), {
       req(input$active_identification)
       if (input$id_strategy == "deriv" & input$lib_type == "medoid") {
           if (file.exists("data/medoid_derivative.rds")) {
               library <- read_any("data/medoid_derivative.rds")
-          }
-          else{
+          } else {
               if(is(tryCatch(check_lib("medoid_derivative"),
                              error=function(e) e,
                              warning=function(w) w),
                     "warning")){
                   get_lib("medoid_derivative",
                           revision = "iThmNyMeUKhkWMvbBxQqpf1sESdQBFTs",
-                          #mode = "w",
-                          #path = "data/",
                           aws = TRUE)
               }
-
               library <- load_lib("medoid_derivative")
           }
-          #return(library)
       }
       else if (input$id_strategy == "nobaseline" &
                input$lib_type == "medoid") {
           if (file.exists("data/medoid_nobaseline.rds")) {
               library <- read_any("data/medoid_nobaseline.rds")
-          }
-          else {
+          } else {
               if(is(tryCatch(check_lib("medoid_nobaseline"),
                              error=function(e) e,
                              warning=function(w) w),
                     "warning")){
                   get_lib("medoid_nobaseline",
                           revision = "CLJCDpeFCMZw4hFUW4Y1QFT2cj23W1Yz",
-                          #mode = "w",
-                          #path = "data/",
                           aws = TRUE)
               }
               library <- load_lib("medoid_nobaseline")
@@ -165,57 +154,44 @@ observeEvent(input$file, {
                input$lib_type == "model") {
           if (file.exists("data/model_derivative.rds")) {
               library <- read_any("data/model_derivative.rds")
-          }
-          else {
+          } else {
               if(is(tryCatch(check_lib("model_derivative"),
                              error=function(e) e,
                              warning=function(w) w),
                     "warning")){
                   get_lib("model_derivative",
                           revision = "Wk7H.Zjj4coxiMGlqQlXjV5smmZou.IH",
-                          #mode = "w",
-                          #path = "data/",
                           aws = TRUE)
               }
               library <- load_lib("model_derivative")
           }
-          library <- library[[input$id_spec_type]]
-          return(library)
       }
       else if (input$id_strategy == "nobaseline" &
                input$lib_type == "model") {
           if (file.exists("data/model_nobaseline.rds")) {
               library <- read_any("data/model_nobaseline.rds")
-          }
-          else{
+          } else{
               if(is(tryCatch(check_lib("model_nobaseline"),
                              error=function(e) e,
                              warning=function(w) w),
                     "warning")){
                   get_lib("model_nobaseline",
                           revision = "rtJY7zQTDzRISfGpvYrU0bcj8nnRYs26",
-                          #mode = "w",
-                          #path = "data/",
                           aws = TRUE)
               }
               library <- load_lib("model_nobaseline")
           }
-          library <- library[[input$id_spec_type]]
-          return(library)
       }
       else if (grepl("nobaseline$", input$id_strategy)) {
           if (file.exists("data/nobaseline.rds")) {
               library <- read_any("data/nobaseline.rds")
-          }
-          else{
+          } else{
               if(is(tryCatch(check_lib("nobaseline"),
                              error=function(e) e,
                              warning=function(w) w),
                     "warning")){
                   get_lib("nobaseline",
                           revision = "XHh26IfFkVgU6O011uKpGeXGoPNsB0_t",
-                          #mode = "w",
-                          #path = "data/",
                           aws = TRUE)
               }
               library <- load_lib("nobaseline")
@@ -224,37 +200,46 @@ observeEvent(input$file, {
       else if (grepl("deriv$", input$id_strategy)) {
           if (file.exists("data/derivative.rds")) {
               library <- read_any("data/derivative.rds")
-          }
-          else{
+          } else{
               if(is(tryCatch(check_lib("derivative"),
                              error=function(e) e,
                              warning=function(w) w),
                     "warning")){
                   get_lib("derivative",
                           revision = "k9DA01hqGk0dNudCu3ddhwQX.whPGrsp",
-                          #mode = "w",
-                          #path = "data/",
                           aws = TRUE)
               }
               library <- load_lib("derivative")
           }
       }
+      library
+  })
+  
+  #Apply spectrum-type selection and range restriction without reloading.
+  libraryR <- reactive({
+      lib <- library_raw()
+      req(lib)
+      if (input$lib_type == "model") {
+          lib <- lib[[input$id_spec_type]]
+      }
       if(!is.null(preprocessed$data)){
-          library <- restrict_range(library, min = min(DataR()$wavenumber), max = max(DataR()$wavenumber), make_rel = F) %>%
+          lib <- restrict_range(lib, min = min(DataR()$wavenumber), max = max(DataR()$wavenumber), make_rel = F) %>%
               filter_spec(!vapply(.$spectra, function(x){all(is.na(x))}, FUN.VALUE = logical(1)))
       }
-
-      if(grepl("^both", input$id_spec_type)) {
-          library
-      }
-      else if (grepl("^ftir", input$id_spec_type)){
-          filter_spec(library, logic = library$metadata$spectrum_type == "ftir")
-      }
-      else if (grepl("^raman", input$id_spec_type)){
-          filter_spec(library, logic = library$metadata$spectrum_type == "raman")
+      if (input$lib_type != "model") {
+          if(grepl("^both", input$id_spec_type)) {
+              lib
+          }
+          else if (grepl("^ftir", input$id_spec_type)){
+              filter_spec(lib, logic = lib$metadata$spectrum_type == "ftir")
+          }
+          else if (grepl("^raman", input$id_spec_type)){
+              filter_spec(lib, logic = lib$metadata$spectrum_type == "raman")
+          }
+      } else {
+          lib
       }
   })
-
   observeEvent(libraryR(), {
       lib <- libraryR()
       orgs <- sort(unique(lib$metadata$organization))
