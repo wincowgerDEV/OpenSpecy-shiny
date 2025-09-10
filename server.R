@@ -113,8 +113,14 @@ observeEvent(input$file, {
 })
 })
   
-  #The matching library to use. 
-  libraryR <- reactive({
+  #The matching library to use. Load once per relevant change and
+  #update available organizations at the same time.
+  libraryR <- eventReactive(
+      list(input$active_identification,
+           input$id_strategy,
+           input$lib_type,
+           input$id_spec_type,
+           preprocessed$data), {
       req(input$active_identification)
       if (input$id_strategy == "deriv" & input$lib_type == "medoid") {
           if (file.exists("data/medoid_derivative.rds")) {
@@ -122,16 +128,16 @@ observeEvent(input$file, {
           }
           else{
               if(is(tryCatch(check_lib("medoid_derivative"),
-                             error=function(e) e, 
-                             warning=function(w) w), 
+                             error=function(e) e,
+                             warning=function(w) w),
                     "warning")){
-                  get_lib("medoid_derivative", 
+                  get_lib("medoid_derivative",
                           revision = "iThmNyMeUKhkWMvbBxQqpf1sESdQBFTs",
-                          #mode = "w", 
-                          #path = "data/", 
-                          aws = TRUE)    
+                          #mode = "w",
+                          #path = "data/",
+                          aws = TRUE)
               }
-              
+
               library <- load_lib("medoid_derivative")
           }
           #return(library)
@@ -143,13 +149,13 @@ observeEvent(input$file, {
           }
           else {
               if(is(tryCatch(check_lib("medoid_nobaseline"),
-                             error=function(e) e, 
-                             warning=function(w) w), 
+                             error=function(e) e,
+                             warning=function(w) w),
                     "warning")){
-                  get_lib("medoid_nobaseline", 
+                  get_lib("medoid_nobaseline",
                           revision = "CLJCDpeFCMZw4hFUW4Y1QFT2cj23W1Yz",
-                          #mode = "w", 
-                          #path = "data/", 
+                          #mode = "w",
+                          #path = "data/",
                           aws = TRUE)
               }
               library <- load_lib("medoid_nobaseline")
@@ -162,13 +168,13 @@ observeEvent(input$file, {
           }
           else {
               if(is(tryCatch(check_lib("model_derivative"),
-                             error=function(e) e, 
-                             warning=function(w) w), 
+                             error=function(e) e,
+                             warning=function(w) w),
                     "warning")){
-                  get_lib("model_derivative", 
+                  get_lib("model_derivative",
                           revision = "Wk7H.Zjj4coxiMGlqQlXjV5smmZou.IH",
-                          #mode = "w", 
-                          #path = "data/", 
+                          #mode = "w",
+                          #path = "data/",
                           aws = TRUE)
               }
               library <- load_lib("model_derivative")
@@ -183,13 +189,13 @@ observeEvent(input$file, {
           }
           else{
               if(is(tryCatch(check_lib("model_nobaseline"),
-                             error=function(e) e, 
-                             warning=function(w) w), 
+                             error=function(e) e,
+                             warning=function(w) w),
                     "warning")){
-                  get_lib("model_nobaseline", 
+                  get_lib("model_nobaseline",
                           revision = "rtJY7zQTDzRISfGpvYrU0bcj8nnRYs26",
-                          #mode = "w", 
-                          #path = "data/", 
+                          #mode = "w",
+                          #path = "data/",
                           aws = TRUE)
               }
               library <- load_lib("model_nobaseline")
@@ -203,13 +209,13 @@ observeEvent(input$file, {
           }
           else{
               if(is(tryCatch(check_lib("nobaseline"),
-                             error=function(e) e, 
-                             warning=function(w) w), 
+                             error=function(e) e,
+                             warning=function(w) w),
                     "warning")){
-                  get_lib("nobaseline", 
+                  get_lib("nobaseline",
                           revision = "XHh26IfFkVgU6O011uKpGeXGoPNsB0_t",
-                          #mode = "w", 
-                          #path = "data/", 
+                          #mode = "w",
+                          #path = "data/",
                           aws = TRUE)
               }
               library <- load_lib("nobaseline")
@@ -221,13 +227,13 @@ observeEvent(input$file, {
           }
           else{
               if(is(tryCatch(check_lib("derivative"),
-                             error=function(e) e, 
-                             warning=function(w) w), 
+                             error=function(e) e,
+                             warning=function(w) w),
                     "warning")){
                   get_lib("derivative",
                           revision = "k9DA01hqGk0dNudCu3ddhwQX.whPGrsp",
-                          #mode = "w", 
-                          #path = "data/", 
+                          #mode = "w",
+                          #path = "data/",
                           aws = TRUE)
               }
               library <- load_lib("derivative")
@@ -237,7 +243,7 @@ observeEvent(input$file, {
           library <- restrict_range(library, min = min(DataR()$wavenumber), max = max(DataR()$wavenumber), make_rel = F) %>%
               filter_spec(!vapply(.$spectra, function(x){all(is.na(x))}, FUN.VALUE = logical(1)))
       }
-      
+
       if(grepl("^both", input$id_spec_type)) {
           library
       }
@@ -249,14 +255,13 @@ observeEvent(input$file, {
       }
   })
 
-  observe({
-      req(input$active_identification)
+  observeEvent(libraryR(), {
       lib <- libraryR()
       orgs <- sort(unique(lib$metadata$organization))
       shinyWidgets::updatePickerInput(session, "lib_org",
                                       choices = orgs,
                                       selected = orgs)
-  })
+  }, ignoreNULL = TRUE)
 
   library_filtered <- reactive({
       lib <- libraryR()
