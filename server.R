@@ -489,16 +489,22 @@ observeEvent(input$file, {
       
   })
   
-  #The correlation matrix between the unknowns and the library. 
-  correlation <- reactive({
+  #Combine processed data and filtered library to avoid double-triggering correlation.
+  cor_inputs <- reactive({
       req(!is.null(preprocessed$data))
       req(input$active_identification)
       req(!grepl("^model$", input$lib_type))
+      list(data = DataR(), library = library_filtered())
+  })
+
+  #The correlation matrix between the unknowns and the library.
+  correlation <- eventReactive(cor_inputs(), {
+      inputs <- cor_inputs()
       withProgress(message = 'Analyzing Spectrum', value = 1/3, {
-      cor_spec(x = DataR(),
-               library = library_filtered(),
-               conform = T,
-               type = "roll")
+          cor_spec(x = inputs$data,
+                   library = inputs$library,
+                   conform = TRUE,
+                   type = "roll")
       })
   })
 
