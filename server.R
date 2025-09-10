@@ -253,7 +253,7 @@ observeEvent(input$file, {
       if (input$lib_type == "model") {
           lib
       } else if (is.null(input$lib_org) || length(input$lib_org) == 0) {
-          lib
+          NULL
       } else {
           filter_spec(lib,
                       logic = lib$metadata$organization %in% input$lib_org)
@@ -489,24 +489,18 @@ observeEvent(input$file, {
       
   })
   
-  #Combine processed data and filtered library to avoid double-triggering correlation.
-  cor_inputs <- reactive({
+  #The correlation matrix between the unknowns and the library.
+  correlation <- eventReactive(library_filtered(), {
       req(!is.null(preprocessed$data))
       req(input$active_identification)
       req(!grepl("^model$", input$lib_type))
-      list(data = DataR(), library = library_filtered())
-  })
-
-  #The correlation matrix between the unknowns and the library.
-  correlation <- eventReactive(cor_inputs(), {
-      inputs <- cor_inputs()
       withProgress(message = 'Analyzing Spectrum', value = 1/3, {
-          cor_spec(x = inputs$data,
-                   library = inputs$library,
+          cor_spec(x = DataR(),
+                   library = library_filtered(),
                    conform = TRUE,
                    type = "roll")
       })
-  })
+  }, ignoreNULL = TRUE)
 
   #The output from the AI classification algorithm. 
   ai_output <- reactive({ #tested working. 
@@ -526,12 +520,13 @@ observeEvent(input$file, {
       match_spec(data, library = libraryR(), na.rm = T, fill = fill) 
   })
   
-  #The maximum correlation or AI value. 
+  #The maximum correlation or AI value.
   max_cor <- reactive({
       req(!is.null(preprocessed$data))
       #req(input$active_identification)
       if(isTruthy(input$active_identification)){
           if(!grepl("^model$", input$lib_type)){
+          req(correlation())
           max_cor_named(correlation())
         }
       else {
@@ -550,9 +545,12 @@ observeEvent(input$file, {
       req(!is.null(preprocessed$data))
       if(isTruthy(input$active_identification)){
           if(!grepl("^model$", input$lib_type)){
+              req(max_cor())
+              req(library_filtered())
               fifelse(max_cor() < MinCor(), rep.int("unknown", length(max_cor())), library_filtered()$metadata$material_class[match(names(max_cor()), library_filtered()$metadata$sample_name)])
           }
           else{
+              req(max_cor())
               fifelse(max_cor() < MinCor(), rep.int("unknown", length(max_cor())), names(max_cor()))
           }
       }
@@ -586,6 +584,7 @@ observeEvent(input$file, {
   #Metadata for all the matches for a single unknown spectrum
   matches_to_single <- reactive({
       req(input$active_identification)
+      req(library_filtered())
       if(is.null(preprocessed$data)){
           library_filtered()$metadata %>%
               mutate("match_val" = NA,
@@ -616,9 +615,9 @@ observeEvent(input$file, {
           as_OpenSpecy(x = numeric(), spectra = data.table(empty = numeric()))
       }
       else{
+          req(library_filtered())
           # Get data from filter_spec
           filter_spec(library_filtered(), logic = matches_to_single()[[data_click$table, "sample_name"]])
-
       }
   })
 
@@ -647,6 +646,7 @@ observeEvent(input$file, {
 #Create the data table that goes below the plot which provides extra metadata.
 match_metadata <- reactive({
     if (is.null(preprocessed$data) && input$active_identification) {
+        req(library_filtered())
         library_filtered()$metadata[data_click$table, ] %>%
             .[, !sapply(., OpenSpecy::is_empty_vector), with = FALSE]
     } else if (input$active_identification & !grepl("^model$", input$lib_type)) {
@@ -971,6 +971,7 @@ output$progress_bars <- renderUI({
       req(input$active_identification)
       req(input$download_selection == "Top Matches")
       req(!grepl("^model$", input$lib_type))
+      req(library_filtered())
       tagList(
           numericInput(
               "top_n_input",
@@ -994,9 +995,14 @@ output$progress_bars <- renderUI({
                 your_spec <- DataR()
                 your_spec$metadata$signal_to_noise <- signal_to_noise()
                 write_spec(your_spec, file)}
-            if(input$download_selection == "Library Spectra") {write_spec(library_filtered(), file)}
+            if(input$download_selection == "Library Spectra") {
+                req(library_filtered())
+                write_spec(library_filtered(), file)
+            }
             if(input$download_selection == "Top Matches") {
                 if(!grepl("^model$", input$lib_type)){
+                    req(library_filtered())
+                    req(correlation())
                     dataR_metadata <- data.table(match_threshold = MinCor(),
                                                  signal_to_noise = signal_to_noise(),
                                                  signal_threshold = MinSNR(),
