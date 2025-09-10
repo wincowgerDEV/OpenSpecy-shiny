@@ -494,11 +494,20 @@ dashboardPage(dark = T,
                                                                                                              "Multinomial" = "model")),
                                                                                      conditionalPanel(
                                                                                          condition = "input.lib_type != 'model'",
-                                                                                         pickerInput(inputId = "lib_org",
+                                                                                         fluidRow(
+                                                                                            box(width = 12,
+                                                                                             collapsed = T,
+                                                                                             title = prettySwitch(inputId = "filter_lib",
+                                                                                                                  label = "Filter Library",
+                                                                                                                  inline = T,
+                                                                                                                  value = F,
+                                                                                                                  status = "success",
+                                                                                                                  fill = T),
+                                                                                             pickerInput(inputId = "lib_org",
                                                                                                     label = "Library Organization",
                                                                                                     choices = NULL,
                                                                                                     multiple = TRUE,
-                                                                                                    options = list(`actions-box` = TRUE))
+                                                                                                    options = list(`actions-box` = TRUE))))
                                                                                      ),
                                                                                     fluidRow(
                                                                                         box(width = 12,
