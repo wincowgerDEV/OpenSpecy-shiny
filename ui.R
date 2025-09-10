@@ -184,14 +184,21 @@ dashboardPage(dark = T,
                        )
               ),
               #Analyze Spectra Tab ----
-              tabItem("analyze", 
+              tabItem("analyze",
                       br(),
-                       fluidRow(
-                           column(2,
+                      fluidRow(
+                          column(10,
+                                 textInput("settings_link", "Shareable link", width = "100%")),
+                          column(2,
+                                 actionButton("copy_link", "Copy link", style = "margin-top: 25px; width: 100%;"))
+                      ),
+                      br(),
+                      fluidRow(
+                          column(2,
                                   ##Upload/download ----
                                   #tags$label("Upload File"),
                                   fluidRow(style = "display: flex; align-items: flex-end;",
-                                      column(12, 
+                                      column(12,
                                              fileInput("file", NULL, multiple = T,
                                                        placeholder = ".csv, .zip, .asp, .jdx, .spc, .spa, .0",
                                                        accept=c("text/csv",

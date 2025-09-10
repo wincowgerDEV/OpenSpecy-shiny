@@ -1,28 +1,58 @@
 function(input, output, session) {
-    
+
   #Setup ----
     options(shiny.maxRequestSize=10000*1024^2)
-    
-    #URL Query
-    # observeEvent(session$clientData$url_search, {
-    #     query <- parseQueryString(session$clientData$url_search)
-    #     
-    #     for (i in 1:(length(reactiveValuesToList(input)))) {
-    #         nameval = names(reactiveValuesToList(input)[i])
-    #         valuetoupdate = query[[nameval]]
-    #         
-    #         if (!is.null(query[[nameval]])) {
-    #             if (is.na(as.numeric(valuetoupdate))) {
-    #                 updateTextInput(session, nameval, value = valuetoupdate)
-    #             }
-    #             else {
-    #                 updateTextInput(session, nameval, value = as.numeric(valuetoupdate))
-    #             }
-    #         }
-    #         
-    #     }
-    #     
-    # })
+
+    # Restore inputs from query string when the app loads
+    observe({
+        query <- parseQueryString(session$clientData$url_search)
+        if (length(query)) {
+            for (name in names(query)) {
+                if (!is.null(input[[name]])) {
+                    value <- query[[name]]
+                    vals <- strsplit(value, ",")[[1]]
+                    num  <- suppressWarnings(as.numeric(vals))
+                    if (!any(is.na(num)) && is.numeric(input[[name]])) {
+                        if (length(num) > 1) {
+                            try(updateSliderInput(session, name, value = num), silent = TRUE)
+                        } else {
+                            try(updateNumericInput(session, name, value = num), silent = TRUE)
+                        }
+                    } else if (all(vals %in% c("TRUE", "FALSE")) && is.logical(input[[name]])) {
+                        try(updateCheckboxInput(session, name, value = as.logical(vals[1])), silent = TRUE)
+                    } else {
+                        try(updateSelectInput(session, name, selected = vals), silent = TRUE)
+                        try(updateTextInput(session, name, value = value), silent = TRUE)
+                    }
+                }
+            }
+        }
+    }, once = TRUE)
+
+    # Build and display a URL containing the current settings
+    observe({
+        params <- reactiveValuesToList(input)
+        params <- params[!grepl("^\\.", names(params))]
+        params$settings_link <- NULL
+        params$copy_link <- NULL
+        params$file <- NULL
+        params <- params[!sapply(params, function(x) is.null(x) || is.list(x))]
+        params <- lapply(params, function(x) paste(x, collapse = ","))
+        params_enc <- vapply(params, function(v) URLencode(v, reserved = TRUE), character(1))
+        query <- paste(paste0(names(params_enc), "=", params_enc), collapse = "&")
+        updateQueryString(paste0("?", query), mode = "replace")
+        base_url <- paste0(session$clientData$url_protocol, "//", session$clientData$url_hostname,
+                           ifelse(session$clientData$url_port == "" || is.na(session$clientData$url_port), "",
+                                  paste0(":", session$clientData$url_port)),
+                           session$clientData$url_pathname)
+        full_url <- paste0(base_url, "?", query)
+        updateTextInput(session, "settings_link", value = full_url)
+    })
+
+    observeEvent(input$copy_link, {
+        shinyjs::runjs("navigator.clipboard.writeText($('#settings_link').val());")
+        showNotification("Link copied to clipboard", type = "message")
+    })
 
   #create a random session id
   session_id <- digest(runif(10))
