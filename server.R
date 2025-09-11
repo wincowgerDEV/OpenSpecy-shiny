@@ -29,28 +29,17 @@ function(input, output, session) {
         }
     }, once = TRUE, ignoreNULL = FALSE)
 
-    # Build and display a URL containing the current settings
-    observe({
+    observeEvent(input$copy_link, {
         params <- reactiveValuesToList(input)
         params <- params[!grepl("^\\.", names(params))]
-        params$settings_link <- NULL
         params$copy_link <- NULL
         params$file <- NULL
-        params <- params[!sapply(params, function(x) is.null(x) || is.list(x))]
+        params <- params[!grepl("(_rows_|_columns_|_cells_|_state|_search$)", names(params))]
+        params <- params[!sapply(params, function(x) is.null(x) || is.list(x) || length(x) > 10)]
         params <- lapply(params, function(x) paste(x, collapse = ","))
         params_enc <- vapply(params, function(v) URLencode(v, reserved = TRUE), character(1))
         query <- paste(paste0(names(params_enc), "=", params_enc), collapse = "&")
-        updateQueryString(paste0("?", query), mode = "replace")
-        base_url <- paste0(session$clientData$url_protocol, "//", session$clientData$url_hostname,
-                           ifelse(session$clientData$url_port == "" || is.na(session$clientData$url_port), "",
-                                  paste0(":", session$clientData$url_port)),
-                           session$clientData$url_pathname)
-        full_url <- paste0(base_url, "?", query)
-        updateTextInput(session, "settings_link", value = full_url)
-    })
-
-    observeEvent(input$copy_link, {
-        shinyjs::runjs("navigator.clipboard.writeText($('#settings_link').val());")
+        shinyjs::runjs(sprintf("navigator.clipboard.writeText('/?%s');", query))
         showNotification("Link copied to clipboard", type = "message")
     })
 

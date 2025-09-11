@@ -187,13 +187,6 @@ dashboardPage(dark = T,
               tabItem("analyze",
                       br(),
                       fluidRow(
-                          column(10,
-                                 textInput("settings_link", "Shareable link", width = "100%")),
-                          column(2,
-                                 actionButton("copy_link", "Copy link", style = "margin-top: 25px; width: 100%;"))
-                      ),
-                      br(),
-                      fluidRow(
                           column(2,
                                   ##Upload/download ----
                                   #tags$label("Upload File"),
@@ -731,11 +724,13 @@ dashboardPage(dark = T,
     #Footer ----
     footer = dashboardFooter(
         left = p(citation),
-        right = HTML(paste0(uiOutput("translate"), 
-                       a(href = "TOS.txt", "Terms And Conditions", class = "lead"),
-                       br(),
-                       a(href = "privacy_policy.txt", "Privacy Policy", class = "lead")
-                       )
+        right = tagList(
+            uiOutput("translate"),
+            a(href = "TOS.txt", "Terms And Conditions", class = "lead"),
+            br(),
+            a(href = "privacy_policy.txt", "Privacy Policy", class = "lead"),
+            br(),
+            actionButton("copy_link", "Copy settings link")
         )
     )
 )
