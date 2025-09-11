@@ -184,14 +184,14 @@ dashboardPage(dark = T,
                        )
               ),
               #Analyze Spectra Tab ----
-              tabItem("analyze", 
+              tabItem("analyze",
                       br(),
-                       fluidRow(
-                           column(2,
+                      fluidRow(
+                          column(2,
                                   ##Upload/download ----
                                   #tags$label("Upload File"),
                                   fluidRow(style = "display: flex; align-items: flex-end;",
-                                      column(12, 
+                                      column(12,
                                              fileInput("file", NULL, multiple = T,
                                                        placeholder = ".csv, .zip, .asp, .jdx, .spc, .spa, .0",
                                                        accept=c("text/csv",
@@ -724,11 +724,13 @@ dashboardPage(dark = T,
     #Footer ----
     footer = dashboardFooter(
         left = p(citation),
-        right = HTML(paste0(uiOutput("translate"), 
-                       a(href = "TOS.txt", "Terms And Conditions", class = "lead"),
-                       br(),
-                       a(href = "privacy_policy.txt", "Privacy Policy", class = "lead")
-                       )
+        right = tagList(
+            uiOutput("translate"),
+            a(href = "TOS.txt", "Terms And Conditions", class = "lead"),
+            br(),
+            a(href = "privacy_policy.txt", "Privacy Policy", class = "lead"),
+            br(),
+            actionButton("copy_link", "Copy settings link")
         )
     )
 )
