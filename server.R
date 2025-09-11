@@ -4,7 +4,7 @@ function(input, output, session) {
     options(shiny.maxRequestSize=10000*1024^2)
 
     # Restore inputs from query string when the app loads
-    observe({
+    observeEvent(session$clientData$url_search, {
         query <- parseQueryString(session$clientData$url_search)
         if (length(query)) {
             for (name in names(query)) {
@@ -27,7 +27,7 @@ function(input, output, session) {
                 }
             }
         }
-    }, once = TRUE)
+    }, once = TRUE, ignoreNULL = FALSE)
 
     # Build and display a URL containing the current settings
     observe({
