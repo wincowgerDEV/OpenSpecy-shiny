@@ -22,6 +22,131 @@ library(reshape2)
 library(OpenSpecy)
 #library(glmnet)
 
+# App metadata ----
+metadata_file <- ".openspecy-shiny-metadata.rds"
+
+read_app_metadata <- function(path = metadata_file) {
+  if (!file.exists(path)) {
+    return(NULL)
+  }
+
+  tryCatch(readRDS(path), error = function(...) NULL)
+}
+
+first_nonempty_string <- function(value) {
+  if (is.null(value) || !length(value)) {
+    return(NULL)
+  }
+
+  candidate <- value[1]
+  if (is.null(candidate) || is.na(candidate)) {
+    return(NULL)
+  }
+
+  candidate <- trimws(as.character(candidate))
+  if (!nzchar(candidate)) {
+    return(NULL)
+  }
+
+  candidate
+}
+
+format_metadata_timestamp <- function(value) {
+  if (is.null(value) || !length(value)) {
+    return(NULL)
+  }
+
+  if (inherits(value, "POSIXt")) {
+    return(format(value[1], "%Y-%m-%d %H:%M %Z"))
+  }
+
+  if (inherits(value, "Date")) {
+    return(format(value[1], "%Y-%m-%d"))
+  }
+
+  if (is.numeric(value)) {
+    numeric_value <- suppressWarnings(as.numeric(value[1]))
+    if (!is.na(numeric_value)) {
+      parsed <- as.POSIXct(numeric_value, origin = "1970-01-01", tz = "UTC")
+      if (!is.na(parsed)) {
+        return(format(parsed, "%Y-%m-%d %H:%M %Z"))
+      }
+    }
+  }
+
+  if (is.character(value)) {
+    candidate <- first_nonempty_string(value)
+    if (is.null(candidate)) {
+      return(NULL)
+    }
+
+    parsed <- suppressWarnings(as.POSIXct(candidate, tz = "UTC"))
+    if (!is.na(parsed)) {
+      return(format(parsed, "%Y-%m-%d %H:%M %Z"))
+    }
+
+    parsed_date <- suppressWarnings(as.Date(candidate))
+    if (!is.na(parsed_date)) {
+      return(format(parsed_date, "%Y-%m-%d"))
+    }
+
+    return(candidate)
+  }
+
+  NULL
+}
+
+build_version_display <- function(metadata) {
+  default_href <- "https://github.com/Moore-Institute-4-Plastic-Pollution-Res/openspecy?tab=readme-ov-file#version-history"
+  default_text <- paste0("Last Updated: ", format(Sys.Date()))
+  default_title <- "Click here to view older versions of this app"
+
+  if (is.null(metadata)) {
+    return(list(text = default_text, href = default_href, title = default_title))
+  }
+
+  commit <- first_nonempty_string(metadata$commit)
+  ref <- first_nonempty_string(metadata$ref)
+  owner <- first_nonempty_string(metadata$owner)
+  repo <- first_nonempty_string(metadata$repo)
+  downloaded <- format_metadata_timestamp(metadata$downloaded_at)
+
+  version_parts <- character()
+  if (!is.null(ref)) {
+    version_parts <- c(version_parts, ref)
+  }
+  if (!is.null(commit)) {
+    version_parts <- c(version_parts, paste0("commit ", substr(commit, 1, 7)))
+  }
+  if (!length(version_parts)) {
+    version_parts <- "unknown version"
+  }
+
+  text <- paste0("Version: ", paste(version_parts, collapse = " • "))
+  if (!is.null(downloaded)) {
+    text <- paste0(text, " — Downloaded: ", downloaded)
+  }
+
+  href <- default_href
+  if (!is.null(owner) && !is.null(repo)) {
+    if (!is.null(commit)) {
+      href <- sprintf("https://github.com/%s/%s/commit/%s", owner, repo, commit)
+    } else if (!is.null(ref)) {
+      href <- sprintf("https://github.com/%s/%s/tree/%s", owner, repo, ref)
+    }
+  }
+
+  title <- default_title
+  if (!is.null(downloaded)) {
+    title <- paste0("Downloaded on ", downloaded)
+  }
+
+  list(text = text, href = href, title = title)
+}
+
+app_metadata <- read_app_metadata()
+app_version_display <- build_version_display(app_metadata)
+
 # Define the custom theme
   theme_black_minimal <- function(base_size = 11, base_family = "") {
     theme_minimal(base_size = base_size, base_family = base_family) +
