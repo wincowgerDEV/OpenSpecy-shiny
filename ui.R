@@ -23,10 +23,10 @@ dashboardPage(dark = T,
                 class = "dropdown",
                 style = "list-style-type: none;",
                 tags$a(
-                    paste0("Last Updated: ",Sys.Date()),
-                    href = "https://github.com/Moore-Institute-4-Plastic-Pollution-Res/openspecy?tab=readme-ov-file#version-history",
+                    app_version_display$text,
+                    href = app_version_display$href,
                     target = "_blank",
-                    title = "Click here to view older versions of this app",
+                    title = app_version_display$title,
                     style = "font-size: 19px;text-decoration: none;"
                      )
                 )
