@@ -51,25 +51,39 @@ first_nonempty_string <- function(value) {
   candidate
 }
 
-format_metadata_timestamp <- function(value) {
+parse_metadata_time <- function(value) {
   if (is.null(value) || !length(value)) {
     return(NULL)
   }
 
+  to_posix <- function(x) {
+    parsed <- suppressWarnings(as.POSIXct(x, tz = "UTC"))
+    if (is.na(parsed)) {
+      return(NULL)
+    }
+    parsed
+  }
+
   if (inherits(value, "POSIXt")) {
-    return(format(value[1], "%Y-%m-%d %H:%M %Z"))
+    parsed <- to_posix(value[1])
+    if (!is.null(parsed)) {
+      return(parsed)
+    }
   }
 
   if (inherits(value, "Date")) {
-    return(format(value[1], "%Y-%m-%d"))
+    parsed <- to_posix(value[1])
+    if (!is.null(parsed)) {
+      return(parsed)
+    }
   }
 
   if (is.numeric(value)) {
     numeric_value <- suppressWarnings(as.numeric(value[1]))
     if (!is.na(numeric_value)) {
-      parsed <- as.POSIXct(numeric_value, origin = "1970-01-01", tz = "UTC")
+      parsed <- suppressWarnings(as.POSIXct(numeric_value, origin = "1970-01-01", tz = "UTC"))
       if (!is.na(parsed)) {
-        return(format(parsed, "%Y-%m-%d %H:%M %Z"))
+        return(parsed)
       }
     }
   }
@@ -80,17 +94,18 @@ format_metadata_timestamp <- function(value) {
       return(NULL)
     }
 
-    parsed <- suppressWarnings(as.POSIXct(candidate, tz = "UTC"))
-    if (!is.na(parsed)) {
-      return(format(parsed, "%Y-%m-%d %H:%M %Z"))
+    parsed <- to_posix(candidate)
+    if (!is.null(parsed)) {
+      return(parsed)
     }
 
     parsed_date <- suppressWarnings(as.Date(candidate))
     if (!is.na(parsed_date)) {
-      return(format(parsed_date, "%Y-%m-%d"))
+      parsed <- to_posix(parsed_date)
+      if (!is.null(parsed)) {
+        return(parsed)
+      }
     }
-
-    return(candidate)
   }
 
   NULL
@@ -109,36 +124,53 @@ build_version_display <- function(metadata) {
   ref <- first_nonempty_string(metadata$ref)
   owner <- first_nonempty_string(metadata$owner)
   repo <- first_nonempty_string(metadata$repo)
-  downloaded <- format_metadata_timestamp(metadata$downloaded_at)
 
-  version_parts <- character()
-  if (!is.null(ref)) {
-    version_parts <- c(version_parts, ref)
+  downloaded_time <- parse_metadata_time(metadata$downloaded_at)
+  downloaded_label <- NULL
+  downloaded_detail <- NULL
+
+  if (!is.null(downloaded_time)) {
+    downloaded_label <- format(as.Date(downloaded_time), "%Y-%m-%d")
+    downloaded_detail <- format(downloaded_time, "%Y-%m-%d %H:%M %Z")
+  } else {
+    raw_downloaded <- first_nonempty_string(metadata$downloaded_at)
+    if (!is.null(raw_downloaded)) {
+      downloaded_label <- raw_downloaded
+      downloaded_detail <- raw_downloaded
+    }
   }
+
+  if (is.null(downloaded_label)) {
+    downloaded_label <- format(Sys.Date())
+  }
+
+  text <- paste0("Last Pulled: ", downloaded_label)
+  commit_display <- NULL
   if (!is.null(commit)) {
-    version_parts <- c(version_parts, paste0("commit ", substr(commit, 1, 7)))
-  }
-  if (!length(version_parts)) {
-    version_parts <- "unknown version"
-  }
-
-  text <- paste0("Version: ", paste(version_parts, collapse = " • "))
-  if (!is.null(downloaded)) {
-    text <- paste0(text, " — Downloaded: ", downloaded)
+    commit_display <- substr(commit, 1, min(nchar(commit), 7))
+    text <- paste0(text, " • Commit ", commit_display)
   }
 
   href <- default_href
   if (!is.null(owner) && !is.null(repo)) {
-    if (!is.null(commit)) {
-      href <- sprintf("https://github.com/%s/%s/commit/%s", owner, repo, commit)
-    } else if (!is.null(ref)) {
-      href <- sprintf("https://github.com/%s/%s/tree/%s", owner, repo, ref)
+    href <- sprintf("https://github.com/%s/%s/commits", owner, repo)
+    if (!is.null(ref)) {
+      href <- sprintf("%s/%s", href, utils::URLencode(ref, reserved = TRUE))
     }
   }
 
   title <- default_title
-  if (!is.null(downloaded)) {
-    title <- paste0("Downloaded on ", downloaded)
+  if (!is.null(downloaded_detail) || !is.null(commit)) {
+    parts <- c()
+    if (!is.null(downloaded_detail)) {
+      parts <- c(parts, paste0("Last pulled ", downloaded_detail))
+    }
+    if (!is.null(commit)) {
+      parts <- c(parts, paste0("Commit ", commit))
+    }
+    if (length(parts)) {
+      title <- paste(parts, collapse = " — ")
+    }
   }
 
   list(text = text, href = href, title = title)
