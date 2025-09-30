@@ -1,28 +1,47 @@
 function(input, output, session) {
-    
+
   #Setup ----
     options(shiny.maxRequestSize=10000*1024^2)
-    
-    #URL Query
-    # observeEvent(session$clientData$url_search, {
-    #     query <- parseQueryString(session$clientData$url_search)
-    #     
-    #     for (i in 1:(length(reactiveValuesToList(input)))) {
-    #         nameval = names(reactiveValuesToList(input)[i])
-    #         valuetoupdate = query[[nameval]]
-    #         
-    #         if (!is.null(query[[nameval]])) {
-    #             if (is.na(as.numeric(valuetoupdate))) {
-    #                 updateTextInput(session, nameval, value = valuetoupdate)
-    #             }
-    #             else {
-    #                 updateTextInput(session, nameval, value = as.numeric(valuetoupdate))
-    #             }
-    #         }
-    #         
-    #     }
-    #     
-    # })
+
+    # Restore inputs from query string when the app loads
+    observeEvent(session$clientData$url_search, {
+        query <- parseQueryString(session$clientData$url_search)
+        if (length(query)) {
+            for (name in names(query)) {
+                if (!is.null(input[[name]])) {
+                    value <- query[[name]]
+                    vals <- strsplit(value, ",")[[1]]
+                    num  <- suppressWarnings(as.numeric(vals))
+                    if (!any(is.na(num)) && is.numeric(input[[name]])) {
+                        if (length(num) > 1) {
+                            try(updateSliderInput(session, name, value = num), silent = TRUE)
+                        } else {
+                            try(updateNumericInput(session, name, value = num), silent = TRUE)
+                        }
+                    } else if (all(vals %in% c("TRUE", "FALSE")) && is.logical(input[[name]])) {
+                        try(updateCheckboxInput(session, name, value = as.logical(vals[1])), silent = TRUE)
+                    } else {
+                        try(updateSelectInput(session, name, selected = vals), silent = TRUE)
+                        try(updateTextInput(session, name, value = value), silent = TRUE)
+                    }
+                }
+            }
+        }
+    }, once = TRUE, ignoreNULL = FALSE)
+
+    observeEvent(input$copy_link, {
+        params <- reactiveValuesToList(input)
+        params <- params[!grepl("^\\.", names(params))]
+        params$copy_link <- NULL
+        params$file <- NULL
+        params <- params[!grepl("(_rows_|_columns_|_cells_|_state|_search$)", names(params))]
+        params <- params[!sapply(params, function(x) is.null(x) || is.list(x) || length(x) > 10)]
+        params <- lapply(params, function(x) paste(x, collapse = ","))
+        params_enc <- vapply(params, function(v) URLencode(v, reserved = TRUE), character(1))
+        query <- paste(paste0(names(params_enc), "=", params_enc), collapse = "&")
+        shinyjs::runjs(sprintf("navigator.clipboard.writeText('/?%s');", query))
+        showNotification("Link copied to clipboard", type = "message")
+    })
 
   #create a random session id
   session_id <- digest(runif(10))
