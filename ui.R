@@ -193,14 +193,14 @@ dashboardPage(dark = T,
                                   fluidRow(style = "display: flex; align-items: flex-end;",
                                       column(12, 
                                              fileInput("file", NULL, multiple = T,
-                                                       placeholder = ".csv, .zip, .asp, .jdx, .spc, .spa, .0",
+                                                       placeholder = ".csv, .zip, .asp, .jdx, .spc, .spa, ...",
                                                        accept=c("text/csv",
                                                                 "text/comma-separated-values,text/plain",
-                                                                ".csv", ".asp", ".tsv", ".spc", ".jdx", 
-                                                                ".dx", ".spa", ".0", ".zip", ".img", 
+                                                                ".csv", ".asp", ".tsv", ".spc", ".jdx", ".dx", ".RData",
+                                                                ".spa", ".0", ".zip", ".img",  ".h5", ".txt",
                                                                 ".json", ".rds", ".yml", ".hdr", ".dat")) %>%
                                                  bs4Dash::popover(
-                                                     title = "Upload Raman or FTIR spectrum files as a csv, tsv, dx, hdr, dat, rds, json, yml, zip, asp, jdx, spc, 0, or spa. A csv file is preferred. If a csv, the file must contain one column labeled wavenumber in units of (1/cm) and another column labeled intensity in absorbance units. If jdx, spc, spa, or 0 the file should be a single absorbance spectrum with wavenumber in (1/cm). If zip, batch upload using a zip file with multiple spectral files that all have the same wavenumbers or a map file formatted as .hdr and .dat. Hit the Download button to download a sample Raman spectrum.",
+                                                     title = "Upload Raman or FTIR spectrum files as a csv, tsv, h5, txt, img, dx, hdr, dat, rds, json, yml, zip, asp, jdx, spc, 0, or spa. A csv file is preferred. If a csv, the file must contain one column labeled wavenumber in units of (1/cm) and another column labeled intensity in absorbance units. If jdx, spc, spa, or 0 the file should be a single absorbance spectrum with wavenumber in (1/cm). If zip, batch upload using a zip file with multiple spectral files that all have the same wavenumbers or a map file formatted as .hdr and .dat. Hit the Download button to download a sample Raman spectrum.",
                                                      content = "File Upload", placement = "right"
                                                  )
                                   )
@@ -459,6 +459,18 @@ dashboardPage(dark = T,
                                                                             max = 3,
                                                                             step = 0.01
                                                                         )
+                                                                    )),
+                                                                fluidRow(
+                                                                    box(width = 12,
+                                                                        collapsed = T,
+                                                                        footer = footnote("Check that xy grid is continuous",
+                                                                                          "This parameter will force uploadeded data and batch uploads to have a continuous grid no matter what the xy coordinates of the data are."),
+                                                                        title = prettySwitch("xy_grid",
+                                                                                             label = "XY Grid Conform",
+                                                                                             inline = T,
+                                                                                             value = F,
+                                                                                             status = "success",
+                                                                                             fill = T)
                                                                     ))
                                                                              
                                                             )

@@ -45,7 +45,7 @@ observeEvent(input$file, {
   data_click$table <- 1
   preprocessed$data <- NULL
 
-  if (!all(grepl("(\\.tsv$)|(\\.dat$)|(\\.hdr$)|(\\.json$)|(\\.rds$)|(\\.yml$)|(\\.csv$)|(\\.asp$)|(\\.spa$)|(\\.spc$)|(\\.jdx$)|(\\.dx$)|(\\.RData$)|(\\.zip$)|(\\.[0-9]$)",
+  if (!all(grepl("(\\.tsv$)|(\\.h5$)|(\\.txt$)|(\\.img$)|(\\.dat$)|(\\.hdr$)|(\\.json$)|(\\.rds$)|(\\.yml$)|(\\.csv$)|(\\.asp$)|(\\.spa$)|(\\.spc$)|(\\.jdx$)|(\\.dx$)|(\\.RData$)|(\\.zip$)|(\\.[0-9]$)",
              ignore.case = T, as.character(input$file$datapath)))) {
     show_alert(
       title = "Data type not supported!",
@@ -270,7 +270,15 @@ observeEvent(input$file, {
  # Redirecting preprocessed data to be a reactive variable. Not totally sure why this is happening in addition to the other. 
  data <- reactive({
     req(input$file)
-      preprocessed$data
+      da <- preprocessed$data
+      if(isTruthy(input$xy_grid) & 
+         (!all(diff(sort(preprocessed$data$metadata$y)) %in% c(0,1)) |
+         !all(diff(sort(preprocessed$data$metadata$x)) %in% c(0,1)))){
+          grid <- gen_grid(nrow(preprocessed$data$metadata))
+          da$metadata$x <- grid$x
+          da$metadata$y <- grid$y
+      }
+          da
     })
 
   #Preprocess ----
