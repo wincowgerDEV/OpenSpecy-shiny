@@ -66,6 +66,116 @@ dashboardPage(dark = T,
             #Script for all pages ----
                 # Required for any of the shinyjs functions.
             shinyjs::useShinyjs(),
+            
+            # Pop Up window for Donations
+            modalDialog(
+              title = tags$div(
+                h1("Help Support Us!"),
+                style = "flex: 1; text-align: center;"),
+              size = "xl",
+              easyClose = TRUE,
+              fluidRow(
+                column(
+                  5,
+                  h4("Thanks to users like you, Open Specy remains free and open!"),
+                  style = "padding-right:0px;",
+                  tags$img(
+                    src = "donation.png",
+                    style = "width: 100%;
+                    height: auto;
+                    object-fit: contain;
+                    padding: 1rem;
+                    display: block;
+                    margin: 0 auto;"
+                  )
+                ),                 column(
+                  7,
+                  style = "padding-left:0px;",
+                  p(
+                    class = "lead",
+                    HTML(
+                      "<br><br>Open Specy is a free and open-source platform dedicated to advancing microplastic research.
+                           We strive to keep our tool accessible to researchers, students, and community scientist worldwide."
+                    ),
+                    style = "font-size:1.4rem;"
+                  ),
+                  p(
+                    class = "lead",
+                    HTML(
+                      "Maintaining Open Specy takes time and resources. By becoming a donor, you are supporting the revolutionization of spectroscopy."
+                    ),
+                    style = "font-size:1.4rem;"
+                  ),
+                  HTML("<br>"),
+                  p(class = "lead",
+                    h3("Donate Today!")),
+                  fluidRow(
+                    column(
+                      4,
+                      actionButton(
+                        inputId = "donate_25",
+                        label = "$25",
+                        style = "padding:4px; background-color: #2a9fd6; font-size:150%",
+                        width = "100%",
+                        onclick = "window.open('https://www.paypal.com/donate/?hosted_button_id=F2CAABAZ6JQTJ','_blank')"
+                      )
+                    ),
+                    column(
+                      4,
+                      actionButton(
+                        inputId = "donate_50",
+                        label = "$50",
+                        style = "padding:4px; background-color: #2a9fd6; font-size:150%",
+                        width = "100%",
+                        onclick = "window.open('https://www.paypal.com/donate/?hosted_button_id=MW8NUFBH7JX2W','_blank')"
+                      )
+                    ),
+                    column(
+                      4,
+                      actionButton(
+                        inputId = "donate_75",
+                        label = "$75",
+                        style = "padding:4px; background-color: #2a9fd6; font-size:150%",
+                        width = "100%",
+                        onclick = "window.open('https://www.paypal.com/donate/?hosted_button_id=M59EWJTJWHZBA','_blank')"
+                      )
+                    )),
+                  HTML("<br>"),
+                  fluidRow(
+                    column(
+                      4,
+                      actionButton(
+                        inputId = "donate_100",
+                        label = "$100",
+                        style = "padding:4px; background-color: #2a9fd6; font-size:150%",
+                        width = "100%",
+                        onclick = "window.open('https://www.paypal.com/donate/?hosted_button_id=WZPE5LCF4FSNE','_blank')"
+                      )
+                    ),
+                    column(
+                      4,
+                      actionButton(
+                        inputId = "donate_1k",
+                        label = "$1,000",
+                        style = "padding:4px; background-color: #2a9fd6; font-size:150%",
+                        width = "100%",
+                        onclick = "window.open('https://www.paypal.com/donate/?hosted_button_id=MCZ2D4TQGYVKC','_blank')"
+                      )
+                    ),
+                    column(
+                      4,
+                      actionButton(
+                        inputId = "donate_other",
+                        label = "Other",
+                        style = "padding:4px; background-color: #2a9fd6; font-size:150%",
+                        width = "100%",
+                        onclick = "window.open('https://www.paypal.com/donate/?hosted_button_id=PZHG44PX5C89C','_blank')"
+                      )
+                    )
+                  )
+                )
+              )
+            ),
 
             tags$head(
                       tags$script(async = T, src = "https://buttons.github.io/buttons.js"),
@@ -85,7 +195,7 @@ dashboardPage(dark = T,
                    accordion(
                        id = "accordion_welcome",
                        accordionItem(
-                           title = "Welcome",
+                           title = h4("Welcome"),
                            status = "info",
                            collapsed = F,
                          fluidRow(
@@ -129,7 +239,17 @@ dashboardPage(dark = T,
                                p(class = "lead", "Open Specy is free and open
                                source thanks to our partners."),
                                br(),
-                               p(class = "lead", "Looking for the classic version of OpenSpecy? Go to wincowger.shinyapps.io/openspecy-classic")),
+                               # p(class = "lead", "Looking for the classic version of OpenSpecy?  Go to <a href='https://wincowger.shinyapps.io/openspecy-classic' target='_blank'>https://wincowger.shinyapps.io/openspecy-classic</a>")),
+                               p(
+                                 class = "lead",
+                                 "Looking for the classic version of OpenSpecy? Go to ",
+                                 tags$a(
+                                   href = "https://wincowger.shinyapps.io/openspecy-classic",
+                                   target = "_blank",
+                                   "https://wincowger.shinyapps.io/openspecy-classic"
+                                 )
+                               )),
+                               
                            column(6, HTML("<iframe width='100%' height='100%' src='https://www.youtube-nocookie.com/embed/3RKufDxzriE' title='YouTube video player' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>")
                                 )
                             )
@@ -138,12 +258,26 @@ dashboardPage(dark = T,
                    accordion(
                        id = "accordion_instructions",
                        accordionItem(
-                           title = "Detailed Instructions",
+                           title = h4("Detailed Instructions"),
                            status = "info",
-                           collapsed = TRUE,
+                           collapsed = FALSE,
                          fluidRow(
-                           column(6,
-                                  HTML('<iframe width="560" height="315" src="https://www.youtube.com/embed/videoseries?si=HmRLfamgtrCYg5Gm&amp;list=PLqdH8O1nalYa4a8JXQ6GbNsH3YQV_aY7g" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'),
+                           # column(6,
+                           #        HTML('<iframe width="560" height="315" src="https://www.youtube.com/embed/videoseries?si=HmRLfamgtrCYg5Gm&amp;list=PLqdH8O1nalYa4a8JXQ6GbNsH3YQV_aY7g" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'),
+                           # ),
+                           column(
+                             6,
+                             tags$div(
+                               style = "position:relative; padding-bottom:56.25%; height:0; overflow:hidden; width:100%;",
+                               tags$iframe(
+                                 src = "https://www.youtube.com/embed/videoseries?si=HmRLfamgtrCYg5Gm&list=PLqdH8O1nalYa4a8JXQ6GbNsH3YQV_aY7g",
+                                 style = "position:absolute; top:0; left:0; width:100%; height:100%; border:0;",
+                                 title = "YouTube video player",
+                                 allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share",
+                                 referrerpolicy = "strict-origin-when-cross-origin",
+                                 allowfullscreen = NA
+                               )
+                             )
                            ),
                            column(6,
                                   tags$ol(
@@ -164,9 +298,9 @@ dashboardPage(dark = T,
                        accordion(
                            id = "accordion_links",
                            accordionItem(
-                               title = "Useful Links",
+                               title = h4("Useful Links"),
                                status = "info",
-                               collapsed = TRUE,
+                               collapsed = FALSE,
                                a(href = "https://simple-plastics.eu/", "Free FTIR Software: siMPle microplastic IR spectral identification software", class = "lead"),
                                br(),
                                a(href = "https://gitlab.ipfdd.de/GEPARD/gepard", "Free Raman and FTIR Software: GEPARD (Gepard-Enabled PARticle Detection for Raman microscopes) Designed for particle-based microplastic analysis", class = "lead"),
@@ -562,10 +696,16 @@ dashboardPage(dark = T,
                                   h4(id = "placeholder1", "Upload some data to get started..."),
                                   uiOutput("choice_names"),
                                   fluidRow(
-                                      column(11, plotlyOutput("heatmapA", inline = TRUE)),
-                                      column(1, uiOutput("nav_buttons"))
+                                      column(12, 
+                                             div(
+                                               id = "heatmap_wrap",
+                                               shinycssloaders::withSpinner(
+                                                 plotlyOutput("heatmapA", inline = TRUE, width = "1600px"), type = 8)
+                                             )
+                                      )
+                                      # column(1, uiOutput("nav_buttons"))
                                   ),
-                                  plotlyOutput("MyPlotC", inline = TRUE),
+                                  shinycssloaders::withSpinner(plotlyOutput("MyPlotC", inline = TRUE), type = 8),
                                   div(style = "overflow-x: scroll",
                                       DT::dataTableOutput("eventmetadata")
                                   ),
@@ -587,148 +727,360 @@ dashboardPage(dark = T,
                       ),
               tabItem("partner", 
                       #Partner With Us tab ----
-                               titlePanel(h4("Help us reach our goal to revolutionize spectroscopy.")),
-                               br(),
+                      titlePanel(h4("Help us reach our goal to revolutionize spectroscopy.")),
+                      br(),
                       accordion(
-                          id = "accordion_partners",
-                          accordionItem(
-                              title = "Partners",
-                              status = "info",
-                              collapsed = T,
+                        id = "accordion_donation",
+                        accordionItem(
+                          title = h4("Make a Donation"),
+                          status = "info",
+                          collapsed = FALSE,
+                          fluidRow(
+                            column(5,
+                                   style = "padding-right:0px;",
+                                   h2("Become a Supporter"),
+                                   tags$img(src = "donation.png", style = 'width: 32vw; padding:1rem;')),
+                            column(
+                              7,
+                              style = "padding-left:0px;",
+                              p(
+                                class = "lead",
+                                HTML(
+                                  "<br><br>Open Specy is a free and open-source plastform dedicated to advancing microplastic research.
+                           We strive to keep our tool accessible to researchers, students, and community scientist worldwide."
+                                ),
+                                style = "font-size:1.4rem;"
+                              ),
+                              p(
+                                class = "lead",
+                                HTML(
+                                  "Maintaining Open Specy takes time and resources. By becoming a donor, you are supporting the revolutionization of spectroscopy."
+                                ),
+                                style = "font-size:1.4rem;"
+                              ),
+                              HTML("<br>"),
+                              p(class = "lead",
+                                h3("Donate Today!")),
                               fluidRow(
-                                  column(6,
-                                         h3("Monetary Partners"),
-                                         panel(style = "align: centre",
-                                               div(class = "jumbotron",
-                                                   style = "padding:0rem 1rem 0rem;
+                                column(
+                                  4,
+                                  actionButton(
+                                    inputId = "donate_25_pop",
+                                    label = "$25",
+                                    style = "padding:4px; background-color: #2a9fd6; font-size:200%",
+                                    width = "100%",
+                                    onclick = "window.open('https://www.paypal.com/donate/?hosted_button_id=F2CAABAZ6JQTJ','_blank')"
+                                  )
+                                ),
+                                column(
+                                  4,
+                                  actionButton(
+                                    inputId = "donate_50_pop",
+                                    label = "$50",
+                                    style = "padding:4px; background-color: #2a9fd6; font-size:200%",
+                                    width = "100%",
+                                    onclick = "window.open('https://www.paypal.com/donate/?hosted_button_id=MW8NUFBH7JX2W','_blank')"
+                                  )
+                                ),
+                                column(
+                                  4,
+                                  actionButton(
+                                    inputId = "donate_75_pop",
+                                    label = "$75",
+                                    style = "padding:4px; background-color: #2a9fd6; font-size:200%",
+                                    width = "100%",
+                                    onclick = "window.open('https://www.paypal.com/donate/?hosted_button_id=M59EWJTJWHZBA','_blank')"
+                                  )
+                                )),
+                              HTML("<br>"),
+                              fluidRow(
+                                column(
+                                  4,
+                                  actionButton(
+                                    inputId = "donate_100_pop",
+                                    label = "$100",
+                                    style = "padding:4px; background-color: #2a9fd6; font-size:200%",
+                                    width = "100%",
+                                    onclick = "window.open('https://www.paypal.com/donate/?hosted_button_id=WZPE5LCF4FSNE','_blank')"
+                                  )
+                                ),
+                                column(
+                                  4,
+                                  actionButton(
+                                    inputId = "donate_1k_pop",
+                                    label = "$1,000",
+                                    style = "padding:4px; background-color: #2a9fd6; font-size:200%",
+                                    width = "100%",
+                                    onclick = "window.open('https://www.paypal.com/donate/?hosted_button_id=MCZ2D4TQGYVKC','_blank')"
+                                  )
+                                ),
+                                column(
+                                  4,
+                                  actionButton(
+                                    inputId = "donate_other_pop",
+                                    label = "Other",
+                                    style = "padding:4px; background-color: #2a9fd6; font-size:200%",
+                                    width = "100%",
+                                    onclick = "window.open('https://www.paypal.com/donate/?hosted_button_id=PZHG44PX5C89C','_blank')"
+                                  )
+                                )
+                              )
+                            )
+                            # #img(src = "https://p.turbosquid.com/ts-thumb/rX/Wm1eqB/t5/currencysymbolsgoldensetc4dmodel000/jpg/1613802168/300x300/sharp_fit_q85/a31625492ce9c8009ab3e4281ad752006e1163ec/currencysymbolsgoldensetc4dmodel000.jpg", style = "padding:1rem; background-color:rgba(255,255,255, 0.9)", width = "100%"),
+                            # actionButton(inputId = "ab1", label = "Donate", style="padding:4px; background-color: #2a9fd6; font-size:200%", width = "100%",
+                            #              icon = icon("donate"),
+                            #              onclick = "window.open('https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=wincowger@gmail.com&lc=US&item_name=Donation+to+Open+Specy&no_note=0&cn=&currency_code=USD&bn=PP-DonationsBF:btn_donateCC_LG.gif:NonHosted', '_blank')")
+                          ))),
+                      accordion(
+                        id = "accordion_merch",
+                        accordionItem(
+                          title = h4("Buy Merch"),
+                          status = "info",
+                          collapsed = FALSE,
+                          fluidRow(
+                            column(
+                              12,
+                              h3(
+                                tags$a(
+                                  href = "https://openspecy.myspreadshop.com/all",
+                                  "Support us by buying Open Specy swag!"),
+                              ),
+                              class = "text-center"
+                            )
+                          ),
+                          tags$style(HTML("
+                  #merchCarousel { width: 600px;margin: 1rem auto; }
+                  #merchCarousel .carousel-item { text-align: center; }
+                  #merchCarousel img { width: 600px; height: 600px; object-fit: cover; }")),
+                          
+                          # Carousel block
+                          tags$div(
+                            id = "merchCarousel",
+                            class = "carousel slide",
+                            `data-ride` = "carousel",     
+                            `data-interval` = "3000",     
+                            
+                            tags$div(
+                              class = "carousel-inner",
+                              tags$div(
+                                class = "carousel-item active",
+                                tags$a(
+                                  href = "https://openspecy.myspreadshop.com/open+specy+logo-A608acf03636e3e62190df397?productType=842&sellable=kaDZQz7Zx7iJXOMoy9wj-842-33&appearance=2&size=29",
+                                  target = "_blank",
+                                  img(src = "openspecy_totebag.jpg", width = 500, height = 500)
+                                )
+                              ),
+                              
+                              tags$div(
+                                class = "carousel-item",
+                                tags$a(
+                                  href = "https://openspecy.myspreadshop.com/open+specy-A5ea87c4b1cbf3a62d81533af?productType=803&sellable=N0rl8bzn7JT9ApNgNkkx-803-34&appearance=231&size=29",
+                                  target = "_blank",
+                                  img(src = "openspecy_hat.jpg", width = 500, height = 500)
+                                )
+                              ),
+                              
+                              tags$div(
+                                class = "carousel-item",
+                                tags$a(
+                                  href = "https://openspecy.myspreadshop.com/open+specy+logo-A608acf03636e3e62190df397?productType=1313&sellable=kaDZQz7Zx7iJXOMoy9wj-1313-32&appearance=1&size=29",
+                                  target = "_blank",
+                                  img(src = "openspecy_mug.jpg", width = 500, height = 500)
+                                )
+                              ),
+                              
+                              tags$div(
+                                class = "carousel-item",
+                                tags$a(
+                                  href = "https://openspecy.myspreadshop.com/analytical+chemistry+vibrant+no+logo-A60c221d8a861f15c38d7a96e?productType=405&sellable=kaDEr5GE4XfDX8OlkEg8-405-23&appearance=1003",
+                                  target = "_blank",
+                                  img(src = "openspecy_hoodie.jpg", width = 500, height = 500)
+                                )
+                              ),
+                              
+                              tags$div(
+                                class = "carousel-item",
+                                tags$a(
+                                  href = "https://openspecy.myspreadshop.com/open+specy+logo-A608acf03636e3e62190df397?productType=813&sellable=kaDZQz7Zx7iJXOMoy9wj-813-8&appearance=823",
+                                  target = "_blank",
+                                  img(src = "openspecy_shirt.jpg", width = 500, height = 500)
+                                )
+                              ),
+                              
+                              tags$div(
+                                class = "carousel-item",
+                                tags$a(
+                                  href = "https://openspecy.myspreadshop.com/open+specy-A5ea87c4b1cbf3a62d81533af?productType=1459&sellable=N0rl8bzn7JT9ApNgNkkx-1459-215&appearance=839&size=167",
+                                  target = "_blank",
+                                  img(src = "openspecy_sticker.jpg", width = 500, height = 500)
+                                )
+                              ),
+                              
+                              tags$div(
+                                class = "carousel-item",
+                                tags$a(
+                                  href = "https://openspecy.myspreadshop.com/analytical+chemistry+vibrant+no+logo-A60c221d8a861f15c38d7a96e?productType=491&sellable=kaDEr5GE4XfDX8OlkEg8-491-8&appearance=822",
+                                  target = "_blank",
+                                  img(src = "openspecy_tiedye.jpg", width = 500, height = 500)
+                                )
+                              )
+                            ),
+                            tags$a(
+                              class = "carousel-control-prev", href = "#merchCarousel",
+                              role = "button", `data-slide` = "prev",
+                              tags$span(class = "carousel-control-prev-icon", `aria-hidden` = "true"),
+                              tags$span(class = "sr-only", "Previous")
+                            ),
+                            tags$a(
+                              class = "carousel-control-next", href = "#merchCarousel",
+                              role = "button", `data-slide` = "next",
+                              tags$span(class = "carousel-control-next-icon", `aria-hidden` = "true"),
+                              tags$span(class = "sr-only", "Next")
+                            )
+                          )
+                        )
+                      ),
+                      accordion(
+                        id = "accordion_partners",
+                        accordionItem(
+                          title = h4("Partners"),
+                          status = "info",
+                          collapsed = FALSE,
+                          fluidRow(
+                            column(6,
+                                   h3("Monetary Partners"),
+                                   panel(style = "align: centre",
+                                         div(class = "jumbotron",
+                                             style = "padding:0rem 1rem 0rem;
                                border:solid #f7f7f9;
                                background-color:rgb(205, 127, 50, 0.5)",
-                                                   h3("Thriving (10,000–100,000$)"),
-                                                   img(src = "https://mooreplasticresearch.org/wp-content/uploads/2021/06/HorizontalLogo-FullName-1.png", style = "width:20vw"),
-                                                   img(src = "https://www.helmholtz-hida.de/typo3conf/ext/hida_site_package/Resources/Public/dest/images/logos/hida-logo.svg", style = "width:20vw"),
-                                                   img(src = "https://infrastructure.der-lab.net/wp-content/uploads/2017/05/logo_nrel_c.jpg", style = "width:20vw"),
-                                                   img(src = "https://mcpzfoundation.org/wp-content/uploads/2021/07/McPZ-Logo-Horizontal-RGB.png", style = "width:20vw")
-                                               ),
-                                               div(class = "jumbotron",
-                                                   style = "padding:0rem 1rem 0rem;
+                                             h3("Thriving (10,000–100,000$)"),
+                                             img(src = "https://mooreplasticresearch.org/wp-content/uploads/2021/06/HorizontalLogo-FullName-1.png", style = "width:20vw"),
+                                             tags$img(src = "hida_logo.png", style = "width:20vw"),
+                                             img(src = "https://infrastructure.der-lab.net/wp-content/uploads/2017/05/logo_nrel_c.jpg", style = "width:20vw"),
+                                             img(src = "https://mcpzfoundation.org/wp-content/uploads/2021/07/McPZ-Logo-Horizontal-RGB.png", style = "width:20vw")
+                                         ),
+                                         div(class = "jumbotron",
+                                             style = "padding:0rem 1rem 0rem;
                                border:solid #f7f7f9;
                                background-color:rgb(3, 252, 15, 0.5)",
-                                                   h3("Maintaining (1,000–10,000$)"),
-                                                   img(src = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/UC_Riverside_logo.svg/1024px-UC_Riverside_logo.svg.png", style = "width:10vw"),
-                                                   img(src = "https://upload.wikimedia.org/wikipedia/commons/7/7e/NSF_logo.png", style = "width:10vw"),
-                                                   img(src = "https://www.awi.de/typo3conf/ext/sms_boilerplate/Resources/Public/Images/AWI/awi_logo.svg", style = "width:10vw"),
-                                                   img(src = "https://www.hpu.edu/_global/images/header-logo.png", style = "width:10vw"),
-                                                   img(src = "https://www.nist.gov/libraries/nist-component-library/dist/img/logo/nist_logo_sidestack_rev.svg", style = "width:10vw"),
-                                                   img(src = "https://www.utoronto.ca/sites/all/themes/uoft_stark/img/U-of-T-logo.svg", style = "width:10vw"),
-                                                   img(src = "https://www.uni-koblenz-landau.de/logo.png", style = "width:10vw"),
-                                                   img(src = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Thermo_Fisher_Scientific_logo.svg/2560px-Thermo_Fisher_Scientific_logo.svg.png", style = "width:10vw")
-                                               ),
-                                               div(class = "jumbotron",
-                                                   style = "padding:0rem 1rem 0rem;
+                                             h3("Maintaining (1,000–10,000$)"),
+                                             img(src = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/UC_Riverside_logo.svg/1024px-UC_Riverside_logo.svg.png", style = "width:10vw"),
+                                             img(src = "https://upload.wikimedia.org/wikipedia/commons/7/7e/NSF_logo.png", style = "width:10vw"),
+                                             img(src = "https://www.awi.de/typo3conf/ext/sms_boilerplate/Resources/Public/Images/AWI/awi_logo.svg", style = "width:10vw"),
+                                             img(src = "https://www.hpu.edu/_global/images/header-logo.png", style = "width:10vw"),
+                                             img(src = "https://www.nist.gov/libraries/nist-component-library/dist/img/logo/nist_logo_sidestack_rev.svg", style = "width:10vw"),
+                                             img(src = "https://www.utoronto.ca/sites/all/themes/uoft_stark/img/U-of-T-logo.svg", style = "width:10vw"),
+                                             tags$img(src = "uni-koblenz.svg", style = "width:10vw"),
+                                             img(src = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Thermo_Fisher_Scientific_logo.svg/2560px-Thermo_Fisher_Scientific_logo.svg.png", style = "width:10vw")
+                                         ),
+                                         div(class = "jumbotron",
+                                             style = "padding:0rem 1rem 0rem;
                                border:solid #f7f7f9;
                                background-color:rgb(0, 0, 255, 0.5)",
-                                                   h3("Supporting (100–1,000$)"),
-                                                   h5( "Jennifer Gadd")
-                                               ),
-                                               div(class = "jumbotron",
-                                                   style = "padding:0rem 1rem 0rem;
+                                             h3("Supporting (100–1,000$)"),
+                                             h5( "Jennifer Gadd")
+                                         ),
+                                         div(class = "jumbotron",
+                                             style = "padding:0rem 1rem 0rem;
                                border:solid #f7f7f9;
                                background-color:rgb(128, 0, 128, 0.5)",
-                                                   h3("Saving (<100$)"),
-                                                   h6("Anne Jefferson, Heather Szafranski, Gwendolyn Lattin, Collin Weber, Gregory Gearhart, Anika Ballent, Shelly Moore, Susanne Brander (Oregon State University), Jeremy Conkle (TEXAS  A&M  UNIVERSITY  CORPUS  CHRISTI)")
-                                               )
+                                             h3("Saving (<100$)"),
+                                             h6("Anne Jefferson, Heather Szafranski, Gwendolyn Lattin, Collin Weber, Gregory Gearhart, Anika Ballent, Shelly Moore, Susanne Brander (Oregon State University), Jeremy Conkle (TEXAS  A&M  UNIVERSITY  CORPUS  CHRISTI)")
                                          )
-                                  ),
-                                  column(6,
-                                         h3("In-Kind Partners"),
-                                         panel(style = "align: centre",
-                                               div(class = "jumbotron",
-                                                   style = "padding:0rem 1rem 0rem;
+                                   )
+                            ),
+                            column(6,
+                                   h3("In-Kind Partners"),
+                                   panel(style = "align: centre",
+                                         div(class = "jumbotron",
+                                             style = "padding:0rem 1rem 0rem;
                                     border:solid #f7f7f9;
                                     background-color:rgb(205, 127, 50, 0.5)",
-                                                   h3("Thriving (10,000–100,000$)"),
-                                                   h4("Win Cowger, Zacharias Steinmetz")
-                                               ),
-                                               div(class = "jumbotron",
-                                                   style = "padding:0rem 1rem 0rem;
+                                             h3("Thriving (10,000–100,000$)"),
+                                             h4("Win Cowger, Zacharias Steinmetz")
+                                         ),
+                                         div(class = "jumbotron",
+                                             style = "padding:0rem 1rem 0rem;
                                     border:solid #f7f7f9;
                                     background-color:rgb(3, 252, 15, 0.5)",
-                                                   h3("Maintaining (1,000–10,000$)"),
-                                                   h5("Garth Covernton, Jamie Leonard, Shelly Moore, Rachel Kozloski, Katherine Lasdin, Aleksandra Karapetrova, Laura Markley, Walter Yu, Walter Waldman, Vesna Teofilovic, Monica Arienzo, Mary Fey Long Norris, Cristiane Vidal, Scott Coffin, Charles Moore, Aline Carvalho, Shreyas Patankar, Andrea Faltynkova, Sebastian Primpke, Andrew Gray, Chelsea Rochman, Orestis Herodotu, Hannah De Frond, Keenan Munno, Hannah Hapich, Jennifer Lynch")
-                                               ),
-                                               div(class = "jumbotron",
-                                                   style = "padding:0rem 1rem 0rem;
+                                             h3("Maintaining (1,000–10,000$)"),
+                                             h5("Garth Covernton, Jamie Leonard, Shelly Moore, Rachel Kozloski, Katherine Lasdin, Aleksandra Karapetrova, Laura Markley, Walter Yu, Walter Waldman, Vesna Teofilovic, Monica Arienzo, Mary Fey Long Norris, Cristiane Vidal, Scott Coffin, Charles Moore, Aline Carvalho, Shreyas Patankar, Andrea Faltynkova, Sebastian Primpke, Andrew Gray, Chelsea Rochman, Orestis Herodotu, Hannah De Frond, Keenan Munno, Hannah Hapich, Jennifer Lynch")
+                                         ),
+                                         div(class = "jumbotron",
+                                             style = "padding:0rem 1rem 0rem;
                                     border:solid #f7f7f9;
                                     background-color:rgb(0, 0, 255, 0.5)",
-                                                   h3("Supporting (100–1,000$)"),
-                                                   h6("Alexandre Dehaut, Gabriel Erni Cassola")
-                                               )
+                                             h3("Supporting (100–1,000$)"),
+                                             h6("Alexandre Dehaut, Gabriel Erni Cassola")
                                          )
-                                  )
-                              )
-                          ),
-                          accordionItem(
-                              title = "Donate Cash",
-                              status = "info",
-                              collapsed = TRUE,
-                              #img(src = "https://p.turbosquid.com/ts-thumb/rX/Wm1eqB/t5/currencysymbolsgoldensetc4dmodel000/jpg/1613802168/300x300/sharp_fit_q85/a31625492ce9c8009ab3e4281ad752006e1163ec/currencysymbolsgoldensetc4dmodel000.jpg", style = "padding:1rem; background-color:rgba(255,255,255, 0.9)", width = "100%"),
-                              actionButton(inputId = "ab1", label = "Donate", style="padding:4px; background-color: #2a9fd6; font-size:200%", width = "100%",
-                                           icon = icon("donate"),
-                                           onclick = "window.open('https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=wincowger@gmail.com&lc=US&item_name=Donation+to+Open+Specy&no_note=0&cn=&currency_code=USD&bn=PP-DonationsBF:btn_donateCC_LG.gif:NonHosted', '_blank')")
-                              ),
-                          accordionItem(
-                              title = "Buy Merch",
-                              status = "info",
-                              collapsed = TRUE,
-                              img(src = "https://image.spreadshirtmedia.com/image-server/v1/products/T813A823PA3132PT17X42Y46D1038541132FS4033/views/1,width=650,height=650,appearanceId=823/updated-logo-for-open-specy-designed-by-alex-mcgoran.jpg", style = "padding:1rem; background-color:rgba(255,255,255, 0.9)", width = "100%"),
-                              actionButton(inputId = "ab2", label = "Shop", style="padding:4px; background-color: #2a9fd6; font-size:200%", width = "100%",
-                                           icon = icon("shopping-cart"),
-                                           onclick ="window.open('https://shop.spreadshirt.com/openspecy/all', '_blank')")
-                          ),
-                          accordionItem(
-                              title = "Contribute Time",
-                              status = "info",
-                              collapsed = T,
-                                  img(src = "https://health.sunnybrook.ca/wp-content/uploads/2020/02/healthy-hands-810x424.jpg", style = "padding:1rem; background-color:rgba(255,255,255, 0.9)", width = "100%"),
-                                        actionButton(inputId = "ab3", label = "Guidelines", style="padding:4px; background-color: #2a9fd6; font-size:200%", width = "100%",
-                                                     icon = icon("clock"),
-                                                     onclick ="window.open('https://docs.google.com/document/d/1SaFgAYKsLbMSYdJClR5s42TyGmPRWihLQcf5zun_yfo/edit?usp=sharing', '_blank')")
-                          ),
-                          
-                              accordionItem(
-                                  title = "Contribute Spectra",
-                                  status = "info",
-                                  collapsed = TRUE,
-                                  p(class = "lead", "To share spectra upload a file to the upload file tab.
+                                   )
+                            )
+                          )
+                        ),
+                        accordionItem(
+                          title = h4("Contribute Time"),
+                          status = "info",
+                          collapsed = T,
+                          img(src = "https://health.sunnybrook.ca/wp-content/uploads/2020/02/healthy-hands-810x424.jpg", style = "padding:1rem; background-color:rgba(255,255,255, 0.9)", width = "100%"),
+                          actionButton(inputId = "ab3", label = "Guidelines", style="padding:4px; background-color: #2a9fd6; font-size:200%", width = "100%",
+                                       icon = icon("clock"),
+                                       onclick ="window.open('https://docs.google.com/document/d/1SaFgAYKsLbMSYdJClR5s42TyGmPRWihLQcf5zun_yfo/edit?usp=sharing', '_blank')")
+                        ),
+                        
+                        accordionItem(
+                          title = h4("Contribute Spectra"),
+                          status = "info",
+                          collapsed = TRUE,
+                          p(class = "lead", "To share spectra upload a file to the upload file tab.
                              If you selected Share a copy of your spectra will be sent to the Community
                              Data Warehouse on Open Science Framework. To add additional metadata,
                              fill in the avaliable metadata fields and click -Share Data-. The
                              spectra file that you uploaded along with your responses will be copied
                              to the a -With Metadata- subfolder at the link below. All shared data holds
                              a Creative Commons Attribution License 4.0."),
-                                  div(
-                                      a("Community Data Warehouse",
-                                        onclick = "window.open('https://osf.io/rjg3c/', '_blank')",
-                                        class="btn btn-primary btn-lg",
-                                        style = "width: 100%;")
-                                  )
-                              )
+                          div(
+                            a("Community Data Warehouse",
+                              onclick = "window.open('https://osf.io/rjg3c/', '_blank')",
+                              class="btn btn-primary btn-lg",
+                              style = "width: 100%;")
+                          )
+                        )
                       )
-                ),
+              ),
               tabItem("contract",
-                      div(
-                          h2("We are a group of experienced spectroscopists and can provide a variety of services for hire, please contact wincowger@gmail.com to inquire about any of the services below.", style = "color: lightblue;"),
-                          h3(tags$ul(
-                              tags$li("Adding new features to OpenSpecy"),
-                              tags$li("Creating spectroscopy software"),
-                              tags$li("Microplastic sample analysis"),
-                              tags$li("Spectral identification"),
-                              tags$li("Study design"),
-                              tags$li("So much more...")
-                          ), style = "color: lightyellow;"), 
-                          style = "padding: 50px"
+                      fluidRow(
+                        column( 
+                          width = 12,
+                          accordion(
+                            id = "accordion_contract",
+                            accordionItem(
+                              title = h4("Contract Us"),
+                              status = "info",
+                              collapsed = FALSE,
+                              fluidRow(
+                                p(class = "lead",
+                                  HTML("We are a group of experienced spectroscopists and can provide a variety of services for hire, 
+                             please contact <a href='mailto:wincowger@gmail.com?subject=Open Specy contract'>wincowger@gmail.com</a> to inquire about any of the services below."),
+                                  style = "font-size:25px;"
+                                ),
+                                tags$ol(
+                                  class = "lead",
+                                  style = "font-size:25px;",
+                                  tags$ul(
+                                    tags$li("Adding new features to OpenSpecy"),
+                                    tags$li("Creating spectroscopy software"),
+                                    tags$li("Microplastic sample analysis"),
+                                    tags$li("Spectral identification"),
+                                    tags$li("Study design"),
+                                    tags$li("So much more!")
+                                  )
+                                )
+                              )
+                            )
+                          )
+                        )
                       )
-                      
               )
               )
             ),

@@ -783,7 +783,8 @@ output$choice_names <- renderUI({
                 column(6, selectInput(inputId = "map_color", 
                                       label = "Map Color", 
                                       choices = choice_names)
-            )
+            ),
+            column(6, uiOutput("nav_buttons"))
             )
                 )
 })
@@ -830,6 +831,14 @@ output$progress_bars <- renderUI({
 
  #Heatmap ----
  #Display the map or batch data in a selectable heatmap. 
+  observe({
+     cond <- !is.null(preprocessed$data) &&
+       ncol(preprocessed$data$spectra) > 1
+    shinyjs::toggle(id = "heatmap_wrap", condition = cond)
+    shinyjs::toggle(id = "placeholder1", condition = !cond)
+ })
+ 
+ 
   output$heatmapA <- renderPlotly({
       req(!is.null(preprocessed$data))
       req(ncol(preprocessed$data$spectra) > 1)
@@ -1096,11 +1105,11 @@ output$progress_bars <- renderUI({
       if (ncol(preprocessed$data$spectra) > 1) {
           tagList(
               div(style = "display:flex;justify-content:center;", actionButton("up_spec", label = NULL, icon = icon("arrow-up"))),
-              div(style = "display:flex;justify-content:center;gap:0.5em;", 
+              div(style = "display:flex;justify-content:center;gap:0.2em;", 
                   actionButton("left_spec",  label = NULL, icon = icon("arrow-left")),
                   actionButton("right_spec", label = NULL, icon = icon("arrow-right"))
               ),
-              div(style = "display:flex;justify-content:center;", actionButton("down_spec", label = NULL, icon = icon("arrow-down")))
+              div(style = "display:flex;justify-content:center;margin-bottom:2em;", actionButton("down_spec", label = NULL, icon = icon("arrow-down")))
           )
       }
   })
