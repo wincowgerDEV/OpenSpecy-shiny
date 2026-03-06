@@ -66,6 +66,107 @@ dashboardPage(dark = T,
             #Script for all pages ----
                 # Required for any of the shinyjs functions.
             shinyjs::useShinyjs(),
+            
+            # Pop Up window for Donations
+            modalDialog(
+                title = tags$div(
+                    h1("Help Support Us!"),
+                    style = "flex: 1; text-align: center;"),
+                size = "xl",
+                easyClose = TRUE,
+                fluidRow(
+                    column(5,
+                           h4("Thanks to users like you, Open Specy remains free and open!"),
+                           style = "padding-right:0px;",
+                           tags$img(src = "donation.png", style = 'width: 24vw; padding:1rem;')),
+                    column(
+                        7,
+                        style = "padding-left:0px;",
+                        p(
+                            class = "lead",
+                            HTML(
+                                "<br><br>Open Specy is a free and open-source platform dedicated to advancing microplastic research.
+                           We strive to keep our tool accessible to researchers, students, and community scientist worldwide."
+                            ),
+                            style = "font-size:1.4rem;"
+                        ),
+                        p(
+                            class = "lead",
+                            HTML(
+                                "Maintaining Open Specy takes time and resources. By becoming a donor, you are supporting the revolutionization of spectroscopy."
+                            ),
+                            style = "font-size:1.4rem;"
+                        ),
+                        HTML("<br>"),
+                        p(class = "lead",
+                          h3("Donate Today!")),
+                        fluidRow(
+                            column(
+                                4,
+                                actionButton(
+                                    inputId = "donate_25",
+                                    label = "$25",
+                                    style = "padding:4px; background-color: #2a9fd6; font-size:150%",
+                                    width = "100%",
+                                    onclick = "window.open('https://www.paypal.com/donate/?hosted_button_id=F2CAABAZ6JQTJ','_blank')"
+                                )
+                            ),
+                            column(
+                                4,
+                                actionButton(
+                                    inputId = "donate_50",
+                                    label = "$50",
+                                    style = "padding:4px; background-color: #2a9fd6; font-size:150%",
+                                    width = "100%",
+                                    onclick = "window.open('https://www.paypal.com/donate/?hosted_button_id=MW8NUFBH7JX2W','_blank')"
+                                )
+                            ),
+                            column(
+                                4,
+                                actionButton(
+                                    inputId = "donate_75",
+                                    label = "$75",
+                                    style = "padding:4px; background-color: #2a9fd6; font-size:150%",
+                                    width = "100%",
+                                    onclick = "window.open('https://www.paypal.com/donate/?hosted_button_id=M59EWJTJWHZBA','_blank')"
+                                )
+                            )),
+                        HTML("<br>"),
+                        fluidRow(
+                            column(
+                                4,
+                                actionButton(
+                                    inputId = "donate_100",
+                                    label = "$100",
+                                    style = "padding:4px; background-color: #2a9fd6; font-size:150%",
+                                    width = "100%",
+                                    onclick = "window.open('https://www.paypal.com/donate/?hosted_button_id=WZPE5LCF4FSNE','_blank')"
+                                )
+                            ),
+                            column(
+                                4,
+                                actionButton(
+                                    inputId = "donate_1k",
+                                    label = "$1,000",
+                                    style = "padding:4px; background-color: #2a9fd6; font-size:150%",
+                                    width = "100%",
+                                    onclick = "window.open('https://www.paypal.com/donate/?hosted_button_id=MCZ2D4TQGYVKC','_blank')"
+                                )
+                            ),
+                            column(
+                                4,
+                                actionButton(
+                                    inputId = "donate_other",
+                                    label = "Other",
+                                    style = "padding:4px; background-color: #2a9fd6; font-size:150%",
+                                    width = "100%",
+                                    onclick = "window.open('https://www.paypal.com/donate/?hosted_button_id=PZHG44PX5C89C','_blank')"
+                                )
+                            )
+                        )
+                    )
+                )
+            ),
 
             tags$head(
                       tags$script(async = T, src = "https://buttons.github.io/buttons.js"),
@@ -74,7 +175,7 @@ dashboardPage(dark = T,
                     color: green; font-size: 300%;
                     }
                     ")),
-                     HTML('<script async src="https://media.ethicalads.io/media/client/ethicalads.min.js"></script>'),
+                     #HTML('<script async src="https://media.ethicalads.io/media/client/ethicalads.min.js"></script>'),
                       tags$link(rel = "icon", type = "image/png", href = "favicon.png")
                       #This is for the error messages.
             ),
