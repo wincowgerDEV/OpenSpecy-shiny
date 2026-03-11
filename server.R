@@ -35,11 +35,72 @@ function(input, output, session) {
   preprocessed <- reactiveValues(data = NULL)
   data_click <- reactiveValues(plot = NULL, table = NULL)
   meta_cache <- reactiveVal(NULL)
+  session_log <- reactiveVal(data.frame(
+    timestamp = character(),
+    step = character(),
+    duration_sec = numeric(),
+    details = character(),
+    stringsAsFactors = FALSE
+  ))
+
+  append_log <- function(step, duration = NA_real_, details = "") {
+    log_df <- session_log()
+    duration_val <- if (is.null(duration) || is.na(duration)) {
+      NA_real_
+    } else {
+      round(as.numeric(duration), 3)
+    }
+    entry <- data.frame(
+      timestamp = format(Sys.time(), "%Y-%m-%d %H:%M:%S"),
+      step = step,
+      duration_sec = duration_val,
+      details = details,
+      stringsAsFactors = FALSE
+    )
+    session_log(rbind(log_df, entry))
+  }
+
+  format_metadata_details <- function(meta) {
+    collapse_value <- function(value) {
+      if (length(value) == 0) {
+        return("NULL")
+      }
+      if (all(is.na(value))) {
+        return("NA")
+      }
+      if (is.list(value)) {
+        value <- unlist(value)
+      }
+      if (is.logical(value)) {
+        value <- tolower(as.character(value))
+      }
+      paste(value, collapse = ", ")
+    }
+    paste(
+      sprintf("%s=%s", names(meta), vapply(meta, collapse_value, character(1))),
+      collapse = "; "
+    )
+  }
 
 
   #Read Data ----
   #Sending data to a remote repo. 
 observeEvent(input$file, {
+  start_time <- Sys.time()
+  file_names <- input$file$name
+  append_log("upload_started", details = paste0("files=", paste(file_names, collapse = ", ")))
+  upload_status <- "success"
+  status_details <- ""
+  on.exit({
+    duration <- difftime(Sys.time(), start_time, units = "secs")
+    detail_parts <- c(
+      paste0("status=", upload_status),
+      if (nzchar(status_details)) status_details else NULL,
+      if (length(file_names)) paste0("files=", paste(file_names, collapse = ", ")) else NULL
+    )
+    append_log("upload_completed", duration, paste(detail_parts, collapse = "; "))
+  }, add = TRUE)
+
   # Read in data when uploaded based on the file type
   data_click$plot <- 1
   data_click$table <- 1
@@ -47,6 +108,8 @@ observeEvent(input$file, {
 
   if (!all(grepl("(\\.tsv$)|(\\.h5$)|(\\.txt$)|(\\.img$)|(\\.dat$)|(\\.hdr$)|(\\.json$)|(\\.rds$)|(\\.yml$)|(\\.csv$)|(\\.asp$)|(\\.spa$)|(\\.spc$)|(\\.jdx$)|(\\.dx$)|(\\.RData$)|(\\.zip$)|(\\.[0-9]$)",
              ignore.case = T, as.character(input$file$datapath)))) {
+    upload_status <- "unsupported_file_type"
+    status_details <- "Unsupported file type"
     show_alert(
       title = "Data type not supported!",
       text = paste0("Uploaded data type is not currently supported; please
@@ -56,7 +119,7 @@ observeEvent(input$file, {
   }
 
   withProgress(message = "Reading data", value = 2/3, {
-      
+
       rout <- tryCatch(expr = {
           read_any(file = as.character(input$file$datapath)) |>
               c_spec(range = "common", res = if(input$conform_decision){input$conform_res} else{8}) |>
@@ -71,11 +134,11 @@ observeEvent(input$file, {
           #}
       )
       #print(rout)
-      
+
       if(!inherits(rout, "simpleWarning") && all(!grepl("(\\.hdr$)|(\\.dat$)|(\\.zip$)", input$file$datapath))){
           rout$metadata$file_name <- input$file$name
       }
-      
+
       if(!inherits(rout, "simpleWarning")){
           checkit <- tryCatch(expr = {check_OpenSpecy(rout)},
                               error = function(e){
@@ -85,19 +148,25 @@ observeEvent(input$file, {
                               warning = function(w){
                                   class(w$message) <- "simpleWarning"
                                   w$message
-                              })          
+                              })
       }
       else{
           checkit <- NA
       }
-      
+
     #print(checkit)
     if (inherits(rout, "simpleWarning") | inherits(checkit, "simpleWarning")) {
+      upload_status <- "error"
+      detail_vec <- c(
+          if (inherits(rout, "simpleWarning")) paste0("load_error=", rout) else NULL,
+          if (inherits(checkit, "simpleWarning")) paste0("check_error=", checkit) else NULL
+      )
+      status_details <- if (length(detail_vec)) paste(detail_vec, collapse = "; ") else ""
       show_alert(
         title = "Something went wrong with reading the data :-(",
-        text =  paste0(if(inherits(rout, "simpleWarning")){paste0("There was an error during data loading that said ", 
+        text =  paste0(if(inherits(rout, "simpleWarning")){paste0("There was an error during data loading that said ",
                                                                   rout, ".")} else{""},
-                       if(inherits(checkit, "simpleWarning")){paste0(" There was an error during data checking that said ", 
+                       if(inherits(checkit, "simpleWarning")){paste0(" There was an error during data checking that said ",
                                                                   checkit, ".")} else{""},
                        ". If you uploaded a text/csv file, make sure that the columns are numeric and named 'wavenumber' and 'intensity'."),
         type =  "error"
@@ -105,9 +174,12 @@ observeEvent(input$file, {
       reset("file")
       preprocessed$data <- NULL
     }
-      
+
     else {
-        preprocessed$data <- rout 
+        preprocessed$data <- rout
+        if (!is.null(rout$spectra)) {
+          status_details <- paste0("spectra_columns=", ncol(rout$spectra))
+        }
         #print(preprocessed$data)
     }
 })
@@ -287,35 +359,48 @@ observeEvent(input$file, {
   baseline_data <- reactive({
     req(!is.null(preprocessed$data))
     req(input$active_preprocessing)
-    processed = process_spec(x = data(),
+    current_data <- data()
+    spectra_count <- if (!is.null(current_data$spectra)) ncol(current_data$spectra) else NA_integer_
+    start_time <- Sys.time()
+    append_log("processing_started", details = paste0("spectra=", spectra_count))
+    on.exit({
+      duration <- difftime(Sys.time(), start_time, units = "secs")
+      detail_parts <- c(
+        paste0("spectra=", spectra_count),
+        paste0("spatial_smooth=", tolower(as.character(isTRUE(input$spatial_decision))))
+      )
+      append_log("processing_completed", duration, paste(detail_parts, collapse = "; "))
+    }, add = TRUE)
+
+    processed = process_spec(x = current_data,
                     active = input$active_preprocessing,
-                    adj_intens = input$intensity_decision, 
+                    adj_intens = input$intensity_decision,
                     adj_intens_args = list(type = input$intensity_corr),
-                    conform_spec = input$conform_decision, 
-                    conform_spec_args = list(range = NULL, 
-                                             res = input$conform_res, 
+                    conform_spec = input$conform_decision,
+                    conform_spec_args = list(range = NULL,
+                                             res = input$conform_res,
                                              type = input$conform_selection),
                     restrict_range = input$range_decision,
-                    restrict_range_args = list(min = input$MinRange, 
+                    restrict_range_args = list(min = input$MinRange,
                                                max = input$MaxRange),
                     flatten_range = input$co2_decision,
-                    flatten_range_args = list(min = input$MinFlat, 
+                    flatten_range_args = list(min = input$MinFlat,
                                               max = input$MaxFlat),
-                    subtr_baseline = input$baseline_decision, 
-                    subtr_baseline_args = list(type = "polynomial", 
-                                               degree = input$baseline, 
-                                               raw = FALSE, 
+                    subtr_baseline = input$baseline_decision,
+                    subtr_baseline_args = list(type = "polynomial",
+                                               degree = input$baseline,
+                                               raw = FALSE,
                                                refit_at_end = input$refit,
                                                iterations = input$iterations,
                                                baseline = NULL),
-                    smooth_intens = input$smooth_decision, 
+                    smooth_intens = input$smooth_decision,
                     smooth_intens_args = list(
                         polynomial = input$smoother,
                         window = calc_window_points(
                             if (input$conform_decision) {
                                 seq(100, 4000, by = input$conform_res)
                             } else {
-                                data()$wavenumber
+                                current_data$wavenumber
                             },
                             input$smoother_window
                         ),
@@ -323,7 +408,7 @@ observeEvent(input$file, {
                         abs = input$derivative_abs
                     ),
                     make_rel = input$make_rel_decision)
-    
+
     if(input$spatial_decision){
         processed = spatial_smooth(processed, sigma = c(input$sigma, input$sigma, input$sigma))
     }
@@ -508,30 +593,66 @@ observeEvent(input$file, {
       req(!is.null(preprocessed$data))
       req(input$active_identification)
       req(!grepl("^model$", input$lib_type))
+      spec <- DataR()
+      library_data <- library_filtered()
+      start_time <- Sys.time()
+      spectra_cols <- if (!is.null(spec$spectra)) ncol(spec$spectra) else NA_integer_
+      library_cols <- if (!is.null(library_data$spectra)) ncol(library_data$spectra) else NA_integer_
+      detail_info <- paste(
+        c(
+          "method=correlation",
+          paste0("spectra_columns=", spectra_cols),
+          paste0("library_columns=", library_cols)
+        ),
+        collapse = "; "
+      )
+      append_log("identification_started", details = detail_info)
+      on.exit({
+        duration <- difftime(Sys.time(), start_time, units = "secs")
+        append_log("identification_completed", duration, detail_info)
+      }, add = TRUE)
       withProgress(message = 'Analyzing Spectrum', value = 1/3, {
-      cor_spec(x = DataR(),
-               library = library_filtered(),
+      cor_spec(x = spec,
+               library = library_data,
                conform = T,
                type = "roll")
       })
   })
 
-  #The output from the AI classification algorithm. 
-  ai_output <- reactive({ #tested working. 
+  #The output from the AI classification algorithm.
+  ai_output <- reactive({ #tested working.
       req(!is.null(preprocessed$data))
       req(input$active_identification)
       req(grepl("^model$", input$lib_type))
-      
+
       #rn <- runif(n = length(unique(libraryR()$all_variables)))
       mean <- rep.int(mean(unlist(DataR()$spectra)), times = length(unique(libraryR()$all_variables)))
-      
+
       fill <- as_OpenSpecy(as.numeric(unique(libraryR()$all_variables)),
                            spectra = data.frame(mean))
-      
+
       data <- conform_spec(DataR(), range = fill$wavenumber,
                            res = NULL)
-      
-      match_spec(data, library = libraryR(), na.rm = T, fill = fill) 
+
+      library_data <- libraryR()
+      start_time <- Sys.time()
+      spectra_cols <- if (!is.null(data$spectra)) ncol(data$spectra) else NA_integer_
+      library_cols <- if (!is.null(library_data$all_variables)) length(unique(library_data$all_variables)) else NA_integer_
+      detail_info <- paste(
+        c(
+          "method=model",
+          paste0("spectra_columns=", spectra_cols),
+          paste0("predictors=", library_cols)
+        ),
+        collapse = "; "
+      )
+      append_log("identification_started", details = detail_info)
+      on.exit({
+        duration <- difftime(Sys.time(), start_time, units = "secs")
+        append_log("identification_completed", duration, detail_info)
+      }, add = TRUE)
+
+      match_spec(data, library = library_data, na.rm = T, fill = fill)
   })
   
   #The maximum correlation or AI value. 
@@ -763,6 +884,33 @@ output$sidebar_metadata <- DT::renderDataTable(server = TRUE, {
       }
   })
 
+output$session_log_table <- DT::renderDataTable({
+    log_df <- session_log()
+    datatable(
+        log_df,
+        options = list(
+            searchHighlight = TRUE,
+            scrollX = TRUE,
+            lengthChange = FALSE,
+            pageLength = 10,
+            order = list(list(0, "desc"))
+        ),
+        rownames = FALSE,
+        style = "bootstrap"
+    )
+})
+outputOptions(output, "session_log_table", suspendWhenHidden = FALSE)
+
+output$download_session_log <- downloadHandler(
+    filename = function() {
+        paste0("session_log_", format(Sys.time(), "%Y%m%d_%H%M%S"), ".csv")
+    },
+    content = function(file) {
+        log_df <- session_log()
+        utils::write.csv(log_df, file, row.names = FALSE)
+    }
+)
+
 # Progress Bars
 output$choice_names <- renderUI({
     req(ncol(preprocessed$data$spectra) > 1)
@@ -834,6 +982,23 @@ output$progress_bars <- renderUI({
       req(!is.null(preprocessed$data))
       req(ncol(preprocessed$data$spectra) > 1)
       #req(input$map_color)
+      start_time <- Sys.time()
+      color_mode <- if (isTruthy(input$map_color)) input$map_color else "auto"
+      collapse_state <- tolower(as.character(isTRUE(input$collapse_decision)))
+      spectra_cols <- if (!is.null(preprocessed$data$spectra)) ncol(preprocessed$data$spectra) else NA_integer_
+      detail_info <- paste(
+        c(
+          paste0("color_mode=", color_mode),
+          paste0("collapse=", collapse_state),
+          paste0("spectra_columns=", spectra_cols)
+        ),
+        collapse = "; "
+      )
+      append_log("heatmap_started", details = detail_info)
+      on.exit({
+        duration <- difftime(Sys.time(), start_time, units = "secs")
+        append_log("heatmap_completed", duration, detail_info)
+      }, add = TRUE)
       if(input$collapse_decision & isTruthy(particles_logi()) & length(unique(as.character(particles_logi()))) > 1){
           test = def_features(DataR(), features = particles_logi())
       }
@@ -1145,6 +1310,10 @@ output$progress_bars <- renderUI({
              min_sn = input$MinSNR,
              signal_selection = input$signal_selection
              )
+  })
+
+  observeEvent(user_metadata(), {
+    append_log("metadata_update", details = format_metadata_details(user_metadata()))
   })
 
   # observe({

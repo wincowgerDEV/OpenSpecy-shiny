@@ -45,6 +45,11 @@ dashboardPage(dark = T,
                     icon = icon("bar-chart")
                 ),
                 menuItem(
+                    "Session Log",
+                    tabName = "session_log",
+                    icon = icon("clock")
+                ),
+                menuItem(
                     "About",
                     tabName = "about",
                     icon = icon("sliders-h")
@@ -283,9 +288,22 @@ dashboardPage(dark = T,
                                a(href = "https://www.effemm2.de/spectragryph/index.html", "Free desktop application for spectral analysis and links to reference databases.", class = "lead")   
                            )
                        )
-              ),
+                ),
+                tabItem(
+                    tabName = "session_log",
+                    fluidRow(
+                        box(
+                            title = "Session Log",
+                            width = 12,
+                            status = "primary",
+                            solidHeader = TRUE,
+                            downloadButton("download_session_log", "Download Session Log"),
+                            div(style = "margin-top: 1rem;", DT::dataTableOutput("session_log_table"))
+                        )
+                    )
+                ),
               #Analyze Spectra Tab ----
-              tabItem("analyze", 
+              tabItem("analyze",
                       br(),
                        fluidRow(
                            column(2,
