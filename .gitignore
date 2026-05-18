@@ -50,6 +50,7 @@ subset_*.RDS
 test_*.RDS
 # Web and Shiny files
 rsconnect/
+site/
 .db_url
 loggit.log
 mongo.txt

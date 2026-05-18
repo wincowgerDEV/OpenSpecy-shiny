@@ -13,7 +13,6 @@ library(plotly)
 library(data.table)
 library(DT)
 library(digest)
-#library(curl)
 #library(loggit)
 library(bs4Dash)
 library(ggplot2)
@@ -21,6 +20,9 @@ library(reshape2)
 
 library(OpenSpecy)
 #library(glmnet)
+
+source(file.path("R", "runtime.R"), local = TRUE)
+source(file.path("R", "mod_fast_file.R"), local = TRUE)
 
 # App metadata ----
 metadata_file <- ".openspecy-shiny-metadata.rds"

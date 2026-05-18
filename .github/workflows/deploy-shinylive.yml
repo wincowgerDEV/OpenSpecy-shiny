@@ -1,0 +1,74 @@
+name: Build and deploy Shinylive app
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: shinylive-pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v5
+
+      - name: Set up R
+        uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: release
+          use-public-rspm: true
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libcurl4-openssl-dev libssl-dev libxml2-dev libharfbuzz-dev libfribidi-dev
+
+      - name: Install R dependencies
+        run: |
+          app_packages <- c(
+            "shinylive",
+            "shiny",
+            "shinyjs",
+            "shinyWidgets",
+            "dplyr",
+            "plotly",
+            "data.table",
+            "DT",
+            "digest",
+            "bs4Dash",
+            "ggplot2",
+            "reshape2",
+            "OpenSpecy",
+            "curl",
+            "config",
+            "scales",
+            "jsonlite",
+            "htmltools",
+            "S7"
+          )
+          install.packages(app_packages)
+        shell: Rscript {0}
+
+      - name: Build Shinylive bundle
+        run: Rscript tools/build-shinylive.R
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: site
+
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4

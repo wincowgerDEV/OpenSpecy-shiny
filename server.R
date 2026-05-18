@@ -35,18 +35,21 @@ function(input, output, session) {
   preprocessed <- reactiveValues(data = NULL)
   data_click <- reactiveValues(plot = NULL, table = NULL)
   meta_cache <- reactiveVal(NULL)
+  uploaded_file_handle <- fast_file_server("file")
 
 
   #Read Data ----
   #Sending data to a remote repo. 
-observeEvent(input$file, {
+observeEvent(uploaded_file_handle(), {
+  file_handle <- uploaded_file_handle()
+  req(file_handle)
+
   # Read in data when uploaded based on the file type
   data_click$plot <- 1
   data_click$table <- 1
   preprocessed$data <- NULL
 
-  if (!all(grepl("(\\.tsv$)|(\\.h5$)|(\\.txt$)|(\\.img$)|(\\.dat$)|(\\.hdr$)|(\\.json$)|(\\.rds$)|(\\.yml$)|(\\.csv$)|(\\.asp$)|(\\.spa$)|(\\.spc$)|(\\.jdx$)|(\\.dx$)|(\\.RData$)|(\\.zip$)|(\\.[0-9]$)",
-             ignore.case = T, as.character(input$file$datapath)))) {
+  if (!file_handle_supported(file_handle)) {
     show_alert(
       title = "Data type not supported!",
       text = paste0("Uploaded data type is not currently supported; please
@@ -58,9 +61,11 @@ observeEvent(input$file, {
   withProgress(message = "Reading data", value = 2/3, {
       
       rout <- tryCatch(expr = {
-          read_any(file = as.character(input$file$datapath)) |>
-              c_spec(range = "common", res = if(input$conform_decision){input$conform_res} else{8}) |>
-              manage_na(ig = c(NA, 0), type = "remove")},
+          read_uploaded_spectra(
+              file_handle,
+              conform_decision = input$conform_decision,
+              conform_res = input$conform_res
+          )},
           error = function(e){
               class(e$message) <- "simpleWarning"
               e$message
@@ -72,8 +77,8 @@ observeEvent(input$file, {
       )
       #print(rout)
       
-      if(!inherits(rout, "simpleWarning") && all(!grepl("(\\.hdr$)|(\\.dat$)|(\\.zip$)", input$file$datapath))){
-          rout$metadata$file_name <- input$file$name
+      if(!inherits(rout, "simpleWarning") && !file_handle_has_extensions(file_handle, c("hdr", "dat", "zip"))){
+          rout$metadata$file_name <- file_handle$name
       }
       
       if(!inherits(rout, "simpleWarning")){
@@ -102,7 +107,7 @@ observeEvent(input$file, {
                        ". If you uploaded a text/csv file, make sure that the columns are numeric and named 'wavenumber' and 'intensity'."),
         type =  "error"
       )
-      reset("file")
+      reset_fast_file_upload(session, "file")
       preprocessed$data <- NULL
     }
       
@@ -269,7 +274,7 @@ observeEvent(input$file, {
 
  # Redirecting preprocessed data to be a reactive variable. Not totally sure why this is happening in addition to the other. 
  data <- reactive({
-    req(input$file)
+    req(uploaded_file_handle())
       da <- preprocessed$data
       if(isTruthy(input$xy_grid) & 
          (!all(diff(sort(preprocessed$data$metadata$y)) %in% c(0,1)) |
@@ -1108,7 +1113,7 @@ output$progress_bars <- renderUI({
 
   #Google translate. 
   output$translate <- renderUI({
-    if(translate & curl::has_internet()) {
+    if(translate & openspecy_has_internet()) {
       includeHTML("www/googletranslate.html")
     }
   })
