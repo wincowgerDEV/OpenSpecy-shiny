@@ -62,6 +62,9 @@ jobs:
       - name: Build Shinylive bundle
         run: Rscript tools/build-shinylive.R
 
+      - name: Build static webR analysis path
+        run: Rscript tools/build-static-webr-site.R --export-libs
+
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
 

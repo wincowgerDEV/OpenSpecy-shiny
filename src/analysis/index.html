@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Open Specy analysis</title>
+    <link rel="stylesheet" href="./style.css" />
+    <script>
+      window.OpenSpecyWebRConfig = {
+        webRModuleUrl: "../shinylive/webr/webr.mjs",
+        webRBaseUrl: "../shinylive/webr/",
+        packageAssetBaseUrl: "../shinylive/webr/",
+        rWrapperUrl: "../r/openspecy_engine.R",
+        referenceLibraryBaseUrl: "../data/"
+      };
+    </script>
+    <script type="module" src="./page.js"></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand">
+        <img src="../assets/logo.png" alt="Open Specy" />
+        <div>
+          <h1>Open Specy analysis</h1>
+          <span>Browser-side spectra matching</span>
+        </div>
+      </div>
+      <nav aria-label="Open Specy">
+        <a href="../">Current Shiny app</a>
+      </nav>
+    </header>
+
+    <main class="workspace">
+      <form class="panel controls" data-analysis-form>
+        <div class="field">
+          <label for="spectrum-file">Spectrum file</label>
+          <input
+            id="spectrum-file"
+            name="file"
+            type="file"
+            accept=".csv,.tsv,.txt"
+            data-file-input
+          />
+        </div>
+
+        <div class="field">
+          <label for="library">Library</label>
+          <select id="library" name="library" data-library-input></select>
+        </div>
+
+        <div class="field">
+          <label for="spectrum-type">Spectrum type</label>
+          <select id="spectrum-type" name="spectrum_type">
+            <option value="both">Both</option>
+            <option value="ftir">FTIR</option>
+            <option value="raman">Raman</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="match-method">Match method</label>
+          <select id="match-method" name="match_method">
+            <option value="correlation">Correlation</option>
+          </select>
+        </div>
+
+        <div class="check-row">
+          <input id="smooth" name="smooth" type="checkbox" checked />
+          <label for="smooth">Smooth</label>
+        </div>
+
+        <div class="check-row">
+          <input id="baseline" name="baseline" type="checkbox" checked />
+          <label for="baseline">Baseline correction</label>
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label for="top-n">Top matches</label>
+            <input id="top-n" name="top_n" type="number" min="1" max="20" value="5" />
+          </div>
+          <div class="field">
+            <label for="min-match">Minimum match</label>
+            <input id="min-match" name="min_match" type="number" min="0" max="1" step="0.01" value="0" />
+          </div>
+        </div>
+
+        <div class="action-row">
+          <button type="submit" data-analyze-button>Analyze</button>
+          <div class="status" role="status" aria-live="polite" data-status>
+            Ready.
+          </div>
+        </div>
+      </form>
+
+      <section class="panel results">
+        <div class="empty-state" data-empty-state>
+          Results will appear here after analysis starts.
+        </div>
+        <div data-results hidden>
+          <div class="results-header">
+            <h2>Matches</h2>
+            <p data-results-summary></p>
+          </div>
+          <div class="table-wrap" data-results-table></div>
+        </div>
+      </section>
+    </main>
+
+    <div class="error" role="alert" data-error hidden></div>
+    <script>
+      (function () {
+        function problemForLocation() {
+          var path = window.location.pathname.replace(/\\/g, "/");
+
+          if (window.location.protocol === "file:") {
+            return "This analysis page cannot run from a file:// URL. Build the site, serve the site/ directory over HTTP, and open /analysis/.";
+          }
+
+          if (/\/src\/analysis\/?/.test(path)) {
+            return "You opened the source analysis page. Run the static build and open the generated site/analysis/ page so webR, R wrappers, and medoid/model assets resolve correctly.";
+          }
+
+          return "";
+        }
+
+        var problem = problemForLocation();
+        if (!problem) {
+          return;
+        }
+
+        var error = document.querySelector("[data-error]");
+        var status = document.querySelector("[data-status]");
+        var form = document.querySelector("[data-analysis-form]");
+        var button = document.querySelector("[data-analyze-button]");
+
+        if (error) {
+          error.hidden = false;
+          error.textContent = problem;
+        }
+        if (status) {
+          status.textContent = "Open the built static site over HTTP before starting analysis.";
+        }
+        if (button) {
+          button.disabled = true;
+        }
+        if (form) {
+          form.addEventListener("submit", function (event) {
+            event.preventDefault();
+            if (error) {
+              error.hidden = false;
+              error.textContent = problem;
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>
